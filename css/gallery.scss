@@ -1,0 +1,28 @@
+---
+# this ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
+//
+// Model gallery
+// --------------------------------------------------
+
+// Padding for cells in `.arch-table`.
+$arch-table-cell-padding: 3px !default;
+
+// Model architecture nested table
+.arch-table {
+    border-style: none;
+    > tr {
+        padding: $arch-table-cell-padding;
+    }
+    > th,
+    > td {
+        border-style: none;
+        padding: $arch-table-cell-padding;
+    }
+}
+
+.table-auto {
+  width: auto !important;
+}

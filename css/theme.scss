@@ -1,0 +1,23 @@
+---
+# this ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
+// Make images responsive by default.
+// Note: If we can reference bootstrap.scss directly, this can be simplified to @include .img-responsive;
+img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+// highlight every other table row 
+tbody tr:nth-child(odd) {
+    background-color: #eee;
+}
+  
+// border and internal padding on table cells
+td {
+    border: 1px solid #bbb;
+    padding: 0.2em;
+}
