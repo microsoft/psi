@@ -1,0 +1,15 @@
+var searchData=
+[
+  ['value',['Value',['../struct_microsoft_1_1_psi_1_1_match_result.html#af0635adfe2ba89aa9e07e8a03a8e6097',1,'Microsoft.Psi.MatchResult.Value()'],['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_labeled_value.html#a9b9abad7c92d5378dc3a75da343afeda',1,'Microsoft.Psi.Visualization.Common.LabeledValue.Value()'],['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a5ad3fc6067f6f649a1824e3c3d313a78',1,'Microsoft.Psi.Visualization.Data.IntervalData.Value()']]],
+  ['values',['Values',['../class_microsoft_1_1_psi_1_1_extensions_1_1_annotations_1_1_annotation_schema.html#a119a777c3fab1557e6321e80dc490b0a',1,'Microsoft::Psi::Extensions::Annotations::AnnotationSchema']]],
+  ['video',['Video',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture.html#a844987cafc86033eb485ec78a323acd7',1,'Microsoft::Psi::Media::MediaCapture']]],
+  ['videoformatmjpg',['VideoFormatMJPG',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_video_formats.html#a3ee0b76228db7964eab9d3c4315a43fd',1,'Microsoft::Psi::Media_Interop::VideoFormats']]],
+  ['videoformatyuy2',['VideoFormatYUY2',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_video_formats.html#aec75f331ab798a54900aaace66ed8a51',1,'Microsoft::Psi::Media_Interop::VideoFormats']]],
+  ['videoproperties',['VideoProperties',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a23b92400b4bf6c5185d2ecc425aeb26a',1,'Microsoft::Psi::Media_Interop::MediaCaptureDevice']]],
+  ['videostreamindex',['videoStreamIndex',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#af83f29e2e6544ac6f9e5ca594cb54dd0',1,'Microsoft::Psi::Media_Interop::MP4WriterUnmanagedData']]],
+  ['viewdurationproperty',['ViewDurationProperty',['../class_microsoft_1_1_psi_1_1_visualization_1_1_controls_1_1_timeline_canvas.html#afc92409120a84501c197b51d89a93994',1,'Microsoft::Psi::Visualization::Controls::TimelineCanvas']]],
+  ['viewextents',['ViewExtents',['../class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html#abad36b213dfe16ef4ad419bc6a42e018',1,'Microsoft::Psi::Visualization::Collections::ObservableKeyedCache']]],
+  ['viewrange',['ViewRange',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#ae210129d6c36e0e336bb67214522507b',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
+  ['viewstarttimeproperty',['ViewStartTimeProperty',['../class_microsoft_1_1_psi_1_1_visualization_1_1_controls_1_1_timeline_canvas.html#a10f17942852e0ee69d405115907c435c',1,'Microsoft::Psi::Visualization::Controls::TimelineCanvas']]],
+  ['visualizationpanel',['VisualizationPanel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_x_y_visualization_panel_view.html#a2992ec7c53c51fd68c8cb1361d0ed4db',1,'Microsoft.Psi.Visualization.Views.XYVisualizationPanelView.VisualizationPanel()'],['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_x_y_z_visualization_panel_view.html#ab36066257459da20665c6395137d776d',1,'Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.VisualizationPanel()']]]
+];

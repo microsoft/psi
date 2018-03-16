@@ -1,0 +1,8 @@
+var searchData=
+[
+  ['gain',['Gain',['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_player_configuration.html#a63f4a568841d6018a7cf96681865b49d',1,'Microsoft.Psi.Audio.AudioPlayerConfiguration.Gain()'],['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_source_configuration.html#a71c94b4a2d141f0ac96cfdc281ae2f71',1,'Microsoft.Psi.Audio.AudioSourceConfiguration.Gain()'],['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_configuration.html#ac2cda7e8ef6216f473bb595bdd100dd4',1,'Microsoft.Psi.Media.MediaCaptureConfiguration.Gain()']]],
+  ['gaininfo',['GainInfo',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_info.html#a69beed22b0d8bc690cf396eed9f878c0',1,'Microsoft::Psi::Media::MediaCaptureInfo']]],
+  ['gamma',['Gamma',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_configuration.html#aef6d847043c67518d6759443df9c2706',1,'Microsoft::Psi::Media::MediaCaptureConfiguration']]],
+  ['gammainfo',['GammaInfo',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_info.html#a115d201f3f17815a64b8b622868d704b',1,'Microsoft::Psi::Media::MediaCaptureInfo']]],
+  ['grammars',['Grammars',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer_configuration.html#a32bc9a4b9a42fd694c8b772c643401f1',1,'Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizerConfiguration.Grammars()'],['../class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer_configuration.html#a885f841255af888806d718f0826f7369',1,'Microsoft.Psi.Speech.SystemSpeechRecognizerConfiguration.Grammars()'],['../class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector_configuration.html#a555dcccf053f1c3287fdaecf43c5b228',1,'Microsoft.Psi.Speech.SystemVoiceActivityDetectorConfiguration.Grammars()']]]
+];
