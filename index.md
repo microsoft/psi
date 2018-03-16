@@ -13,7 +13,7 @@ The Platform for Situated Intelligence project aims to address these issues and 
 
 # Using and Building
 
-Platform for Situated Intelligence is a .NET Framework. Large parts of it are build on .NET Core and thereforerun both on Windows and Linux, whereas some components are specific and available only to one operating system (for instance a Kinect sensor component is available only for Windows.)
+Platform for Situated Intelligence is built on the a .NET Framework. Large parts of it are build on .NET Standard and therefore run both on Windows and Linux, whereas some components are specific and available only to one operating system (for instance a Kinect sensor component is available only for Windows.)
 
 You can build applications based on Platform for Situated Intelligence either by leveraging nuget packages, or by cloning and building the code. Below are instructions:
 

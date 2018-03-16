@@ -17,7 +17,7 @@ The tutorial is structured in the following easy steps:
 6. [**Replaying Data**](/psi/tutorials/#ReplayingData) - explains how to replay data from a persisted store. 
 7. [**Further Reading**](/psi/tutorials/#FurtherReading) - provides pointers to further in-depth topics.
 
-<a name="SimpleApplication" />
+<a name="SimpleApplication"></a>
 
 ## 1. A simple \psi application
 
@@ -100,13 +100,13 @@ The `Select` operator we have injected transforms the messages from the sequence
 
 Beyond `Do` and `Select`, \\psi contains many operators: single stream operators like `Where`, `Aggregate`, `Parallel` etc. (similar with Linq and Rx), stream generators (`Sequence`, `Enumerate`, `Timer`) as well as operators for combining streams (`Join`, `Sample`, `Repeat`). Like `Do`, some of these operators also have overloads that can surface the message envelope information. Check out the [Basic Stream Operators](/psi/topics/InDepth.BasicStreamOperators) page for an in-depth look at all of them.
 
-<a name="Synchronization" />
+<a name="Synchronization"></a>
 
 ## 2. Synchronization
 
 Building systems that operate over streaming data often requires that we do stream-fusion, i.e., join data arriving on two different streams to form a third stream. Because execution of the various components in a \\psi pipeline is asynchronous and parallel, <b><i>synchronization</i></b> becomes paramount, i.e., how do we match (or pair-up) the messages that arrive on the different streams to be joined?
 
-The answer lies in the fact that \\psi streams are time-aware: timing information is carried along with the data on each stream, enabling both the developer and the runtime to correctly reason about the timing of the data. Specifically, the way this works is that the data collected by sensors (the data on source streams) is timestamped with an <b><i>originating time</i></b> that captures when the data captured by the sensor occured in the real world. For instance, messages posted on the output stream of the video camera components will time-stamp each frame with the originating time of when that image frame was collected by the sensor. As the image message is processed by a downstream `ToGray()` component, the originating time is propagated forward on the resulting grayscale image message. This way, a downstream component that receives the grayscale image will know what was the time of this data in the real world. And, if the component has to fuse information from the grayscaleimage with results from processing an audio-stream (which may arrive at a different latency), because the component has access to originating times on both streams, it can reason about time and pair the streams. 
+The answer lies in the fact that \\psi streams are time-aware: timing information is carried along with the data on each stream, enabling both the developer and the runtime to correctly reason about the timing of the data. Specifically, the way this works is that the data collected by sensors (the data on source streams) is timestamped with an <b><i>originating time</i></b> that captures when the data captured by the sensor occured in the real world. For instance, messages posted on the output stream of the video camera components will time-stamp each frame with the originating time of when that image frame was collected by the sensor. As the image message is processed by a downstream `ToGray()` component, the originating time is propagated forward on the resulting grayscale image message. This way, a downstream component that receives the grayscale image will know what was the time of this data in the real world. And, if the component has to fuse information from the grayscale image with results from processing an audio-stream (which may arrive at a different latency), because the component has access to originating times on both streams, it can reason about time and pair the streams. 
 
 To facilite this type of synchronization \\psi provides a special `Join` stream operator that allows you to fuse multiple streams and control the synchronization mechanism used in this process.
 
@@ -154,7 +154,7 @@ Re-run the program. This time, the results are not always 1. In this case we hav
 
 We have illustrated above how to do an _exact_ join (the originating times must match exactly for the messages to be paired). There are many ways to do originating-time based synchronization, with important consequences for the behavior of the pipeline. In this introductory guide, we limit this discussion here, but we recommend that you read the more in-depth topic on the [Synchronization](/psi/topics/InDepth.Synchronization) page.
 
-<a name="SavingData" />
+<a name="SavingData"></a>
 
 ## 3. Saving Data
 
@@ -181,11 +181,11 @@ using (var p = Pipeline.Create())
 }
 ```
 
-The example creates and saves the _sequence_ and _sin_ and _cos_ streams of double values. This is done by creating a Store component with a given name and folder path via the `Store.Create` factory method, and then using it with the `Write` stream operator. The `Store` component knows how to serialize and write to disk virtually any .Net data type (including user-provided types) in an efficient way. 
+The example creates and saves the _sequence_ and _sin_ and _cos_ streams of double values. This is done by creating a store component with a given name and folder path via the `Store.Create` factory method, and then using it with the `Write` stream operator. The store component knows how to serialize and write to disk virtually any .Net data type (including user-provided types) in an efficient way. 
 
 The data is written to disk in the specified location (in this case `c:\\recordings`, in a folder called `demo.0000`. The `Store.Create` API creates this folder and increases the counter to `demo.0001`, `demo.0002` etc. if you run the application repeatedly. Inside the `demo.0000` folder you will find Catalog, Data and Index files. Together, these files constitute the store. 
 
-<a name="OfflineVisualization" />
+<a name="OfflineVisualization"></a>
 
 ## 4. Offline Visualization
 
@@ -193,13 +193,13 @@ Visualization of multimodal streaming data plays a central role in developing mu
 
 __NOTE__: Currently, PsiStudio runs only on Windows (although a future cross-platform version is planned - see more in our [Roadmap](/psi/Roadmap) document.) The tool is not currently shipped as an executable, so if you want to use it you will need to build the codebase; instructions for building the code are available [here](/psi/BuildingPsi). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it. To enable live visualization scenarios (more on that in a second), Platform for Situated Intelligence Studio is a COM server and registers itself as such with the Windows Registry the first time it is launched. You may receive a prompt to allow access for the tool to register itself on first launch.
 
-PsiStudio enables compositing multiple visualizers of different times (from simple streams of doubles to images, depth maps, etc.). In this section we will give a very brief introduction to this tool.
+PsiStudio enables compositing multiple visualizers of different types (from simple streams of doubles to images, depth maps, etc.). In this section we will give a very brief introduction to this tool.
 
 Once you run the application, you will see a window that looks similar to the image below. To open a store, go to the _File_ -> _Open Store_ and navigate to the location you have specified in the example above, e.g. `C:\\recordings\demo.####` (the last folder corresponds to the last run) and open the Catalog file, e.g. `C:\\recordings\demo.####\demo.Catalog_000000.psi`. The PsiStudio window should now look like this:
 
 ![PsiStudio (when opening the demo recording)](/psi/tutorials/PsiStudio.Start.png)
 
-The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a <b><i>dataset</i></b> around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page.), with the name <i>Untitled Dataset</i>. Double-clicking on <i>Untitled Dataset</i> will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting <i>Plot</i> will allow you to visualize the Sin stream, like below: 
+The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a <b><i>dataset</i></b> around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name <i>Untitled Dataset</i>. Double-clicking on <i>Untitled Dataset</i> will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting <i>Plot</i> will allow you to visualize the Sin stream, like below: 
 
 ![PsiStudio (visualizing a stream)](/psi/tutorials/PsiStudio.SinVisualization.png)
 
@@ -217,15 +217,13 @@ As we have seen before, new visualizations will by default be overlaid in the sa
 
 ![PsiStudio (Visualizers Tab)](/psi/tutorials/PsiStudio.VisualizersTab.png)
 
-Right-clicking on the Cos visualizer brings up a context-menu that currently allows you to remove this visualizer. Do so. This should make the cos stream disappear from the panel. Next, click on the <i>Insert Timeline Panel</i> button in the toolbar, highlighted in the image above. This will add a new timeline panel. If you go back to <i>Datasets</i>, then right-click on Cos and click <i>Plot</i> again, the Cos stream will appear in the second (current) panel.
+Right-clicking on the Cos visualizer brings up a context-menu that currently allows you to remove this visualizer. Try it out. This should make the Cos stream disappear from the panel. Next, click on the <i>Insert Timeline Panel</i> button in the toolbar, highlighted in the image above. This will add a new timeline panel. If you go back to <i>Datasets</i>, then right-click on Cos and click <i>Plot</i> again, the Cos stream will appear in the second (current) panel.
 
 Come back to the <i>Visualizations</i> tab and highlight the Cos visualizer. On the bottom-right side, the set of properties for this visualizer are available for inspection and modification. You can change various properties of the visualize, like the color of the line and the marker style to use. For instance, here we have changed the <i>LineColor</i> and <i>MarkerColor</i> properties to red, and the <i>MarkerStyle</i> to Square:
 
 ![PsiStudio (two panels)](/psi/tutorials/PsiStudio.TwoPanels.png)
 
-There are many more aspects and features of the PsiStudio tool than are beyond the scope of this brief introduction.
-
-<a name="LiveVisualization" />
+<a name="LiveVisualization"></a>
 
 ## 5. Live Visualization
 
@@ -293,11 +291,11 @@ unless manually specified)
 - we configure the plot markers to `Diamond` style (by default the plot marker style is `None`, i.e. markers are not shown)
 - we configure the plot markers color to red.
 
-<a name="ReplayingData" />
+<a name="ReplayingData"></a>
 
 ## 6. Replaying Data
 
-Data written to disk in the manner described above can be played back with similar ease. Assuming that the previous example was executed at least once, the following code will read and replay the data, computing and displaying the sin and cos functions. 
+Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorial/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin and cos functions. 
 
 ```csharp
 using (var p = Pipeline.Create())
@@ -319,14 +317,14 @@ using (var p = Pipeline.Create())
 
 An existing store is open with the `Store.Open` factory method, and streams within the store can be retrieved by name using the `OpenStream` method (you will have to know the name and type of the stream you want to access). The streams can then be processed as if they were just generated from a source. 
 
-This method of replaying data preserves the relative timing and order of the messages, and by default plays back data at the same speed as it was produced. When you run the program, you will see the `sin` values being displayed by the `Do` operator. 
+This method of replaying data preserves the relative timing and order of the messages, and by default plays back data at the same speed as it was produced. When you run the program, you will see the Sin values being displayed by the `Do` operator. 
 
-We can control the speed of the execution of the pipeline, via a replay descriptor parameter passed to the `Run()` method. If noparameter is specified the pipeline uses the `ReplayDescriptor.ReplayAllRealTime`, which plays back the data at the same speed as itwas produced. Try replacing the call to `p.Run()` with `p.Run(ReplayDescriptor.ReplayAll)`. In this case, the data will play backfrom the store at maximum speed, regardless of the speed at which it was generated. Running the program will display the `sin` values much faster now. Note that the originating times are nevertheless preserved on the messages being replayed from the store. 
+We can control the speed of the execution of the pipeline, via a replay descriptor parameter passed to the `Run()` method. If noparameter is specified the pipeline uses the `ReplayDescriptor.ReplayAllRealTime`, which plays back the data at the same speed as it was produced. Try replacing the call to `p.Run()` with `p.Run(ReplayDescriptor.ReplayAll)`. In this case, the data will play backfrom the store at maximum speed, regardless of the speed at which it was generated. Running the program will display the Sin values much faster now. Note that the originating times are nevertheless preserved on the messages being replayed from the store. 
 
-<a name="FurtherReading" />
+<a name="FurtherReading"></a>
 
 ## 7. Next steps
 
-After going through this first brief tutorial, it may be helpful to look through the set of [Samples](/psi/samples) provided. Some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, but reading them will give you more insight into programming with Platform for Situated Intelligence.
+After going through this first brief tutorial, it may be helpful to look through the set of [Samples](/psi/samples) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.
 
-Finally, additional information is provided in a set of [In-Depth Topics](/psi/topics) that dive into a bit more detailsin various aspects of the framework, like synchronization, persistence, remoting, visualization etc.
+Finally, additional information is provided in a set of [In-Depth Topics](/psi/topics) that dive into more details in various aspects of the framework, like synchronization, persistence, remoting, visualization etc.

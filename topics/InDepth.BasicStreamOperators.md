@@ -7,18 +7,18 @@ title:  Basic Stream Operators
 
 The ability to manipulate streams of data plays a central role in Platform for Situated Intelligence. This document provides a brief overview of the basic stream operators currently available. With a few exceptions (like generators and joins), stream operators generally transform one stream into another. The operators can be grouped into several classes:
 
-* [Generating](/psi/topics/InDepth.BasicStreamOperators/#Generators): these operators provide the means for creating various source streams.
+* [Generating](/psi/topics/InDepth.BasicStreamOperators/#Generating): these operators provide the means for creating various source streams.
 * [Mapping](/psi/topics/InDepth.BasicStreamOperators/#Mapping): these operators transform messages from the input stream.
 * [Filtering](/psi/topics/InDepth.BasicStreamOperators/#Filtering): these operators filter messages from the input stream.
 * [Aggregating](/psi/topics/InDepth.BasicStreamOperators/#Aggregating): these operators aggregate messages from the input stream.
 * [Actuating](/psi/topics/InDepth.BasicStreamOperators/#Actuating): these operators allow for actuating based on messages in a stream.
 * [Synchronizing](/psi/topics/InDepth.BasicStreamOperators/#Synchronizing): these operators allow for synchronizing multiple streams.
 * [Sampling](/psi/topics/InDepth.BasicStreamOperators/#Sampling): these operators allow for sampling over a stream.
-* [Window Computations](/psi/topics/InDepth.BasicStreamOperators/#WindowComputations): these operators compute various simple mathematical functions over windows on a stream.
 * [Parallel](/psi/topics/InDepth.BasicStreamOperators/#Parallel): these operators allow for vector-parallel computations.
+* [Time Related](/psi/topics/InDepth.BasicStreamOperators/#TimeRelated): these operators provide timing information.
 * [Miscellaneous](/psi/topics/InDepth.BasicStreamOperators/#Miscellaneous): these operators provide various other functionalities.
 
-<a name="Generators" />
+<a name="Generating"></a>
 
 ## 1. Generating
 
@@ -122,7 +122,7 @@ This produces a stream of 1000 multiples of 5:
 var fives = Generators.Sequence(p, 0, x => x + 5, 1000, TimeSpan.FromMilliseconds(10));
 ```
 
-<a name="Mapping" />
+<a name="Mapping"></a>
 
 ## 2. Mapping
 
@@ -195,7 +195,7 @@ var squaredNullableStream = myNullableStream.NullableSelect(x => x * x);
 
 Like with `Select`, there are overloads giving access to the message envelope.
 
-<a name="Filtering" />
+<a name="Filtering"></a>
 
 ## 3. Filtering
 
@@ -224,7 +224,15 @@ var range = Generators.Range(p, 0, 100, TimeSpan.FromMilliseconds(100));
 var first100 = range.Where((_, e) => e.SequenceId <= 10);
 ```
 
-<a name="Aggregating" />
+### First()
+
+Another filtering operator is `First`, which produces a resulting stream that contains only the first message on the input stream.
+
+```csharp
+First(this IProducer<T> source) -> IProducer<T> // stream consisting of single first value
+```
+
+<a name="Aggregating"></a>
 
 ## 4. Aggregating
 
@@ -265,7 +273,7 @@ Interestingly, this lambda delegate is essentially taking the accumulated value 
 var min = myStream.Aggregate(Math.Min);
 ```
 
-<a name="Actuating" />
+<a name="Actuating"></a>
 
 ## 5. Actuating
 
@@ -310,15 +318,17 @@ myStream.ToObservable();
 
 [Bridging to events is a bit more involved.](/psi/topics/InDepth.EventSource), requiring construction of an `EventSource` component and providing lambdas to subscribe/unsubscribe. This is due to events not being first class values in C# (as they are in F#).
 
-<a name="Synchronizing" />
+<a name="Synchronizing"></a>
 
 ## 6. Synchronizing
 
-Platform for Situated Intelligence provides operators that allow synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](/psi/topics/InDepth.Synchronization).
+Platform for Situated Intelligence provides operators that allow for fusing and synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](/psi/topics/InDepth.Synchronization).
 
-<a name="Sampling" />
+<a name="Sampling"></a>
 
 ## 7. Sampling
+
+### Sample(...)
 
 To sample values from a dense stream at some presumably sparser interval use `Sample`. A `clock` signal drives the sampling. At each signal, a value is taken from the source stream. If messages do not line up in time exactly, an `interpolator`, `matchWindow` or `tolerance` may be given specifying a policy (much like with [other synchronization operators](/psi/topics/InDepth.Synchronization)).
 
@@ -337,73 +347,126 @@ For example:
 var sample = myStream.Sample(TimeSpan.FromMilliseconds(100));
 ```
 
-<a name="WindowComputations" />
+<a name="Parallel"></a>
 
-## 8. Window computations
+## 8. Parallel
 
-While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Buffer` and `History` operators](/psi/topics/InDepth.BuffersAndHistory) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
+The `Parallel` operator enables parallel execution over dense or sparse vectors (i.e., arrays or dictionaries).
 
-As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Buffer` and `History`](/psi/topics/InDepth.BuffersAndHistory):
+#### Dense vector parallel processing
+
+When using parallel over a stream of dense vectors, i.e. a stream of arrays, a separate pipeline is instantiated for each element in the vector. Each element is processed in parallel and the results are merged at the end back into a vector of the output type. 
 
 ```csharp
-Sum(this IProducer<_> source, int size) -> IProducer<_>
-Sum(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
-Sum(this IProducer<IEnumerable<_>> source, TimeSpan timeSpan) -> IProducer<_>
+Parallel<TIn, TOut>(
+    this IProducer<TIn[]> source,
+    int vectorSize,
+    Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector,
+    DeliveryPolicy policy = null,
+    bool joinOrDefault = true) -> IProducer<TOut>
+```
 
-Max(this IProducer<_> source, int size) -> IProducer<_>
-Max(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
-Max(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+In this case, we need to specify the vector size and a function that given an index in the array and an input stream of type `TIn` produces an output stream of type `TOut`. This function essentially allows us to  specify the sub-pipeline that will be created for the input index.
 
-Min(this IProducer<_> source, int size) -> IProducer<_>
-Min(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
-Min(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+For instance, conside the example below:
 
-Average(this IProducer<_> source, int size) -> IProducer<_>
-Average(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
-Average(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+```csharp
+var streamOfArray = Generators.Sequence(p, new[] { 0, 1, 2 }, r => new[] { r[0] + 1, r[1] + 1, r[2] + 1 }, 100);
+streamOfArray.Parallel(3, (int index, IProducer<int> s) => {
+    if(index == 0)
+    {
+        return s;
+    }
+    else if(index == 1)
+    {
+        return s.Select(m => m * 2);
+    }
+    else
+    {
+        return s.Select(m => m * 3);
+    }
+});
 
-ZScoreNormalization(this IProducer<Double> source, double mean, double std) -> IProducer<double>
+```
+
+Here, the `streamOfArray` looks like this:
+
+```
+0  1  2  3  4
+1  2  3  4  5
+2  3  4  5  6
+```
+
+The `Parallel` operator defines a index-specific pipeline, which keeps the values for index 1 (we return the original stream as the output stream; doubles the values for index 2 via a `Select` operator, and triples the values for index 3 again via a `Select` operator. The results will look like this:
+
+```
+0  1  2  3  4
+2  4  6  8 10
+6  9 12 15 18
+```
+
+#### Sparse vector parallel processing
+
+A similar `Parallel` operator is available to process sparse vectors, i.e. dictionaries `Dictionary<TKey, TValue>`. The signature is:
+
+```csharp
+Parallel<TIn, TKey, TOut>(
+    this IProducer<Dictionary<TKey, TIn>> source,
+    Func<TKey, IProducer<TIn>, IProducer<TOut>> transformSelector,
+    DeliveryPolicy policy = null,
+    bool joinOrDefault = true) -> IProducer<Dictionary<TKey, TOut>>
+```
+
+
+<a name="TimeRelated"></a>
+
+## 9. Time-related operators
+
+### TimeOf()
+
+The `TimeOf` operator returns a stream that contains the originating times of the messages on the input stream.
+
+```csharp
+TimeOf(this IProducer<T> source) -> IProducer<DateTime>
 ```
 
 For example:
 
 ```csharp
-var avg = myStream.Average(TimeSpan.FromMilliseconds(100));
+myStream.TimeOf();
 ```
 
-<a name="Parallel" />
+This operator is simply implemented based on a `Select` that picks up the originating time from the message envelope.
 
-## 9. Parallel
+### Delay(...)
 
-TODO
-
-<a name="Miscellaneous" />
-
-## 10. Miscellaneous
-
-### Performance
-
-Aside from enabling and looking at performance counters (Windows only), it is occasionally useful to simply inspect performance with these inline operators:
+The `Delay` operator produces a "delayed" stream by shifting the originating times by a specified interval.
 
 ```csharp
-FrameRate(this IProducer<T> source) -> IProducer<double>
-FrameRate(this IProducer<T> source, TimeSpan windowSize ) -> IProducer<double>
-FrameRateAvg(this IProducer<T> source, int count) -> IProducer<double>
+Delay(this IProducer<T> source, TimeSpan delay, DeliveryPolicy policy) -> IProducer<T> // delay start of stream
+```
+
+For example, the code below returns a stream where the messages are offset by 200 ms:
+
+```csharp
+myStream.Delay(TimeSpan.FromMilliseconds(200));
+```
+
+### Latency(...)
+
+The `Latency` operator computes the latency on a given stream. The messages on the output stream are of type `TimeSpan` and correspond to the difference between the time the message was created (captured by the `Time` member of the message envelope) and the originating time of the message.
+
+```csharp
 Latency(this IProducer<T> source) -> IProducer<TimeSpan>
 ```
 
-### Others
+<a name="Miscellaneous"></a>
 
-```csharp
-Name(this IProducer<T> source, string name) -> IProducer<T> // name a stream
-Delay(this IProducer<T> source, TimeSpan delay, DeliveryPolicy policy) -> IProducer<T> // delay start of stream
-First(this IProducer<T> source) -> IProducer<T> // stream consisting of single first value
-Process(this IProducer<TIn> source, Action<TIn, Envelope, Emitter<TOut>> transform, DeliveryPolicy policy) -> IProducer<TOut>
-```
+## 10. Miscellaneous
 
-### PipeTo()
+### PipeTo(...)
 
-Nodes of the stream graph commonly terminate into the receiver of a component. The component causes some actuation; audio output, etc.
+The `PipeTo` operator allows for connecting streams to various component receivers. 
 
 ```csharp
 PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, DeliveryPolicy policy = null);
@@ -412,52 +475,55 @@ PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, DeliveryPolicy policy =
 For example:
 
 ```csharp
-myStream.PipeTo(myComponent); // default `In` receiver
 myStream.PipeTo(myComponent.SomeReceiver);
 ```
 
-### Abs(), Cast(), TimeOf()
-
-Some specializations of `Select` exist for commonly applied mapping functions:
+If the component is an `IConsumer<T>`, then the `PipeTo` operator can be used to directly connect to the `In` receiver of the component:
 
 ```csharp
-Abs(this IProducer<double> source) -> IProducer<double>
-Cast<TNew>(this IProducer<T> source) -> IProducer<TNew>
-TimeOf(this IProducer<T> source) -> IProducer<DateTime>
+myStream.PipeTo(myComponent);
 ```
 
-For example:
+### Process(...)
+
+The `Process` operator allows for writing more general stream processors. It's signature is as follows:
 
 ```csharp
-var negToPos = Generators.Sequence(p, -100.0, x => x + 1, 200);
-var positive = negToPos.Abs();
+Process(this IProducer<TIn> source, Action<TIn, Envelope, Emitter<TOut>> transform, DeliveryPolicy policy) -> IProducer<TOut>
 ```
 
-This is equivalent to `negToPos.Select(x => Math.Abs(x))` of course, but more convenient.
-
-### Count(), Sum(), Min()/Max(), Average(), ...
-
-The `Aggregate` operator is very general and can be used accomplish many operations depending of accumulated state. For convenience, a myriad of common specializations are provided, including `Count`/`LongCount`, `Sum`, `Min`/`Max`, `Average`, `Std`, `Log`, ...
+The second parameter is an action that takes as parameters the message and envelope from the originating stream as well as the output emitter. When using process you control when and what you post on the output emitter. As an example, consider the code snippet below:
 
 ```csharp
-Count(this IProducer<T> source) -> IProducer<int>
-Count(this IProducer<T> source, Predicate<T> condition) -> IProducer<int>
-
-LongCount(this IProducer<T> source) -> IProducer<long>
-LongCount(this IProducer<T> source, Predicate<T> condition) -> IProducer<long>
-
-Sum(this IProducer<_> source) -> IProducer<_>
-Sum(this IProducer<_> source, Predicate<_> condition) -> IProducer<_>
-
-Max(this IProducer<_> source) -> IProducer<_>
-Min(this IProducer<_> source) -> IProducer<_>
-MinMaxNormalization(this IProducer<_> source, double min, double max) -> IProducer<_>
-
-Average(this IProducer<_> source) -> IProducer<_>
-Average(this IProducer<_> source, Predicate<T> condition) -> IProducer<_>
-
-Std(this IProducer<_> source) -> IProducer<_>
-
-Log(this IProducer<double> source) -> IProducer<double>
-Log(this IProducer<double> source, double newBase) -> IProducer<double>
+var sequence = Generators.Sequence(p, 0, x => x + 1, 100);
+sequence.Process<int, int>((m, e, o) =>
+{
+    if (m % 2 == 0)
+    {
+        o.Post(m * 2, e.OriginatingTime);
+    }
+});
 ```
+
+In this case `sequence` is a stream of increasing integers, e.g. 1, 2, 3, 4, ... The delegate given to `Process` checks if the input message is even, and if so doubles the value and posts the result. The resulting stream is 4, 8, 12, ... This could have been in this case accomplished with a `Where` and `Select`, like:
+
+```csharp
+sequence.Where(m => m % 2 == 0).Select(m => m * 2)
+```
+
+but `Process` does all this in a single operator, and is useful for more complex cases. 
+
+### Name(...)
+
+The `Name` operator allows for naming streams, which can be helpful when debugging.
+
+```csharp
+Name(this IProducer<T> source, string name) -> IProducer<T> // name a stream
+```
+
+For instance:
+
+```csharp
+myStream.Name("My stream");
+```
+

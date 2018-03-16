@@ -5,26 +5,31 @@ title:  Synchronization
 
 # Synchronization
 
-Joins allow fusing of two or more streams into a single stream.
-Other frameworks (e.g. Rx) have similar operators such as `Zip()`, but in \\psi these are not based on the wall-clock time or ordinal of message arrival.
-Instead, these are based on message `OriginatingTime` stamps.
-Messages may arrive at any wall-clock time, but the timestamp in the envelope is what really matters.
+## Join(...)
 
-## Interpolators
+The `Join` operators allows synchronizing (or fusing) two or more streams into a single stream.
+Other frameworks (e.g. Rx) have similar operators such as `Zip()`, but in \\psi these are not based on the wall-clock time or ordinal of message arrival.
+Instead, synchronization in \\psi is based on the message _originating time_, captured by the `OriginatingTime` field transported in the message envelope.
+
+The originating times are usually set by the sensor components or stream generators, at origin, and capture the originating time to which each message corresponds. For instance, a camera component will set the originating time for each frame, and as each frame goes through a pipeline of components that may process it in various ways (e.g. convert to grayscale, extract optical flow, etc.) the originating time is propagated with the resulting messages. The optical flow results may arrive at some downstream component at a later time, but they still carry the originating time (that corresponds to when the original video frame happened in the world) in the envelope. This originating time is what really matters for synchronization, because when we want to synchronize two streams (e.g. audio and video), we often care about when the events on those streams actually happened in the world. 
 
 Joins are driven by a _primary_ stream while pairing with _secondary_ streams.
 When we say `a.Join(b)`, then `a` is the primary stream.
-Each message from the primary stream _may_ produce a joined value taken or synthesized from the secondary stream.
-Interpolators determine how the secondary values are chosen.
+Each message from the primary stream _may_ produce at most one joined value, taken or synthesized from the secondary stream. The result of the join operation is a stream of tuples.
+
+_Interpolators_ determine how values are chosen from the secondary stream to be joined with a given message on the primary stream.
+
+## Interpolators
+
+Two types of interpolators are currently available: `Exact` and `Best`
 
 | Interpolator | Window | Require Next Value |
 |:--|:--|:--|
 | `Match.Exact()` | ∅ | yes |
 | `Match.Best<T>(...)` | [−∞, +∞] (default) | yes |
 
-An `Exact` match requires that messages in the secondary stream align _exactly_ on time.
+By default, if no interpolator is specified, `Join` uses the `Exact` interpolator. An `Exact` match requires that messages in the secondary stream align _exactly_ in originating time.
 If no _exact_ match is found in the secondary stream then the primary stream message is dropped.
-This is the default interpolator used by `Join(...)`.
 You may however specify another interpolator such as `Best` (discussed next) or a custom window (see section below). 
 
 A `Best` match will pair with a message from the secondary stream having the _nearest_ time; searching backward and/or forward in time.
