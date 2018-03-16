@@ -7,11 +7,12 @@ title:  Kinect Overview
 
 Platform for Situated Intelligence supports reading from a Microsoft Kinect V2 Depth Camera. This includes capture of video, audio, body tracking, and face tracking streams from the Kinect.
 
-**Please note**: Support for Kinect is currently limited to Windows only.
+**Please note**: <br/>Support for Kinect is currently limited to Windows only.<br/>Support for Face tracking via Kinect is limited to Windows 64 bit applications.
 
 ## Basic Components
 
 Basic Kinect capabilities are provided by instantiating a <see cref="Microsoft.Psi.Kinect.KinectSensor">KinectSensor</see> component which is part of the <see cref="Microsoft.Psi.Kinect">Microsoft.Psi.Kinect</see> namespace.
+<br/>Support for Kinect Face tracking is provided by instantiating a <see cref="Microsoft.Psi.Kinect.KinectFaceDetector">KinectFaceDetector</see> component which is part of the <see cref="Microsoft.Psi.Kinect.Face">Microsoft.Psi.Kinect.Face</see> namespace.
 
 ## Common Patterns of Usage
 
@@ -59,13 +60,15 @@ using (var pipeline = Pipeline.Create())
 This final example demonstrates how to use the Kinect to perform face tracking. This simple example will print out for each face detected whether the person's mouth is open or closed. Note: That face tracking on the Kinect relies on enabling the body tracking, and thus we need to enable <see cref="Microsoft.Psi.Kinect.KinectSensorConfiguration.OutputBodies">OutputBodies</see> in the <see cref="Microsoft.Psi.Kinect.KinectSensorConfiguration">KinectSensorConfiguration</see>.
 
 ```csharp
+using Microsoft.Psi.Kinect;
 using (var pipeline = Pipeline.Create())
 {
-    var kinectSensorConfig = new Microsoft.Psi.Kinect.KinectSensorConfiguration();
+    var kinectSensorConfig = new KinectSensorConfiguration();
     kinectSensorConfig.OutputFaces = true;
     kinectSensorConfig.OutputBodies = true;
     var kinectSensor = new KinectSensor(pipeline, kinectSensorConfig);
-    kinectSensor.Faces.Select((List<Microsoft.Psi.Kinect.KinectFace> list) => 
+    var faceTracker = new Face.KinectFaceDetector(pipeline, kinectSensor, Face.KinectFaceDetectorConfiguration.Default);
+    faceTracker.Faces.Select((List<Face.KinectFace> list) => 
     {
        for (int i = 0; i < list.Count; i++)
        {

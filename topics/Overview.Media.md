@@ -5,15 +5,21 @@ title:  Media Overview
 
 # Media Overview
 
-The following is a brief overview of support for streaming media (e.g. streaming video from a Web Camera) in Platform for Situated Intelligence.
+The following is a brief overview of support for streaming media in Platform for Situated Intelligence.
 
 __NOTE__: Support for web cameras is currently limited to Windows only.
 
 ## Basic Components
 
-Basic Media capture capabilities are provided by instantiating a <see cref="Microsoft.Psi.Media.MediaCapture">MediaCapture</see> component which is part of the <see cref="Microsoft.Psi.Media">Microsoft.Psi.Media</see> namespace. This component is capable of streaming video from a webcam into a \\psi application.
-
-There is also a <see cref="Microsoft.Psi.Media.MediaSource">MediaSource</see> component which may be used to stream video and audio from a file (such as an .mp4 file).
+There are three main components exposed by the \Psi Media Library. All of these components are part of the Microsoft.Psi.Media namespace.
+<h4>MediaCapture</h4>
+The <see cref="Microsoft.Psi.Media.MediaCapture">MediaCapture</see> component enables capturing of video from web camera.
+<h4>MediaSource</h4>
+The <see cref="Microsoft.Psi.Media.MediaSource">MediaSource</see> component enables play back of video from an external file/URL.
+<br/>__NOTE__: The MediaSource component is only available on the Windows platform.
+<h4>Mpeg4Writer</h4>
+The <see cref="Microsoft.Psi.Media.Mpeg4Writer">Mpeg4Writer</see> component enables writing of \Psi Images to an external MPEG4 file.
+<br/>__NOTE__: The Mpeg4Writer component is only available on the Windows platform.
 
 ## Common Patterns of Usage
 
@@ -67,5 +73,26 @@ using (var pipeline = Pipeline.Create())
             // Do something with the audio block
 	});
     pipeline.Run();
+}
+```
+
+### Writing images to an .mp4 file
+
+This next snippet of code demonstrates how to instatiate a <see cref="Microsoft.Psi.Media.Mpeg4Writer">Mpeg4Writer</see> component to generate a .mp4 file from a \Psi pipeline. We read images from the webcam and write them out to output.mp4.
+
+```csharp
+using (var pipeline = Pipeline.Create())
+{
+    var webcam = new MediaCapture(pipeline, 1920, 1080, 30.0);
+
+    var audioConfig = new Microsoft.Psi.Audio.AudioSourceConfiguration();
+    audioConfig.OutputFormat = WaveFormat.Create16BitPcm(48000, 2);
+
+    var audioSource = new Microsoft.Psi.Audio.AudioSource(pipeline, audioConfig);
+
+    var writer = new Mpeg4Writer(pipeline, "output.mp4", 1920, 1080, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp);
+    audioSource.Out.PipeTo(writer.AudioIn);
+    webcam.Out.PipeTo(writer.ImageIn);
+    pipeline.Run(System.TimeSpan.FromSeconds(30));
 }
 ```
