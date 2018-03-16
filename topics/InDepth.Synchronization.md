@@ -20,22 +20,29 @@ Interpolators determine how the secondary values are chosen.
 | Interpolator | Window | Require Next Value |
 |:--|:--|:--|
 | `Match.Exact()` | ∅ | yes |
-| `Match.Best<T>(...)` | ∅ (default) | yes |
+| `Match.Best<T>(...)` | [−∞, +∞] (default) | yes |
 
 An `Exact` match requires that messages in the secondary stream align _exactly_ on time.
+If no _exact_ match is found in the secondary stream then the primary stream message is dropped.
+This is the default interpolator used by `Join(...)`.
+You may however specify another interpolator such as `Best` (discussed next) or a custom window (see section below). 
 
-The default, if unspecified, is a `Best` match. A time window may be given, but the default behavior is an exact window; essentially the same as `Match.Exact()`. However, when specifying a time window, `Best` will pair with a message from the secondary stream having the _nearest_ time; searching both backward and forward in time (as the given tolerance window permits).
-To do this properly, notice that it is required that the next message to be seen.
+A `Best` match will pair with a message from the secondary stream having the _nearest_ time; searching backward and/or forward in time.
+The default is to search an _infinite_ time window both forward and backward in time; producing the absolute _best_ match.
+No primary messages are dropped. Each is paired with the nearest secondary message or else waits (potentially forever) for a provably _best_ match.
+
+To do this properly, notice that it is required that the next message is seen.
 It cannot be known whether a given message from the secondary stream is the "best" match until the next message has been seen to confirm that it is not better.
-
-While `Best` is the truly best possible match, it comes at a cost.
-Waiting for the next secondary stream message before emitting a pairing introduces latency.
+Waiting for the next secondary message before emitting a pairing introduces latency.
+Message times do increase monotonically so the _single_ next message is sufficient.
+It is important to note that this may cause awkward pairings if the secondary stream drops or is extremely sparse. Primary messages may be paired with _very_ distant secondaries for lack of anything better. For this reason, it is occasionally desirable to give a time window constraint (discussed next).
 
 ## Custom Windows
 
-Instead of the default behavior of `Best` (matching an _exact_ time window), we may specify a window to `Match.Best(...)` as either a `RelativeTimeInterval` directly or as a `TimeSpan` which becomes an interval [-span, +span].
+Instead of the default behavior of `Best` (matching an _infinite_ time window), we may specify a window to `Match.Best(...)` as either a `RelativeTimeInterval` directly or as a `TimeSpan` which becomes an interval [-span, +span].
 In fact, there is an implicit type conversion from `RelativeTimeInterval` and `TimeSpan` to a `Best` interpolator so _anywhere_ an interpolator is expected, a window may be specified.
-This includes domain-specific "Join-like" operators which may not necessarily provide direct overloads.
+This includes `Join` (e.g. `Join(TimeSpan.FromMilliseconds(50))` is equivalent to `Join(Match.Best(TimeSpan.FromMilliseconds(50)))`) and other domain-specific "Join-like" operators which may not necessarily provide direct overloads.
+It is important to note that a non-infinite time window means that `Best` is no longer guaranteed not to drop primary messages — it _will_ if no secondary is found within the window.
 
 ## Default Values
 
