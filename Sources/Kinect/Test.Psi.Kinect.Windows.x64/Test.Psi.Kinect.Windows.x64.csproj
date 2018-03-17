@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3A3F1C2C-A805-4EA2-B5AE-80371B565A15}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Test.Psi.Kinect</RootNamespace>
+    <AssemblyName>Test.Psi.Kinect.Windows.x64</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\..\Build\Test.Psi.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>..\..\..\Build\Test.Psi.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=3.20.2.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MathNet.Numerics.Signed.3.20.2\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Spatial, Version=0.4.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MathNet.Spatial.Signed.0.4.0\lib\net40\MathNet.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Kinect.Face, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
+      <HintPath>..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\lib\net45\Microsoft.Kinect.Face.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mesh.cs" />
+    <Compile Include="MeshTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuaternionTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\ExpressionRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\ExpressionRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\EyeLeftRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\EyeLeftRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\EyeRightRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\EyeRightRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\FacialHairIRRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\FacialHairIRRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\FacialHairRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\FacialHairRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\Feature.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\Feature.config</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\GlassesIRRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\GlassesIRRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\GlassesRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\GlassesRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\LookingAwayRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\LookingAwayRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\MouthMovedRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\MouthMovedRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\MouthOpenRandomForest.model">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\MouthOpenRandomForest.model</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\FaceAlignment.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\FaceAlignment.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\FaceAlignmentColor.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\FaceAlignmentColor.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\FaceAlignmentColor27.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\FaceAlignmentColor27.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\FaceDetector.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\FaceDetector.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\FaceOrientation.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\FaceOrientation.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\FaceTrackingColor27.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\FaceTrackingColor27.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\3DModel.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\3DModel.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\3DModel_globalPCA.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\3DModel_globalPCA.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_F.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_F.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_HLP.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_HLP.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_HRP.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\AAMModelData_HRP.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\PCAMaskBias.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\PCAMaskBias.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\front.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\front.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\front_nose.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\front_nose.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\left.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\left.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\left_nose.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\left_nose.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\right.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\right.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\right_nose.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\right_nose.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EyeState\EyeClose.pra">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EyeState\EyeClose.pra</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EyeState\EyeClose.wgh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EyeState\EyeClose.wgh</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EyeState\LeftCloseRightOpen44Flip.pra">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EyeState\LeftCloseRightOpen44Flip.pra</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EyeState\LeftCloseRightOpen44Flip.wgh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EyeState\LeftCloseRightOpen44Flip.wgh</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EyeState\LeftOpenRightClose44Flip.pra">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EyeState\LeftOpenRightClose44Flip.pra</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EyeState\LeftOpenRightClose44Flip.wgh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EyeState\LeftOpenRightClose44Flip.wgh</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\MouthModel\close.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\MouthModel\close.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\MouthModel\lopen.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\MouthModel\lopen.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\ViewModel\front.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\ViewModel\front.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\ViewModel\left.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\ViewModel\left.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\ViewModel\right.mod.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\ViewModel\right.mod.bin</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\WholeHeadModel\fullMeanHead60_tri.ply">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\WholeHeadModel\fullMeanHead60_tri.ply</Link>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Calibration\Microsoft.Psi.Calibration.Windows\Microsoft.Psi.Calibration.Windows.csproj">
+      <Project>{84ce1fe5-8141-4c2a-ac30-21bdc87f5d0a}</Project>
+      <Name>Microsoft.Psi.Calibration.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj">
+      <Project>{9bf2e5ef-186a-4179-b753-ae11ee90e026}</Project>
+      <Name>Microsoft.Psi.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj">
+      <Project>{04147400-0ab0-4f07-9975-d4b7e58150db}</Project>
+      <Name>Microsoft.Psi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Psi.Kinect.Windows\Microsoft.Psi.Kinect.Windows.csproj">
+      <Project>{855fd8be-6938-4784-b1ee-d90a8b5b2496}</Project>
+      <Name>Microsoft.Psi.Kinect.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\Expression\NuiExpressionModelManifest.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\Expression\NuiExpressionModelManifest.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_F.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_F.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HLP.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HLP.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HRP.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\AAMModel\Map2D3D_HRP.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\Front.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\Front.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\left.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\left.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\EvalModel\right.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\EvalModel\right.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\MouthModel\close.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\MouthModel\close.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\MouthModel\lopen.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\MouthModel\lopen.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\MouthModel\MeanShapes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\MouthModel\MeanShapes.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\SkintoneModel\skintone_appearance_classifier.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\SkintoneModel\skintone_appearance_classifier.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\SkintoneModel\skintone_shape_classifier.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\SkintoneModel\skintone_shape_classifier.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\ViewModel\front.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\ViewModel\front.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\ViewModel\left.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\ViewModel\left.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\ViewModel\right.p.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\ViewModel\right.p.txt</Link>
+    </None>
+    <None Include="..\..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\content\NuiDatabase\HDFaceTracker\WholeHeadModel\FullHeadMaskVertexCorrespondence.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>NuiDatabase\HDFaceTracker\WholeHeadModel\FullHeadMaskVertexCorrespondence.txt</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

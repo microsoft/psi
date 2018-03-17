@@ -1,0 +1,159 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+namespace Microsoft.Psi.Visualization.Common
+{
+    using System;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using Microsoft.Psi.Extensions.Base;
+    using Microsoft.Psi.Imaging;
+
+    /// <summary>
+    /// Represents an displayable image based on a <see cref="Microsoft.Psi.Imaging.Image"/>.
+    /// </summary>
+    public class DisplayImage : ObservableObject
+    {
+        private object imageLock = new object();
+        private Shared<Image> psiImage;
+        private FrameCounter renderedFrames = new FrameCounter();
+        private FrameCounter receivedFrames = new FrameCounter();
+        private WriteableBitmap image;
+
+        /// <summary>
+        /// Gets underlying <see cref="PsiImage"/>.
+        /// </summary>
+        public Shared<Image> PsiImage => this.psiImage;
+
+        /// <summary>
+        /// Gets or sets the frame counter of rendered frames.
+        /// </summary>
+        public FrameCounter RenderedFrames
+        {
+            get => this.renderedFrames;
+            set { this.Set(nameof(this.RenderedFrames), ref this.renderedFrames, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the frame counter of received frames.
+        /// </summary>
+        public FrameCounter ReceivedFrames
+        {
+            get => this.receivedFrames;
+            set { this.Set(nameof(this.ReceivedFrames), ref this.receivedFrames, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the display image.
+        /// </summary>
+        public WriteableBitmap Image
+        {
+            get => this.image;
+            set { this.Set(nameof(this.Image), ref this.image, value); }
+        }
+
+        /// <summary>
+        /// Update the underlying image with the specified image.
+        /// </summary>
+        /// <param name="image">New image.</param>
+        public void UpdateImage(Image image)
+        {
+            Shared<Image> sharedImage = (image == null) ? null : new Shared<Image>(image, null);
+            this.UpdateImage((Shared<Image>)sharedImage);
+        }
+
+        /// <summary>
+        /// Update the underlying image with the specified image.
+        /// </summary>
+        /// <param name="image">New image.</param>
+        public void UpdateImage(Shared<Image> image)
+        {
+            lock (this.imageLock)
+            {
+                this.psiImage?.Dispose();
+                if (image == null)
+                {
+                    this.psiImage = null;
+                    return;
+                }
+
+                this.psiImage = image.AddRef();
+            }
+
+            this.UpdateBitmap();
+        }
+
+        /// <summary>
+        /// Crop image to specified dimensions and return newly cropped image. Does not alter current image.
+        /// </summary>
+        /// <param name="left">Left border of crop.</param>
+        /// <param name="top">Top border of crop.</param>
+        /// <param name="width">Width of crop.</param>
+        /// <param name="height">Height of crop.</param>
+        /// <returns>The newly cropped image.</returns>
+        public DisplayImage Crop(int left, int top, int width, int height)
+        {
+            Shared<Image> croppedCopy = this.psiImage.Resource.Crop(left, top, width, height);
+            var displayImage = new DisplayImage();
+            displayImage.UpdateImage(croppedCopy);
+            return displayImage;
+        }
+
+        private void UpdateBitmap()
+        {
+            if (Application.Current != null)
+            {
+                Application.Current.Dispatcher.BeginInvoke(
+                    (Action)(() =>
+                    {
+                        lock (this.imageLock)
+                        {
+                            if (this.Image == null
+                                    || this.Image.PixelWidth != this.psiImage.Resource.Width
+                                    || this.Image.PixelHeight != this.psiImage.Resource.Height
+                                    || this.Image.BackBufferStride != this.psiImage.Resource.Stride)
+                            {
+                                System.Windows.Media.PixelFormat pixelFormat;
+                                switch (this.psiImage.Resource.PixelFormat)
+                                {
+                                    case Imaging.PixelFormat.Gray_8bpp:
+                                        pixelFormat = PixelFormats.Gray8;
+                                        break;
+
+                                    case Imaging.PixelFormat.Gray_16bpp:
+                                        pixelFormat = PixelFormats.Gray16;
+                                        break;
+
+                                    case Imaging.PixelFormat.BGR_24bpp:
+                                        pixelFormat = PixelFormats.Bgr24;
+                                        break;
+
+                                    case Imaging.PixelFormat.BGRX_32bpp:
+                                        pixelFormat = PixelFormats.Bgr32;
+                                        break;
+
+                                    case Imaging.PixelFormat.BGRA_32bpp:
+                                        pixelFormat = PixelFormats.Bgra32;
+                                        break;
+
+                                    case Imaging.PixelFormat.RGBA_64bpp:
+                                        pixelFormat = PixelFormats.Rgba64;
+                                        break;
+
+                                    default:
+                                        throw new Exception("Unexpected PixelFormat in DisplayImage");
+                                }
+
+                                this.Image = new WriteableBitmap(this.psiImage.Resource.Width, this.psiImage.Resource.Height, 300, 300, pixelFormat, null);
+                            }
+
+                            this.Image.WritePixels(new Int32Rect(0, 0, this.psiImage.Resource.Width, this.psiImage.Resource.Height), this.psiImage.Resource.ImageData, this.psiImage.Resource.Stride * this.psiImage.Resource.Height, this.psiImage.Resource.Stride);
+                            this.renderedFrames.Increment();
+                        }
+                    }),
+                    System.Windows.Threading.DispatcherPriority.Render);
+            }
+        }
+    }
+}

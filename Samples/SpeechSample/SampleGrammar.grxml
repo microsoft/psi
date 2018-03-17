@@ -1,0 +1,62 @@
+﻿<grammar xmlns="http://www.w3.org/2001/06/grammar"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.w3.org/2001/06/grammar 
+                             http://www.w3.org/TR/speech-grammar/grammar.xsd"
+         xml:lang="en-US" version="1.0"
+         tag-format="semantics-ms/1.0"
+         root="ZeroToOneHundred">
+
+  <rule id="ZeroToOneHundred">
+    <one-of>
+      <item>zero</item>
+      <item><ruleref uri="#OneToNine"/></item>
+      <item><ruleref uri="#TenToNineteen"/></item>
+      <item>
+        <ruleref uri="#TwentyToNinety"/>
+        <item repeat="0-1">
+          <ruleref uri="#OneToNine"/>
+        </item>
+      </item>
+      <item>one hundred</item>
+    </one-of>
+  </rule>
+  <rule id="OneToNine">
+    <one-of>
+      <item>one</item>
+      <item>two</item>
+      <item>three</item>
+      <item>four</item>
+      <item>five</item>
+      <item>six</item>
+      <item>seven</item>
+      <item>eight</item>
+      <item>nine</item>
+    </one-of>
+  </rule>
+  <rule id="TenToNineteen">
+    <one-of>
+      <item>ten</item>
+      <item>eleven</item>
+      <item>twelve</item>
+      <item>thirteen</item>
+      <item>fourteen</item>
+      <item>fifteen</item>
+      <item>sixteen</item>
+      <item>seventeen</item>
+      <item>eighteen</item>
+      <item>nineteen</item>
+    </one-of>
+  </rule>
+  <rule id="TwentyToNinety">
+    <one-of>
+      <item>twenty</item>
+      <item>thirty</item>
+      <item>forty</item>
+      <item>fifty</item>
+      <item>sixty</item>
+      <item>seventy</item>
+      <item>eighty</item>
+      <item>ninety</item>
+    </one-of>
+  </rule>
+</grammar>

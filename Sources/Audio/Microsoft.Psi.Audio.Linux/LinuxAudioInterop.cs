@@ -1,0 +1,531 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+namespace Microsoft.Psi.Audio
+{
+    using System;
+    using System.Runtime.InteropServices;
+
+    /// <summary>
+    /// Structs, enums and static methods for interacting with Advanced Linux Sound Architecture (ALSA) drivers.
+    /// </summary>
+    /// <remarks>
+    /// This implimentation is based on this spec: http://www.alsa-project.org/alsa-doc/alsa-lib
+    /// The only dependency is on `asound`, which comes with the system.
+    /// </remarks>
+    internal static class LinuxAudioInterop
+    {
+        /// <summary>
+        /// Audio device mode
+        /// </summary>
+        internal enum Mode
+        {
+            /// <summary>
+            /// Audio device playback mode
+            /// </summary>
+            Playback = 0, // SND_PCM_STREAM_PLAYBACK
+
+            /// <summary>
+            /// Audio device capture mode
+            /// </summary>
+            Capture = 1, // SND_PCM_STREAM_CAPTURE
+        }
+
+        /// <summary>
+        /// Audio device access
+        /// </summary>
+        internal enum Access
+        {
+            /// <summary>
+            /// Audio device interleaved access
+            /// </summary>
+            Interleaved = 3, // SND_PCM_ACCESS_RW_INTERLEAVED
+
+            /// <summary>
+            /// Audio device noninterleaved access
+            /// </summary>
+            NonInterleaved = 4, // SND_PCM_ACCESS_RW_NONINTERLEAVED
+        }
+
+        /// <summary>
+        /// Audio device format
+        /// </summary>
+        internal enum Format
+        {
+            /// <summary>
+            /// SND_PCM_FORMAT_UNKNOWN
+            /// </summary>
+            Unknown = -1,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S8
+            /// </summary>
+            S8 = 0,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U8
+            /// </summary>
+            U8 = 1,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S16_LE
+            /// </summary>
+            S16LE = 2,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S16_BE
+            /// </summary>
+            S16BE = 3,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U16_LE
+            /// </summary>
+            U16LE = 4,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U16_BE
+            /// </summary>
+            U16BE = 5,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S24_LE
+            /// </summary>
+            S24LE = 6,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S24_BE
+            /// </summary>
+            S24BE = 7,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U24_LE
+            /// </summary>
+            U24LE = 8,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U24_BE
+            /// </summary>
+            U24BE = 9,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S32_LE
+            /// </summary>
+            S32LE = 10,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S32_BE
+            /// </summary>
+            S32BE = 11,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U32_LE
+            /// </summary>
+            U32LE = 12,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U32_BE
+            /// </summary>
+            U32BE = 13,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_FLOAT_LE
+            /// </summary>
+            F32LE = 14,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_FLOAT_BE
+            /// </summary>
+            F32BE = 15,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_FLOAT64_LE
+            /// </summary>
+            F64LE = 16,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_FLOAT64_BE
+            /// </summary>
+            F64BE = 17,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_IEC958_SUBFRAME_LE
+            /// </summary>
+            IEC958SubframeLE = 18,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_IEC958_SUBFRAME_BE
+            /// </summary>
+            IEC958SubframeBE = 19,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_MU_LAW
+            /// </summary>
+            MULaw = 20,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_A_LAW
+            /// </summary>
+            ALaw = 21,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_IMA_ADPCM
+            /// </summary>
+            IMA_ADPCM = 22,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_MPEG
+            /// </summary>
+            MPEG = 23,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_GSM
+            /// </summary>
+            GSM = 24,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_SPECIAL = 31
+            /// </summary>
+            Special = 31,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S24_3LE = 32
+            /// </summary>
+            S24_3LE = 32,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S24_3BE
+            /// </summary>
+            S24_3BE = 33,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U24_3LE
+            /// </summary>
+            U24_3LE = 34,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U24_3BE
+            /// </summary>
+            U24_3BE = 35,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S20_3LE
+            /// </summary>
+            S20_3LE = 36,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S20_3BE
+            /// </summary>
+            S20_3BE = 37,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U20_3LE
+            /// </summary>
+            U20_3LE = 38,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U20_3BE
+            /// </summary>
+            U20_3BE = 39,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S18_3LE
+            /// </summary>
+            S18_3LE = 40,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_S18_3BE
+            /// </summary>
+            S18_3BE = 41,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U18_3LE
+            /// </summary>
+            U18_3LE = 42,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_U18_3BE
+            /// </summary>
+            U18_3BE = 43,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_G723_24
+            /// </summary>
+            G723_24 = 44,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_G723_24_1B
+            /// </summary>
+            G723_24_1B = 45,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_G723_40
+            /// </summary>
+            G723_40 = 46,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_G723_40_1B
+            /// </summary>
+            G723_40_1B = 47,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_DSD_U8
+            /// </summary>
+            DSD_U8 = 48,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_DSD_U16_LE
+            /// </summary>
+            DSD_U16_LE = 49,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_DSD_U32_LE
+            /// </summary>
+            DSD_U32_LE = 50,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_DSD_U16_BE
+            /// </summary>
+            DSD_U16_BE = 51,
+
+            /// <summary>
+            /// SND_PCM_FORMAT_DSD_U32_BE
+            /// </summary>
+            DSD_U32_BE = 52,
+        }
+
+        /// <summary>
+        /// Convert supported `AudioConfiguration` to interop `Format`.
+        /// </summary>
+        /// <remarks>
+        /// Only 8-, 16- and 32-bit PCM and 32- or 64-bit float are supported.
+        /// </remarks>
+        /// <param name="config">Audio configuration</param>
+        /// <returns>Converted interop `Format`</returns>
+        internal static Format ConfigurationFormat(AudioConfiguration config)
+        {
+            switch (config.Format.FormatTag)
+            {
+                case WaveFormatTag.WAVE_FORMAT_PCM:
+                    switch (config.Format.BitsPerSample)
+                    {
+                        case 8:
+                            return LinuxAudioInterop.Format.S8;
+                        case 16:
+                            return LinuxAudioInterop.Format.S16LE;
+                        case 32:
+                            return LinuxAudioInterop.Format.S32LE;
+                        default:
+                            throw new ArgumentException("Only 8, 16 and 32 bits per sample are supported for PCM.");
+                    }
+
+                case WaveFormatTag.WAVE_FORMAT_IEEE_FLOAT:
+                    switch (config.Format.BitsPerSample)
+                    {
+                        case 32:
+                            return LinuxAudioInterop.Format.F32LE;
+                        case 64:
+                            return LinuxAudioInterop.Format.F64LE;
+                        default:
+                            throw new ArgumentException("Only 16 and 32 bits per sample are supported for IEEE float.");
+                    }
+
+                default:
+                    throw new ArgumentException("Only PCM and IEEE Float wave formats supported.");
+            }
+        }
+
+        /// <summary>
+        /// Open audio device.
+        /// </summary>
+        /// <param name="name">Device name (e.g. "plughw:0,0")</param>
+        /// <param name="mode">Device mode</param>
+        /// <param name="rate">Data block rate (Hz)</param>
+        /// <param name="channels">Number of channels</param>
+        /// <param name="format">Data format</param>
+        /// <param name="access">Device access</param>
+        /// <returns>Device handle</returns>
+        internal static unsafe AudioDevice Open(string name, Mode mode, int rate = 44100, int channels = 1, Format format = Format.S16LE, Access access = Access.Interleaved)
+        {
+            void* handle;
+            if (Open(&handle, name, (int)mode, 0) != 0)
+            {
+                throw new ArgumentException("Open failed.");
+            }
+
+            void* param;
+            if (HardwareParamsMalloc(&param) != 0)
+            {
+                throw new ArgumentException("Hardware params malloc failed.");
+            }
+
+            if (HardwareParamsAny(handle, param) != 0)
+            {
+                throw new ArgumentException("Hardware params any failed.");
+            }
+
+            if (HardwareParamsSetAccess(handle, param, (int)access) != 0)
+            {
+                throw new ArgumentException("Hardware params set access failed.");
+            }
+
+            if (HardwareParamsSetFormat(handle, param, (int)format) != 0)
+            {
+                throw new ArgumentException("Hardware params set format failed.");
+            }
+
+            int* ratePtr = &rate;
+            int dir = 0;
+            int* dirPtr = &dir;
+            if (HardwareParamsSetRate(handle, param, ratePtr, dirPtr) != 0)
+            {
+                throw new ArgumentException("Hardware params set rate failed.");
+            }
+
+            if (HardwareParamsSetChannels(handle, param, (uint)channels) != 0)
+            {
+                throw new ArgumentException("Hardware params set channels failed.");
+            }
+
+            if (HardwareParams(handle, param) != 0)
+            {
+                throw new ArgumentException("Hardware set params failed.");
+            }
+
+            HardwareParamsFree(param);
+
+            if (PrepareHandle(handle) != 0)
+            {
+                throw new ArgumentException("Prepare handle failed.");
+            }
+
+            return new AudioDevice(handle);
+        }
+
+        /// <summary>
+        /// Read block from device.
+        /// </summary>
+        /// <param name="device">Device handle</param>
+        /// <param name="buffer">Buffer into which to read</param>
+        /// <param name="blockSize">Block size</param>
+        internal static unsafe void Read(AudioDevice device, byte[] buffer, int blockSize)
+        {
+            fixed (void* bufferPtr = buffer)
+            {
+                long err = Read(device.Handle, bufferPtr, (ulong)blockSize);
+                if (err < 0)
+                {
+                    err = Recover(device.Handle, (int)err, 1);
+                    if (err < 0)
+                    {
+                        throw new ArgumentException("Read recovery failed.");
+                    }
+                }
+                else if (err != blockSize)
+                {
+                    throw new ArgumentException("Read failed.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Write block to device.
+        /// </summary>
+        /// <param name="device">Device handle</param>
+        /// <param name="buffer">Buffer to be written</param>
+        /// <param name="blockSize">Block size</param>
+        internal static unsafe void Write(AudioDevice device, byte[] buffer, int blockSize)
+        {
+            fixed (void* bufferPtr = buffer)
+            {
+                long err = Write(device.Handle, bufferPtr, (ulong)blockSize);
+                if (err < 0)
+                {
+                    err = Recover(device.Handle, (int)err, 1);
+                    if (err < 0)
+                    {
+                        throw new ArgumentException("Write recovery failed.");
+                    }
+                }
+                else if (err != blockSize)
+                {
+                    throw new ArgumentException("Write failed.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Close device.
+        /// </summary>
+        /// <param name="device">Device handle</param>
+        internal static unsafe void Close(AudioDevice device)
+        {
+            if (CloseHandle(device.Handle) != 0)
+            {
+                throw new ArgumentException("Close failed.");
+            }
+        }
+
+        [DllImport("asound", EntryPoint = "snd_pcm_open")]
+        private static unsafe extern int Open(void** handle, [MarshalAs(UnmanagedType.LPStr)]string name, int capture, int mode);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_malloc")]
+        private static unsafe extern int HardwareParamsMalloc(void** param);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_any")]
+        private static unsafe extern int HardwareParamsAny(void* handle, void* param);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_access")]
+        private static unsafe extern int HardwareParamsSetAccess(void* handle, void* param, int access);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_format")]
+        private static unsafe extern int HardwareParamsSetFormat(void* handle, void* param, int format);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_rate_near")]
+        private static unsafe extern int HardwareParamsSetRate(void* handle, void* param, int* rate, int* dir);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_channels")]
+        private static unsafe extern int HardwareParamsSetChannels(void* handle, void* param, uint channels);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params")]
+        private static unsafe extern int HardwareParams(void* handle, void* param);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_free")]
+        private static unsafe extern void HardwareParamsFree(void* param);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_prepare")]
+        private static unsafe extern int PrepareHandle(void* handle);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_recover")]
+        private static unsafe extern int Recover(void* handle, int error, int silent);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_readi")]
+        private static unsafe extern long Read(void* handle, void* buffer, ulong blockSize);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_writei")]
+        private static unsafe extern long Write(void* handle, void* buffer, ulong blockSize);
+
+        [DllImport("asound", EntryPoint = "snd_pcm_close")]
+        private static unsafe extern int CloseHandle(void* handle);
+
+        /// <summary>
+        /// Audio device handle.
+        /// </summary>
+        /// <remarks>Useful to keep users from having to be `unsafe`.</remarks>
+        internal class AudioDevice
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AudioDevice"/> class.
+            /// </summary>
+            /// <param name="handle">Device handle pointer</param>
+            public unsafe AudioDevice(void* handle)
+            {
+                this.Handle = handle;
+            }
+
+            /// <summary>
+            /// Gets device handle pointer.
+            /// </summary>
+            public unsafe void* Handle { get; private set; }
+        }
+    }
+}

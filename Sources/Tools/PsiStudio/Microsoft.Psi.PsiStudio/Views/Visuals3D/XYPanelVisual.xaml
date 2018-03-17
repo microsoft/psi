@@ -1,0 +1,26 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<ModelVisual3D x:Class="Microsoft.Psi.Visualization.Views.Visuals3D.XYPanelVisual"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
+               xmlns:views="clr-namespace:Microsoft.Psi.Visualization.Views">
+    <Viewport2DVisual3D>
+        <Viewport2DVisual3D.Geometry>
+            <MeshGeometry3D x:Name="Mesh" Positions="-9.6,0,5.4 -9.6,0,-5.4 9.6,0,-5.4 9.6,0,5.4" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3 0 2 1 0 3 2">
+            </MeshGeometry3D>
+        </Viewport2DVisual3D.Geometry>
+        <Viewport2DVisual3D.Material>
+            <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True" Color="White" />
+        </Viewport2DVisual3D.Material>
+        <Grid Name="RootHost2DIn3D" Width="{Binding XYVisualizationPanel.Width}" Height="{Binding XYVisualizationPanel.Height}" Opacity="0.8">
+            <Grid.Resources>
+                <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            </Grid.Resources>
+            <Viewbox Stretch="Uniform" ClipToBounds="True">
+                <views:XYVisualizationPanelView DataContext="{Binding XYVisualizationPanel}"/>
+            </Viewbox>
+        </Grid>
+    </Viewport2DVisual3D>
+</ModelVisual3D>

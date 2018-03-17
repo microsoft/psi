@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Microsoft.ROS.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\Microsoft.ROS.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="RosDns.fs" />
+    <Compile Include="RosTcp.fs" />
+    <Compile Include="XmlRpc.fs" />
+    <Compile Include="RosRpc.fs" />
+    <Compile Include="RosParamClient.fs" />
+    <Compile Include="RosMasterClient.fs" />
+    <Compile Include="RosSlaveClient.fs" />
+    <Compile Include="RosMessage.fs" />
+    <Compile Include="RosMessageTypes.fs" />
+    <Compile Include="RosServiceTypes.fs" />
+    <Compile Include="RosPublisher.fs" />
+    <Compile Include="RosSubscriber.fs" />
+    <Compile Include="RosServiceClient.fs" />
+    <Compile Include="RosNode.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.3.2" />
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
+  </ItemGroup>
+
+</Project>

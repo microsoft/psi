@@ -1,0 +1,234 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+namespace Test.Psi
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reactive.Linq;
+    using Microsoft.Psi;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    [TestClass]
+    public class JoinTests
+    {
+        [TestMethod]
+        [Timeout(60000)]
+        public void ScalarJoin()
+        {
+            var resultsAB = new List<ValueTuple<int, int>>();
+            var resultsAA = new List<ValueTuple<int, int>>();
+            var resultsBA = new List<ValueTuple<int, int>>();
+            var resultsBB = new List<ValueTuple<int, int>>();
+
+            using (var p = Pipeline.Create())
+            {
+                var sourceA = Generators.Sequence(p, 0, i => i + 1, 30, TimeSpan.FromTicks(10));
+                var sourceB = Generators.Sequence(p, 0, i => i + 1, 3, TimeSpan.FromTicks(100));
+                sourceA
+                    .Join(sourceB, TimeSpan.FromTicks(5))
+                    .Do(t => resultsAB.Add(ValueTuple.Create(t.Item1, t.Item2)));
+                sourceA
+                    .Join(sourceA, TimeSpan.FromTicks(5))
+                    .Do(t => resultsAA.Add(ValueTuple.Create(t.Item1, t.Item2)));
+                sourceB
+                    .Join(sourceA, TimeSpan.FromTicks(5))
+                    .Do(t => resultsBA.Add(ValueTuple.Create(t.Item1, t.Item2)));
+                sourceB
+                    .Join(sourceB, TimeSpan.FromTicks(5))
+                    .Do(t => resultsBB.Add(ValueTuple.Create(t.Item1, t.Item2)));
+                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+            }
+
+            Assert.AreEqual(3, resultsAB.Count);
+            Assert.AreEqual(ValueTuple.Create(0, 0), resultsAB[0]);
+            Assert.AreEqual(ValueTuple.Create(10, 1), resultsAB[1]);
+            Assert.AreEqual(ValueTuple.Create(20, 2), resultsAB[2]);
+
+            Assert.AreEqual(3, resultsBA.Count);
+            Assert.AreEqual(ValueTuple.Create(0, 0), resultsBA[0]);
+            Assert.AreEqual(ValueTuple.Create(1, 10), resultsBA[1]);
+            Assert.AreEqual(ValueTuple.Create(2, 20), resultsBA[2]);
+
+            Assert.AreEqual(30, resultsAA.Count);
+            for (int i = 0; i < 30; i++)
+            {
+                Assert.AreEqual(ValueTuple.Create(i, i), resultsAA[i]);
+            }
+
+            Assert.AreEqual(3, resultsBB.Count);
+            Assert.AreEqual(ValueTuple.Create(0, 0), resultsBB[0]);
+            Assert.AreEqual(ValueTuple.Create(1, 1), resultsBB[1]);
+            Assert.AreEqual(ValueTuple.Create(2, 2), resultsBB[2]);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void VectorJoin()
+        {
+            var results = new List<int[]>();
+
+            using (var p = Pipeline.Create())
+            {
+                var sourceA = Generators.Sequence(p, 0, i => i + 1, 30, TimeSpan.FromTicks(10));
+                var sourceB = Generators.Sequence(p, 0, i => i + 1, 3, TimeSpan.FromTicks(100));
+                Operators
+                    .Join(new[] { sourceA, sourceB, sourceA, sourceB }, TimeSpan.FromTicks(5))
+                    .Do(t => results.Add(t.DeepClone()));
+                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+            }
+
+            Assert.AreEqual(3, results.Count);
+            CollectionAssert.AreEqual(new[] { 0, 0, 0, 0 }, results[0]);
+            CollectionAssert.AreEqual(new[] { 10, 1, 10, 1 }, results[1]);
+            CollectionAssert.AreEqual(new[] { 20, 2, 20, 2 }, results[2]);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void VectorJoinWithArityOne()
+        {
+            var results = new List<int[]>();
+
+            using (var p = Pipeline.Create())
+            {
+                var source = Generators.Sequence(p, 0, i => i + 1, 10);
+                Operators
+                    .Join(new[] { source }, TimeSpan.FromTicks(5))
+                    .Do(t => results.Add(t.DeepClone()));
+                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+            }
+
+            Assert.AreEqual(10, results.Count);
+            for (var i = 0; i < 10; i++)
+            {
+                CollectionAssert.AreEqual(new[] { i }, results[i]);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SparseJoin()
+        {
+            var results = new List<Dictionary<string, int>>();
+
+            using (var p = Pipeline.Create())
+            {
+                var sourceA = Generators.Sequence(p, 100, i => i + 1, 30, TimeSpan.FromTicks(10));
+                var sourceB = Generators.Sequence(p, 100, i => i + 1, 10, TimeSpan.FromTicks(30));
+                var sourceC = Generators.Sequence(p, 100, i => i + 1, 3, TimeSpan.FromTicks(100));
+                var keyMapping = sourceA.Select(i => (i % 10 != 0) ? new Dictionary<string, int> { { "zero", 0 }, { "one", 1 } } : new Dictionary<string, int> { { "zero", 0 }, { "two", 2 } });
+
+                Operators
+                    .Join(keyMapping, new[] { sourceA, sourceB, sourceC }, TimeSpan.FromTicks(5))
+                    .Do(t => results.Add(t.DeepClone()));
+                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+            }
+
+            Assert.AreEqual(12, results.Count);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 100 }, { "two", 100 } }, results[0]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 103 }, { "one", 101 } }, results[1]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 106 }, { "one", 102 } }, results[2]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 109 }, { "one", 103 } }, results[3]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 110 }, { "two", 101 } }, results[4]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 112 }, { "one", 104 } }, results[5]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 115 }, { "one", 105 } }, results[6]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 118 }, { "one", 106 } }, results[7]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 120 }, { "two", 102 } }, results[8]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 121 }, { "one", 107 } }, results[9]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 124 }, { "one", 108 } }, results[10]);
+            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 127 }, { "one", 109 } }, results[11]);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void TupleCollapsingJoin()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var range = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(10));
+                var sourceA = range.Select(x => $"A{x}");
+                var sourceB = range.Select(x => $"B{x}");
+                var sourceC = range.Select(x => $"C{x}");
+                var sourceD = range.Select(x => $"D{x}");
+                var sourceE = range.Select(x => $"E{x}");
+                var sourceF = range.Select(x => $"F{x}");
+                var sourceG = range.Select(x => $"G{x}");
+
+                var tuples =
+                    sourceA
+                        .Join(sourceB, Match.Best<string>())
+                        .Join(sourceC, Match.Best<string>())
+                        .Join(sourceD, Match.Best<string>())
+                        .Join(sourceE, Match.Best<string>())
+                        .Join(sourceF, Match.Best<string>())
+                        .Join(sourceG, Match.Best<string>())
+                        .ToObservable().ToListObservable();
+                pipeline.Run();
+
+                var results = tuples.AsEnumerable().ToArray();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(
+                    new ValueTuple<string, string, string, string, string, string, string>[]
+                    {
+                        ValueTuple.Create("A0", "B0", "C0", "D0", "E0", "F0", "G0"),
+                        ValueTuple.Create("A1", "B1", "C1", "D1", "E1", "F1", "G1"),
+                        ValueTuple.Create("A2", "B2", "C2", "D2", "E2", "F2", "G2"),
+                        ValueTuple.Create("A3", "B3", "C3", "D3", "E3", "F3", "G3"),
+                        ValueTuple.Create("A4", "B4", "C4", "D4", "E4", "F4", "G4"),
+                        ValueTuple.Create("A5", "B5", "C5", "D5", "E5", "F5", "G5"),
+                        ValueTuple.Create("A6", "B6", "C6", "D6", "E6", "F6", "G6"),
+                        ValueTuple.Create("A7", "B7", "C7", "D7", "E7", "F7", "G7"),
+                        ValueTuple.Create("A8", "B8", "C8", "D8", "E8", "F8", "G8"),
+                        ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9")
+                    },
+                    results));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void TupleCollapsingReversedJoin()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var range = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(10));
+                var sourceA = range.Select(x => $"A{x}");
+                var sourceB = range.Select(x => $"B{x}");
+                var sourceC = range.Select(x => $"C{x}");
+                var sourceD = range.Select(x => $"D{x}");
+                var sourceE = range.Select(x => $"E{x}");
+                var sourceF = range.Select(x => $"F{x}");
+                var sourceG = range.Select(x => $"G{x}");
+
+                var tuplesFG = sourceF.Join(sourceG);
+                var tuplesEFG = sourceE.Join(tuplesFG);
+                var tuplesDEFG = sourceD.Join(tuplesEFG);
+                var tuplesCDEFG = sourceC.Join(tuplesDEFG);
+                var tuplesBCDEFG = sourceB.Join(tuplesCDEFG);
+                var tuplesABCDEFG = sourceA.Join(tuplesBCDEFG);
+                var tuples = tuplesABCDEFG.ToObservable().ToListObservable();
+                pipeline.Run();
+
+                var results = tuples.AsEnumerable().ToArray();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(
+                    new ValueTuple<string, string, string, string, string, string, string>[]
+                    {
+                        ValueTuple.Create("A0", "B0", "C0", "D0", "E0", "F0", "G0"),
+                        ValueTuple.Create("A1", "B1", "C1", "D1", "E1", "F1", "G1"),
+                        ValueTuple.Create("A2", "B2", "C2", "D2", "E2", "F2", "G2"),
+                        ValueTuple.Create("A3", "B3", "C3", "D3", "E3", "F3", "G3"),
+                        ValueTuple.Create("A4", "B4", "C4", "D4", "E4", "F4", "G4"),
+                        ValueTuple.Create("A5", "B5", "C5", "D5", "E5", "F5", "G5"),
+                        ValueTuple.Create("A6", "B6", "C6", "D6", "E6", "F6", "G6"),
+                        ValueTuple.Create("A7", "B7", "C7", "D7", "E7", "F7", "G7"),
+                        ValueTuple.Create("A8", "B8", "C8", "D8", "E8", "F8", "G8"),
+                        ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9")
+                    },
+                    results));
+            }
+        }
+    }
+}

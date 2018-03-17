@@ -1,0 +1,60 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<UserControl
+    x:Class="Microsoft.Psi.Visualization.Views.Visuals2D.ScatterRectangleVisualizationObjectView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
+    mc:Ignorable="d" 
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <conv:PlacementConverter x:Key="PlacementConverter"/>
+        <conv:VisualizationObjectToColorConverter x:Key="ColorConverter"/>
+    </UserControl.Resources>
+
+    <Grid Name="Inset" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ItemsControl ItemsSource="{Binding Path=DataCollection,  RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=Data.Item1.Left, Converter={StaticResource PlacementConverter}}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Data.Item1.Top, Converter={StaticResource PlacementConverter}}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <Rectangle
+                            Grid.Row="0" 
+                            Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ItemsControl}, Converter={StaticResource ColorConverter}}"
+                            Fill="Transparent"
+                            Height="{Binding Data.Item1.Height, Converter={StaticResource PlacementConverter}}"
+                            Width="{Binding Data.Item1.Width, Converter={StaticResource PlacementConverter}}" />
+
+                        <Label
+                            Grid.Row="1"
+                            Content="{Binding Path=Data.Item2}"
+                            Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ItemsControl}, Converter={StaticResource ColorConverter}}"
+                            Width="{Binding Data.Item1.Width, Converter={StaticResource PlacementConverter}}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

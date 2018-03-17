@@ -1,0 +1,114 @@
+[
+    {
+        "Envelope": {
+            "SourceId": 1,
+            "SequenceId": 0,
+            "OriginatingTime": "2017-11-01T09:15:30.12345Z",
+            "Time": "2017-11-01T09:15:30.12345Z"
+        },
+        "Data": {
+            "ArrayValue": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "BoolValue": true,
+            "DateTimeValue": "2017-11-30T12:59:41.896745Z",
+            "DoubleValue": 0.123456,
+            "IntValue": 123456,
+            "ListValue": [
+                4,
+                5,
+                6,
+                7
+            ],
+            "StringValue": "abc",
+            "TimeSpanValue": "1:2:3.456789"
+        }
+    },
+    {
+        "Envelope": {
+            "SourceId": 2,
+            "SequenceId": 0,
+            "OriginatingTime": "2017-11-01T09:15:30.12345Z",
+            "Time": "2017-11-01T09:15:30.12345Z"
+        },
+        "Data": {
+            "ArrayValue": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "BoolValue": true,
+            "DateTimeValue": "2017-11-30T12:59:41.896745Z",
+            "DoubleValue": 0.123456,
+            "IntValue": 123456,
+            "ListValue": [
+                4,
+                5,
+                6,
+                7
+            ],
+            "StringValue": "abc",
+            "TimeSpanValue": "1:2:3.456789"
+        }
+    },
+    {
+        "Envelope": {
+            "SourceId": 1,
+            "SequenceId": 1,
+            "OriginatingTime": "2017-11-01T09:15:34.12345Z",
+            "Time": "2017-11-01T09:15:34.12345Z"
+        },
+        "Data": {
+            "ArrayValue": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "BoolValue": true,
+            "DateTimeValue": "2017-11-30T12:59:41.896745Z",
+            "DoubleValue": 0.123456,
+            "IntValue": 123456,
+            "ListValue": [
+                4,
+                5,
+                6,
+                7
+            ],
+            "StringValue": "abc",
+            "TimeSpanValue": "1:2:3.456789"
+        }
+    },
+    {
+        "Envelope": {
+            "SourceId": 2,
+            "SequenceId": 1,
+            "OriginatingTime": "2017-11-01T09:15:34.12345Z",
+            "Time": "2017-11-01T09:15:34.12345Z"
+        },
+        "Data": {
+            "ArrayValue": [
+                0,
+                1,
+                2,
+                3
+            ],
+            "BoolValue": true,
+            "DateTimeValue": "2017-11-30T12:59:41.896745Z",
+            "DoubleValue": 0.123456,
+            "IntValue": 123456,
+            "ListValue": [
+                4,
+                5,
+                6,
+                7
+            ],
+            "StringValue": "abc",
+            "TimeSpanValue": "1:2:3.456789"
+        }
+    }
+]

@@ -1,0 +1,22 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+     
+<Window x:Class="Microsoft.Psi.Samples.OpenCV.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Microsoft.Psi.Samples.OpenCV"
+        mc:Ignorable="d"
+        Title="Microsoft Psi OpenCV Sample" Height="350" Width="525">
+    <StackPanel>
+    <Grid>
+        <Image Name="WebCamImg" Source="{Binding Path=DispImage.Image}" Stretch="Fill" Grid.Row="0" Grid.Column="0"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <TextBlock Text="FrameRate:" Foreground="Red"/>
+            <TextBlock Text="{Binding Path=DispImage.RenderedFrames.Rate}" Foreground="Red"/>
+        </StackPanel>
+    </Grid>
+    <Button Name="ConvertButton" Click="Button_Click" Content="ToRGB"/>
+    </StackPanel>
+</Window>
