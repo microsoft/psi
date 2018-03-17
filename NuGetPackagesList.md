@@ -31,5 +31,4 @@ The table below contains the list of Platform for Situated Intelligence NuGet pa
 | Microsoft.Psi.Runtime.Windows    | Provides Windows-specific perf counter APIs for Platform for Situated Intelligence. | - | Yes | AnyCPU |
 | Microsoft.Psi.Speech    | Provides data structures, APIs and components for speech processing. | Yes | Yes | AnyCPU |
 | Microsoft.Psi.Speech.Windows    | Provides Windows-specific components for speech processing. | - | Yes | AnyCPU |
-| Microsoft.Psi.Visualization.Client.Windows    | Provides visualization APIs for Platform for Situated Intelligence. | - | Yes | AnyCPU |
-| Microsoft.Psi.Visualization.Common.Windows    | Provides base data structures for visualization APIs for Platform for Situated Intelligence. | - | Yes | AnyCPU |
+| Microsoft.Psi.Visualization.Windows    | Provides visualization APIs for Platform for Situated Intelligence. | - | Yes | AnyCPU |
