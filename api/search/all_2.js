@@ -16,7 +16,6 @@ var searchData=
   ['captureaudio',['CaptureAudio',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_configuration.html#aeaaaacd67feda05348f0143c89867b95',1,'Microsoft::Psi::Media::MediaCaptureConfiguration']]],
   ['captureformat',['CaptureFormat',['../struct_microsoft_1_1_psi_1_1_media___interop_1_1_capture_format.html',1,'Microsoft::Psi::Media_Interop']]],
   ['capturesample',['CaptureSample',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a7b9e69483deb0beb908eaa2abe0c6d69',1,'Microsoft.Psi::Media_Interop::MediaCaptureDevice::CaptureSample()'],['../class_microsoft_1_1_psi_1_1_media___interop_1_1_source_reader_callback.html#ac06a108cbcba7e9af77720a4792bbb26',1,'Microsoft.Psi::Media_Interop::SourceReaderCallback::CaptureSample()']]],
-  ['cast_3c_20t_2c_20tnew_20_3e',['Cast&lt; T, TNew &gt;',['../class_microsoft_1_1_psi_1_1_operators.html#a2d46bd08ed2e906aa295b41646656790',1,'Microsoft::Psi::Operators']]],
   ['catalogextentsize',['CatalogExtentSize',['../class_microsoft_1_1_psi_1_1_persistence_1_1_store_writer.html#a21cb28d76b28d3f955a5ac8dfe19bb57',1,'Microsoft::Psi::Persistence::StoreWriter']]],
   ['catalogschema',['CatalogSchema',['../class_microsoft_1_1_psi_1_1_extensions_1_1_data_1_1_json_store_base.html#acc0efb36479e48698d58f22acbc942e3',1,'Microsoft::Psi::Extensions::Data::JsonStoreBase']]],
   ['catalogschemastring',['CatalogSchemaString',['../class_microsoft_1_1_psi_1_1_extensions_1_1_data_1_1_json_store_base.html#ad203589eb15eb8ecf202e15c91d5a94a',1,'Microsoft::Psi::Extensions::Data::JsonStoreBase']]],

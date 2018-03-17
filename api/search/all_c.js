@@ -108,7 +108,6 @@ var searchData=
   ['min_3c_20tsource_2c_20tresult_20_3e',['Min&lt; TSource, TResult &gt;',['../class_microsoft_1_1_psi_1_1_operators.html#a7610f818432f268e77236b9353786324',1,'Microsoft::Psi::Operators']]],
   ['minimum',['Minimum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a2fd61dd4619a1aa934e58fd5fee46233',1,'Microsoft::Psi::Visualization::Data::IntervalData']]],
   ['minitemwidth',['MinItemWidth',['../class_microsoft_1_1_psi_1_1_visualization_1_1_controls_1_1_timeline_canvas.html#a4ac19d01263fedd89ddd349727c113bc',1,'Microsoft::Psi::Visualization::Controls::TimelineCanvas']]],
-  ['minmaxnormalization',['MinMaxNormalization',['../class_microsoft_1_1_psi_1_1_operators.html#a88f99240976d5464fa800d53e81165e7',1,'Microsoft::Psi::Operators']]],
   ['minordistance',['MinorDistance',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_z_visualization_panel_configuration.html#a25d4f565a0ec52c79aa76fc39598e1d4',1,'Microsoft::Psi::Visualization::Config::XYZVisualizationPanelConfiguration']]],
   ['minute',['Minute',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_timeline_view.html#ab334614f1459470da7af93036e4c2c8fa62902641c38f3a4a8eb3212454360e24',1,'Microsoft::Psi::Visualization::Views::TimelineView']]],
   ['minvalue',['MinValue',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_info_1_1_property_info.html#a9c6be0ebd3c7562e08263f5d885c7562',1,'Microsoft::Psi::Media::MediaCaptureInfo::PropertyInfo']]],

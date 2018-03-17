@@ -12,6 +12,5 @@ var searchData=
   ['zoomtodatarange',['ZoomToDataRange',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#ab0c5fdf7e19edaf2f6074425867f29d8',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
   ['zoomtorange',['ZoomToRange',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a365e9a0bcfb8f2022288891b90c01de2',1,'Microsoft::Psi::Visualization::VisualizationObjects::VisualizationContainer']]],
   ['zoomtoselection',['ZoomToSelection',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#a3fbed109452166eb9b7775f68b2615f4',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
-  ['zoomtoselectionpadding',['ZoomToSelectionPadding',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#aa66bb346b49ec974cd2fb7e5f1902b15',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
-  ['zscorenormalization',['ZScoreNormalization',['../class_microsoft_1_1_psi_1_1_operators.html#a4f5f624973b997129b7fa7a800ad8201',1,'Microsoft::Psi::Operators']]]
+  ['zoomtoselectionpadding',['ZoomToSelectionPadding',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#aa66bb346b49ec974cd2fb7e5f1902b15',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]]
 ];

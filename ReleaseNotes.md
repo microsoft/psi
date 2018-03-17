@@ -5,18 +5,18 @@ title:  Release Notes
 
 # Release Notes
 
-**2018/03/11**: Beta-release, version 0.2.1.0 // TODO: Fix version
+**2018/03/17**: Beta-release, version 0.2.123.1
 
-This is an initial, beta version of the Platform for Situated Intelligence. The current version includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing). Here are some relevant documents:
+Initial, beta version of the Platform for Situated Intelligence. Includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing). Relevant documents:
 
-* [Documentation](/psi/) - the top level documentation page for Platform for Situated Intelligence.
-* [Platform for Situated Intelligence Overview](/psi/PlatformOverview) - contains a high-level overview of the platform.
-* [NuGet Packages List](/psi/NuGetPackagesList) - contains the list of NuGet packages available in this release.
-* [Building the Code](/psi/BuildingPsi) - contains information about how to build the code.
-* [Brief Introduction](/psi/tutorials) - contains a brief introduction to how to write a simple application.
-* [Samples](/psi/samples) - contains the list of samples available. 
+* [Documentation](/psi/) - top-level documentation page for Platform for Situated Intelligence.
+* [Platform for Situated Intelligence Overview](/psi/PlatformOverview) - high-level overview of the platform.
+* [NuGet Packages List](/psi/NuGetPackagesList) - list of NuGet packages available in this release.
+* [Building the Code](/psi/BuildingPsi) - information about how to build the code.
+* [Brief Introduction](/psi/tutorials) - brief introduction on how to write a simple application.
+* [Samples](/psi/samples) - list of samples available. 
 
-Below you can find a like of known issues, which we hope to address in the near future. In addition, the [Roadmap](/psi/Roadmap) document provides some insights about future planned developments.
+Below you can find a list of known issues, which we hope to address soon. Additionally, the [Roadmap](/psi/Roadmap) document provides insights about future planned developments.
 
 <a name="KnownIssues" />
 
