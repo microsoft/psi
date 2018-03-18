@@ -28,7 +28,7 @@ __Samples__. After going through this first brief tutorial, it may be helpful to
 
 __In-depth Topics__. Finally, additional information is provided in a set of [Topics](/psi/topics) that dive into more detail on various aspects of the framework including synchronization, persistence, remoting, visualization etc.
 
-Like the rest of the codebase, the documentation is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it `documentation`, as this will help us target our documentation development efforts to the highest priority needs.
+Like the rest of the codebase, the documentation is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it [`documentation`](https://github.com/Microsoft/psi/labels/documentation), as this will help us target our documentation development efforts to the highest priority needs.
 
 # Disclaimer
 
@@ -38,7 +38,7 @@ For additional information, we recommend you read the [Known Issues](/psi/Releas
 
 # Getting Help
 
-If you find a reproducible bug or if you would like to request a new feature or additional documentation, please file an [issue on the github repo](https://github.com/Microsoft/psi/issues). If you do so, please make sure a corresponding issue has not already been filed. Use the [`bug`](https://github.com/Microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce. Use the [`feature request`](https://github.com/Microsoft/psi/labels/documentation) label to request new features, and use the [`documentation`](https://github.com/Microsoft/psi/labels/documentation) label to request additional documentation. 
+If you find a reproducible bug or if you would like to request a new feature or additional documentation, please file an [issue on the github repo](https://github.com/Microsoft/psi/issues). If you do so, please make sure a corresponding issue has not already been filed. Use the [`bug`](https://github.com/Microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce. Use the [`feature request`](https://github.com/Microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/Microsoft/psi/labels/documentation) label to request additional documentation. 
 
 # Contributing
 

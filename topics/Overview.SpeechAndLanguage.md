@@ -11,9 +11,9 @@ Situated interactive applications often need to deal with speech when communicat
 
 \\psi provides a number of speech recognition components based on different speech recognition technologies.
 
-- [SystemSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage/#SystemSpeechRecognizer) (Windows only) - Uses the [System.Speech.Recognition.SpeechRecognitionEngine](https://msdn.microsoft.com/en-us/library/system.speech.recognition.speechrecognitionengine.aspx) that is based on Desktop Speech technology that comes with the .NET Framework on Windows.
-- [MicrosoftSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage/#MicrosoftSpeechRecognizer) (Windows only) - Uses the [Microsoft.Speech.Recognition.SpeechRecognitionEngine](https://msdn.microsoft.com/en-us/library/microsoft.speech.recognition.speechrecognitionengine.aspx) that is based on the [Microsoft Speech Platform](https://msdn.microsoft.com/en-us/library/hh361572.aspx) (requires a separate download and installation).
-- [BingSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage/#BingSpeechRecognizer) - Uses the [Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api) that is part of Microsoft Cognitive Services.
+- [SystemSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#SystemSpeechRecognizer) (Windows only) - Uses the [System.Speech.Recognition.SpeechRecognitionEngine](https://msdn.microsoft.com/en-us/library/system.speech.recognition.speechrecognitionengine.aspx) that is based on Desktop Speech technology that comes with the .NET Framework on Windows.
+- [MicrosoftSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#MicrosoftSpeechRecognizer) (Windows only) - Uses the [Microsoft.Speech.Recognition.SpeechRecognitionEngine](https://msdn.microsoft.com/en-us/library/microsoft.speech.recognition.speechrecognitionengine.aspx) that is based on the [Microsoft Speech Platform](https://msdn.microsoft.com/en-us/library/hh361572.aspx) (requires a separate download and installation).
+- [BingSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#BingSpeechRecognizer) - Uses the [Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api) that is part of Microsoft Cognitive Services.
 
 <a name="SystemSpeechRecognizer"/>
 
@@ -145,13 +145,13 @@ With the above grammar configured, a recognized phrase of "remind me in a minute
 <a name="MicrosoftSpeechRecognizer"/>
 
 ### The MicrosoftSpeechRecognizer component
-The `MicrosoftSpeechRecognizer` component, like the `SystemSpeechRecognizer` component, performs speech recognition on a stream of audio. However, it is implemented using the [Microsoft Server Speech Platform SDK](https://msdn.microsoft.com/en-us/library/hh361572.aspx). The API and usage of this component and its API are almost identical to that of the `SystemSpeechRecognizer` component. However, the `MicrosoftSpeechRecognizer` currently only supports [grammar-based](/psi/topics/Overview.SpeechAndLanguage/#Grammars) speech recognition.
+The `MicrosoftSpeechRecognizer` component, like the `SystemSpeechRecognizer` component, performs speech recognition on a stream of audio. However, it is implemented using the [Microsoft Server Speech Platform SDK](https://msdn.microsoft.com/en-us/library/hh361572.aspx). The API and usage of this component and its API are almost identical to that of the `SystemSpeechRecognizer` component. However, the `MicrosoftSpeechRecognizer` currently only supports [grammar-based](/psi/topics/Overview.SpeechAndLanguage#Grammars) speech recognition.
 
 <a name="BingSpeechRecognizer"/>
 
 ### The BingSpeechRecognizer component
 
-The `BingSpeechRecognizer` component uses the [Cognitive Services Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api). In contrast to the `SystemSpeechRecognizer`, it requires as input a joint audio and voice activity signal, represented as a `ValueTuple<AudioBuffer, bool>`. The second item is a flag that indicates whether the `AudioBuffer` contains speech (or more specifically, voice activity). To construct such an input signal from a stream of raw audio, the [SimpleVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage/#SimpleVoiceActivityDetector) or [SystemVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage/#SystemVoiceActivityDetector) (Windows only) components may be used in conjunction with the `Join` operator, as in the following example.
+The `BingSpeechRecognizer` component uses the [Cognitive Services Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api). In contrast to the `SystemSpeechRecognizer`, it requires as input a joint audio and voice activity signal, represented as a `ValueTuple<AudioBuffer, bool>`. The second item is a flag that indicates whether the `AudioBuffer` contains speech (or more specifically, voice activity). To construct such an input signal from a stream of raw audio, the [SimpleVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage#SimpleVoiceActivityDetector) or [SystemVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage#SystemVoiceActivityDetector) (Windows only) components may be used in conjunction with the `Join` operator, as in the following example.
 
 ```csharp
 using (var pipeline = Pipeline.Create())

@@ -13,8 +13,8 @@ The `Samples` folder contains a few small example applications written with Plat
 | [WebcamWithAudioSample](https://github.com/Microsoft/psi/blob/master/Samples/WebcamWithAudioSample) | This sample illustrates how to get images from a camera and audio from a microphone. | Yes | - |
 | [KinectSample](https://github.com/Microsoft/psi/blob/master/Samples/KinectSample) | This sample illustrates how to augment an existing voice activity detector by leveraging information about lips motion extracted from Kinect face tracking. | Yes | - |
 | [SpeechSample](https://github.com/Microsoft/psi/blob/master/Samples/SpeechSample) | This sample illustrates how to use various speech recognition components. | Yes | - |
-| [PsiRosTurtleSample](https://github.com/Microsoft/psi/blob/master/Samples/PsiRosTurtleSample/Readme.md) | This sample illustrates how to connect Platform for Situated Intelligence to the `turtlesim` in ROS. | Yes | Yes |
-| [ArmControlROSSample](https://github.com/Microsoft/psi/blob/master/Samples/ArmControlROSSample/Readme.md) | This sample illustrates how to connect Platform for Situated Intelligence to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) using ROS. | Yes | Yes |
+| [PsiRosTurtleSample](https://github.com/Microsoft/psi/blob/master/Samples/PsiRosTurtleSample) | This sample illustrates how to connect Platform for Situated Intelligence to the `turtlesim` in ROS. | Yes | Yes |
+| [ArmControlROSSample](https://github.com/Microsoft/psi/blob/master/Samples/ArmControlROSSample) | This sample illustrates how to connect Platform for Situated Intelligence to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) using ROS. | Yes | Yes |
 | [OpenCVSample](https://github.com/Microsoft/psi/blob/master/Samples/OpenCVSample) | This sample illustrates how to interop with OpenCV. | Yes | - |
 | [WpfSample](https://github.com/Microsoft/psi/blob/master/Samples/WpfSample) | This sample illustrates how to write and Windows Presentation Foundation app that uses Platform for Situated Intelligence. | Yes | - |
 

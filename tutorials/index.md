@@ -9,13 +9,13 @@ This tutorial is meant to help you get started with writing you own C# applicati
 
 The tutorial is structured in the following easy steps:
 
-1. [**A simple \\psi application**](/psi/tutorials/#SimpleApplication) - describes first steps in creating a very simple \\psi application.
-2. [**Synchronization**](/psi/tutorials/#Synchronization) - describes how to fuse and synchronize multiple streams.
-3. [**Saving Data**](/psi/tutorials/#SavingData) - explains how to persists streams to disk.
-4. [**Offline Visualization**](/psi/tutorials/#OfflineVisualization) - explains how to use PsiStudio to visualize persisted data.
-5. [**Live Visualization**](/psi/tutorials/#LiveVisualization) - explains how to visualize data live, from a running application.
-6. [**Replaying Data**](/psi/tutorials/#ReplayingData) - explains how to replay data from a persisted store. 
-7. [**Further Reading**](/psi/tutorials/#FurtherReading) - provides pointers to further in-depth topics.
+1. [**A simple \\psi application**](/psi/tutorials#SimpleApplication) - describes first steps in creating a very simple \\psi application.
+2. [**Synchronization**](/psi/tutorials#Synchronization) - describes how to fuse and synchronize multiple streams.
+3. [**Saving Data**](/psi/tutorials#SavingData) - explains how to persists streams to disk.
+4. [**Offline Visualization**](/psi/tutorials#OfflineVisualization) - explains how to use PsiStudio to visualize persisted data.
+5. [**Live Visualization**](/psi/tutorials#LiveVisualization) - explains how to visualize data live, from a running application.
+6. [**Replaying Data**](/psi/tutorials#ReplayingData) - explains how to replay data from a persisted store. 
+7. [**Further Reading**](/psi/tutorials#FurtherReading) - provides pointers to further in-depth topics.
 
 <a name="SimpleApplication"></a>
 
@@ -232,7 +232,7 @@ While so far we have discussed how to use PsiStudio to visualize previously coll
 First, we will have to setup a new console application that this time is .NET Framework 4.7 (as previously mentioned the visualization system is not yet cross-platform). Follow the steps below:
 * Create the app by going to _File -> New Project -> Visual C# -> Console App (.NET Framework)_
 * In _Project Properties_ -> _Application_ -> _Target framework_, set the target to _.NET Framework 4.7_
-* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Runtime` and `Microsoft.Psi.Visualization`
+* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Visualization.Windows`
 
 Finally, add the following using clauses at the top of your file: 
 
@@ -295,7 +295,7 @@ unless manually specified)
 
 ## 6. Replaying Data
 
-Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorial/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin and cos functions. 
+Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorials/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin and cos functions. 
 
 ```csharp
 using (var p = Pipeline.Create())

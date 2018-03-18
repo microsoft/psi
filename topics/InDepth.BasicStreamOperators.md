@@ -7,16 +7,16 @@ title:  Basic Stream Operators
 
 The ability to manipulate streams of data plays a central role in Platform for Situated Intelligence. This document provides a brief overview of the basic stream operators currently available. With a few exceptions (like generators and joins), stream operators generally transform one stream into another. The operators can be grouped into several classes:
 
-* [Generating](/psi/topics/InDepth.BasicStreamOperators/#Generating): these operators provide the means for creating various source streams.
-* [Mapping](/psi/topics/InDepth.BasicStreamOperators/#Mapping): these operators transform messages from the input stream.
-* [Filtering](/psi/topics/InDepth.BasicStreamOperators/#Filtering): these operators filter messages from the input stream.
-* [Aggregating](/psi/topics/InDepth.BasicStreamOperators/#Aggregating): these operators aggregate messages from the input stream.
-* [Actuating](/psi/topics/InDepth.BasicStreamOperators/#Actuating): these operators allow for actuating based on messages in a stream.
-* [Synchronizing](/psi/topics/InDepth.BasicStreamOperators/#Synchronizing): these operators allow for synchronizing multiple streams.
-* [Sampling](/psi/topics/InDepth.BasicStreamOperators/#Sampling): these operators allow for sampling over a stream.
-* [Parallel](/psi/topics/InDepth.BasicStreamOperators/#Parallel): these operators allow for vector-parallel computations.
-* [Time Related](/psi/topics/InDepth.BasicStreamOperators/#TimeRelated): these operators provide timing information.
-* [Miscellaneous](/psi/topics/InDepth.BasicStreamOperators/#Miscellaneous): these operators provide various other functionalities.
+* [Generating](/psi/topics/InDepth.BasicStreamOperators#Generating): these operators provide the means for creating various source streams.
+* [Mapping](/psi/topics/InDepth.BasicStreamOperators#Mapping): these operators transform messages from the input stream.
+* [Filtering](/psi/topics/InDepth.BasicStreamOperators#Filtering): these operators filter messages from the input stream.
+* [Aggregating](/psi/topics/InDepth.BasicStreamOperators#Aggregating): these operators aggregate messages from the input stream.
+* [Actuating](/psi/topics/InDepth.BasicStreamOperators#Actuating): these operators allow for actuating based on messages in a stream.
+* [Synchronizing](/psi/topics/InDepth.BasicStreamOperators#Synchronizing): these operators allow for synchronizing multiple streams.
+* [Sampling](/psi/topics/InDepth.BasicStreamOperators#Sampling): these operators allow for sampling over a stream.
+* [Parallel](/psi/topics/InDepth.BasicStreamOperators#Parallel): these operators allow for vector-parallel computations.
+* [Time Related](/psi/topics/InDepth.BasicStreamOperators#TimeRelated): these operators provide timing information.
+* [Miscellaneous](/psi/topics/InDepth.BasicStreamOperators#Miscellaneous): these operators provide various other functionalities.
 
 <a name="Generating"></a>
 

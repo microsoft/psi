@@ -69,7 +69,7 @@ var next5min = last5min + TimeSpan.FromMinutes(5);
 
 Scaling from the center splits the difference. That is, scaling by `2.0` will result in an interval with twice the `Span`; having added half to each end.
 
-### Understanding `RelativeTimeIntervals`
+### Understanding RelativeTimeIntervals
 
 The `RelativeTimeInterval` type is used mainly to represent a _relative_ time interval. That is, a time interval around an unspecified origin. The `Left` point is generally a negative `TimeSpan` and the `Right` a positive one. For example, an interval from -5 minutes to +10 minutes:
 

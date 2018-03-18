@@ -12,8 +12,8 @@ Generally a long-running ROS system is integrated into a \\psi application by co
 
 After reading about the ROS bridge, the sample applications are a great way to understand how to integrate with \\psi.
 
-* [Turtle Sample](https://github.com/Microsoft/psi/blob/master/Samples/PsiRosTurtleSample/Readme.md) - builds a \\psi application controlling the `turtlesim` (no hardware required)
-* [Arm Control Sample](https://github.com/Microsoft/psi/blob/master/Samples/ArmControlROSSample/Readme.md) - builds a \\psi application controlling the [uArm Metal](http://ufactory.cc/#/en/uarm1) (hardware required)
+* [Turtle Sample](https://github.com/Microsoft/psi/blob/master/Samples/PsiRosTurtleSample) - builds a \\psi application controlling the `turtlesim` (no hardware required)
+* [Arm Control Sample](https://github.com/Microsoft/psi/blob/master/Samples/ArmControlROSSample) - builds a \\psi application controlling the [uArm Metal](http://ufactory.cc/#/en/uarm1) (hardware required)
 
 ## Comparisons
 
