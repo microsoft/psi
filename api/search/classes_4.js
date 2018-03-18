@@ -28,11 +28,9 @@ var searchData=
   ['emitter_3c_20valuetuple_3c_20tkey_2c_20microsoft_3a_3apsi_3a_3amessage_3c_20tin_20_3e_20_3e_20_3e',['Emitter&lt; ValueTuple&lt; TKey, Microsoft::Psi::Message&lt; TIn &gt; &gt; &gt;',['../class_microsoft_1_1_psi_1_1_emitter.html',1,'Microsoft::Psi']]],
   ['encodedimage',['EncodedImage',['../class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html',1,'Microsoft::Psi::Imaging']]],
   ['encodedimagepool',['EncodedImagePool',['../class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html',1,'Microsoft::Psi::Imaging']]],
-  ['encodedimagevisualizationobject',['EncodedImageVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_encoded_image_visualization_object.html',1,'Microsoft.Psi.Visualization.VisualizationObjects.EncodedImageVisualizationObject'],['../class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_encoded_image_visualization_object.html',1,'Microsoft.Psi.Visualization.Client.EncodedImageVisualizationObject']]],
-  ['encodedimagevisualizationobjectview',['EncodedImageVisualizationObjectView',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals2_d_1_1_encoded_image_visualization_object_view.html',1,'Microsoft::Psi::Visualization::Views::Visuals2D']]],
+  ['encodedimagevisualizationobject',['EncodedImageVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_encoded_image_visualization_object.html',1,'Microsoft::Psi::Visualization::Client']]],
   ['entity',['Entity',['../class_microsoft_1_1_psi_1_1_language_1_1_entity.html',1,'Microsoft::Psi::Language']]],
   ['envelope',['Envelope',['../struct_microsoft_1_1_psi_1_1_envelope.html',1,'Microsoft::Psi']]],
   ['eventsource',['EventSource',['../class_microsoft_1_1_psi_1_1_components_1_1_event_source.html',1,'Microsoft::Psi::Components']]],
-  ['eventtocommand',['EventToCommand',['../class_microsoft_1_1_psi_1_1_visualization_1_1_base_1_1_event_to_command.html',1,'Microsoft::Psi::Visualization::Base']]],
   ['exporter',['Exporter',['../class_microsoft_1_1_psi_1_1_data_1_1_exporter.html',1,'Microsoft::Psi::Data']]]
 ];

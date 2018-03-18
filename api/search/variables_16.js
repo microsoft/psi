@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['xmax',['XMax',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_rectangle.html#a1788cf4981fc465c8c665c920729e9e2',1,'Microsoft::Psi::Visualization::Common::Rectangle']]],
-  ['xmin',['XMin',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_rectangle.html#ae5cfb579971cc61fa704293a4737303c',1,'Microsoft::Psi::Visualization::Common::Rectangle']]]
+  ['zero',['Zero',['../class_microsoft_1_1_psi_1_1_int_interval.html#a41b86b35823f88068f5a42b4eb05293f',1,'Microsoft.Psi.IntInterval.Zero()'],['../class_microsoft_1_1_psi_1_1_real_interval.html#a09ba9c99c83ced41e462fd9d3abd593b',1,'Microsoft.Psi.RealInterval.Zero()'],['../class_microsoft_1_1_psi_1_1_relative_time_interval.html#ab78982f0e49ac94aca64fb0b6980d71b',1,'Microsoft.Psi.RelativeTimeInterval.Zero()']]]
 ];

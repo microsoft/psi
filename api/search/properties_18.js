@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['y',['Y',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_point.html#a12733749df9dc51a6ede5ec22fcbea02',1,'Microsoft::Psi::Visualization::Common::Point']]],
-  ['y0',['Y0',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_rectangle.html#acadd710e21a70b7a1634d368850364ca',1,'Microsoft::Psi::Visualization::Common::Rectangle']]],
-  ['y1',['Y1',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_rectangle.html#adcb367eb434c8d63f25c9a733347ad03',1,'Microsoft::Psi::Visualization::Common::Rectangle']]],
   ['yaxis',['YAxis',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_timeline_visualization_panel_configuration.html#ad17c672686e5cba9a26776cac4a9cc23',1,'Microsoft.Psi.Visualization.Config.TimelineVisualizationPanelConfiguration.YAxis()'],['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_visualization_panel_configuration.html#a9a1e662cc6afa20f0045ae2a3b068692',1,'Microsoft.Psi.Visualization.Config.XYVisualizationPanelConfiguration.YAxis()']]],
   ['yaxis2',['YAxis2',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_visualization_panel_configuration.html#a261dd7aaaa243377a56642c174271263',1,'Microsoft::Psi::Visualization::Config::XYVisualizationPanelConfiguration']]],
   ['yaxiscomputemode',['YAxisComputeMode',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_plot_visualization_object_configuration.html#a8e83d2e6614c7aecee84a8454e8a5a3a',1,'Microsoft::Psi::Visualization::Config::PlotVisualizationObjectConfiguration']]],

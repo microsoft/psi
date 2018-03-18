@@ -1,7 +1,6 @@
 var searchData=
 [
   ['machine',['Machine',['../class_microsoft_1_1_psi_1_1_finite_state_machine_1_1_machine.html',1,'Microsoft::Psi::FiniteStateMachine']]],
-  ['mainwindow',['MainWindow',['../class_microsoft_1_1_psi_1_1_psi_studio_1_1_main_window.html',1,'Microsoft::Psi::PsiStudio']]],
   ['managedcameracontrolpropertyvalue',['ManagedCameraControlPropertyValue',['../struct_microsoft_1_1_psi_1_1_media___interop_1_1_managed_camera_control_property_value.html',1,'Microsoft::Psi::Media_Interop']]],
   ['match',['Match',['../class_microsoft_1_1_psi_1_1_match.html',1,'Microsoft::Psi']]],
   ['matchresult',['MatchResult',['../struct_microsoft_1_1_psi_1_1_match_result.html',1,'Microsoft::Psi']]],
@@ -18,9 +17,7 @@ var searchData=
   ['merger_3c_20microsoft_3a_3apsi_3a_3amessage_3c_20jtoken_20_3e_2c_20string_20_3e',['Merger&lt; Microsoft::Psi::Message&lt; JToken &gt;, string &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_merger.html',1,'Microsoft::Psi::Components']]],
   ['merger_3c_20microsoft_3a_3apsi_3a_3amessage_3c_20microsoft_3a_3apsi_3a_3acommon_3a_3abufferreader_20_3e_2c_20string_20_3e',['Merger&lt; Microsoft::Psi::Message&lt; Microsoft::Psi::Common::BufferReader &gt;, string &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_merger.html',1,'Microsoft::Psi::Components']]],
   ['message',['Message',['../class_microsoft_1_1_psi_1_1_message.html',1,'Microsoft.Psi.Message'],['../struct_microsoft_1_1_psi_1_1_message.html',1,'Microsoft.Psi.Message&lt; T &gt;']]],
-  ['message_3c_20microsoft_3a_3apsi_3a_3aextensions_3a_3aannotations_3a_3aannotatedevent_20_3e',['Message&lt; Microsoft::Psi::Extensions::Annotations::AnnotatedEvent &gt;',['../class_microsoft_1_1_psi_1_1_message.html',1,'Microsoft::Psi']]],
   ['message_3c_20tdata_20_3e',['Message&lt; TData &gt;',['../class_microsoft_1_1_psi_1_1_message.html',1,'Microsoft::Psi']]],
-  ['messageadapter',['MessageAdapter',['../class_microsoft_1_1_psi_1_1_visualization_1_1_adapters_1_1_message_adapter.html',1,'Microsoft::Psi::Visualization::Adapters']]],
   ['metadata',['Metadata',['../class_microsoft_1_1_psi_1_1_metadata.html',1,'Microsoft::Psi']]],
   ['microsoftspeechrecognizer',['MicrosoftSpeechRecognizer',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html',1,'Microsoft::Psi::MicrosoftSpeech']]],
   ['microsoftspeechrecognizerconfiguration',['MicrosoftSpeechRecognizerConfiguration',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer_configuration.html',1,'Microsoft::Psi::MicrosoftSpeech']]],

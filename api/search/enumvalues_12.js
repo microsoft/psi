@@ -1,10 +1,6 @@
 var searchData=
 [
   ['tcp',['Tcp',['../namespace_microsoft_1_1_psi_1_1_remoting.html#aae712dfab44dbddf329b3374e906bc4fa30b7fdeebc36988717d0e274cc2e7520',1,'Microsoft::Psi::Remoting']]],
-  ['tenmicroseconds',['TenMicroseconds',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_timeline_view.html#ab334614f1459470da7af93036e4c2c8fa42cf1a32f769287a1464d460acb16284',1,'Microsoft::Psi::Visualization::Views::TimelineView']]],
-  ['tenmilliseconds',['TenMilliseconds',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_timeline_view.html#ab334614f1459470da7af93036e4c2c8fa44d896940e4221a76996f631bc4fbcea',1,'Microsoft::Psi::Visualization::Views::TimelineView']]],
-  ['tenminutes',['TenMinutes',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_timeline_view.html#ab334614f1459470da7af93036e4c2c8fab8404cea0d09d17c07dd496b9dcfdf93',1,'Microsoft::Psi::Visualization::Views::TimelineView']]],
-  ['tenseconds',['TenSeconds',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_timeline_view.html#ab334614f1459470da7af93036e4c2c8fa028106fb344e906baa6ecf4aa2e4c2be',1,'Microsoft::Psi::Visualization::Views::TimelineView']]],
   ['throttlingrequests',['ThrottlingRequests',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15adce17a465583cef74b45ebdaddcab10c',1,'Microsoft::Psi']]],
   ['tilt',['Tilt',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942a686319a93c35facda5c3da08875fb394',1,'Microsoft::Psi::Media_Interop']]],
   ['tiltrelative',['TiltRelative',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942a74d45c99dfd804387e044266c1cd335f',1,'Microsoft::Psi::Media_Interop']]],

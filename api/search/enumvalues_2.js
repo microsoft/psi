@@ -31,6 +31,5 @@ var searchData=
   ['contrast',['Contrast',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13ac63ecd19a0ca74c22dfcf3063c9805d2',1,'Microsoft::Psi::Media_Interop']]],
   ['conversation',['Conversation',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech.html#abc432aee3ab213195bfdafbafdbb1c2ca9c84e2b9302627e683f348e57fd14e6b',1,'Microsoft::Psi::CognitiveServices::Speech']]],
   ['created',['Created',['../namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581a0eceeb45861f9585dd7a97a3e36f85c6',1,'Microsoft::Psi']]],
-  ['cross',['Cross',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833ae76b449b9fc8536af7557ffa6321d269',1,'Microsoft::Psi::Visualization::Common']]],
-  ['cursor',['Cursor',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa266b83f0e2c805ce7647991bd84e687a9abdae4fa5d93330363a88ed8a5e7946',1,'Microsoft::Psi::Visualization::Common']]]
+  ['cross',['Cross',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833ae76b449b9fc8536af7557ffa6321d269',1,'Microsoft::Psi::Visualization::Common']]]
 ];

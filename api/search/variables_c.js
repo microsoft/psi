@@ -19,7 +19,5 @@ var searchData=
   ['metadataschemastring',['MetadataSchemaString',['../class_microsoft_1_1_psi_1_1_extensions_1_1_data_1_1_json_store_base.html#ae90a2245fd3ca7988fc10a264aeefa8c',1,'Microsoft::Psi::Extensions::Data::JsonStoreBase']]],
   ['metadataschemauri',['MetadataSchemaUri',['../class_microsoft_1_1_psi_1_1_extensions_1_1_data_1_1_json_store_base.html#a111022833ffee729fddf59390d8ee355',1,'Microsoft::Psi::Extensions::Data::JsonStoreBase']]],
   ['microseconds',['MicroSeconds',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_internal_1_1_image_frame.html#a834dee5f95b8e0fc3df89c47ed00e6b8',1,'Microsoft::Psi::Media::MediaCaptureInternal::ImageFrame']]],
-  ['minimum',['Minimum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a2fd61dd4619a1aa934e58fd5fee46233',1,'Microsoft::Psi::Visualization::Data::IntervalData']]],
-  ['modeproperty',['ModeProperty',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_timeline_view.html#a30a7ded2fb84f74603c8815a4c273a82',1,'Microsoft::Psi::Visualization::Views::TimelineView']]],
-  ['musttoggleisenabledproperty',['MustToggleIsEnabledProperty',['../class_microsoft_1_1_psi_1_1_visualization_1_1_base_1_1_event_to_command.html#afdfccccfeddf048a84d3a3d961df27c3',1,'Microsoft::Psi::Visualization::Base::EventToCommand']]]
+  ['minimum',['Minimum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a2fd61dd4619a1aa934e58fd5fee46233',1,'Microsoft::Psi::Visualization::Data::IntervalData']]]
 ];

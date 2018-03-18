@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['offset',['Offset',['../class_microsoft_1_1_psi_1_1_visualization_1_1_converters_1_1_placement_converter.html#afff9ae9073125a5c24c6c92908209d49',1,'Microsoft::Psi::Visualization::Converters::PlacementConverter']]],
   ['opened',['Opened',['../class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#adfa6f478c8773a660bf9a0933d0822fe',1,'Microsoft::Psi::PsiStreamMetadata']]],
   ['optimizeforspeech',['OptimizeForSpeech',['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_source_configuration.html#aad951772dcd2e8194de22d69bfff5cc9',1,'Microsoft::Psi::Audio::AudioSourceConfiguration']]],
   ['ordefault',['OrDefault',['../class_microsoft_1_1_psi_1_1_match_1_1_interpolator.html#a1405c6130acf5f9741a8bc8ee56541ac',1,'Microsoft::Psi::Match::Interpolator']]],
