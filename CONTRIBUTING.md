@@ -22,10 +22,9 @@ We have already defined the following issue labels:
 
 * [`good first issue`](https://github.com/Microsoft/psi/labels/good%20first%20issue): these issues are small and appropriate for people who wish to familiarize themselves with GitHub pull requests and/or \\psi's contributor guidelines, build process, and running tests. We're here to help you get started in open source.
 
-
 ## Contributing New Components
 
-One of the stated goals for the Platform for Situated Intelligence project is to create an open eco-system of pluggable components that can lower the barrier to entry for developing multimodal integrative-AI systems. If you have a cool new component you have written for \\psi that you think might be useful to others, we encourage you to release it to the community if possible. Here are a few recommendations and guidelines that we believe would help enable a future thriving eco-system:
+One of the stated goals for the Platform for Situated Intelligence project is to create an open eco-system of pluggable components that can lower the barrier to entry for developing multimodal integrative-AI systems. If you have a new component you have written for \\psi that you think might be useful to others, we encourage you to release it to the community if possible. Here are a few recommendations and guidelines that we believe would help enable a future thriving eco-system:
 
 * __NuGet__. Release if possible as a [NuGet](https://www.nuget.org) package: NuGet packages are easy to consume and work on both Windows and Linux. 
   * __Naming__. Use the following naming conventions:
@@ -33,24 +32,23 @@ One of the stated goals for the Platform for Situated Intelligence project is to
     * Append `.Windows` or `.Linux` if the package only runs on one of those operating systems
     * Append `.x64` or `.x86` if the package only runs on those platforms (e.g. if it is not `AnyCPU`)
   * __Description__. In the package description, use a phrasing like: _Provides Platform for Situated Intelligence APIs and components for ..._
-  * __Tags__. In the package tags, add `Psi`. 
+  * __Tags__. In the package tags, add `Psi`.
 
 * __Target__. Where possible, target .NET Standard: this will allow your component library to work cross-platform.
 
-* __Let us know__. If possible we'd love to hear from you when you develop a new package. You can do so by opening an [issue](https://github.com/Microsoft/psi/issues), tag it with the [announcement](https://github.com/Microsoft/psi/labels/announcement) tag, and including a pointer to your component. 
-
+* __Let us know__. If possible we'd love to hear from you when you develop a new package. You can do so by opening an [issue](https://github.com/Microsoft/psi/issues), tag it with the [announcement](https://github.com/Microsoft/psi/labels/announcement) tag, and including a pointer to your component.
 
 ## Contributing to the Existing Code-base via Pull Requests
 
-Apart from contributing by releasing your own Platform for Situated Intelligence components, you could also contribute by fixing bugs, improving documentation, adding new features to the existing codebase. 
+Apart from contributing by releasing your own Platform for Situated Intelligence components, you could also contribute by fixing bugs, improving documentation, adding new features to the existing codebase.
 
-#### Legal
+### Legal
 
 You will need to complete a Contributor License Agreement (CLA) before your pull request can be accepted. This agreement testifies that you are granting us permission to use the source code you are submitting, and that this work is being submitted under appropriate license that we can use it.
 
-You can complete the CLA by going through the steps at https://cla.microsoft.com. Once we have received the signed CLA, we'll review the request. You will only need to do this once.
+You can complete the CLA by going through the steps at [https://cla.microsoft.com](https://cla.microsoft.com). Once we have received the signed CLA, we'll review the request. You will only need to do this once.
 
-#### Code Organization
+### Code Organization
 
 Below is a description of the directory structure for the Platform for Situated Intelligence source tree. Every time you modify the structure by adding a new project, please update the table below.
 
@@ -74,18 +72,18 @@ Below is a description of the directory structure for the Platform for Situated 
 | Sources   | Tools         | Contains tools - e.g. PsiStudio, etc. |
 | Sources   | Visualization | Contains class libraries for visualization. |
 
-#### Coding Style
+### Coding Style
 
-Platform for Situated Intelligence is an organically grown codebase. The consistency of style reflects this. 
+Platform for Situated Intelligence is an organically grown codebase. The consistency of style reflects this.
 For the most part, the team follows these [coding conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions) along with these [design guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/). Pull requests that reformat the code will not be accepted.
 
 In case you would like to add a new project to the `Psi.sln` we require that the project is setup in a similar ways to the other projects to ensure a certain coding standard.
 
-#### Build and Test
+### Build and Test
 
 To fully validate your changes, do a complete rebuild and test for both Debug and Release Configurations.
 
-#### Pull Requests
+### Pull Requests
 
 We accept __bug fix pull requests__. Please make sure there is a corresponding tracking issue for the bug. When you submit a PR for a bug, please link to the issue.
 
@@ -97,4 +95,4 @@ Pull requests should:
 * Be a child commit of a reasonably recent commit in the master branch
 * Pass all unit tests
 * Have a clear commit message
-* Ideally include adequate tests
+* Ideally, include adequate tests
