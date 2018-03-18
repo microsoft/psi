@@ -5,7 +5,7 @@ title:  ROS Integration
 
 # \\psi / ROS Integration {#PsiRosIntegration}
 
-The [ROS Bridge](https://github.com/Microsoft/psi/blob/master/Sources/Integrations/ROS/Microsoft.ROS/Readme.md) may be used to integrate ROS components into a \\psi system.
+The [ROS Bridge](https://github.com/Microsoft/psi/tree/master/Sources/Integrations/ROS/Microsoft.Psi.ROS) may be used to integrate ROS components into a \\psi system.
 Generally a long-running ROS system is integrated into a \\psi application by constructing components utilizing the bridge to become proper publishers and subscribers over ROS protocols; exposing as emitters and receivers.
 
 ## Samples
