@@ -6,8 +6,8 @@ Here we briefly explain the ROS architecture and the bridge layer.
 
 The following tutorials may help to get started:
 
-* [PsiRosTurtleSample](../../../../Samples/PsiRosTurtleSample/Readme.md) - simple tutorial to control `turtlesim` (no hardware required)
-* [ArmControlROSSample](../../../../Samples/ArmControlROSSample/Readme.md) - tutorial to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) (hardware required)
+* [PsiRosTurtleSample](https://github.com/Microsoft/psi/tree/master/Samples/PsiRosTurtleSample/Readme.md) - simple tutorial to control `turtlesim` (no hardware required)
+* [ArmControlROSSample](https://github.com/Microsoft/psi/tree/master/Samples/ArmControlROSSample) - tutorial to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) (hardware required)
 
 ## ROS
 
@@ -55,16 +55,18 @@ As a user you merely call `Publish(...)` and messages are fanned out and process
 The `RosMessageTypes` class contains many standard message schemas and is used to create your own as needed.
 For example, many message types are available with something like `RosMessageTypes.Geometry.Twist.Def`, while custom schemas must be defined, e.g.:
 
-    var poseMessageDef = RosMessage.CreateMessageDef(
-        "turtlesim/Pose",
-        "863b248d5016ca62ea2e895ae5265cf9",
-        new[] {
-            Tuple.Create("x", RosMessage.RosFieldDef.Float32Def),
-            Tuple.Create("y", RosMessage.RosFieldDef.Float32Def),
-            Tuple.Create("theta", RosMessage.RosFieldDef.Float32Def),
-            Tuple.Create("linear_velocity", RosMessage.RosFieldDef.Float32Def),
-            Tuple.Create("angular_velocity", RosMessage.RosFieldDef.Float32Def)
-        })
+```C#
+var poseMessageDef = RosMessage.CreateMessageDef(
+  "turtlesim/Pose",
+  "863b248d5016ca62ea2e895ae5265cf9",
+  new[] {
+    Tuple.Create("x", RosMessage.RosFieldDef.Float32Def),
+    Tuple.Create("y", RosMessage.RosFieldDef.Float32Def),
+    Tuple.Create("theta", RosMessage.RosFieldDef.Float32Def),
+    Tuple.Create("linear_velocity", RosMessage.RosFieldDef.Float32Def),
+    Tuple.Create("angular_velocity", RosMessage.RosFieldDef.Float32Def)
+  })
+```
 
 ### Protocol
 
@@ -82,56 +84,58 @@ Let's say Node `Foo` wants to publish messages to which Node `Bar` wants to subs
 
 * *ROS Master:* The ROS Master is started and listens, by default, for XmlRpc requests on port 11311
 * *Publisher:* `Foo` is started and tells the ROS Master that it wants to publish a Topic (`registerPublisher`)
-    * `Foo` only knows about the ROS Master and nothing about `Bar`
-    * The Topic name and the host/port on which `Foo` will be listening for XmlRpc requests is given
+  * `Foo` only knows about the ROS Master and nothing about `Bar`
+  * The Topic name and the host/port on which `Foo` will be listening for XmlRpc requests is given
 * *Subscriber:* `Bar` is started and tells the ROS Master it wants to subscribe to a Topic (`registerSubscriber`)
-    * `Bar` only knows about the ROS Master and nothing about `Foo`
-    * The Topic name, message type and host/port on which `Bar` will be listening is given
-    * The Master shares `Foo`'s endpoint with `Bar`. Now it's up to them to negotiate a connection
+  * `Bar` only knows about the ROS Master and nothing about `Foo`
+  * The Topic name, message type and host/port on which `Bar` will be listening is given
+  * The Master shares `Foo`'s endpoint with `Bar`. Now it's up to them to negotiate a connection
 * *Peer-to-peer:* `Bar` asks `Foo` for the Topic (`requestTopic`)
-    * The Topic name and `Bar`'s supported protocols (e.g. TCP, UDP, ...) are given
-    * `Foo` replies with host/port information for the connection (different host/port from the XmlRpc endpoint, and possibly different per subscriber)
+  * The Topic name and `Bar`'s supported protocols (e.g. TCP, UDP, ...) are given
+  * `Foo` replies with host/port information for the connection (different host/port from the XmlRpc endpoint, and possibly different per subscriber)
 * *Negotiation:* `Bar` now negotiates the message format by sending an `md5sum`, `type` string, and full `message_definition` text
-    * For backward compatibility, `Foo` should support older `md5sum`'s
-    * `Foo` replies with the `md5sum` and `type` it intends to send and then begins pumping binary-packed messages
+  * For backward compatibility, `Foo` should support older `md5sum`'s
+  * `Foo` replies with the `md5sum` and `type` it intends to send and then begins pumping binary-packed messages
 
 #### XmlRpc
 
 [XmlRpc](https://en.wikipedia.org/wiki/XML-RPC) is a very simple protocol consisting of a `methodCall` POSTed over HTTP to a given host/port, followed by a `methodResponse`.
 For example, to get the URI of the ROS Master:
 
-    <?xml version="1.0"?>
-    <methodCall>
-      <methodName>getUri</methodName>
-      <params>
-        <param>
-          <value>username</value>
-        </param>
-      </params>
-    </methodCall>
+```xml
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>getUri</methodName>
+  <params>
+    <param>
+      <value>username</value>
+    </param>
+  </params>
+</methodCall>
 
-    <?xml version='1.0'?>
-    <methodResponse>
-      <params>
-        <param>
-          <value>
-            <array>
-              <data>
-                <value>
-                  <int>1</int>
-                </value>
-                <value>
-                  <string></string>
-                </value>
-                <value>
-                  <string>http://my-dev-box-ubuntu:11311/</string>
-                </value>
-              </data>
-            </array>
-          </value>
-        </param>
-      </params>
-    </methodResponse>
+<?xml version='1.0'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <array>
+          <data>
+            <value>
+              <int>1</int>
+            </value>
+            <value>
+              <string></string>
+            </value>
+            <value>
+              <string>http://my-dev-box-ubuntu:11311/</string>
+            </value>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+```
 
 There are encodings for the following types: `array`, `base64`, `boolean`, `dateTime.iso8601`, `double`, `integer`, `string`, `struct`, `nil`.
 A `<value>` element without a type is assumed to be a `string`.
@@ -195,12 +199,12 @@ Though not mentioned below, all requests contain the `caller_id` and a response 
 Though not mentioned below, all requests contain the `caller_id` and a response body bundled with states code/message (see XmlRpc section above).
 
 * `setParam key value -> ()`
-* `getParam key -> (value: XmlRpcValue)`*
+* `getParam key -> (value: XmlRpcValue)` *
 * `deleteParam key -> ()`
 * `hasParam key -> bool`
-* `searchParam key -> `**
+* `searchParam key ->` **
 * `getParamNames () -> (names: string list)`
-* `subscribeParam callerApi key -> (current: XmlRpcValue)`***
+* `subscribeParam callerApi key -> (current: XmlRpcValue)` ***
 * `unsubscribeParam callerApi key -> (numUnsubscribed: int)`
 
 *If the `key` given to `getParam` is a namespace then the return is tree constructed of structs.
