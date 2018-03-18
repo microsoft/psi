@@ -17,7 +17,7 @@ You can build applications based on Platform for Situated Intelligence either by
 
 # Getting Started
 
-__Brief Introduction__. To get started, the [Brief Introduction](https://microsoft.github.io/psi/tutorial) page provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist to and replay data from disk. We recommend that you work through the examples in this tutorial to familiarize yourself with these core concepts.
+__Brief Introduction__. To get started, the [Brief Introduction](https://microsoft.github.io/psi/tutorials) page provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist to and replay data from disk. We recommend that you work through the examples in this tutorial to familiarize yourself with these core concepts.
 
 __Samples__. After going through this first brief tutorial, it may be helpful to look through the set of [Samples](https://microsoft.github.io/psi/samples) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \\psi.
 
@@ -33,7 +33,7 @@ For additional information, we recommend you read the [Known Issues](https://mic
 
 # Getting Help
 
-If you find a reproducible bug or if you would like to request a new feature or additional documentation, please file an [issue on the github repo](https://microsoft.github.io/psi/issues). If you do so, please make sure a corresponding issue has not already been filed. Use the [`bug`](https://microsoft.github.io/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce. Use the [`feature request`](https://microsoft.github.io/psi/labels/documentation) label to request new features, and use the [`documentation`](https://microsoft.github.io/psi/labels/documentation) label to request additional documentation. 
+If you find a reproducible bug or if you would like to request a new feature or additional documentation, please file an [issue on the github repo](https://github.com/microsoft/psi/issues). If you do so, please make sure a corresponding issue has not already been filed. Use the [`bug`](https://github.com/microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce. Use the [`feature request`](https://github.com/microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/microsoft/psi/labels/documentation) label to request additional documentation. 
 
 # Contributing
 

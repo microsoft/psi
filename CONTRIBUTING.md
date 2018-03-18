@@ -16,7 +16,7 @@ We have already defined the following issue labels:
 
 * [`documentation`](https://github.com/Microsoft/psi/labels/documentation): these issues are requests for additional or improved documentation.
 
-* [`feature request`](https://github.com/Microsoft/psi/labels/documentation): these issues are requests for additional or improved documentation.
+* [`feature request`](https://github.com/Microsoft/psi/labels/feature%20request): these issues are requests for additional or improved documentation.
 
 * [`help wanted`](https://github.com/Microsoft/psi/labels/help%20wanted): these issues are specifically well suited for outside contributors.
 
@@ -54,25 +54,25 @@ You can complete the CLA by going through the steps at https://cla.microsoft.com
 
 Below is a description of the directory structure for the Platform for Situated Intelligence source tree. Every time you modify the structure by adding a new project, please update the table below.
 
-| Folder    | Subfolder    | Description |
-| :-------- | :----------- | :---------- |
-| Build     |              | Contains \psi build tools. |
-| docs      |              | Contains \psi documentation. |
-| NuGet     |              | Contains \psi .nuspec files. |
-| Samples   |              | Contains \psi sample applications. |
-| Sources   |              | Contains \psi source code. |
-| Sources   | Audio        | Contains class libraries for audio components. |
-| Sources   | Calibration  | Contains class libraries for calibrating cameras. |
-| Sources   | Common       | Contains class libraries for common test support. |
-| Sources   | Extensions   | Contains class libraries that extend the \psi runtime class libraries. |
-| Sources   | Imaging      | Contains class libraries for \psi imaging, e.g. implementing images, video capture, etc. |
-| Sources   | Integrations | Contains integrations - these are class libraries that provide shims around 3rd party libraries. |
-| Sources   | Kinect       | Contains class libraries for Kinect sensor components. |
-| Sources   | Language     | Contains class libraries for natural language processing components. |
-| Sources   | Media        | Contains class libraries for media components. |
-| Sources   | Runtime      | Contains class libraries for Platform for Situated Intelligence runtime. |
-| Sources   | Speech       | Contains class libraries for speech components. |
-| Sources   | Toolkits     | Contains toolkits - e.g. Finite State Machine toolkit, etc. |
+| Folder    | Subfolder     | Description |
+| :-------- | :------------ | :---------- |
+| Build     |               | Contains \psi build tools. |
+| Samples   |               | Contains \psi sample applications. |
+| Sources   |               | Contains \psi source code. |
+| Sources   | Audio         | Contains class libraries for audio components. |
+| Sources   | Calibration   | Contains class libraries for calibrating cameras. |
+| Sources   | Common        | Contains class libraries for common test support. |
+| Sources   | Extensions    | Contains class libraries that extend the \psi runtime class libraries. |
+| Sources   | Imaging       | Contains class libraries for \psi imaging, e.g. images, video capture, etc. |
+| Sources   | Integrations  | Contains integrations - libraries that provide shims around 3rd party libraries. |
+| Sources   | Kinect        | Contains class libraries for Kinect sensor components. |
+| Sources   | Language      | Contains class libraries for natural language processing components. |
+| Sources   | Media         | Contains class libraries for media components. |
+| Sources   | Runtime       | Contains class libraries for \psi runtime. |
+| Sources   | Speech        | Contains class libraries for speech components. |
+| Sources   | Toolkits      | Contains toolkits - e.g. Finite State Machine toolkit, etc. |
+| Sources   | Tools         | Contains tools - e.g. PsiStudio, etc. |
+| Sources   | Visualization | Contains class libraries for visualization. |
 
 #### Coding Style
 
