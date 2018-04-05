@@ -7,7 +7,7 @@ title:  Using with NuGet Packages
 
 To build \\psi applications, we recommend using [Visual Studio 2017](https://www.visualstudio.com/vs/ "Visual Studio 2017") on Windows (the free, Community editions is sufficient). Under Linux, we recommend using [Visual Studio Code](https://code.visualstudio.com/).
 
-To build a \\psi application using [NuGet packages](http://www.nuget.org), simply reference the relevant `Microsoft.Psi.*` packages available on www.nuget.org in your application. The [Brief Introduction](/psi/tutorials) tutorial also contains a quick description of how you build a very simple, initial \\psi application.
+To build a \\psi application using [NuGet packages](http://www.nuget.org), simply reference the relevant `Microsoft.Psi.*` packages available on www.nuget.org in your application. Please note that to use these packages, you need to check the _Include prerelease_ checkbox when you browse for NuGet packages in Visual Studio. The [Brief Introduction](/psi/tutorials) tutorial also contains a quick description of how you build a very simple, initial \\psi application.
 
 __Choice of .NET Framework__. Platform for Situated Intelligence is build on .NET, and can be used from .NET applications.
 

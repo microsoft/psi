@@ -83,8 +83,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afbd86f3dd274c9beac396f5305ef9cd7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_splitter.html#afbd86f3dd274c9beac396f5305ef9cd7">Splitter</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Func&lt; TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TKey &gt; outputSelector)</td></tr>
+<tr class="memdesc:afbd86f3dd274c9beac396f5305ef9cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_splitter.html#afbd86f3dd274c9beac396f5305ef9cd7" title="Initializes a new instance of the Splitter&lt;TIn, TKey&gt; class. ">Splitter&lt;TIn, TKey&gt;</a> class.  <a href="#afbd86f3dd274c9beac396f5305ef9cd7">More...</a><br /></td></tr>
 <tr class="separator:afbd86f3dd274c9beac396f5305ef9cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a04db1a87ed4e662aa54bc5bf4f880943"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_splitter.html#a04db1a87ed4e662aa54bc5bf4f880943">Add</a> (TKey key)</td></tr>
+<tr class="memdesc:a04db1a87ed4e662aa54bc5bf4f880943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add emitter mapping.  <a href="#a04db1a87ed4e662aa54bc5bf4f880943">More...</a><br /></td></tr>
 <tr class="separator:a04db1a87ed4e662aa54bc5bf4f880943"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -103,8 +105,8 @@ Additional Inherited Members</h2></td></tr>
 <div class="textblock"><p>Sends the input message to at most one of the dynamic outputs, selected using the specified output selector. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>The input message type</td></tr>
-    <tr><td class="paramname">TKey</td><td>The type of key to use when identifying the correct output</td></tr>
+    <tr><td class="paramname">TIn</td><td>The input message type.</td></tr>
+    <tr><td class="paramname">TKey</td><td>The type of key to use when identifying the correct output.</td></tr>
   </table>
   </dd>
 </dl>
@@ -135,6 +137,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_splitter.html#afbd86f3dd274c9beac396f5305ef9cd7" title="Initializes a new instance of the Splitter&lt;TIn, TKey&gt; class. ">Splitter&lt;TIn, TKey&gt;</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
+    <tr><td class="paramname">outputSelector</td><td>Selector function identifying the output.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -153,6 +164,15 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Add emitter mapping. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key to which to map emitter.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Emitter having been mapped.</dd></dl>
 
 </div>
 </div>

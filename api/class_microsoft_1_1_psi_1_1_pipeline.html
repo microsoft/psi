@@ -85,10 +85,13 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9dfb232b23b4754b7a34831ed13ce2d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a9dfb232b23b4754b7a34831ed13ce2d0">Pipeline</a> (string name, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> globalPolicy, int threadCount, bool allowSchedulingOnExternalThreads)</td></tr>
+<tr class="memdesc:a9dfb232b23b4754b7a34831ed13ce2d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a> class.  <a href="#a9dfb232b23b4754b7a34831ed13ce2d0">More...</a><br /></td></tr>
 <tr class="separator:a9dfb232b23b4754b7a34831ed13ce2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a3fdb1bba22c0ef03f238336fefe30c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a1a3fdb1bba22c0ef03f238336fefe30c">AddComponent</a> (string name, object stateObject)</td></tr>
+<tr class="memdesc:a1a3fdb1bba22c0ef03f238336fefe30c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add component to pipeline.  <a href="#a1a3fdb1bba22c0ef03f238336fefe30c">More...</a><br /></td></tr>
 <tr class="separator:a1a3fdb1bba22c0ef03f238336fefe30c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7da244fab31c7532ca33c8c34462b255"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a7da244fab31c7532ca33c8c34462b255">ProposeReplayTime</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> activeInterval, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> originatingTimeInterval)</td></tr>
+<tr class="memdesc:a7da244fab31c7532ca33c8c34462b255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propose replay time.  <a href="#a7da244fab31c7532ca33c8c34462b255">More...</a><br /></td></tr>
 <tr class="separator:a7da244fab31c7532ca33c8c34462b255"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec30508a49d0b04a6f99bd1230bf59d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aaec30508a49d0b04a6f99bd1230bf59d">CreateReceiver&lt; T &gt;</a> (object owner, Action&lt; T, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> &gt; action, string name, bool autoClone=false)</td></tr>
 <tr class="memdesc:aaec30508a49d0b04a6f99bd1230bf59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input receiver associated with the specified component object.  <a href="#aaec30508a49d0b04a6f99bd1230bf59d">More...</a><br /></td></tr>
@@ -109,63 +112,87 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a51c4a37552fac278254c21ac7fd5d348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input receiver associated with the specified component object, connected to an async message processing function. The expected signature of the message processing delegate is:  <a href="#a51c4a37552fac278254c21ac7fd5d348">More...</a><br /></td></tr>
 <tr class="separator:a51c4a37552fac278254c21ac7fd5d348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab51711019e8a062fe696262d91b0f3f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ab51711019e8a062fe696262d91b0f3f4">CreateEmitter&lt; T &gt;</a> (object owner, string name)</td></tr>
+<tr class="memdesc:ab51711019e8a062fe696262d91b0f3f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create emitter.  <a href="#ab51711019e8a062fe696262d91b0f3f4">More...</a><br /></td></tr>
 <tr class="separator:ab51711019e8a062fe696262d91b0f3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d8c959067dbe0e97293364576e64c6a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a1d8c959067dbe0e97293364576e64c6a">WaitAll</a> (int millisecondsTimeout=Timeout.Infinite)</td></tr>
+<tr class="memdesc:a1d8c959067dbe0e97293364576e64c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all components to complete.  <a href="#a1d8c959067dbe0e97293364576e64c6a">More...</a><br /></td></tr>
 <tr class="separator:a1d8c959067dbe0e97293364576e64c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23d21d3a45de1e4e3c7ae73566fd3ef3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a23d21d3a45de1e4e3c7ae73566fd3ef3">WaitAny</a> (int millisecondsTimeout=Timeout.Infinite)</td></tr>
+<tr class="memdesc:a23d21d3a45de1e4e3c7ae73566fd3ef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for any component to complete.  <a href="#a23d21d3a45de1e4e3c7ae73566fd3ef3">More...</a><br /></td></tr>
 <tr class="separator:a23d21d3a45de1e4e3c7ae73566fd3ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dc3f880c5c8c1d41d2941b2394d501d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a8dc3f880c5c8c1d41d2941b2394d501d">Dispose</a> ()</td></tr>
 <tr class="separator:a8dc3f880c5c8c1d41d2941b2394d501d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7261dc1c08fe194d1ab5a49fa6a684c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ad7261dc1c08fe194d1ab5a49fa6a684c">Run</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a> descriptor, bool enableExceptionHandling=false)</td></tr>
+<tr class="memdesc:ad7261dc1c08fe194d1ab5a49fa6a684c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (synchronously).  <a href="#ad7261dc1c08fe194d1ab5a49fa6a684c">More...</a><br /></td></tr>
 <tr class="separator:ad7261dc1c08fe194d1ab5a49fa6a684c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67225bfa671b4b9d820e8c7929d2f231"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a67225bfa671b4b9d820e8c7929d2f231">Run</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> replayInterval=null, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1, bool enableExceptionHandling=false)</td></tr>
+<tr class="memdesc:a67225bfa671b4b9d820e8c7929d2f231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (synchronously).  <a href="#a67225bfa671b4b9d820e8c7929d2f231">More...</a><br /></td></tr>
 <tr class="separator:a67225bfa671b4b9d820e8c7929d2f231"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07e0b6ef6c31f6459186f576649a7be9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a07e0b6ef6c31f6459186f576649a7be9">Run</a> (DateTime replayStartTime, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1, bool enableExceptionHandling=false)</td></tr>
+<tr class="memdesc:a07e0b6ef6c31f6459186f576649a7be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (synchronously).  <a href="#a07e0b6ef6c31f6459186f576649a7be9">More...</a><br /></td></tr>
 <tr class="separator:a07e0b6ef6c31f6459186f576649a7be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0b25f50426092624ab237ca4aff80af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#af0b25f50426092624ab237ca4aff80af">Run</a> (DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1, bool enableExceptionHandling=false)</td></tr>
+<tr class="memdesc:af0b25f50426092624ab237ca4aff80af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (synchronously).  <a href="#af0b25f50426092624ab237ca4aff80af">More...</a><br /></td></tr>
 <tr class="separator:af0b25f50426092624ab237ca4aff80af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9177eda4afe947f86e69c8a5d1841d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ac9177eda4afe947f86e69c8a5d1841d6">Run</a> (TimeSpan duration, bool enableExceptionHandling=false)</td></tr>
+<tr class="memdesc:ac9177eda4afe947f86e69c8a5d1841d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (synchronously).  <a href="#ac9177eda4afe947f86e69c8a5d1841d6">More...</a><br /></td></tr>
 <tr class="separator:ac9177eda4afe947f86e69c8a5d1841d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf921f700e3fd34a1790ae7b950969b8"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#acf921f700e3fd34a1790ae7b950969b8">RunAsync</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> replayInterval=null, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1)</td></tr>
+<tr class="memdesc:acf921f700e3fd34a1790ae7b950969b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#acf921f700e3fd34a1790ae7b950969b8">More...</a><br /></td></tr>
 <tr class="separator:acf921f700e3fd34a1790ae7b950969b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a480b7ad1b7f67bd5c76314bf51282302"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a480b7ad1b7f67bd5c76314bf51282302">RunAsync</a> (DateTime replayStartTime, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1)</td></tr>
+<tr class="memdesc:a480b7ad1b7f67bd5c76314bf51282302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#a480b7ad1b7f67bd5c76314bf51282302">More...</a><br /></td></tr>
 <tr class="separator:a480b7ad1b7f67bd5c76314bf51282302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad78ed015775b3dced357d8d13dbc9f2"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aad78ed015775b3dced357d8d13dbc9f2">RunAsync</a> (DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1)</td></tr>
+<tr class="memdesc:aad78ed015775b3dced357d8d13dbc9f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#aad78ed015775b3dced357d8d13dbc9f2">More...</a><br /></td></tr>
 <tr class="separator:aad78ed015775b3dced357d8d13dbc9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfbd537122d0d5bfea562f2d9452971a"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#abfbd537122d0d5bfea562f2d9452971a">RunAsync</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a> descriptor)</td></tr>
+<tr class="memdesc:abfbd537122d0d5bfea562f2d9452971a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#abfbd537122d0d5bfea562f2d9452971a">More...</a><br /></td></tr>
 <tr class="separator:abfbd537122d0d5bfea562f2d9452971a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4eb0c7c16cca3d793f5e21d590e18a8"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ac4eb0c7c16cca3d793f5e21d590e18a8">GetCurrentTime</a> ()</td></tr>
+<tr class="memdesc:ac4eb0c7c16cca3d793f5e21d590e18a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current clock time.  <a href="#ac4eb0c7c16cca3d793f5e21d590e18a8">More...</a><br /></td></tr>
 <tr class="separator:ac4eb0c7c16cca3d793f5e21d590e18a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac57fa881009f2653b7046881087b5a7"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aac57fa881009f2653b7046881087b5a7">GetCurrentTimeFromElapsedTicks</a> (long ticksFromSystemBoot)</td></tr>
+<tr class="memdesc:aac57fa881009f2653b7046881087b5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current time, given elapsed ticks.  <a href="#aac57fa881009f2653b7046881087b5a7">More...</a><br /></td></tr>
 <tr class="separator:aac57fa881009f2653b7046881087b5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a546d382ce16f9cb43acc87012905ed"><td class="memItemLeft" align="right" valign="top">TimeSpan&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a3a546d382ce16f9cb43acc87012905ed">ConvertToRealTime</a> (TimeSpan duration)</td></tr>
+<tr class="memdesc:a3a546d382ce16f9cb43acc87012905ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert virtual duration to real time.  <a href="#a3a546d382ce16f9cb43acc87012905ed">More...</a><br /></td></tr>
 <tr class="separator:a3a546d382ce16f9cb43acc87012905ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd007cc892cece8dfb29d2b5ccfb0346"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#abd007cc892cece8dfb29d2b5ccfb0346">ConvertToRealTime</a> (DateTime time)</td></tr>
+<tr class="memdesc:abd007cc892cece8dfb29d2b5ccfb0346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert virtual datetime to real time.  <a href="#abd007cc892cece8dfb29d2b5ccfb0346">More...</a><br /></td></tr>
 <tr class="separator:abd007cc892cece8dfb29d2b5ccfb0346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8104e0ce9dd581a8e7d6cd484c161926"><td class="memItemLeft" align="right" valign="top">TimeSpan&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a8104e0ce9dd581a8e7d6cd484c161926">ConvertFromRealTime</a> (TimeSpan duration)</td></tr>
+<tr class="memdesc:a8104e0ce9dd581a8e7d6cd484c161926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert real timespan to virtual.  <a href="#a8104e0ce9dd581a8e7d6cd484c161926">More...</a><br /></td></tr>
 <tr class="separator:a8104e0ce9dd581a8e7d6cd484c161926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a9ce9a89ff13b1d721a85ef2e1e3b6dc0">ConvertFromRealTime</a> (DateTime time)</td></tr>
+<tr class="memdesc:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contert real datetime to virtual.  <a href="#a9ce9a89ff13b1d721a85ef2e1e3b6dc0">More...</a><br /></td></tr>
 <tr class="separator:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ad7c65d5988b2680dbd0a31c6800c60bd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ad7c65d5988b2680dbd0a31c6800c60bd">Create</a> (string name=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> globalPolicy=null, int threadCount=0, bool allowSchedulingOnExternalThreads=false)</td></tr>
+<tr class="memdesc:ad7c65d5988b2680dbd0a31c6800c60bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create pipeline.  <a href="#ad7c65d5988b2680dbd0a31c6800c60bd">More...</a><br /></td></tr>
 <tr class="separator:ad7c65d5988b2680dbd0a31c6800c60bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:af6b2233b5839f722c64b2d089505c21e"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#af6b2233b5839f722c64b2d089505c21e">Name</a> =&gt; this.name</td></tr>
+<tr class="memdesc:af6b2233b5839f722c64b2d089505c21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets pipeline name.  <a href="#af6b2233b5839f722c64b2d089505c21e">More...</a><br /></td></tr>
 <tr class="separator:af6b2233b5839f722c64b2d089505c21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ef31d6552936b491c097fda69b64fe8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a5ef31d6552936b491c097fda69b64fe8">ReplayDescriptor</a> =&gt; this.replayDescriptor</td></tr>
+<tr class="memdesc:a5ef31d6552936b491c097fda69b64fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets replay descriptor.  <a href="#a5ef31d6552936b491c097fda69b64fe8">More...</a><br /></td></tr>
 <tr class="separator:a5ef31d6552936b491c097fda69b64fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48e9c836272b502ed4e41d9e241c814f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a48e9c836272b502ed4e41d9e241c814f">GlobalPolicy</a> =&gt; this.globalPolicy</td></tr>
+<tr class="memdesc:a48e9c836272b502ed4e41d9e241c814f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets global delivery policy.  <a href="#a48e9c836272b502ed4e41d9e241c814f">More...</a><br /></td></tr>
 <tr class="separator:a48e9c836272b502ed4e41d9e241c814f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
 Events</h2></td></tr>
 <tr class="memitem:a6c80c864b6fb71ed145d7311a48d8837"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline_completion_event_args.html">PipelineCompletionEventArgs</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a6c80c864b6fb71ed145d7311a48d8837">PipelineCompletionEvent</a></td></tr>
+<tr class="memdesc:a6c80c864b6fb71ed145d7311a48d8837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event fired upon pipeline completion.  <a href="#a6c80c864b6fb71ed145d7311a48d8837">More...</a><br /></td></tr>
 <tr class="separator:a6c80c864b6fb71ed145d7311a48d8837"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f752e33c524012aa1c47e3587b20e4e"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a7f752e33c524012aa1c47e3587b20e4e">ComponentCompletionEvent</a></td></tr>
+<tr class="memdesc:a7f752e33c524012aa1c47e3587b20e4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event fired upon component completion.  <a href="#a7f752e33c524012aa1c47e3587b20e4e">More...</a><br /></td></tr>
 <tr class="separator:a7f752e33c524012aa1c47e3587b20e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -209,6 +236,17 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Pipeline name.</td></tr>
+    <tr><td class="paramname">globalPolicy</td><td>Global delivery policy.</td></tr>
+    <tr><td class="paramname">threadCount</td><td>Number of threads.</td></tr>
+    <tr><td class="paramname">allowSchedulingOnExternalThreads</td><td>Whether to allow scheduling on external threads.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -238,6 +276,15 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Add component to pipeline. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Component name.</td></tr>
+    <tr><td class="paramname">stateObject</td><td>Initial state object.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a8104e0ce9dd581a8e7d6cd484c161926"></a>
@@ -255,6 +302,15 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Convert real timespan to virtual. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">duration</td><td>Duration to convert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Converted time span.</dd></dl>
 
 </div>
 </div>
@@ -274,6 +330,15 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Contert real datetime to virtual. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>Datetime to convert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Converted datetime.</dd></dl>
+
 </div>
 </div>
 <a id="a3a546d382ce16f9cb43acc87012905ed"></a>
@@ -292,6 +357,15 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Convert virtual duration to real time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">duration</td><td>Duration to convert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Converted time span.</dd></dl>
+
 </div>
 </div>
 <a id="abd007cc892cece8dfb29d2b5ccfb0346"></a>
@@ -309,6 +383,15 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Convert virtual datetime to real time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>Datetime to convert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Converted datetime.</dd></dl>
 
 </div>
 </div>
@@ -357,6 +440,18 @@ Events</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Create pipeline. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Pipeline name.</td></tr>
+    <tr><td class="paramname">globalPolicy</td><td>Global delivery policy.</td></tr>
+    <tr><td class="paramname">threadCount</td><td>Number of threads.</td></tr>
+    <tr><td class="paramname">allowSchedulingOnExternalThreads</td><td>Whether to allow scheduling on external threads.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Created pipeline.</dd></dl>
 
 </div>
 </div>
@@ -562,6 +657,22 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Create emitter. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of emitted messages.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner</td><td>Owner of emitter.</td></tr>
+    <tr><td class="paramname">name</td><td>Name of emitter.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Created emitter.</dd></dl>
 
 </div>
 </div>
@@ -773,6 +884,9 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Get current clock time. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current clock time.</dd></dl>
+
 </div>
 </div>
 <a id="aac57fa881009f2653b7046881087b5a7"></a>
@@ -790,6 +904,15 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get current time, given elapsed ticks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ticksFromSystemBoot</td><td>Ticks elapsed since system boot.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current time.</dd></dl>
 
 </div>
 </div>
@@ -819,6 +942,15 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Propose replay time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">activeInterval</td><td>Active time interval.</td></tr>
+    <tr><td class="paramname">originatingTimeInterval</td><td>Originating time interval.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ad7261dc1c08fe194d1ab5a49fa6a684c"></a>
@@ -846,6 +978,15 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run pipeline (synchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">descriptor</td><td>Replay descriptor.</td></tr>
+    <tr><td class="paramname">enableExceptionHandling</td><td>Whether to enable exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -893,6 +1034,18 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Run pipeline (synchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">replayInterval</td><td>Time interval within which to replay.</td></tr>
+    <tr><td class="paramname">useOriginatingTime</td><td>Whether to use originating time.</td></tr>
+    <tr><td class="paramname">enforceReplayClock</td><td>Whether to enforce replay clock.</td></tr>
+    <tr><td class="paramname">replaySpeedFactor</td><td>Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</td></tr>
+    <tr><td class="paramname">enableExceptionHandling</td><td>Whether to enable exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a07e0b6ef6c31f6459186f576649a7be9"></a>
@@ -938,6 +1091,18 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run pipeline (synchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">replayStartTime</td><td>Time at which to start replaying.</td></tr>
+    <tr><td class="paramname">useOriginatingTime</td><td>Whether to use originating time.</td></tr>
+    <tr><td class="paramname">enforceReplayClock</td><td>Whether to enforce replay clock.</td></tr>
+    <tr><td class="paramname">replaySpeedFactor</td><td>Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</td></tr>
+    <tr><td class="paramname">enableExceptionHandling</td><td>Whether to enable exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -991,6 +1156,19 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Run pipeline (synchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">replayStartTime</td><td>Time at which to start replaying.</td></tr>
+    <tr><td class="paramname">replayEndTime</td><td>Time at which to end replaying.</td></tr>
+    <tr><td class="paramname">useOriginatingTime</td><td>Whether to use originating time.</td></tr>
+    <tr><td class="paramname">enforceReplayClock</td><td>Whether to enforce replay clock.</td></tr>
+    <tr><td class="paramname">replaySpeedFactor</td><td>Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</td></tr>
+    <tr><td class="paramname">enableExceptionHandling</td><td>Whether to enable exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ac9177eda4afe947f86e69c8a5d1841d6"></a>
@@ -1018,6 +1196,15 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run pipeline (synchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">duration</td><td>Duration (time span) to replay.</td></tr>
+    <tr><td class="paramname">enableExceptionHandling</td><td>Whether to enable exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1059,6 +1246,18 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Run pipeline (asynchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">replayInterval</td><td>Time interval within which to replay.</td></tr>
+    <tr><td class="paramname">useOriginatingTime</td><td>Whether to use originating time.</td></tr>
+    <tr><td class="paramname">enforceReplayClock</td><td>Whether to enforce replay clock.</td></tr>
+    <tr><td class="paramname">replaySpeedFactor</td><td>Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Disposable used to terminate pipeline.</dd></dl>
+
 </div>
 </div>
 <a id="a480b7ad1b7f67bd5c76314bf51282302"></a>
@@ -1098,6 +1297,18 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run pipeline (asynchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">replayStartTime</td><td>Time at which to start replaying.</td></tr>
+    <tr><td class="paramname">useOriginatingTime</td><td>Whether to use originating time.</td></tr>
+    <tr><td class="paramname">enforceReplayClock</td><td>Whether to enforce replay clock.</td></tr>
+    <tr><td class="paramname">replaySpeedFactor</td><td>Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Disposable used to terminate pipeline.</dd></dl>
 
 </div>
 </div>
@@ -1145,6 +1356,19 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Run pipeline (asynchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">replayStartTime</td><td>Time at which to start replaying.</td></tr>
+    <tr><td class="paramname">replayEndTime</td><td>Time at which to end replaying.</td></tr>
+    <tr><td class="paramname">useOriginatingTime</td><td>Whether to use originating time.</td></tr>
+    <tr><td class="paramname">enforceReplayClock</td><td>Whether to enforce replay clock.</td></tr>
+    <tr><td class="paramname">replaySpeedFactor</td><td>Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Disposable used to terminate pipeline.</dd></dl>
+
 </div>
 </div>
 <a id="abfbd537122d0d5bfea562f2d9452971a"></a>
@@ -1162,6 +1386,15 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run pipeline (asynchronously). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">descriptor</td><td>Replay descriptor.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Disposable used to terminate pipeline.</dd></dl>
 
 </div>
 </div>
@@ -1181,6 +1414,15 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Wait for all components to complete. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">millisecondsTimeout</td><td>Timeout (milliseconds).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success.</dd></dl>
+
 </div>
 </div>
 <a id="a23d21d3a45de1e4e3c7ae73566fd3ef3"></a>
@@ -1199,6 +1441,15 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Wait for any component to complete. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">millisecondsTimeout</td><td>Timeout (milliseconds).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success.</dd></dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -1214,6 +1465,8 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Gets global delivery policy. </p>
+
 </div>
 </div>
 <a id="af6b2233b5839f722c64b2d089505c21e"></a>
@@ -1228,6 +1481,8 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Gets pipeline name. </p>
+
 </div>
 </div>
 <a id="a5ef31d6552936b491c097fda69b64fe8"></a>
@@ -1241,6 +1496,8 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Gets replay descriptor. </p>
 
 </div>
 </div>
@@ -1257,6 +1514,8 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Event fired upon component completion. </p>
+
 </div>
 </div>
 <a id="a6c80c864b6fb71ed145d7311a48d8837"></a>
@@ -1270,6 +1529,8 @@ Events</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Event fired upon pipeline completion. </p>
 
 </div>
 </div>

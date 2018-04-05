@@ -13,7 +13,7 @@ The Platform for Situated Intelligence project aims to address these issues and 
 
 # Using and Building
 
-Platform for Situated Intelligence is built on the a .NET Framework. Large parts of it are build on .NET Standard and therefore run both on Windows and Linux, whereas some components are specific and available only to one operating system (for instance a Kinect sensor component is available only for Windows.)
+Platform for Situated Intelligence is built on the .NET Framework. Large parts of it are built on .NET Standard and therefore run both on Windows and Linux, whereas some components are specific and available only to one operating system (for instance the Kinect sensor component is available only for Windows.)
 
 You can build applications based on Platform for Situated Intelligence either by leveraging nuget packages, or by cloning and building the code. Below are instructions:
 
@@ -44,6 +44,20 @@ If you find a reproducible bug or if you would like to request a new feature or 
 
 We hope the community can help improve and evolve Platform for Situated Intelligence. If you plan to contribute to the codebase, please read the [Contributing Guidelines](https://github.com/Microsoft/psi/blob/master/CONTRIBUTING.md) document. It describes how the source code is organized and things you need to know before making any source code changes.
 
+# Who is Using
+
+Platform for Situated Intelligence is currently being used in a number of industry and academic research labs, including (but not limited to):
+* in the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
+* in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
+* in the [Speech Language and Interactive Machines](https://coen.boisestate.edu/slim/) research group at Boise State University.
+* in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/), Northwestern University. 
+
+If you would like to be added to this list, just add a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url to your research lab, website or project that you would like us to link to. 
+
 # License
 
 Platform for Situated Intelligence is available under an [MIT License](https://github.com/Microsoft/psi/blob/master/LICENSE.txt).
+
+# Acknowledgments
+
+We would like to thank our internal and external early adopters for the feedback provided during the alpha testing period, including (but not limited to): [Daniel McDuff](http://alumni.media.mit.edu/~djmcduff/) and [Kael Rowan](https://www.microsoft.com/en-us/research/people/kaelr/) at MSR, Chirag Raman and Louis-Phillipe Morency in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at CMU, as well as adopters in the [SLIM research group](https://coen.boisestate.edu/slim/) at Boise State and in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/) at Northwestern University.

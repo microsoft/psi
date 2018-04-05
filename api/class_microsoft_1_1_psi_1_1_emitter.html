@@ -85,6 +85,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3f4f9bf726dc76f8800e0418b82b3db3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#a3f4f9bf726dc76f8800e0418b82b3db3">Close</a> ()</td></tr>
+<tr class="memdesc:a3f4f9bf726dc76f8800e0418b82b3db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close emitter (unsubscribing receivers).  <a href="#a3f4f9bf726dc76f8800e0418b82b3db3">More...</a><br /></td></tr>
 <tr class="separator:a3f4f9bf726dc76f8800e0418b82b3db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4d988ce627707f4b8c32155d02fb34f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#ab4d988ce627707f4b8c32155d02fb34f">Post</a> (T message, DateTime originatingTime)</td></tr>
 <tr class="memdesc:ab4d988ce627707f4b8c32155d02fb34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronously calls all subscribers. When the call returns, the message is assumed to be unchanged and reusable (that is, no downstream component is referencing it or any of its parts).  <a href="#ab4d988ce627707f4b8c32155d02fb34f">More...</a><br /></td></tr>
@@ -103,6 +104,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a859e14258e6a0230dff2dd525c8cac96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#a859e14258e6a0230dff2dd525c8cac96">Pipeline</a> =&gt; this.pipeline</td></tr>
 <tr class="separator:a859e14258e6a0230dff2dd525c8cac96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a798316bd057e38b5515232c7b3afab5a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#a798316bd057e38b5515232c7b3afab5a">HasSubscribers</a> =&gt; this.receivers.Count() &gt; 0</td></tr>
+<tr class="memdesc:a798316bd057e38b5515232c7b3afab5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether this emitter has subscribers.  <a href="#a798316bd057e38b5515232c7b3afab5a">More...</a><br /></td></tr>
 <tr class="separator:a798316bd057e38b5515232c7b3afab5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63500585efaefeb472987a3c5f39b1b"><td class="memItemLeft" align="right" valign="top">object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#af63500585efaefeb472987a3c5f39b1b">Owner</a> =&gt; this.owner</td></tr>
 <tr class="separator:af63500585efaefeb472987a3c5f39b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,12 +115,16 @@ Properties</h2></td></tr>
 <tr class="separator:ad4feee47f2aa06caeefa61b0bc749384"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_i_emitter')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html">Microsoft.Psi.IEmitter</a></td></tr>
 <tr class="memitem:a2802c52c4dc8cfa764485d8c3d484acb inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a2802c52c4dc8cfa764485d8c3d484acb">Name</a><code> [get]</code></td></tr>
+<tr class="memdesc:a2802c52c4dc8cfa764485d8c3d484acb inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets emitter name.  <a href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a2802c52c4dc8cfa764485d8c3d484acb">More...</a><br /></td></tr>
 <tr class="separator:a2802c52c4dc8cfa764485d8c3d484acb inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4450055789e7e624a8f1b9624ad909b3 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memItemLeft" align="right" valign="top">object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a4450055789e7e624a8f1b9624ad909b3">Owner</a><code> [get]</code></td></tr>
+<tr class="memdesc:a4450055789e7e624a8f1b9624ad909b3 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets emitter owner object.  <a href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a4450055789e7e624a8f1b9624ad909b3">More...</a><br /></td></tr>
 <tr class="separator:a4450055789e7e624a8f1b9624ad909b3 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6523b6b235a3d842c2611ceefe91ad03 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a6523b6b235a3d842c2611ceefe91ad03">Pipeline</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6523b6b235a3d842c2611ceefe91ad03 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets pipeline to which emitter belongs.  <a href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a6523b6b235a3d842c2611ceefe91ad03">More...</a><br /></td></tr>
 <tr class="separator:a6523b6b235a3d842c2611ceefe91ad03 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a528037cd291b10ca0070d37b7c623b13 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a528037cd291b10ca0070d37b7c623b13">Id</a><code> [get]</code></td></tr>
+<tr class="memdesc:a528037cd291b10ca0070d37b7c623b13 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets emitter ID.  <a href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a528037cd291b10ca0070d37b7c623b13">More...</a><br /></td></tr>
 <tr class="separator:a528037cd291b10ca0070d37b7c623b13 inherit properties_interface_microsoft_1_1_psi_1_1_i_emitter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_i_producer"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_i_producer')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; T &gt;</a></td></tr>
 <tr class="memitem:a105253033c938a4e5b889415a942389d inherit properties_interface_microsoft_1_1_psi_1_1_i_producer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TOut &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html#a105253033c938a4e5b889415a942389d">Out</a><code> [get]</code></td></tr>
@@ -148,6 +154,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Close emitter (unsubscribing receivers). </p>
 
 </div>
 </div>
@@ -259,6 +267,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Gets a value indicating whether this emitter has subscribers. </p>
 
 </div>
 </div>

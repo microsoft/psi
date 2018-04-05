@@ -84,11 +84,13 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a23b35db8eea089ab442c69c6d65c8033"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#a23b35db8eea089ab442c69c6d65c8033">AsyncConsumerProducer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline)</td></tr>
+<tr class="memdesc:a23b35db8eea089ab442c69c6d65c8033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#a23b35db8eea089ab442c69c6d65c8033" title="Initializes a new instance of the AsyncConsumerProducer&lt;TIn, TOut&gt; class. ">AsyncConsumerProducer&lt;TIn, TOut&gt;</a> class.  <a href="#a23b35db8eea089ab442c69c6d65c8033">More...</a><br /></td></tr>
 <tr class="separator:a23b35db8eea089ab442c69c6d65c8033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aeac6d89a23678c9ebaa9c59ab1acd277"><td class="memItemLeft" align="right" valign="top">virtual async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#aeac6d89a23678c9ebaa9c59ab1acd277">ReceiveAsync</a> (TIn value, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> envelope)</td></tr>
+<tr class="memdesc:aeac6d89a23678c9ebaa9c59ab1acd277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Async receiver to be implemented by subclass.  <a href="#aeac6d89a23678c9ebaa9c59ab1acd277">More...</a><br /></td></tr>
 <tr class="separator:aeac6d89a23678c9ebaa9c59ab1acd277"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -132,6 +134,14 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#a23b35db8eea089ab442c69c6d65c8033" title="Initializes a new instance of the AsyncConsumerProducer&lt;TIn, TOut&gt; class. ">AsyncConsumerProducer&lt;TIn, TOut&gt;</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -168,6 +178,16 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Async receiver to be implemented by subclass. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Value received.</td></tr>
+    <tr><td class="paramname">envelope</td><td>Message envelope.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Async task.</dd></dl>
 
 </div>
 </div>

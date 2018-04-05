@@ -25,7 +25,7 @@ Before writing up our first \\psi app, we will need to setup a Visual Studio pro
 
 1. First, create a simple .NET Core console app (for the examples below, a console app will suffice). You can do so by going to _File -> New Project -> Visual C# -> Console App (.NET Core)_. (.NET Core is a cross-platform solution; if you want to createa .NET Framework solution which runs only on Windows, make sure you change your project settings to target .NET Framework 4.7 or above.)
 
-2. Add a reference to the `Microsoft.Psi.Runtime` NuGet package that contains the core Platform for Situated Intelligence infrastructure. You can do so by going to References (under your project), right-click, then _Manage NuGet Packages_, then go to _Browse_. Type in `Microsoft.Psi.Runtime` and install.
+2. Add a reference to the `Microsoft.Psi.Runtime` NuGet package that contains the core Platform for Situated Intelligence infrastructure. You can do so by going to References (under your project), right-click, then _Manage NuGet Packages_, then go to _Browse_. Make sure the _Include prerelease_ checkbox is checked. Type in `Microsoft.Psi.Runtime` and install.
 
 3. As the final step, add a `using` clause at the beginning of your program as follows:
 

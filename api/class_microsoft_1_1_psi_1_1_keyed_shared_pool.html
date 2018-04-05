@@ -75,6 +75,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Initializes a new instance of the KeyedSharedPool&lt;T, TKey&gt; class.  
+ <a href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#details">More...</a></p>
+
 <p>Inherits IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -85,9 +88,27 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a34fe47e12f1e2224cdc5a34ff0e77aee"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#a34fe47e12f1e2224cdc5a34ff0e77aee">GetOrCreate</a> (TKey key, Func&lt; T &gt; constructor)</td></tr>
+<tr class="memdesc:a34fe47e12f1e2224cdc5a34ff0e77aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pooled instance or create when necessary.  <a href="#a34fe47e12f1e2224cdc5a34ff0e77aee">More...</a><br /></td></tr>
 <tr class="separator:a34fe47e12f1e2224cdc5a34ff0e77aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Initializes a new instance of the KeyedSharedPool&lt;T, TKey&gt; class. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of shared resource.</td></tr>
+    <tr><td class="paramname">TKey</td><td>Type of shared resource key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="typeconstraint">
+<dl><dt><b>Type Constraints</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>T</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a105832e9dc75048e952ae89aa7e8cc29"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a105832e9dc75048e952ae89aa7e8cc29">&#9670;&nbsp;</a></span>Dispose()</h2>
 
@@ -140,6 +161,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get pooled instance or create when necessary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Shared resource key</td></tr>
+    <tr><td class="paramname">constructor</td><td>Constructor function called as necessary to create new instances</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared resource</dd></dl>
 
 </div>
 </div>

@@ -91,6 +91,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6ecc7ca7c8663e4860059888a7ca548a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the serializer name and version, which a serializer needs to be able to interpret when initialized with an older schema.  <a href="#a6ecc7ca7c8663e4860059888a7ca548a">More...</a><br /></td></tr>
 <tr class="separator:a6ecc7ca7c8663e4860059888a7ca548a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe1dfe235e58ef0502e7215a2abb87a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html#abe1dfe235e58ef0502e7215a2abb87a9">ValidateCompatibleWith</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a> other)</td></tr>
+<tr class="memdesc:abe1dfe235e58ef0502e7215a2abb87a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate whether two schemas are compatible.  <a href="#abe1dfe235e58ef0502e7215a2abb87a9">More...</a><br /></td></tr>
 <tr class="separator:abe1dfe235e58ef0502e7215a2abb87a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99be5a7f63ecc6367a147e1df41d373c"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; MemberInfo &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html#a99be5a7f63ecc6367a147e1df41d373c">GetCompatibleMemberSet</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a> targetSchema=null)</td></tr>
 <tr class="memdesc:a99be5a7f63ecc6367a147e1df41d373c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the MemberInfo information for each member of the type schema, based on a target schema specification.  <a href="#a99be5a7f63ecc6367a147e1df41d373c">More...</a><br /></td></tr>
@@ -114,6 +115,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae2cd0a37fa48a2f44db346b24f280ae1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html#ae2cd0a37fa48a2f44db346b24f280ae1">IsPartial</a> =&gt; this.Members == null</td></tr>
+<tr class="memdesc:ae2cd0a37fa48a2f44db346b24f280ae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether type is partial.  <a href="#ae2cd0a37fa48a2f44db346b24f280ae1">More...</a><br /></td></tr>
 <tr class="separator:ae2cd0a37fa48a2f44db346b24f280ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -497,6 +499,15 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Validate whether two schemas are compatible. </p>
+<p>Schemas are compatible if all required fields are present in both (regardless of type).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>Other type schema.</td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -511,6 +522,8 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Gets a value indicating whether type is partial. </p>
 
 </div>
 </div>

@@ -5,6 +5,17 @@ title:  Release Notes
 
 # Release Notes
 
+**2018/04/04**: Beta-release, version 0.3.16.5
+
+Interim release with a few changes to the samples and some minor bugfixes:
+
+* ArmControlROSSample is now RosArmControlSample.
+* PsiRosTurtleSample is now RosTurtleSample.
+* Added LinuxSpeechSample.
+* KinectFaceDetector component now outputs an empty list if no face is detected.
+* NuGet packages are now marked beta.
+* Additional minor bugfixes.
+
 **2018/03/17**: Beta-release, version 0.2.123.1
 
 Initial, beta version of the Platform for Situated Intelligence. Includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing). Relevant documents:

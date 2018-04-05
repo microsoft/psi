@@ -75,6 +75,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Runtime info metadata.  
+ <a href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#details">More...</a></p>
+
 <p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_metadata.html">Microsoft.Psi.Metadata</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -86,12 +89,16 @@ Public Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a4c76e74c07bccc676de8f82a49aeccca"><td class="memItemLeft" align="right" valign="top">static readonly string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#a4c76e74c07bccc676de8f82a49aeccca">MachineName</a> = Environment.MachineName</td></tr>
+<tr class="memdesc:a4c76e74c07bccc676de8f82a49aeccca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the NetBIOS name of the local machine.  <a href="#a4c76e74c07bccc676de8f82a49aeccca">More...</a><br /></td></tr>
 <tr class="separator:a4c76e74c07bccc676de8f82a49aeccca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad61a7ef8dfd54aa0aa6685ab011d3fcc"><td class="memItemLeft" align="right" valign="top">static readonly string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#ad61a7ef8dfd54aa0aa6685ab011d3fcc">CmdLine</a> = Environment.CommandLine</td></tr>
+<tr class="memdesc:ad61a7ef8dfd54aa0aa6685ab011d3fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the command line for the process.  <a href="#ad61a7ef8dfd54aa0aa6685ab011d3fcc">More...</a><br /></td></tr>
 <tr class="separator:ad61a7ef8dfd54aa0aa6685ab011d3fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0adccce5dcb93340e5a56d3620be9f45"><td class="memItemLeft" align="right" valign="top">static readonly AssemblyName&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#a0adccce5dcb93340e5a56d3620be9f45">RuntimeName</a> = Assembly.GetExecutingAssembly().GetName()</td></tr>
+<tr class="memdesc:a0adccce5dcb93340e5a56d3620be9f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets name of the executing assembly.  <a href="#a0adccce5dcb93340e5a56d3620be9f45">More...</a><br /></td></tr>
 <tr class="separator:a0adccce5dcb93340e5a56d3620be9f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87ca394b45d7b30c94888723436e6be9"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html">RuntimeInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#a87ca394b45d7b30c94888723436e6be9">Current</a> = new <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html">RuntimeInfo</a>()</td></tr>
+<tr class="memdesc:a87ca394b45d7b30c94888723436e6be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current runtime info.  <a href="#a87ca394b45d7b30c94888723436e6be9">More...</a><br /></td></tr>
 <tr class="separator:a87ca394b45d7b30c94888723436e6be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
@@ -122,7 +129,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a209f53354cbccfc416b7b3587fcc121c inherit properties_class_microsoft_1_1_psi_1_1_metadata"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets custom flags implemented in derived types.  <a href="class_microsoft_1_1_psi_1_1_metadata.html#a209f53354cbccfc416b7b3587fcc121c">More...</a><br /></td></tr>
 <tr class="separator:a209f53354cbccfc416b7b3587fcc121c inherit properties_class_microsoft_1_1_psi_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Runtime info metadata. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="ad61a7ef8dfd54aa0aa6685ab011d3fcc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad61a7ef8dfd54aa0aa6685ab011d3fcc">&#9670;&nbsp;</a></span>CmdLine</h2>
 
@@ -142,6 +151,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the command line for the process. </p>
 
 </div>
 </div>
@@ -164,6 +175,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the current runtime info. </p>
 
 </div>
 </div>
@@ -203,6 +216,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Gets the NetBIOS name of the local machine. </p>
+
 </div>
 </div>
 <a id="a0adccce5dcb93340e5a56d3620be9f45"></a>
@@ -224,6 +239,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets name of the executing assembly. </p>
 
 </div>
 </div>

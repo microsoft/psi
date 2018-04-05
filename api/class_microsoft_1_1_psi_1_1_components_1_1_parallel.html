@@ -83,6 +83,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af6fb328015e3693bc5ac265308407320"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#af6fb328015e3693bc5ac265308407320">Parallel</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault)</td></tr>
+<tr class="memdesc:af6fb328015e3693bc5ac265308407320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#af6fb328015e3693bc5ac265308407320" title="Initializes a new instance of the Parallel&lt;TIn, TOut&gt; class. ">Parallel&lt;TIn, TOut&gt;</a> class.  <a href="#af6fb328015e3693bc5ac265308407320">More...</a><br /></td></tr>
 <tr class="separator:af6fb328015e3693bc5ac265308407320"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -150,6 +151,17 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#af6fb328015e3693bc5ac265308407320" title="Initializes a new instance of the Parallel&lt;TIn, TOut&gt; class. ">Parallel&lt;TIn, TOut&gt;</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
+    <tr><td class="paramname">vectorSize</td><td>Vector size.</td></tr>
+    <tr><td class="paramname">transformSelector</td><td>Function mapping keyed input producers to output producers.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

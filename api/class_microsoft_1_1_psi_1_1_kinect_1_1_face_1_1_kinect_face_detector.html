@@ -86,9 +86,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3009d5262f7f5163f6f0be3e709ad8f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector.html#a3009d5262f7f5163f6f0be3e709ad8f9">KinectFaceDetector</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_sensor.html">Kinect.KinectSensor</a> kinectSensor, <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector_configuration.html">KinectFaceDetectorConfiguration</a> configuration)</td></tr>
 <tr class="memdesc:a3009d5262f7f5163f6f0be3e709ad8f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector.html" title="Used for receiving information from a Kinect sensor ">KinectFaceDetector</a> class.  <a href="#a3009d5262f7f5163f6f0be3e709ad8f9">More...</a><br /></td></tr>
 <tr class="separator:a3009d5262f7f5163f6f0be3e709ad8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c15360d0eb72c6cd8551a6bdebb54f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector.html#a6c15360d0eb72c6cd8551a6bdebb54f3">UpdateFaceTracking</a> (List&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> &gt; kinectBodies)</td></tr>
-<tr class="memdesc:a6c15360d0eb72c6cd8551a6bdebb54f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called with a list of bodies we got from our Kinect sensor  <a href="#a6c15360d0eb72c6cd8551a6bdebb54f3">More...</a><br /></td></tr>
-<tr class="separator:a6c15360d0eb72c6cd8551a6bdebb54f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b0811f8c983c6ce6b9c23c10da7088"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector.html#ad0b0811f8c983c6ce6b9c23c10da7088">UpdateFaceTracking</a> (List&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> &gt; kinectBodies, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> e)</td></tr>
+<tr class="memdesc:ad0b0811f8c983c6ce6b9c23c10da7088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called with a list of bodies we got from our Kinect sensor  <a href="#ad0b0811f8c983c6ce6b9c23c10da7088">More...</a><br /></td></tr>
+<tr class="separator:ad0b0811f8c983c6ce6b9c23c10da7088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb2a47db5fe1b120f704c00027b40d14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector.html#adb2a47db5fe1b120f704c00027b40d14">Dispose</a> ()</td></tr>
 <tr class="memdesc:adb2a47db5fe1b120f704c00027b40d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to release the sensor  <a href="#adb2a47db5fe1b120f704c00027b40d14">More...</a><br /></td></tr>
 <tr class="separator:adb2a47db5fe1b120f704c00027b40d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,8 +170,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a6c15360d0eb72c6cd8551a6bdebb54f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c15360d0eb72c6cd8551a6bdebb54f3">&#9670;&nbsp;</a></span>UpdateFaceTracking()</h2>
+<a id="ad0b0811f8c983c6ce6b9c23c10da7088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0b0811f8c983c6ce6b9c23c10da7088">&#9670;&nbsp;</a></span>UpdateFaceTracking()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,8 +180,18 @@ Properties</h2></td></tr>
           <td class="memname">void Microsoft.Psi.Kinect.Face.KinectFaceDetector.UpdateFaceTracking </td>
           <td>(</td>
           <td class="paramtype">List&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> &gt;&#160;</td>
-          <td class="paramname"><em>kinectBodies</em></td><td>)</td>
+          <td class="paramname"><em>kinectBodies</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -190,6 +200,7 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">kinectBodies</td><td>List of KinectBody</td></tr>
+    <tr><td class="paramname">e</td><td>Envelope containing originating time of the kinect bodies</td></tr>
   </table>
   </dd>
 </dl>
