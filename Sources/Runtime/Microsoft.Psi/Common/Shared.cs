@@ -17,6 +17,9 @@ namespace Microsoft.Psi
 
 #pragma warning disable SA1402
 
+    /// <summary>
+    /// Shared resource utility.
+    /// </summary>
     public static class Shared
     {
         /// <summary>
@@ -85,6 +88,11 @@ namespace Microsoft.Psi
         private StackTrace disposeStackTrace;
 #endif
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Shared{T}"/> class.
+        /// </summary>
+        /// <param name="resource">Shared resource.</param>
+        /// <param name="recycler">Shared pool recycler.</param>
         public Shared(T resource, SharedPool<T> recycler)
             : this()
         {
@@ -127,8 +135,14 @@ namespace Microsoft.Psi
 #endif
         }
 
+        /// <summary>
+        /// Gets underlying resource.
+        /// </summary>
         public T Resource => this.inner?.Resource;
 
+        /// <summary>
+        /// Gets shared pool recycler.
+        /// </summary>
         public SharedPool<T> Recycler => this.inner?.Recycler;
 
         internal SharedContainer<T> Inner => this.inner;
@@ -157,6 +171,10 @@ namespace Microsoft.Psi
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Add reference.
+        /// </summary>
+        /// <returns>Shared resource.</returns>
         public Shared<T> AddRef()
         {
             Shared<T> sh = new Shared<T>();

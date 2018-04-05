@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Scheduling
     /// <typeparam name="T">Type of item in the list</typeparam>
     public abstract class PriorityQueue<T>
     {
-        // the head of the ordered workitem list is always empty
+        // the head of the ordered work item list is always empty
         private readonly PriorityQueueNode head = new PriorityQueueNode(0);
         private readonly PriorityQueueNode emptyHead = new PriorityQueueNode(0);
         private readonly Comparison<T> comparer;
@@ -21,15 +21,28 @@ namespace Microsoft.Psi.Scheduling
         private int count;
         private int nextId;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PriorityQueue{T}"/> class.
+        /// </summary>
+        /// <param name="name">Priority queue name.</param>
+        /// <param name="comparer">Comparison function.</param>
         public PriorityQueue(string name, Comparison<T> comparer)
         {
             this.comparer = comparer;
         }
 
+        /// <summary>
+        /// Gets count of items in queue.
+        /// </summary>
         public int Count => this.count;
 
         internal WaitHandle Empty => this.empty;
 
+        /// <summary>
+        /// Try peeking at first item; returning indication of success.
+        /// </summary>
+        /// <param name="workitem">Work item populated if successful.</param>
+        /// <returns>Indication of success.</returns>
         public bool TryPeek(out T workitem)
         {
             workitem = default(T);
@@ -38,7 +51,7 @@ namespace Microsoft.Psi.Scheduling
                 return false;
             }
 
-            // lock the head and the first workitem
+            // lock the head and the first work item
             var previous = this.head;
             int retries = previous.Lock();
             var current = previous.Next;
@@ -55,9 +68,15 @@ namespace Microsoft.Psi.Scheduling
             return true;
         }
 
+        /// <summary>
+        /// Try to dequeue work item; returning indication of success.
+        /// </summary>
+        /// <param name="workitem">Work item populated if successful.</param>
+        /// <param name="getAnyMatchingItem">Whether to match any item (or only first).</param>
+        /// <returns>Indication of success.</returns>
         public bool TryDequeue(out T workitem, bool getAnyMatchingItem = true)
         {
-            // keep looping until we either get a workitem, or the list changed under us
+            // keep looping until we either get a work item, or the list changed under us
             workitem = default(T);
             bool found = false;
             if (this.count == 0)
@@ -66,7 +85,7 @@ namespace Microsoft.Psi.Scheduling
             }
 
             // as we traverse the list of nodes, we use two locks, on previous and current, to ensure consistency
-            // start by taking a lock on the head first, which is immutable (not an actual workitem)
+            // start by taking a lock on the head first, which is immutable (not an actual work item)
             var previous = this.head;
             int retries = previous.Lock();
             var current = previous.Next;
@@ -77,7 +96,7 @@ namespace Microsoft.Psi.Scheduling
                 // we got the node, now see if it's ready
                 if (this.DequeueCondition(current.Workitem))
                 {
-                    // save the workitem
+                    // save the work item
                     workitem = current.Workitem;
                     found = true;
 
@@ -119,8 +138,14 @@ namespace Microsoft.Psi.Scheduling
             return found;
         }
 
-        // Enqueuing is O(n), but since we re-enqueue the oldest originating time many times as it is processed by the pipeline,
-        // the dominant operation is to enqueue at the beginning of the queue
+        /// <summary>
+        /// Enqueue work item.
+        /// </summary>
+        /// <remarks>
+        /// Enqueuing is O(n), but since we re-enqueue the oldest originating time many times as it is processed by the pipeline,
+        /// the dominant operation is to enqueue at the beginning of the queue
+        /// </remarks>
+        /// <param name="workitem">Work item to enqueue.</param>
         public void Enqueue(T workitem)
         {
             // reset the empty signal as needed
@@ -171,19 +196,24 @@ namespace Microsoft.Psi.Scheduling
                 Category,
                 new Tuple<PriorityQueueCounters, string, string, PerfCounterType>[]
                 {
-                    Tuple.Create(PriorityQueueCounters.WorkitemCount, "Workitem queue count", "The number of workitems in the global queue", PerfCounterType.NumberOfItems32),
-                    Tuple.Create(PriorityQueueCounters.EnqueuingTime, "Enqueuing time", "The time to enqueue a workitem", PerfCounterType.NumberOfItems32),
-                    Tuple.Create(PriorityQueueCounters.DequeueingTime, "Dequeuing time", "The time to dequeuing a workitem", PerfCounterType.NumberOfItems32),
-                    Tuple.Create(PriorityQueueCounters.EnqueueingRetries, "Enqueuing retry average", "The number of retries per workitem enqueue operation.", PerfCounterType.AverageCount64),
-                    Tuple.Create(PriorityQueueCounters.EnqueueingCount, "Enqueue count", "The base counter for computing the workitem enqueuing retry count.", PerfCounterType.AverageBase),
-                    Tuple.Create(PriorityQueueCounters.DequeuingRetries, "Dequeuing retry average", "The number of retries per workitem dequeue operation.", PerfCounterType.AverageCount64),
-                    Tuple.Create(PriorityQueueCounters.DequeueingCount, "Dequeue count", "The base counter for computing the workitem enqueuing retry count.", PerfCounterType.AverageBase)
+                    Tuple.Create(PriorityQueueCounters.WorkitemCount, "Workitem queue count", "The number of work items in the global queue", PerfCounterType.NumberOfItems32),
+                    Tuple.Create(PriorityQueueCounters.EnqueuingTime, "Enqueuing time", "The time to enqueue a work item", PerfCounterType.NumberOfItems32),
+                    Tuple.Create(PriorityQueueCounters.DequeueingTime, "Dequeuing time", "The time to dequeuing a work item", PerfCounterType.NumberOfItems32),
+                    Tuple.Create(PriorityQueueCounters.EnqueueingRetries, "Enqueuing retry average", "The number of retries per work item enqueue operation.", PerfCounterType.AverageCount64),
+                    Tuple.Create(PriorityQueueCounters.EnqueueingCount, "Enqueue count", "The base counter for computing the work item enqueuing retry count.", PerfCounterType.AverageBase),
+                    Tuple.Create(PriorityQueueCounters.DequeuingRetries, "Dequeuing retry average", "The number of retries per work item dequeue operation.", PerfCounterType.AverageCount64),
+                    Tuple.Create(PriorityQueueCounters.DequeueingCount, "Dequeue count", "The base counter for computing the work item enqueuing retry count.", PerfCounterType.AverageBase)
                 });
 #pragma warning restore SA1118 // Parameter must not span multiple lines
 
             this.counters = perf.Enable(Category, name);
         }
 
+        /// <summary>
+        /// Predicate function condition under which to dequeue.
+        /// </summary>
+        /// <param name="item">Candidate item.</param>
+        /// <returns>Whether to dequeue.</returns>
         protected abstract bool DequeueCondition(T item);
 
         private int Enqueue(PriorityQueueNode node)

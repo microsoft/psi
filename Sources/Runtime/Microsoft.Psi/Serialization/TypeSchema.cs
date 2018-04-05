@@ -12,11 +12,29 @@ namespace Microsoft.Psi.Serialization
 
     public delegate TypeSchema SchemaGenerator(Type type);
 
+    /// <summary>
+    /// Flags indicating type.
+    /// </summary>
     public enum TypeFlags : uint
     {
+        /// <summary>
+        /// Type is a class (reference).
+        /// </summary>
         IsClass = 0x01,
+
+        /// <summary>
+        /// Type is a struct (value).
+        /// </summary>
         IsStruct = 0x02,
+
+        /// <summary>
+        /// Type is a contract (interface).
+        /// </summary>
         IsContract = 0x04,
+
+        /// <summary>
+        /// Type is a collection (enumerable).
+        /// </summary>
         IsCollection = 0x08
     }
 
@@ -57,6 +75,9 @@ namespace Microsoft.Psi.Serialization
         {
         }
 
+        /// <summary>
+        /// Gets a value indicating whether type is partial.
+        /// </summary>
         public bool IsPartial => this.Members == null;
 
         /// <summary>
@@ -107,7 +128,7 @@ namespace Microsoft.Psi.Serialization
             }
             else if (!hasDataContract)
             {
-                // use binary serialization approach (all fields and only fields) when the type is not datacontract capable
+                // use binary serialization approach (all fields and only fields) when the type is not data contract capable
                 members.AddRange(
                     Generator
                     .GetClonableFields(type)
@@ -260,7 +281,11 @@ namespace Microsoft.Psi.Serialization
             this.SerializerVersion = serializerVersion;
         }
 
-        // two schemas are compatible if all required fields are present in both (regardless of type)
+        /// <summary>
+        /// Validate whether two schemas are compatible.
+        /// </summary>
+        /// <remarks>Schemas are compatible if all required fields are present in both (regardless of type).</remarks>
+        /// <param name="other">Other type schema.</param>
         public void ValidateCompatibleWith(TypeSchema other)
         {
             if (this.IsPartial || other == null || other.IsPartial)

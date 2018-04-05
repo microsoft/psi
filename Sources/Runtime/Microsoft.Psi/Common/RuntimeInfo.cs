@@ -6,6 +6,9 @@ namespace Microsoft.Psi.Common
     using System;
     using System.Reflection;
 
+    /// <summary>
+    /// Runtime info metadata.
+    /// </summary>
     public class RuntimeInfo : Metadata
     {
         /// <summary>
@@ -13,12 +16,24 @@ namespace Microsoft.Psi.Common
         /// </summary>
         public const int CurrentRuntimeVersion = 2;
 
+        /// <summary>
+        /// Gets the NetBIOS name of the local machine.
+        /// </summary>
         public static readonly string MachineName = Environment.MachineName;
 
+        /// <summary>
+        /// Get the command line for the process.
+        /// </summary>
         public static readonly string CmdLine = Environment.CommandLine;
 
+        /// <summary>
+        /// Gets name of the executing assembly.
+        /// </summary>
         public static readonly AssemblyName RuntimeName = Assembly.GetExecutingAssembly().GetName();
 
+        /// <summary>
+        /// Gets the current runtime info.
+        /// </summary>
         public static readonly RuntimeInfo Current = new RuntimeInfo();
 
         internal RuntimeInfo(int serializationSystemVersion = CurrentRuntimeVersion)

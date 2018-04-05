@@ -26,6 +26,7 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Include="C5" Version="2.5.3" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.1" />
     <PackageReference Include="MathNet.Spatial.Signed" Version="0.4.0" />

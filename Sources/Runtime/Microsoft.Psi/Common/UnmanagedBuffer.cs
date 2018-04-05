@@ -7,6 +7,9 @@ namespace Microsoft.Psi.Common
     using System.Runtime.InteropServices;
     using Microsoft.Psi.Serialization;
 
+    /// <summary>
+    /// Unmanaged buffer wrapper class.
+    /// </summary>
     [Serializer(typeof(UnmanagedBuffer.CustomSerializer))]
     public class UnmanagedBuffer : IDisposable
     {
@@ -36,10 +39,21 @@ namespace Microsoft.Psi.Common
             this.DisposeUnmanaged();
         }
 
+        /// <summary>
+        /// Gets a pointer to underlying data.
+        /// </summary>
         public IntPtr Data => this.data;
 
+        /// <summary>
+        /// Gets size of underlying data.
+        /// </summary>
         public int Size => this.size;
 
+        /// <summary>
+        /// Allocate unmanaged buffer.
+        /// </summary>
+        /// <param name="size">Size (bytes) to allocate.</param>
+        /// <returns>Allocated unmanaged buffer.</returns>
         public static UnmanagedBuffer Allocate(int size)
         {
             var data = Marshal.AllocHGlobal(size);
@@ -55,11 +69,23 @@ namespace Microsoft.Psi.Common
             return new UnmanagedBuffer(data, size, true);
         }
 
+        /// <summary>
+        /// Wrap existing unmanaged memory.
+        /// </summary>
+        /// <param name="data">Pointer to data.</param>
+        /// <param name="size">Data size (bytes).</param>
+        /// <returns>Wrapped unmanaged buffer.</returns>
         public static UnmanagedBuffer WrapIntPtr(IntPtr data, int size)
         {
             return new UnmanagedBuffer(data, size, false);
         }
 
+        /// <summary>
+        /// Create a copy of existing unmanaged memory.
+        /// </summary>
+        /// <param name="data">Pointer to data.</param>
+        /// <param name="size">Data size (bytes).</param>
+        /// <returns>Wrapped copy of unmanaged buffer.</returns>
         public static UnmanagedBuffer CreateCopyFrom(IntPtr data, int size)
         {
             var newData = Marshal.AllocHGlobal(size);
@@ -67,6 +93,11 @@ namespace Microsoft.Psi.Common
             return new UnmanagedBuffer(newData, size, true);
         }
 
+        /// <summary>
+        /// Create a copy of existing managed data.
+        /// </summary>
+        /// <param name="data">Data to be copied.</param>
+        /// <returns>Wrapped copy to unmanaged buffer.</returns>
         public static UnmanagedBuffer CreateCopyFrom(byte[] data)
         {
             var result = UnmanagedBuffer.Allocate(data.Length);
@@ -74,6 +105,10 @@ namespace Microsoft.Psi.Common
             return result;
         }
 
+        /// <summary>
+        /// Clone unmanaged buffer.
+        /// </summary>
+        /// <returns>Cloned unmanaged buffer.</returns>
         public UnmanagedBuffer Clone()
         {
             var newData = Marshal.AllocHGlobal(this.size);
@@ -81,6 +116,10 @@ namespace Microsoft.Psi.Common
             return new UnmanagedBuffer(newData, this.size, true);
         }
 
+        /// <summary>
+        /// Copy this unmanaged buffer to another instance.
+        /// </summary>
+        /// <param name="destination">Destination instance to which to copy.</param>
         public void CopyTo(UnmanagedBuffer destination)
         {
             if (destination == null)
@@ -97,6 +136,12 @@ namespace Microsoft.Psi.Common
             }
         }
 
+        /// <summary>
+        /// Read bytes from unmanaged buffer.
+        /// </summary>
+        /// <param name="count">Count of bytes to copy.</param>
+        /// <param name="offset">Offset into buffer.</param>
+        /// <returns>Bytes having been copied.</returns>
         public byte[] ReadBytes(int count, int offset = 0)
         {
             var result = new byte[count];
@@ -104,6 +149,10 @@ namespace Microsoft.Psi.Common
             return result;
         }
 
+        /// <summary>
+        /// Copy unmanaged buffer to managed array.
+        /// </summary>
+        /// <param name="destination">Destination array to which to copy.</param>
         public void CopyTo(byte[] destination)
         {
             if (destination == null)
@@ -118,6 +167,11 @@ namespace Microsoft.Psi.Common
             Marshal.Copy(this.data, destination, 0, destination.Length);
         }
 
+        /// <summary>
+        /// Copy unmanaged buffer to address.
+        /// </summary>
+        /// <param name="destination">Destination address to which to copy.</param>
+        /// <param name="size">Size (bytes) to copy.</param>
         public void CopyTo(IntPtr destination, int size)
         {
             if (size != this.size)
@@ -128,6 +182,10 @@ namespace Microsoft.Psi.Common
             CopyUnmanagedMemory(destination, this.data, this.size);
         }
 
+        /// <summary>
+        /// Copy from unmanaged buffer.
+        /// </summary>
+        /// <param name="source">Unmanaged buffer from which to copy.</param>
         public void CopyFrom(UnmanagedBuffer source)
         {
             if (source == null)
@@ -142,6 +200,10 @@ namespace Microsoft.Psi.Common
             CopyUnmanagedMemory(this.data, source.data, this.size);
         }
 
+        /// <summary>
+        /// Copy from managed array.
+        /// </summary>
+        /// <param name="source">Managed array from which to copy.</param>
         public void CopyFrom(byte[] source)
         {
             if (source == null)
@@ -156,6 +218,11 @@ namespace Microsoft.Psi.Common
             Marshal.Copy(source, 0, this.data, source.Length);
         }
 
+        /// <summary>
+        /// Copy from address.
+        /// </summary>
+        /// <param name="source">Source address from which to copy.</param>
+        /// <param name="size">Size (bytes) to copy.</param>
         public void CopyFrom(IntPtr source, int size)
         {
             if (size != this.size)

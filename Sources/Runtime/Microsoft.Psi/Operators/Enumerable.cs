@@ -29,10 +29,19 @@ namespace Microsoft.Psi
             return new StreamEnumerable<T>(stream, condition);
         }
 
+        /// <summary>
+        /// Enumerable stream class.
+        /// </summary>
+        /// <typeparam name="T">Type of stream messages.</typeparam>
         public class StreamEnumerable<T> : IEnumerable, IEnumerable<T>
         {
             private readonly StreamEnumerator enumerator;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StreamEnumerable{T}"/> class.
+            /// </summary>
+            /// <param name="stream">Stream to enumerate.</param>
+            /// <param name="predicate">Predicate (filter) function.</param>
             public StreamEnumerable(IProducer<T> stream, Func<T, bool> predicate = null)
             {
                 this.enumerator = new StreamEnumerator(predicate ?? (_ => true));

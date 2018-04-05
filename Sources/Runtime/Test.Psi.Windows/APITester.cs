@@ -9,7 +9,7 @@ namespace Test.Psi
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
-    /// Scenarios and usage required by the Analog Data Science team.
+    /// Scenarios and usage around PerfCounters
     /// </summary>
     [TestClass]
     public class APITester

@@ -15,6 +15,10 @@ namespace Microsoft.Psi.Scheduling
         private ManualResetEvent empty;
         private ManualResetEvent available;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimpleSemaphore"/> class.
+        /// </summary>
+        /// <param name="maxThreadCount">Maximum number of threads.</param>
         public SimpleSemaphore(int maxThreadCount)
         {
             this.maxCount = maxThreadCount;
@@ -22,10 +26,20 @@ namespace Microsoft.Psi.Scheduling
             this.available = new ManualResetEvent(true);
         }
 
+        /// <summary>
+        /// Gets empty state wait handle.
+        /// </summary>
         public WaitHandle Empty => this.empty;
 
+        /// <summary>
+        /// Gets availability wait handle.
+        /// </summary>
         public WaitHandle Available => this.available;
 
+        /// <summary>
+        /// Try to enter the semaphore.
+        /// </summary>
+        /// <returns>Success.</returns>
         public bool TryEnter()
         {
             this.empty.Reset();
@@ -39,6 +53,9 @@ namespace Microsoft.Psi.Scheduling
             return true;
         }
 
+        /// <summary>
+        /// Exit the semaphore.
+        /// </summary>
         public void Exit()
         {
             var newCount = Interlocked.Decrement(ref this.count);

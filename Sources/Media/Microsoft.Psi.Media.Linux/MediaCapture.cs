@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
+#pragma warning disable SA1305 // Field names must not use Hungarian notation
+
 namespace Microsoft.Psi.Media
 {
     using System;
@@ -214,3 +216,5 @@ namespace Microsoft.Psi.Media
         }
     }
 }
+
+#pragma warning restore SA1305 // Field names must not use Hungarian notation

@@ -7,11 +7,29 @@ namespace Microsoft.Psi.Streams
     using System.Collections.Generic;
 
 #pragma warning disable SA1649 // File name must match first type name
+    /// <summary>
+    /// Queue state transition.
+    /// </summary>
     public struct QueueTransition
     {
+        /// <summary>
+        /// Queue state transition to empty.
+        /// </summary>
         public bool ToEmpty;
+
+        /// <summary>
+        /// Queue state transition to no longer empty.
+        /// </summary>
         public bool ToNotEmpty;
+
+        /// <summary>
+        /// Queue state transition to full.
+        /// </summary>
         public bool ToFull;
+
+        /// <summary>
+        /// Queue state transition to no longer full.
+        /// </summary>
         public bool ToNotFull;
     }
 #pragma warning restore SA1649 // File name must match first type name

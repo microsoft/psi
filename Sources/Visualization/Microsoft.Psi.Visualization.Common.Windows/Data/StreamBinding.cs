@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Data
 {
     using System;
+    using System.Reflection;
     using System.Runtime.Serialization;
 
     /// <summary>
@@ -189,6 +190,11 @@ namespace Microsoft.Psi.Visualization.Data
                 if (this.streamAdapterType == null && this.StreamAdapterTypeName != null)
                 {
                     this.streamAdapterType = Type.GetType(this.StreamAdapterTypeName);
+                    if (this.streamAdapterType == null)
+                    {
+                        var assembly = Assembly.GetEntryAssembly();
+                        this.streamAdapterType = assembly.GetType(this.StreamAdapterTypeName);
+                    }
                 }
 
                 return this.streamAdapterType;
@@ -283,6 +289,11 @@ namespace Microsoft.Psi.Visualization.Data
                 if (this.summarizerType == null && this.SummarizerTypeName != null)
                 {
                     this.summarizerType = Type.GetType(this.SummarizerTypeName);
+                    if (this.summarizerType == null)
+                    {
+                        var assembly = Assembly.GetEntryAssembly();
+                        this.summarizerType = assembly.GetType(this.SummarizerTypeName);
+                    }
                 }
 
                 return this.summarizerType;

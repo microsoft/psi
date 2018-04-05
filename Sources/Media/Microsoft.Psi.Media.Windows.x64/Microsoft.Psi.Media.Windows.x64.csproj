@@ -26,6 +26,7 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Include="SharpDX.MediaFoundation" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,12 @@ namespace Microsoft.Psi.Components
     {
         private Func<DateTime, TimeSpan, TOut> generator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Timer{TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="timerInterval">Time interval with which to produce messages.</param>
+        /// <param name="generator">Message generation function.</param>
         public Timer(Pipeline pipeline, uint timerInterval, Func<DateTime, TimeSpan, TOut> generator)
             : base(pipeline, timerInterval)
         {
@@ -23,6 +29,11 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public Emitter<TOut> Out { get; }
 
+        /// <summary>
+        /// Generate timer message from current and elapsed time.
+        /// </summary>
+        /// <param name="absoluteTime">The current (virtual) time</param>
+        /// <param name="relativeTime">The time elapsed since the generator was started</param>
         protected override void Generate(DateTime absoluteTime, TimeSpan relativeTime)
         {
             var value = this.generator(absoluteTime, relativeTime);

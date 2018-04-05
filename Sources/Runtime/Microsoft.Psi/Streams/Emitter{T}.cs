@@ -52,6 +52,9 @@ namespace Microsoft.Psi
         /// <inheritdoc />
         public Pipeline Pipeline => this.pipeline;
 
+        /// <summary>
+        /// Gets a value indicating whether this emitter has subscribers.
+        /// </summary>
         public bool HasSubscribers => this.receivers.Count() > 0;
 
         /// <inheritdoc />
@@ -62,6 +65,9 @@ namespace Microsoft.Psi
 
         internal SynchronizationLock SyncContext => this.syncContext;
 
+        /// <summary>
+        /// Close emitter (unsubscribing receivers).
+        /// </summary>
         public void Close()
         {
             lock (this.receivers)

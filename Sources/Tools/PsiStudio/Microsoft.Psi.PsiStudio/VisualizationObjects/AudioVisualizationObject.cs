@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
+    using System.Windows.Media;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
@@ -22,6 +23,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(AudioVisualizationObjectView));
+
+        /// <inheritdoc />
+        protected override void InitNew()
+        {
+            base.InitNew();
+            this.Configuration.LineColor = Colors.White;
+            this.Configuration.MarkerColor = Colors.White;
+            this.Configuration.RangeColor = Colors.White;
+        }
 
         /// <inheritdoc />
         protected override void OnConfigurationPropertyChanged(string propertyName)

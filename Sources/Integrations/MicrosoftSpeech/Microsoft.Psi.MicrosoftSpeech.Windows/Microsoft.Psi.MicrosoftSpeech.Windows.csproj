@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="CheckVariable">
   <PropertyGroup>
     <TargetFramework>net47</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -24,6 +24,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
   <ItemGroup>
@@ -37,4 +40,11 @@
       <HintPath>$(MsSpeechSdkDir)\Assembly\Microsoft.Speech.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <Target Name="CheckVariable">
+    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation"  ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''"/>
+    <CallTarget Targets="DoBuild"  Condition=" '$(MsSpeechSdkDir)' != '' "/>
+  </Target>
+  <Target Name="DoBuild" DependsOnTargets="Build">
+    <Exec Command="echo Built project using MsSpeechSdkDir='%MsSpeechSdkDir%'"/>
+  </Target>
 </Project>

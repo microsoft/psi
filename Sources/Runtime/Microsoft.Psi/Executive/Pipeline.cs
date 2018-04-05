@@ -67,6 +67,13 @@ namespace Microsoft.Psi
 
         private bool enableExceptionHandling;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pipeline"/> class.
+        /// </summary>
+        /// <param name="name">Pipeline name.</param>
+        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="threadCount">Number of threads.</param>
+        /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         public Pipeline(string name, DeliveryPolicy globalPolicy, int threadCount, bool allowSchedulingOnExternalThreads)
         {
             this.name = name ?? "default";
@@ -75,14 +82,29 @@ namespace Microsoft.Psi
             this.scheduler = new Scheduler(this.globalPolicy, this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
         }
 
+        /// <summary>
+        /// Event fired upon pipeline completion.
+        /// </summary>
         public event EventHandler<PipelineCompletionEventArgs> PipelineCompletionEvent;
 
+        /// <summary>
+        /// Event fired upon component completion.
+        /// </summary>
         public event EventHandler<string> ComponentCompletionEvent;
 
+        /// <summary>
+        /// Gets pipeline name.
+        /// </summary>
         public string Name => this.name;
 
+        /// <summary>
+        /// Gets replay descriptor.
+        /// </summary>
         public ReplayDescriptor ReplayDescriptor => this.replayDescriptor;
 
+        /// <summary>
+        /// Gets global delivery policy.
+        /// </summary>
         public DeliveryPolicy GlobalPolicy => this.globalPolicy;
 
         internal Scheduler Scheduler => this.scheduler;
@@ -93,16 +115,34 @@ namespace Microsoft.Psi
 
         internal ConcurrentQueue<PipelineElement> Components => this.components;
 
+        /// <summary>
+        /// Create pipeline.
+        /// </summary>
+        /// <param name="name">Pipeline name.</param>
+        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="threadCount">Number of threads.</param>
+        /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
+        /// <returns>Created pipeline.</returns>
         public static Pipeline Create(string name = null, DeliveryPolicy globalPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false)
         {
             return new Pipeline(name, globalPolicy, threadCount, allowSchedulingOnExternalThreads);
         }
 
+        /// <summary>
+        /// Add component to pipeline.
+        /// </summary>
+        /// <param name="name">Component name.</param>
+        /// <param name="stateObject">Initial state object.</param>
         public void AddComponent(string name, object stateObject)
         {
             this.AddComponent(new PipelineElement(name, stateObject));
         }
 
+        /// <summary>
+        /// Propose replay time.
+        /// </summary>
+        /// <param name="activeInterval">Active time interval.</param>
+        /// <param name="originatingTimeInterval">Originating time interval.</param>
         public void ProposeReplayTime(TimeInterval activeInterval, TimeInterval originatingTimeInterval)
         {
             if (!activeInterval.LeftEndpoint.Bounded)
@@ -215,6 +255,13 @@ namespace Microsoft.Psi
             return this.CreateReceiver<T>(owner, m => action(m).Wait(), name, autoClone);
         }
 
+        /// <summary>
+        /// Create emitter.
+        /// </summary>
+        /// <typeparam name="T">Type of emitted messages.</typeparam>
+        /// <param name="owner">Owner of emitter.</param>
+        /// <param name="name">Name of emitter.</param>
+        /// <returns>Created emitter.</returns>
         public Emitter<T> CreateEmitter<T>(object owner, string name)
         {
             PipelineElement node = this.GetOrCreateNode(owner);
@@ -223,6 +270,11 @@ namespace Microsoft.Psi
             return emitter;
         }
 
+        /// <summary>
+        /// Wait for all components to complete.
+        /// </summary>
+        /// <param name="millisecondsTimeout">Timeout (milliseconds).</param>
+        /// <returns>Success.</returns>
         public bool WaitAll(int millisecondsTimeout = Timeout.Infinite)
         {
             bool result = this.completed.WaitOne(millisecondsTimeout);
@@ -230,6 +282,11 @@ namespace Microsoft.Psi
             return result;
         }
 
+        /// <summary>
+        /// Wait for any component to complete.
+        /// </summary>
+        /// <param name="millisecondsTimeout">Timeout (milliseconds).</param>
+        /// <returns>Success.</returns>
         public bool WaitAny(int millisecondsTimeout = Timeout.Infinite)
         {
             bool result = this.anyCompleted.WaitOne(millisecondsTimeout);
@@ -243,6 +300,11 @@ namespace Microsoft.Psi
             this.Dispose(false);
         }
 
+        /// <summary>
+        /// Run pipeline (synchronously).
+        /// </summary>
+        /// <param name="descriptor">Replay descriptor.</param>
+        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
         public void Run(ReplayDescriptor descriptor, bool enableExceptionHandling = false)
         {
             this.enableExceptionHandling = enableExceptionHandling;
@@ -250,21 +312,51 @@ namespace Microsoft.Psi
             this.WaitAll();
         }
 
+        /// <summary>
+        /// Run pipeline (synchronously).
+        /// </summary>
+        /// <param name="replayInterval">Time interval within which to replay.</param>
+        /// <param name="useOriginatingTime">Whether to use originating time.</param>
+        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
+        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
+        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
         public void Run(TimeInterval replayInterval = null, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1, bool enableExceptionHandling = false)
         {
             this.Run(new ReplayDescriptor(replayInterval, useOriginatingTime, enforceReplayClock, replaySpeedFactor), enableExceptionHandling);
         }
 
+        /// <summary>
+        /// Run pipeline (synchronously).
+        /// </summary>
+        /// <param name="replayStartTime">Time at which to start replaying.</param>
+        /// <param name="useOriginatingTime">Whether to use originating time.</param>
+        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
+        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
+        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
         public void Run(DateTime replayStartTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1, bool enableExceptionHandling = false)
         {
             this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, useOriginatingTime, enforceReplayClock, replaySpeedFactor), enableExceptionHandling);
         }
 
+        /// <summary>
+        /// Run pipeline (synchronously).
+        /// </summary>
+        /// <param name="replayStartTime">Time at which to start replaying.</param>
+        /// <param name="replayEndTime">Time at which to end replaying.</param>
+        /// <param name="useOriginatingTime">Whether to use originating time.</param>
+        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
+        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
+        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
         public void Run(DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1, bool enableExceptionHandling = false)
         {
             this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, useOriginatingTime, enforceReplayClock, replaySpeedFactor), enableExceptionHandling);
         }
 
+        /// <summary>
+        /// Run pipeline (synchronously).
+        /// </summary>
+        /// <param name="duration">Duration (time span) to replay.</param>
+        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
         public void Run(TimeSpan duration, bool enableExceptionHandling = false)
         {
             this.enableExceptionHandling = enableExceptionHandling;
@@ -275,21 +367,51 @@ namespace Microsoft.Psi
             }
         }
 
+        /// <summary>
+        /// Run pipeline (asynchronously).
+        /// </summary>
+        /// <param name="replayInterval">Time interval within which to replay.</param>
+        /// <param name="useOriginatingTime">Whether to use originating time.</param>
+        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
+        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
+        /// <returns>Disposable used to terminate pipeline.</returns>
         public IDisposable RunAsync(TimeInterval replayInterval = null, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
         {
             return this.RunAsync(new ReplayDescriptor(replayInterval, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
         }
 
+        /// <summary>
+        /// Run pipeline (asynchronously).
+        /// </summary>
+        /// <param name="replayStartTime">Time at which to start replaying.</param>
+        /// <param name="useOriginatingTime">Whether to use originating time.</param>
+        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
+        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
+        /// <returns>Disposable used to terminate pipeline.</returns>
         public IDisposable RunAsync(DateTime replayStartTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
         {
             return this.RunAsync(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
         }
 
+        /// <summary>
+        /// Run pipeline (asynchronously).
+        /// </summary>
+        /// <param name="replayStartTime">Time at which to start replaying.</param>
+        /// <param name="replayEndTime">Time at which to end replaying.</param>
+        /// <param name="useOriginatingTime">Whether to use originating time.</param>
+        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
+        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
+        /// <returns>Disposable used to terminate pipeline.</returns>
         public IDisposable RunAsync(DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
         {
             return this.RunAsync(new ReplayDescriptor(replayStartTime, replayEndTime, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
         }
 
+        /// <summary>
+        /// Run pipeline (asynchronously).
+        /// </summary>
+        /// <param name="descriptor">Replay descriptor.</param>
+        /// <returns>Disposable used to terminate pipeline.</returns>
         public IDisposable RunAsync(ReplayDescriptor descriptor)
         {
             descriptor = descriptor ?? ReplayDescriptor.ReplayAll;
@@ -320,31 +442,60 @@ namespace Microsoft.Psi
             return this;
         }
 
+        /// <summary>
+        /// Get current clock time.
+        /// </summary>
+        /// <returns>Current clock time.</returns>
         public DateTime GetCurrentTime()
         {
             return this.clock.GetCurrentTime();
         }
 
+        /// <summary>
+        /// Get current time, given elapsed ticks.
+        /// </summary>
+        /// <param name="ticksFromSystemBoot">Ticks elapsed since system boot.</param>
+        /// <returns>Current time.</returns>
         public DateTime GetCurrentTimeFromElapsedTicks(long ticksFromSystemBoot)
         {
             return this.clock.GetTimeFromElapsedTicks(ticksFromSystemBoot);
         }
 
+        /// <summary>
+        /// Convert virtual duration to real time.
+        /// </summary>
+        /// <param name="duration">Duration to convert.</param>
+        /// <returns>Converted time span.</returns>
         public TimeSpan ConvertToRealTime(TimeSpan duration)
         {
             return this.clock.ToRealTime(duration);
         }
 
+        /// <summary>
+        /// Convert virtual datetime to real time.
+        /// </summary>
+        /// <param name="time">Datetime to convert.</param>
+        /// <returns>Converted datetime.</returns>
         public DateTime ConvertToRealTime(DateTime time)
         {
             return this.clock.ToRealTime(time);
         }
 
+        /// <summary>
+        /// Convert real timespan to virtual.
+        /// </summary>
+        /// <param name="duration">Duration to convert.</param>
+        /// <returns>Converted time span.</returns>
         public TimeSpan ConvertFromRealTime(TimeSpan duration)
         {
             return this.clock.ToVirtualTime(duration);
         }
 
+        /// <summary>
+        /// Contert real datetime to virtual.
+        /// </summary>
+        /// <param name="time">Datetime to convert.</param>
+        /// <returns>Converted datetime.</returns>
         public DateTime ConvertFromRealTime(DateTime time)
         {
             return this.clock.ToVirtualTime(time);

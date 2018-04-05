@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <None Remove="stylecop.json" />
-    <None Remove="TurtleSim.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,4 +30,7 @@
     <ProjectReference Include="..\..\Sources\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+  </ItemGroup>
 </Project>

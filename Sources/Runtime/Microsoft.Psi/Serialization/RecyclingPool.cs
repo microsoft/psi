@@ -8,6 +8,9 @@ namespace Microsoft.Psi
     using System.Text;
     using Microsoft.Psi.Serialization;
 
+    /// <summary>
+    /// Message recycling pool class.
+    /// </summary>
     public class RecyclingPool
     {
         /// <summary>

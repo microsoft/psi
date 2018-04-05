@@ -11,6 +11,15 @@ namespace Microsoft.Psi
     /// </summary>
     public static partial class Operators
     {
+        /// <summary>
+        /// Sample stream by interval with an interpolator.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="samplingInterval">Interval at which to sample.</param>
+        /// <param name="interpolator">Interpolator with which to sample.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Sample<T>(
             this IProducer<T> source,
             TimeSpan samplingInterval,
@@ -23,6 +32,15 @@ namespace Microsoft.Psi
             return sampler;
         }
 
+        /// <summary>
+        /// Sample stream by interval with a time window.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="samplingInterval">Interval at which to sample.</param>
+        /// <param name="matchTolerance">Match tolerance with which to sample.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Sample<T>(
             this IProducer<T> source,
             TimeSpan samplingInterval,
@@ -32,6 +50,15 @@ namespace Microsoft.Psi
             return Sample(source, samplingInterval, new RelativeTimeInterval(-matchTolerance, matchTolerance), policy);
         }
 
+        /// <summary>
+        /// Sample stream by interval with a relative time interval window.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="samplingInterval">Interval at which to sample.</param>
+        /// <param name="matchWindow">Relative time interval window in which to sample.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Sample<T>(
             this IProducer<T> source,
             TimeSpan samplingInterval,
@@ -41,6 +68,16 @@ namespace Microsoft.Psi
             return Sample(source, samplingInterval, Match.Best<T>(matchWindow), policy);
         }
 
+        /// <summary>
+        /// Sample stream by clock signal with a time window.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <typeparam name="TClock">Type of clock signal messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="clock">Clock signal stream.</param>
+        /// <param name="tolerance">Time span tolerance in which to sample.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Sample<T, TClock>(
             this IProducer<T> source,
             IProducer<TClock> clock,
@@ -50,6 +87,16 @@ namespace Microsoft.Psi
             return Sample(source, clock, new RelativeTimeInterval(-tolerance, tolerance), policy);
         }
 
+        /// <summary>
+        /// Sample stream by clock signal with a relative time interval window.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <typeparam name="TClock">Type of clock signal messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="clock">Clock signal stream.</param>
+        /// <param name="matchWindow">Relative time interval window in which to sample.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Sample<T, TClock>(
             this IProducer<T> source,
             IProducer<TClock> clock,
@@ -59,6 +106,16 @@ namespace Microsoft.Psi
             return Sample(source, clock, Match.Best<T>(matchWindow), policy);
         }
 
+        /// <summary>
+        /// Sample stream by clock signal with an interpolator.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <typeparam name="TClock">Type of clock signal messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="clock">Clock signal stream.</param>
+        /// <param name="interpolator">Interpolator with which to sample.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Sample<T, TClock>(
             this IProducer<T> source,
             IProducer<TClock> clock,

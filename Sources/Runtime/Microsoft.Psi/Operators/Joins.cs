@@ -448,6 +448,7 @@ namespace Microsoft.Psi
         /// <typeparam name="TSecondary">Type of secondary messages.</typeparam>
         /// <param name="primary">Primary stream of tuples (arity 5).</param>
         /// <param name="secondary">Secondary stream.</param>
+        /// <param name="matchTolerance">Time span of match tolerance.</param>
         /// <returns>Stream of joined (`ValueTuple`) values flattened to arity 6.</returns>
         public static IProducer<ValueTuple<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<ValueTuple<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5>> primary,
@@ -1072,6 +1073,17 @@ namespace Microsoft.Psi
 
 #region vector joins
 
+        /// <summary>
+        /// Vector join.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <typeparam name="TOut">Type of output stream messages.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Collection of secondary streams.</param>
+        /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <param name="outputCreator">Mapping function from primary and secondary messages to output.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<TOut> Join<TPrimary, TSecondary, TOut>(
             this IProducer<TPrimary> primary,
             IEnumerable<IProducer<TSecondary>> secondaries,
@@ -1096,6 +1108,13 @@ namespace Microsoft.Psi
             return join;
         }
 
+        /// <summary>
+        /// Vector join.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input stream messages.</typeparam>
+        /// <param name="inputs">Collection of input streams.</param>
+        /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<TIn[]> Join<TIn>(
             this IEnumerable<IProducer<TIn>> inputs,
             Match.Interpolator<TIn> interpolator)
@@ -1128,6 +1147,17 @@ namespace Microsoft.Psi
 
 #region sparse vector joins
 
+        /// <summary>
+        /// Sparse vector join.
+        /// </summary>
+        /// <typeparam name="TKeyCollection">Type of key collection.</typeparam>
+        /// <typeparam name="TIn">Type of input messages.</typeparam>
+        /// <typeparam name="TKey">Type of key values.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="inputs">Collection of secondary streams.</param>
+        /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <param name="keyMapSelector">Selector function mapping keys to key/value pairs.</param>
+        /// <returns>Output stream.</returns>
         public static Join<TKeyCollection, TIn, Dictionary<TKey, TIn>> Join<TKeyCollection, TIn, TKey>(
             this IProducer<TKeyCollection> primary,
             IEnumerable<IProducer<TIn>> inputs,
@@ -1163,6 +1193,15 @@ namespace Microsoft.Psi
             return join;
         }
 
+        /// <summary>
+        /// Sparse vector join.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input messages.</typeparam>
+        /// <typeparam name="TKey">Type of key values.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="inputs">Collection of secondary streams.</param>
+        /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <returns>Output stream.</returns>
         public static Join<Dictionary<TKey, int>, TIn, Dictionary<TKey, TIn>> Join<TIn, TKey>(
             this IProducer<Dictionary<TKey, int>> primary,
             IEnumerable<IProducer<TIn>> inputs,
@@ -1171,6 +1210,15 @@ namespace Microsoft.Psi
             return Join(primary, inputs, interpolator, keyMap => keyMap);
         }
 
+        /// <summary>
+        /// Sparse vector join.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input messages.</typeparam>
+        /// <typeparam name="TKey">Type of key values.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="inputs">Collection of secondary streams.</param>
+        /// <param name="interpolatorTolerance">Time span in within which to join.</param>
+        /// <returns>Output stream.</returns>
         public static Join<Dictionary<TKey, int>, TIn, Dictionary<TKey, TIn>> Join<TIn, TKey>(
             this IProducer<Dictionary<TKey, int>> primary,
             IEnumerable<IProducer<TIn>> inputs = null,
@@ -1180,6 +1228,15 @@ namespace Microsoft.Psi
             return Join(primary, inputs, new RelativeTimeInterval(-interpolatorTolerance, interpolatorTolerance));
         }
 
+        /// <summary>
+        /// Sparse vector join.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input messages.</typeparam>
+        /// <typeparam name="TKey">Type of key values.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="inputs">Collection of secondary streams.</param>
+        /// <param name="matchWindow">Relative time interval within which to join.</param>
+        /// <returns>Output stream.</returns>
         public static Join<Dictionary<TKey, int>, TIn, Dictionary<TKey, TIn>> Join<TIn, TKey>(
             this IProducer<Dictionary<TKey, int>> primary,
             IEnumerable<IProducer<TIn>> inputs,

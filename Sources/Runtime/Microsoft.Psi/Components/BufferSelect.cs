@@ -20,6 +20,13 @@ namespace Microsoft.Psi.Components
         private readonly Func<IEnumerable<Message<TInput>>, ValueTuple<TOutput, DateTime>> selector;
         private readonly int maxSize;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BufferSelect{TInput, TOutput}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="removeCondition">Predicate function determining removal condition.</param>
+        /// <param name="selector">Selector function.</param>
+        /// <param name="maxSize">Maximum buffer size.</param>
         public BufferSelect(Pipeline pipeline, Func<Message<TInput>, DateTime, bool> removeCondition, Func<IEnumerable<Message<TInput>>, ValueTuple<TOutput, DateTime>> selector, int maxSize = int.MaxValue)
             : base(pipeline)
         {
@@ -28,6 +35,12 @@ namespace Microsoft.Psi.Components
             this.maxSize = maxSize;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BufferSelect{TInput, TOutput}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="selector">Selector function.</param>
+        /// <param name="maxSize">Maximum buffer size.</param>
         public BufferSelect(Pipeline pipeline, Func<IEnumerable<Message<TInput>>, ValueTuple<TOutput, DateTime>> selector, int maxSize)
             : base(pipeline)
         {

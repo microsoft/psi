@@ -11,6 +11,16 @@ namespace Microsoft.Psi
     /// </summary>
     public static partial class Operators
     {
+        /// <summary>
+        /// Aggregate stream values.
+        /// </summary>
+        /// <typeparam name="TIn">Type of source stream.</typeparam>
+        /// <typeparam name="TOut">Type of output stream.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="seed">Initial seed state.</param>
+        /// <param name="func">Aggregation function.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<TOut> Aggregate<TIn, TOut>(this IProducer<TIn> source, TOut seed, Func<TOut, TIn, TOut> func, DeliveryPolicy policy = null)
         {
             return Aggregate<TOut, TIn, TOut>(
@@ -25,11 +35,30 @@ namespace Microsoft.Psi
                 policy);
         }
 
+        /// <summary>
+        /// Aggregate stream values.
+        /// </summary>
+        /// <typeparam name="TIn">Type of source stream messages.</typeparam>
+        /// <typeparam name="TAcc">Type of initial seed value.</typeparam>
+        /// <typeparam name="TOut">Type of output stream messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="seed">Initial seed state.</param>
+        /// <param name="func">Aggregation function.</param>
+        /// <param name="selector">Selector function.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<TOut> Aggregate<TIn, TAcc, TOut>(this IProducer<TIn> source, TAcc seed, Func<TAcc, TIn, TAcc> func, Func<TAcc, TOut> selector)
         {
             return Aggregate(source, seed, func).Select(selector);
         }
 
+        /// <summary>
+        /// Aggregate stream values.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output stream messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="func">Aggregation function.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<T> Aggregate<T>(this IProducer<T> source, Func<T, T, T> func, DeliveryPolicy policy = null)
         {
             // `Aggregate` where `TIn` is same type as `TOut`, seed becomes first value
@@ -45,6 +74,17 @@ namespace Microsoft.Psi
                 policy).Select(x => x.Item2);
         }
 
+        /// <summary>
+        /// Aggregate stream values.
+        /// </summary>
+        /// <typeparam name="TAccumulate">Type of initial seed value.</typeparam>
+        /// <typeparam name="TIn">Type of input stream messages.</typeparam>
+        /// <typeparam name="TOut">Type of output stream messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="seed">Initial seed value.</param>
+        /// <param name="func">Aggregation function.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
         public static IProducer<TOut> Aggregate<TAccumulate, TIn, TOut>(
             this IProducer<TIn> source,
             TAccumulate seed,

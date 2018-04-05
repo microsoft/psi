@@ -18,6 +18,13 @@ namespace Microsoft.Psi.Components
         private readonly IProducer<TOut[]> join;
         private readonly Receiver<TIn[]> input;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Parallel{TIn, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="vectorSize">Vector size.</param>
+        /// <param name="transformSelector">Function mapping keyed input producers to output producers.</param>
+        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
         public Parallel(Pipeline pipeline, int vectorSize, Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector, bool joinOrDefault)
         {
             this.input = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));

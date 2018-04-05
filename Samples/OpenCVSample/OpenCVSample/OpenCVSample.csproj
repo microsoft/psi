@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CheckVariable">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -166,4 +166,11 @@
     <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CheckVariable">
+    <Warning Text="In order to build this sample you must define the environment variable OpenCVDir to point to your OpenCV installation"  ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir)'==''"/>
+    <CallTarget Targets="DoBuild"  Condition=" ('$(OpenCVDir)' != '') AND ('$(AGENT_BUILDDIRECTORY)'=='') "/>
+  </Target>
+  <Target Name="DoBuild" DependsOnTargets="Build">
+    <Exec Command="echo Built sample using OpenCVDir='%OpenCVDir%'"/>
+  </Target>
 </Project>

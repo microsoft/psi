@@ -182,6 +182,9 @@ namespace Microsoft.Psi.Serialization
             }
         }
 
+        /// <summary>
+        /// Event which fires when each new type schema has been added.
+        /// </summary>
         public event EventHandler<TypeSchema> SchemaAdded;
 
         /// <summary>

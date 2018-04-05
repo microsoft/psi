@@ -30,6 +30,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
     <ProjectReference Include="..\..\Extensions\Microsoft.Psi.Extensions\Microsoft.Psi.Extensions.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />

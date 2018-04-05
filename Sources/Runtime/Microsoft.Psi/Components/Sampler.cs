@@ -17,6 +17,12 @@ namespace Microsoft.Psi.Components
         private readonly TimeSpan samplingInterval;
         private DateTime nextPublishTime;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sampler{T}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="interpolator">Interpolator used to sample.</param>
+        /// <param name="samplingInterval">Sampling interval.</param>
         public Sampler(Pipeline pipeline, Match.Interpolator<T> interpolator, TimeSpan samplingInterval)
             : base()
         {

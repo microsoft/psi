@@ -27,6 +27,12 @@ namespace Microsoft.Psi.Components
         // buffers
         private Dictionary<TKey, int> activeBranches = new Dictionary<TKey, int>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParallelSparse{TIn, TKey, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="transformSelector">Function mapping keyed input producers to output producers.</param>
+        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
         public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transformSelector, bool joinOrDefault)
         {
             this.pipeline = pipeline;

@@ -57,6 +57,9 @@ namespace Microsoft.Psi
         /// <inheritdoc />
         public object Owner => this.owner;
 
+        /// <summary>
+        /// Gets receiver message recycler.
+        /// </summary>
         public IRecyclingPool<T> Recycler => this.cloner;
 
         /// <inheritdoc />
@@ -74,11 +77,19 @@ namespace Microsoft.Psi
             }
         }
 
+        /// <summary>
+        /// Recycle message.
+        /// </summary>
+        /// <param name="freeMessage">Message to recycle.</param>
         public void Recycle(Message<T> freeMessage)
         {
             this.Recycle(freeMessage.Data);
         }
 
+        /// <summary>
+        /// Recycle item.
+        /// </summary>
+        /// <param name="item">Item to recycle.</param>
         public void Recycle(T item)
         {
             this.cloner.Recycle(item);

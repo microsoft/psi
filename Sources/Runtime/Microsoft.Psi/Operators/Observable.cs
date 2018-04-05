@@ -22,10 +22,18 @@ namespace Microsoft.Psi
             return new StreamObservable<T>(stream);
         }
 
+        /// <summary>
+        /// Observable stream class.
+        /// </summary>
+        /// <typeparam name="T">Type of stream messages.</typeparam>
         public class StreamObservable<T> : IObservable<T>
         {
             private ConcurrentDictionary<IObserver<T>, IObserver<T>> observers = new ConcurrentDictionary<IObserver<T>, IObserver<T>>();
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StreamObservable{T}"/> class.
+            /// </summary>
+            /// <param name="stream">Stream to observe.</param>
             public StreamObservable(IProducer<T> stream)
             {
                 stream.Out.Pipeline.PipelineCompletionEvent += (_, args) =>
@@ -50,6 +58,9 @@ namespace Microsoft.Psi
                 });
             }
 
+            /// <summary>
+            /// Gets a value indicating whether this observable stream has subscribers.
+            /// </summary>
             public bool HasSubscribers => this.observers.Count > 0;
 
             /// <inheritdoc />

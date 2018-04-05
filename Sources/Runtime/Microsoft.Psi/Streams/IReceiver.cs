@@ -10,8 +10,14 @@ namespace Microsoft.Psi
     /// </summary>
     public interface IReceiver : IDisposable
     {
+        /// <summary>
+        /// Gets receiver owner object.
+        /// </summary>
         object Owner { get; }
 
+        /// <summary>
+        /// Gets receiver source emitter.
+        /// </summary>
         IEmitter Source { get; }
     }
 }

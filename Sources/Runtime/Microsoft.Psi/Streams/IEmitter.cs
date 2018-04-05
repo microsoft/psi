@@ -8,12 +8,24 @@ namespace Microsoft.Psi
     /// </summary>
     public interface IEmitter
     {
+        /// <summary>
+        /// Gets emitter name.
+        /// </summary>
         string Name { get; }
 
+        /// <summary>
+        /// Gets emitter owner object.
+        /// </summary>
         object Owner { get; }
 
+        /// <summary>
+        /// Gets pipeline to which emitter belongs.
+        /// </summary>
         Pipeline Pipeline { get; }
 
+        /// <summary>
+        /// Gets emitter ID.
+        /// </summary>
         int Id { get; }
 
         /// <summary>

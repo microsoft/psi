@@ -17,6 +17,10 @@ namespace Microsoft.Psi.Components
         private readonly Pipeline pipeline;
         private readonly Emitter<ValueTuple<TKey, Message<TIn>>> output;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Merger{TIn, TKey}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
         public Merger(Pipeline pipeline)
         {
             this.pipeline = pipeline;
@@ -26,6 +30,11 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public Emitter<ValueTuple<TKey, Message<TIn>>> Out => this.output;
 
+        /// <summary>
+        /// Add a key to which a receiver will be mapped.
+        /// </summary>
+        /// <param name="key">Key to which to map a receiver.</param>
+        /// <returns>Receiver having been mapped.</returns>
         public Receiver<TIn> Add(TKey key)
         {
             if (this.inputs.ContainsKey(key))

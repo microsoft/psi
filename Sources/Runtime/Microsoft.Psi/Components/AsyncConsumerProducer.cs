@@ -13,6 +13,10 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="TOut">The output message type</typeparam>
     public abstract class AsyncConsumerProducer<TIn, TOut> : IConsumerProducer<TIn, TOut>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncConsumerProducer{TIn, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
         public AsyncConsumerProducer(Pipeline pipeline)
         {
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
@@ -25,6 +29,12 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public Emitter<TOut> Out { get; }
 
+        /// <summary>
+        /// Async receiver to be implemented by subclass.
+        /// </summary>
+        /// <param name="value">Value received.</param>
+        /// <param name="envelope">Message envelope.</param>
+        /// <returns>Async task.</returns>
         protected virtual async Task ReceiveAsync(TIn value, Envelope envelope)
         {
             await Task.Run(() => throw new NotImplementedException());

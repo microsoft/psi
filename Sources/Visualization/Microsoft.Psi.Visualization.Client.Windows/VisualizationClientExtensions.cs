@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Adds a new timeline visualization panel.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created timeline visualization panel.</returns>
         public static TimelineVisualizationPanel AddTimelinePanel(this VisualizationClient vc)
         {
@@ -297,7 +297,10 @@ namespace Microsoft.Psi.Visualization.Client
                 typeof(SimpleReader),
                 "Microsoft.Psi.Visualization.Adapters.BoolAdapter",
                 "Microsoft.Psi.Visualization.Summarizers.RangeSummarizer");
-            return vc.Show<PlotVisualizationObject, double, PlotVisualizationObjectConfiguration, TimelineVisualizationPanel>(streamBinding);
+            var boolPlot = vc.Show<PlotVisualizationObject, double, PlotVisualizationObjectConfiguration, TimelineVisualizationPanel>(streamBinding);
+            boolPlot.Configuration.YMin = -0.2;
+            boolPlot.Configuration.YMax = 1.2;
+            return boolPlot;
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-# OpenCV Sample
+﻿# OpenCV Sample
 
 This sample demostrates how to integrate OpenCV with Platform for Situated Intelligence. There are two projects in this sample:
   1) OpenCVSample.csproj is the main sample. It creates a webcam source and sends the images from the camera to OpenCV to convert them to gray scale.

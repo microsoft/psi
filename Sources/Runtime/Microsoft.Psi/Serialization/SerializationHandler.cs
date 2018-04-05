@@ -20,6 +20,12 @@ namespace Microsoft.Psi.Serialization
         private int sizeOf;
         private bool isImmutableType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializationHandler"/> class.
+        /// </summary>
+        /// <param name="targetType">Target serialization type.</param>
+        /// <param name="contractName">Serialization handler contract name.</param>
+        /// <param name="id">Serialization handler ID.</param>
         protected SerializationHandler(Type targetType, string contractName, int id)
         {
             this.id = id;
@@ -28,12 +34,24 @@ namespace Microsoft.Psi.Serialization
             this.isImmutableType = Generator.IsImmutableType(targetType);
         }
 
+        /// <summary>
+        /// Gets serialization handler ID.
+        /// </summary>
         public int Id => this.id;
 
+        /// <summary>
+        /// Gets serialization handler name.
+        /// </summary>
         public string Name => this.name;
 
+        /// <summary>
+        /// Gets target serialization type.
+        /// </summary>
         public Type TargetType => this.type;
 
+        /// <summary>
+        /// Gets a value indicating whether type is immutable.
+        /// </summary>
         public bool IsImmutableType => this.isImmutableType;
 
         /// <summary>
@@ -105,17 +123,45 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type to serialize</typeparam>
     public abstract class SerializationHandler<T> : SerializationHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializationHandler{T}"/> class.
+        /// </summary>
+        /// <param name="contractName">Serialization handler contract name.</param>
+        /// <param name="id">Serialization handler ID.</param>
         protected SerializationHandler(string contractName, int id)
             : base(typeof(T), contractName, id)
         {
         }
 
+        /// <summary>
+        /// Serialize to buffer.
+        /// </summary>
+        /// <param name="writer">Buffer to which to serialize.</param>
+        /// <param name="instance">Instance to serialize.</param>
+        /// <param name="context">Serialization context.</param>
         public abstract void Serialize(BufferWriter writer, T instance, SerializationContext context);
 
+        /// <summary>
+        /// Deserialize from buffer.
+        /// </summary>
+        /// <param name="reader">Buffer from which to deserialize.</param>
+        /// <param name="target">Target into which to deserialize.</param>
+        /// <param name="context">Serialization context.</param>
         public abstract void Deserialize(BufferReader reader, ref T target, SerializationContext context);
 
+        /// <summary>
+        /// Clone instance to target.
+        /// </summary>
+        /// <param name="instance">Instance to be cloned.</param>
+        /// <param name="target">Target into which to clone.</param>
+        /// <param name="context">Serialization context.</param>
         public abstract void Clone(T instance, ref T target, SerializationContext context);
 
+        /// <summary>
+        /// Clear target value.
+        /// </summary>
+        /// <param name="target">Target to clear.</param>
+        /// <param name="context">Serialization context.</param>
         public abstract void Clear(ref T target, SerializationContext context);
     }
 #pragma warning restore SA1402

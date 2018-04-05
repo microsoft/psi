@@ -14,6 +14,12 @@ namespace Microsoft.Psi.Components
         private bool valueReceived = false;
         private T last;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Repeater{T, TClock}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="useInitialValue">Whether to seed with an initial value (before any messages seen).</param>
+        /// <param name="initialValue">Initial value (repeated before any messages seen).</param>
         public Repeater(Pipeline pipeline, bool useInitialValue = false, T initialValue = default(T))
             : base(pipeline)
         {
@@ -22,6 +28,9 @@ namespace Microsoft.Psi.Components
             this.ClockIn = pipeline.CreateReceiver<TClock>(this, this.ReceiveClock, nameof(this.ClockIn));
         }
 
+        /// <summary>
+        /// Gets clock signal receiver.
+        /// </summary>
         public Receiver<TClock> ClockIn { get; }
 
         /// <inheritdoc />

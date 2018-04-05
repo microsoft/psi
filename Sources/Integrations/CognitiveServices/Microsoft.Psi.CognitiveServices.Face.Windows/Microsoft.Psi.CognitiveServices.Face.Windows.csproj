@@ -23,6 +23,7 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.ProjectOxford.Face" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>

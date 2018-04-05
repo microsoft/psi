@@ -54,10 +54,12 @@ namespace Microsoft.Psi.Kinect.Face
         /// Called with a list of bodies we got from our Kinect sensor
         /// </summary>
         /// <param name="kinectBodies">List of KinectBody</param>
-        public void UpdateFaceTracking(List<KinectBody> kinectBodies)
+        /// <param name="e">Envelope containing originating time of the kinect bodies</param>
+        public void UpdateFaceTracking(List<KinectBody> kinectBodies, Envelope e)
         {
             if (kinectBodies.Count == 0)
             {
+                this.Faces.Post(new List<KinectFace>(), e.OriginatingTime);
                 return;
             }
 
@@ -225,7 +227,7 @@ namespace Microsoft.Psi.Kinect.Face
             /// <param name="e">Envelope</param>
             public void ReceiveInput(List<KinectBody> kinectBodies, Envelope e)
             {
-                this.faceDetector.UpdateFaceTracking(kinectBodies);
+                this.faceDetector.UpdateFaceTracking(kinectBodies, e);
             }
         }
     }

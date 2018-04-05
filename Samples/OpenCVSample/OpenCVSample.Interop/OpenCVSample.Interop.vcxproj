@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="CheckVariable" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -11,80 +11,99 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{0C0D11F0-04C4-41D3-AF43-7C2ACA90214A}</ProjectGuid>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>PsiOpenCVSampleInterop</RootNamespace>
+    <ProjectName>OpenCVSample.Interop</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <OpenCVDir Condition="'$(OpenCVDir)' == ''">$(USERPROFILE)\Documents\opencv\cv3.3\opencv</OpenCVDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ImportGroup Label="ExtensionSettings"></ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(OpenCVDir)\build\include;$(OpenCVDir)\sources\modules\highgui\include;$(OpenCVDir)\sources\modules\core\include;$(OpenCVDir)\sources\modules\videostab\include;$(OpenCVDir)\sources\modules\imgcodecs\include;$(OpenCVDir)\sources\modules\imgproc\include;$(OpenCVDir)\sources\modules\videoio\include;;$(OpenCVDir)\sources\include</IncludePath>
-    <OutDir>$(Platform)\$(Configuration)\</OutDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
+    <LinkKeyFile></LinkKeyFile>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(OpenCVDir)\build\include;$(OpenCVDir)\sources\modules\highgui\include;$(OpenCVDir)\sources\modules\core\include;$(OpenCVDir)\sources\modules\videostab\include;$(OpenCVDir)\sources\modules\imgcodecs\include;$(OpenCVDir)\sources\modules\imgproc\include;$(OpenCVDir)\sources\modules\videoio\include;;$(OpenCVDir)\sources\include</IncludePath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <TreatWarningAsError>true</TreatWarningAsError>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>"$(OpenCVDir)\build\x64\vc14\lib\opencv_world330.lib";kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <PostBuildEvent>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(OutDir)..\..\..\OpenCVSample\bin\Release\$(TargetName)$(TargetExt)
-copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330.dll $(OutDir)..\..\..\OpenCVSample\bin\Release</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
+    <LinkKeyFile></LinkKeyFile>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(OpenCVDir)\build\include;$(OpenCVDir)\sources\modules\highgui\include;$(OpenCVDir)\sources\modules\core\include;$(OpenCVDir)\sources\modules\videostab\include;$(OpenCVDir)\sources\modules\imgcodecs\include;$(OpenCVDir)\sources\modules\imgproc\include;$(OpenCVDir)\sources\modules\videoio\include;;$(OpenCVDir)\sources\include</IncludePath>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>"$(OpenCVDir)\build\x64\vc14\lib\opencv_world330d.lib";kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\</AdditionalLibraryDirectories>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(OutDir)..\..\..\OpenCVSample\bin\Debug\$(TargetName)$(TargetExt)
+      <Command>if not exist $(OutDir)..\..\..\OpenCVSample\bin\Debug (mkdir $(OutDir)..\..\..\OpenCVSample\bin\Debug)
+copy $(OutDir)$(TargetName)$(TargetExt) $(OutDir)..\..\..\OpenCVSample\bin\Debug\$(TargetName)$(TargetExt)
 copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330d.dll $(OutDir)..\..\..\OpenCVSample\bin\Debug</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>"$(OpenCVDir)\build\x64\vc14\lib\opencv_world330.lib";kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\</AdditionalLibraryDirectories>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>if not exist $(OutDir)..\..\..\OpenCVSample\bin\Release (mkdir $(OutDir)..\..\..\OpenCVSample\bin\Release)
+copy $(OutDir)$(TargetName)$(TargetExt) $(OutDir)..\..\..\OpenCVSample\bin\Release\$(TargetName)$(TargetExt)
+copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330.dll $(OutDir)..\..\..\OpenCVSample\bin\Release</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -102,8 +121,8 @@ copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330d.dll $(OutDir)..\..\..\Open
     <ClCompile Include="ImageBuffer.cpp" />
     <ClCompile Include="OpenCVNative.cpp" />
     <ClCompile Include="Stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,4 +137,11 @@ copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330d.dll $(OutDir)..\..\..\Open
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="CheckVariable">
+    <Warning Text="In order to build this sample you must define the environment variable OpenCVDir to point to your OpenCV installation"  ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir)'==''"/>
+    <CallTarget Targets="DoBuild"  Condition=" ('$(OpenCVDir)' != '') AND ('$(AGENT_BUILDDIRECTORY)'=='') "/>
+  </Target>
+  <Target Name="DoBuild" DependsOnTargets="Build">
+    <Exec Command="echo Built sample using OpenCVDir='%OpenCVDir%'"/>
+  </Target>
 </Project>

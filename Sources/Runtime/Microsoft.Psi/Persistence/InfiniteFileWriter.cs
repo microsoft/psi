@@ -95,8 +95,8 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Indicates whether the specified file has an active writer.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
+        /// <param name="name">Infinite file name.</param>
+        /// <param name="path">Infinite file path.</param>
         /// <returns>Returns true if there is an active writer to this file.</returns>
         public static bool IsActive(string name, string path)
         {

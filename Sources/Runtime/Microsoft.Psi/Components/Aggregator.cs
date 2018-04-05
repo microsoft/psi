@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Components
     using System;
 
     /// <summary>
-    /// A stateful transform
+    /// A stateful transform.
     /// </summary>
     /// <typeparam name="TState">The state type</typeparam>
     /// <typeparam name="TIn">The input message type</typeparam>
@@ -16,6 +16,12 @@ namespace Microsoft.Psi.Components
         private Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator;
         private TState state;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Aggregator{TState, TIn, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="init">Initial state.</param>
+        /// <param name="aggregator">Aggregation function.</param>
         public Aggregator(Pipeline pipeline, TState init, Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator)
             : base(pipeline)
         {

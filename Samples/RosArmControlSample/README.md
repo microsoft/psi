@@ -1,4 +1,4 @@
-﻿# Arm Control ROS Sample
+# ROS Arm Control Sample
 
 This sample demonstrates leveraging existing ROS packages with \psi, using the [uArm Metal](http://ufactory.cc/#/en/uarm1).
 The sample itself will run under the Core CLR (Mac/Linux/Windows), but depends on ROS running under Linux.
@@ -607,6 +607,6 @@ Have fun!
 
 ## Links
 
-* A simpler [tutorial using `turtlesim`](https://github.com/Microsoft/psi/blob/master/Samples/PsiRosTurtleSample)
+* A simpler [tutorial using `turtlesim`](https://github.com/Microsoft/psi/blob/master/Samples/RosTurtleSample)
 * [Blog covering uArm ROS library](http://www.aransena.com/blog/2016/9/13/uarm-controller)
 * Official [`UArmForROS` package](https://github.com/uArm-Developer/UArmForROS) (not being used)

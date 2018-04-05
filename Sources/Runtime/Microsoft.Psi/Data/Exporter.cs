@@ -63,9 +63,24 @@ namespace Microsoft.Psi.Data
         /// </summary>
         public enum WriteWhichEmitters
         {
+            /// <summary>
+            /// Write all emitters.
+            /// </summary>
             All,
+
+            /// <summary>
+            /// Write specified emitters.
+            /// </summary>
             Specified,
+
+            /// <summary>
+            /// Write connected emitters.
+            /// </summary>
             Connected,
+
+            /// <summary>
+            /// Write attributed emitters.
+            /// </summary>
             Attributed
         }
 

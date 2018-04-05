@@ -16,6 +16,11 @@ namespace Microsoft.Psi.Components
         private readonly BufferWriter serializationBuffer = new BufferWriter(16);
         private readonly SerializationHandler<T> handler;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializerComponent{T}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="serializers">Known serializers.</param>
         public SerializerComponent(Pipeline pipeline, KnownSerializers serializers)
             : base(pipeline)
         {

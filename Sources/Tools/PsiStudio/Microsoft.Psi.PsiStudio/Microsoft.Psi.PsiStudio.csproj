@@ -108,7 +108,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\System.Drawing.Common.4.5.0-preview1-25914-04\lib\net461\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\..\..\..\packages\System.Drawing.Common.4.5.0-preview1-26216-02\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />

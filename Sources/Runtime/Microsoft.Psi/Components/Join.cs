@@ -28,6 +28,14 @@ namespace Microsoft.Psi.Components
         private TSecondary[] lastValues;
         private MatchResult<TSecondary>[] lastResults;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Join{TPrimary, TSecondary, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <param name="outputCreator">Mapping function from message pair to output.</param>
+        /// <param name="secondaryCount">Number of secondary streams.</param>
+        /// <param name="secondarySelector">Selector function mapping primary messages to secondary stream indices.</param>
         public Join(
             Pipeline pipeline,
             Match.Interpolator<TSecondary> interpolator,
@@ -59,10 +67,20 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public Emitter<TOut> Out { get; }
 
+        /// <summary>
+        /// Gets primary input receiver.
+        /// </summary>
         public Receiver<TPrimary> InPrimary { get; }
 
+        /// <summary>
+        /// Gets collection of secondary receivers.
+        /// </summary>
         public IList<Receiver<TSecondary>> InSecondaries => this.inSecondaries;
 
+        /// <summary>
+        /// Add input receiver.
+        /// </summary>
+        /// <returns>Receiver.</returns>
         public Receiver<TSecondary> AddInput()
         {
             var lastIndex = this.inSecondaries.Length;

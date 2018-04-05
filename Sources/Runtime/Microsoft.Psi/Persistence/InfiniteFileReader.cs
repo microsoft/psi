@@ -50,8 +50,8 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Indicates whether the specified file is already loaded by a reader or writer.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="path"></param>
+        /// <param name="name">Infinite file name.</param>
+        /// <param name="path">Infinite file path.</param>
         /// <returns>Returns true if the store is already loaded.</returns>
         public static bool IsActive(string name, string path)
         {

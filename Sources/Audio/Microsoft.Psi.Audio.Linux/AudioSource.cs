@@ -150,10 +150,10 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void Stop()
         {
-            if (this.audioDevice != null)
+            var audioDevice = Interlocked.Exchange(ref this.audioDevice, null);
+            if (audioDevice != null)
             {
-                LinuxAudioInterop.Close(this.audioDevice);
-                this.audioDevice = null;
+                LinuxAudioInterop.Close(audioDevice);
             }
         }
 
