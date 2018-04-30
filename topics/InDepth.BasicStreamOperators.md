@@ -11,6 +11,7 @@ The ability to manipulate streams of data plays a central role in Platform for S
 * [Mapping](/psi/topics/InDepth.BasicStreamOperators#Mapping): these operators transform messages from the input stream.
 * [Filtering](/psi/topics/InDepth.BasicStreamOperators#Filtering): these operators filter messages from the input stream.
 * [Aggregating](/psi/topics/InDepth.BasicStreamOperators#Aggregating): these operators aggregate messages from the input stream.
+* [Window Computations]](/psi/topics/InDepth.BasicStreamOperators#WindowComputations): these operators aggregate windows of messages from the input stream.
 * [Actuating](/psi/topics/InDepth.BasicStreamOperators#Actuating): these operators allow for actuating based on messages in a stream.
 * [Synchronizing](/psi/topics/InDepth.BasicStreamOperators#Synchronizing): these operators allow for synchronizing multiple streams.
 * [Sampling](/psi/topics/InDepth.BasicStreamOperators#Sampling): these operators allow for sampling over a stream.
@@ -273,9 +274,58 @@ Interestingly, this lambda delegate is essentially taking the accumulated value 
 var min = myStream.Aggregate(Math.Min);
 ```
 
+### Specialized Aggregations
+
+The `Aggregate` operator is very general and can be used to accomplish many operations depending of accumulated state. For convenience, a myriad of common specializations are provided, including `Count`/`LongCount`, `Sum`, `Min`/`Max`, `Average`, `Std`, `Abs`, `Log`, ...
+
+```csharp
+Count(this IProducer<_> source) -> IProducer<int>
+Count(this IProducer<_> source, Predicate<T> condition) -> IProducer<int>
+LongCount(this IProducer<_> source) -> IProducer<long>
+LongCount(this IProducer<_> source, Predicate<T> condition) -> IProducer<long>
+Sum(this IProducer<_> source) -> IProducer<_>
+Sum(this IProducer<_> source, Predicate<_> condition) -> IProducer<_>
+Average(this IProducer<_> source) -> IProducer<_>
+Average(this IProducer<_> source, Predicate<_> condition) -> IProducer<_>
+Max(this IProducer<_> source) -> IProducer<_>
+Max(this IProducer<_> source, Predicate<_> condition) -> IProducer<_>
+Min(this IProducer<_> source) -> IProducer<_>
+Min(this IProducer<_> source, Predicate<_> condition) -> IProducer<_>
+Std(this IProducer<_> source) -> IProducer<_>
+Abs(this IProducer<double> source) -> IProducer<double>
+Log(this IProducer<double> source) -> IProducer<double>
+Log(this IProducer<double> source, double newBase) -> IProducer<double>
+```
+
+<a name="WindowComputations"></a>
+
+## 5. Window computations
+
+While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Buffer` and `History` operators](/psi/topics/InDepth.BuffersAndHistory) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
+
+As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Buffer` and `History`](/psi/topics/InDepth.BuffersAndHistory):
+
+```csharp
+Sum(this IProducer<_> source, int size) -> IProducer<_>
+Sum(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
+Sum(this IProducer<IEnumerable<_>> source, TimeSpan timeSpan) -> IProducer<_>
+Average(this IProducer<_> source, int size) -> IProducer<_>
+Average(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
+Average(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+Max(this IProducer<_> source, int size) -> IProducer<_>
+Max(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
+Max(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+Min(this IProducer<_> source, int size) -> IProducer<_>
+Min(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
+Min(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+Std(this IProducer<_> source, int size) -> IProducer<_>
+Std(this IProducer<_> source, TimeSpan timeSpan) -> IProducer<_>
+Std(this IProducer<IEnumerable<_> source>) -> IProducer<_>
+```
+
 <a name="Actuating"></a>
 
-## 5. Actuating
+## 6. Actuating
 
 Streams, produced by sensors or generators, are processed and eventually make their way to some kind of "actuator." The `Do` operator, as well as various and bridging operators can be suitable for this task.
 
@@ -320,13 +370,13 @@ myStream.ToObservable();
 
 <a name="Synchronizing"></a>
 
-## 6. Synchronizing
+## 7. Synchronizing
 
 Platform for Situated Intelligence provides operators that allow for fusing and synchronizing multiple streams in a variety of ways. The synchronization operators are `Join` and `Pair`. Given the complexity and importance of the topic, these operators are described in more detail in a separate [in-depth document on synchronization](/psi/topics/InDepth.Synchronization).
 
 <a name="Sampling"></a>
 
-## 7. Sampling
+## 8. Sampling
 
 ### Sample(...)
 
@@ -349,7 +399,7 @@ var sample = myStream.Sample(TimeSpan.FromMilliseconds(100));
 
 <a name="Parallel"></a>
 
-## 8. Parallel
+## 9. Parallel
 
 The `Parallel` operator enables parallel execution over dense or sparse vectors (i.e., arrays or dictionaries).
 
@@ -420,7 +470,7 @@ Parallel<TIn, TKey, TOut>(
 
 <a name="TimeRelated"></a>
 
-## 9. Time-related operators
+## 10. Time-related operators
 
 ### TimeOf()
 
@@ -462,7 +512,7 @@ Latency(this IProducer<T> source) -> IProducer<TimeSpan>
 
 <a name="Miscellaneous"></a>
 
-## 10. Miscellaneous
+## 11. Miscellaneous
 
 ### PipeTo(...)
 
