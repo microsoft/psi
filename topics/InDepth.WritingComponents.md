@@ -12,10 +12,11 @@ This document provides an introduction to how to write your own components. It i
 1. [**A Simple \psi Component**](/psi/topics/InDepth.WritingComponents#SimpleComponent): explains how to create and use a new component, and discusses a number of important aspects about the \psi programming model in relationship to writing components.
 2. [**Stream Operators**](/psi/topics/InDepth.WritingComponents#StreamOperators): discusses design patterns around stream operators, which are a special case of components that have a single input and a single output.
 3. [**Meta-Components**](/psi/topics/InDepth.WritingComponents#MetaComponents): explains how to wrap a graph of sub-components into a higher-level meta-component.
-4. [**Source Components**](/psi/topics/InDepth.WritingComponents#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
-5. [**Guidelines for Writing Components**](/psi/topics/InDepth.WritingComponents#Guidelines): summarizes a set of recommended guidelines for writing component.
+4. [**Hooking Pipeline Start/Stop**](/psi/topics/InDepth.WritingComponents#PipelineStartStop): describes how to hook into pipeline life cycle events.
+5. [**Source Components**](/psi/topics/InDepth.WritingComponents#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
+6. [**Guidelines for Writing Components**](/psi/topics/InDepth.WritingComponents#Guidelines): summarizes a set of recommended guidelines for writing component.
 
-This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](/psi/tutorials/) and the [Synchornization](/psi/topics/InDepth.Synchronization) in-depth topic.
+This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](/psi/tutorials/) and the [Synchronization](/psi/topics/InDepth.Synchronization) in-depth topic.
 
 <a name="SimpleComponent"></a>
 
@@ -86,7 +87,7 @@ The constructor for the component creates the receivers and emitters by calling 
 
 The signature for each receiver method has two parameters. The first one is of the same type as the receiver, and will contain at runtime the value of the incoming message on the stream. The second parameter is of type `Envelope` and will contain the message envelope information, including the message originating time, sequence number, etc.
 
-The `ReceiveString` receiver method simply captures the input message in the `lastStringInput` private variable. The `ReceiveCount` receiver creates the corresponding output by using a string builder and appending the stored string as many times as the `count` input. It then posts the results on the output stream by calling the `Post` method on the `this.Out` emitter. The `Post` call takes two parameters: the first is the message to be posted, which needs to be of the same type as the emitter. The second parameter is the originating time for this message. As explained in the [Brief Introduction](/psi/tutorials/) tutorial and the [Synchornization](/psi/topics/InDepth.Synchronization) in-depth topic, \psi components propagate the originating times for the incoming messages to the output streams. It is the responsibility of the component author to make sure this is the case and to choose what the originating time for each outgoing message is. In this case, we are choosing to propagate the originating time from the count input as this is what triggers the outputs.
+The `ReceiveString` receiver method simply captures the input message in the `lastStringInput` private variable. The `ReceiveCount` receiver creates the corresponding output by using a string builder and appending the stored string as many times as the `count` input. It then posts the results on the output stream by calling the `Post` method on the `this.Out` emitter. The `Post` call takes two parameters: the first is the message to be posted, which needs to be of the same type as the emitter. The second parameter is the originating time for this message. As explained in the [Brief Introduction](/psi/tutorials/) tutorial and the [Synchronization](/psi/topics/InDepth.Synchronization) in-depth topic, \psi components propagate the originating times for the incoming messages to the output streams. It is the responsibility of the component author to make sure this is the case and to choose what the originating time for each outgoing message is. In this case, we are choosing to propagate the originating time from the count input as this is what triggers the outputs.
 
 ### 1.2. Using the component
 
@@ -270,29 +271,48 @@ this.stringIn.Out.PipeTo(stringMultiplierComponent.StringIn);
 
 On the output side, the meta-component emitters can be assigned directly from the sub-component emitter or existing wiring &mdash; see the last couple of lines in the constructor above.
 
-<a name="SourceComponents"></a>
+<a name="PipelineStartStop"></a>
 
-## 4. Source Components
+## 4. Hooking Pipeline Start/Stop
 
-Another special class of components are _source components_, or components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc.
-
-### 4.1. IStartable Interface
-
-To facilitate writing source components, the \psi framework provides an `IStartable` interface. Components that implement this interface will get a `Start` call when the pipeline begins to run. This is useful in sensor components, which typically have to start their own data acquisition thread. The interface also defines a `Stop` method, which is called when the pipeline is shutting down. The signatures of the two methods are below:
+Components may need to do setup and teardown work when the pipeline starts and/or stops. For this, the `Pipeline` has methods to register callbacks; generally called in the component's constructor:
 
 ```csharp
-// Start method, called when upon start-up
-void Start(Action onCompleted, ReplayDescriptor descriptor);
+// Registers handler to be called upon pipeline start.
+void Pipeline.RegisterPipelineStartHandler(object owner, Action onStart);
 
-// Stop method, callen when pipeline is shutting down
-void Stop();
+// Registers handler to be called upon pipeline stop.
+void Pipeline.RegisterPipelineStopHandler(object owner, Action onStop);
 ```
 
-The `Start` method provides an `onCompleted` action which the component must call once it has finished generating messages. This mechanism allows a source component that produces a finite set of messages to inform the pipeline that no more messages are being produced on the stream (the runtime will know to shut down the pipeline when no more messages are being produced or processed anywhere). The second parameter is of type `ReplayDescriptor` and provides information to the startable component about playback constraints. The \psi runtime allows the application writer to control the execution of the pipeline in a variety of ways via this replay descriptor, and generator source need to comply.
+The `owner` object is the state object protecting concurrent calls to the component. Typically the component itself (`this`) is used. The `Action` is called upon pipeline start/stop.
 
-The `Stop` method is called when the pipeline is shutting down. Once this method completes, the component should stop generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages.
+The `onStart` callback is invoked when the pipeline is about to start. All components have been constructed but messages have not started to flow. Additionally, the `Pipeline.ReplayDescriptor` has been established by this point in time.
 
-### 4.2. Generator Pattern
+The `onStop` is called when the pipeline is shutting down. Once this completes, the component should stop generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages.
+
+<a name="SourceComponents"></a>
+
+## 5. Source Component Interfaces
+
+In contrast to _reactive components_, which are those that produce output _only_ in response to incoming message, _source components_ are the "headwaters" of the system; the source from which messages flow. These are components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc. 
+
+Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` marker interface serves this purpose. Being a "marker" interface, there are no methods to implement. Merely declaring a component to be an `ISourceComponent` clearly identifies it as such to the pipeline.
+
+### 5.1. Completion
+
+Some source components have a notion of "completion." These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `IFiniteSourceComponent` interface is itself an `ISourceComponent` and is used in this case. The single `Initialize(Action onCompleted)` method provides a means to later notify the pipeline of completion by way of an `onCompleted` action to call at the appropriate time:
+
+```csharp
+// Implementors should advise the pipeline when they are done posting 
+void IFiniteSourceComponent.Initialize(Action onCompleted);
+```
+
+`Initialize(...)` is called after the graph of components has been constructed, but before messages have began to flow; just before pipeline startup.
+
+Once all source components have completed, downstream reactive components no longer having anything to which to react and the pipeline is free to shut down. Any cycles in the graph where reactive components are "down stream" from themselves do not prevent pipeline shut down.
+
+### 5.2. Generator Pattern
 
 In the discussion above, we have assumed that the source component obtains data via a thread that it starts or obtains, but that cannot be controlled by the runtime scheduler. However, this also means that the runtime cannot throttle these components, i.e. it cannot slow down the production of the source messages if it needs to (for instance if resource constraints prevent the full pipeline to run at the speed of the source).
 
@@ -362,7 +382,7 @@ The component must override the virtual `GenerateNext` method to produce data on
 
 <a name="Guidelines"></a>
 
-## 5. Guidelines for Writing Components
+## 6. Guidelines for Writing Components
 
 In general, follow the guidelines we have already provided above when writing components.
 
