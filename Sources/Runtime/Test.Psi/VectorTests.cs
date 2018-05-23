@@ -149,7 +149,7 @@ namespace Test.Psi
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => values[i])
                     .Do(dict => original.Add(dict.DeepClone()))
-                    .Parallel((k, v) => v.Where(value => value % 2 == 0), true)
+                    .Parallel((k, v) => v.Where(value => value % 2 == 0), false)
                     .Do(dict => results.Add(dict.DeepClone()));
                 p.Run();
             }

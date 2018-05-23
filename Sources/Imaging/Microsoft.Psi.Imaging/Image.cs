@@ -836,7 +836,7 @@ namespace Microsoft.Psi.Imaging
                     var assembly = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName("Microsoft.Psi.Imaging.Windows"));
                     if (assembly != null)
                     {
-                        var ic = assembly.CreateInstance("Microsoft.Psi.Imaging.Windows.ImageCompressor");
+                        var ic = assembly.CreateInstance("Microsoft.Psi.Imaging.ImageCompressor");
                         if (ic != null)
                         {
                             this.imageCompressor = ic as IImageCompressor;
