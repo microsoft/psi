@@ -269,7 +269,7 @@ First, we will have to setup a new console application that this time is .NET Fr
 
 * Create the app by going to _File -> New Project -> Visual C# -> Console App (.NET Framework)_
 * In _Project Properties_ -> _Application_ -> _Target framework_, set the target to _.NET Framework 4.7_
-* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Visualization.Windows`
+* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Visualization.Windows` (See [here](https://microsoft.github.io/psi/UsingWithNuget).)
 
 Finally, add the following using clauses at the top of your file:
 
