@@ -324,9 +324,9 @@ The code snippet shows how to initialize the visualization client, and set it up
 The next line, `visualizer.AddTimelinePanel()` create a new timeline panel where we will plot the _cos_ stream. Finally, the block plots the cos stream. Note that the call to `Show` returns a visualization object that can be used to configure various properties of the visualization. These are the same properties that are accessible and configurable via the UI from the PsiStudio properties panel. For instance, in the code above:
 
 * we configure the Y-axis bounds of the visualization manually (by default this is automatically adjusted to the range of visible points unless manually specified)
-* we configure the color of the plot to red (by default the plot will iterate through a set of colors)
+* we configure the color of the plot to `Red` (by default the plot will iterate through a set of colors)
 * we configure the plot markers to `Diamond` style (by default the plot marker style is `None`, i.e. markers are not shown)
-* we configure the plot markers color to red.
+* we configure the plot markers color to `Red`.
 
 <a name="ReplayingData"></a>
 
