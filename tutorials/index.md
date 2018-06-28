@@ -332,7 +332,7 @@ The next line, `visualizer.AddTimelinePanel()` create a new timeline panel where
 
 ## 6. Replaying Data
 
-Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorials/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin and cos functions.
+Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorials/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin function.
 
 ```csharp
 using (var p = Pipeline.Create())
