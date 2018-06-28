@@ -247,7 +247,7 @@ To display the legend that's visible in the image above, simply right click on t
 
 You will notice that as you move the cursor around over the timeline panel, the legend updates with the current values under the cursor. Navigation can be done via mouse: moving the mouse moves the cursor, and the scroll wheel zooms the timeline view in and out. As you zoom in, you will notice that the time navigator visuals change, to indicate where you are in the data (the blue region in the top-half).
 
-As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Start first by selecting the _Visualizations_ tab (on the left, next to _Datasets_). This will bring you to a hierarchical view of the panels and visualizations currently displayed. It shows that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, and it will show two stream visulizers underneath, for Sin and Cos, like below:
+As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Start first by selecting the _Visualizations_ tab (on the left, next to _Datasets_). This will bring you to a hierarchical view of the panels and visualizations currently displayed. It shows that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, and it will show two stream visualizers underneath, for Sin and Cos, like below:
 
 ![PsiStudio (Visualizers Tab)](/psi/tutorials/PsiStudio.VisualizersTab.png)
 
