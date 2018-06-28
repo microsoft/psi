@@ -233,7 +233,7 @@ Once you run the application, you will see a window that looks similar to the im
 
 ![PsiStudio (when opening the demo recording)](/psi/tutorials/PsiStudio.Start.png)
 
-The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream, like below:
+The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream, like below:
 
 ![PsiStudio (visualizing a stream)](/psi/tutorials/PsiStudio.SinVisualization.png)
 
