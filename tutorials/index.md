@@ -298,7 +298,7 @@ using (var p = Pipeline.Create())
     visualizer.ClearAll();
     visualizer.SetLiveMode();
 
-    // Plot the sin stream and adjust some properties
+    // Plot the sin stream
     sin.Show(visualizer);
 
     // Add a new timeline panel
