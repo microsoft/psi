@@ -239,7 +239,7 @@ The PsiStudio application has a toolbar, a time-navigator (more on that in a sec
 
 The plot command has created a timeline visualization panel and inside it a visualizer for the Sin stream. Moving the mouse over the panel moves the data cursor (which is synchronized across all panels).
 
-If we repeat the operation on the Cos stream, a visulizer for this stream will be overlaid on the current timeline panel, resulting in a visualization like this.
+If we repeat the operation on the Cos stream, a visualizer for this stream will be overlaid on the current timeline panel, resulting in a visualization like this.
 
 To display the legend that's visible in the image below, simply right click on the timeline panel and select _Show/Hide Legend_.
 
