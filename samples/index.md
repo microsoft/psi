@@ -17,6 +17,6 @@ The `Samples` folder contains a few small example applications written with Plat
 | [RosTurtleSample](https://github.com/Microsoft/psi/blob/master/Samples/RosTurtleSample) | This sample illustrates how to connect Platform for Situated Intelligence to the `turtlesim` in ROS. | Yes | Yes |
 | [RosArmControlSample](https://github.com/Microsoft/psi/blob/master/Samples/RosArmControlSample) | This sample illustrates how to connect Platform for Situated Intelligence to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) using ROS. | Yes | Yes |
 | [OpenCVSample](https://github.com/Microsoft/psi/blob/master/Samples/OpenCVSample) | This sample illustrates how to interop with OpenCV. | Yes | - |
-| [WpfSample](https://github.com/Microsoft/psi/blob/master/Samples/WpfSample) | This sample illustrates how to write and Windows Presentation Foundation app that uses Platform for Situated Intelligence. | Yes | - |
+| [WpfSample](https://github.com/Microsoft/psi/blob/master/Samples/WpfSample) | This sample illustrates how to write a Windows Presentation Foundation app that uses Platform for Situated Intelligence. | Yes | - |
 
 
