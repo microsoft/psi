@@ -265,7 +265,7 @@ While so far we have discussed how to use PsiStudio to visualize previously coll
 
 __Notes__: 
 * To run this example, PsiStudio must have been compiled and must have ran at least once beforehand, as this will ensure the tool is registered as a COM server. (see note at the beginning of the [Offline Visualization](/psi/tutorials#OfflineVisualization) section above).
-* For now, your app should target x64 platform and have a direct dependency on Newtonsoft.Json (>= 11.0.0) until this (issue)[https://github.com/Microsoft/psi/issues/7] is resolved.
+* For now, your app should target x64 platform and have a direct dependency on Newtonsoft.Json (>= 11.0.0) until this [issue](https://github.com/Microsoft/psi/issues/7) is resolved.
 
 First, we will have to setup a new console application that this time is .NET Framework 4.7 (as previously mentioned the visualization system is not yet cross-platform). Follow the steps below:
 
