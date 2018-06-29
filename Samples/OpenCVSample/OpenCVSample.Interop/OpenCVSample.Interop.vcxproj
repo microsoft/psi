@@ -131,9 +131,6 @@ copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330.dll $(OutDir)..\..\..\OpenC
   <ItemGroup>
     <Image Include="app.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
