@@ -233,21 +233,21 @@ Once you run the application, you will see a window that looks similar to the im
 
 ![PsiStudio (when opening the demo recording)](/psi/tutorials/PsiStudio.Start.png)
 
-The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream, like below:
+The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream, like below:
 
 ![PsiStudio (visualizing a stream)](/psi/tutorials/PsiStudio.SinVisualization.png)
 
 The plot command has created a timeline visualization panel and inside it a visualizer for the Sin stream. Moving the mouse over the panel moves the data cursor (which is synchronized across all panels).
 
-If we repeat the operation on the Cos stream, a visulizer for this stream will be overlaid on the current timeline panel, resulting in a visualization like this.
-
-To display the legend that's visible in the image below, simply right click on the timeline panel and select _Show/Hide Legend_.
+If we repeat the operation on the Cos stream, a visualizer for this stream will be overlaid on the current timeline panel, resulting in a visualization like this :
 
 ![PsiStudio (two streams and legend)](/psi/tutorials/PsiStudio.SinCosLegendVisualization.png)
 
+To display the legend that's visible in the image above, simply right click on the timeline panel and select _Show/Hide Legend_.
+
 You will notice that as you move the cursor around over the timeline panel, the legend updates with the current values under the cursor. Navigation can be done via mouse: moving the mouse moves the cursor, and the scroll wheel zooms the timeline view in and out. As you zoom in, you will notice that the time navigator visuals change, to indicate where you are in the data (the blue region in the top-half).
 
-As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Start first by selecting the _Visualizations_ tab (on the left, next to _Datasets_). This will bring you to a hierarchical view of the panels and visualizations currently displayed. It shows that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, and it will show two stream visulizers underneath, for Sin and Cos, like below:
+As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Start first by selecting the _Visualizations_ tab (on the left, next to _Datasets_). This will bring you to a hierarchical view of the panels and visualizations currently displayed. It shows that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, and it will show two stream visualizers underneath, for Sin and Cos, like below:
 
 ![PsiStudio (Visualizers Tab)](/psi/tutorials/PsiStudio.VisualizersTab.png)
 
@@ -263,13 +263,15 @@ Come back to the _Visualizations_ tab and highlight the Cos visualizer. On the b
 
 While so far we have discussed how to use PsiStudio to visualize previously collected data, the tool can also be used to visualize the streams persisted by an application _live_, while the application is running. The following example shows how to set this up.
 
-__Note__: To run this example, PsiStudio must have been compiled and must have ran at least once beforehand, as this will ensure the tool is registered as a COM server. (see note at the beginning of the [Offline Visualization](/psi/tutorials#OfflineVisualization) section above).
+__Notes__: 
+* To run this example, PsiStudio must have been compiled and must have ran at least once beforehand, as this will ensure the tool is registered as a COM server. (see note at the beginning of the [Offline Visualization](/psi/tutorials#OfflineVisualization) section above).
+* For now, your app should target x64 platform and have a direct dependency on Newtonsoft.Json (>= 11.0.0) until this [issue](https://github.com/Microsoft/psi/issues/7) is resolved.
 
 First, we will have to setup a new console application that this time is .NET Framework 4.7 (as previously mentioned the visualization system is not yet cross-platform). Follow the steps below:
 
 * Create the app by going to _File -> New Project -> Visual C# -> Console App (.NET Framework)_
 * In _Project Properties_ -> _Application_ -> _Target framework_, set the target to _.NET Framework 4.7_
-* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Visualization.Windows`
+* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Visualization.Windows` (See [here](https://microsoft.github.io/psi/UsingWithNuget).)
 
 Finally, add the following using clauses at the top of your file:
 
@@ -298,7 +300,7 @@ using (var p = Pipeline.Create())
     visualizer.ClearAll();
     visualizer.SetLiveMode();
 
-    // Plot the sin stream and adjust some properties
+    // Plot the sin stream
     sin.Show(visualizer);
 
     // Add a new timeline panel
@@ -323,16 +325,16 @@ The code snippet shows how to initialize the visualization client, and set it up
 
 The next line, `visualizer.AddTimelinePanel()` create a new timeline panel where we will plot the _cos_ stream. Finally, the block plots the cos stream. Note that the call to `Show` returns a visualization object that can be used to configure various properties of the visualization. These are the same properties that are accessible and configurable via the UI from the PsiStudio properties panel. For instance, in the code above:
 
-* we configure the Y-axis bounds of the visualization manually (by default this automatically adjusted to the range of visible points unless manually specified)
-* we configure the color of the plot to red (by default the plot will iterate through a set of colors)
+* we configure the Y-axis bounds of the visualization manually (by default this is automatically adjusted to the range of visible points unless manually specified)
+* we configure the color of the plot to `Red` (by default the plot will iterate through a set of colors)
 * we configure the plot markers to `Diamond` style (by default the plot marker style is `None`, i.e. markers are not shown)
-* we configure the plot markers color to red.
+* we configure the plot markers color to `Red`.
 
 <a name="ReplayingData"></a>
 
 ## 6. Replaying Data
 
-Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorials/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin and cos functions.
+Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorials/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin function.
 
 ```csharp
 using (var p = Pipeline.Create())
