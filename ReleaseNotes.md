@@ -66,4 +66,10 @@ Consecutive messages posted on the same stream with identical originating time t
 Workaround:
 Ensure the originating time on consecutive messages is incremented by at least 1 tick.
 
+**[Speech Recognition](https://github.com/Microsoft/psi/issues/12):**
+Originating times of speech recognition messages from the SystemSpeechRecognizer and MicrosoftSpeechRecognizer components may not reflect the exact times of the corresponding utterances in the audio stream.
+
+Workaround:
+Do not rely on the originating times of messages from the SystemSpeechRecognizer and MicrosoftSpeechRecognizer components to be precise with respect to the input audio stream. If such precision is required, align the bytes in the `StreamingSpeechRecognitionResult.Audio` property of the output message with the raw input audio to locate the corresponding utterance within the input audio stream.
+
 - - -
