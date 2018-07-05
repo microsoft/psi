@@ -36,7 +36,9 @@ __Build__:
 
 __Prerequisites__:
 
-You will need .NET Core on Linux. You can find the installation instructions [here](https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x).
+You will need .NET Core on Linux. You can find the [installation instructions here](https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x).
+
+Although \psi is built on .NET Standard, IL assembly still depends on _Mono's_ `ilasm` tool. [Install at least `mono-devel`](https://www.mono-project.com/download/stable/#download-lin).
 
 __Build__:
 

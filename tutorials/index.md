@@ -55,7 +55,7 @@ static void Main(string[] args)
 {
     using (var p = Pipeline.Create())
     {
-        var timer = Generators.Timer(p, TimeSpan.FromSeconds(0.1));
+        var timer = Timers.Timer(p, TimeSpan.FromSeconds(0.1));
         timer.Do(t => Console.WriteLine(t));
         p.Run();
     }
@@ -64,7 +64,7 @@ static void Main(string[] args)
 
 Try it out!
 
-The `Generators.Timer` factory method creates a source timer stream. In this case, the first parameter in the call is the pipeline object `p` (a common pattern in \\psi when instantiating components) and the second parameter is the time interval to use when generating messages is specified as the second parameter.
+The `Timers.Timer` factory method creates a source timer stream. In this case, the first parameter in the call is the pipeline object `p` (a common pattern in \\psi when instantiating components) and the second parameter is the time interval to use when generating messages is specified as the second parameter.
 
 __*Streams*__ are a fundamental construct and a first-order citizen in the \\psi runtime. They can be generated and processed via various operators and they link components together. Streams are a generic type (you can have a stream of any type `T`) and are strongly typed, and therefore the connections between components are statically checked. Messages posted on streams are time-stamped and streams can be persisted to disk and visualized (more on that in a moment).
 

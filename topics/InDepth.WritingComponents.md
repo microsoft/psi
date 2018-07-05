@@ -11,10 +11,11 @@ This document provides an introduction to how to write your own components. It i
 
 1. [**A Simple \psi Component**](/psi/topics/InDepth.WritingComponents#SimpleComponent): explains how to create and use a new component, and discusses a number of important aspects about the \psi programming model in relationship to writing components.
 2. [**Stream Operators**](/psi/topics/InDepth.WritingComponents#StreamOperators): discusses design patterns around stream operators, which are a special case of components that have a single input and a single output.
-3. [**Meta-Components**](/psi/topics/InDepth.WritingComponents#MetaComponents): explains how to wrap a graph of sub-components into a higher-level meta-component.
-4. [**Hooking Pipeline Start/Stop**](/psi/topics/InDepth.WritingComponents#PipelineStartStop): describes how to hook into pipeline life cycle events.
-5. [**Source Components**](/psi/topics/InDepth.WritingComponents#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
-6. [**Guidelines for Writing Components**](/psi/topics/InDepth.WritingComponents#Guidelines): summarizes a set of recommended guidelines for writing component.
+3. [**Subpipelines**] (psi/topics/InDepth.WritingComponents#SubPipelines): describes subpipeline components and their behavior.
+4. [**Composite-Components**](/psi/topics/InDepth.WritingComponents#CompositeComponents): explains how to wrap a graph of sub-components into a higher-level composite-component.
+5. [**Registering for Notification of Pipeline Start/Stop**](/psi/topics/InDepth.WritingComponents#PipelineStartStop): describes how to hook into pipeline life cycle events.
+6. [**Source Components**](/psi/topics/InDepth.WritingComponents#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
+7. [**Guidelines for Writing Components**](/psi/topics/InDepth.WritingComponents#Guidelines): summarizes a set of recommended guidelines for writing component.
 
 This document assumes an understanding of the concept of originating time for \psi messages. To get familiar with this construct, please read first the [Brief Introduction](/psi/tutorials/) and the [Synchronization](/psi/topics/InDepth.Synchronization) in-depth topic.
 
@@ -129,7 +130,7 @@ this.CountIn = pipeline.CreateReceiver<int>(this, ReceiveCount, nameof(this.Coun
 
 The first parameter of the `CreateReceiver` method (called `owner`) is an object that informs the runtime that these receivers are owned by the same component. In this case, since we have passed in `this`, i.e. the reference to the current instance of the component, the runtime will know to execute these methods exclusively on that component instance. If a second component of the same type would be instantiated and connected somewhere in the same pipeline, the receiver exclusivity applies on each of the components separately, but the two components can execute in parallel.
 
-The second observation is more of a programming guideline. Because of exclusivity of receivers, care in general should be taken that the processing code running in each receiver does not take too long, as this would induce large latencies in the pipeline and would also prevent other receivers from being scheduled during that time. The \psi parallel programming model in effect encourages decomposition and encapsulation, and discourages large, monolithic components. Later on, in the [Meta-components](/psi/topics/InDepth.WritingComponents#MetaComponents) section of this document, we discuss how to instead construct large components by hierarchically aggregating smaller ones. This not only will foster encapsulation and reuse, but will also enable gains in efficiency via the pipeline-parallel execution afforded by the runtime scheduler.
+The second observation is more of a programming guideline. Because of exclusivity of receivers, care in general should be taken that the processing code running in each receiver does not take too long, as this would induce large latencies in the pipeline and would also prevent other receivers from being scheduled during that time. The \psi parallel programming model in effect encourages decomposition and encapsulation, and discourages large, monolithic components. Later on, in the [Composite-components](/psi/topics/InDepth.WritingComponents#CompositeComponents) section of this document, we discuss how to instead construct large components by hierarchically aggregating smaller ones. This not only will foster encapsulation and reuse, but will also enable gains in efficiency via the pipeline-parallel execution afforded by the runtime scheduler.
 
 ### 1.4. Isolated execution and message ownership
 
@@ -209,19 +210,47 @@ source.PipeTo(signComponent.In, deliveryPolicy)
 
 because the `Sign` component implements `IConsumer` and `PipeTo` knows how to route to an `IConsumer`. By deriving from `ConsumerProducer<TIn, TOut>` your component class automatically implements this interface.
 
-<a name="MetaComponents"></a>
+<a name="Subpipelines"></a>
 
-## 3. Meta-components
+## 3. Subpipelines
 
-_Meta-components_ allow for aggregating a graph of existing components in a single, higher-level component. As an example, consider the figure below. The meta-component depicted here wraps the previous `StringMultiplier` component, together with a stream operator component that computes the absolute value of the input stream into a single meta-component with two inputs and two outputs. The inputs correspond like before to a string and count. On the output side, will provide the multiplied string and absolute value of the count. Like in the previous example, this meta-component is not very useful, but will help illustrate how meta-components are created.
+Subpipelines are a construct that enable hierarchical organization in the computation graph. They enable developing composite components, or dynamic computation graphs that can a lifetime separate from their parent `Pipeline`.
 
-![A meta-component](/psi/topics/WritingComponents.MetaComponent.png)
+The `Subpipeline` class is essentially a `Pipeline` (it derives from it), but is also a component that can be added to a parent pipeline. This allows for a means of abstraction and for hierarchically organizing computation graphs via [composite components](/psi/topics/InDepth.WritingComponents#CompositeComponents), which we describe in more detail in the next section. Additionally, subpipelines may have a lifetime that is independent of that of their parent. Finally, subpipelines enable initializing and starting or stopping child components independently from the parent to which they belong, and hence dynamically constructing computation graphs. As an example, subpipelines are used internally by the [`Parallel` operator](/psi/topics/InDepth.BasicStreamOperators#Parallel) to dynamically create and run parallel computation graphs for multiple instances, while respecting source component initialization, start and stop events, etc.
 
-The code for this meta-component is shown below:
+Subpipelines are defined as a [finite source component](/psi/topics/InDepth.WritingComponents#SourceComponents) and complete when all of their child source components have completed. If a `Subpipeline` contains _no_ source components then it completes (calls `onCompleted`) at startup, and therefore behaves as a purely reactive component.
+
+Subpipelines share the parent's `Scheduler`, the parent's `PipelineCompletionEvent` and, if not specified, the parent's global `DeliveryPolicy`. 
+
+If not explicitly started via `Run()` or `RunAsync()`, subpipelines start when the parent pipeline starts - just as a normal component. They may also be created and started dynamically at runtime. 
+
+Constructing a subpipeline and attaching components to it is simple:
 
 ```csharp
-// Implements a simple meta-component
-public class MetaComponent
+using (var p = Pipeline.Create("root"))
+{
+    using (var s = Subpipeline.Create(p, "sub"))
+    {
+        // add to sub-pipeline
+        var seq = Generators.Sequence(s, new[] { 1, 2, 3 });
+        p.Run(); // run parent pipeline
+    }
+}
+```
+
+<a name="CompositeComponents"></a>
+
+## 4. Composite-components
+
+_Composite-components_ allow for aggregating a graph of existing components in a single, higher-level component. As an example, consider the figure below. The composite-component depicted here wraps the previous `StringMultiplier` component, together with a stream operator component that computes the absolute value of the input stream into a single composite-component with two inputs and two outputs. The inputs correspond like before to a string and count. On the output side, will provide the multiplied string and absolute value of the count. Like in the previous example, this composite-component is not very useful, but will help illustrate how composite-components are created.
+
+![A composite-component](/psi/topics/WritingComponents.CompositeComponent.png)
+
+The code for this composite-component is shown below:
+
+```csharp
+// Implements a simple composite-component
+public class CompositeComponent : Subpipeline
 {
     // Connector for the string input
     private Connector<string> stringIn;
@@ -230,23 +259,28 @@ public class MetaComponent
     private Connector<int> countIn;
 
     // Constructor
-    public MetaComponent(Pipeline pipeline)
+    public CompositeComponent(Pipeline pipeline)
+        : base(pipeline, nameof(CompositeComponent))
     {
         // Create the connectors
-        this.stringIn = pipeline.CreateConnector<string>(this, nameof(this.StringIn));
-        this.countIn = pipeline.CreateConnector<int>(this, nameof(this.CountIn));
+        this.stringIn = pipeline.CreateInputConnector<string>(this, this, nameof(this.StringIn));
+        this.countIn = pipeline.CreateInputConnector<int>(this, this, nameof(this.CountIn));
+
+        // Define the outputs
+        var stringOut = this.CreateOutputConnector<string>(pipeline, this, nameof(this.StringOut));
+        var absCountOut = this.CreateOutputConnector<int>(pipeline, this, nameof(this.AbsCountOut));
+        this.StringOut = stringOut.Out;
+        this.AbsCountOut = absCountOut.Out;
+
+        // Create the string multiplier component, and connect it
+        var stringMultiplierComponent = new StringMultiplier(this);
+        this.stringIn.Out.PipeTo(stringMultiplierComponent.StringIn);
+        stringMultiplierComponent.Out.PipeTo(stringOut);
 
         // Create the absolute value of count stream by applying a Select operator
         var abs = this.countIn.Out.Select(v => v > 0 ? v : -v);
-
-        // Create the string multiplier component, and connect it
-        var stringMultiplierComponent = new StringMultiplier(pipeline);
-        this.stringIn.Out.PipeTo(stringMultiplierComponent.StringIn);
         abs.PipeTo(stringMultiplierComponent.CountIn);
-
-        // Define the outputs
-        this.StringOut = stringMultiplierComponent.Out;
-        this.AbsCountOut = abs.Out;
+        abs.Out.PipeTo(absCountOut);
     }
 
     // Receiver for string input
@@ -263,17 +297,17 @@ public class MetaComponent
 }
 ```
 
-Like with a regular component, a meta-component is written as a class. The constructor also receives the pipeline object, and sets up the receivers and emitters. The difference is in that there are no receiver methods. Instead, receivers for meta-components can be setup with the help of connectors, implemented by the  `Connector<T>` class. A _connector_ exposes a member `In` that acts as a receiver, and a member `Out` that acts as an emitter. This way, it can live on the input boundary of the meta-component and be seen as a receiver from outside the component and as an emitter from inside. The constructor code can then create a number of sub-components and wire them together to the connector outputs, e.g.:
+Like with a regular component, a composite-component is written as a class. A recommended approach is to inherit from `Subpipeline`; providing a clear delineation in the graph (future tools may collapse graph visualization, for example). The constructor also receives the pipeline object, and sets up the receivers and emitters. The difference is in that there are no receiver methods. Instead, receivers for composite-components can be setup with the help of connectors, implemented by the  `Connector<T>` class. A _connector_ exposes a member `In` that acts as a receiver, and a member `Out` that acts as an emitter. This way, it can live on the input boundary of the composite-component and be seen as a receiver from outside the component and as an emitter from inside. The constructor code can then create a number of sub-components and wire them together to the connector outputs. Also notice that internal components are given the subpipeline as their host upon construction (e.g. `new StringMultiplier(this)`). This ensures that the inner components remain isolated from the parent pipeline while also not exposing subpipeline emitters to the outside world. Example:
 
 ```csharp
 this.stringIn.Out.PipeTo(stringMultiplierComponent.StringIn);
 ```
 
-On the output side, the meta-component emitters can be assigned directly from the sub-component emitter or existing wiring &mdash; see the last couple of lines in the constructor above.
+On the output side, the composite-component emitters can be assigned directly from the sub-component emitter or existing wiring &mdash; see the last couple of lines in the constructor above.
 
 <a name="PipelineStartStop"></a>
 
-## 4. Hooking Pipeline Start/Stop
+## 5. Registering for Notification of Pipeline Start/Stop
 
 Components may need to do setup and teardown work when the pipeline starts and/or stops. For this, the `Pipeline` has methods to register callbacks; generally called in the component's constructor:
 
@@ -293,13 +327,13 @@ The `onStop` is called when the pipeline is shutting down. Once this completes, 
 
 <a name="SourceComponents"></a>
 
-## 5. Source Component Interfaces
+## 6. Source Component Interfaces
 
 In contrast to _reactive components_, which are those that produce output _only_ in response to incoming message, _source components_ are the "headwaters" of the system; the source from which messages flow. These are components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc. 
 
 Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` marker interface serves this purpose. Being a "marker" interface, there are no methods to implement. Merely declaring a component to be an `ISourceComponent` clearly identifies it as such to the pipeline.
 
-### 5.1. Completion
+### 6.1. Completion
 
 Some source components have a notion of "completion." These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `IFiniteSourceComponent` interface is itself an `ISourceComponent` and is used in this case. The single `Initialize(Action onCompleted)` method provides a means to later notify the pipeline of completion by way of an `onCompleted` action to call at the appropriate time:
 
@@ -312,7 +346,7 @@ void IFiniteSourceComponent.Initialize(Action onCompleted);
 
 Once all source components have completed, downstream reactive components no longer having anything to which to react and the pipeline is free to shut down. Any cycles in the graph where reactive components are "down stream" from themselves do not prevent pipeline shut down.
 
-### 5.2. Generator Pattern
+### 6.2. Generator Pattern
 
 In the discussion above, we have assumed that the source component obtains data via a thread that it starts or obtains, but that cannot be controlled by the runtime scheduler. However, this also means that the runtime cannot throttle these components, i.e. it cannot slow down the production of the source messages if it needs to (for instance if resource constraints prevent the full pipeline to run at the speed of the source).
 
@@ -382,7 +416,7 @@ The component must override the virtual `GenerateNext` method to produce data on
 
 <a name="Guidelines"></a>
 
-## 6. Guidelines for Writing Components
+## 7. Guidelines for Writing Components
 
 In general, follow the guidelines we have already provided above when writing components.
 

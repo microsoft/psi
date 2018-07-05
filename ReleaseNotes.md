@@ -5,16 +5,33 @@ title:  Release Notes
 
 # Release Notes
 
+**2018/07/02**: Beta-release, version ???
+
+Interim release with support for new devices, runtime enhancements and several API changes, as well as minor bug fixes:
+
+* Added support for RealSense depth camera
+* Added the `FFMPEGMediaSource` component for Linux
+* Added a [`Subpipeline`] class, enabling nested pipelines(psi/topics/InDepth.WritingComponents#SubPipelines)
+* [`Parallel`](/psi/topics/InDepth.BasicStreamOperators#Parallel)
+ now uses subpipelines
+* [`Sequence`, `Repeat` and `Range` generators](/psi/topics/InDepth.BasicStreamOperators#Producing) now allow time-aligned messages
+* Additional minor bug fixes.
+
+Several API changes have been made:
+
+* `Generators.Timer(...)` is now `Timers.Timer(...)`
+* `IStartable` has been [replaced by `ISourceControl`/`IFiniteSourceControl`](/psi/topics/InDepth.WritingComponents#SourceComponents) and the [way that components get notified about the pipeline starting and stopping](/psi/topics/InDepth.WritingComponents#PipelineStartStop) has changed
+
 **2018/04/04**: Beta-release, version 0.3.16.5
 
-Interim release with a few changes to the samples and some minor bugfixes:
+Interim release with a few changes to the samples and some minor bug fixes:
 
 * ArmControlROSSample is now RosArmControlSample.
 * PsiRosTurtleSample is now RosTurtleSample.
 * Added LinuxSpeechSample.
 * KinectFaceDetector component now outputs an empty list if no face is detected.
 * NuGet packages are now marked beta.
-* Additional minor bugfixes.
+* Additional minor bug fixes.
 
 **2018/03/17**: Beta-release, version 0.2.123.1
 

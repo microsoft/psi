@@ -7,7 +7,7 @@ title:  Basic Stream Operators
 
 The ability to manipulate streams of data plays a central role in Platform for Situated Intelligence. This document provides a brief overview of the basic stream operators currently available. With a few exceptions (like generators and joins), stream operators generally transform one stream into another. The operators can be grouped into several classes:
 
-* [Generating](/psi/topics/InDepth.BasicStreamOperators#Generating): these operators provide the means for creating various source streams.
+* [Producing](/psi/topics/InDepth.BasicStreamOperators#Producing): these operators provide the means for creating various source streams.
 * [Mapping](/psi/topics/InDepth.BasicStreamOperators#Mapping): these operators transform messages from the input stream.
 * [Filtering](/psi/topics/InDepth.BasicStreamOperators#Filtering): these operators filter messages from the input stream.
 * [Aggregating](/psi/topics/InDepth.BasicStreamOperators#Aggregating): these operators aggregate messages from the input stream.
@@ -19,11 +19,13 @@ The ability to manipulate streams of data plays a central role in Platform for S
 * [Time Related](/psi/topics/InDepth.BasicStreamOperators#TimeRelated): these operators provide timing information.
 * [Miscellaneous](/psi/topics/InDepth.BasicStreamOperators#Miscellaneous): these operators provide various other functionalities.
 
-<a name="Generating"></a>
+<a name="Producing"></a>
 
-## 1. Generating
+## 1. Producing Streams
 
-Most often source streams are produced by various sensor components, like cameras or microphones. However, several generic stream-producing operators are also available and can be used, via static methods on the static `Generators` class.
+Most often source streams are produced by various sensor components, like cameras or microphones. However, several generic stream-producing operators are also available and can be used, via static methods on the `Generators` class. Timers are also available via static methods on the `Timers` class. A subtle difference between the two is that generators complete once a sequence terminates while timers pay attention to the pipeline reply context.
+
+Generators may optionally be asked to produce time-aligned messages that are guaranteed to have an originating time passes through a given `DateTime`. That is, a sequence of messages may be generated at a given interval (e.g. 100ms) but may be additionally required to align those intervals on a particular time (e.g. the start of a particular second). This is sometimes a useful guarantee when later joining many generated streams that may otherwise be misaligned by some fraction of time.
 
 ### Return(...)
 
@@ -37,21 +39,6 @@ For example, this produces a stream on which a single message of type `int` with
 
 ```csharp
 var life = Generators.Return(p, 42);
-```
-
-### Timer(...)
-
-It's surprisingly common to need a simple timer signal stream. This is done with:
-
-```csharp
-Generators.Timer(Pipeline p, TimeSpan interval) -> IProducer<TimeSpan>
-Generators.Timer(Pipeline p, TimeSpan interval, Func<DateTime, TimeSpan, T> generatorFn) -> IProducer<T>
-```
-
-For example, the following produces a stream of elapsed `TimeSpan` values at 10 millisecond intervals:
-
-```csharp
-var timer = Generators.Timer(p, TimeSpan.FromMilliseconds(10));
 ```
 
 ### Range(...)
@@ -87,7 +74,7 @@ For another example, taking a `Range` and `Timer` (see above), the following pro
 
 ```csharp
 var range = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(100));
-var timer = Generators.Timer(p, TimeSpan.FromMilliseconds(10));
+var timer = Timers.Timer(p, TimeSpan.FromMilliseconds(10));
 var rep = range.Repeat(timer);
 ```
 
@@ -121,6 +108,21 @@ This produces a stream of 1000 multiples of 5:
 
 ```csharp
 var fives = Generators.Sequence(p, 0, x => x + 5, 1000, TimeSpan.FromMilliseconds(10));
+```
+
+### Timer(...)
+
+It's surprisingly common to need a simple timer signal stream. This is done with:
+
+```csharp
+Timers.Timer(Pipeline p, TimeSpan interval) -> IProducer<TimeSpan>
+Timers.Timer(Pipeline p, TimeSpan interval, Func<DateTime, TimeSpan, T> generatorFn) -> IProducer<T>
+```
+
+For example, the following produces a stream of elapsed `TimeSpan` values at 10 millisecond intervals:
+
+```csharp
+var timer = Timers.Timer(p, TimeSpan.FromMilliseconds(10));
 ```
 
 <a name="Mapping"></a>
@@ -418,7 +420,7 @@ Parallel<TIn, TOut>(
 
 In this case, we need to specify the vector size and a function that given an index in the array and an input stream of type `TIn` produces an output stream of type `TOut`. This function essentially allows us to  specify the sub-pipeline that will be created for the input index.
 
-For instance, conside the example below:
+For instance, consider the example below:
 
 ```csharp
 var streamOfArray = Generators.Sequence(p, new[] { 0, 1, 2 }, r => new[] { r[0] + 1, r[1] + 1, r[2] + 1 }, 100);
@@ -463,10 +465,15 @@ A similar `Parallel` operator is available to process sparse vectors, i.e. dicti
 Parallel<TIn, TKey, TOut>(
     this IProducer<Dictionary<TKey, TIn>> source,
     Func<TKey, IProducer<TIn>, IProducer<TOut>> transformSelector,
+    bool joinOrDefault = true,
     DeliveryPolicy policy = null,
-    bool joinOrDefault = true) -> IProducer<Dictionary<TKey, TOut>>
+    Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null
+    ) -> IProducer<Dictionary<TKey, TOut>>
 ```
 
+Internally, sparse vector parallel processing creates and runs instances of [`Subpipeline`](psi/topics/InDepth.WritingComponents#SubPipelines) dynamically and stops them based on the `branchTerminationPolicy`. The default policy is to stop and remove subpipelines when when the corresponding key is no longer available in the message.
+
+A good example usage is when _tracking_ multiple entities (e.g. face tracking). When a set of tracked entities are represented as a stream of dictionaries, `Parallel` will create multiple `Subpipeline` instances, each processing a particular entity independently, and gather the results. Each `Subpipeline` will terminate when the tracked entity is no longer found (e.g. a particular face moves out of frame).
 
 <a name="TimeRelated"></a>
 
