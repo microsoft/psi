@@ -70,6 +70,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#events">Events</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_pipeline-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -81,6 +82,8 @@ $(function() {
  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#details">More...</a></p>
 
 <p>Inherits IDisposable.</p>
+
+<p>Inherited by <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html">Microsoft.Psi.Subpipeline</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -93,6 +96,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7da244fab31c7532ca33c8c34462b255"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a7da244fab31c7532ca33c8c34462b255">ProposeReplayTime</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> activeInterval, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> originatingTimeInterval)</td></tr>
 <tr class="memdesc:a7da244fab31c7532ca33c8c34462b255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propose replay time.  <a href="#a7da244fab31c7532ca33c8c34462b255">More...</a><br /></td></tr>
 <tr class="separator:a7da244fab31c7532ca33c8c34462b255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6454ae649dc187e6ae8f789810bdd251"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a6454ae649dc187e6ae8f789810bdd251">RegisterPipelineStartHandler</a> (object owner, Action onStart)</td></tr>
+<tr class="memdesc:a6454ae649dc187e6ae8f789810bdd251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline start.  <a href="#a6454ae649dc187e6ae8f789810bdd251">More...</a><br /></td></tr>
+<tr class="separator:a6454ae649dc187e6ae8f789810bdd251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46968330300b3394467e225de7841ed6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a46968330300b3394467e225de7841ed6">RegisterPipelineStopHandler</a> (object owner, Action onStop)</td></tr>
+<tr class="memdesc:a46968330300b3394467e225de7841ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline stop.  <a href="#a46968330300b3394467e225de7841ed6">More...</a><br /></td></tr>
+<tr class="separator:a46968330300b3394467e225de7841ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec30508a49d0b04a6f99bd1230bf59d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aaec30508a49d0b04a6f99bd1230bf59d">CreateReceiver&lt; T &gt;</a> (object owner, Action&lt; T, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> &gt; action, string name, bool autoClone=false)</td></tr>
 <tr class="memdesc:aaec30508a49d0b04a6f99bd1230bf59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input receiver associated with the specified component object.  <a href="#aaec30508a49d0b04a6f99bd1230bf59d">More...</a><br /></td></tr>
 <tr class="separator:aaec30508a49d0b04a6f99bd1230bf59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aad78ed015775b3dced357d8d13dbc9f2"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aad78ed015775b3dced357d8d13dbc9f2">RunAsync</a> (DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime=false, bool enforceReplayClock=true, float replaySpeedFactor=1)</td></tr>
 <tr class="memdesc:aad78ed015775b3dced357d8d13dbc9f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#aad78ed015775b3dced357d8d13dbc9f2">More...</a><br /></td></tr>
 <tr class="separator:aad78ed015775b3dced357d8d13dbc9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfbd537122d0d5bfea562f2d9452971a"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#abfbd537122d0d5bfea562f2d9452971a">RunAsync</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a> descriptor)</td></tr>
-<tr class="memdesc:abfbd537122d0d5bfea562f2d9452971a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#abfbd537122d0d5bfea562f2d9452971a">More...</a><br /></td></tr>
-<tr class="separator:abfbd537122d0d5bfea562f2d9452971a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3653c569eccf86edaa3d152f6846d115"><td class="memItemLeft" align="right" valign="top">virtual IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a3653c569eccf86edaa3d152f6846d115">RunAsync</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a> descriptor)</td></tr>
+<tr class="memdesc:a3653c569eccf86edaa3d152f6846d115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run pipeline (asynchronously).  <a href="#a3653c569eccf86edaa3d152f6846d115">More...</a><br /></td></tr>
+<tr class="separator:a3653c569eccf86edaa3d152f6846d115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4eb0c7c16cca3d793f5e21d590e18a8"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ac4eb0c7c16cca3d793f5e21d590e18a8">GetCurrentTime</a> ()</td></tr>
 <tr class="memdesc:ac4eb0c7c16cca3d793f5e21d590e18a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current clock time.  <a href="#ac4eb0c7c16cca3d793f5e21d590e18a8">More...</a><br /></td></tr>
 <tr class="separator:ac4eb0c7c16cca3d793f5e21d590e18a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,7 +174,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8104e0ce9dd581a8e7d6cd484c161926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert real timespan to virtual.  <a href="#a8104e0ce9dd581a8e7d6cd484c161926">More...</a><br /></td></tr>
 <tr class="separator:a8104e0ce9dd581a8e7d6cd484c161926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a9ce9a89ff13b1d721a85ef2e1e3b6dc0">ConvertFromRealTime</a> (DateTime time)</td></tr>
-<tr class="memdesc:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contert real datetime to virtual.  <a href="#a9ce9a89ff13b1d721a85ef2e1e3b6dc0">More...</a><br /></td></tr>
+<tr class="memdesc:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert real datetime to virtual.  <a href="#a9ce9a89ff13b1d721a85ef2e1e3b6dc0">More...</a><br /></td></tr>
 <tr class="separator:a9ce9a89ff13b1d721a85ef2e1e3b6dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
@@ -185,6 +194,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a48e9c836272b502ed4e41d9e241c814f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a48e9c836272b502ed4e41d9e241c814f">GlobalPolicy</a> =&gt; this.globalPolicy</td></tr>
 <tr class="memdesc:a48e9c836272b502ed4e41d9e241c814f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets global delivery policy.  <a href="#a48e9c836272b502ed4e41d9e241c814f">More...</a><br /></td></tr>
 <tr class="separator:a48e9c836272b502ed4e41d9e241c814f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a98c7ebd93bbdf9a9954501ad6bd22b02"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a98c7ebd93bbdf9a9954501ad6bd22b02">Stop</a> (bool abandonPendingWorkitems=false, bool stopScheduler=true)</td></tr>
+<tr class="memdesc:a98c7ebd93bbdf9a9954501ad6bd22b02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the pipeline by disabling message passing between the pipeline components. The pipeline configuration is not changed and the pipeline can be restarted later.  <a href="#a98c7ebd93bbdf9a9954501ad6bd22b02">More...</a><br /></td></tr>
+<tr class="separator:a98c7ebd93bbdf9a9954501ad6bd22b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
 Events</h2></td></tr>
@@ -330,7 +345,7 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Contert real datetime to virtual. </p>
+<p>Convert real datetime to virtual. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>Datetime to convert.</td></tr>
@@ -953,6 +968,80 @@ Events</h2></td></tr>
 
 </div>
 </div>
+<a id="a6454ae649dc187e6ae8f789810bdd251"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6454ae649dc187e6ae8f789810bdd251">&#9670;&nbsp;</a></span>RegisterPipelineStartHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Pipeline.RegisterPipelineStartHandler </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>onStart</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers handler to be called upon pipeline start. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner</td><td>The component that owns the handler. This is usually the state object that the receiver operates on.</td></tr>
+    <tr><td class="paramname">onStart</td><td>The action to be called upon pipeline start.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a46968330300b3394467e225de7841ed6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46968330300b3394467e225de7841ed6">&#9670;&nbsp;</a></span>RegisterPipelineStopHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Pipeline.RegisterPipelineStopHandler </td>
+          <td>(</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>onStop</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers handler to be called upon pipeline stop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner</td><td>The component that owns the handler. This is usually the state object that the receiver operates on.</td></tr>
+    <tr><td class="paramname">onStop</td><td>The action to be called upon pipeline stop.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad7261dc1c08fe194d1ab5a49fa6a684c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad7261dc1c08fe194d1ab5a49fa6a684c">&#9670;&nbsp;</a></span>Run() <span class="overload">[1/5]</span></h2>
 
@@ -1371,20 +1460,28 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="abfbd537122d0d5bfea562f2d9452971a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfbd537122d0d5bfea562f2d9452971a">&#9670;&nbsp;</a></span>RunAsync() <span class="overload">[4/4]</span></h2>
+<a id="a3653c569eccf86edaa3d152f6846d115"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3653c569eccf86edaa3d152f6846d115">&#9670;&nbsp;</a></span>RunAsync() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">IDisposable Microsoft.Psi.Pipeline.RunAsync </td>
+          <td class="memname">virtual IDisposable Microsoft.Psi.Pipeline.RunAsync </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a>&#160;</td>
           <td class="paramname"><em>descriptor</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Run pipeline (asynchronously). </p>
@@ -1395,6 +1492,55 @@ Events</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Disposable used to terminate pipeline.</dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#ac0821677d4738f0854b70691d9d0d126">Microsoft.Psi.Subpipeline</a>.</p>
+
+</div>
+</div>
+<a id="a98c7ebd93bbdf9a9954501ad6bd22b02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98c7ebd93bbdf9a9954501ad6bd22b02">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Microsoft.Psi.Pipeline.Stop </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>abandonPendingWorkitems</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>stopScheduler</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stops the pipeline by disabling message passing between the pipeline components. The pipeline configuration is not changed and the pipeline can be restarted later. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">abandonPendingWorkitems</td><td>Abandons the pending work items</td></tr>
+    <tr><td class="paramname">stopScheduler</td><td>Stops the scheduler.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#adf685ef1053a4abeda08852a3a9d4d46">Microsoft.Psi.Subpipeline</a>.</p>
 
 </div>
 </div>

@@ -189,6 +189,12 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:ab78982f0e49ac94aca64fb0b6980d71b"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#ab78982f0e49ac94aca64fb0b6980d71b">Zero</a></td></tr>
 <tr class="memdesc:ab78982f0e49ac94aca64fb0b6980d71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero interval (unbounded but inclusive, zero value)  <a href="#ab78982f0e49ac94aca64fb0b6980d71b">More...</a><br /></td></tr>
 <tr class="separator:ab78982f0e49ac94aca64fb0b6980d71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a290c91ca0141f6c63131efbdb55f25f1"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#a290c91ca0141f6c63131efbdb55f25f1">Past</a></td></tr>
+<tr class="memdesc:a290c91ca0141f6c63131efbdb55f25f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Canonical interval describing the past (including the present moment).  <a href="#a290c91ca0141f6c63131efbdb55f25f1">More...</a><br /></td></tr>
+<tr class="separator:a290c91ca0141f6c63131efbdb55f25f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fae16a540c173efab26e1ff31aae795"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#a4fae16a540c173efab26e1ff31aae795">Future</a></td></tr>
+<tr class="memdesc:a4fae16a540c173efab26e1ff31aae795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Canonical interval describing the future (including the present moment).  <a href="#a4fae16a540c173efab26e1ff31aae795">More...</a><br /></td></tr>
+<tr class="separator:a4fae16a540c173efab26e1ff31aae795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -1105,6 +1111,30 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a4fae16a540c173efab26e1ff31aae795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fae16a540c173efab26e1ff31aae795">&#9670;&nbsp;</a></span>Future</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> Microsoft.Psi.RelativeTimeInterval.Future</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">            <span class="keyword">new</span> <a class="code" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#af90887313b77d424577a38111c677e3d">RelativeTimeInterval</a>(TimeSpan.Zero, <span class="keyword">true</span>, <span class="keyword">true</span>, TimeSpan.MaxValue, <span class="keyword">false</span>, <span class="keyword">false</span>)</div></div><!-- fragment -->
+<p>Canonical interval describing the future (including the present moment). </p>
+
+</div>
+</div>
 <a id="a3c09be53ba3a863a5bffb5694f10ab0d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c09be53ba3a863a5bffb5694f10ab0d">&#9670;&nbsp;</a></span>Infinite</h2>
 
@@ -1126,6 +1156,30 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">            <span class="keyword">new</span> <a class="code" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#af90887313b77d424577a38111c677e3d">RelativeTimeInterval</a>(TimeSpan.MinValue, <span class="keyword">false</span>, <span class="keyword">false</span>, TimeSpan.MaxValue, <span class="keyword">false</span>, <span class="keyword">false</span>)</div></div><!-- fragment -->
 <p>Canonical infinite interval (unbounded on both ends) </p>
+
+</div>
+</div>
+<a id="a290c91ca0141f6c63131efbdb55f25f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a290c91ca0141f6c63131efbdb55f25f1">&#9670;&nbsp;</a></span>Past</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> Microsoft.Psi.RelativeTimeInterval.Past</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">            <span class="keyword">new</span> <a class="code" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#af90887313b77d424577a38111c677e3d">RelativeTimeInterval</a>(TimeSpan.MinValue, <span class="keyword">false</span>, <span class="keyword">false</span>, TimeSpan.Zero, <span class="keyword">true</span>, <span class="keyword">true</span>)</div></div><!-- fragment -->
+<p>Canonical interval describing the past (including the present moment). </p>
 
 </div>
 </div>

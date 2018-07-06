@@ -5,7 +5,6 @@ var searchData=
   ['captureformat',['CaptureFormat',['../struct_microsoft_1_1_psi_1_1_media___interop_1_1_capture_format.html',1,'Microsoft::Psi::Media_Interop']]],
   ['circularbufferstream',['CircularBufferStream',['../class_microsoft_1_1_psi_1_1_audio_1_1_circular_buffer_stream.html',1,'Microsoft::Psi::Audio']]],
   ['colorextensions',['ColorExtensions',['../class_microsoft_1_1_psi_1_1_visualization_1_1_extensions_1_1_color_extensions.html',1,'Microsoft::Psi::Visualization::Extensions']]],
-  ['colortransfoms',['ColorTransfoms',['../class_microsoft_1_1_psi_1_1_imaging_1_1_color_transfoms.html',1,'Microsoft::Psi::Imaging']]],
   ['comhelper',['ComHelper',['../class_microsoft_1_1_psi_1_1_visualization_1_1_server_1_1_com_helper.html',1,'Microsoft::Psi::Visualization::Server']]],
   ['comnative',['ComNative',['../class_microsoft_1_1_psi_1_1_visualization_1_1_server_1_1_com_native.html',1,'Microsoft::Psi::Visualization::Server']]],
   ['comobservableobject',['ComObservableObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_base_1_1_com_observable_object.html',1,'Microsoft::Psi::Visualization::Base']]],
@@ -25,6 +24,5 @@ var searchData=
   ['consumerproducer_3c_20string_2c_20audiobuffer_20_3e',['ConsumerProducer&lt; string, AudioBuffer &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
   ['consumerproducer_3c_20t_2c_20t_20_3e',['ConsumerProducer&lt; T, T &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
   ['consumerproducer_3c_20tinput_2c_20toutput_20_3e',['ConsumerProducer&lt; TInput, TOutput &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
-  ['copytransforms',['CopyTransforms',['../class_microsoft_1_1_psi_1_1_imaging_1_1_copy_transforms.html',1,'Microsoft::Psi::Imaging']]],
   ['customserializer',['CustomSerializer',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html',1,'Microsoft::Psi::Imaging::Image']]]
 ];

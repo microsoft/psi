@@ -74,20 +74,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Factory methods for instantiating generators and timers.  
+<p>Factory methods for instantiating generators.  
  <a href="class_microsoft_1_1_psi_1_1_generators.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3b7cd020dba4472d72e95e1a83310be2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a3b7cd020dba4472d72e95e1a83310be2">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, T initialValue, Func&lt; T, T &gt; generateNext, int count, TimeSpan interval=default(TimeSpan))</td></tr>
-<tr class="memdesc:a3b7cd020dba4472d72e95e1a83310be2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of values from a user-provided function, at a regular interval. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a3b7cd020dba4472d72e95e1a83310be2">More...</a><br /></td></tr>
-<tr class="separator:a3b7cd020dba4472d72e95e1a83310be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55472e80eed780032bd6283512d8d776"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a55472e80eed780032bd6283512d8d776">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, IEnumerator&lt; T &gt; enumerator, TimeSpan interval=default(TimeSpan))</td></tr>
-<tr class="memdesc:a55472e80eed780032bd6283512d8d776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms an enumerator into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a55472e80eed780032bd6283512d8d776">More...</a><br /></td></tr>
-<tr class="separator:a55472e80eed780032bd6283512d8d776"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a161e2418a8cc8526e8104a0f59112fe3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a161e2418a8cc8526e8104a0f59112fe3">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, IEnumerable&lt; T &gt; enumerable, TimeSpan interval=default(TimeSpan))</td></tr>
-<tr class="memdesc:a161e2418a8cc8526e8104a0f59112fe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms an enumerable sequence into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a161e2418a8cc8526e8104a0f59112fe3">More...</a><br /></td></tr>
-<tr class="separator:a161e2418a8cc8526e8104a0f59112fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af87cd4dfd9d5bb6584ec44432b4b8f6a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#af87cd4dfd9d5bb6584ec44432b4b8f6a">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, T initialValue, Func&lt; T, T &gt; generateNext, int count, TimeSpan interval=default(TimeSpan), DateTime? alignDateTime=null)</td></tr>
+<tr class="memdesc:af87cd4dfd9d5bb6584ec44432b4b8f6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of values from a user-provided function, at a regular interval. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#af87cd4dfd9d5bb6584ec44432b4b8f6a">More...</a><br /></td></tr>
+<tr class="separator:af87cd4dfd9d5bb6584ec44432b4b8f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12994e4bb100fead1a11d4734d026083"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a12994e4bb100fead1a11d4734d026083">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, IEnumerator&lt; T &gt; enumerator, TimeSpan interval=default(TimeSpan), DateTime? alignDateTime=null)</td></tr>
+<tr class="memdesc:a12994e4bb100fead1a11d4734d026083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms an enumerator into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a12994e4bb100fead1a11d4734d026083">More...</a><br /></td></tr>
+<tr class="separator:a12994e4bb100fead1a11d4734d026083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4fa9eb28b78bdbceeb988d7ffdad2b8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#aa4fa9eb28b78bdbceeb988d7ffdad2b8">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, IEnumerable&lt; T &gt; enumerable, TimeSpan interval=default(TimeSpan), DateTime? alignDateTime=null)</td></tr>
+<tr class="memdesc:aa4fa9eb28b78bdbceeb988d7ffdad2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms an enumerable sequence into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#aa4fa9eb28b78bdbceeb988d7ffdad2b8">More...</a><br /></td></tr>
+<tr class="separator:aa4fa9eb28b78bdbceeb988d7ffdad2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19f85e82005e4715c54f0a5c4f3f8256"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a19f85e82005e4715c54f0a5c4f3f8256">Sequence&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, IEnumerator&lt;(T, DateTime)&gt; enumerator)</td></tr>
 <tr class="memdesc:a19f85e82005e4715c54f0a5c4f3f8256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream by enumerating a sequence of data and originating time pairs. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a19f85e82005e4715c54f0a5c4f3f8256">More...</a><br /></td></tr>
 <tr class="separator:a19f85e82005e4715c54f0a5c4f3f8256"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,24 +97,18 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a45fb94123e5207419ae68ac5f901a8ae"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a45fb94123e5207419ae68ac5f901a8ae">Return&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, T value)</td></tr>
 <tr class="memdesc:a45fb94123e5207419ae68ac5f901a8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a single message containing the specified value.  <a href="#a45fb94123e5207419ae68ac5f901a8ae">More...</a><br /></td></tr>
 <tr class="separator:a45fb94123e5207419ae68ac5f901a8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac40674d39ddfcb5894475e69d33f3519"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#ac40674d39ddfcb5894475e69d33f3519">Repeat&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, T value, int count, TimeSpan interval=default(TimeSpan))</td></tr>
-<tr class="memdesc:ac40674d39ddfcb5894475e69d33f3519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of messages containing the same value. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#ac40674d39ddfcb5894475e69d33f3519">More...</a><br /></td></tr>
-<tr class="separator:ac40674d39ddfcb5894475e69d33f3519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0191d3e4535f506c3e092a754fc4e91b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a0191d3e4535f506c3e092a754fc4e91b">Range</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int start, int count, TimeSpan interval=default(TimeSpan))</td></tr>
-<tr class="memdesc:a0191d3e4535f506c3e092a754fc4e91b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of consecutive integer values, published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a0191d3e4535f506c3e092a754fc4e91b">More...</a><br /></td></tr>
-<tr class="separator:a0191d3e4535f506c3e092a754fc4e91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a060d799f824df9ad8fefb16b7a9a54f8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a060d799f824df9ad8fefb16b7a9a54f8">Timer&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, TimeSpan interval, Func&lt; DateTime, TimeSpan, T &gt; generatorFn)</td></tr>
-<tr class="memdesc:a060d799f824df9ad8fefb16b7a9a54f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream by invoking a user-provided function at a regular time interval. Unlike <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a161e2418a8cc8526e8104a0f59112fe3" title="Transforms an enumerable sequence into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline. ">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;T&gt;, TimeSpan)</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#ac40674d39ddfcb5894475e69d33f3519" title="Generates a stream of messages containing the same value. When the pipeline is in replay mode...">Repeat&lt;T&gt;(Pipeline, T, int, TimeSpan)</a> and <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a0191d3e4535f506c3e092a754fc4e91b" title="Generates a stream of consecutive integer values, published at regular intervals. When the pipeline i...">Range</a> this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load. When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time, but if the pipeline slows down, the interval between messages might not appear constant.  <a href="#a060d799f824df9ad8fefb16b7a9a54f8">More...</a><br /></td></tr>
-<tr class="separator:a060d799f824df9ad8fefb16b7a9a54f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2584982088b0c0ab078af3f0646a66d1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TimeSpan &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a2584982088b0c0ab078af3f0646a66d1">Timer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, TimeSpan interval)</td></tr>
-<tr class="memdesc:a2584982088b0c0ab078af3f0646a66d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of TimeSpan messages indicating the time elapsed from the start of the pipeline. Unlike <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a161e2418a8cc8526e8104a0f59112fe3" title="Transforms an enumerable sequence into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline. ">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;T&gt;, TimeSpan)</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#ac40674d39ddfcb5894475e69d33f3519" title="Generates a stream of messages containing the same value. When the pipeline is in replay mode...">Repeat&lt;T&gt;(Pipeline, T, int, TimeSpan)</a> and <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a0191d3e4535f506c3e092a754fc4e91b" title="Generates a stream of consecutive integer values, published at regular intervals. When the pipeline i...">Range</a> this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load. When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time, but if the pipeline slows down, the interval between messages might not appear constant.  <a href="#a2584982088b0c0ab078af3f0646a66d1">More...</a><br /></td></tr>
-<tr class="separator:a2584982088b0c0ab078af3f0646a66d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff1f4a2aa36880674094fec846f3ae09"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#aff1f4a2aa36880674094fec846f3ae09">Repeat&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, T value, int count, TimeSpan interval=default(TimeSpan), DateTime? alignDateTime=null)</td></tr>
+<tr class="memdesc:aff1f4a2aa36880674094fec846f3ae09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of messages containing the same value. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#aff1f4a2aa36880674094fec846f3ae09">More...</a><br /></td></tr>
+<tr class="separator:aff1f4a2aa36880674094fec846f3ae09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45b2e698e56dca5b0127f332b653ea03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a45b2e698e56dca5b0127f332b653ea03">Range</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int start, int count, TimeSpan interval=default(TimeSpan), DateTime? alignDateTime=null)</td></tr>
+<tr class="memdesc:a45b2e698e56dca5b0127f332b653ea03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a stream of consecutive integer values, published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.  <a href="#a45b2e698e56dca5b0127f332b653ea03">More...</a><br /></td></tr>
+<tr class="separator:a45b2e698e56dca5b0127f332b653ea03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Factory methods for instantiating generators and timers. </p>
+<div class="textblock"><p>Factory methods for instantiating generators. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0191d3e4535f506c3e092a754fc4e91b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0191d3e4535f506c3e092a754fc4e91b">&#9670;&nbsp;</a></span>Range()</h2>
+<a id="a45b2e698e56dca5b0127f332b653ea03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45b2e698e56dca5b0127f332b653ea03">&#9670;&nbsp;</a></span>Range()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +138,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>&#160;</td>
+          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DateTime?&#160;</td>
+          <td class="paramname"><em>alignDateTime</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -166,6 +166,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">start</td><td>The starting value.</td></tr>
     <tr><td class="paramname">count</td><td>The count of values to generate. Use int.MaxValue if the generator should never stop.</td></tr>
     <tr><td class="paramname">interval</td><td>The desired time interval between consecutive messages. Defaults ot 1 tick.</td></tr>
+    <tr><td class="paramname">alignDateTime</td><td>If non-null, this parameter specifies a time to align the generator messages with. If the paramater is non-null, the messages will have originating times that align with the specified time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -173,8 +174,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac40674d39ddfcb5894475e69d33f3519"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac40674d39ddfcb5894475e69d33f3519">&#9670;&nbsp;</a></span>Repeat&lt; T &gt;()</h2>
+<a id="aff1f4a2aa36880674094fec846f3ae09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff1f4a2aa36880674094fec846f3ae09">&#9670;&nbsp;</a></span>Repeat&lt; T &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -204,7 +205,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>&#160;</td>
+          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DateTime?&#160;</td>
+          <td class="paramname"><em>alignDateTime</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -232,6 +239,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">value</td><td>The value to publish.</td></tr>
     <tr><td class="paramname">count</td><td>The count of values to generate. Use int.MaxValue if the generator should never stop.</td></tr>
     <tr><td class="paramname">interval</td><td>The desired time interval between consecutive messages. Defaults ot 1 tick.</td></tr>
+    <tr><td class="paramname">alignDateTime</td><td>If non-null, this parameter specifies a time to align the generator messages with. If the paramater is non-null, the messages will have originating times that align with the specified time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -291,8 +299,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3b7cd020dba4472d72e95e1a83310be2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b7cd020dba4472d72e95e1a83310be2">&#9670;&nbsp;</a></span>Sequence&lt; T &gt;() <span class="overload">[1/5]</span></h2>
+<a id="af87cd4dfd9d5bb6584ec44432b4b8f6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af87cd4dfd9d5bb6584ec44432b4b8f6a">&#9670;&nbsp;</a></span>Sequence&lt; T &gt;() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -328,7 +336,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>&#160;</td>
+          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DateTime?&#160;</td>
+          <td class="paramname"><em>alignDateTime</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -357,6 +371,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">generateNext</td><td>The function that generates a new value based on the previous value.</td></tr>
     <tr><td class="paramname">count</td><td>The count of values to generate. Use int.MaxValue if the generator should never stop.</td></tr>
     <tr><td class="paramname">interval</td><td>The desired time interval between consecutive messages. Defaults ot 1 tick.</td></tr>
+    <tr><td class="paramname">alignDateTime</td><td>If non-null, this parameter specifies a time to align the generator messages with. If the paramater is non-null, the messages will have originating times that align with the specified time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -364,8 +379,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a55472e80eed780032bd6283512d8d776"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55472e80eed780032bd6283512d8d776">&#9670;&nbsp;</a></span>Sequence&lt; T &gt;() <span class="overload">[2/5]</span></h2>
+<a id="a12994e4bb100fead1a11d4734d026083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12994e4bb100fead1a11d4734d026083">&#9670;&nbsp;</a></span>Sequence&lt; T &gt;() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -389,7 +404,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>&#160;</td>
+          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DateTime?&#160;</td>
+          <td class="paramname"><em>alignDateTime</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -416,6 +437,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">pipeline</td><td>The pipeline that will run this generator.</td></tr>
     <tr><td class="paramname">enumerator</td><td>The enumerator producing the values to publish.</td></tr>
     <tr><td class="paramname">interval</td><td>The desired time interval between consecutive messages. Defaults ot 1 tick.</td></tr>
+    <tr><td class="paramname">alignDateTime</td><td>If non-null, this parameter specifies a time to align the generator messages with. If the paramater is non-null, the messages will have originating times that align with the specified time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -423,8 +445,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a161e2418a8cc8526e8104a0f59112fe3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a161e2418a8cc8526e8104a0f59112fe3">&#9670;&nbsp;</a></span>Sequence&lt; T &gt;() <span class="overload">[3/5]</span></h2>
+<a id="aa4fa9eb28b78bdbceeb988d7ffdad2b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4fa9eb28b78bdbceeb988d7ffdad2b8">&#9670;&nbsp;</a></span>Sequence&lt; T &gt;() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -448,7 +470,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>&#160;</td>
+          <td class="paramname"><em>interval</em> = <code>default(TimeSpan)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DateTime?&#160;</td>
+          <td class="paramname"><em>alignDateTime</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -475,6 +503,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">pipeline</td><td>The pipeline that will run this generator.</td></tr>
     <tr><td class="paramname">enumerable</td><td>The sequence to publish.</td></tr>
     <tr><td class="paramname">interval</td><td>The desired time interval between consecutive messages. Defaults ot 1 tick.</td></tr>
+    <tr><td class="paramname">alignDateTime</td><td>If non-null, this parameter specifies a time to align the generator messages with. If the paramater is non-null, the messages will have originating times that align with the specified time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -583,111 +612,6 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A stream of values of type T</dd></dl>
-
-</div>
-</div>
-<a id="a2584982088b0c0ab078af3f0646a66d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2584982088b0c0ab078af3f0646a66d1">&#9670;&nbsp;</a></span>Timer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TimeSpan&gt; Microsoft.Psi.Generators.Timer </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
-          <td class="paramname"><em>pipeline</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generates a stream of TimeSpan messages indicating the time elapsed from the start of the pipeline. Unlike <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a161e2418a8cc8526e8104a0f59112fe3" title="Transforms an enumerable sequence into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline. ">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;T&gt;, TimeSpan)</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#ac40674d39ddfcb5894475e69d33f3519" title="Generates a stream of messages containing the same value. When the pipeline is in replay mode...">Repeat&lt;T&gt;(Pipeline, T, int, TimeSpan)</a> and <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a0191d3e4535f506c3e092a754fc4e91b" title="Generates a stream of consecutive integer values, published at regular intervals. When the pipeline i...">Range</a> this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load. When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time, but if the pipeline slows down, the interval between messages might not appear constant. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pipeline</td><td>The pipeline that will run this generator.</td></tr>
-    <tr><td class="paramname">interval</td><td>The interval at which to generate messages.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A stream of messages representing time elapsed since the start of the pipeline</dd></dl>
-
-</div>
-</div>
-<a id="a060d799f824df9ad8fefb16b7a9a54f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a060d799f824df9ad8fefb16b7a9a54f8">&#9670;&nbsp;</a></span>Timer&lt; T &gt;()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;T&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a2584982088b0c0ab078af3f0646a66d1">Microsoft.Psi.Generators.Timer</a>&lt; T &gt; </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
-          <td class="paramname"><em>pipeline</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>interval</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Func&lt; DateTime, TimeSpan, T &gt;&#160;</td>
-          <td class="paramname"><em>generatorFn</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generates a stream by invoking a user-provided function at a regular time interval. Unlike <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a161e2418a8cc8526e8104a0f59112fe3" title="Transforms an enumerable sequence into a stream of messages published at regular intervals. When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline. ">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;T&gt;, TimeSpan)</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#ac40674d39ddfcb5894475e69d33f3519" title="Generates a stream of messages containing the same value. When the pipeline is in replay mode...">Repeat&lt;T&gt;(Pipeline, T, int, TimeSpan)</a> and <a class="el" href="class_microsoft_1_1_psi_1_1_generators.html#a0191d3e4535f506c3e092a754fc4e91b" title="Generates a stream of consecutive integer values, published at regular intervals. When the pipeline i...">Range</a> this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load. When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time, but if the pipeline slows down, the interval between messages might not appear constant. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of data in the sequence.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pipeline</td><td>The pipeline that will run this generator.</td></tr>
-    <tr><td class="paramname">interval</td><td>The interval at which to generate messages.</td></tr>
-    <tr><td class="paramname">generatorFn</td><td>The function generating the messages.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A stream of messages of type T</dd></dl>
 
 </div>
 </div>

@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['annotations',['Annotations',['../namespace_microsoft_1_1_psi_1_1_extensions_1_1_annotations.html',1,'Microsoft::Psi::Extensions']]],
+  ['annotations',['Annotations',['../namespace_microsoft_1_1_psi_1_1_data_1_1_annotations.html',1,'Microsoft.Psi.Data.Annotations'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_annotations.html',1,'Microsoft.Psi.Visualization.Annotations']]],
   ['arrays',['Arrays',['../namespace_microsoft_1_1_psi_1_1_arrays.html',1,'Microsoft::Psi']]],
   ['audio',['Audio',['../namespace_microsoft_1_1_psi_1_1_audio.html',1,'Microsoft::Psi']]],
-  ['base',['Base',['../namespace_microsoft_1_1_psi_1_1_extensions_1_1_base.html',1,'Microsoft.Psi.Extensions.Base'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_base.html',1,'Microsoft.Psi.Visualization.Base']]],
+  ['base',['Base',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_base.html',1,'Microsoft::Psi::Visualization']]],
   ['calibration',['Calibration',['../namespace_microsoft_1_1_psi_1_1_calibration.html',1,'Microsoft::Psi']]],
   ['client',['Client',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_client.html',1,'Microsoft::Psi::Visualization']]],
   ['cognitiveservices',['CognitiveServices',['../namespace_microsoft_1_1_psi_1_1_cognitive_services.html',1,'Microsoft::Psi']]],
@@ -12,14 +12,16 @@ var searchData=
   ['common',['Common',['../namespace_microsoft_1_1_psi_1_1_common.html',1,'Microsoft.Psi.Common'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html',1,'Microsoft.Psi.Visualization.Common']]],
   ['components',['Components',['../namespace_microsoft_1_1_psi_1_1_components.html',1,'Microsoft::Psi']]],
   ['config',['Config',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_config.html',1,'Microsoft::Psi::Visualization']]],
-  ['converters',['Converters',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_converters.html',1,'Microsoft::Psi::Visualization']]],
-  ['data',['Data',['../namespace_microsoft_1_1_psi_1_1_data.html',1,'Microsoft.Psi.Data'],['../namespace_microsoft_1_1_psi_1_1_extensions_1_1_data.html',1,'Microsoft.Psi.Extensions.Data'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html',1,'Microsoft.Psi.Visualization.Data']]],
+  ['converters',['Converters',['../namespace_microsoft_1_1_psi_1_1_data_1_1_converters.html',1,'Microsoft.Psi.Data.Converters'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_converters.html',1,'Microsoft.Psi.Visualization.Converters']]],
+  ['data',['Data',['../namespace_microsoft_1_1_psi_1_1_data.html',1,'Microsoft.Psi.Data'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html',1,'Microsoft.Psi.Visualization.Data']]],
+  ['datasets',['Datasets',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_datasets.html',1,'Microsoft::Psi::Visualization']]],
   ['executive',['Executive',['../namespace_microsoft_1_1_psi_1_1_executive.html',1,'Microsoft::Psi']]],
-  ['extensions',['Extensions',['../namespace_microsoft_1_1_psi_1_1_extensions.html',1,'Microsoft.Psi.Extensions'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_extensions.html',1,'Microsoft.Psi.Visualization.Extensions']]],
+  ['extensions',['Extensions',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_extensions.html',1,'Microsoft::Psi::Visualization']]],
   ['face',['Face',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_face.html',1,'Microsoft.Psi.CognitiveServices.Face'],['../namespace_microsoft_1_1_psi_1_1_kinect_1_1_face.html',1,'Microsoft.Psi.Kinect.Face']]],
   ['finitestatemachine',['FiniteStateMachine',['../namespace_microsoft_1_1_psi_1_1_finite_state_machine.html',1,'Microsoft::Psi']]],
   ['imaging',['Imaging',['../namespace_microsoft_1_1_psi_1_1_imaging.html',1,'Microsoft::Psi']]],
   ['input',['Input',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_input.html',1,'Microsoft::Psi::Visualization']]],
+  ['json',['Json',['../namespace_microsoft_1_1_psi_1_1_data_1_1_json.html',1,'Microsoft::Psi::Data']]],
   ['kinect',['Kinect',['../namespace_microsoft_1_1_psi_1_1_kinect.html',1,'Microsoft::Psi']]],
   ['language',['Language',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_language.html',1,'Microsoft.Psi.CognitiveServices.Language'],['../namespace_microsoft_1_1_psi_1_1_language.html',1,'Microsoft.Psi.Language']]],
   ['media',['Media',['../namespace_microsoft_1_1_psi_1_1_media.html',1,'Microsoft::Psi']]],
@@ -29,6 +31,7 @@ var searchData=
   ['navigation',['Navigation',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_navigation.html',1,'Microsoft::Psi::Visualization']]],
   ['persistence',['Persistence',['../namespace_microsoft_1_1_psi_1_1_persistence.html',1,'Microsoft::Psi']]],
   ['psi',['Psi',['../namespace_microsoft_1_1_psi.html',1,'Microsoft']]],
+  ['realsense',['RealSense',['../namespace_microsoft_1_1_psi_1_1_real_sense.html',1,'Microsoft::Psi']]],
   ['remoting',['Remoting',['../namespace_microsoft_1_1_psi_1_1_remoting.html',1,'Microsoft::Psi']]],
   ['scheduling',['Scheduling',['../namespace_microsoft_1_1_psi_1_1_scheduling.html',1,'Microsoft::Psi']]],
   ['serialization',['Serialization',['../namespace_microsoft_1_1_psi_1_1_serialization.html',1,'Microsoft.Psi.Serialization'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_serialization.html',1,'Microsoft.Psi.Visualization.Serialization']]],
@@ -39,5 +42,6 @@ var searchData=
   ['vision',['Vision',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_vision.html',1,'Microsoft::Psi::CognitiveServices']]],
   ['visualization',['Visualization',['../namespace_microsoft_1_1_psi_1_1_visualization.html',1,'Microsoft::Psi']]],
   ['visualizationobjects',['VisualizationObjects',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects.html',1,'Microsoft::Psi::Visualization']]],
-  ['visualizationpanels',['VisualizationPanels',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels.html',1,'Microsoft::Psi::Visualization']]]
+  ['visualizationpanels',['VisualizationPanels',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels.html',1,'Microsoft::Psi::Visualization']]],
+  ['windows',['Windows',['../namespace_microsoft_1_1_psi_1_1_real_sense_1_1_windows.html',1,'Microsoft::Psi::RealSense']]]
 ];

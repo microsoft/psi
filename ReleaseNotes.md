@@ -5,7 +5,7 @@ title:  Release Notes
 
 # Release Notes
 
-**2018/07/02**: Beta-release, version ???
+**2018/07/02**: Beta-release, version 0.4.216.2
 
 Interim release with support for new devices, runtime enhancements and several API changes, as well as minor bug fixes:
 

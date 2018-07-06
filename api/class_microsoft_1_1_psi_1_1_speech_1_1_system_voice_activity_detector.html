@@ -118,7 +118,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Component that implements a voice activity detector. </p>
-<p>This component monitors an input audio stream and outputs a boolean flag for each input message indicating whether or not voice activity was present in the corresponding AudioBuffer. </p>
+<p>This component monitors an input audio stream and outputs a boolean flag for each input message indicating whether or not voice activity was present in the corresponding AudioBuffer. It relies on the System.Speech.Recognition.SpeechRecognitionEngine in .NET and uses its AudioStateChanged event to estimate when speech activity begins and ends. It estimates the originating times of these events using the current audio position of the underlying speech recognition engine to obtain an estimate of the time the event occurred. These results may be further fine-tuned to potentially obtain better estimates with the VoiceActivityStartOffsetMs and VoiceActivityEndOffsetMs configuration parameters, which are added to the inferred times. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af4a445fa1a21c0f5c1d32f0ad64abbe3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4a445fa1a21c0f5c1d32f0ad64abbe3">&#9670;&nbsp;</a></span>SystemVoiceActivityDetector() <span class="overload">[1/2]</span></h2>

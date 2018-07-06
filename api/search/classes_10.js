@@ -2,6 +2,9 @@ var searchData=
 [
   ['range',['Range',['../struct_microsoft_1_1_psi_1_1_arrays_1_1_range.html',1,'Microsoft::Psi::Arrays']]],
   ['realinterval',['RealInterval',['../class_microsoft_1_1_psi_1_1_real_interval.html',1,'Microsoft::Psi']]],
+  ['realsensedevice',['RealSenseDevice',['../class_microsoft_1_1_psi_1_1_real_sense_1_1_windows_1_1_real_sense_device.html',1,'Microsoft::Psi::RealSense::Windows']]],
+  ['realsensedeviceunmanaged',['RealSenseDeviceUnmanaged',['../class_real_sense_device_unmanaged.html',1,'']]],
+  ['realsensesensor',['RealSenseSensor',['../class_microsoft_1_1_psi_1_1_real_sense_1_1_windows_1_1_real_sense_sensor.html',1,'Microsoft::Psi::RealSense::Windows']]],
   ['receiver',['Receiver',['../class_microsoft_1_1_psi_1_1_receiver.html',1,'Microsoft::Psi']]],
   ['receiver_3c_20bool_20_3e',['Receiver&lt; bool &gt;',['../class_microsoft_1_1_psi_1_1_receiver.html',1,'Microsoft::Psi']]],
   ['receiver_3c_20dictionary_3c_20tkey_2c_20tin_20_3e_20_3e',['Receiver&lt; Dictionary&lt; TKey, TIn &gt; &gt;',['../class_microsoft_1_1_psi_1_1_receiver.html',1,'Microsoft::Psi']]],
@@ -18,6 +21,7 @@ var searchData=
   ['recognizedphrase',['RecognizedPhrase',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_recognized_phrase.html',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
   ['recyclingpool',['RecyclingPool',['../class_microsoft_1_1_psi_1_1_recycling_pool.html',1,'Microsoft::Psi']]],
   ['referencecountedobject',['ReferenceCountedObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_server_1_1_reference_counted_object.html',1,'Microsoft::Psi::Visualization::Server']]],
+  ['relativepathconverter',['RelativePathConverter',['../class_microsoft_1_1_psi_1_1_data_1_1_converters_1_1_relative_path_converter.html',1,'Microsoft::Psi::Data::Converters']]],
   ['relativetimeinterval',['RelativeTimeInterval',['../class_microsoft_1_1_psi_1_1_relative_time_interval.html',1,'Microsoft::Psi']]],
   ['remoteexporter',['RemoteExporter',['../class_microsoft_1_1_psi_1_1_remoting_1_1_remote_exporter.html',1,'Microsoft::Psi::Remoting']]],
   ['remoteimporter',['RemoteImporter',['../class_microsoft_1_1_psi_1_1_remoting_1_1_remote_importer.html',1,'Microsoft::Psi::Remoting']]],

@@ -9,7 +9,7 @@ var searchData=
   ['end',['End',['../struct_microsoft_1_1_psi_1_1_arrays_1_1_range.html#af502cd7f70e4747b2e400672dffe64d1',1,'Microsoft.Psi.Arrays.Range.End()'],['../class_microsoft_1_1_psi_1_1_replay_descriptor.html#aebbaf903772fdab2e064c0c5f1f1c602',1,'Microsoft.Psi.ReplayDescriptor.End()']]],
   ['endtime',['EndTime',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a1eab4cd82e15bf658f9cb6ad53a27044',1,'Microsoft::Psi::Visualization::Data::IntervalData']]],
   ['enforcereplayclock',['EnforceReplayClock',['../class_microsoft_1_1_psi_1_1_replay_descriptor.html#adcb54a8f9e98e26d5fe84d0d26f31bbe',1,'Microsoft::Psi::ReplayDescriptor']]],
-  ['envelopeschemastring',['EnvelopeSchemaString',['../class_microsoft_1_1_psi_1_1_extensions_1_1_data_1_1_json_store_base.html#aefbab2ce6720e4ceb520c8553882f759',1,'Microsoft::Psi::Extensions::Data::JsonStoreBase']]],
-  ['envelopeschemauri',['EnvelopeSchemaUri',['../class_microsoft_1_1_psi_1_1_extensions_1_1_data_1_1_json_store_base.html#a76897f1264013fca360b18621141b3f6',1,'Microsoft::Psi::Extensions::Data::JsonStoreBase']]],
+  ['envelopeschemastring',['EnvelopeSchemaString',['../class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store_base.html#aadd28013701b6a54304446964f3cc218',1,'Microsoft::Psi::Data::Json::JsonStoreBase']]],
+  ['envelopeschemauri',['EnvelopeSchemaUri',['../class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store_base.html#a8589a721bce4bdcbc03e1aeb8ad006da',1,'Microsoft::Psi::Data::Json::JsonStoreBase']]],
   ['extentid',['ExtentId',['../struct_microsoft_1_1_psi_1_1_persistence_1_1_index_entry.html#a8d16865afe8f728d141314b9ad7f9c4b',1,'Microsoft::Psi::Persistence::IndexEntry']]]
 ];

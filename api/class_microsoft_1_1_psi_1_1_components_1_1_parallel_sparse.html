@@ -68,6 +68,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -82,9 +83,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a993e30fa64794df2cc7eaba1fe63d0c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a993e30fa64794df2cc7eaba1fe63d0c4">ParallelSparse</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault)</td></tr>
-<tr class="memdesc:a993e30fa64794df2cc7eaba1fe63d0c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a993e30fa64794df2cc7eaba1fe63d0c4" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class.  <a href="#a993e30fa64794df2cc7eaba1fe63d0c4">More...</a><br /></td></tr>
-<tr class="separator:a993e30fa64794df2cc7eaba1fe63d0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2ca531fc03994f468669dc24daac352"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#af2ca531fc03994f468669dc24daac352">ParallelSparse</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:af2ca531fc03994f468669dc24daac352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#af2ca531fc03994f468669dc24daac352" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class.  <a href="#af2ca531fc03994f468669dc24daac352">More...</a><br /></td></tr>
+<tr class="separator:af2ca531fc03994f468669dc24daac352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a0fa8b2eda0b9b9236beedc8fbfc62cd9"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a0fa8b2eda0b9b9236beedc8fbfc62cd9">BranchTerminateWhenKeyNotPresent</a> (TKey key, Dictionary&lt; TKey, TIn &gt; message)</td></tr>
+<tr class="memdesc:a0fa8b2eda0b9b9236beedc8fbfc62cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Branch termination policy to terminate when corresponding key is not longer present.  <a href="#a0fa8b2eda0b9b9236beedc8fbfc62cd9">More...</a><br /></td></tr>
+<tr class="separator:a0fa8b2eda0b9b9236beedc8fbfc62cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -104,8 +111,8 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a993e30fa64794df2cc7eaba1fe63d0c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a993e30fa64794df2cc7eaba1fe63d0c4">&#9670;&nbsp;</a></span>ParallelSparse()</h2>
+<a id="af2ca531fc03994f468669dc24daac352"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2ca531fc03994f468669dc24daac352">&#9670;&nbsp;</a></span>ParallelSparse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,7 +133,13 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>joinOrDefault</em>&#160;</td>
+          <td class="paramname"><em>joinOrDefault</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -136,15 +149,64 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a993e30fa64794df2cc7eaba1fe63d0c4" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#af2ca531fc03994f468669dc24daac352" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
     <tr><td class="paramname">transformSelector</td><td>Function mapping keyed input producers to output producers.</td></tr>
     <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0fa8b2eda0b9b9236beedc8fbfc62cd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fa8b2eda0b9b9236beedc8fbfc62cd9">&#9670;&nbsp;</a></span>BranchTerminateWhenKeyNotPresent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html">Microsoft.Psi.Components.ParallelSparse</a>&lt; TIn, TKey, TOut &gt;.BranchTerminateWhenKeyNotPresent </td>
+          <td>(</td>
+          <td class="paramtype">TKey&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Dictionary&lt; TKey, TIn &gt;&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Branch termination policy to terminate when corresponding key is not longer present. </p>
+<p>This is the default policy.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Branch key.</td></tr>
+    <tr><td class="paramname">message</td><td>Message containing current key/value pairs.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Indication of whether to terminate the given branch.</dd></dl>
 
 </div>
 </div>

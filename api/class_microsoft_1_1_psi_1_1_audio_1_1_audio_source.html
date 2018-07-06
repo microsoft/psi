@@ -79,7 +79,7 @@ $(function() {
 <p>Component that implements an audio source which captures live audio from an input device such as a microphone.  
  <a href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_source.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; AudioBuffer &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_startable.html">Microsoft.Psi.Components.IStartable</a>, IDisposable, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; AudioBuffer &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_startable.html">Microsoft.Psi.Components.IStartable</a>, and IDisposable.</p>
+<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; AudioBuffer &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, IDisposable, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; AudioBuffer &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, and IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -89,12 +89,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a79b4619c3632f944c8d2371d0e30d089"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_source.html#a79b4619c3632f944c8d2371d0e30d089">AudioSource</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string configurationFilename=null)</td></tr>
 <tr class="memdesc:a79b4619c3632f944c8d2371d0e30d089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_source.html" title="Component that implements an audio source which captures live audio from an input device such as a mi...">AudioSource</a> class.  <a href="#a79b4619c3632f944c8d2371d0e30d089">More...</a><br /></td></tr>
 <tr class="separator:a79b4619c3632f944c8d2371d0e30d089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adead97dea0cc1fb7f8bdee263fc765bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_source.html#adead97dea0cc1fb7f8bdee263fc765bf">Start</a> (Action onCompleted, <a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a> descriptor)</td></tr>
-<tr class="memdesc:adead97dea0cc1fb7f8bdee263fc765bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to start capturing audio from the microphone.  <a href="#adead97dea0cc1fb7f8bdee263fc765bf">More...</a><br /></td></tr>
-<tr class="separator:adead97dea0cc1fb7f8bdee263fc765bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a97ad4e91c75405ffa5ba24c0c7cb40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_source.html#a3a97ad4e91c75405ffa5ba24c0c7cb40">Stop</a> ()</td></tr>
-<tr class="memdesc:a3a97ad4e91c75405ffa5ba24c0c7cb40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the pipeline is shutting down.  <a href="#a3a97ad4e91c75405ffa5ba24c0c7cb40">More...</a><br /></td></tr>
-<tr class="separator:a3a97ad4e91c75405ffa5ba24c0c7cb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38f33ecfe813a3cd417ae60824e2ef34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_source.html#a38f33ecfe813a3cd417ae60824e2ef34">Dispose</a> ()</td></tr>
 <tr class="memdesc:a38f33ecfe813a3cd417ae60824e2ef34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispose method.  <a href="#a38f33ecfe813a3cd417ae60824e2ef34">More...</a><br /></td></tr>
 <tr class="separator:a38f33ecfe813a3cd417ae60824e2ef34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -380,66 +374,6 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="adead97dea0cc1fb7f8bdee263fc765bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adead97dea0cc1fb7f8bdee263fc765bf">&#9670;&nbsp;</a></span>Start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Audio.AudioSource.Start </td>
-          <td>(</td>
-          <td class="paramtype">Action&#160;</td>
-          <td class="paramname"><em>onCompleted</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Called to start capturing audio from the microphone. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">onCompleted</td><td>Delegate to call when the execution completed</td></tr>
-    <tr><td class="paramname">descriptor</td><td>If set, describes the playback constraints</td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_startable.html#ad9ae0514d00b2a0e86539365fff05d2f">Microsoft.Psi.Components.IStartable</a>.</p>
-
-</div>
-</div>
-<a id="a3a97ad4e91c75405ffa5ba24c0c7cb40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a97ad4e91c75405ffa5ba24c0c7cb40">&#9670;&nbsp;</a></span>Stop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Audio.AudioSource.Stop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Called when the pipeline is shutting down. </p>
-
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_startable.html#a9b9c122d640d2373ee36a7af3d4197f5">Microsoft.Psi.Components.IStartable</a>.</p>
 
 </div>
 </div>

@@ -67,25 +67,56 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Data Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespace_microsoft_1_1_psi_1_1_data_1_1_annotations"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_data_1_1_annotations.html">Annotations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespace_microsoft_1_1_psi_1_1_data_1_1_converters"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_data_1_1_converters.html">Converters</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespace_microsoft_1_1_psi_1_1_data_1_1_json"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_data_1_1_json.html">Json</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html">Dataset</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a dataset (collection of sessions) to be reasoned over.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that writes messages to a multi-stream store. The store can be backed by a file on disk, can be ephemeral (in-memory) for inter-process communication or can be a network protocol for cross-machine communication. Instances of this component can be created using <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af445066b425d592506950f389474acf6" title="Creates a new multi-stream store and returns an Exporter instance which can be used to write streams ...">Store.Create(Pipeline, string, string, bool, Serialization.KnownSerializers)</a>.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Importer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads messages from a multi-stream store, either at the full speed allowed by available resources or at the desired rate specified by the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a>. Instances of this class can be created using the <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a33a73e2fb58f468e2c2252f815c15cd2" title="Opens a multi-stream store for read and returns an Importer instance which can be used to inspect the...">Store.Open</a> method. The store metadata is available immediately after open (before the pipeline is running) via the <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a29ffcec9197319088b9609e7ab363059" title="Gets the metadata of all the storage streams in this store. ">AvailableStreams</a> property.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_partition.html">IPartition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a partition that can be added to a session. A partition represents a single data stream in a data store.  <a href="interface_microsoft_1_1_psi_1_1_data_1_1_i_partition.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html">ISimpleReader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a message reader from a multi-stream store.  <a href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_writer.html">ISimpleWriter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines an interface for all simple writers of data stores.  <a href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_writer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_partition.html">Partition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a base class of partitions that can be added to a session.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_partition.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html">Session</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a session (collection of partitions) to be reasoned over.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_session.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session_importer.html">SessionImporter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a class used in importing data into a session.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_session_importer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html">SimpleReader</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads messages from a multi-stream store. Unlike StoreReader, this class calls delegates instead of publishing to streams, so it is unconstrained by the ordering limitations imposed by streams and can be re-used for seeking back and forth. The class is intended to be used by the UI.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_store_partition.html">StorePartition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a partition from a data store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_store_partition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
