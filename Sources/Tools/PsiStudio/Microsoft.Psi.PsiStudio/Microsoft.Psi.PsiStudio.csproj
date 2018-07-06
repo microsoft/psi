@@ -260,6 +260,7 @@
     <Compile Include="Views\Visuals3D\ScatterCoordinateSystemVisual.cs" />
     <Compile Include="Views\Visuals3D\ScatterLine3DVisual.cs" />
     <Compile Include="Views\Visuals3D\ScatterPlanarDirectionVisual.cs" />
+    <Compile Include="Views\Visuals3D\ScatterRect3DVisual.cs" />
     <Compile Include="Views\Visuals3D\SpriteVisual.xaml.cs">
       <DependentUpon>SpriteVisual.xaml</DependentUpon>
     </Compile>
@@ -285,6 +286,7 @@
     <Compile Include="VisualizationObjects\ScatterLine3DVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ScatterPlanarDirectionVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ScatterPlotVisualizationObject.cs" />
+    <Compile Include="VisualizationObjects\ScatterRect3DVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ScatterRectangleVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\SpeechRecognitionVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\Sprite3DVisualizationObject.cs" />
@@ -334,9 +336,9 @@
       <Project>{AC5745DA-570C-4E57-9AE4-D1974F629428}</Project>
       <Name>Microsoft.Psi.Audio</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Extensions\Microsoft.Psi.Extensions\Microsoft.Psi.Extensions.csproj">
+    <ProjectReference Include="..\..\..\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj">
       <Project>{ba9b5409-ced7-4b8c-900b-935ac777fb4f}</Project>
-      <Name>Microsoft.Psi.Extensions</Name>
+      <Name>Microsoft.Psi.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj">
       <Project>{02a92f0e-98f1-4b42-883a-761272bac185}</Project>
@@ -375,7 +377,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Brushes.xaml">

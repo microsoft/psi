@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Components
     using System.Collections.Generic;
 
     /// <summary>
-    /// Creates and applies a sub-pipeline to each element in the input collection.
+    /// Creates and applies a sub-pipeline to each element in the input array. The input array must have the same length across all messages.
     /// The sub-pipelines have index affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same index.
     /// </summary>
     /// <typeparam name="TIn">The input message type</typeparam>
@@ -32,12 +32,13 @@ namespace Microsoft.Psi.Components
             var branchResults = new IProducer<TOut>[vectorSize];
             for (int i = 0; i < vectorSize; i++)
             {
-                this.branches[i] = pipeline.CreateEmitter<TIn>(this, "branch" + i);
+                var subpipeline = Subpipeline.Create(pipeline, $"subpipeline{i}");
+                this.branches[i] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
                 branchResults[i] = transformSelector(i, this.branches[i]);
             }
 
             var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();
-            this.join = Operators.Join(branchResults, interpolator);
+            this.join = Operators.Join(branchResults, interpolator, pipeline);
         }
 
         /// <inheritdoc />
@@ -48,6 +49,11 @@ namespace Microsoft.Psi.Components
 
         private void Receive(TIn[] message, Envelope e)
         {
+            if (message.Length != this.branches.Length)
+            {
+                throw new InvalidOperationException("The Parallel operator has encountered a stream message that does not match the specified size of the input vector.");
+            }
+
             for (int i = 0; i < message.Length; i++)
             {
                 this.branches[i].Post(message[i], e.OriginatingTime);

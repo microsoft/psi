@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="CheckVariable" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project InitialTargets="CheckVariable" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -34,7 +34,8 @@
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings"></ImportGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -45,7 +46,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
-    <LinkKeyFile></LinkKeyFile>
+    <LinkKeyFile>
+    </LinkKeyFile>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(OpenCVDir)\build\include;$(OpenCVDir)\sources\modules\highgui\include;$(OpenCVDir)\sources\modules\core\include;$(OpenCVDir)\sources\modules\videostab\include;$(OpenCVDir)\sources\modules\imgcodecs\include;$(OpenCVDir)\sources\modules\imgproc\include;$(OpenCVDir)\sources\modules\videoio\include;;$(OpenCVDir)\sources\include</IncludePath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
@@ -54,7 +56,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
-    <LinkKeyFile></LinkKeyFile>
+    <LinkKeyFile>
+    </LinkKeyFile>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(OpenCVDir)\build\include;$(OpenCVDir)\sources\modules\highgui\include;$(OpenCVDir)\sources\modules\core\include;$(OpenCVDir)\sources\modules\videostab\include;$(OpenCVDir)\sources\modules\imgcodecs\include;$(OpenCVDir)\sources\modules\imgproc\include;$(OpenCVDir)\sources\modules\videoio\include;;$(OpenCVDir)\sources\include</IncludePath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
@@ -131,17 +134,13 @@ copy $(OpenCVDir)\build\x64\vc14\bin\opencv_world330.dll $(OutDir)..\..\..\OpenC
   <ItemGroup>
     <Image Include="app.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable OpenCVDir to point to your OpenCV installation"  ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir)'==''"/>
-    <CallTarget Targets="DoBuild"  Condition=" ('$(OpenCVDir)' != '') AND ('$(AGENT_BUILDDIRECTORY)'=='') "/>
-  </Target>
-  <Target Name="DoBuild" DependsOnTargets="Build">
-    <Exec Command="echo Built sample using OpenCVDir='%OpenCVDir%'"/>
+    <Warning Text="In order to build this sample you must define the environment variable OpenCVDir to point to your Intel RealSense SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir)'==''" />
+    <CreateProperty Value="" Condition="'$(OpenCVDir)'==''">
+      <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
+    </CreateProperty>
   </Target>
 </Project>

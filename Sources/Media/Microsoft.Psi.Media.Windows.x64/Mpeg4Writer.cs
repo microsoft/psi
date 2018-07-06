@@ -6,14 +6,13 @@ namespace Microsoft.Psi.Media
     using System;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
-    using Microsoft.Psi.Components;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Media_Interop;
 
     /// <summary>
     /// This class defines a component for writing image+sound data into an MPEG-4 file (.mp4)
     /// </summary>
-    public class Mpeg4Writer : IConsumer<Shared<Image>>, IStartable, IDisposable
+    public class Mpeg4Writer : IConsumer<Shared<Image>>, IDisposable
     {
         private readonly Pipeline pipeline;
         private readonly Mpeg4WriterConfiguration configuration;
@@ -64,6 +63,7 @@ namespace Microsoft.Psi.Media
 
         private Mpeg4Writer(Pipeline pipeline, string filename)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
             this.pipeline = pipeline;
             this.ImageIn = pipeline.CreateReceiver<Shared<Image>>(this, this.ReceiveImage, nameof(this.ImageIn));
             this.AudioIn = pipeline.CreateReceiver<AudioBuffer>(this, this.ReceiveAudio, nameof(this.AudioIn));
@@ -86,28 +86,6 @@ namespace Microsoft.Psi.Media
         public Receiver<Shared<Image>> In => this.ImageIn;
 
         /// <summary>
-        /// Called once all the subscriptions are established.
-        /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
-        {
-            MP4Writer.Startup();
-            this.writer = new MP4Writer();
-            this.writer.Open(this.filename, this.configuration.Config);
-        }
-
-        /// <summary>
-        /// Called by the pipeline when media capture should be stopped
-        /// </summary>
-        void IStartable.Stop()
-        {
-            this.writer.Close();
-            this.writer = null;
-            MP4Writer.Shutdown();
-        }
-
-        /// <summary>
         /// Dispose method
         /// </summary>
         public void Dispose()
@@ -120,6 +98,16 @@ namespace Microsoft.Psi.Media
                 this.writer = null;
                 MP4Writer.Shutdown();
             }
+        }
+
+        /// <summary>
+        /// Called once all the subscriptions are established.
+        /// </summary>
+        private void OnPipelineStart()
+        {
+            MP4Writer.Startup();
+            this.writer = new MP4Writer();
+            this.writer.Open(this.filename, this.configuration.Config);
         }
 
         private void ReceiveImage(Shared<Image> image, Envelope e)

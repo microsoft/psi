@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.Collections.Generic;
-    using Microsoft.Psi.Extensions.Data;
+    using Microsoft.Psi.Visualization.Datasets;
 
     /// <summary>
     /// Represents a stream visualization object.
@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Update the store bindings for given enumeration of partitions.
         /// </summary>
-        /// <param name="partitions">The partions to update the bindings with.</param>
-        void UpdateStoreBindings(IEnumerable<IPartition> partitions);
+        /// <param name="partitions">The partitions to update the bindings with.</param>
+        void UpdateStoreBindings(IEnumerable<PartitionViewModel> partitions);
     }
 }

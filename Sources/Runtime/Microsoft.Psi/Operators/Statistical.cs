@@ -422,6 +422,125 @@ namespace Microsoft.Psi
         }
 
 #endregion `Average`
+#region `Std`
+
+        /// <summary>
+        /// Compute standard deviation of (double) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (double) values.</returns>
+        public static IProducer<double> Std(this IProducer<double> source)
+        {
+            long count = 0;
+            double mean = 0, q = 0;
+
+            // see: https://en.wikipedia.org/wiki/Standard_deviation#Rapid_calculation_methods
+            return source.Select(
+                value =>
+                {
+                    count++;
+                    var oldmean = mean;
+                    mean = mean + ((value - mean) / count);
+                    q = q + ((value - oldmean) * (value - mean));
+                    return Math.Sqrt(q / count);
+                });
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (double) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (double) values.</returns>
+        public static IProducer<float> Std(this IProducer<float> source)
+        {
+            long count = 0;
+            double mean = 0, q = 0;
+
+            // see: https://en.wikipedia.org/wiki/Standard_deviation#Rapid_calculation_methods
+            return source.Select(
+                value =>
+                {
+                    count++;
+                    var oldmean = mean;
+                    mean = mean + ((value - mean) / count);
+                    q = q + ((value - oldmean) * (value - mean));
+                    return (float)Math.Sqrt(q / count);
+                });
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (double) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (double) values.</returns>
+        public static IProducer<decimal> Std(this IProducer<decimal> source)
+        {
+            long count = 0;
+            decimal mean = 0, q = 0;
+
+            // see: https://en.wikipedia.org/wiki/Standard_deviation#Rapid_calculation_methods
+            return source.Select(
+                value =>
+                {
+                    count++;
+                    var oldmean = mean;
+                    mean = mean + ((value - mean) / count);
+                    q = q + ((value - oldmean) * (value - mean));
+                    return (decimal)Math.Sqrt((double)q / count);
+                });
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (float) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (float) values.</returns>
+        public static float Std(this IEnumerable<float> source)
+        {
+            var count = source.Count();
+            if (count < 1)
+            {
+                return 0f;
+            }
+
+            return (float)Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (double) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (double) values.</returns>
+        public static double Std(this IEnumerable<double> source)
+        {
+            var count = source.Count();
+            if (count < 1)
+            {
+                return 0;
+            }
+
+            return Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (decimal) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (decimal) values.</returns>
+        public static decimal Std(this IEnumerable<decimal> source)
+        {
+            var count = source.Count();
+            if (count < 1)
+            {
+                return 0;
+            }
+
+            Func<decimal, decimal> sq = x => x * x;
+
+            return (decimal)Math.Sqrt((double)source.Sum(d => sq(d - source.Average())) / (count - 1));
+        }
+
+#endregion
 #region LINQ
 
         /// <summary>
@@ -1351,228 +1470,39 @@ namespace Microsoft.Psi
         {
             return source.Select(xs => xs.Average(selector));
         }
-        #endregion LINQ
+
+        /// <summary>
+        /// Compute standard deviation of each window.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <returns>Stream of std values.</returns>
+        public static IProducer<float> Std(this IProducer<IEnumerable<float>> source)
+        {
+            return source.Select(xs => xs.Std());
+        }
+
+        /// <summary>
+        /// Compute standard deviation of each window.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <returns>Stream of std values.</returns>
+        public static IProducer<double> Std(this IProducer<IEnumerable<double>> source)
+        {
+            return source.Select(xs => xs.Std());
+        }
+
+        /// <summary>
+        /// Compute standard deviation of each window.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <returns>Stream of std values.</returns>
+        public static IProducer<decimal> Std(this IProducer<IEnumerable<decimal>> source)
+        {
+            return source.Select(xs => xs.Std());
+        }
+
+#endregion LINQ
 #region Over History
-
-        /// <summary>
-        /// Compute the average (decimal) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Average(this IProducer<decimal> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (decimal) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Average(this IProducer<decimal> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable decimal) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Average(this IProducer<decimal?> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable decimal) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Average(this IProducer<decimal?> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (double) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<double> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (double) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<double> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable double) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<double?> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable double) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<double?> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (float) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Average(this IProducer<float> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (float) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Average(this IProducer<float> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable float) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (nullable float) values.</returns>
-        public static IProducer<float?> Average(this IProducer<float?> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable float) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (nullable float) values.</returns>
-        public static IProducer<float?> Average(this IProducer<float?> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (int) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<int> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (int) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<int> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable int) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<int?> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable int) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<int?> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (long) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<long> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (long) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<long> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable long) within each window by size.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="size">Window size.</param>
-        /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<long?> source, int size)
-        {
-            return History(source, size, LastTimestamp).Average();
-        }
-
-        /// <summary>
-        /// Compute the average (nullable long) within each window by time span.
-        /// </summary>
-        /// <param name="source">The source stream.</param>
-        /// <param name="timeSpan">Window time span.</param>
-        /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<long?> source, TimeSpan timeSpan)
-        {
-            return History(source, timeSpan, LastTimestamp).Average();
-        }
 
         /// <summary>
         /// Compute the sum (decimal) within each window by size.
@@ -2234,6 +2164,292 @@ namespace Microsoft.Psi
             return History(source, timeSpan, LastTimestamp).Max();
         }
 
+        /// <summary>
+        /// Compute the average (decimal) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (decimal) values.</returns>
+        public static IProducer<decimal> Average(this IProducer<decimal> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (decimal) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (decimal) values.</returns>
+        public static IProducer<decimal> Average(this IProducer<decimal> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable decimal) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (nullable decimal) values.</returns>
+        public static IProducer<decimal?> Average(this IProducer<decimal?> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable decimal) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (nullable decimal) values.</returns>
+        public static IProducer<decimal?> Average(this IProducer<decimal?> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (double) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (double) values.</returns>
+        public static IProducer<double> Average(this IProducer<double> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (double) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (double) values.</returns>
+        public static IProducer<double> Average(this IProducer<double> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable double) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (nullable double) values.</returns>
+        public static IProducer<double?> Average(this IProducer<double?> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable double) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (nullable double) values.</returns>
+        public static IProducer<double?> Average(this IProducer<double?> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (float) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (float) values.</returns>
+        public static IProducer<float> Average(this IProducer<float> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (float) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (float) values.</returns>
+        public static IProducer<float> Average(this IProducer<float> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable float) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (nullable float) values.</returns>
+        public static IProducer<float?> Average(this IProducer<float?> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable float) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (nullable float) values.</returns>
+        public static IProducer<float?> Average(this IProducer<float?> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (int) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (double) values.</returns>
+        public static IProducer<double> Average(this IProducer<int> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (int) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (double) values.</returns>
+        public static IProducer<double> Average(this IProducer<int> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable int) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (nullable double) values.</returns>
+        public static IProducer<double?> Average(this IProducer<int?> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable int) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (nullable double) values.</returns>
+        public static IProducer<double?> Average(this IProducer<int?> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (long) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (double) values.</returns>
+        public static IProducer<double> Average(this IProducer<long> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (long) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (double) values.</returns>
+        public static IProducer<double> Average(this IProducer<long> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable long) within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of average (nullable double) values.</returns>
+        public static IProducer<double?> Average(this IProducer<long?> source, int size)
+        {
+            return History(source, size, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the average (nullable long) within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of average (nullable double) values.</returns>
+        public static IProducer<double?> Average(this IProducer<long?> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Average();
+        }
+
+        /// <summary>
+        /// Compute the standard deviation within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of standard deviation values.</returns>
+        public static IProducer<float> Std(this IProducer<float> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Std();
+        }
+
+        /// <summary>
+        /// Compute the standard deviation within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of standard deviation values.</returns>
+        public static IProducer<float> Std(this IProducer<float> source, int size)
+        {
+            return History(source, size, LastTimestamp).Std();
+        }
+
+        /// <summary>
+        /// Compute the standard deviation within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of standard deviation values.</returns>
+        public static IProducer<double> Std(this IProducer<double> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Std();
+        }
+
+        /// <summary>
+        /// Compute the standard deviation within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of standard deviation values.</returns>
+        public static IProducer<double> Std(this IProducer<double> source, int size)
+        {
+            return History(source, size, LastTimestamp).Std();
+        }
+
+        /// <summary>
+        /// Compute the standard deviation within each window by time span.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="timeSpan">Window time span.</param>
+        /// <returns>Stream of standard deviation values.</returns>
+        public static IProducer<decimal> Std(this IProducer<decimal> source, TimeSpan timeSpan)
+        {
+            return History(source, timeSpan, LastTimestamp).Std();
+        }
+
+        /// <summary>
+        /// Compute the standard deviation within each window by size.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="size">Window size.</param>
+        /// <returns>Stream of standard deviation values.</returns>
+        public static IProducer<decimal> Std(this IProducer<decimal> source, int size)
+        {
+            return History(source, size, LastTimestamp).Std();
+        }
+
 #endregion Over History
 #region Miscellaneous
 
@@ -2245,28 +2461,6 @@ namespace Microsoft.Psi
         public static IProducer<double> Abs(this IProducer<double> source)
         {
             return source.Select(d => Math.Abs(d));
-        }
-
-        /// <summary>
-        /// Compute standard deviation of (double) values.
-        /// </summary>
-        /// <param name="source">Source stream.</param>
-        /// <returns>Stream of standard deviation (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<double> source)
-        {
-            long count = 0;
-            double mean = 0, q = 0;
-
-            // see: https://en.wikipedia.org/wiki/Standard_deviation#Rapid_calculation_methods
-            return source.Select(
-                value =>
-                {
-                    count++;
-                    var oldmean = mean;
-                    mean = mean + ((value - mean) / count);
-                    q = q + ((value - oldmean) * (value - mean));
-                    return Math.Sqrt(q / count);
-                });
         }
 
         /// <summary>
@@ -2286,7 +2480,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of natural (base e) logarithms.</returns>
         public static IProducer<double> Log(this IProducer<double> source)
         {
-            return source.Select(x => Math.Log(x));
+            return source.Select(Math.Log);
         }
 
         /// <summary>

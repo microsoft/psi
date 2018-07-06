@@ -368,22 +368,42 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <param name="e">An object that contains the event data.</param>
         private void OnConversationErrorHandler(object sender, SpeechErrorEventArgs e)
         {
-            // Not an exhaustive list of possible errors, and while we may be able to handle some
-            // error conditions and continue, we should at least throw if login fails since this
-            // is a common fatal error (the subscription key is invalid).
-            if (e.SpeechErrorCode == SpeechClientStatus.HttpForbidden)
+            switch (e.SpeechErrorCode)
             {
-                // Create an exception to represent this error
-                this.conversationError = new InvalidOperationException(
-                        nameof(BingSpeechRecognizer) +
-                        ": Login failed. Please check that the subscription key that you supplied in the " +
-                        nameof(BingSpeechRecognizerConfiguration) +
-                        " object is valid and that your subscription is active. For details on obtaining " +
-                        "a subscription to the Bing Speech API service, please see " +
-                        "https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account");
+                // Authentication failure
+                case SpeechClientStatus.HttpForbidden:
+                case SpeechClientStatus.HttpUnauthorized:
+                    // Create an exception to represent this error
+                    this.conversationError = new InvalidOperationException(
+                            nameof(BingSpeechRecognizer) +
+                            ": Login failed. Please check that the subscription key that you supplied in the " +
+                            nameof(BingSpeechRecognizerConfiguration) +
+                            " object is valid and that your subscription is active. For details on obtaining " +
+                            "a subscription to the Bing Speech API service, please see " +
+                            "https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account");
 
-                // Set a flag to indicate that this is a fatal error and the component should stop processing until the pipeline terminates
-                this.fatalError = true;
+                    // Set a flag to indicate that this is a fatal error and the component should stop processing until the pipeline terminates
+                    this.fatalError = true;
+                    break;
+
+                // Incorrect message format error - usually as a result of sending up an unsupported audio format
+                case SpeechClientStatus.WebSocketInvalidPayloadData:
+                    // Audio/message format error
+                    this.conversationError = new InvalidOperationException(
+                        e.SpeechErrorText +
+                        " The speech service rejected the last message that was sent to it. This could be due " +
+                        "to an incorrect audio format header, or some other audio encoding or message formatting " +
+                        "error. Please check to ensure that the audio being sent is encoded as one-channel 16-bit " +
+                        "PCM sampled at 16 kHz.");
+
+                    // Set a flag to indicate that this is a fatal error and the component should stop processing until the pipeline terminates
+                    this.fatalError = true;
+                    break;
+
+                default:
+                    // Other (possibly transient) error
+                    this.conversationError = new Exception(e.SpeechErrorText);
+                    break;
             }
 
             // Do not post further errors if a fatal error condition exists - the pipeline may be shutting down

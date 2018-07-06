@@ -15,6 +15,7 @@ namespace Microsoft.Psi.Scheduling
         private readonly Func<Exception, bool> errorHandler;
         private readonly DeliveryPolicy globalPolicy;
         private readonly bool allowSchedulingOnExternalThreads;
+        private readonly int threadCount;
         private readonly ManualResetEvent stopped = new ManualResetEvent(true);
         private readonly AutoResetEvent futureAdded = new AutoResetEvent(false);
         private readonly Thread futuresThread;
@@ -36,6 +37,7 @@ namespace Microsoft.Psi.Scheduling
             this.errorHandler = errorHandler;
             this.threadSemaphore = new SimpleSemaphore((threadCount == 0) ? Environment.ProcessorCount * 2 : threadCount);
             this.allowSchedulingOnExternalThreads = allowSchedulingOnExternalThreads;
+            this.threadCount = threadCount;
             this.globalWorkitems = new WorkItemQueue(name);
             this.futureWorkitems = new FutureWorkItemQueue(name + "_future", this);
             this.futuresThread = new Thread(new ThreadStart(this.ProcessFutureQueue));
@@ -52,6 +54,18 @@ namespace Microsoft.Psi.Scheduling
         public WaitHandle WorkitemQueueEmpty => this.globalWorkitems.Empty;
 
         public Clock Clock => this.clock;
+
+        internal bool AllowSchedulingOnExternalThreads => this.allowSchedulingOnExternalThreads;
+
+        internal int ThreadCount => this.threadCount;
+
+        internal bool IsStarted
+        {
+            get
+            {
+                return !this.stopped.WaitOne(0);
+            }
+        }
 
         // executes the delegate immediately, on the calling thread, without scheduling
         public bool TryExecute<T>(SynchronizationLock synchronizationObject, Action<T> action, T argument, DateTime startTime)
@@ -226,7 +240,6 @@ namespace Microsoft.Psi.Scheduling
             }
 
             this.forcedShutdownRequested = abandonPendingWorkitems;
-
             this.stopped.Set();
             this.futuresThread.Join();
             this.clock = new Clock(DateTime.MinValue, 0);

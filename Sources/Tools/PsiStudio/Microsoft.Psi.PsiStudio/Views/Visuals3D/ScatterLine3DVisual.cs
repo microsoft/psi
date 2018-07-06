@@ -79,7 +79,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void Configuration_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ScatterLine3DVisualizationObjectConfiguration.Color))
+            if ((e.PropertyName == nameof(ScatterLine3DVisualizationObjectConfiguration.Color)) ||
+                (e.PropertyName == nameof(ScatterLine3DVisualizationObjectConfiguration.Thickness)))
             {
                 this.UpdateLines();
             }

@@ -14,8 +14,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Shapes;
-    using Microsoft.Psi.Extensions.Annotations;
-    using Microsoft.Psi.Extensions.Base;
+    using Microsoft.Psi.Data.Annotations;
+    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Extensions;
     using Microsoft.Psi.Visualization.Navigation;

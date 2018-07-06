@@ -10,19 +10,19 @@ namespace Microsoft.Psi.Components
     /// This is useful for components that need to poll some resource. Such components can simply subscribe to this
     /// clock component rather than registering a timer on their own.
     /// </summary>
-    public abstract class Timer : IStartable, IDisposable
+    public abstract class Timer : IFiniteSourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
-
-        /// <summary>
-        /// Delegate we need to hold on to, so that it doesn't get garbage collected.
-        /// </summary>
-        private readonly Time.TimerDelegate timerDelegate;
 
         /// <summary>
         /// The interval on which to publish messages.
         /// </summary>
         private readonly TimeSpan timerInterval;
+
+        /// <summary>
+        /// Delegate we need to hold on to, so that it doesn't get garbage collected.
+        /// </summary>
+        private Time.TimerDelegate timerDelegate;
 
         /// <summary>
         /// The id of the multimedia timer we use under the covers
@@ -62,14 +62,15 @@ namespace Microsoft.Psi.Components
         /// <param name="timerInterval">The timer firing interval, in ms.</param>
         public Timer(Pipeline pipeline, uint timerInterval)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.timerInterval = TimeSpan.FromMilliseconds(timerInterval);
-            this.timerDelegate = new Time.TimerDelegate(this.PublishTime);
         }
 
         /// <summary>
         /// Finalizes an instance of the <see cref="Timer"/> class.
-        /// Releases the underying unmanaged timer.
+        /// Releases the underlying unmanaged timer.
         /// </summary>
         ~Timer()
         {
@@ -84,29 +85,41 @@ namespace Microsoft.Psi.Components
         /// </summary>
         public void Dispose()
         {
-            this.Stop();
+            this.OnPipelineStop();
+        }
+
+        /// <inheritdoc/>
+        void IFiniteSourceComponent.Initialize(Action onCompleted)
+        {
+            this.onCompleted = onCompleted;
         }
 
         /// <summary>
-        /// Called when the component is about to start running.
+        /// Called by the timer. Override to publish actual messages
         /// </summary>
-        /// <param name="onCompleted">Callback to invoke when done</param>
-        /// <param name="replayContext">Describes the playback constraints</param>
-        public void Start(Action onCompleted, ReplayDescriptor replayContext)
+        /// <param name="absoluteTime">The current (virtual) time</param>
+        /// <param name="relativeTime">The time elapsed since the generator was started</param>
+        protected abstract void Generate(DateTime absoluteTime, TimeSpan relativeTime);
+
+        /// <summary>
+        /// Starts the timer. Called by the runtime when the pipeline starts.
+        /// </summary>
+        private void OnPipelineStart()
         {
-            if (replayContext.Start == DateTime.MinValue)
+            var replay = this.pipeline.ReplayDescriptor;
+            if (replay.Start == DateTime.MinValue)
             {
                 this.startTime = this.pipeline.GetCurrentTime();
             }
             else
             {
-                this.startTime = replayContext.Start;
+                this.startTime = replay.Start;
             }
 
-            this.endTime = replayContext.End;
-            this.onCompleted = onCompleted;
+            this.endTime = replay.End;
             this.currentTime = this.startTime;
             uint realTimeInterval = (uint)this.pipeline.ConvertToRealTime(this.timerInterval).TotalMilliseconds;
+            this.timerDelegate = new Time.TimerDelegate(this.PublishTime);
             this.timer = Platform.Specific.TimerStart(realTimeInterval, this.timerDelegate);
             this.running = true;
         }
@@ -114,7 +127,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Stops the timer. Called by the runtime when the pipeline shuts down.
         /// </summary>
-        public void Stop()
+        private void OnPipelineStop()
         {
             if (this.running)
             {
@@ -126,13 +139,6 @@ namespace Microsoft.Psi.Components
 
             GC.SuppressFinalize(this);
         }
-
-        /// <summary>
-        /// Called by the timer. Override to publish actual messages
-        /// </summary>
-        /// <param name="absoluteTime">The current (virtual) time</param>
-        /// <param name="relativeTime">The time elapsed since the generator was started</param>
-        protected abstract void Generate(DateTime absoluteTime, TimeSpan relativeTime);
 
         /// <summary>
         /// Wakes up every timerInterval to publish a new message.
@@ -147,7 +153,7 @@ namespace Microsoft.Psi.Components
             var now = this.pipeline.GetCurrentTime();
             if (now >= this.endTime)
             {
-                this.Stop();
+                this.OnPipelineStop();
             }
             else
             {

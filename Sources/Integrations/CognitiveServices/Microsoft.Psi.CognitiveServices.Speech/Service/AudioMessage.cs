@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.CognitiveServices.Speech.Service
 {
+    using System.IO;
     using Microsoft.Psi.Audio;
 
     /// <summary>
@@ -30,7 +31,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// This should be sent once, before any audio data is sent to the service.
         /// </remarks>
         internal AudioMessage(WaveFormat format)
-            : this(format.GetBytes())
+            : this(CreateRiffHeader(format))
         {
         }
 
@@ -52,6 +53,24 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         internal AudioMessage(byte[] data, int offset, int count)
             : base("audio", data, offset, count)
         {
+        }
+
+        /// <summary>
+        /// Creates a RIFF header for the supplied WaveFormat object.
+        /// </summary>
+        /// <param name="format">The WaveFormat object.</param>
+        /// <returns>A byte array containing the RIFF header.</returns>
+        private static byte[] CreateRiffHeader(WaveFormat format)
+        {
+            var formatStream = new MemoryStream();
+
+            // Use the helper WaveDataWriterClass to write the RIFF header to a MemoryStream
+            using (var waveDataWriter = new WaveDataWriterClass(formatStream, format))
+            {
+                // Since we only want the header, we don't need to write any data. The header has
+                // already been written to the MemoryStream so we can just return the stream bytes.
+                return formatStream.ToArray();
+            }
         }
     }
 }

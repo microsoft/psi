@@ -28,7 +28,7 @@ namespace Microsoft.Psi
         private readonly ManualResetEvent completed = new ManualResetEvent(false);
 
         /// <summary>
-        /// This event becomes set when the first startable component is done
+        /// This event becomes set when the first source component is done
         /// </summary>
         private readonly ManualResetEvent anyCompleted = new ManualResetEvent(false);
 
@@ -45,18 +45,15 @@ namespace Microsoft.Psi
 
         private TimeInterval proposedOriginatingTimeInterval;
 
-        // the pipeline time, which might or might not be the same as real time (is shifted when in replay mode, and can be slowed down)
-        private Clock clock;
-
         /// <summary>
         /// The wiring of components
         /// </summary>
         private ConcurrentQueue<PipelineElement> components = new ConcurrentQueue<PipelineElement>();
 
         /// <summary>
-        /// The startable wiring components
+        /// The source wiring components
         /// </summary>
-        private List<PipelineElement> startableComponents = new List<PipelineElement>();
+        private List<PipelineElement> sourceComponents = new List<PipelineElement>();
 
         private Scheduler scheduler;
 
@@ -75,11 +72,33 @@ namespace Microsoft.Psi
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         public Pipeline(string name, DeliveryPolicy globalPolicy, int threadCount, bool allowSchedulingOnExternalThreads)
+            : this(name, globalPolicy)
+        {
+            this.scheduler = new Scheduler(this.globalPolicy, this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pipeline"/> class.
+        /// </summary>
+        /// <param name="name">Pipeline name.</param>
+        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="scheduler">Scheduler to be used.</param>
+        internal Pipeline(string name, DeliveryPolicy globalPolicy, Scheduler scheduler)
+            : this(name, globalPolicy)
+        {
+            this.scheduler = scheduler;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pipeline"/> class.
+        /// </summary>
+        /// <param name="name">Pipeline name.</param>
+        /// <param name="globalPolicy">Global delivery policy.</param>
+        private Pipeline(string name, DeliveryPolicy globalPolicy)
         {
             this.name = name ?? "default";
             this.globalPolicy = globalPolicy ?? DeliveryPolicy.Unlimited;
             this.enableExceptionHandling = false;
-            this.scheduler = new Scheduler(this.globalPolicy, this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
         }
 
         /// <summary>
@@ -109,7 +128,7 @@ namespace Microsoft.Psi
 
         internal Scheduler Scheduler => this.scheduler;
 
-        internal Clock Clock => this.clock;
+        internal Clock Clock => this.scheduler.Clock;
 
         internal KeyValueStore ConfigurationStore => this.configStore;
 
@@ -157,6 +176,26 @@ namespace Microsoft.Psi
 
             this.proposedTimeInterval = (this.proposedTimeInterval == null) ? activeInterval : TimeInterval.Coverage(new[] { this.proposedTimeInterval, activeInterval });
             this.proposedOriginatingTimeInterval = (this.proposedOriginatingTimeInterval == null) ? originatingTimeInterval : TimeInterval.Coverage(new[] { this.proposedOriginatingTimeInterval, originatingTimeInterval });
+        }
+
+        /// <summary>
+        /// Registers handler to be called upon pipeline start.
+        /// </summary>
+        /// <param name="owner">The component that owns the handler. This is usually the state object that the receiver operates on.</param>
+        /// <param name="onStart">The action to be called upon pipeline start.</param>
+        public void RegisterPipelineStartHandler(object owner, Action onStart)
+        {
+            this.GetOrCreateNode(owner).OnStartHandler = onStart;
+        }
+
+        /// <summary>
+        /// Registers handler to be called upon pipeline stop.
+        /// </summary>
+        /// <param name="owner">The component that owns the handler. This is usually the state object that the receiver operates on.</param>
+        /// <param name="onStop">The action to be called upon pipeline stop.</param>
+        public void RegisterPipelineStopHandler(object owner, Action onStop)
+        {
+            this.GetOrCreateNode(owner).OnStopHandler = onStop;
         }
 
         /// <summary>
@@ -412,34 +451,9 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="descriptor">Replay descriptor.</param>
         /// <returns>Disposable used to terminate pipeline.</returns>
-        public IDisposable RunAsync(ReplayDescriptor descriptor)
+        public virtual IDisposable RunAsync(ReplayDescriptor descriptor)
         {
-            descriptor = descriptor ?? ReplayDescriptor.ReplayAll;
-            this.replayDescriptor = descriptor.Intersect(descriptor.UseOriginatingTime ? this.proposedOriginatingTimeInterval : this.proposedTimeInterval);
-
-            bool hasExplicitStart = this.replayDescriptor.Interval.Left != DateTime.MinValue;
-            this.clock = hasExplicitStart ? new Clock(this.replayDescriptor.Start, 1 / this.replayDescriptor.ReplaySpeedFactor) : new Clock(default(TimeSpan), 1 / this.replayDescriptor.ReplaySpeedFactor);
-            this.completed.Reset();
-            this.scheduler.Start(this.clock, descriptor.EnforceReplayClock);
-
-            // keep track of startable components
-            foreach (var component in this.components)
-            {
-                if (component.IsStartable)
-                {
-                    lock (this.startableComponents)
-                    {
-                        this.startableComponents.Add(component);
-                    }
-                }
-            }
-
-            foreach (var component in this.components)
-            {
-                component.Activate(this.replayDescriptor);
-            }
-
-            return this;
+            return this.RunAsync(descriptor, null);
         }
 
         /// <summary>
@@ -448,7 +462,7 @@ namespace Microsoft.Psi
         /// <returns>Current clock time.</returns>
         public DateTime GetCurrentTime()
         {
-            return this.clock.GetCurrentTime();
+            return this.Clock.GetCurrentTime();
         }
 
         /// <summary>
@@ -458,7 +472,7 @@ namespace Microsoft.Psi
         /// <returns>Current time.</returns>
         public DateTime GetCurrentTimeFromElapsedTicks(long ticksFromSystemBoot)
         {
-            return this.clock.GetTimeFromElapsedTicks(ticksFromSystemBoot);
+            return this.Clock.GetTimeFromElapsedTicks(ticksFromSystemBoot);
         }
 
         /// <summary>
@@ -468,7 +482,7 @@ namespace Microsoft.Psi
         /// <returns>Converted time span.</returns>
         public TimeSpan ConvertToRealTime(TimeSpan duration)
         {
-            return this.clock.ToRealTime(duration);
+            return this.Clock.ToRealTime(duration);
         }
 
         /// <summary>
@@ -478,7 +492,7 @@ namespace Microsoft.Psi
         /// <returns>Converted datetime.</returns>
         public DateTime ConvertToRealTime(DateTime time)
         {
-            return this.clock.ToRealTime(time);
+            return this.Clock.ToRealTime(time);
         }
 
         /// <summary>
@@ -488,17 +502,17 @@ namespace Microsoft.Psi
         /// <returns>Converted time span.</returns>
         public TimeSpan ConvertFromRealTime(TimeSpan duration)
         {
-            return this.clock.ToVirtualTime(duration);
+            return this.Clock.ToVirtualTime(duration);
         }
 
         /// <summary>
-        /// Contert real datetime to virtual.
+        /// Convert real datetime to virtual.
         /// </summary>
         /// <param name="time">Datetime to convert.</param>
         /// <returns>Converted datetime.</returns>
         public DateTime ConvertFromRealTime(DateTime time)
         {
-            return this.clock.ToVirtualTime(time);
+            return this.Clock.ToVirtualTime(time);
         }
 
         internal Emitter<T> CreateEmitterWithFixedStreamId<T>(object owner, string name, int streamId)
@@ -515,7 +529,7 @@ namespace Microsoft.Psi
         /// <param name="abandonPendingWorkItems">Abandons pending work items.</param>
         internal void Dispose(bool abandonPendingWorkItems)
         {
-            if (this.scheduler == null)
+            if (this.components == null)
             {
                 // we never started or we've been already disposed
                 return;
@@ -523,7 +537,6 @@ namespace Microsoft.Psi
 
             this.Stop(abandonPendingWorkItems);
             this.DisposeComponents();
-            this.scheduler = null;
             this.components = null;
             this.ThrowIfError();
         }
@@ -531,34 +544,128 @@ namespace Microsoft.Psi
         internal void AddComponent(PipelineElement pe)
         {
             pe.Initialize(this);
-            this.components.Enqueue(pe);
+            if (pe.StateObject != this)
+            {
+                this.components.Enqueue(pe);
+            }
         }
 
         internal void NotifyCompleted(PipelineElement component)
         {
-            if (component.IsStartable)
+            if (component.IsSource)
             {
-                bool lastRemainingStartable = false;
-                lock (this.startableComponents)
+                bool lastRemainingCompletable = false;
+                lock (this.sourceComponents)
                 {
-                    if (!this.startableComponents.Contains(component))
+                    if (!this.sourceComponents.Contains(component))
                     {
                         // the component was already removed (e.g. because the pipeline is stopping)
                         return;
                     }
 
-                    this.startableComponents.Remove(component);
-                    lastRemainingStartable = this.startableComponents.Count == 0;
+                    this.sourceComponents.Remove(component);
+                    lastRemainingCompletable = this.sourceComponents.Count == 0;
                 }
 
                 this.anyCompleted.Set();
                 this.ComponentCompletionEvent?.Invoke(this, component.Name);
 
-                if (lastRemainingStartable)
+                if (lastRemainingCompletable)
                 {
-                    // stop once all IStartableComponents have stopped
+                    // stop once all finite source components have stopped, assuming no infinite sources
                     ThreadPool.QueueUserWorkItem(_ => this.Stop());
                 }
+            }
+        }
+
+        /// <summary>
+        /// Run pipeline (asynchronously).
+        /// </summary>
+        /// <param name="descriptor">Replay descriptor.</param>
+        /// <param name="clock">Clock to use (in the case of a shared scheduler - e.g. subpipeline).</param>
+        /// <returns>Disposable used to terminate pipeline.</returns>
+        internal virtual IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock)
+        {
+            descriptor = descriptor ?? ReplayDescriptor.ReplayAll;
+            this.replayDescriptor = descriptor.Intersect(descriptor.UseOriginatingTime ? this.proposedOriginatingTimeInterval : this.proposedTimeInterval);
+
+            this.completed.Reset();
+            if (clock == null)
+            {
+                clock =
+                    this.replayDescriptor.Interval.Left != DateTime.MinValue ?
+                    new Clock(this.replayDescriptor.Start, 1 / this.replayDescriptor.ReplaySpeedFactor) :
+                    new Clock(default(TimeSpan), 1 / this.replayDescriptor.ReplaySpeedFactor);
+                this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);
+            }
+
+            // keep track of source components
+            foreach (var component in this.components)
+            {
+                if (component.IsSource)
+                {
+                    lock (this.sourceComponents)
+                    {
+                        this.sourceComponents.Add(component);
+                    }
+                }
+            }
+
+            foreach (var component in this.components)
+            {
+                component.Start(this.replayDescriptor);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Signal pipeline completion.
+        /// </summary>
+        /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
+        internal void Complete(bool abandonPendingWorkitems)
+        {
+            if (this.PipelineCompletionEvent != null)
+            {
+                // this.scheduler might be null if RunAsync was never called.
+                if (this.Scheduler != null)
+                {
+                    this.PipelineCompletionEvent(this, new PipelineCompletionEventArgs(this.Clock.GetCurrentTime(), abandonPendingWorkitems, this.errors));
+                }
+
+                this.errors.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Stops the pipeline by disabling message passing between the pipeline components.
+        /// The pipeline configuration is not changed and the pipeline can be restarted later.
+        /// </summary>
+        /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
+        /// <param name="stopScheduler">Stops the scheduler.</param>
+        protected virtual void Stop(bool abandonPendingWorkitems = false, bool stopScheduler = true)
+        {
+            if (this.stopping)
+            {
+                this.completed.WaitOne();
+                return;
+            }
+
+            this.stopping = true;
+
+            // stop all started components, to disable the streaming of new messages
+            this.DeactivateComponents();
+
+            if (stopScheduler)
+            {
+                // block until all messages in the pipeline are fully processed
+                this.scheduler.Stop(abandonPendingWorkitems);
+            }
+
+            this.completed.Set();
+            if (stopScheduler)
+            {
+                this.Complete(abandonPendingWorkitems);
             }
         }
 
@@ -577,57 +684,20 @@ namespace Microsoft.Psi
             return node;
         }
 
-        /// <summary>
-        /// Stops the pipeline by disabling message passing between the pipeline components.
-        /// The pipeline configuration is not changed and the pipeline can be restarted later.
-        /// </summary>
-        /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
-        private void Stop(bool abandonPendingWorkitems = false)
-        {
-            if (this.stopping)
-            {
-                this.completed.WaitOne();
-                return;
-            }
-
-            this.stopping = true;
-
-            // stop all startable components, to disable the streaming of new messages
-            this.DeactivateComponents();
-
-            // block until all messages in the pipeline are fully processed
-            this.scheduler.Stop(abandonPendingWorkitems);
-
-            this.completed.Set();
-            if (this.PipelineCompletionEvent != null)
-            {
-                // this.clock might be null if RunAsync was never called.
-                if (this.clock != null)
-                {
-                    this.PipelineCompletionEvent(this, new PipelineCompletionEventArgs(this.clock.GetCurrentTime(), abandonPendingWorkitems, this.errors));
-                }
-
-                this.errors.Clear();
-            }
-
-            this.clock = null;
-        }
-
         private void DeactivateComponents()
         {
-            // to avoid deadlocks resulting from component calls to NotifyCompleted, copy and empty the list before calling each startable component
-            PipelineElement[] startedComponents;
-            lock (this.startableComponents)
+            // to avoid deadlocks resulting from component calls to NotifyCompleted, copy and empty the list before calling each source component
+            PipelineElement[] components;
+            lock (this.components)
             {
-                startedComponents = this.startableComponents.ToArray();
-                this.startableComponents.Clear();
+                components = this.components.ToArray();
             }
 
-            foreach (var component in startedComponents)
+            foreach (var component in components)
             {
                 if (component.IsActive)
                 {
-                    component.Deactivate();
+                    component.Stop();
                 }
             }
         }

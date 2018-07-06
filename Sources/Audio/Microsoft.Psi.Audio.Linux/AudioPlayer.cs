@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Audio
     /// playback the output may be specified by name via the <see cref="AudioConfiguration.DeviceName"/>
     /// configuration parameter.
     /// </remarks>
-    public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, IStartable, IDisposable
+    public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, IDisposable
     {
         private readonly Pipeline pipeline;
 
@@ -43,9 +43,11 @@ namespace Microsoft.Psi.Audio
         public AudioPlayer(Pipeline pipeline, AudioConfiguration configuration)
             : base(pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
-            this.frameSize = configuration.Format.BitsPerSample / 8;
+            this.frameSize = this.configuration.Format.Channels * configuration.Format.BitsPerSample / 8;
         }
 
         /// <summary>
@@ -73,11 +75,17 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
+        /// Disposes the <see cref="AudioPlayer"/> object.
+        /// </summary>
+        public void Dispose()
+        {
+            this.OnPipelineStop();
+        }
+
+        /// <summary>
         /// Starts playing back audio.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        public void Start(Action onCompleted, ReplayDescriptor descriptor)
+        private void OnPipelineStart()
         {
             this.audioDevice = LinuxAudioInterop.Open(
                 this.configuration.DeviceName,
@@ -90,21 +98,13 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Stops playing back audio.
         /// </summary>
-        public void Stop()
+        private void OnPipelineStop()
         {
             if (this.audioDevice != null)
             {
                 LinuxAudioInterop.Close(this.audioDevice);
                 this.audioDevice = null;
             }
-        }
-
-        /// <summary>
-        /// Disposes the <see cref="AudioPlayer"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Stop();
         }
     }
 }

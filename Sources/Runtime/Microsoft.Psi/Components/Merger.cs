@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Components
         private readonly Dictionary<TKey, Receiver<TIn>> inputs = new Dictionary<TKey, Receiver<TIn>>();
         private readonly Pipeline pipeline;
         private readonly Emitter<ValueTuple<TKey, Message<TIn>>> output;
+        private readonly object syncRoot = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Merger{TIn, TKey}"/> class.
@@ -37,12 +38,16 @@ namespace Microsoft.Psi.Components
         /// <returns>Receiver having been mapped.</returns>
         public Receiver<TIn> Add(TKey key)
         {
-            if (this.inputs.ContainsKey(key))
+            // lock access to the inputs so Merger works concurrently
+            lock (this.syncRoot)
             {
-                throw new InvalidOperationException($"An input for this key {key} has already been addded.");
-            }
+                if (this.inputs.ContainsKey(key))
+                {
+                    throw new InvalidOperationException($"An input for this key {key} has already been addded.");
+                }
 
-            return this.inputs[key] = this.pipeline.CreateReceiver<TIn>(this, m => this.Receive(key, m), key.ToString());
+                return this.inputs[key] = this.pipeline.CreateReceiver<TIn>(this, m => this.Receive(key, m), key.ToString());
+            }
         }
 
         private void Receive(TKey key, Message<TIn> message)

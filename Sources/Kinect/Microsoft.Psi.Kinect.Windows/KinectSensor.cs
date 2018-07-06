@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Kinect
     /// <summary>
     /// Used for receiving information from a Kinect sensor
     /// </summary>
-    public class KinectSensor : IKinectSensor, IStartable, IDisposable
+    public class KinectSensor : IKinectSensor, ISourceComponent, IDisposable
     {
         private static WaveFormat audioFormat = WaveFormat.Create16kHz1ChannelIeeeFloat();
         private readonly Pipeline pipeline;
@@ -66,6 +66,8 @@ namespace Microsoft.Psi.Kinect
         /// <param name="pipeline">Pipeline this sensor is a part of</param>
         private KinectSensor(Pipeline pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.StartKinect);
+            pipeline.RegisterPipelineStopHandler(this, () => this.kinectSensor?.Close());
             this.pipeline = pipeline;
             this.Bodies = pipeline.CreateEmitter<List<KinectBody>>(this, nameof(this.Bodies));
             this.ColorImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.ColorImage));
@@ -151,24 +153,6 @@ namespace Microsoft.Psi.Kinect
         private int DisplayWidth => this.kinectSensor.ColorFrameSource.FrameDescription.Width;
 
         private int DisplayHeight => this.kinectSensor.ColorFrameSource.FrameDescription.Height;
-
-        /// <summary>
-        /// IStartable called by the pipeline when KinectSensor is activated in the pipeline
-        /// </summary>
-        /// <param name="onCompleted">Unused</param>
-        /// <param name="descriptor">Parameter Unused</param>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
-        {
-            this.StartKinect();
-        }
-
-        /// <summary>
-        /// Called by the pipeline to stop the sensor
-        /// </summary>
-        void IStartable.Stop()
-        {
-            this.kinectSensor?.Close();
-        }
 
         /// <summary>
         /// Called to release the sensor

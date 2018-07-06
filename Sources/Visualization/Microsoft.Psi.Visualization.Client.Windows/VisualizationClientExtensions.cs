@@ -6,10 +6,11 @@ namespace Microsoft.Psi.Visualization.Client
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Media.Media3D;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Extensions.Annotations;
+    using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Speech;
@@ -34,7 +35,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Adds a new XY visualization panel.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created XY visualization panel.</returns>
         public static XYVisualizationPanel AddXYPanel(this VisualizationClient vc)
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Adds a new XYZ visualization panel.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created XYZ visualization panel.</returns>
         public static XYZVisualizationPanel AddXYZPanel(this VisualizationClient vc)
         {
@@ -54,7 +55,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Clears the entire visualization container.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         public static void ClearAll(this VisualizationClient vc)
         {
             vc.CurrentContainer.Clear();
@@ -63,7 +64,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Sets the current rendering mode to <see cref="RemoteNavigationMode.Live"/>.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <param name="start">The starting position of the navigator range. Default sets to <see cref="DateTime.UtcNow"/>.</param>
         /// <param name="duration">The duration of the navigator range. Default sets to 10 seconds.</param>
         public static void SetLiveMode(this VisualizationClient vc, DateTime start = default(DateTime), TimeSpan duration = default(TimeSpan))
@@ -89,7 +90,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Sets the navigator extents to specified time interval.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <param name="timeInterval">Time interval to set navigator extents to.</param>
         public static void SetNavigatorToExtents(this VisualizationClient vc, TimeInterval timeInterval)
         {
@@ -102,7 +103,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Sets the navigator based on current time with a 6 second range.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         public static void SetNavigatorToNow(this VisualizationClient vc)
         {
             vc.SetNavigatorToNow(TimeSpan.FromSeconds(6));
@@ -111,7 +112,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <summary>
         /// Sets the navigator based on current time and a provided range.
         /// </summary>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <param name="delta">Range of time to include in view.</param>
         public static void SetNavigatorToNow(this VisualizationClient vc, TimeSpan delta)
         {
@@ -128,7 +129,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <typeparam name="TObject">The type of client stream visualization object (proxy) to create.</typeparam>
         /// <typeparam name="TData">The type of underlying data of the stream visualization object.</typeparam>
         /// <typeparam name="TConfig">The type of configuration of the stream visualization object</typeparam>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <param name="stream">Stream to show.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static TObject Show3D<TObject, TData, TConfig>(this VisualizationClient vc, IProducer<TData> stream)
@@ -145,7 +146,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <typeparam name="TData">The type of underlying data of the stream visualization object.</typeparam>
         /// <typeparam name="TConfig">The type of configuration of the stream visualization object</typeparam>
         /// <typeparam name="TPanel">The type of visauzalition panel required to show the stream.</typeparam>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <param name="stream">Stream to show.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static TObject Show<TObject, TData, TConfig, TPanel>(this VisualizationClient vc, IProducer<TData> stream)
@@ -170,7 +171,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// <typeparam name="TData">The type of underlying data of the stream visualization object.</typeparam>
         /// <typeparam name="TConfig">The type of configuration of the stream visualization object</typeparam>
         /// <param name="stream">Stream to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static TObject Show<TObject, TData, TConfig>(this IProducer<TData> stream, VisualizationClient vc)
             where TObject : StreamVisualizationObject<TData, TConfig>, new()
@@ -183,7 +184,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows an audio stream.
         /// </summary>
         /// <param name="stream">Aduio stream to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <param name="channel">The audio channel to show. Default is 0.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static AudioVisualizationObject Show(this IProducer<AudioBuffer> stream, VisualizationClient vc, int channel = 0)
@@ -210,7 +211,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows an encoded image stream.
         /// </summary>
         /// <param name="stream">Encoded image stream to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static EncodedImageVisualizationObject Show(this IProducer<Shared<EncodedImage>> stream, VisualizationClient vc)
         {
@@ -221,7 +222,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows an image stream.
         /// </summary>
         /// <param name="stream">Image stream to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static ImageVisualizationObject Show(this IProducer<Shared<Image>> stream, VisualizationClient vc)
         {
@@ -232,7 +233,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a Kinect bodies stream in an XYZ visualization panel.
         /// </summary>
         /// <param name="stream">Kinect bodies stream to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static KinectBodies3DVisualizationObject Show(this IProducer<List<KinectBody>> stream, VisualizationClient vc)
         {
@@ -243,7 +244,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a list of 3D points stream in an XYZ visualization panel.
         /// </summary>
         /// <param name="stream">A list of 3D points  stream to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static Points3DVisualizationObject ShowScatterPlot3D(this IProducer<List<System.Windows.Media.Media3D.Point3D>> stream, VisualizationClient vc)
         {
@@ -254,7 +255,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of doubles.
         /// </summary>
         /// <param name="stream">A stream of doubles to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static PlotVisualizationObject Show(this IProducer<double> stream, VisualizationClient vc)
         {
@@ -279,7 +280,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of booleans.
         /// </summary>
         /// <param name="stream">A stream of booleans to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static PlotVisualizationObject Show(this IProducer<bool> stream, VisualizationClient vc)
         {
@@ -304,10 +305,21 @@ namespace Microsoft.Psi.Visualization.Client
         }
 
         /// <summary>
+        /// Shows a stream of a list of 3D rectangles
+        /// </summary>
+        /// <param name="stream">A stream of a list of 3D rectangles to show.</param>
+        /// <param name="vc">The visualization client.</param>
+        /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
+        public static ScatterRect3DVisualizationObject Show(this IProducer<List<(CoordinateSystem, Rect3D)>> stream, VisualizationClient vc)
+        {
+            return vc.Show<ScatterRect3DVisualizationObject, List<(CoordinateSystem, Rect3D)>, ScatterRect3DVisualizationObjectConfiguration, XYZVisualizationPanel>(stream);
+        }
+
+        /// <summary>
         /// Shows a stream of a list of coordinate systems.
         /// </summary>
         /// <param name="stream">A stream of a list of coordinate systems to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static ScatterCoordinateSystemsVisualizationObject Show(this IProducer<List<CoordinateSystem>> stream, VisualizationClient vc)
         {
@@ -318,7 +330,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of a list of named points.
         /// </summary>
         /// <param name="stream">A stream of a list of named points to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static ScatterPlotVisualizationObject Show(this IProducer<List<Tuple<Point, string>>> stream, VisualizationClient vc)
         {
@@ -329,7 +341,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of a list of rectangles.
         /// </summary>
         /// <param name="stream">A stream of a list of rectangles to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static ScatterRectangleVisualizationObject Show(this IProducer<List<Tuple<System.Drawing.Rectangle, string>>> stream, VisualizationClient vc)
         {
@@ -340,7 +352,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of speech recognition results.
         /// </summary>
         /// <param name="stream">A stream of speech recognition results to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static SpeechRecognitionVisualizationObject Show(this IProducer<IStreamingSpeechRecognitionResult> stream, VisualizationClient vc)
         {
@@ -351,7 +363,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of strings with durations.
         /// </summary>
         /// <param name="stream">A stream of strings with durations to show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static StringWithDurationVisualizationObject Show(this IProducer<Tuple<string, TimeSpan>> stream, VisualizationClient vc)
         {
@@ -362,7 +374,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// Shows a stream of annotations
         /// </summary>
         /// <param name="stream">A stream of annotations show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static AnnotatedEventVisualizationObject ShowAnnotations(this IProducer<AnnotatedEvent> stream, VisualizationClient vc)
         {
@@ -374,7 +386,7 @@ namespace Microsoft.Psi.Visualization.Client
         /// </summary>
         /// <typeparam name="T">The type of the stream.</typeparam>
         /// <param name="stream">A stream of annotations show.</param>
-        /// <param name="vc">The visuzalization client.</param>
+        /// <param name="vc">The visualization client.</param>
         /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
         public static TimeIntervalVisualizationObject ShowLatency<T>(this IProducer<T> stream, VisualizationClient vc)
         {

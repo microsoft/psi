@@ -225,7 +225,6 @@ namespace Microsoft.Psi
                     var elapsed = (long)(((decimal)(stamp - stopwatchStart) * TicksPerStopwatch) + 0.5m);
                     if (elapsed > ResetAfterSwTicks)
                     {
-                        Console.WriteLine("Reset");
                         do
                         {
                             systemTimeStart = DateTime.UtcNow.ToFileTimeUtc();

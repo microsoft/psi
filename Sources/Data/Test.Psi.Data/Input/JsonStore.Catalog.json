@@ -1,0 +1,30 @@
+[
+    {
+        "Name": "Stream1",
+        "Id": 1,
+        "TypeName": "Test.Psi.Data.SimpleObject",
+        "PartitionName": "JsonStore",
+        "PartitionPath": "Input",
+        "FirstMessageTime": "2017-11-01T09:15:30.12345Z",
+        "LastMessageTime": "2017-11-01T09:15:34.12345Z",
+        "FirstMessageOriginatingTime": "2017-11-01T09:15:30.12345Z",
+        "LastMessageOriginatingTime": "2017-11-01T09:15:34.12345Z",
+        "AverageMessageSize": 388,
+        "AverageLatency": 0,
+        "MessageCount": 2
+    },
+    {
+        "Name": "Stream2",
+        "Id": 2,
+        "TypeName": "Test.Psi.Data.SimpleObject",
+        "PartitionName": "JsonStore",
+        "PartitionPath": "Input",
+        "FirstMessageTime": "2017-11-01T09:15:30.12345Z",
+        "LastMessageTime": "2017-11-01T09:15:34.12345Z",
+        "FirstMessageOriginatingTime": "2017-11-01T09:15:30.12345Z",
+        "LastMessageOriginatingTime": "2017-11-01T09:15:34.12345Z",
+        "AverageMessageSize": 388,
+        "AverageLatency": 0,
+        "MessageCount": 2
+    }
+]

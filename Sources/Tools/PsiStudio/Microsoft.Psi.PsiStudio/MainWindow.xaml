@@ -211,9 +211,9 @@
                             </Grid.RowDefinitions>
                             
                             <Grid Grid.Row="0">
-                                <TreeView Name="DatasetsTreeView" ItemsSource="{Binding Datasets}" SelectedItemChanged="DatasetsTreeView_SelectedItemChanged" ItemTemplateSelector="{StaticResource ResourceKey=PsiStudioTemplateSelector}">
+                                <TreeView Name="DatasetsTreeView" ItemsSource="{Binding DatasetViewModels}" SelectedItemChanged="DatasetsTreeView_SelectedItemChanged" ItemTemplateSelector="{StaticResource ResourceKey=PsiStudioTemplateSelector}">
                                     <TreeView.Resources>
-                                        <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding Sessions}">
+                                        <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding SessionViewModels}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="Icons\data_x4.png"/>
                                                 <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
@@ -233,7 +233,7 @@
                                             </StackPanel>
                                         </HierarchicalDataTemplate>
                                         
-                                        <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding Partitions}">
+                                        <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding PartitionViewModels}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="Icons\session_x4.png"/>
                                                 <TextBlock Text="{Binding Name}" Margin="7,0,0,0">

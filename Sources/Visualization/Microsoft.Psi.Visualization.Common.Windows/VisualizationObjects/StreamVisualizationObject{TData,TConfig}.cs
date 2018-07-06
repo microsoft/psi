@@ -11,10 +11,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using Microsoft.Psi;
-    using Microsoft.Psi.Extensions.Data;
     using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Server;
     using Newtonsoft.Json;
@@ -148,9 +148,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        public void UpdateStoreBindings(IEnumerable<IPartition> partitions)
+        public void UpdateStoreBindings(IEnumerable<PartitionViewModel> partitions)
         {
-            IPartition partition = partitions.FirstOrDefault(p => p.Name == this.Configuration.StreamBinding.PartitionName);
+            PartitionViewModel partition = partitions.FirstOrDefault(p => p.Name == this.Configuration.StreamBinding.PartitionName);
             if (partition != null)
             {
                 var streamBinding = new StreamBinding(this.Configuration.StreamBinding, partition.StoreName, partition.StorePath);

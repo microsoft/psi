@@ -5,8 +5,6 @@ namespace Microsoft.Psi.Kinect.Face
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.Kinect;
     using Microsoft.Kinect.Face;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
@@ -15,7 +13,7 @@ namespace Microsoft.Psi.Kinect.Face
     /// <summary>
     /// Used for receiving information from a Kinect sensor
     /// </summary>
-    public class KinectFaceDetector : IKinectFaceDetector, IStartable, IDisposable
+    public class KinectFaceDetector : IKinectFaceDetector, ISourceComponent, IDisposable
     {
         private Kinect.KinectSensor kinectSensor = null;
         private KinectFaceDetectorConfiguration configuration = null;
@@ -37,6 +35,7 @@ namespace Microsoft.Psi.Kinect.Face
         /// <param name="configuration">Configuration to use</param>
         public KinectFaceDetector(Pipeline pipeline, Kinect.KinectSensor kinectSensor, KinectFaceDetectorConfiguration configuration)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.kinectSensor = kinectSensor;
@@ -103,26 +102,6 @@ namespace Microsoft.Psi.Kinect.Face
         }
 
         /// <summary>
-        /// IStartable called by the pipeline when KinectSensor is activated in the pipeline
-        /// </summary>
-        /// <param name="onCompleted">Unused</param>
-        /// <param name="descriptor">Parameter Unused</param>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException(nameof(KinectFaceDetector));
-            }
-        }
-
-        /// <summary>
-        /// Called by the pipeline to stop the sensor
-        /// </summary>
-        void IStartable.Stop()
-        {
-        }
-
-        /// <summary>
         /// Called to release the sensor
         /// </summary>
         public void Dispose()
@@ -181,6 +160,17 @@ namespace Microsoft.Psi.Kinect.Face
                         }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Called by the pipeline when KinectSensor is activated in the pipeline
+        /// </summary>
+        private void OnPipelineStart()
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(nameof(KinectFaceDetector));
             }
         }
 

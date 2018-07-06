@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Audio
     /// which to capture may be specified via the <see cref="AudioConfiguration.DeviceName"/> configuration
     /// parameter (e.g. "plughw:0,0").
     /// </remarks>
-    public sealed class AudioSource : IProducer<AudioBuffer>, IStartable, IDisposable
+    public sealed class AudioSource : IProducer<AudioBuffer>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
 
@@ -53,6 +53,8 @@ namespace Microsoft.Psi.Audio
         /// <param name="configuration">The component configuration.</param>
         public AudioSource(Pipeline pipeline, AudioConfiguration configuration)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
@@ -93,11 +95,17 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
+        /// Dispose method.
+        /// </summary>
+        public void Dispose()
+        {
+            this.OnPipelineStop();
+        }
+
+        /// <summary>
         /// Called to start capturing audio from the microphone.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        public void Start(Action onCompleted, ReplayDescriptor descriptor)
+        private void OnPipelineStart()
         {
             this.audioDevice = LinuxAudioInterop.Open(
                 this.configuration.DeviceName,
@@ -148,21 +156,13 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Called when the pipeline is shutting down.
         /// </summary>
-        public void Stop()
+        private void OnPipelineStop()
         {
             var audioDevice = Interlocked.Exchange(ref this.audioDevice, null);
             if (audioDevice != null)
             {
                 LinuxAudioInterop.Close(audioDevice);
             }
-        }
-
-        /// <summary>
-        /// Dispose method.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Stop();
         }
     }
 }

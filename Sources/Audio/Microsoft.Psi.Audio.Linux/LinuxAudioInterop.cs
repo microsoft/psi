@@ -433,11 +433,15 @@ namespace Microsoft.Psi.Audio
         /// <param name="device">Device handle</param>
         /// <param name="buffer">Buffer to be written</param>
         /// <param name="blockSize">Block size</param>
-        internal static unsafe void Write(AudioDevice device, byte[] buffer, int blockSize)
+        /// <param name="offset">Offset into buffer from which to start writing data</param>
+        /// <returns>Number of frames (1 frame=1 sample from each channel) written</returns>
+        internal static unsafe int Write(AudioDevice device, byte[] buffer, int blockSize, int offset = 0)
         {
+            long err = 0;
             fixed (void* bufferPtr = buffer)
             {
-                long err = Write(device.Handle, bufferPtr, (ulong)blockSize);
+                byte* pb = (byte*)bufferPtr + offset;
+                err = Write(device.Handle, pb, (ulong)blockSize);
                 if (err < 0)
                 {
                     err = Recover(device.Handle, (int)err, 1);
@@ -448,9 +452,10 @@ namespace Microsoft.Psi.Audio
                 }
                 else if (err != blockSize)
                 {
-                    throw new ArgumentException("Write failed.");
                 }
             }
+
+            return (int)err;
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ namespace Test.Psi
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Psi;
+    using Microsoft.Psi.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -50,6 +51,48 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void VectorIncorrectSizeParallel()
+        {
+            List<double> results = new List<double>();
+
+            using (var p = Pipeline.Create())
+            {
+                var x = Enumerable.Range(0, 4).ToArray();
+
+                // Runs a parallel over the vector, but specifying only size 2. This should throw an exception.
+                Generators.Return(p, x).Parallel(2, (i, d, e) => d * 10, true);
+                try
+                {
+                    p.Run(enableExceptionHandling: true);
+                }
+                catch (AggregateException exception)
+                {
+                    Assert.IsInstanceOfType(exception.InnerException, typeof(InvalidOperationException));
+                }
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void VariableLengthVectorStatelessParallel()
+        {
+            List<int> results = new List<int>();
+
+            using (var p = Pipeline.Create())
+            {
+                Generators.Sequence(p, Enumerable.Range(0, 1).ToArray(), r => Enumerable.Range(0, r.Length + 1).ToArray(), 5, TimeSpan.FromTicks(10))
+                    .Parallel((i, s) => s.Select(x => x *10), true)
+                    .Do(x => results.Add(x.Sum()));
+
+                p.Run();
+            }
+
+            CollectionAssert.AreEqual(new int[] { 0, 10, 30, 60, 100 }, results.ToArray());
+        }
+
+
+        [TestMethod]
+        [Timeout(60000)]
         public void SparseVectorStatelessParallel()
         {
             var odd = new Dictionary<int, int> { { 1, 100 }, { 3, 300 }, { 5, 500 } };
@@ -75,23 +118,44 @@ namespace Test.Psi
         [Timeout(60000)]
         public void SparseVectorStatefulParallel()
         {
-            var odd = new Dictionary<int, int> { { 1, 100 }, { 3, 300 }, { 5, 500 } };
-            var even = new Dictionary<int, int> { { 0, 0 }, { 2, 200 }, { 4, 400 } };
+            var frames =
+                new[]
+                {
+                    //                           full       end        start      mid        intermittent
+                    new Dictionary<int, int> { { 1, 10 },            { 3, 30 }                       }, //  10      30
+                    new Dictionary<int, int> { { 1, 10 },            { 3, 30 },            { 5, 50 } }, //  20      60      50
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }, { 3, 30 }, { 4, 40 }, { 5, 50 } }, //  30  20  90  40 100
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }, { 3, 30 }, { 4, 40 }, { 5, 50 } }, //  40  40 120  80 150
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }, { 3, 30 }, { 4, 40 },           }, //  50  60 150 120
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }, { 3, 30 }, { 4, 40 }, { 5, 50 } }, //  60  80 180 160  50
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }, { 3, 30 }, { 4, 40 }, { 5, 50 } }, //  70 100 210 200 100
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }, { 3, 30 }                       }, //  80 120 240
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }                                  }, //  90 140
+                    new Dictionary<int, int> { { 1, 10 }, { 2, 20 }                                  }, // 100 160
+                };
 
             List<int[]> results = new List<int[]>();
 
             using (var p = Pipeline.Create())
             {
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
-                    .Select(i => (i % 2 == 0) ? even : odd)
+                    .Select(i => frames[i])
                     .Parallel((key, stream) => stream.Aggregate(0, (prev, v) => v + prev), true)
                     .Do(x => results.Add(x.Values.ToArray()));
 
                 p.Run();
             }
 
-            CollectionAssert.AreEqual(new int[] { 0, 1000, 2000 }, results[8]);
-            CollectionAssert.AreEqual(new int[] { 500, 1500, 2500 }, results[9]);
+            CollectionAssert.AreEqual(new int[] {  10,       30           }, results[0]);
+            CollectionAssert.AreEqual(new int[] {  20,       60,       50 }, results[1]);
+            CollectionAssert.AreEqual(new int[] {  30,  20,  90,  40, 100 }, results[2]);
+            CollectionAssert.AreEqual(new int[] {  40,  40, 120,  80, 150 }, results[3]);
+            CollectionAssert.AreEqual(new int[] {  50,  60, 150, 120,     }, results[4]);
+            CollectionAssert.AreEqual(new int[] {  60,  80, 180, 160,  50 }, results[5]);
+            CollectionAssert.AreEqual(new int[] {  70, 100, 210, 200, 100 }, results[6]);
+            CollectionAssert.AreEqual(new int[] {  80, 120, 240           }, results[7]);
+            CollectionAssert.AreEqual(new int[] {  90, 140                }, results[8]);
+            CollectionAssert.AreEqual(new int[] { 100, 160                }, results[9]);
         }
 
         [TestMethod]
@@ -156,6 +220,24 @@ namespace Test.Psi
 
             // Frames that do not match on the two branches are dropped
             Assert.IsTrue(results.Count == 5);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ParallelComponentIssolationTest()
+        {
+            // verify that Parallel* components don't expose emitters of inner Subpipeline
+            using (var p = Pipeline.Create())
+            {
+                var parallel = new Parallel<int, int>(p, 10, (i, prod) => prod, false);
+                Assert.AreEqual(p, parallel.Out.Pipeline); // composite components shouldn't expose subpipelines
+
+                var parallelVarLen = new ParallelVariableLength<int, int>(p, (i, prod) => prod, false);
+                Assert.AreEqual(p, parallelVarLen.Out.Pipeline); // composite components shouldn't expose subpipelines
+
+                var parallelSparse = new ParallelSparse<int, int, int>(p, (i, prod) => prod, false);
+                Assert.AreEqual(p, parallelSparse.Out.Pipeline); // composite components shouldn't expose subpipelines
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Visualization.Common
 {
     using System.Diagnostics;
-    using Microsoft.Psi.Extensions.Base;
+    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Represents a frame counter (FPS).

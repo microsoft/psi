@@ -15,17 +15,17 @@ namespace Microsoft.Psi.PsiStudio
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Extensions.Annotations;
-    using Microsoft.Psi.Extensions.Base;
-    using Microsoft.Psi.Extensions.Data;
+    using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Serialization;
     using Microsoft.Psi.Speech;
     using Microsoft.Psi.Visualization.Adapters;
+    using Microsoft.Psi.Visualization.Annotations;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.PsiStudio
     {
         private VisualizationContainer visualizationContainer;
         private SimpleReader dataStore;
-        private Dataset dataset;
+        private DatasetViewModel datasetViewModel;
 
         private Pipeline audioPlaybackPipeline;
         private RelayCommand playCommand;
@@ -61,8 +61,8 @@ namespace Microsoft.Psi.PsiStudio
             booleanSchema.AddSchemaValue("true", System.Drawing.Color.Green);
             AnnotationSchemaRegistry.Default.Register(booleanSchema);
 
-            this.Dataset = new Dataset();
-            this.Datasets = new ObservableCollection<Dataset> { this.dataset };
+            this.DatasetViewModel = new DatasetViewModel();
+            this.DatasetViewModels = new ObservableCollection<DatasetViewModel> { this.datasetViewModel };
         }
 
         /// <summary>
@@ -76,20 +76,20 @@ namespace Microsoft.Psi.PsiStudio
         public AnnotationSchemaRegistry AnnotationSchemaRegistry => AnnotationSchemaRegistry.Default;
 
         /// <summary>
-        /// Gets the collection of datasets.
+        /// Gets the collection of dataset view models.
         /// </summary>
-        public ObservableCollection<Dataset> Datasets { get; private set; }
+        public ObservableCollection<DatasetViewModel> DatasetViewModels { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current dataset.
+        /// Gets or sets the current dataset view model.
         /// </summary>
-        public Dataset Dataset
+        public DatasetViewModel DatasetViewModel
         {
-            get => this.dataset;
+            get => this.datasetViewModel;
             set
             {
-                this.dataset = value;
-                this.RaisePropertyChanged(nameof(this.Dataset));
+                this.datasetViewModel = value;
+                this.RaisePropertyChanged(nameof(this.DatasetViewModel));
             }
         }
 
@@ -150,9 +150,9 @@ namespace Microsoft.Psi.PsiStudio
         /// <param name="owner">The window that will own this dialog.</param>
         public void AddAnnotation(Window owner)
         {
-            AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistry.Default.Schemas);
+            AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistryViewModel.Default.Schemas);
             dlg.Owner = owner;
-            dlg.StorePath = string.IsNullOrWhiteSpace(this.Dataset.FileName) ? Environment.CurrentDirectory : Path.GetDirectoryName(this.Dataset.FileName);
+            dlg.StorePath = string.IsNullOrWhiteSpace(this.DatasetViewModel.FileName) ? Environment.CurrentDirectory : Path.GetDirectoryName(this.DatasetViewModel.FileName);
             var result = dlg.ShowDialog();
             if (result.HasValue && result.Value)
             {
@@ -186,8 +186,8 @@ namespace Microsoft.Psi.PsiStudio
 
                 // create a new annotation definition and store
                 var definition = new AnnotatedEventDefinition(dlg.StreamName);
-                definition.Schemas.Add(dlg.AnnotationSchema);
-                this.Dataset.CurrentSession.CreateAnnotationPartition(dlg.StoreName, dlg.StorePath, definition);
+                definition.AddSchema(dlg.AnnotationSchema);
+                this.DatasetViewModel.CurrentSessionViewModel.CreateAnnotationPartition(dlg.StoreName, dlg.StorePath, definition);
 
                 // open the stream for visualization (NOTE: if the selection extents were MinTime/MaxTime, no event will be created)
                 annotations.OpenStream(new StreamBinding(dlg.StreamName, dlg.PartitionName, dlg.StoreName, dlg.StorePath, typeof(AnnotationSimpleReader)));
@@ -204,16 +204,16 @@ namespace Microsoft.Psi.PsiStudio
             this.VisualizationContainer = VisualizationContainer.Load(filename);
 
             // zoom into the current session
-            var session = this.Dataset.CurrentSession;
+            var session = this.DatasetViewModel.CurrentSessionViewModel;
             var timeInterval = session?.OriginatingTimeInterval;
             timeInterval = timeInterval ?? new TimeInterval(DateTime.MinValue, DateTime.MaxValue);
             this.VisualizationContainer.ZoomToRange(timeInterval);
 
             // set the data range to the dataset
-            this.VisualizationContainer.Navigator.DataRange.SetRange(this.Dataset.OriginatingTimeInterval);
+            this.VisualizationContainer.Navigator.DataRange.SetRange(this.DatasetViewModel.OriginatingTimeInterval);
 
             // update store bindings
-            this.VisualizationContainer.UpdateStoreBindings(session == null ? new List<IPartition>() : session.Partitions.ToList());
+            this.VisualizationContainer.UpdateStoreBindings(session == null ? new List<PartitionViewModel>() : session.PartitionViewModels.ToList());
         }
 
         /// <summary>
@@ -225,22 +225,22 @@ namespace Microsoft.Psi.PsiStudio
             var fileInfo = new FileInfo(filename);
             if (fileInfo.Extension == ".psi")
             {
-                var name = fileInfo.Name.Split('.')[0];
-                this.Dataset = Dataset.CreateFromExistingStore(name, fileInfo.DirectoryName);
+                var name = fileInfo.Name.Substring(0, Path.GetFileNameWithoutExtension(filename).LastIndexOf('.'));
+                this.DatasetViewModel = DatasetViewModel.CreateFromExistingStore(name, fileInfo.DirectoryName);
             }
             else
             {
-                this.Dataset = Dataset.Load(filename);
+                this.DatasetViewModel = DatasetViewModel.Load(filename);
             }
 
-            this.Datasets.Clear();
-            this.Datasets.Add(this.Dataset);
+            this.DatasetViewModels.Clear();
+            this.DatasetViewModels.Add(this.DatasetViewModel);
 
             // set the data range to the dataset
-            this.VisualizationContainer.Navigator.DataRange.SetRange(this.Dataset.OriginatingTimeInterval);
+            this.VisualizationContainer.Navigator.DataRange.SetRange(this.DatasetViewModel.OriginatingTimeInterval);
 
             // zoom into the current session
-            var timeInterval = this.Dataset.CurrentSession?.OriginatingTimeInterval;
+            var timeInterval = this.DatasetViewModel.CurrentSessionViewModel?.OriginatingTimeInterval;
             timeInterval = timeInterval ?? new TimeInterval(DateTime.MinValue, DateTime.MaxValue);
             this.VisualizationContainer.ZoomToRange(timeInterval);
         }
@@ -262,7 +262,7 @@ namespace Microsoft.Psi.PsiStudio
 
             this.audioPlaybackPipeline = Pipeline.Create("AudioPlayer");
             replayDescriptor = new ReplayDescriptor(this.VisualizationContainer.Navigator.SelectionRange.StartTime, this.VisualizationContainer.Navigator.SelectionRange.EndTime, false, true, (float)(1.0 / speed));
-            var partition = this.Dataset.CurrentSession.Partitions.First();
+            var partition = this.DatasetViewModel.CurrentSessionViewModel.PartitionViewModels.First();
             var importer = Store.Open(this.audioPlaybackPipeline, partition.StoreName, partition.StorePath);
 
             // Find first stream that contains audio.
@@ -358,6 +358,8 @@ namespace Microsoft.Psi.PsiStudio
             this.AddVisualizeStreamCommand<AudioBuffer>("Visualize", this.PlotAudio);
             this.AddVisualizeStreamCommand<List<Tuple<System.Drawing.Rectangle, string>>>("Visualize", (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false));
             this.AddVisualizeStreamCommand<List<System.Drawing.Rectangle>>("Visualize", (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false, typeof(ListRectangleAdapter)));
+            this.AddVisualizeStreamCommand<List<KinectBody>>("Visualize", (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>>("Visualize", (s) => this.Show3D<ScatterRect3DVisualizationObject, List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>, ScatterRect3DVisualizationObjectConfiguration>(s, false));
         }
 
         private void AddVisualizeStreamCommand<TKey>(string displayName, Action<IStreamTreeNode> action)

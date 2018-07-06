@@ -30,6 +30,18 @@ namespace Microsoft.Psi
             new RelativeTimeInterval(TimeSpan.Zero, true, true, TimeSpan.Zero, true, true);
 
         /// <summary>
+        /// Canonical interval describing the past (including the present moment).
+        /// </summary>
+        public static readonly RelativeTimeInterval Past =
+            new RelativeTimeInterval(TimeSpan.MinValue, false, false, TimeSpan.Zero, true, true);
+
+        /// <summary>
+        /// Canonical interval describing the future (including the present moment).
+        /// </summary>
+        public static readonly RelativeTimeInterval Future =
+            new RelativeTimeInterval(TimeSpan.Zero, true, true, TimeSpan.MaxValue, false, false);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RelativeTimeInterval"/> class.
         /// </summary>
         /// <remarks>Defaults to inclusive</remarks>

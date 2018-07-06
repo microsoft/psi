@@ -25,18 +25,21 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="interpolator">Interpolator determining match behavior and tolerance.</param>
         /// <param name="outputCreator">Function mapping the primary and secondary messages to an output message type.</param>
+        /// <param name="pipeline">The pipeline to which this component belongs (optional, defaults to that of secondaries).</param>
         /// <returns>Stream of joined values.</returns>
         public static IProducer<TOut> Join<TPrimary, TSecondary, TOut>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             Match.Interpolator<TSecondary> interpolator,
-            Func<TPrimary, TSecondary, TOut> outputCreator)
+            Func<TPrimary, TSecondary, TOut> outputCreator,
+            Pipeline pipeline = null)
         {
             return Join(
                 primary,
                 new[] { secondary },
                 interpolator,
-                (m, sArr) => outputCreator(m, sArr[0]));
+                (m, sArr) => outputCreator(m, sArr[0]),
+                pipeline);
         }
 
         /// <summary>
@@ -1083,15 +1086,17 @@ namespace Microsoft.Psi
         /// <param name="secondaries">Collection of secondary streams.</param>
         /// <param name="interpolator">Interpolator with which to join.</param>
         /// <param name="outputCreator">Mapping function from primary and secondary messages to output.</param>
+        /// <param name="pipeline">The pipeline to which this component belongs (optional, defaults to that of secondaries).</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TOut> Join<TPrimary, TSecondary, TOut>(
             this IProducer<TPrimary> primary,
             IEnumerable<IProducer<TSecondary>> secondaries,
             Match.Interpolator<TSecondary> interpolator,
-            Func<TPrimary, TSecondary[], TOut> outputCreator)
+            Func<TPrimary, TSecondary[], TOut> outputCreator,
+            Pipeline pipeline = null)
         {
             var join = new Join<TPrimary, TSecondary, TOut>(
-                secondaries.First().Out.Pipeline,
+                pipeline ?? secondaries.First().Out.Pipeline,
                 interpolator,
                 outputCreator,
                 secondaries.Count(),
@@ -1114,10 +1119,12 @@ namespace Microsoft.Psi
         /// <typeparam name="TIn">Type of input stream messages.</typeparam>
         /// <param name="inputs">Collection of input streams.</param>
         /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <param name="pipeline">The pipeline to which this component belongs (optional, defaults to that of secondaries).</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TIn[]> Join<TIn>(
             this IEnumerable<IProducer<TIn>> inputs,
-            Match.Interpolator<TIn> interpolator)
+            Match.Interpolator<TIn> interpolator,
+            Pipeline pipeline = null)
         {
             var count = inputs.Count();
             if (count > 1)
@@ -1132,7 +1139,8 @@ namespace Microsoft.Psi
                         buffer[0] = m;
                         Array.Copy(sArr, 0, buffer, 1, count - 1);
                         return buffer;
-                    });
+                    },
+                    pipeline);
             }
             else if (count == 1)
             {
@@ -1143,9 +1151,40 @@ namespace Microsoft.Psi
                 throw new ArgumentException("Vector join with empty inputs collection.");
             }
         }
-#endregion vector joins
+        #endregion vector joins
 
-#region sparse vector joins
+        #region sparse vector joins
+
+        /// <summary>
+        /// Dynamic vector join.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input messages.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="inputs">Collection of secondary streams.</param>
+        /// <param name="interpolator">Interpolator with which to join.</param>
+        /// <returns>Output stream.</returns>
+        public static Join<int, TIn, TIn[]> Join<TIn>(
+            this IProducer<int> primary,
+            IEnumerable<IProducer<TIn>> inputs,
+            Match.Interpolator<TIn> interpolator)
+        {
+            var join = new Join<int, TIn, TIn[]>(
+                primary.Out.Pipeline,
+                interpolator,
+                (count, values) => values,
+                inputs.Count(),
+                count => Enumerable.Range(0, count));
+
+            primary.PipeTo(join.InPrimary);
+
+            var i = 0;
+            foreach (var input in inputs)
+            {
+                input.PipeTo(join.InSecondaries[i++]);
+            }
+
+            return join;
+        }
 
         /// <summary>
         /// Sparse vector join.

@@ -7,7 +7,7 @@ namespace ArmControlROSSample
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
-    public class UArmComponent : IStartable
+    public class UArmComponent : ISourceComponent
     {
         private readonly UArm arm;
 
@@ -15,6 +15,8 @@ namespace ArmControlROSSample
 
         public UArmComponent(Pipeline pipeline, UArm arm)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.arm = arm;
             this.Beep = pipeline.CreateReceiver<Tuple<float, float>>(this, (b, _) => this.arm.Beep(b.Item1, b.Item2), nameof(this.Beep));
@@ -34,13 +36,13 @@ namespace ArmControlROSSample
 
         public Emitter<Tuple<float, float, float>> PositionChanged { get; private set; }
 
-        public void Start(Action onCompleted, ReplayDescriptor descriptor)
+        private void OnPipelineStart()
         {
             this.arm.Connect();
             this.arm.PositionChanged += this.OnPositionChanged;
         }
 
-        public void Stop()
+        private void OnPipelineStop()
         {
             this.arm.Disconnect();
             this.arm.PositionChanged -= this.OnPositionChanged;

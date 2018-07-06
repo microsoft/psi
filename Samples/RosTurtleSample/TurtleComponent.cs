@@ -7,7 +7,7 @@ namespace TurtleROSSample
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
-    public class TurtleComponent : IStartable
+    public class TurtleComponent : IFiniteSourceComponent
     {
         private readonly Pipeline pipeline;
         private readonly Turtle turtle;
@@ -17,6 +17,8 @@ namespace TurtleROSSample
 
         public TurtleComponent(Pipeline pipeline, Turtle turtle)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.turtle = turtle;
             this.Velocity = pipeline.CreateReceiver<Tuple<float, float>>(this, (c, _) => this.turtle.Velocity(c.Item1, c.Item2), nameof(this.Velocity));
@@ -27,14 +29,18 @@ namespace TurtleROSSample
 
         public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
 
-        public void Start(Action onCompleted, ReplayDescriptor descriptor)
+        public void Initialize(Action onCompleted)
         {
             this.onCompleted = onCompleted;
+        }
+
+        public void OnPipelineStart()
+        {
             this.turtle.Connect();
             this.turtle.PoseChanged += this.OnPoseChanged;
         }
 
-        public void Stop()
+        public void OnPipelineStop()
         {
             this.stopped = true;
             this.turtle.Disconnect();

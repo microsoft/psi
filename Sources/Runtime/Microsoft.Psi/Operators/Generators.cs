@@ -9,7 +9,7 @@ namespace Microsoft.Psi
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Factory methods for instantiating generators and timers.
+    /// Factory methods for instantiating generators.
     /// </summary>
     public static class Generators
     {
@@ -23,10 +23,12 @@ namespace Microsoft.Psi
         /// <param name="generateNext">The function that generates a new value based on the previous value.</param>
         /// <param name="count">The count of values to generate. Use int.MaxValue if the generator should never stop.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
-        public static IProducer<T> Sequence<T>(Pipeline pipeline, T initialValue, Func<T, T> generateNext, int count, TimeSpan interval = default(TimeSpan))
+        public static IProducer<T> Sequence<T>(Pipeline pipeline, T initialValue, Func<T, T> generateNext, int count, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
-            return Sequence(pipeline, Enumerate(initialValue, generateNext, count), interval);
+            return Sequence(pipeline, Enumerate(initialValue, generateNext, count), interval, alignDateTime);
         }
 
         /// <summary>
@@ -37,10 +39,12 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="enumerator">The enumerator producing the values to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
-        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval = default(TimeSpan))
+        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
-            var g = new Generator<T>(pipeline, enumerator, interval);
+            var g = new Generator<T>(pipeline, enumerator, interval, alignDateTime);
             return g;
         }
 
@@ -52,10 +56,12 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="enumerable">The sequence to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
-        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerable<T> enumerable, TimeSpan interval = default(TimeSpan))
+        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerable<T> enumerable, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
-            var g = new Generator<T>(pipeline, enumerable.GetEnumerator(), interval);
+            var g = new Generator<T>(pipeline, enumerable.GetEnumerator(), interval, alignDateTime);
             return g;
         }
 
@@ -108,10 +114,12 @@ namespace Microsoft.Psi
         /// <param name="value">The value to publish.</param>
         /// <param name="count">The count of values to generate. Use int.MaxValue if the generator should never stop.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
-        public static IProducer<T> Repeat<T>(Pipeline pipeline, T value, int count, TimeSpan interval = default(TimeSpan))
+        public static IProducer<T> Repeat<T>(Pipeline pipeline, T value, int count, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
-            return Sequence(pipeline, Enumerable.Repeat(value, count), interval);
+            return Sequence(pipeline, Enumerable.Repeat(value, count), interval, alignDateTime);
         }
 
         /// <summary>
@@ -122,42 +130,12 @@ namespace Microsoft.Psi
         /// <param name="start">The starting value.</param>
         /// <param name="count">The count of values to generate. Use int.MaxValue if the generator should never stop.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of consecutive integers</returns>
-        public static IProducer<int> Range(Pipeline pipeline, int start, int count, TimeSpan interval = default(TimeSpan))
+        public static IProducer<int> Range(Pipeline pipeline, int start, int count, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
-            return Sequence(pipeline, Enumerable.Range(start, count), interval);
-        }
-
-        /// <summary>
-        /// Generates a stream by invoking a user-provided function at a regular time interval.
-        /// Unlike <see cref="Sequence{T}(Pipeline, IEnumerable{T}, TimeSpan)"/>, <see cref="Repeat{T}(Pipeline, T, int, TimeSpan)"/> and <see cref="Range"/>
-        /// this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load.
-        /// When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time,
-        /// but if the pipeline slows down, the interval between messages might not appear constant.
-        /// </summary>
-        /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
-        /// <param name="interval">The interval at which to generate messages.</param>
-        /// <param name="generatorFn">The function generating the messages.</param>
-        /// <returns>A stream of messages of type T</returns>
-        public static IProducer<T> Timer<T>(Pipeline pipeline, TimeSpan interval, Func<DateTime, TimeSpan, T> generatorFn)
-        {
-            return new Timer<T>(pipeline, (uint)interval.TotalMilliseconds, generatorFn);
-        }
-
-        /// <summary>
-        /// Generates a stream of <see cref="TimeSpan"/> messages indicating the time elapsed from the start of the pipeline.
-        /// Unlike <see cref="Sequence{T}(Pipeline, IEnumerable{T}, TimeSpan)"/>, <see cref="Repeat{T}(Pipeline, T, int, TimeSpan)"/> and <see cref="Range"/>
-        /// this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load.
-        /// When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time,
-        /// but if the pipeline slows down, the interval between messages might not appear constant.
-        /// </summary>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
-        /// <param name="interval">The interval at which to generate messages.</param>
-        /// <returns>A stream of messages representing time elapsed since the start of the pipeline</returns>
-        public static IProducer<TimeSpan> Timer(Pipeline pipeline, TimeSpan interval)
-        {
-            return Timer<TimeSpan>(pipeline, interval, (_, t) => t);
+            return Sequence(pipeline, Enumerable.Range(start, count), interval, alignDateTime);
         }
 
         private static IEnumerable<TResult> Enumerate<TResult>(TResult initialValue, Func<TResult, TResult> generateNext, int count)

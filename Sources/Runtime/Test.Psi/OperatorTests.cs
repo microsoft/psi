@@ -39,7 +39,7 @@ namespace Test.Psi
         {
             // Create the base timer used to derive all the streams
             int tick = 0;
-            var timerSource = Generators.Timer(pipeline, TimeSpan.FromMilliseconds(realIntervalMs), (dt, ts) => tick++);
+            var timerSource = Timers.Timer(pipeline, TimeSpan.FromMilliseconds(realIntervalMs), (dt, ts) => tick++);
 
             // List of derived output streams
             List<IProducer<T>> streams = new List<IProducer<T>>();
@@ -1084,6 +1084,32 @@ namespace Test.Psi
                     // buffer timestamp matches _middle_ message in buffer
                     Assert.AreEqual(SelectMiddleTimestamp(buf.Item1).Ticks, buf.Item2.Ticks);
                 }
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StdOverIEnumerable()
+        {
+            Assert.IsTrue(Math.Abs(new [] { 727.7m, 1086.5m, 1091.0m, 1361.3m, 1490.5m, 1956.1m }.Std() - 420.96248961952256m) < 0.0000000001m); // decimal
+            Assert.IsTrue(Math.Abs(new [] { 727.7, 1086.5, 1091.0, 1361.3, 1490.5, 1956.1 }.Std() - 420.96248961952256) < double.Epsilon); // double
+            Assert.IsTrue(Math.Abs(new [] { 727.7f, 1086.5f, 1091.0f, 1361.3f, 1490.5f, 1956.1f }.Std() - 420.96248961952256f) < float.Epsilon); // float
+            Assert.AreEqual(0, new double[] { }.Std());
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StdOverWindows()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var windows = Generators.Sequence(pipeline, new IEnumerable<double>[] { new[] { 727.7, 1086.5, 1091.0, 1361.3, 1490.5, 1956.1 }, new double[] { } });
+                var std = windows.Std().ToObservable().ToListObservable();
+                pipeline.Run();
+
+                var results = std.AsEnumerable().ToArray();
+                Assert.AreEqual(2, results.Length);
+                Assert.IsTrue(Enumerable.SequenceEqual(new[] { 420.96248961952256, 0 }, results));
             }
         }
 

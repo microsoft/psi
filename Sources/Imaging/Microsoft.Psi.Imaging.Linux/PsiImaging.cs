@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Imaging
     public static partial class ImagingOperators
     {
         /// <summary>
-        /// Operator converts from an Image to a compressed (encoded) image
+        /// Converts from an Image to a compressed (encoded) image
         /// </summary>
         /// <param name="source">Source image to encode</param>
         /// <param name="encoderFn">Method to perform encoding</param>
@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Operator converts from an Image to a compressed JPEG image
+        /// Converts from an Image to a compressed JPEG image
         /// </summary>
         /// <param name="source">Source image to compress</param>
         /// <param name="quality">JPEG quality to use</param>
@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Operator converts from an Image to a compressed PNG image
+        /// Converts from an Image to a compressed PNG image
         /// </summary>
         /// <param name="source">Source image to compress</param>
         /// <param name="deliveryPolicy">Delivery policy</param>
@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Operator decodes a sample that was previously encoded
+        /// Decodes an image that was previously encoded
         /// </summary>
         /// <param name="source">Source image to compress</param>
         /// <param name="deliveryPolicy">Delivery policy</param>

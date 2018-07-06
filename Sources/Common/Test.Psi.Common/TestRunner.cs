@@ -7,6 +7,7 @@ namespace Test.Psi.Common
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     public class TestRunner
@@ -101,7 +102,11 @@ namespace Test.Psi.Common
                     string error = null;
                     try
                     {
-                        m.Invoke(t, null);
+                        var result = m.Invoke(t, null) as Task;
+                        if (result != null)
+                        {
+                            result.Wait();
+                        }
                     }
                     catch (Exception e)
                     {

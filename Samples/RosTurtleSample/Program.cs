@@ -24,7 +24,7 @@ namespace TurtleROSSample
                 {
                     if (k == ConsoleKey.Q)
                     {
-                        turtle.Stop();
+                        turtle.OnPipelineStop();
                     }
 
                     var linear = k == ConsoleKey.UpArrow ? 1f : k == ConsoleKey.DownArrow ? -1f : 0f;

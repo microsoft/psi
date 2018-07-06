@@ -88,7 +88,7 @@ namespace Microsoft.Psi
         /// <param name="fileName">The name (and path) of the new file to generate.</param>
         public static void DumpStructure(this Pipeline pipeline, string fileName)
         {
-            string catStartable = "startable";
+            string catSource = "source";
             string catDefault = "default";
 
             using (var writer = File.CreateText(fileName))
@@ -99,7 +99,7 @@ namespace Microsoft.Psi
 
                 foreach (var component in pipeline.Components)
                 {
-                    var componentCategory = component.IsStartable ? catStartable : catDefault;
+                    var componentCategory = component.IsSource ? catSource : catDefault;
                     foreach (var receiver in component.Inputs)
                     {
                         var receiverName = System.Security.SecurityElement.Escape(receiver.Key);
@@ -153,13 +153,13 @@ namespace Microsoft.Psi
 
                 writer.WriteLine("</Links>");
                 writer.WriteLine("<Categories>");
-                writer.WriteLine($"<Category Id=\"{catStartable}\"/>");
+                writer.WriteLine($"<Category Id=\"{catSource}\"/>");
                 writer.WriteLine($"<Category Id=\"{catDefault}\"/>");
                 writer.WriteLine("<Category Id=\"Contains\" IsContainment=\"True\"/>");
                 writer.WriteLine("</Categories>");
                 writer.WriteLine("<Styles>");
-                writer.WriteLine($"<Style TargetType=\"Node\"  GroupLabel=\"{catStartable}\" ValueLabel =\"True\">");
-                writer.WriteLine($"<Condition Expression=\"HasCategory('{catStartable}')\" />");
+                writer.WriteLine($"<Style TargetType=\"Node\"  GroupLabel=\"{catSource}\" ValueLabel =\"True\">");
+                writer.WriteLine($"<Condition Expression=\"HasCategory('{catSource}')\" />");
                 writer.WriteLine("<Setter Property=\"Background\" Value=\"#FF339933\" />");
                 writer.WriteLine("</Style>");
                 writer.WriteLine("</Styles>");

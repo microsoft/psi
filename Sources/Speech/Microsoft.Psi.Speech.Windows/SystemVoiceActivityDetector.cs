@@ -18,7 +18,12 @@ namespace Microsoft.Psi.Speech
     /// </summary>
     /// <remarks>
     /// This component monitors an input audio stream and outputs a boolean flag for each input message indicating
-    /// whether or not voice activity was present in the corresponding <see cref="AudioBuffer"/>.
+    /// whether or not voice activity was present in the corresponding <see cref="AudioBuffer"/>. It relies on the
+    /// System.Speech.Recognition.SpeechRecognitionEngine in .NET and uses its AudioStateChanged event to estimate
+    /// when speech activity begins and ends. It estimates the originating times of these events using the current
+    /// audio position of the underlying speech recognition engine to obtain an estimate of the time the event occurred.
+    /// These results may be further fine-tuned to potentially obtain better estimates with the VoiceActivityStartOffsetMs
+    /// and VoiceActivityEndOffsetMs configuration parameters, which are added to the inferred times.
     /// </remarks>
     public sealed class SystemVoiceActivityDetector : ConsumerProducer<AudioBuffer, bool>, IDisposable
     {

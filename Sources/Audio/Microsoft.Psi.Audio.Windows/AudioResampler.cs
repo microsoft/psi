@@ -180,8 +180,9 @@ namespace Microsoft.Psi.Audio
 
                 // use the end of the last sample in the packet as the originating time
                 // The QPC ticks from the resampler are converted back to a DateTime.
-                DateTime originatingTime = new DateTime(timestamp +
-                    (10000000L * length / this.Configuration.OutputFormat.AvgBytesPerSec));
+                DateTime originatingTime = new DateTime(
+                    timestamp + (10000000L * length / this.Configuration.OutputFormat.AvgBytesPerSec),
+                    DateTimeKind.Utc);
 
                 if (originatingTime < this.lastOutputPostTime)
                 {

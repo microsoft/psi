@@ -189,8 +189,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
                 else
                 {
-                    // Not summarizing, so read data directly from the stream
-                    this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, this.Navigator.DataRange.StartTime, this.Navigator.DataRange.EndTime);
+                    // Not summarizing, so read data directly from the stream - note that end time is exclusive, so adding one tick to ensure any message at EndTime is included
+                    this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, this.Navigator.DataRange.StartTime, this.Navigator.DataRange.EndTime.AddTicks(1));
                 }
             }
         }

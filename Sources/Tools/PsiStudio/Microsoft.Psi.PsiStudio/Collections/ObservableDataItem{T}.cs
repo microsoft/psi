@@ -3,7 +3,7 @@
 
 namespace Microsoft.Psi.Visualization.Collections
 {
-    using Microsoft.Psi.Extensions.Base;
+    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Object with a data field that notifies listeners when changed.

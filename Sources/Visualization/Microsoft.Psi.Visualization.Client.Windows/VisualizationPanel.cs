@@ -3,6 +3,9 @@
 
 namespace Microsoft.Psi.Visualization.Client
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Config;
 
@@ -74,7 +77,27 @@ namespace Microsoft.Psi.Visualization.Client
         {
             TObject visualizationObject = new TObject();
             visualizationObject.Panel = this;
-            visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(visualizationObject.TypeName);
+
+            var executingAssembly = Assembly.GetExecutingAssembly();
+            if (executingAssembly.GetType(visualizationObject.TypeName) != null)
+            {
+                visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(executingAssembly.Location, visualizationObject.TypeName);
+            }
+            else
+            {
+                // find the assembly containing the visualization object type on the client side
+                var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(visualizationObject.TypeName) != null);
+
+                if (assembly != null)
+                {
+                    visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(assembly.Location, visualizationObject.TypeName);
+                }
+                else
+                {
+                    visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(visualizationObject.TypeName);
+                }
+            }
+
             return visualizationObject;
         }
 

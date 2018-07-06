@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Condition="'$(FFMPEGDir)'!=''">
+    <DefineConstants>$(DefineConstants);FFMPEG</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -32,12 +36,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\FFMPEGMediaSource.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj"  Condition="'$(FFMPEGDir)'!=''"/>
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio.Linux\Microsoft.Psi.Audio.Linux.csproj"  Condition="'$(FFMPEGDir)'!=''"/>
   </ItemGroup>
 
 </Project>

@@ -10,8 +10,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Microsoft.Psi.Extensions.Annotations;
-    using Microsoft.Psi.Extensions.Data;
+    using Microsoft.Psi.Data.Annotations;
+    using Microsoft.Psi.Data.Json;
+    using Microsoft.Psi.Visualization.Annotations;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
@@ -258,12 +259,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.addSchemaCommand = new RelayCommand(
                         o =>
                         {
-                            AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistry.Default.Schemas, false);
+                            AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistryViewModel.Default.Schemas, false);
                             var result = dlg.ShowDialog();
                             if (result.HasValue && result.Value)
                             {
                                 // add new schema to the annotated event template
-                                this.Definition.Schemas.Add(dlg.AnnotationSchema);
+                                this.Definition.AddSchema(dlg.AnnotationSchema);
 
                                 // add new schema with default schema value to all existing annotated events
                                 foreach (var message in this.Data)

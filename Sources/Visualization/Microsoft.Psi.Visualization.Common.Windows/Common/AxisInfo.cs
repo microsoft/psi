@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Common
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Media;
-    using Microsoft.Psi.Extensions.Base;
+    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Represents data used to display axes in visualization panels.

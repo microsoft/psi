@@ -22,7 +22,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
     /// passed to the component via the configuration. For more information, and to see how to create person groups, see the full direct API for
     /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
     /// </remarks>
-    public sealed class FaceRecognizer : AsyncConsumerProducer<Shared<Image>, Dictionary<string, double>>, IStartable, IDisposable
+    public sealed class FaceRecognizer : AsyncConsumerProducer<Shared<Image>, Dictionary<string, double>>, IDisposable
     {
         /// <summary>
         /// The client that communicates with the cloud image analyzer service.
@@ -60,17 +60,6 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// </summary>
         /// <remarks>A value of true is posted on the stream each time the rate limit for calling Cognitive Services FACE API is exceeded.</remarks>
         public Emitter<bool> RateLimitExceeded { get; }
-
-        /// <inheritdoc/>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
-        {
-            onCompleted?.Invoke();
-        }
-
-        /// <inheritdoc/>
-        void IStartable.Stop()
-        {
-        }
 
         /// <summary>
         /// Disposes the face recognizer component.

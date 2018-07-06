@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ThirdPartyNotices.txt = ThirdPartyNotices.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{B896CA01-930B-4AC4-951D-560346D735B8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B896CA01-930B-4AC4-951D-560346D735B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Speech", "Speech", "{BABB7492-D236-4F1E-81C8-AB300CE1AD84}"
 EndProject
@@ -67,9 +67,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{2EA715
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Common", "Sources\Common\Test.Psi.Common\Test.Psi.Common.csproj", "{F843DAFA-A02B-4B63-8985-6890E513312E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Extensions", "Sources\Extensions\Microsoft.Psi.Extensions\Microsoft.Psi.Extensions.csproj", "{D9EB512A-9F4F-4D46-86F1-57065CCC933D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Data", "Sources\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj", "{D9EB512A-9F4F-4D46-86F1-57065CCC933D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Extensions", "Sources\Extensions\Test.Psi.Extensions\Test.Psi.Extensions.csproj", "{91184A9B-5AB9-4715-B853-8E95E5065AA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Data", "Sources\Data\Test.Psi.Data\Test.Psi.Data.csproj", "{91184A9B-5AB9-4715-B853-8E95E5065AA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Kinect.Windows.x64", "Sources\Kinect\Test.Psi.Kinect.Windows.x64\Test.Psi.Kinect.Windows.x64.csproj", "{3A3F1C2C-A805-4EA2-B5AE-80371B565A15}"
 EndProject
@@ -106,6 +106,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{1AA38339-B349-4AA7-A0A9-F92ADCFDB2DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenCVSample", "OpenCVSample", "{BED75944-5B42-45E4-8347-46CEEEFC865F}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\OpenCVSample\README.md = Samples\OpenCVSample\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Audio.Linux", "Sources\Audio\Microsoft.Psi.Audio.Linux\Microsoft.Psi.Audio.Linux.csproj", "{E2810FAA-8EB3-4B3B-8667-C3C586137D28}"
 EndProject
@@ -177,6 +180,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RosTurtleSample", "Samples\RosTurtleSample\RosTurtleSample.csproj", "{1DFBBB70-4677-4E00-9A49-63489373C8C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinuxSpeechSample", "Samples\LinuxSpeechSample\LinuxSpeechSample.csproj", "{B82BFF1A-CF8E-4920-BA34-C5080D6794D7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Psi.Media.Native.x64", "Sources\Media\Microsoft.Psi.Media.Native.x64\Microsoft.Psi.Media.Native.x64.vcxproj", "{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RealSense", "RealSense", "{64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.RealSense.Windows.x64", "Sources\RealSense\Microsoft.Psi.RealSense.Windows.x64\Microsoft.Psi.RealSense.Windows.x64.csproj", "{7B73D864-9997-4637-8765-44C17FD09CE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Psi.RealSense_Interop.Windows.x64", "Sources\RealSense\Microsoft.Psi.RealSense_Interop.Windows.x64\Microsoft.Psi.RealSense_Interop.Windows.x64.vcxproj", "{DAB8847B-DE0A-45E2-A7DA-30432A36525B}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -391,6 +402,18 @@ Global
 		{B82BFF1A-CF8E-4920-BA34-C5080D6794D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B82BFF1A-CF8E-4920-BA34-C5080D6794D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B82BFF1A-CF8E-4920-BA34-C5080D6794D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Debug|Any CPU.Build.0 = Debug|x64
+		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Release|Any CPU.ActiveCfg = Release|x64
+		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Release|Any CPU.Build.0 = Release|x64
+		{7B73D864-9997-4637-8765-44C17FD09CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B73D864-9997-4637-8765-44C17FD09CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B73D864-9997-4637-8765-44C17FD09CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B73D864-9997-4637-8765-44C17FD09CE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Debug|Any CPU.Build.0 = Debug|x64
+		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Release|Any CPU.ActiveCfg = Release|x64
+		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -468,6 +491,10 @@ Global
 		{65554739-ABDC-43A9-AD9E-3445CF5B8817} = {1AA38339-B349-4AA7-A0A9-F92ADCFDB2DF}
 		{1DFBBB70-4677-4E00-9A49-63489373C8C8} = {1AA38339-B349-4AA7-A0A9-F92ADCFDB2DF}
 		{B82BFF1A-CF8E-4920-BA34-C5080D6794D7} = {1AA38339-B349-4AA7-A0A9-F92ADCFDB2DF}
+		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42} = {AD8FE445-240A-4791-8C64-A5E2D6E67FF9}
+		{64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC} = {A0856299-D28A-4513-B964-3FA5290FF160}
+		{7B73D864-9997-4637-8765-44C17FD09CE1} = {64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC}
+		{DAB8847B-DE0A-45E2-A7DA-30432A36525B} = {64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

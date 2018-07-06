@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+
+(cd ./Sources/Media/Microsoft.Psi.Media.Native.x64/                         && . ./build.sh)
 (cd ./Sources/Audio/Microsoft.Psi.Audio/                                    && . ./build.sh)
 (cd ./Sources/Audio/Microsoft.Psi.Audio.Linux/                              && . ./build.sh)
 (cd ./Sources/Common/Test.Psi.Common/                                       && . ./build.sh)

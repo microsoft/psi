@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Components
     /// The following example shows how to implement a multi-stream generator:
     /// /include ..\..\Test.Psi\GeneratorSample.cs
     /// </remarks>
-    public abstract class Generator : IStartable
+    public abstract class Generator : IFiniteSourceComponent
     {
         private readonly Receiver<int> loopBackIn;
         private readonly Emitter<int> loopBackOut;
@@ -37,6 +37,8 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to attach to.</param>
         public Generator(Pipeline pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.loopBackOut = pipeline.CreateEmitter<int>(this, nameof(this.loopBackOut));
             this.loopBackIn = pipeline.CreateReceiver<int>(this, this.Next, nameof(this.loopBackIn));
             this.loopBackOut.PipeTo(this.loopBackIn);
@@ -44,16 +46,9 @@ namespace Microsoft.Psi.Components
         }
 
         /// <inheritdoc />
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
+        public void Initialize(Action onCompleted)
         {
             this.onCompleted = onCompleted;
-            this.Next(0, default(Envelope));
-        }
-
-        /// <inheritdoc />
-        void IStartable.Stop()
-        {
-            this.stopped = true;
         }
 
         /// <summary>
@@ -67,6 +62,24 @@ namespace Microsoft.Psi.Components
         /// If the data being published doesn't come with a timestamp, use pipeline.GetCurrentTime().
         /// </returns>
         protected abstract DateTime GenerateNext(DateTime previous);
+
+        /// <summary>
+        /// Stop this component.
+        /// </summary>
+        protected void Stop()
+        {
+            this.stopped = true;
+        }
+
+        private void OnPipelineStop()
+        {
+            this.Stop();
+        }
+
+        private void OnPipelineStart()
+        {
+            this.Next(0, default(Envelope));
+        }
 
         private void Next(int last, Envelope envelope)
         {

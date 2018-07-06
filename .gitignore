@@ -261,9 +261,6 @@ paket-files/
 .vscode/
 *.diagsession
 
-# webpack
-*.min.js
-
 # documentation
 /_site/
 /.sass-cache/

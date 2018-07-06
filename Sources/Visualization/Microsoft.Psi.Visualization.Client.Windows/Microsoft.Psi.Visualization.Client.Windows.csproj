@@ -34,7 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
-    <ProjectReference Include="..\..\Extensions\Microsoft.Psi.Extensions\Microsoft.Psi.Extensions.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
     <ProjectReference Include="..\..\Kinect\Microsoft.Psi.Kinect.Windows\Microsoft.Psi.Kinect.Windows.csproj" />
@@ -43,9 +43,9 @@
     <ProjectReference Include="..\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(OutDir)\Microsoft.Psi.Extensions.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutDir)\Microsoft.Psi.Extensions.pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutDir)\Microsoft.Psi.Extensions.xml" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutDir)\Microsoft.Psi.Data.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutDir)\Microsoft.Psi.Data.pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutDir)\Microsoft.Psi.Data.xml" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Visualization.Common.Windows.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Visualization.Common.Windows.pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Visualization.Common.Windows.xml" Pack="true" PackagePath="lib\$(TargetFramework)" />

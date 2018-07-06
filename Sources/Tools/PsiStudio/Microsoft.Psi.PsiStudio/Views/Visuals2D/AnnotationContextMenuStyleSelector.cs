@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Microsoft.Psi.Extensions.Annotations;
+    using Microsoft.Psi.Data.Annotations;
 
     /// <summary>
     /// Provides a way to apply context menu style for annotated event visualization object view.

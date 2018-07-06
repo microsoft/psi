@@ -59,7 +59,7 @@ namespace Microsoft.Psi.Imaging
     public static class PixelFormatExtensions
     {
         /// <summary>
-        /// Extension method that returns the number of bits per pixel for a given pixel format
+        /// Returns the number of bits per pixel for a given pixel format
         /// </summary>
         /// <param name="pixelFormat">Pixel format for which to find bits per pixel</param>
         /// <returns>Number of bits per pixel for the given pixel format</returns>
@@ -69,7 +69,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Extension method that returns the number of bytes per pixel for a given pixel format
+        /// Returns the number of bytes per pixel for a given pixel format
         /// </summary>
         /// <param name="pixelFormat">Pixel format for which to find bytes per pixel</param>
         /// <returns>Number of bytes per pixel for the given pixel format</returns>
@@ -85,10 +85,10 @@ namespace Microsoft.Psi.Imaging
     public static class PixelFormatHelper
     {
         /// <summary>
-        /// Converts from a system pixel format into a \Psi pixel format
+        /// Converts from a system pixel format into a Psi.Imaging pixel format
         /// </summary>
         /// <param name="pf">System pixel format to be converted</param>
-        /// <returns>\Psi pixel format that matches the specified system pixel format</returns>
+        /// <returns>Psi.Imaging pixel format that matches the specified system pixel format</returns>
         public static PixelFormat FromSystemPixelFormat(System.Drawing.Imaging.PixelFormat pf)
         {
             if (pf == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
@@ -125,10 +125,10 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Converts from a \Psi PixelFormat to a System.Drawing.Imaging.PixelFormat
+        /// Converts from a Psi.Imaging PixelFormat to a System.Drawing.Imaging.PixelFormat
         /// </summary>
         /// <param name="pf">Pixel format to convert</param>
-        /// <returns>The system pixel format that corresponds to the \Psi pixel format</returns>
+        /// <returns>The system pixel format that corresponds to the Psi.Imaging pixel format</returns>
         public static System.Drawing.Imaging.PixelFormat ToSystemPixelFormat(PixelFormat pf)
         {
             switch (pf)

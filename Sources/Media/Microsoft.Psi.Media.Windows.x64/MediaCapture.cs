@@ -13,12 +13,12 @@ namespace Microsoft.Psi.Media
     /// <summary>
     /// This class encapsulates a video camera component.
     /// </summary>
-    public class MediaCapture : IProducer<Shared<Image>>, IStartable, IDisposable, IMediaCapture
+    public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable, IMediaCapture
     {
         private readonly Pipeline pipeline;
 
         /// <summary>
-        /// The video cameara configuration
+        /// The video camera configuration
         /// </summary>
         private readonly MediaCaptureConfiguration configuration;
 
@@ -96,6 +96,8 @@ namespace Microsoft.Psi.Media
 
         private MediaCapture(Pipeline pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Out));
         }
@@ -120,11 +122,72 @@ namespace Microsoft.Psi.Media
         public Emitter<Shared<Image>> Out { get; private set; }
 
         /// <summary>
+        /// Returns information about each property exposed by the media capture device
+        /// </summary>
+        /// <returns>MediaCaptureInfo object definiting ranges and availability of each property</returns>
+        public MediaCaptureInfo GetDeviceInfo()
+        {
+            return this.deviceInfo;
+        }
+
+        /// <summary>
+        /// Returns the current configuration for the media capture device
+        /// </summary>
+        /// <returns>A new MediaCaptureConfiguration object with the device's current settings</returns>
+        public MediaCaptureConfiguration GetDeviceConfiguration()
+        {
+            MediaCaptureConfiguration config = new MediaCaptureConfiguration();
+            config.BacklightCompensation = this.GetValueBool(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo.Supported);
+            config.Brightness = this.GetValueInt(VideoProperty.Brightness, this.deviceInfo.BrightnessInfo.Supported);
+            config.ColorEnable = this.GetValueBool(VideoProperty.ColorEnable, this.deviceInfo.ColorEnableInfo.Supported);
+            config.Contrast = this.GetValueInt(VideoProperty.Contrast, this.deviceInfo.ContrastInfo.Supported);
+            config.Gain = this.GetValueInt(VideoProperty.Gain, this.deviceInfo.GainInfo.Supported);
+            config.Gamma = this.GetValueInt(VideoProperty.Gamma, this.deviceInfo.GammaInfo.Supported);
+            config.Hue = this.GetValueInt(VideoProperty.Hue, this.deviceInfo.HueInfo.Supported);
+            config.Saturation = this.GetValueInt(VideoProperty.Saturation, this.deviceInfo.SaturationInfo.Supported);
+            config.Sharpness = this.GetValueInt(VideoProperty.Sharpness, this.deviceInfo.SharpnessInfo.Supported);
+            config.WhiteBalance = this.GetValueInt(VideoProperty.WhiteBalance, this.deviceInfo.WhiteBalanceInfo.Supported);
+            config.Focus = this.GetValueInt(ManagedCameraControlProperty.Focus, this.deviceInfo.FocusInfo.Supported);
+            return config;
+        }
+
+        /// <summary>
+        /// Assigns the specified configuration to the media capture device
+        /// </summary>
+        /// <param name="config">Configuration to set on media capture device</param>
+        public void SetDeviceConfiguration(MediaCaptureConfiguration config)
+        {
+            this.SetDeviceProperty(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo, config.BacklightCompensation);
+            this.SetDeviceProperty(VideoProperty.Brightness, this.deviceInfo.BrightnessInfo, config.Brightness);
+            this.SetDeviceProperty(VideoProperty.ColorEnable, this.deviceInfo.ColorEnableInfo, config.ColorEnable);
+            this.SetDeviceProperty(VideoProperty.Contrast, this.deviceInfo.ContrastInfo, config.Contrast);
+            this.SetDeviceProperty(VideoProperty.Gain, this.deviceInfo.GainInfo, config.Gain);
+            this.SetDeviceProperty(VideoProperty.Gamma, this.deviceInfo.GammaInfo, config.Gamma);
+            this.SetDeviceProperty(VideoProperty.Hue, this.deviceInfo.HueInfo, config.Hue);
+            this.SetDeviceProperty(VideoProperty.Saturation, this.deviceInfo.SaturationInfo, config.Saturation);
+            this.SetDeviceProperty(VideoProperty.Sharpness, this.deviceInfo.SharpnessInfo, config.Sharpness);
+            this.SetDeviceProperty(VideoProperty.WhiteBalance, this.deviceInfo.WhiteBalanceInfo, config.WhiteBalance);
+            this.SetDeviceProperty(ManagedCameraControlProperty.Focus, this.deviceInfo.FocusInfo, config.Focus);
+        }
+
+        /// <summary>
+        /// Dispose method
+        /// </summary>
+        public void Dispose()
+        {
+            // check for null since it's possible that Start was never called
+            if (this.camera != null)
+            {
+                this.camera.Shutdown();
+                this.camera.Dispose();
+                this.camera = null;
+            }
+        }
+
+        /// <summary>
         /// Called once all the subscriptions are established.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
+        private void OnPipelineStart()
         {
             MediaCaptureDevice.Initialize();
             CaptureFormat found = null;
@@ -210,81 +273,12 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Returns information about each property exposed by the media capture device
-        /// </summary>
-        /// <returns>MediaCaptureInfo object definiting ranges and availability of each property</returns>
-        public MediaCaptureInfo GetDeviceInfo()
-        {
-            return this.deviceInfo;
-        }
-
-        /// <summary>
-        /// Returns the current configuration for the media capture device
-        /// </summary>
-        /// <returns>A new MediaCaptureConfiguration object with the device's current settings</returns>
-        public MediaCaptureConfiguration GetDeviceConfiguration()
-        {
-            MediaCaptureConfiguration config = new MediaCaptureConfiguration();
-            config.BacklightCompensation = this.GetValueBool(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo.Supported);
-            config.Brightness = this.GetValueInt(VideoProperty.Brightness, this.deviceInfo.BrightnessInfo.Supported);
-            config.ColorEnable = this.GetValueBool(VideoProperty.ColorEnable, this.deviceInfo.ColorEnableInfo.Supported);
-            config.Contrast = this.GetValueInt(VideoProperty.Contrast, this.deviceInfo.ContrastInfo.Supported);
-            config.Gain = this.GetValueInt(VideoProperty.Gain, this.deviceInfo.GainInfo.Supported);
-            config.Gamma = this.GetValueInt(VideoProperty.Gamma, this.deviceInfo.GammaInfo.Supported);
-            config.Hue = this.GetValueInt(VideoProperty.Hue, this.deviceInfo.HueInfo.Supported);
-            config.Saturation = this.GetValueInt(VideoProperty.Saturation, this.deviceInfo.SaturationInfo.Supported);
-            config.Sharpness = this.GetValueInt(VideoProperty.Sharpness, this.deviceInfo.SharpnessInfo.Supported);
-            config.WhiteBalance = this.GetValueInt(VideoProperty.WhiteBalance, this.deviceInfo.WhiteBalanceInfo.Supported);
-            config.Focus = this.GetValueInt(ManagedCameraControlProperty.Focus, this.deviceInfo.FocusInfo.Supported);
-            return config;
-        }
-
-        /// <summary>
-        /// Assigns the specified configuration to the media capture device
-        /// </summary>
-        /// <param name="config">Configuration to set on media capture device</param>
-        public void SetDeviceConfiguration(MediaCaptureConfiguration config)
-        {
-            this.SetDeviceProperty(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo, config.BacklightCompensation);
-            this.SetDeviceProperty(VideoProperty.Brightness, this.deviceInfo.BrightnessInfo, config.Brightness);
-            this.SetDeviceProperty(VideoProperty.ColorEnable, this.deviceInfo.ColorEnableInfo, config.ColorEnable);
-            this.SetDeviceProperty(VideoProperty.Contrast, this.deviceInfo.ContrastInfo, config.Contrast);
-            this.SetDeviceProperty(VideoProperty.Gain, this.deviceInfo.GainInfo, config.Gain);
-            this.SetDeviceProperty(VideoProperty.Gamma, this.deviceInfo.GammaInfo, config.Gamma);
-            this.SetDeviceProperty(VideoProperty.Hue, this.deviceInfo.HueInfo, config.Hue);
-            this.SetDeviceProperty(VideoProperty.Saturation, this.deviceInfo.SaturationInfo, config.Saturation);
-            this.SetDeviceProperty(VideoProperty.Sharpness, this.deviceInfo.SharpnessInfo, config.Sharpness);
-            this.SetDeviceProperty(VideoProperty.WhiteBalance, this.deviceInfo.WhiteBalanceInfo, config.WhiteBalance);
-            this.SetDeviceProperty(ManagedCameraControlProperty.Focus, this.deviceInfo.FocusInfo, config.Focus);
-        }
-
-        /// <summary>
         /// Called by the pipeline when media capture should be stopped
         /// </summary>
-        void IStartable.Stop()
+        private void OnPipelineStop()
         {
-            if (this.camera != null)
-            {
-                this.camera.Shutdown();
-                this.camera.Dispose();
-                this.camera = null;
-            }
-
+            this.Dispose();
             MediaCaptureDevice.Uninitialize();
-        }
-
-        /// <summary>
-        /// Dispose method
-        /// </summary>
-        public void Dispose()
-        {
-            // check for null since it's possible that Start was never called
-            if (this.camera != null)
-            {
-                this.camera.Shutdown();
-                this.camera.Dispose();
-                this.camera = null;
-            }
         }
 
         private void SetDeviceProperty(VideoProperty prop, MediaCaptureInfo.PropertyInfo propInfo, MediaCaptureConfiguration.PropertyValue<int> value)

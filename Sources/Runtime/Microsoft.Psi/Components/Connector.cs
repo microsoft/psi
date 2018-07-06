@@ -15,14 +15,27 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Connector{T}"/> class.
         /// </summary>
+        /// <param name="from">The pipeline from which to attach.</param>
+        /// <param name="to">The pipeline to which to attach.</param>
+        /// <param name="owner">The owner of the component, which will define the synchronization context. This is usually the owning component.</param>
+        /// <param name="name">The name of the connector</param>
+        /// <remarks>Composite components may use the `Connector` to bridge `from` a parent pipeline into a `subpipeline` and/or `from` a subpipeline back out `to` the parent.</remarks>
+        public Connector(Pipeline from, Pipeline to, object owner, string name)
+        {
+            owner = owner ?? this;
+            this.Out = to.CreateEmitter<T>(owner, name);
+            this.In = from.CreateReceiver<T>(owner, (m, e) => this.Out.Post(m, e.OriginatingTime), name);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Connector{T}"/> class.
+        /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="owner">The owner of the component, which will define the synchronization context. This is usually the owning component.</param>
         /// <param name="name">The name of the connector</param>
         public Connector(Pipeline pipeline, object owner, string name)
+            : this(pipeline, pipeline, owner, name)
         {
-            owner = owner ?? this;
-            this.Out = pipeline.CreateEmitter<T>(owner, name);
-            this.In = pipeline.CreateReceiver<T>(owner, (m, e) => this.Out.Post(m, e.OriginatingTime), name);
         }
 
         /// <summary>

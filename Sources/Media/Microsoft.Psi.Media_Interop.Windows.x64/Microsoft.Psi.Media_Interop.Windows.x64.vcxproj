@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -17,6 +17,16 @@
     <RootNamespace>VideoCapture</RootNamespace>
     <ProjectName>Microsoft.Psi.Media_Interop.Windows.x64</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(FFMPEGDir)'!=''">
+    <FFMpegLibs>$(FFMPEGDir)\lib\avdevice.lib;$(FFMPEGDir)\lib\avfilter.lib;$(FFMPEGDir)\lib\postproc.lib;$(FFMPEGDir)\lib\swresample.lib;$(FFMPEGDir)\lib\avcodec.lib;$(FFMPEGDir)\lib\avformat.lib;$(FFMPEGDir)\lib\avutil.lib;$(FFMPEGDir)\lib\swscale.lib</FFMpegLibs>
+    <FFMpegIncludes>$(FFMPEGDir)\include</FFMpegIncludes>
+    <FFMpegDefines>USE_FFMPEG</FFMpegDefines>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(FFMPEGDir)'==''">
+    <FFMpegLibs />
+    <FFMpegIncludes />
+    <FFMpegDefines />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -51,6 +61,7 @@
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
     <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\Microsoft.Psi.Media.Native.x64;$(FFMpegIncludes)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -60,12 +71,13 @@
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
     <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(FFMpegIncludes);..\Microsoft.Psi.Media.Native.x64</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDLL;$(FFMpegDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -75,7 +87,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>mfplat.lib;mf.lib;mfreadwrite.lib;mfuuid.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(FFMpegLibs);mfplat.lib;mf.lib;mfreadwrite.lib;mfuuid.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
@@ -83,7 +95,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDLL;$(FFMpegDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -95,7 +107,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>mfplat.lib;mf.lib;mfreadwrite.lib;mfuuid.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(FFMpegLibs);mfplat.lib;mf.lib;mfreadwrite.lib;mfuuid.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
@@ -105,6 +117,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CaptureFormat.h" />
+    <ClInclude Include="FFMPEGReader.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="Managed.h" />
     <ClInclude Include="ManagedCameraControlProperty.h" />
@@ -123,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="CaptureFormat.cpp" />
+    <ClCompile Include="FFMPEGReader.cpp" />
     <ClCompile Include="MediaFoundationUtility.cpp" />
     <ClCompile Include="MediaCaptureDevice.cpp" />
     <ClCompile Include="MP4Writer.cpp" />
@@ -136,6 +150,28 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AssemblyInfo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Psi.Media.Native.x64\Microsoft.Psi.Media.Native.x64.vcxproj">
+      <Project>{c50f7f21-beb0-4366-b73f-859eebc3ed42}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Microsoft.Psi.Media.Native.x64\$(Platform)\$(Configuration)\Microsoft.Psi.Media.Native.x64.dll">
+      <DeploymentContent>true</DeploymentContent>
+      <Link>Microsoft.Psi.Media.Native.x64.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Microsoft.Psi.Media.Native.x64\$(Platform)\$(Configuration)\Microsoft.Psi.Media.Native.x64.lib">
+      <DeploymentContent>true</DeploymentContent>
+      <Link>Microsoft.Psi.Media.Native.x64.lib</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Microsoft.Psi.Media.Native.x64\$(Platform)\$(Configuration)\Microsoft.Psi.Media.Native.x64.pdb">
+      <DeploymentContent>true</DeploymentContent>
+      <Link>Microsoft.Psi.Media.Native.x64.pdb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

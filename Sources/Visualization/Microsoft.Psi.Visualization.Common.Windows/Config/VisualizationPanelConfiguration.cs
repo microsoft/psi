@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Visualization.Config
 {
     using System.Runtime.Serialization;
-    using Microsoft.Psi.Extensions.Base;
+    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Represents a base class for visualization panel configuraions.

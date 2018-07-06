@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Media
     /// <summary>
     /// Media capture component for Linux.
     /// </summary>
-    public class MediaCapture : IProducer<Shared<Image>>, IStartable, IDisposable
+    public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable
     {
         private static readonly SharedPool<byte[]> RawPool = new SharedPool<byte[]>(0);
 
@@ -73,6 +73,8 @@ namespace Microsoft.Psi.Media
 
         private MediaCapture(Pipeline pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Out));
             this.Raw = pipeline.CreateEmitter<Shared<byte[]>>(this, nameof(this.Raw));
@@ -92,11 +94,23 @@ namespace Microsoft.Psi.Media
         public Emitter<Shared<byte[]>> Raw { get; private set; }
 
         /// <summary>
+        /// Dispose method
+        /// </summary>
+        public void Dispose()
+        {
+            // check for null since it's possible that Start was never called
+            if (this.camera != null)
+            {
+                this.camera.Close();
+                this.camera.Dispose();
+                this.camera = null;
+            }
+        }
+
+        /// <summary>
         /// Called once all the subscriptions are established.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        unsafe void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
+        private unsafe void OnPipelineStart()
         {
             this.camera = new MediaCaptureInternal(this.configuration.DeviceId);
             this.camera.Open();
@@ -191,22 +205,8 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Called by the pipeline when media capture should be stopped
         /// </summary>
-        void IStartable.Stop()
+        private void OnPipelineStop()
         {
-            if (this.camera != null)
-            {
-                this.camera.Close();
-                this.camera.Dispose();
-                this.camera = null;
-            }
-        }
-
-        /// <summary>
-        /// Dispose method
-        /// </summary>
-        public void Dispose()
-        {
-            // check for null since it's possible that Start was never called
             if (this.camera != null)
             {
                 this.camera.Close();

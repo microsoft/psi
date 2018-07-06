@@ -291,7 +291,7 @@ namespace Test.Psi
             for (int i = 0; i < SourceCount; i++)
             {
                 // make a timer for each source
-                var timer = Generators.Timer(p, TimeSpan.FromMilliseconds(1000 / this.frequency)).Select((d, e) => e.SequenceId);
+                var timer = Timers.Timer(p, TimeSpan.FromMilliseconds(1000 / this.frequency)).Select((d, e) => e.SequenceId);
 
                 // branch and generate data
                 for (int k = 0; k < ParallelBranchMultiplier; k++)

@@ -14,10 +14,10 @@ namespace Microsoft.Psi.Components
     /// <remarks>
     /// The static functions provided by the <see cref="Generators"/> wrap <see cref="Generator{T}"/>
     /// and are designed to make the common cases easier:
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{ValueTuple{T, System.DateTime}})"/>
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{T}, System.TimeSpan)"/>
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerator{ValueTuple{T, System.DateTime}})"/>
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerator{T}, System.TimeSpan)"/>
+    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{ValueTuple{T, DateTime}})"/>
+    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{T}, TimeSpan, DateTime?)"/>
+    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerator{ValueTuple{T, DateTime}})"/>
+    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerator{T}, TimeSpan, DateTime?)"/>
     /// </remarks>
     public class Generator<T> : Generator, IProducer<T>
     {
@@ -27,10 +27,12 @@ namespace Microsoft.Psi.Components
         /// Initializes a new instance of the <see cref="Generator{T}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
-        /// <param name="enumerator">A lazy enumerator of data</param>
+        /// <param name="enumerator">A lazy enumerator of data.</param>
         /// <param name="interval">An optional timespan interval used to increment time on each generated message. Defaults to 1 tick.</param>
-        public Generator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval = default(TimeSpan))
-            : this(pipeline, CreateEnumerator(pipeline, enumerator, (interval == default(TimeSpan)) ? new TimeSpan(1) : interval))
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// is non-null, the messages will have originating times that align with the specified time.</param>
+        public Generator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
+            : this(pipeline, CreateEnumerator(pipeline, enumerator, (interval == default(TimeSpan)) ? new TimeSpan(1) : interval, alignDateTime))
         {
         }
 
@@ -67,7 +69,7 @@ namespace Microsoft.Psi.Components
             return this.enumerator.Current.time;
         }
 
-        private static IEnumerator<(T value, DateTime time)> CreateEnumerator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval)
+        private static IEnumerator<(T value, DateTime time)> CreateEnumerator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval, DateTime? alignDateTime)
         {
             DateTime startTime;
             if (pipeline.ReplayDescriptor.Start == DateTime.MinValue)
@@ -79,10 +81,27 @@ namespace Microsoft.Psi.Components
                 startTime = pipeline.ReplayDescriptor.Start;
             }
 
-            while (enumerator.MoveNext())
+            if (alignDateTime.HasValue)
             {
-                yield return (enumerator.Current, startTime);
-                startTime += interval;
+                if (alignDateTime.Value > startTime)
+                {
+                    startTime += TimeSpan.FromTicks((alignDateTime.Value - startTime).Ticks % interval.Ticks);
+                }
+                else
+                {
+                    startTime += TimeSpan.FromTicks(interval.Ticks - ((startTime - alignDateTime.Value).Ticks % interval.Ticks));
+                }
+            }
+
+            // Ensure that generated messages remain within the pipeline replay descriptor.
+            // An infinite replay descriptor will have an end time of DateTime.MaxValue.
+            DateTime endTime = pipeline.ReplayDescriptor.End;
+            DateTime nextTime = startTime;
+
+            while (enumerator.MoveNext() && nextTime <= endTime)
+            {
+                yield return (enumerator.Current, nextTime);
+                nextTime += interval;
             }
         }
     }

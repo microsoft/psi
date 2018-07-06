@@ -8,8 +8,9 @@ namespace Microsoft.Psi.PsiStudio
     using System;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using Microsoft.Psi.Extensions.Data;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.Server;
     using Newtonsoft.Json;
 
@@ -26,7 +27,7 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         public static readonly VisualizationService Instance;
 
-        private Session currentSession;
+        private SessionViewModel currentSessionViewModel;
 
         static VisualizationService()
         {
@@ -77,35 +78,24 @@ namespace Microsoft.Psi.PsiStudio
         /// <inheritdoc />
         public void EnsureBinding(string jsonStreamBinding)
         {
-            this.EnsureDataset();
             this.EnsureSession();
             this.EnsurePartition(JsonConvert.DeserializeObject<StreamBinding>(jsonStreamBinding));
         }
 
-        private void EnsureDataset()
-        {
-            if (PsiStudioContext.Instance.Dataset.Name == Dataset.DefaultName)
-            {
-                PsiStudioContext.Instance.Dataset.Name = "Running";
-            }
-        }
-
         private void EnsurePartition(StreamBinding streamBinding)
         {
-            var partition = this.currentSession.AddStorePartition(streamBinding.StoreName, streamBinding.StorePath, streamBinding.PartitionName);
-            partition.Name = "Running";
+            this.currentSessionViewModel.AddStorePartition(streamBinding.StoreName, streamBinding.StorePath, streamBinding.PartitionName);
         }
 
         private void EnsureSession()
         {
-            var session = PsiStudioContext.Instance.Dataset.Sessions.FirstOrDefault((s) => s.Name == Session.DefaultName);
+            var session = PsiStudioContext.Instance.DatasetViewModel.SessionViewModels.FirstOrDefault((s) => s.Name == Session.DefaultName);
             if (session == null)
             {
-                session = PsiStudioContext.Instance.Dataset.CreateSession();
+                session = PsiStudioContext.Instance.DatasetViewModel.CreateSession();
             }
 
-            session.Name = "Running";
-            this.currentSession = session;
+            this.currentSessionViewModel = session;
         }
     }
 

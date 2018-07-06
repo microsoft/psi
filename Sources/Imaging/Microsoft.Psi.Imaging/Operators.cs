@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Imaging
     using System.Drawing;
 
     /// <summary>
-    /// Define sampling mode used by various imaging operators
+    /// Sampling mode used by various imaging operators
     /// </summary>
     public enum SamplingMode
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines thresholding modes
+    /// Thresholding modes
     /// </summary>
     public enum Threshold
     {
@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines axis along which to flip an image
+    /// Axis along which to flip an image
     /// </summary>
     public enum FlipMode
     {
@@ -87,9 +87,9 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines various imaging operators
+    /// Various imaging operators
     /// </summary>
-    public static class TransformOperators
+    public static partial class Operators
     {
         /// <summary>
         /// Flips an image along a specified axis
@@ -291,9 +291,9 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines set of operators used for drawing on an image
+    /// Set of operators used for drawing on an image
     /// </summary>
-    public static class DrawTransforms
+    public static partial class Operators
     {
         /// <summary>
         /// Draws a rectangle at the specified pixel coordinates on the image
@@ -347,9 +347,9 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines set of transforms for copying image data
+    /// Set of transforms for copying image data
     /// </summary>
-    public static class CopyTransforms
+    public static partial class Operators
     {
         /// <summary>
         /// Copies a source image into a destination image using the specified masking image.
@@ -568,9 +568,9 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines basic color transforms on images
+    /// Basic color transforms on images
     /// </summary>
-    public static class ColorTransfoms
+    public static partial class Operators
     {
         /// <summary>
         /// Inverts an image.
@@ -738,9 +738,9 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Defines imaging math operators
+    /// Imaging math operators
     /// </summary>
-    public static class MathOperators
+    public static partial class Operators
     {
         /// <summary>
         /// Performs per channel thresholding on the image

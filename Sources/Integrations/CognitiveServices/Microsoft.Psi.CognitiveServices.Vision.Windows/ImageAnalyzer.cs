@@ -18,7 +18,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
     /// <remarks>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
     /// subscription key is required to use this component. For more information, see the full direct API for
     /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></remarks>
-    public sealed class ImageAnalyzer : IStartable
+    public sealed class ImageAnalyzer
     {
         /// <summary>
         /// The client that communicates with the cloud image analyzer service.
@@ -99,22 +99,11 @@ namespace Microsoft.Psi.CognitiveServices.Vision
 
         #region Static methods for parsing results to strings
 
-        /// <inheritdoc/>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
-        {
-            onCompleted?.Invoke();
-        }
-
-        /// <inheritdoc/>
-        void IStartable.Stop()
-        {
-        }
-
         /// <summary>
         /// Parse Analysis Result into a string
         /// </summary>
         /// <param name="result">Analysis Result</param>
-        /// <returns>Retursn a string corresponding to the analysis result</returns>
+        /// <returns>Returns a string corresponding to the analysis result</returns>
         internal static string AnalysisResultToString(AnalysisResult result)
         {
             string resultString = string.Empty;

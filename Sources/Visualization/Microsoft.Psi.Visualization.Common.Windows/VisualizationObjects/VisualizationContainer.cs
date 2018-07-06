@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using System.Windows.Data;
-    using Microsoft.Psi.Extensions.Data;
+    using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Serialization;
     using Microsoft.Psi.Visualization.Server;
@@ -290,8 +290,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Update the store bindings with the specified enumeration of partitions.
         /// </summary>
-        /// <param name="partitions">Partions to use in updating store bindings.</param>
-        public void UpdateStoreBindings(IEnumerable<IPartition> partitions)
+        /// <param name="partitions">Partitions to use in updating store bindings.</param>
+        public void UpdateStoreBindings(IEnumerable<PartitionViewModel> partitions)
         {
             foreach (var panel in this.Panels)
             {

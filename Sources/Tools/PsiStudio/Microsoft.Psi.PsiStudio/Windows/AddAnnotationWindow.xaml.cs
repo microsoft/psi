@@ -10,7 +10,8 @@ namespace Microsoft.Psi.Visualization.Windows
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Forms;
-    using Microsoft.Psi.Extensions.Annotations;
+    using Microsoft.Psi.Data.Annotations;
+    using Microsoft.Psi.Visualization.Annotations;
 
     /// <summary>
     /// Interaction logic for AddAnnotationWindow.xaml
@@ -29,7 +30,7 @@ namespace Microsoft.Psi.Visualization.Windows
         /// </summary>
         /// <param name="schemas">The current collection of annotation schemas.</param>
         /// <param name="showStorageProperties">Flag indicating whether to show the storage properties. Default is true.</param>
-        public AddAnnotationWindow(ReadOnlyObservableCollection<AnnotationSchema> schemas, bool showStorageProperties = true)
+        public AddAnnotationWindow(ReadOnlyObservableCollection<AnnotationSchemaViewModel> schemas, bool showStorageProperties = true)
         {
             this.InitializeComponent();
 
@@ -57,7 +58,7 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <summary>
         /// Gets the annotation schema.
         /// </summary>
-        public AnnotationSchema AnnotationSchema => this.AnnotationSchemaComboBox.SelectedItem as AnnotationSchema;
+        public AnnotationSchema AnnotationSchema => (this.AnnotationSchemaComboBox.SelectedItem as AnnotationSchemaViewModel).Schema;
 
         /// <summary>
         /// Gets the stream name.

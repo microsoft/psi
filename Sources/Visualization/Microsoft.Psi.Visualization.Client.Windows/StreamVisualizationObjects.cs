@@ -9,8 +9,9 @@ namespace Microsoft.Psi.Visualization.Client
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Media.Media3D;
     using MathNet.Spatial.Euclidean;
-    using Microsoft.Psi.Extensions.Annotations;
+    using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Speech;
@@ -86,6 +87,20 @@ namespace Microsoft.Psi.Visualization.Client
 
         /// <inheritdoc/>
         public override string TypeName => "Microsoft.Psi.Visualization.VisualizationObjects.Points3DVisualizationObject";
+
+        /// <inheritdoc />
+        protected override IContractResolver ContractResolver => this.contractResolver;
+    }
+
+    /// <summary>
+    /// Class implements a client proxy for Microsoft.Psi.Visualization.VisualizationObjects.ScatterRect3DVisualizationObject />.
+    /// </summary>
+    public sealed class ScatterRect3DVisualizationObject : StreamVisualizationObject<List<(CoordinateSystem, Rect3D)>, ScatterRect3DVisualizationObjectConfiguration>
+    {
+        private IContractResolver contractResolver = new Instant3DVisualizationObjectContractResolver();
+
+        /// <inheritdoc/>
+        public override string TypeName => "Microsoft.Psi.Visualization.VisualizationObjects.ScatterRect3DVisualizationObject";
 
         /// <inheritdoc />
         protected override IContractResolver ContractResolver => this.contractResolver;

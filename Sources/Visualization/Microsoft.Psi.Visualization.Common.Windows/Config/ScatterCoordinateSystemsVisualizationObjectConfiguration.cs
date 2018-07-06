@@ -11,5 +11,16 @@ namespace Microsoft.Psi.Visualization.Config
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class ScatterCoordinateSystemsVisualizationObjectConfiguration : Instant3DVisualizationObjectConfiguration
     {
+        private double size = 0.03;
+
+        /// <summary>
+        /// Gets or sets the size.
+        /// </summary>
+        [DataMember]
+        public double Size
+        {
+            get { return this.size; }
+            set { this.Set(nameof(this.Size), ref this.size, value); }
+        }
     }
 }

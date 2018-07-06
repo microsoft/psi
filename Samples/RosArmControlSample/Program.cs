@@ -82,7 +82,7 @@ namespace ArmControlROSSample
             using (var pipeline = Pipeline.Create())
             {
                 var arm = new UArmComponent(pipeline, uarm);
-                var keys = Generators.Timer(pipeline, TimeSpan.FromMilliseconds(10), (dt, ts) => Console.ReadKey(true).Key);
+                var keys = Timers.Timer(pipeline, TimeSpan.FromMilliseconds(10), (dt, ts) => Console.ReadKey(true).Key);
                 var pump = false;
                 keys.Where(k => k == ConsoleKey.P).Select(_ => pump = !pump).PipeTo(arm.Pump);
                 keys.Where(k => k == ConsoleKey.B).Select(_ => Tuple.Create(500f, 0.1f)).PipeTo(arm.Beep);

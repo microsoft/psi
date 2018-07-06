@@ -7,6 +7,8 @@ namespace Test.Psi
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Reactive;
+    using System.Reactive.Linq;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -42,7 +44,7 @@ namespace Test.Psi
             {
                 var count = 100;
                 var ready = new AutoResetEvent(false);
-                var src = Generators.Timer(p1, TimeSpan.FromMilliseconds(5));
+                var src = Timers.Timer(p1, TimeSpan.FromMilliseconds(5));
                 src
                     .Select(t => new byte[100], DeliveryPolicy.Unlimited)
                     .Select(b => b[50], DeliveryPolicy.Unlimited)
@@ -61,6 +63,138 @@ namespace Test.Psi
                 p1.RunAsync();
                 ready.WaitOne(-1);
                 Assert.AreEqual(0, count);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Subpipelines()
+        {
+            using (var p = Pipeline.Create("root"))
+            {
+                using (var s = Subpipeline.Create(p, "sub"))
+                {
+                    // add to sub-pipeline
+                    var seq = Generators.Sequence(s, new[] { 1, 2, 3 }).ToObservable().ToListObservable();
+                    p.Run(); // run parent pipeline
+
+                    Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, seq.AsEnumerable()));
+                }
+            }
+        }
+
+        public class TestReactiveCompositeComponent : Subpipeline
+        {
+            public Receiver<int> In { private set; get; }
+
+            public Emitter<int> Out { private set; get; }
+
+            public TestReactiveCompositeComponent(Pipeline parent)
+                : base(parent, "TestReactiveCompositeComponent")
+            {
+                var input = parent.CreateInputConnector<int>(this, this, "Input");
+                var output = this.CreateOutputConnector<int>(parent, this, "Output");
+                this.In = input.In;
+                this.Out = output.Out;
+                input.Select(i => i * 2).PipeTo(output);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineAsReactiveComponent()
+        {
+            using (var p = Pipeline.Create("root"))
+            {
+                var doubler = new TestReactiveCompositeComponent(p);
+                Assert.AreEqual(p, doubler.Out.Pipeline); // composite component shouldn't expose the fact that subpipeline is involved
+                var seq = Generators.Sequence(p, new[] { 1, 2, 3 });
+                seq.PipeTo(doubler.In);
+                var results = doubler.Out.ToObservable().ToListObservable();
+                p.Run(); // note that parent pipeline stops once sources complete (reactive composite-component subpipeline doesn't "hold open")
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 4, 6 }, results.AsEnumerable()));
+            }
+        }
+
+        public class TestFiniteSourceCompositeComponent : Subpipeline
+        {
+            public Emitter<int> Out { private set; get; }
+
+            public TestFiniteSourceCompositeComponent(Pipeline parent)
+                : base(parent, "TestFiniteSourceCompositeComponent")
+            {
+                var output = this.CreateOutputConnector<int>(parent, this, "Output");
+                this.Out = output.Out;
+                Generators.Range(this, 0, 10).Out.PipeTo(output);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineAsFiniteSourceComponent()
+        {
+            using (var p = Pipeline.Create("root"))
+            {
+                var finite = new TestFiniteSourceCompositeComponent(p);
+                Assert.AreEqual(p, finite.Out.Pipeline); // composite component shouldn't expose the fact that subpipeline is involved
+                var results = finite.Out.ToObservable().ToListObservable();
+                p.Run(); // note that parent pipeline stops once finite source composite-component subpipeline completes
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, results.AsEnumerable()));
+            }
+        }
+
+        public class TestInfiniteSourceCompositeComponent : Subpipeline
+        {
+            public Emitter<int> Out { private set; get; }
+
+            public TestInfiniteSourceCompositeComponent(Pipeline parent)
+                : base(parent, "TestInfiniteSourceCompositeComponent")
+            {
+                var output = this.CreateOutputConnector<int>(parent, this, "Output");
+                this.Out = output.Out;
+                var timer = Timers.Timer(this, TimeSpan.FromMilliseconds(10));
+                timer.Aggregate(0, (i, _) => i + 1).PipeTo(output);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineAsInfiniteSourceComponent()
+        {
+            ListObservable<int> results;
+            var completed = false;
+
+            using (var p = Pipeline.Create("root"))
+            {
+                var infinite = new TestInfiniteSourceCompositeComponent(p);
+                Assert.AreEqual(p, infinite.Out.Pipeline); // composite component shouldn't expose the fact that subpipeline is involved
+                results = infinite.Out.ToObservable().ToListObservable();
+                p.PipelineCompletionEvent += ((_, __) => completed = true);
+                p.RunAsync();
+                Thread.Sleep(200);
+                Assert.IsFalse(completed); // note that infinite source composite-component subpipeline never completes (parent pipeline must be disposed explicitly)
+            }
+
+            Assert.IsTrue(completed); // note that infinite source composite-component subpipeline never completes (parent pipeline must be disposed explicitly)
+            Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, results.AsEnumerable().Take(3))); // compare first few only
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ComponentInitStartOrderingWhenExceedingSchedulerThreadPool()
+        {
+            // Starting this many generators will easily exceed the `maxThreadCount` and start filling the global queue
+            // This used to cause an issue in which component start/initialize would be scheduled out of order and crash
+            using (var pipeline = Pipeline.Create())
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    var p = Generators.Sequence(pipeline, new int[] { });
+                }
+
+                pipeline.Run();
             }
         }
 

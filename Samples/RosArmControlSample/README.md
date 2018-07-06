@@ -548,7 +548,7 @@ Just as before, let's start with getting the pump to work.
 using (var pipeline = Pipeline.Create())
 {
     var arm = new UArmComponent(pipeline, uarm);
-    var keys = Generators.Timer(pipeline, TimeSpan.FromMilliseconds(10), (_, __) => Console.ReadKey(true).Key);
+    var keys = Timers.Timer(pipeline, TimeSpan.FromMilliseconds(10), (_, __) => Console.ReadKey(true).Key);
     var pump = false;
     keys.Where(k => k == ConsoleKey.P).Select(_ => pump = !pump).PipeTo(arm.Pump);
     pipeline.Run();

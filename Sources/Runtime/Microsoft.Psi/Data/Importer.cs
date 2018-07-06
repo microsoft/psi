@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Data
     /// Instances of this class can be created using the <see cref="Store.Open"/> method.
     /// The store metadata is available immediately after open (before the pipeline is running) via the <see cref="AvailableStreams"/> property.
     /// </summary>
-    public sealed class Importer : IStartable, IDisposable
+    public sealed class Importer : IFiniteSourceComponent, IDisposable
     {
         private readonly Receiver<bool> loopBack;
         private readonly Emitter<bool> next;
@@ -39,6 +39,8 @@ namespace Microsoft.Psi.Data
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to open a volatile data store</param>
         public Importer(Pipeline pipeline, string name, string path)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.reader = new StoreReader(name, path, this.LoadMetadata);
             if (this.reader.ActiveTimeInterval != null && !this.reader.ActiveTimeInterval.IsEmpty && this.reader.ActiveTimeInterval.IsFinite)
@@ -91,17 +93,9 @@ namespace Microsoft.Psi.Data
         public RuntimeInfo SourceRuntimeInfo => this.reader.RuntimeVersion;
 
         /// <inheritdoc />
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
+        void IFiniteSourceComponent.Initialize(Action onCompleted)
         {
             this.onCompleted = onCompleted;
-            this.reader.Seek(descriptor.Interval, descriptor.UseOriginatingTime);
-            this.next.Post(true, descriptor.Start);
-        }
-
-        /// <inheritdoc />
-        void IStartable.Stop()
-        {
-            this.stopping = true;
         }
 
         /// <summary>
@@ -203,6 +197,24 @@ namespace Microsoft.Psi.Data
             splitterOut.PipeTo(deserializer, DeliveryPolicy.Immediate);
             this.streams[streamName] = deserializer.Out;
             return deserializer.Out;
+        }
+
+        /// <summary>
+        /// Start the psi component
+        /// </summary>
+        private void OnPipelineStart()
+        {
+            var replay = this.pipeline.ReplayDescriptor;
+            this.reader.Seek(replay.Interval, replay.UseOriginatingTime);
+            this.next.Post(true, replay.Start);
+        }
+
+        /// <summary>
+        /// Stop the psi component
+        /// </summary>
+        private void OnPipelineStop()
+        {
+            this.stopping = true;
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Audio
     /// <br/>
     /// **Please note**: This component uses Audio APIs that are available on Windows only.
     /// </remarks>
-    public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, IStartable, IDisposable
+    public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, IDisposable
     {
         private readonly Pipeline pipeline;
         private readonly AudioPlayerConfiguration configuration;
@@ -39,6 +39,8 @@ namespace Microsoft.Psi.Audio
         public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)
             : base(pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.currentInputFormat = configuration.InputFormat;
@@ -132,14 +134,12 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Starts playing back audio.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        public void Start(Action onCompleted, ReplayDescriptor descriptor)
+        public void OnPipelineStart()
         {
             // If playing back at greater than original speed (ReplaySpeedFactor < 1),
             // overwrite queued audio since data buffers will be arriving faster than
             // it can be rendered.
-            this.overwrite = descriptor.ReplaySpeedFactor < 1;
+            this.overwrite = this.pipeline.ReplayDescriptor.ReplaySpeedFactor < 1;
 
             // publish initial volume level at startup
             this.AudioLevel.Post(this.audioRenderDevice.AudioLevel, this.pipeline.GetCurrentTime());
@@ -153,15 +153,12 @@ namespace Microsoft.Psi.Audio
                 this.configuration.TargetLatencyInMs,
                 this.configuration.Gain,
                 this.configuration.InputFormat);
-
-            // signal completion of startup
-            onCompleted?.Invoke();
         }
 
         /// <summary>
         /// Stops playing back audio.
         /// </summary>
-        public void Stop()
+        public void OnPipelineStop()
         {
             this.audioRenderDevice.StopRendering();
 
@@ -174,7 +171,7 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void Dispose()
         {
-            this.Stop();
+            this.OnPipelineStop();
             this.audioRenderDevice.Dispose();
             this.audioRenderDevice = null;
         }

@@ -7,8 +7,8 @@ namespace Microsoft.Psi.Visualization.Common
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using Microsoft.Psi.Extensions.Base;
     using Microsoft.Psi.Imaging;
+    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Represents an displayable image based on a <see cref="Microsoft.Psi.Imaging.Image"/>.

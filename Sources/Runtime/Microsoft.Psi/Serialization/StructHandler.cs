@@ -55,8 +55,16 @@ namespace Microsoft.Psi.Serialization
 
         internal override void UntypedDeserialize(BufferReader reader, ref object target, SerializationContext context)
         {
-            T typedTarget = (target is T) ? (T)target : default(T);
-            target = target ?? typedTarget;
+            T typedTarget = default(T);
+            if (target is T)
+            {
+                typedTarget = (T)target;
+            }
+            else
+            {
+                target = (object)default(T); // when the target is of a different type, we have to allocate a new object (via boxing)
+            }
+
             context.AddDeserializedObject(target);
             this.innerSerializer.Deserialize(reader, ref typedTarget, context);
             CopyToBox(typedTarget, ref target, context);
@@ -64,8 +72,16 @@ namespace Microsoft.Psi.Serialization
 
         internal override void UntypedClone(object instance, ref object target, SerializationContext context)
         {
-            T typedTarget = (target is T) ? (T)target : default(T);
-            target = target ?? typedTarget;
+            T typedTarget = default(T);
+            if (target is T)
+            {
+                typedTarget = (T)target;
+            }
+            else
+            {
+                target = (object)default(T); // when the target is of a different type, we have to allocate a new object (via boxing)
+            }
+
             context.AddDeserializedObject(target);
             this.innerSerializer.Clone((T)instance, ref typedTarget, context);
             CopyToBox(typedTarget, ref target, context);
@@ -73,10 +89,19 @@ namespace Microsoft.Psi.Serialization
 
         internal override void UntypedClear(ref object target, SerializationContext context)
         {
-            T typedTarget = (T)target;
+            T typedTarget = default(T);
+            if (target is T)
+            {
+                typedTarget = (T)target;
+            }
+            else
+            {
+                target = (object)default(T); // when the target is of a different type, we have to allocate a new object (via boxing)
+            }
+
             context.AddDeserializedObject(target);
             this.innerSerializer.Clear(ref typedTarget, context);
-            target = typedTarget;
+            CopyToBox(typedTarget, ref target, context);
         }
     }
 }

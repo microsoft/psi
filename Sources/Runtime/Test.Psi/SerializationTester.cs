@@ -93,6 +93,14 @@ namespace Test.Psi
             var r2 = r.DeepClone();
             Assert.IsTrue(object.ReferenceEquals(r2[0], r2[1])); // must have been single instanced
             Assert.IsFalse(object.ReferenceEquals(r[0], r2[0])); // must be different than the cloned instance
+
+            // validate reference maintained after clone
+            1002.DeepClone(ref b);
+            Assert.IsTrue(object.ReferenceEquals(b, r[0])); // boxed object address should be the same
+
+            // should work even if the source and target are not the same type
+            1002d.DeepClone(ref b);
+            Assert.IsFalse(object.ReferenceEquals(b, r[0])); // boxed object address should be different
         }
 
         [TestMethod]

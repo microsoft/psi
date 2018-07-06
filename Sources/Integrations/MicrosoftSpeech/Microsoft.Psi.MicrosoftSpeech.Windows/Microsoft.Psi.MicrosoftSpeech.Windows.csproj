@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="CheckVariable">
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CheckVariable">
   <PropertyGroup>
     <TargetFramework>net47</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -41,10 +41,15 @@
     </Reference>
   </ItemGroup>
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation"  ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''"/>
-    <CallTarget Targets="DoBuild"  Condition=" '$(MsSpeechSdkDir)' != '' "/>
-  </Target>
-  <Target Name="DoBuild" DependsOnTargets="Build">
-    <Exec Command="echo Built project using MsSpeechSdkDir='%MsSpeechSdkDir%'"/>
+    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Intel RealSense SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''" />
+    <CreateProperty Value="" Condition="'$(MsSpeechSdkDir)'==''">
+      <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
+    </CreateProperty>
+    <CreateProperty Value="false" Condition="'$(MsSpeechSdkDir)'==''">
+      <Output TaskParameter="Value" PropertyName="GeneratePackageOnBuild" />
+    </CreateProperty>
+    <CreateProperty Value="" Condition="'$(MsSpeechSdkDir)'==''">
+      <Output TaskParameter="Value" PropertyName="GenerateNuspecDependsOn" />
+    </CreateProperty>
   </Target>
 </Project>

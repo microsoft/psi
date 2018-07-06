@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Audio
     /// <br/>
     /// **Please note**: This component uses Audio APIs that are available on Windows only.
     /// </remarks>
-    public sealed class AudioSource : IProducer<AudioBuffer>, IStartable, IDisposable
+    public sealed class AudioSource : IProducer<AudioBuffer>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
 
@@ -61,6 +61,8 @@ namespace Microsoft.Psi.Audio
         /// <param name="configuration">The component configuration.</param>
         public AudioSource(Pipeline pipeline, AudioSourceConfiguration configuration)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
@@ -146,11 +148,21 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
+        /// Dispose method.
+        /// </summary>
+        public void Dispose()
+        {
+            if (this.audioCaptureDevice != null)
+            {
+                this.audioCaptureDevice.Dispose();
+                this.audioCaptureDevice = null;
+            }
+        }
+
+        /// <summary>
         /// Called to start capturing audio from the microphone.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the execution completed</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        void IStartable.Start(Action onCompleted, ReplayDescriptor descriptor)
+        private void OnPipelineStart()
         {
             // publish initial values at startup
             this.AudioLevel.Post(this.audioCaptureDevice.AudioLevel, this.pipeline.GetCurrentTime());
@@ -172,21 +184,9 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Called when the pipeline is shutting down.
         /// </summary>
-        void IStartable.Stop()
+        private void OnPipelineStop()
         {
             this.sourceFormat = null;
-        }
-
-        /// <summary>
-        /// Dispose method.
-        /// </summary>
-        public void Dispose()
-        {
-            if (this.audioCaptureDevice != null)
-            {
-                this.audioCaptureDevice.Dispose();
-                this.audioCaptureDevice = null;
-            }
         }
 
         /// <summary>

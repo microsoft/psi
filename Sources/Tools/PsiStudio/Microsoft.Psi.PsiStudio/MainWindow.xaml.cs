@@ -9,9 +9,8 @@ namespace Microsoft.Psi.PsiStudio
     using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Input;
-    using Microsoft.Psi.Extensions.Data;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Microsoft.Win32;
@@ -257,7 +256,7 @@ namespace Microsoft.Psi.PsiStudio
             if (result == true)
             {
                 string filename = dlg.FileName;
-                this.context.Dataset.Save(filename);
+                this.context.DatasetViewModel.Save(filename);
             }
         }
 
@@ -279,7 +278,7 @@ namespace Microsoft.Psi.PsiStudio
         private void PlaybackPlay_Click(object sender, RoutedEventArgs e)
         {
             if (this.context.VisualizationContainer.Navigator.NavigationMode == Visualization.Navigation.NavigationMode.Live ||
-                this.context.Dataset?.CurrentSession?.Partitions.FirstOrDefault() == null)
+                this.context.DatasetViewModel?.CurrentSessionViewModel?.PartitionViewModels.FirstOrDefault() == null)
             {
                 return;
             }
@@ -300,7 +299,7 @@ namespace Microsoft.Psi.PsiStudio
         private void PlaybackStopPlaying_Click(object sender, RoutedEventArgs e)
         {
             if (this.context.VisualizationContainer.Navigator.NavigationMode == Visualization.Navigation.NavigationMode.Live ||
-                this.context.Dataset?.CurrentSession?.Partitions.FirstOrDefault() == null)
+                this.context.DatasetViewModel?.CurrentSessionViewModel?.PartitionViewModels.FirstOrDefault() == null)
             {
                 return;
             }
@@ -318,25 +317,25 @@ namespace Microsoft.Psi.PsiStudio
 
         private void RemovePartition_Click(object sender, RoutedEventArgs e)
         {
-            var partition = ((MenuItem)sender).DataContext as IPartition;
+            var partition = ((MenuItem)sender).DataContext as PartitionViewModel;
             partition.RemovePartition();
         }
 
         private void RemoveSession_Click(object sender, RoutedEventArgs e)
         {
-            var session = ((MenuItem)sender).DataContext as Session;
+            var session = ((MenuItem)sender).DataContext as SessionViewModel;
             session.RemoveSession();
         }
 
         private void CreateSession_Click(object sender, RoutedEventArgs e)
         {
-            var dataset = ((MenuItem)sender).DataContext as Dataset;
+            var dataset = ((MenuItem)sender).DataContext as DatasetViewModel;
             dataset.CreateSession();
         }
 
         private void CreateSessionFromExistingStore_Click(object sender, RoutedEventArgs e)
         {
-            var dataset = ((MenuItem)sender).DataContext as Dataset;
+            var dataset = ((MenuItem)sender).DataContext as DatasetViewModel;
 
             Win32.OpenFileDialog dlg = new Win32.OpenFileDialog();
             dlg.DefaultExt = ".psi";
@@ -353,16 +352,16 @@ namespace Microsoft.Psi.PsiStudio
 
         private void VisualizeSession_Click(object sender, RoutedEventArgs e)
         {
-            var session = ((MenuItem)sender).DataContext as Session;
-            this.context.Dataset.CurrentSession = session;
+            var session = ((MenuItem)sender).DataContext as SessionViewModel;
+            this.context.DatasetViewModel.CurrentSessionViewModel = session;
             this.context.VisualizationContainer.Navigator.DataRange.SetRange(session.OriginatingTimeInterval);
             this.context.VisualizationContainer.ZoomToRange(session.OriginatingTimeInterval);
-            this.context.VisualizationContainer.UpdateStoreBindings(session.Partitions.ToList());
+            this.context.VisualizationContainer.UpdateStoreBindings(session.PartitionViewModels.ToList());
         }
 
         private void AddPartition_Click(object sender, RoutedEventArgs e)
         {
-            var session = ((MenuItem)sender).DataContext as Session;
+            var session = ((MenuItem)sender).DataContext as SessionViewModel;
 
             Win32.OpenFileDialog dlg = new Win32.OpenFileDialog();
             dlg.DefaultExt = ".psi";
@@ -386,17 +385,17 @@ namespace Microsoft.Psi.PsiStudio
                     throw new ApplicationException("Invalid file type selected when adding partition.");
                 }
 
-                this.context.Dataset.CurrentSession = session;
+                this.context.DatasetViewModel.CurrentSessionViewModel = session;
                 this.context.VisualizationContainer.ZoomToRange(session.OriginatingTimeInterval);
             }
         }
 
         private void VisualizePartition_Click(object sender, RoutedEventArgs e)
         {
-            var partition = ((MenuItem)sender).DataContext as IPartition;
-            this.context.Dataset.CurrentSession = partition.Session;
-            this.context.VisualizationContainer.ZoomToRange(partition.Session.OriginatingTimeInterval);
-            this.context.VisualizationContainer.UpdateStoreBindings(new IPartition[] { partition });
+            var partition = ((MenuItem)sender).DataContext as PartitionViewModel;
+            this.context.DatasetViewModel.CurrentSessionViewModel = partition.SessionViewModel;
+            this.context.VisualizationContainer.ZoomToRange(partition.SessionViewModel.OriginatingTimeInterval);
+            this.context.VisualizationContainer.UpdateStoreBindings(new PartitionViewModel[] { partition });
         }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)

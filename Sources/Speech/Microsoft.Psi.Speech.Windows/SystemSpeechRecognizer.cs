@@ -30,8 +30,13 @@ namespace Microsoft.Psi.Speech
     /// <see cref="StreamingSpeechRecognitionResult.IsFinal"/> property. Partial results contain partial hypotheses while speech is in
     /// progress and are useful for displaying hypothesized text as feedback to the user. The final result is emitted once the recognizer
     /// has determined that speech has ended, and will contain the top hypothesis for the utterance.
+    ///
+    /// The originating times of speech recognition events emitted by this component are estimates. These are estimated in a couple of ways
+    /// from the results that the underlying speech recognition engine returns. In the case of a final recognition result, we use the audio
+    /// position offset of the recognized audio as reported by the recognition engine to compute an estimate of the originating time. For
+    /// partial hypotheses, we use the engine's current offset into the audio stream to estimate the originating time.
     /// </remarks>
-    public sealed class SystemSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, IStartable, IDisposable
+    public sealed class SystemSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, IDisposable
     {
         /// <summary>
         /// The configuration for this component.
@@ -64,7 +69,7 @@ namespace Microsoft.Psi.Speech
         private readonly Emitter<SpeechRecognitionRejectedEventArgs> speechRecognitionRejected;
 
         /// <summary>
-        /// The output stream of audio signal problem occurreed events
+        /// The output stream of audio signal problem occurred events
         /// </summary>
         private readonly Emitter<AudioSignalProblemOccurredEventArgs> audioSignalProblemOccurred;
 
@@ -131,6 +136,8 @@ namespace Microsoft.Psi.Speech
         public SystemSpeechRecognizer(Pipeline pipeline, SystemSpeechRecognizerConfiguration configuration)
             : base(pipeline)
         {
+            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+
             this.configuration = configuration ?? new SystemSpeechRecognizerConfiguration();
 
             // create receiver of grammar updates
@@ -290,22 +297,10 @@ namespace Microsoft.Psi.Speech
         /// <summary>
         /// Called once all the subscriptions are established.
         /// </summary>
-        /// <param name="onCompleted">Delegate to call when the component finishes</param>
-        /// <param name="descriptor">If set, describes the playback constraints</param>
-        public void Start(Action onCompleted, ReplayDescriptor descriptor)
+        public void OnPipelineStart()
         {
             // start the speech recognition engine
             this.speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-
-            // component is considered "completed" once started up
-            onCompleted?.Invoke();
-        }
-
-        /// <summary>
-        /// Called when the pipeline is shutting down.
-        /// </summary>
-        public void Stop()
-        {
         }
 
         /// <summary>

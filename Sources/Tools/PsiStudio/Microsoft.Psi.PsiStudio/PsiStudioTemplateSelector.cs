@@ -5,7 +5,7 @@ namespace Microsoft.Psi.PsiStudio
 {
     using System.Windows;
     using System.Windows.Controls;
-    using Microsoft.Psi.Extensions.Data;
+    using Microsoft.Psi.Visualization.Datasets;
 
     /// <summary>
     /// Provides a way to select the appropriate datatemplate based on the data object provided.
@@ -18,15 +18,15 @@ namespace Microsoft.Psi.PsiStudio
             FrameworkElement element = container as FrameworkElement;
             if (element != null && item != null)
             {
-                if (item is Dataset)
+                if (item is DatasetViewModel)
                 {
                     return element.FindResource("DatasetTemplate") as DataTemplate;
                 }
-                else if (item is Session)
+                else if (item is SessionViewModel)
                 {
                     return element.FindResource("SessionTemplate") as DataTemplate;
                 }
-                else if (item is IPartition)
+                else if (item is PartitionViewModel)
                 {
                     return element.FindResource("PartitionTemplate") as DataTemplate;
                 }

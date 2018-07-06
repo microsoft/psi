@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
     using HelixToolkit.Wpf;
@@ -22,8 +23,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
         private static readonly int PipeDiv = 7;
 
         private KinectBodies3DVisualizationObject visualizationObject;
-        private List<List<SphereVisual3D>> bodyJoints = new List<List<SphereVisual3D>>();
-        private List<Dictionary<Tuple<JointType, JointType>, PipeVisual3D>> bodyBones = new List<Dictionary<Tuple<JointType, JointType>, PipeVisual3D>>();
+        private Dictionary<ulong, List<SphereVisual3D>> bodyJoints = new Dictionary<ulong, List<SphereVisual3D>>();
+        private Dictionary<ulong, List<bool>> bodyJointsTracked = new Dictionary<ulong, List<bool>>();
+        private Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, PipeVisual3D>> bodyBones = new Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, PipeVisual3D>>();
+        private Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, bool>> bodyBonesTracked = new Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, bool>>();
+
+        private Brush trackedEntitiesBrush = new SolidColorBrush();
+        private Brush untrackedEntitiesBrush = new SolidColorBrush();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectBodiesVisual"/> class.
@@ -40,15 +46,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
         private void ClearAll()
         {
             this.bodyJoints.Clear();
+            this.bodyJointsTracked.Clear();
             this.bodyBones.Clear();
+            this.bodyBonesTracked.Clear();
             this.Children.Clear();
         }
 
-        private void AddBody(int bodyIndex)
+        private void AddBody(ulong trackingId)
         {
-            var regularBrush = new SolidColorBrush(this.visualizationObject.Configuration.Color);
-
             List<SphereVisual3D> joints = new List<SphereVisual3D>();
+            List<bool> jointsTracked = new List<bool>();
             for (int i = 0; i < Body.JointCount; i++)
             {
                 var bodyPart = new SphereVisual3D()
@@ -58,10 +65,12 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 };
 
                 joints.Add(bodyPart);
+                jointsTracked.Add(true);
                 this.Children.Add(bodyPart);
             }
 
-            this.bodyJoints.Add(joints);
+            this.bodyJoints.Add(trackingId, joints);
+            this.bodyJointsTracked.Add(trackingId, jointsTracked);
 
             var bones = new Dictionary<Tuple<JointType, JointType>, PipeVisual3D>
             {
@@ -89,34 +98,89 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 { Tuple.Create(JointType.KneeLeft, JointType.AnkleLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } },
                 { Tuple.Create(JointType.AnkleLeft, JointType.FootLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } }
             };
+            var bonesTracked = new Dictionary<Tuple<JointType, JointType>, bool>
+            {
+                { Tuple.Create(JointType.HandTipLeft, JointType.HandLeft), true },
+                { Tuple.Create(JointType.ThumbLeft, JointType.HandLeft), true },
+                { Tuple.Create(JointType.HandLeft, JointType.WristLeft), true },
+                { Tuple.Create(JointType.WristLeft, JointType.ElbowLeft), true },
+                { Tuple.Create(JointType.ElbowLeft, JointType.ShoulderLeft), true },
+                { Tuple.Create(JointType.ShoulderLeft, JointType.SpineShoulder), true },
+                { Tuple.Create(JointType.HandTipRight, JointType.HandRight), true },
+                { Tuple.Create(JointType.ThumbRight, JointType.HandRight), true },
+                { Tuple.Create(JointType.HandRight, JointType.WristRight), true },
+                { Tuple.Create(JointType.WristRight, JointType.ElbowRight), true },
+                { Tuple.Create(JointType.ElbowRight, JointType.ShoulderRight), true },
+                { Tuple.Create(JointType.ShoulderRight, JointType.SpineShoulder), true },
+                { Tuple.Create(JointType.Head, JointType.Neck), true },
+                { Tuple.Create(JointType.Neck, JointType.SpineShoulder), true },
+                { Tuple.Create(JointType.SpineShoulder, JointType.SpineBase), true },
+                { Tuple.Create(JointType.SpineBase, JointType.HipRight), true },
+                { Tuple.Create(JointType.HipRight, JointType.KneeRight), true },
+                { Tuple.Create(JointType.KneeRight, JointType.AnkleRight), true },
+                { Tuple.Create(JointType.AnkleRight, JointType.FootRight), true },
+                { Tuple.Create(JointType.SpineBase, JointType.HipLeft), true },
+                { Tuple.Create(JointType.HipLeft, JointType.KneeLeft), true },
+                { Tuple.Create(JointType.KneeLeft, JointType.AnkleLeft), true },
+                { Tuple.Create(JointType.AnkleLeft, JointType.FootLeft), true }
+            };
 
             foreach (var b in bones)
             {
                 this.Children.Add(b.Value);
             }
 
-            this.bodyBones.Add(bones);
+            this.bodyBones.Add(trackingId, bones);
+            this.bodyBonesTracked.Add(trackingId, bonesTracked);
+
             this.UpdateProperties();
+        }
+
+        private void RemoveBody(ulong trackingId)
+        {
+            // remove joints
+            foreach (var joint in this.bodyJoints[trackingId])
+            {
+                this.Children.Remove(joint);
+            }
+
+            // remove bones
+            foreach (var bone in this.bodyBones[trackingId].Values)
+            {
+                this.Children.Remove(bone);
+            }
+
+            this.bodyJoints.Remove(trackingId);
+            this.bodyJointsTracked.Remove(trackingId);
+            this.bodyBones.Remove(trackingId);
+            this.bodyBonesTracked.Remove(trackingId);
         }
 
         private void UpdateProperties()
         {
-            var regularBrush = new SolidColorBrush(this.visualizationObject.Configuration.Color);
+            this.trackedEntitiesBrush = new SolidColorBrush(this.visualizationObject.Configuration.Color);
+            var alphaColor = Color.FromArgb(
+                (byte)(this.visualizationObject.Configuration.InferredJointsOpacity * 255),
+                this.visualizationObject.Configuration.Color.R,
+                this.visualizationObject.Configuration.Color.G,
+                this.visualizationObject.Configuration.Color.B);
+            this.untrackedEntitiesBrush = new SolidColorBrush(alphaColor);
+
             foreach (var body in this.bodyJoints)
             {
-                foreach (var joint in body)
+                for (int i = 0; i < body.Value.Count; i++)
                 {
-                    joint.Radius = this.visualizationObject.Configuration.Size;
-                    joint.Fill = regularBrush;
+                    body.Value[i].Radius = this.visualizationObject.Configuration.Size;
+                    body.Value[i].Fill = this.bodyJointsTracked[body.Key][i] ? this.trackedEntitiesBrush : this.untrackedEntitiesBrush;
                 }
             }
 
             foreach (var body in this.bodyBones)
             {
-                foreach (var bone in body.Values)
+                foreach (var bone in body.Value)
                 {
-                    bone.Diameter = this.visualizationObject.Configuration.Size;
-                    bone.Fill = regularBrush;
+                    bone.Value.Diameter = this.visualizationObject.Configuration.Size;
+                    bone.Value.Fill = this.bodyBonesTracked[body.Key][bone.Key] ? this.trackedEntitiesBrush : this.untrackedEntitiesBrush;
                 }
             }
         }
@@ -129,21 +193,29 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 return;
             }
 
-            // if we have more bodies than we need, clear all
-            if (kinectBodies.Count < this.bodyJoints.Count)
+            // add any missing bodies
+            foreach (var body in kinectBodies)
             {
-                this.ClearAll();
+                if (!this.bodyJoints.ContainsKey(body.TrackingId))
+                {
+                    this.AddBody(body.TrackingId);
+                }
             }
 
-            // add bodies if we don't have enough
-            for (int body = this.bodyJoints.Count; body < kinectBodies.Count; body++)
+            // remove any non-necessary bodies
+            var currentIds = this.bodyJoints.Select(kvp => kvp.Key).ToArray();
+            foreach (var id in currentIds)
             {
-                this.AddBody(body);
+                if (!kinectBodies.Any(b => b.TrackingId == id))
+                {
+                    this.RemoveBody(id);
+                }
             }
 
             // populate the bodies with information
             for (int body = 0; body < kinectBodies.Count; body++)
             {
+                var trackingId = kinectBodies[body].TrackingId;
                 var bodyTracked = kinectBodies[body].IsTracked;
                 for (int joint = 0; joint < Body.JointCount; joint++)
                 {
@@ -152,43 +224,29 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                     if (body < kinectBodies.Count && bodyTracked && jointTracked)
                     {
                         var jointPosition = kinectBodies[body].Joints[(JointType)joint].Position;
-                        this.bodyJoints[body][joint].Transform = new TranslateTransform3D(jointPosition.X, jointPosition.Y, jointPosition.Z);
-                        if (kinectBodies[body].Joints[(JointType)joint].TrackingState == TrackingState.Tracked)
-                        {
-                            this.bodyJoints[body][joint].Visible = true;
-                        }
-                        else
-                        {
-                            this.bodyJoints[body][joint].Visible = false;
-                        }
+                        this.bodyJoints[trackingId][joint].Transform = new TranslateTransform3D(jointPosition.X, jointPosition.Y, jointPosition.Z);
+                        this.bodyJointsTracked[trackingId][joint] = kinectBodies[body].Joints[(JointType)joint].TrackingState == TrackingState.Tracked;
                     }
                     else
                     {
-                        this.bodyJoints[body][joint].Visible = false;
+                        this.bodyJointsTracked[trackingId][joint] = false;
                     }
                 }
 
-                foreach (var bone in this.bodyBones[body].Keys)
+                foreach (var bone in this.bodyBones[trackingId].Keys)
                 {
                     var boneTracked = kinectBodies[body].Joints[bone.Item1].TrackingState != TrackingState.NotTracked && kinectBodies[body].Joints[bone.Item2].TrackingState != TrackingState.NotTracked;
                     if (body < kinectBodies.Count && bodyTracked && boneTracked)
                     {
                         var joint1Position = kinectBodies[body].Joints[bone.Item1].Position;
                         var joint2Position = kinectBodies[body].Joints[bone.Item2].Position;
-                        this.bodyBones[body][bone].Point1 = new Point3D(joint1Position.X, joint1Position.Y, joint1Position.Z);
-                        this.bodyBones[body][bone].Point2 = new Point3D(joint2Position.X, joint2Position.Y, joint2Position.Z);
-                        if (kinectBodies[body].Joints[bone.Item1].TrackingState == TrackingState.Tracked && kinectBodies[body].Joints[bone.Item2].TrackingState == TrackingState.Tracked)
-                        {
-                            this.bodyBones[body][bone].Visible = true;
-                        }
-                        else
-                        {
-                            this.bodyBones[body][bone].Visible = false;
-                        }
+                        this.bodyBones[trackingId][bone].Point1 = new Point3D(joint1Position.X, joint1Position.Y, joint1Position.Z);
+                        this.bodyBones[trackingId][bone].Point2 = new Point3D(joint2Position.X, joint2Position.Y, joint2Position.Z);
+                        this.bodyBonesTracked[trackingId][bone] = kinectBodies[body].Joints[bone.Item1].TrackingState == TrackingState.Tracked && kinectBodies[body].Joints[bone.Item2].TrackingState == TrackingState.Tracked;
                     }
                     else
                     {
-                        this.bodyBones[body][bone].Visible = false;
+                        this.bodyBonesTracked[trackingId][bone] = false;
                     }
                 }
             }
