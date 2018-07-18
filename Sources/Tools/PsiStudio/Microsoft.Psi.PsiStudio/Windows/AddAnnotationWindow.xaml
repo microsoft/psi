@@ -10,31 +10,32 @@
         SizeToContent="WidthAndHeight"
         Title="Add Annotation"
         WindowStartupLocation="CenterOwner" 
-        WindowStyle="SingleBorderWindow">
+        WindowStyle="SingleBorderWindow"
+        Background="{StaticResource WindowBackgroundBrush}">
     
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.Resources>
-            <Style TargetType="Label">
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                 <Setter Property="HorizontalAlignment" Value="Right" />
                 <Setter Property="Margin" Value="10,2,2,2" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
-            <Style TargetType="TextBox">
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Margin" Value="2,2,10,2" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Width" Value="180" />
             </Style>
 
-            <Style TargetType="ComboBox">
+            <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Margin" Value="2,2,10,2" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Width" Value="180" />
             </Style>
 
-            <Style TargetType="Button">
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="Height" Value="20" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Width" Value="80" />
