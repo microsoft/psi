@@ -26,6 +26,7 @@ The table below contains the list of Platform for Situated Intelligence NuGet pa
 | Microsoft.Psi.Media.Linux    | Provides Linux-specific APIs and components for audio-visual capture. | Yes | - | AnyCPU |
 | Microsoft.Psi.Media.Windows.x64    | Provides Windows-specific APIs and components for audio-visual capture and processing. | - | Yes | x64 |
 | Microsoft.Psi.MicrosoftSpeech.Windows    | Provides Windows-specific components for the using the Microsoft.Speech recognition platform. | - | Yes | AnyCPU |
+| Microsoft.Psi.RealSense.Windows.x64    | Provides Windows-specific components for the using the Intel RealSense depth camera. | - | Yes | x64 |
 | Microsoft.Psi.ROS   | Provides APIs for using ROS from .NET Framework | Yes | Yes | AnyCPU |
 | Microsoft.Psi.Runtime    | Provides the core APIs and components for Platform for Situated Intelligence. | Yes | Yes | AnyCPU |
 | Microsoft.Psi.Runtime.Windows    | Provides Windows-specific perf counter APIs for Platform for Situated Intelligence. | - | Yes | AnyCPU |
