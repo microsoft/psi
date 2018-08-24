@@ -104,23 +104,23 @@ The `Select` operator we have injected transforms the messages from the sequence
 
 Beyond `Do` and `Select`, \\psi contains many operators: single stream operators like `Where`, `Aggregate`, `Parallel` etc. (similar with Linq and Rx), stream generators (`Sequence`, `Enumerate`, `Timer`) as well as operators for combining streams (`Join`, `Sample`, `Repeat`). Like `Do`, some of these operators also have overloads that can surface the message envelope information. Check out the [Basic Stream Operators](/psi/topics/InDepth.BasicStreamOperators) page for an in-depth look at all of them.
 
-Finally, so far we have highlighted the language of stream operators, which encapsulate simple components that perform transformations on streams. In the more general case, \\psi components can have multiple inputs and outputs and can be wired into a pipeline via the `PipeTo` operator. For instance, in the example below we instantiate an audio source component for microphone capture, and connect its output to a voice activity detector component, after which we display the results.
+Finally, so far we have highlighted the language of stream operators, which encapsulate simple components that perform transformations on streams. In the more general case, \\psi components can have multiple inputs and outputs and can be wired into a pipeline via the `PipeTo` operator. For instance, in the example below we instantiate a wave file audio source component, and connect its output to an acoustic features extractor component, after which we display the results.
 
 ```csharp
 using (var p = Pipeline.Create())
 {
     // Create an audio source component
-    var audioSource = new AudioSource(p,
-        new AudioSourceConfiguration() { OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm() });
+    var waveFileAudioSource = new WaveFileAudioSource(p, "sample.wav");
 
-    // Create a voice activity detector component
-    var vad = new SystemVoiceActivityDetector(p);
+    // Create an acoustic features component
+    var acousticFeatures = new AcousticFeaturesExtractor(p);
 
-    // Pipe the output of the audio source component into the input of the voice activity detector
-    audioSource.Out.PipeTo(vad.In);
+    // Pipe the output of the wave file audio source component into the input of the acoustic features
+    waveFileAudioSource.Out.PipeTo(acousticFeatures.In);
 
-    // Process the output of the voice activity detector and print the messages to the console
-    vad.Out.Do(m => Console.WriteLine(m));
+    // Process the output of the acoustic features and print the messages to the console
+    acousticFeatures.SpectralEntropy.Do(s => Console.WriteLine($"SpectralEntropy: {s}"));
+    acousticFeatures.LogEnergy.Do(e => Console.WriteLine($"LogEnergy: {e}"));
 
     // Run the pipeline
     p.Run();
