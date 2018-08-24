@@ -11,7 +11,7 @@ This document provides an introduction to how to write your own components. It i
 
 1. [**A Simple \psi Component**](/psi/topics/InDepth.WritingComponents#SimpleComponent): explains how to create and use a new component, and discusses a number of important aspects about the \psi programming model in relationship to writing components.
 2. [**Stream Operators**](/psi/topics/InDepth.WritingComponents#StreamOperators): discusses design patterns around stream operators, which are a special case of components that have a single input and a single output.
-3. [**Subpipelines**] (psi/topics/InDepth.WritingComponents#SubPipelines): describes subpipeline components and their behavior.
+3. [**Subpipelines**](/psi/topics/InDepth.WritingComponents#Subpipelines): describes subpipeline components and their behavior.
 4. [**Composite-Components**](/psi/topics/InDepth.WritingComponents#CompositeComponents): explains how to wrap a graph of sub-components into a higher-level composite-component.
 5. [**Registering for Notification of Pipeline Start/Stop**](/psi/topics/InDepth.WritingComponents#PipelineStartStop): describes how to hook into pipeline life cycle events.
 6. [**Source Components**](/psi/topics/InDepth.WritingComponents#SourceComponents): presents design patterns for writing source components, like sensors and other data generators.
@@ -331,51 +331,6 @@ The `onStop` is called when the pipeline is shutting down. Once this completes, 
 
 In contrast to _reactive components_, which are those that produce output _only_ in response to incoming message, _source components_ are the "headwaters" of the system; the source from which messages flow. These are components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc. 
 
-### 4.1. Component Interfaces
-
-To facilitate writing components, the \psi framework provides several interfaces to interact with the pipeline; giving insight into pipeline activity and indicating the kind of component to influence pipeline behavior.
-
-Components may be classified into two distinct categories:
-
-1. Reactive - producing messages only in response to incoming messages.
-2. Source - producing messages from other inputs such as sensor readings, files, etc.
-
-*Reactive* components need not implement any interfaces, however `IStartable` provides a way for such components to hook into pipeline start/stop. This is useful for doing initialization and tear-down work at the proper times. The interface looks like:
-
-```csharp
-// Start method, called when upon start-up
-void IStartable.Start();
-
-// Stop method, called when pipeline is shutting down
-void IStartable.Stop();
-```
-
-The `Start` method is called when the pipeline is about to start and the `Stop` method is called when the pipeline is shutting down. Once this method completes, the component should stop generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages.
-
-*Source* components are what drive the pipeline. Without them, downstream components have nothing to which to react. Some source components provide an essentially *infinite* stream of data; from a live sensor for example. Others provide a *finite* stream of messages generally from recorded data or from a time- or iteration-bounded process.
-
-Source components providing infinite streams should implement `IInfiniteSource`. This is identical to `IStartable`; providing a pipeline start/stop hook which is useful in sensor components, for example, which typically have to start their own data acquisition thread.
-
-More importantly, the interface clearly identifies a component as a source to the pipeline. A pipeline containing infinite source components will not shut down until an explicit call to `Stop()` or `Dispose()`. The interface looks like:
-
-```csharp
-// Start method, called when upon start-up
-void IInfiniteSource.Start();
-
-// Stop method, called when pipeline is shutting down
-void IInfiniteSource.Stop();
-```
-
-Source components having the concept of completion should instead implement `IFiniteSource`. This too identifies it as a source to the pipeline and prevents shut down. However, the `Start(...)` method provides an `onCompleted` action which the component must call once it has finished generating messages. This mechanism allows a source component that produces a finite set of messages to inform the pipeline that no more messages are being produced on the stream. A pipeline containing only *finite* sources (and reactive components) will itself complete and shut down once all sources have completed.
-
-```csharp
-// Start method, called when upon start-up
-void IFiniteSource.Start(Action onCompleted);
-
-// Stop method, called when pipeline is shutting down
-void IFiniteSource.Stop();
-```
-=======
 Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` marker interface serves this purpose. Being a "marker" interface, there are no methods to implement. Merely declaring a component to be an `ISourceComponent` clearly identifies it as such to the pipeline.
 
 ### 6.1. Completion
