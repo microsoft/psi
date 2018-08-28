@@ -28,6 +28,8 @@ __Samples__. After going through this first brief tutorial, it may be helpful to
 
 __In-depth Topics__. Finally, additional information is provided in a set of [Topics](/psi/topics) that dive into more detail on various aspects of the framework including synchronization, persistence, remoting, visualization etc.
 
+Additional useful information regarding available packages and components can be found in the [NuGet packages list](/psi/NuGetPackagesList) and in the [component list](/psi/ComponentsList) pages.
+
 Like the rest of the codebase, the documentation is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it [`documentation`](https://github.com/Microsoft/psi/labels/documentation), as this will help us target our documentation development efforts to the highest priority needs.
 
 # Disclaimer

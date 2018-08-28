@@ -112,15 +112,15 @@ using (var p = Pipeline.Create())
     // Create an audio source component
     var waveFileAudioSource = new WaveFileAudioSource(p, "sample.wav");
 
-    // Create an acoustic features component
-    var acousticFeatures = new AcousticFeaturesExtractor(p);
+    // Create an acoustic features extractor component
+    var acousticFeaturesExtractor = new AcousticFeaturesExtractor(p);
 
-    // Pipe the output of the wave file audio source component into the input of the acoustic features
-    waveFileAudioSource.Out.PipeTo(acousticFeatures.In);
+    // Pipe the output of the wave file audio source component into the input of the acoustic features extractor
+    waveFileAudioSource.Out.PipeTo(acousticFeaturesExtractor.In);
 
     // Process the output of the acoustic features and print the messages to the console
-    acousticFeatures.SpectralEntropy.Do(s => Console.WriteLine($"SpectralEntropy: {s}"));
-    acousticFeatures.LogEnergy.Do(e => Console.WriteLine($"LogEnergy: {e}"));
+    acousticFeaturesExtractor.SpectralEntropy.Do(s => Console.WriteLine($"SpectralEntropy: {s}"));
+    acousticFeaturesExtractor.LogEnergy.Do(e => Console.WriteLine($"LogEnergy: {e}"));
 
     // Run the pipeline
     p.Run();

@@ -14,7 +14,7 @@ __Setup Visual Studio__:
 We recommend you use [Visual Studio 2017](https://www.visualstudio.com/vs/) (the Community Edition of Visual Studio is sufficient). Make sure the following features are installed (you can check these features by running the Visual Studio Installer again and looking at both the Workloads and Individual Components tabs):
 
 * Make sure you have installed the __.NET desktop development__ workload, as well as the __.NET Framework 4.7 targeting pack__ feature.
-* Make sure you have installed the __Desktop development with C++__ workload, as well as the __Windows 10 SDK (10.0.15063.0) for Desktop C++ [x86 and x64]__ feature.
+* Make sure you have installed the __Desktop development with C++__ workload, as well as the __Windows 10 SDK (10.0.17134.0) for Desktop C++ [x86 and x64]__ feature.
 
 __Optional prerequisites__:
 

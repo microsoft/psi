@@ -36,6 +36,8 @@ The links below provide additional information about various, more in-depth topi
 
 ## Components and Toolkits
 
+The list of currently available components can be accessed [here](/psi/ComponentsList). The table below provides links with overviews for components in specific areas. 
+
 | Topic | Description |
 | :----------- | :---------- |
 | [Audio&nbsp;Overview](/psi/topics/Overview.Audio) | Provides an overview of audio capture and processing components and APIs. |
