@@ -15,7 +15,7 @@ processing and rendering audio, as well as for generating a range of acoustic fe
 ## Basic Components
 
 Basic audio capabilities are provided by the following components in the `Microsoft.Psi.Audio namespace`:
-- `AudioSource` - Captures audio from an audio recording device.
+- `AudioCapture` - Captures audio from an audio recording device.
 - `AudioPlayer` - Plays back audio on an audio playback device.
 - `AudioResampler` - Resamples an audio stream (Windows only).
 - `WaveFileAudioSource` - Reads audio from a wave file.
@@ -35,20 +35,20 @@ The following code will capture audio from the default audio recording device on
 ```csharp
 using (var pipeline = Pipeline.Create())
 {
-    var source = new AudioSource(pipeline);
+    var source = new AudioCapture(pipeline);
     var player = new AudioPlayer(pipeline);
     source.PipeTo(player);
     pipeline.Run();
 }
 ```
 
-Individual audio devices for capture and playback may be specified in an `AudioSourceConfiguration` or `AudioPlayerConfiguration`
-object, which may optionally be supplied when constructing an `AudioSource` or `AudioPlayer` as shown in the following code:
+Individual audio devices for capture and playback may be specified in an `AudioCaptureConfiguration` or `AudioPlayerConfiguration`
+object, which may optionally be supplied when constructing an `AudioCapture` or `AudioPlayer` as shown in the following code:
 
 ```csharp
-var source = new AudioSource(
+var source = new AudioCapture(
     pipeline,
-    new AudioSourceConfiguration()
+    new AudioCaptureConfiguration()
     {
         DeviceName = "Headset Microphone (USB)"
     });
@@ -66,9 +66,9 @@ may be explicitly specified by supplying a 'WaveFormat' value in the configurati
 
 ```csharp
 var format = WaveFormat.Create16kHz1Channel16BitPcm();
-var source = new AudioSource(
+var source = new AudioCapture(
     pipeline,
-    new AudioSourceConfiguration()
+    new AudioCaptureConfiguration()
     { 
         OutputFormat = format
     });
@@ -117,8 +117,8 @@ The following operators are provided to manipulate raw audio samples and to comp
 - `ToFloat` - Converts raw audio samples to floating-point sample values.
 - `ZeroCrossingRate` - Computes the zero-cross frequency of an audio frame.
 
-While any one of these operators may be used individually, they are usually produced collectively using the `AcousticFeatures` component which
-aggregates a set of commonly used acoustic feature streams into a single component. Configuration parameters specified in the `AcousticFeaturesConfiguration`
+While any one of these operators may be used individually, they are usually produced collectively using the `AcousticFeaturesExtractor` component which
+aggregates a set of commonly used acoustic feature streams into a single component. Configuration parameters specified in the `AcousticFeaturesExtractorConfiguration`
 object determine which features to generate. Note that the audio input to this component is assumed to be 1-channel 16-bit PCM audio. Ensure that this format
-is specified in `AudioSourceConfiguration` if using the `AudioSource` to capture live audio as input, or use the `AudioResampler` component to convert the
+is specified in `AudioCaptureConfiguration` if using the `AudioCapture` to capture live audio as input, or use the `AudioResampler` component to convert the
 audio stream to the required format.

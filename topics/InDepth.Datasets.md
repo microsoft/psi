@@ -181,23 +181,23 @@ public async Task CreateDerivedPartitionAsync(
 
 The `CreateDerivedPartitionAsync` APIs are asynchronous to accommodate awaiting and cancelling long-running computations over large datasets.
 
-As an example, given a raw dataset from containing a stream of audio captured from a run of an application, we may want to compute a set of acoustic feature streams over the audio for further analysis, or simply to visualize them. Assuming that the dataset contains a stream named "RawAudioData", we can define an action that will import the data from this stream using the `SessionImporter`, compute the desired acoustic features using the `AcousticFeatures` \\psi component, and write the computed streams back to the dataset in a derived partion using the `Exporter`:
+As an example, given a raw dataset from containing a stream of audio captured from a run of an application, we may want to compute a set of acoustic feature streams over the audio for further analysis, or simply to visualize them. Assuming that the dataset contains a stream named "RawAudioData", we can define an action that will import the data from this stream using the `SessionImporter`, compute the desired acoustic features using the `AcousticFeaturesExtractor` \\psi component, and write the computed streams back to the dataset in a derived partion using the `Exporter`:
 
 ```csharp
 await dataset.CreateDerivedPartitionAsync(
     (pipeline, importer, exporter) =>
     {
         // create a component to compute the acoustic features
-        var acousticFeatures = new AcousticFeatures(pipeline);
+        var acousticFeaturesExtractor = new AcousticFeaturesExtractor(pipeline);
 
-        // import the raw audio stream and pipe it to the acoustic features component
+        // import the raw audio stream and pipe it to the acoustic features extractor component
         var rawAudio = importer.OpenStream<AudioBuffer>("RawAudioData");
-        rawAudio.PipeTo(acousticFeatures);
+        rawAudio.PipeTo(acousticFeaturesExtractor);
 
         // save the derived acoustic feature streams
-        acousticFeatures.LogEnergy.Write("LogEnergy", exporter);
-        acousticFeatures.LowFrequencyEnergy.Write("LowFrequencyEnergy", exporter);
-        acousticFeatures.SpectralEntropy.Write("SpectralEntropy", exporter);
+        acousticFeaturesExtractor.LogEnergy.Write("LogEnergy", exporter);
+        acousticFeaturesExtractor.LowFrequencyEnergy.Write("LowFrequencyEnergy", exporter);
+        acousticFeaturesExtractor.SpectralEntropy.Write("SpectralEntropy", exporter);
     },
     "AcousticFeatures",
     true,
@@ -219,16 +219,16 @@ await dataset.CreateDerivedPartitionAsync(
     (pipeline, importer, exporter) =>
     {
         // create a component to compute the acoustic features
-        var acousticFeatures = new AcousticFeatures(pipeline);
+        var acousticFeaturesExtractor = new AcousticFeaturesExtractor(pipeline);
 
-        // import the raw audio stream and pipe it to the acoustic features component
+        // import the raw audio stream and pipe it to the acoustic features extractor component
         var rawAudio = importer.OpenStream<AudioBuffer>("RawAudioData");
-        rawAudio.PipeTo(acousticFeatures);
+        rawAudio.PipeTo(acousticFeaturesExtractor);
 
         // save the derived acoustic feature streams
-        acousticFeatures.LogEnergy.Write("LogEnergy", exporter);
-        acousticFeatures.LowFrequencyEnergy.Write("LowFrequencyEnergy", exporter);
-        acousticFeatures.SpectralEntropy.Write("SpectralEntropy", exporter);
+        acousticFeaturesExtractor.LogEnergy.Write("LogEnergy", exporter);
+        acousticFeaturesExtractor.LowFrequencyEnergy.Write("LowFrequencyEnergy", exporter);
+        acousticFeaturesExtractor.SpectralEntropy.Write("SpectralEntropy", exporter);
     },
     "AcousticFeatures",
     true,

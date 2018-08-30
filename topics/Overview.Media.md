@@ -39,11 +39,11 @@ using (var pipeline = Pipeline.Create())
 	{
 		// Do something with the JPG image
 	});
-    var audioConfig = new Microsoft.Psi.Audio.AudioSourceConfiguration()
+    var audioConfig = new Microsoft.Psi.Audio.AudioCaptureConfiguration()
 	{
             OutputFormat = Microsoft.Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm()
 	});
-    var audioInput = new Microsoft.Psi.Audio.AudioSource(pipeline, audioConfig);
+    var audioInput = new Microsoft.Psi.Audio.AudioCapture(pipeline, audioConfig);
     audioInput.Out.Do(
 	(audioBuffer, e) =>
 	{
@@ -85,13 +85,13 @@ using (var pipeline = Pipeline.Create())
 {
     var webcam = new MediaCapture(pipeline, 1920, 1080, 30.0);
 
-    var audioConfig = new Microsoft.Psi.Audio.AudioSourceConfiguration();
+    var audioConfig = new Microsoft.Psi.Audio.AudioCaptureConfiguration();
     audioConfig.OutputFormat = WaveFormat.Create16BitPcm(48000, 2);
 
-    var audioSource = new Microsoft.Psi.Audio.AudioSource(pipeline, audioConfig);
+    var audioCapture = new Microsoft.Psi.Audio.AudioCapture(pipeline, audioConfig);
 
     var writer = new Mpeg4Writer(pipeline, "output.mp4", 1920, 1080, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp);
-    audioSource.Out.PipeTo(writer.AudioIn);
+    audioCapture.Out.PipeTo(writer.AudioIn);
     webcam.Out.PipeTo(writer.ImageIn);
     pipeline.Run(System.TimeSpan.FromSeconds(30));
 }

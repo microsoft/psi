@@ -19,17 +19,17 @@ Situated interactive applications often need to deal with speech when communicat
 
 ### The SystemSpeechRecognizer component
 
-The `SystemSpeechRecognizer` component performs continuous recognition on an audio stream. Recognition results are posted as they are available on the `Out` stream. Recognition results are of type `SpeechRecognitionResult` and implement the `IStreamingSpeechRecognitionResult` interface. In general, this pattern allows for results from speech recognition components based on different underlying technologies to conform to a common interface for consumption by downstream components. Messages on the `Out` stream may contain partial or final results, distinguished by the `IStreamingSpeechRecognitionResult.IsFinal` flag. Partial results contain partial hypotheses while speech is in progress and are useful for displaying hypothesized text as feedback to the user. The final result is emitted once the recognizer has determined that speech has ended, and will contain the top hypothesis for the utterance.
+The `SystemSpeechRecognizer` component performs continuous recognition on an audio stream. Recognition results are of type `SpeechRecognitionResult` and implement the `IStreamingSpeechRecognitionResult` interface. In general, this pattern allows for results from speech recognition components based on different underlying technologies to conform to a common interface for consumption by downstream components. Final speech recognition results are posted on the `Out` stream while partial recognition results are posted on the `PartialRecognitionResults` stream. Partial results contain partial hypotheses while speech is in progress and are useful for displaying hypothesized text as feedback to the user. The final result is emitted once the recognizer has determined that speech has ended, and will contain the top hypothesis for the utterance.
 
-The following example shows how to perform speech recognition on an audio stream. Note that by default the speech recognizer expects a 16 kHz, 1-channel, 16-bit PCM audio stream. If the format of the audio source is different, either specify the correct format in the `AudioSourceConfiguration.OutputFormat` configuration parameter (as shown), apply resampling to the audio stream using the `Resample` audio operator, or set the `SystemSpeechRecognizerConfiguration.InputFormat` configuration parameter to match the audio source format. However, not all input audio formats are supported.
+The following example shows how to perform speech recognition on an audio stream. Note that by default the speech recognizer expects a 16 kHz, 1-channel, 16-bit PCM audio stream. If the format of the audio source is different, either specify the correct format in the `AudioCaptureConfiguration.OutputFormat` configuration parameter (as shown), apply resampling to the audio stream using the `Resample` audio operator, or set the `SystemSpeechRecognizerConfiguration.InputFormat` configuration parameter to match the audio source format. However, not all input audio formats are supported.
 
 ```csharp
 using (var pipeline = Pipeline.Create())
 {
     // Capture audio from the default recording device in the correct format
-    var audio = new AudioSource(
+    var audio = new AudioCapture(
         pipeline, 
-        new AudioSourceConfiguration()
+        new AudioCaptureConfiguration()
         {
             OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm()
         });
@@ -40,14 +40,12 @@ using (var pipeline = Pipeline.Create())
     // Send the audio to the recognizer
     audio.PipeTo(recognizer);
 
-    // Print partial recognition results - use the Where operator to filter and the Do operator to print
-    var partial = recognizer.Out
-        .Where(result => !result.IsFinal)
+    // Print partial recognition results - use the Do operator to print
+    var partial = recognizer.PartialRecognitionResults
         .Do(partial => Console.WriteLine(partial.Text.ToString()));
 
     // Print final recognition results
     var final = recognizer.Out
-        .Where(result => result.IsFinal)
         .Do(final => Console.WriteLine(final.Text.ToString()));
 
     // Run the pipeline
@@ -145,7 +143,7 @@ With the above grammar configured, a recognized phrase of "remind me in a minute
 <a name="MicrosoftSpeechRecognizer"/>
 
 ### The MicrosoftSpeechRecognizer component
-The `MicrosoftSpeechRecognizer` component, like the `SystemSpeechRecognizer` component, performs speech recognition on a stream of audio. However, it is implemented using the [Microsoft Server Speech Platform SDK](https://msdn.microsoft.com/en-us/library/hh361572.aspx). The API and usage of this component and its API are almost identical to that of the `SystemSpeechRecognizer` component. However, the `MicrosoftSpeechRecognizer` currently only supports [grammar-based](/psi/topics/Overview.SpeechAndLanguage#Grammars) speech recognition.
+The `MicrosoftSpeechRecognizer` component, like the `SystemSpeechRecognizer` component, performs speech recognition on a stream of audio. However, it is implemented using the [Microsoft Server Speech Platform SDK](https://msdn.microsoft.com/en-us/library/hh361572.aspx). The usage of this component and its API are almost identical to that of the `SystemSpeechRecognizer` component. However, the `MicrosoftSpeechRecognizer` currently only supports [grammar-based](/psi/topics/Overview.SpeechAndLanguage#Grammars) speech recognition.
 
 <a name="BingSpeechRecognizer"/>
 
@@ -164,9 +162,9 @@ using (var pipeline = Pipeline.Create())
             SubscriptionKey = "..." // replace with your own subscription key
         });
 
-    var audio = new AudioSource(
+    var audio = new AudioCapture(
         pipeline, 
-        new AudioSourceConfiguration() 
+        new AudioCaptureConfiguration() 
         {
             OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm()
         });
@@ -191,7 +189,7 @@ using (var pipeline = Pipeline.Create())
 }
 ```
 
-The component posts partial and final recognition results represented by a `SpeechRecognitionResult` object on the `Out` stream.
+The component posts final and partial recognition results represented by the `SpeechRecognitionResult` object on the `Out` and `PartialRecognitionResults` streams respectively.
 
 Note that the `BingSpeechRecognizerConfiguration.SubscriptionKey` configuration parameter is required in order to use the Bing speech recognition service. A subscription may be obtained [by registering here](https://www.microsoft.com/cognitive-services/en-us/speech-api).
 
