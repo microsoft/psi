@@ -44,11 +44,11 @@
     <Reference Include="C5, Version=2.5.0.0, Culture=neutral, PublicKeyToken=282361b99ded7e8e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\C5.2.5.3\lib\net45\C5.dll</HintPath>
     </Reference>
-    <Reference Include="HelixToolkit, Version=1.1.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\HelixToolkit.1.1.0\lib\portable-net45+win8+wpa81+wp8\HelixToolkit.dll</HintPath>
+    <Reference Include="HelixToolkit, Version=2.3.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HelixToolkit.2.3.0\lib\netstandard1.1\HelixToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="HelixToolkit.Wpf, Version=1.1.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\HelixToolkit.Wpf.1.1.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
+    <Reference Include="HelixToolkit.Wpf, Version=2.3.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HelixToolkit.Wpf.2.3.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=3.20.2.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MathNet.Numerics.Signed.3.20.2\lib\net40\MathNet.Numerics.dll</HintPath>
@@ -67,8 +67,8 @@
       <HintPath>..\..\packages\Microsoft.Kinect.Face.x64.2.0.1410.19000\lib\net45\Microsoft.Kinect.Face.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ProjectOxford.Common, Version=2.0.25.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.ProjectOxford.Common.2.0.25\lib\netstandard1.1\Microsoft.ProjectOxford.Common.dll</HintPath>
+    <Reference Include="Microsoft.ProjectOxford.Common, Version=2.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.ProjectOxford.Common.2.1.1\lib\netstandard1.1\Microsoft.ProjectOxford.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ProjectOxford.Face, Version=1.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.ProjectOxford.Face.1.4.0\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Microsoft.ProjectOxford.Face.dll</HintPath>
@@ -77,7 +77,7 @@
       <HintPath>..\..\packages\Microsoft.ProjectOxford.Vision.1.0.393\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Microsoft.ProjectOxford.Vision.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -201,7 +201,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
   </Target>
-  <Import Project="..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
 </Project>

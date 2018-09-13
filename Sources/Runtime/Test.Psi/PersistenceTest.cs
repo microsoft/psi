@@ -12,6 +12,7 @@ namespace Test.Psi
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Test.Psi.Common;
 
     [TestClass]
     public class PersistenceTest
@@ -27,7 +28,7 @@ namespace Test.Psi
         [TestCleanup]
         public void Cleanup()
         {
-            Directory.Delete(this.path, true);
+            TestRunner.SafeDirectoryDelete(this.path, true);
         }
 
         [TestMethod]
@@ -427,6 +428,22 @@ namespace Test.Psi
             {
                 Assert.AreEqual(before[i].SequenceId, after[i].SequenceId);
                 Assert.AreEqual(before[i].OriginatingTime, after[i].OriginatingTime);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("Stress")]
+        public void SimultaneousWriteReadWithRelativePathStress()
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                this.SimultaneousWriteReadWithRelativePath();
+
+                // clear the test folder for the next iteration
+                foreach (string folder in Directory.GetDirectories(this.path, nameof(this.SimultaneousWriteReadWithRelativePath) + "*"))
+                {
+                    TestRunner.SafeDirectoryDelete(folder, true);
+                }
             }
         }
 

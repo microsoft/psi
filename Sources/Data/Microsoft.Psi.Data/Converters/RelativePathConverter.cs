@@ -72,11 +72,21 @@ namespace Microsoft.Psi.Data.Converters
                     var rootUri = new Uri(AppendDirectorySeparatorChar(rootPath));
                     var valueUri = new Uri(AppendDirectorySeparatorChar(value), UriKind.RelativeOrAbsolute);
 
-                    // if value is an absolute URI, convert it to a relative URI (relative to root URI)
+                    // if value is an absolute URI, attempt to convert it to a relative URI (relative to root URI)
                     if (valueUri.IsAbsoluteUri)
                     {
                         var relativeUri = rootUri.MakeRelativeUri(valueUri);
-                        value = Uri.UnescapeDataString(relativeUri.ToString());
+
+                        if (relativeUri.IsAbsoluteUri)
+                        {
+                            // if it was not possible to make the URI relative, use the full local path
+                            value = relativeUri.LocalPath;
+                        }
+                        else
+                        {
+                            // unescape the relative path
+                            value = Uri.UnescapeDataString(relativeUri.ToString());
+                        }
                     }
                 }
             }

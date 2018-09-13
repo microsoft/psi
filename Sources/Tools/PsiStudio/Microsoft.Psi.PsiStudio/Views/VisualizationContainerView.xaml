@@ -44,11 +44,16 @@
             RowBackground="Transparent"
             SelectionMode="Single"
             SelectionUnit="FullRow"
+            AllowDrop="True"
+            DragEnter="Items_DragEnter"
+            DragLeave="Items_DragLeave"
+            DragOver="Items_DragOver"
+            Drop="Items_Drop"
             ScrollViewer.CanContentScroll="False"
             CanUserAddRows="False"
             EnableRowVirtualization="False"
             VerticalContentAlignment="Stretch"
-            VerticalScrollBarVisibility="Auto">
+            VerticalScrollBarVisibility="Disabled">
 
             <DataGrid.Resources>
                 <views:VisualizationTemplateSelector x:Key="panelTemplateSelector" />

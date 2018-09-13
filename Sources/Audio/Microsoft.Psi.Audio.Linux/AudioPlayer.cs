@@ -8,12 +8,12 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements an audio player component which plays back a stream of audio to an output device such as the speakers.
+    /// Component that plays back an audio stream to an output device such as the speakers.
     /// </summary>
     /// <remarks>
     /// This output component renders an audio input stream of type <see cref="AudioBuffer"/> to the
     /// default or other specified audio output device for playback. The audio device on which to
-    /// playback the output may be specified by name via the <see cref="AudioConfiguration.DeviceName"/>
+    /// playback the output may be specified by name via the <see cref="AudioPlayerConfiguration.DeviceName"/>
     /// configuration parameter.
     /// </remarks>
     public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, IDisposable
@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// The configuration for this component.
         /// </summary>
-        private readonly AudioConfiguration configuration;
+        private readonly AudioPlayerConfiguration configuration;
 
         /// <summary>
         /// Number of bytes per audio frame.
@@ -40,7 +40,7 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioPlayer(Pipeline pipeline, AudioConfiguration configuration)
+        public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)
             : base(pipeline)
         {
             pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
         public AudioPlayer(Pipeline pipeline, string configurationFilename = null)
-            : this(pipeline, (configurationFilename == null) ? new AudioConfiguration() : new ConfigurationHelper<AudioConfiguration>(configurationFilename).Configuration)
+            : this(pipeline, (configurationFilename == null) ? new AudioPlayerConfiguration() : new ConfigurationHelper<AudioPlayerConfiguration>(configurationFilename).Configuration)
         {
         }
 
@@ -92,7 +92,7 @@ namespace Microsoft.Psi.Audio
                 LinuxAudioInterop.Mode.Playback,
                 (int)this.configuration.Format.SamplesPerSec,
                 this.configuration.Format.Channels,
-                LinuxAudioInterop.ConfigurationFormat(this.configuration));
+                LinuxAudioInterop.ConvertFormat(this.configuration.Format));
         }
 
         /// <summary>

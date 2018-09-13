@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Media
     using Microsoft.Psi.Media_Interop;
 
     /// <summary>
-    /// This class encapsulates a video camera component.
+    /// Component that captures and streams video and audio from a camera.
     /// </summary>
     public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable, IMediaCapture
     {
@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Media
             this.configuration = configurationHelper.Configuration;
             if (this.configuration.CaptureAudio)
             {
-                this.audio = new Audio.AudioSource(pipeline, new Audio.AudioSourceConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
+                this.audio = new Audio.AudioCapture(pipeline, new Audio.AudioCaptureConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
             }
         }
 
@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Media
             this.configuration = configuration;
             if (this.configuration.CaptureAudio)
             {
-                this.audio = new Audio.AudioSource(pipeline, new Audio.AudioSourceConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
+                this.audio = new Audio.AudioCapture(pipeline, new Audio.AudioCaptureConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
             }
         }
 
@@ -90,7 +90,7 @@ namespace Microsoft.Psi.Media
             };
             if (this.configuration.CaptureAudio)
             {
-                this.audio = new Audio.AudioSource(pipeline, new Audio.AudioSourceConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
+                this.audio = new Audio.AudioCapture(pipeline, new Audio.AudioCaptureConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
             }
         }
 

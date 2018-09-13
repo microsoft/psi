@@ -10,7 +10,6 @@ namespace Microsoft.Psi.Data.Json
     using Microsoft.Psi.Persistence;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using Newtonsoft.Json.Schema;
 
     /// <summary>
     /// Represents a writer for JSON data stores.
@@ -21,19 +20,16 @@ namespace Microsoft.Psi.Data.Json
 
         private StreamWriter streamWriter = null;
         private JsonWriter jsonWriter = null;
-        private JSchemaValidatingWriter validatingWriter = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonStoreWriter"/> class.
         /// </summary>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="dataSchemaString">JSON schema used to validate data stream.</param>
         /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store</param>
         /// <param name="extension">The extension for the underlying file.</param>
-        /// <param name="preloadSchemas">Dictionary of URis to JSON schemas to preload before validating any JSON. Would likely include schemas references by the catalog and data schemas.</param>
-        public JsonStoreWriter(string name, string path, string dataSchemaString, bool createSubdirectory = true, string extension = DefaultExtension, IDictionary<Uri, string> preloadSchemas = null)
-            : base(dataSchemaString, extension, preloadSchemas)
+        public JsonStoreWriter(string name, string path, bool createSubdirectory = true, string extension = DefaultExtension)
+            : base(extension)
         {
             ushort id = 0;
             this.Name = name;
@@ -61,32 +57,17 @@ namespace Microsoft.Psi.Data.Json
             string dataPath = System.IO.Path.Combine(this.Path, StoreCommon.GetDataFileName(this.Name) + this.Extension);
             this.streamWriter = File.CreateText(dataPath);
             this.jsonWriter = new JsonTextWriter(this.streamWriter);
-            this.validatingWriter = new JSchemaValidatingWriter(this.jsonWriter);
-            this.validatingWriter.Schema = this.DataSchema;
-            this.validatingWriter.ValidationEventHandler += (s, e) => throw new InvalidDataException(e.Message);
-            this.validatingWriter.WriteStartArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonStoreWriter"/> class.
-        /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store</param>
-        public JsonStoreWriter(string name, string path, bool createSubdirectory = true)
-        : this(name, path, JsonStoreBase.DataSchemaString, createSubdirectory)
-        {
+            this.jsonWriter.WriteStartArray();
         }
 
         /// <inheritdoc />
         public override void Dispose()
         {
             this.WriteCatalog();
-            this.validatingWriter.WriteEndArray();
+            this.jsonWriter.WriteEndArray();
             this.streamWriter.Dispose();
             this.streamWriter = null;
             this.jsonWriter = null;
-            this.validatingWriter = null;
         }
 
         /// <summary>
@@ -133,7 +114,7 @@ namespace Microsoft.Psi.Data.Json
         {
             var metadata = this.catalog[envelope.SourceId];
             metadata.Update(envelope, data.ToString().Length);
-            this.WriteMessage(data, envelope, this.validatingWriter);
+            this.WriteMessage(data, envelope, this.jsonWriter);
         }
 
         private void WriteCatalog()
@@ -141,11 +122,8 @@ namespace Microsoft.Psi.Data.Json
             string metadataPath = System.IO.Path.Combine(this.Path, StoreCommon.GetCatalogFileName(this.Name) + this.Extension);
             using (var file = File.CreateText(metadataPath))
             using (var writer = new JsonTextWriter(file))
-            using (var validatingWriter = new JSchemaValidatingWriter(writer))
             {
-                validatingWriter.Schema = this.CatalogSchema;
-                validatingWriter.ValidationEventHandler += (s, e) => throw new InvalidDataException(e.Message);
-                this.Serializer.Serialize(validatingWriter, this.catalog.Values.ToList());
+                this.Serializer.Serialize(writer, this.catalog.Values.ToList());
             }
         }
 

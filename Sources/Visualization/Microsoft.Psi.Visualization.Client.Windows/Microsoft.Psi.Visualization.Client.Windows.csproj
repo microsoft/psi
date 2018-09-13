@@ -43,9 +43,6 @@
     <ProjectReference Include="..\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(OutDir)\Microsoft.Psi.Data.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutDir)\Microsoft.Psi.Data.pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutDir)\Microsoft.Psi.Data.xml" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Visualization.Common.Windows.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Visualization.Common.Windows.pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Visualization.Common.Windows.xml" Pack="true" PackagePath="lib\$(TargetFramework)" />

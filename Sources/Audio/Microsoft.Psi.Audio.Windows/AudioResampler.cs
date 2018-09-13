@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements an audio resampler component which resamples an audio stream into a different format.
+    /// Component that resamples an audio stream into a different format.
     /// </summary>
     /// <remarks>
     /// This component performs resampling on an audio stream of type <see cref="AudioBuffer"/> to convert it to an

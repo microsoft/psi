@@ -385,9 +385,9 @@ namespace Microsoft.Psi
             return new Interpolator<T>(NearestValueFn<T>(window, requireNextValue, orDefault), window, requireNextValue, orDefault);
         }
 
-        private static Func<DateTime, IEnumerable<Message<T>>, MatchResult<T>> NearestValueFn<T>(RelativeTimeInterval window, bool requireNextValue, bool orDefault)
+        private static Func<DateTime, IEnumerable<Message<T>>, bool, MatchResult<T>> NearestValueFn<T>(RelativeTimeInterval window, bool requireNextValue, bool orDefault)
         {
-            return (DateTime matchTime, IEnumerable<Message<T>> messages) =>
+            return (DateTime matchTime, IEnumerable<Message<T>> messages, bool final) =>
             {
                 var count = messages.Count();
 
@@ -430,7 +430,7 @@ namespace Microsoft.Psi
                 {
                     // Check if we need to satisfy additional conditions
                     // if the best match is the last available message
-                    if (requireNextValue && (i == count))
+                    if (requireNextValue && (i == count) && !final)
                     {
                         // We need to guarantee that bestMatch is indeed the best match. If it has an
                         // originating time that occurs at or after the match time (or the
@@ -480,7 +480,7 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of messages.</typeparam>
         public class Interpolator<T>
         {
-            private readonly Func<DateTime, IEnumerable<Message<T>>, MatchResult<T>> matchFn;
+            private readonly Func<DateTime, IEnumerable<Message<T>>, bool, MatchResult<T>> matchFn;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Interpolator{T}"/> class.
@@ -489,7 +489,7 @@ namespace Microsoft.Psi
             /// <param name="window">Message window interval.</param>
             /// <param name="requireNextValue">Whether the next value is required as confirmation of proper match.</param>
             /// <param name="orDefault">Whether to return a default value upon failure to find a suitable match.</param>
-            public Interpolator(Func<DateTime, IEnumerable<Message<T>>, MatchResult<T>> match, RelativeTimeInterval window, bool requireNextValue, bool orDefault)
+            public Interpolator(Func<DateTime, IEnumerable<Message<T>>, bool, MatchResult<T>> match, RelativeTimeInterval window, bool requireNextValue, bool orDefault)
             {
                 this.Window = window;
                 this.RequireNextValue = requireNextValue;
@@ -535,10 +535,11 @@ namespace Microsoft.Psi
             /// </summary>
             /// <param name="matchTime">Time at which to match.</param>
             /// <param name="messages">Window of messages.</param>
+            /// <param name="final">Flag indicating whether this is a final call (stream closed)</param>
             /// <returns>Resulting match.</returns>
-            public MatchResult<T> Match(DateTime matchTime, IEnumerable<Message<T>> messages)
+            public MatchResult<T> Match(DateTime matchTime, IEnumerable<Message<T>> messages, bool final)
             {
-                return this.matchFn(matchTime, messages);
+                return this.matchFn(matchTime, messages, final);
             }
         }
     }

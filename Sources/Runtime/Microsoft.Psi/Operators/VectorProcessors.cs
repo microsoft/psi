@@ -12,141 +12,282 @@ namespace Microsoft.Psi
     /// </summary>
     public static partial class Operators
     {
-        /// <summary>
-        /// Transforms a stream of fixed-size array messages by creating and applying a sub-pipeline to each element in the input array,
-        /// and assembling the results into a corresponding output array stream.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TOut">Type of output messages.</typeparam>
-        /// <param name="source">Source stream.</param>
-        /// <param name="vectorSize">The arity of the array messages on the input stream.</param>
-        /// <param name="action">Action function.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        /// <param name="policy">Delivery policy.</param>
-        /// <returns>Stream of collections of output.</returns>
-        public static IProducer<TOut[]> Parallel<TIn, TOut>(
-            this IProducer<TIn[]> source,
-            int vectorSize,
-            Func<int, TIn, Envelope, TOut> action,
-            bool joinOrDefault = false,
-            DeliveryPolicy policy = null)
-        {
-            return source.Parallel(vectorSize, (index, singleItemStream) => singleItemStream.Select((item, e) => action(index, item, e)), joinOrDefault, policy);
-        }
+        #region Parallel extension methods using fixed-size parallel
 
         /// <summary>
-        /// Transforms a stream of fixed-size array messages by creating and applying a sub-pipeline to each element in the input array,
-        /// and assembling the results into a corresponding output array stream.
+        /// Transforms a stream of fixed-size array messages by creating a stream for each element in the array,
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
+        /// array stream.
         /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TOut">Type of output messages.</typeparam>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <typeparam name="TOut">Type of output array element.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="vectorSize">Vector arity.</param>
-        /// <param name="transformSelector">Function mapping indexes to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        /// <param name="policy">Delivery policy.</param>
-        /// <returns>Stream of collections of output.</returns>
+        /// <param name="streamTransform">Function mapping from an index and stream of input element to a stream of output element.</param>
+        /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
         public static IProducer<TOut[]> Parallel<TIn, TOut>(
             this IProducer<TIn[]> source,
             int vectorSize,
-            Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector,
+            Func<int, IProducer<TIn>, IProducer<TOut>> streamTransform,
             bool joinOrDefault = false,
-            DeliveryPolicy policy = null)
+            DeliveryPolicy deliveryPolicy = null)
         {
-            policy = policy ?? DeliveryPolicy.Immediate;
-            var p = new Parallel<TIn, TOut>(source.Out.Pipeline, vectorSize, transformSelector, joinOrDefault);
-            source.PipeTo(p, policy);
+            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
+            var p = new ParallelFixedLength<TIn, TOut>(source.Out.Pipeline, vectorSize, streamTransform, joinOrDefault);
+            source.PipeTo(p, deliveryPolicy);
             return p;
         }
 
         /// <summary>
-        /// Transforms a stream of variable-size array messages by creating and applying a sub-pipeline to each element in the input array,
-        /// and assembling the results into a corresponding output array stream.
+        /// Processes a stream of fixed-size array messages by creating a stream for each element in the array,
+        /// and performing an action on each of these streams.
         /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TOut">Type of output messages.</typeparam>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
         /// <param name="source">Source stream.</param>
-        /// <param name="action">Action function.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        /// <param name="policy">Delivery policy.</param>
-        /// <returns>Stream of key to output mappings.</returns>
-        public static IProducer<TOut[]> Parallel<TIn, TOut>(
-            this IProducer<TIn[]> source,
-            Func<int, TIn, Envelope, TOut> action,
-            bool joinOrDefault = false,
-            DeliveryPolicy policy = null)
-        {
-            return source.Parallel((index, singleItemStream) => singleItemStream.Select((item, e) => action(index, item, e)), joinOrDefault, policy);
-        }
-
-        /// <summary>
-        /// Transforms a stream of variable-size array messages by creating and applying a sub-pipeline to each element in the input array,
-        /// and assembling the results into a corresponding output array stream.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TOut">Type of output messages.</typeparam>
-        /// <param name="source">Source stream.</param>
-        /// <param name="transformSelector">Function mapping indexes to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        /// <param name="policy">Delivery policy.</param>
-        /// <returns>Stream of key to output mappings.</returns>
-        public static IProducer<TOut[]> Parallel<TIn, TOut>(
-            this IProducer<TIn[]> source,
-            Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector,
-            bool joinOrDefault = false,
-            DeliveryPolicy policy = null)
-        {
-            policy = policy ?? DeliveryPolicy.Immediate;
-            var p = new ParallelVariableLength<TIn, TOut>(source.Out.Pipeline, transformSelector, joinOrDefault);
-            source.PipeTo(p, policy);
-            return p;
-        }
-
-        /// <summary>
-        /// Transforms a stream of dictionary messages by creating and applying a sub-pipeline to each element in the dictionary,
-        /// and assembling the results into a corresponding output array dictionary.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TKey">Type of key.</typeparam>
-        /// <typeparam name="TOut">Type of output messages.</typeparam>
-        /// <param name="source">Source stream.</param>
-        /// <param name="action">Action function.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        /// <param name="policy">Delivery policy.</param>
-        /// <returns>Stream of key to output mappings.</returns>
-        public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
-            this IProducer<Dictionary<TKey, TIn>> source,
-            Func<TKey, TIn, Envelope, TOut> action,
-            bool joinOrDefault = false,
-            DeliveryPolicy policy = null)
-        {
-            return source.Parallel<TIn, TKey, TOut>((key, stream) => stream.Select((val, e) => action(key, val, e)), joinOrDefault, policy);
-        }
-
-        /// <summary>
-        /// Transforms a stream of dictionary messages by creating and applying a sub-pipeline to each element in the dictionary,
-        /// and assembling the results into a corresponding output array dictionary.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TKey">Type of key.</typeparam>
-        /// <typeparam name="TOut">Type of output messages.</typeparam>
-        /// <param name="source">Source stream.</param>
-        /// <param name="transformSelector">Function mapping indexes to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
+        /// <param name="vectorSize">Vector arity.</param>
+        /// <param name="streamAction">Action to apply to the individual element streams.</param>
         /// <param name="deliveryPolicy">Delivery policy.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
-        /// <returns>Stream of key to output mappings.</returns>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TIn[]> Parallel<TIn>(
+            this IProducer<TIn[]> source,
+            int vectorSize,
+            Action<int, IProducer<TIn>> streamAction,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
+            var p = new ParallelFixedLength<TIn, TIn>(source.Out.Pipeline, vectorSize, streamAction);
+            source.PipeTo(p, deliveryPolicy);
+            return source;
+        }
+
+        /// <summary>
+        /// Transforms a stream of fixed-size array messages by creating a stream for each element in the array,
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
+        /// array stream.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <typeparam name="TOut">Type of output array element.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="vectorSize">Vector arity.</param>
+        /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
+        /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TOut[]> Parallel<TIn, TOut>(
+            this IProducer<TIn[]> source,
+            int vectorSize,
+            Func<IProducer<TIn>, IProducer<TOut>> streamTransform,
+            bool joinOrDefault = false,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            return source.Parallel(vectorSize, (i, s) => streamTransform(s), joinOrDefault, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Processes a stream of fixed-size array messages by creating a stream for each element in the array,
+        /// and performing an action on each of these streams.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="vectorSize">Vector arity.</param>
+        /// <param name="streamAction">Action to apply to the individual element streams.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TIn[]> Parallel<TIn>(
+            this IProducer<TIn[]> source,
+            int vectorSize,
+            Action<IProducer<TIn>> streamAction,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            return source.Parallel(vectorSize, (i, s) => streamAction(s), deliveryPolicy);
+        }
+
+        #endregion
+
+        #region Parallel extension methods using variable-size parallel
+
+        /// <summary>
+        /// Transforms a stream of variable-size array messages by creating a stream for each element in the array,
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
+        /// array stream.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <typeparam name="TOut">Type of output array element.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
+        /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TOut[]> Parallel<TIn, TOut>(
+            this IProducer<TIn[]> source,
+            Func<int, IProducer<TIn>, IProducer<TOut>> streamTransform,
+            bool joinOrDefault = false,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
+            var p = new ParallelVariableLength<TIn, TOut>(source.Out.Pipeline, streamTransform, joinOrDefault);
+            source.PipeTo(p, deliveryPolicy);
+            return p;
+        }
+
+        /// <summary>
+        /// Processes a stream of variable-size array messages by creating a stream for each element in the array,
+        /// and performing an action on each of these streams.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamAction">Action to apply to the individual element streams.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TIn[]> Parallel<TIn>(
+            this IProducer<TIn[]> source,
+            Action<int, IProducer<TIn>> streamAction,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
+            var p = new ParallelVariableLength<TIn, TIn>(source.Out.Pipeline, streamAction);
+            source.PipeTo(p, deliveryPolicy);
+            return source;
+        }
+
+        /// <summary>
+        /// Transforms a stream of variable-size array messages by creating a stream for each element in the array,
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
+        /// array stream.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <typeparam name="TOut">Type of output array element.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
+        /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TOut[]> Parallel<TIn, TOut>(
+            this IProducer<TIn[]> source,
+            Func<IProducer<TIn>, IProducer<TOut>> streamTransform,
+            bool joinOrDefault = false,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            return source.Parallel((i, s) => streamTransform(s), joinOrDefault, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Processes a stream of variable-size array messages by creating a stream for each element in the array,
+        /// and performing an action on each of these streams.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input array element.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamAction">Action to apply to the individual element streams.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <returns>Stream of output arrays.</returns>
+        public static IProducer<TIn[]> Parallel<TIn>(
+            this IProducer<TIn[]> source,
+            Action<IProducer<TIn>> streamAction,
+            DeliveryPolicy deliveryPolicy = null)
+        {
+            return source.Parallel((i, s) => streamAction(s), deliveryPolicy);
+        }
+
+        #endregion
+
+        #region Parallel extension methods using dictionaries
+
+        /// <summary>
+        /// Transforms a stream of dictionary messages by creating a stream for each key in the dictionary,
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
+        /// dictionary stream.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input dictionary values.</typeparam>
+        /// <typeparam name="TKey">Type of input dictionary keys.</typeparam>
+        /// <typeparam name="TOut">Type of output dictionary values.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
+        /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</param>
+        /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
             this IProducer<Dictionary<TKey, TIn>> source,
-            Func<TKey, IProducer<TIn>, IProducer<TOut>> transformSelector,
+            Func<TKey, IProducer<TIn>, IProducer<TOut>> streamTransform,
             bool joinOrDefault = false,
             DeliveryPolicy deliveryPolicy = null,
             Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
         {
             deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
-            var p = new ParallelSparse<TIn, TKey, TOut>(source.Out.Pipeline, transformSelector, joinOrDefault, branchTerminationPolicy);
+            var p = new ParallelSparse<TIn, TKey, TOut>(source.Out.Pipeline, streamTransform, joinOrDefault, branchTerminationPolicy);
             source.PipeTo(p, deliveryPolicy);
             return p;
         }
+
+        /// <summary>
+        /// Processes a stream of dictionary messages by creating a stream for each key in the dictionary,
+        /// applying a sub-pipeline to each of these streams.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input dictionary values.</typeparam>
+        /// <typeparam name="TKey">Type of input dictionary keys.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamAction">The action to apply to each element stream.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
+        /// <returns>Stream of output dictionaries.</returns>
+        public static IProducer<Dictionary<TKey, TIn>> Parallel<TIn, TKey>(
+            this IProducer<Dictionary<TKey, TIn>> source,
+            Action<TKey, IProducer<TIn>> streamAction,
+            DeliveryPolicy deliveryPolicy = null,
+            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        {
+            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
+            var p = new ParallelSparse<TIn, TKey, TIn>(source.Out.Pipeline, streamAction, branchTerminationPolicy);
+            source.PipeTo(p, deliveryPolicy);
+            return source;
+        }
+
+        /// <summary>
+        /// Transforms a stream of dictionary messages by creating a stream for each key in the dictionary,
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
+        /// dictionary stream.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input dictionary values.</typeparam>
+        /// <typeparam name="TKey">Type of input dictionary keys.</typeparam>
+        /// <typeparam name="TOut">Type of output dictionary values.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamTransform">Function mapping from an input element stream to an output output element stream.</param>
+        /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</param>
+        /// <returns>Stream of output dictionaries.</returns>
+        public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
+            this IProducer<Dictionary<TKey, TIn>> source,
+            Func<IProducer<TIn>, IProducer<TOut>> streamTransform,
+            bool joinOrDefault = false,
+            DeliveryPolicy deliveryPolicy = null,
+            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        {
+            return source.Parallel((k, s) => streamTransform(s), joinOrDefault, deliveryPolicy, branchTerminationPolicy);
+        }
+
+        /// <summary>
+        /// Processes a stream of dictionary messages by creating a stream for each key in the dictionary,
+        /// applying a sub-pipeline to each of these streams.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input dictionary values.</typeparam>
+        /// <typeparam name="TKey">Type of input dictionary keys.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="streamAction">The action to apply to each element stream.</param>
+        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
+        /// <returns>Stream of output dictionaries.</returns>
+        public static IProducer<Dictionary<TKey, TIn>> Parallel<TIn, TKey>(
+            this IProducer<Dictionary<TKey, TIn>> source,
+            Action<IProducer<TIn>> streamAction,
+            DeliveryPolicy deliveryPolicy = null,
+            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        {
+            return source.Parallel((k, s) => streamAction(s), deliveryPolicy, branchTerminationPolicy);
+        }
+
+        #endregion
     }
 }

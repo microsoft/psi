@@ -6,6 +6,7 @@ namespace Test.Psi
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,7 +23,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 Generators.Sequence(p, new[] { 100, 1, 0.01 }, r => new[] { r[0] + 100, r[1] + 1, r[2] + 0.01 }, 10, TimeSpan.FromTicks(10))
-                    .Parallel(3, (i, d, e) => d * 100, true)
+                    .Parallel(3, s => s.Select(d => d * 100), true)
                     .Do(results.Add);
 
                 p.Run();
@@ -60,14 +61,14 @@ namespace Test.Psi
                 var x = Enumerable.Range(0, 4).ToArray();
 
                 // Runs a parallel over the vector, but specifying only size 2. This should throw an exception.
-                Generators.Return(p, x).Parallel(2, (i, d, e) => d * 10, true);
+                Generators.Return(p, x).Parallel(2, s => s.Select(d => d * 10), true);
                 try
                 {
                     p.Run(enableExceptionHandling: true);
                 }
                 catch (AggregateException exception)
                 {
-                    Assert.IsInstanceOfType(exception.InnerException, typeof(InvalidOperationException));
+                    Assert.IsInstanceOfType(exception.InnerException, typeof(InvalidOperationException), "Unexpected exception type: {0}", exception.InnerException.GetType().ToString());
                 }
             }
         }
@@ -81,7 +82,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 Generators.Sequence(p, Enumerable.Range(0, 1).ToArray(), r => Enumerable.Range(0, r.Length + 1).ToArray(), 5, TimeSpan.FromTicks(10))
-                    .Parallel((i, s) => s.Select(x => x *10), true)
+                    .Parallel((i, s) => s.Select(x => x * 10), true)
                     .Do(x => results.Add(x.Sum()));
 
                 p.Run();
@@ -104,7 +105,7 @@ namespace Test.Psi
             {
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => (i % 2 == 0) ? even : odd)
-                    .Parallel((key, val, env) => val / 100, true)
+                    .Parallel(s => s.Select(val => val / 100), true)
                     .Do(x => results.Add(x.Values.ToArray()));
 
                 p.Run();
@@ -140,22 +141,84 @@ namespace Test.Psi
             {
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => frames[i])
-                    .Parallel((key, stream) => stream.Aggregate(0, (prev, v) => v + prev), true)
+                    .Parallel(stream => stream.Aggregate(0, (prev, v) => v + prev), true)
                     .Do(x => results.Add(x.Values.ToArray()));
 
                 p.Run();
             }
 
-            CollectionAssert.AreEqual(new int[] {  10,       30           }, results[0]);
-            CollectionAssert.AreEqual(new int[] {  20,       60,       50 }, results[1]);
-            CollectionAssert.AreEqual(new int[] {  30,  20,  90,  40, 100 }, results[2]);
-            CollectionAssert.AreEqual(new int[] {  40,  40, 120,  80, 150 }, results[3]);
-            CollectionAssert.AreEqual(new int[] {  50,  60, 150, 120,     }, results[4]);
-            CollectionAssert.AreEqual(new int[] {  60,  80, 180, 160,  50 }, results[5]);
-            CollectionAssert.AreEqual(new int[] {  70, 100, 210, 200, 100 }, results[6]);
-            CollectionAssert.AreEqual(new int[] {  80, 120, 240           }, results[7]);
-            CollectionAssert.AreEqual(new int[] {  90, 140                }, results[8]);
-            CollectionAssert.AreEqual(new int[] { 100, 160                }, results[9]);
+            CollectionAssert.AreEqual(new int[] { 10, 30 }, results[0]);
+            CollectionAssert.AreEqual(new int[] { 20, 60, 50 }, results[1]);
+            CollectionAssert.AreEqual(new int[] { 30, 20, 90, 40, 100 }, results[2]);
+            CollectionAssert.AreEqual(new int[] { 40, 40, 120, 80, 150 }, results[3]);
+            CollectionAssert.AreEqual(new int[] { 50, 60, 150, 120, }, results[4]);
+            CollectionAssert.AreEqual(new int[] { 60, 80, 180, 160, 50 }, results[5]);
+            CollectionAssert.AreEqual(new int[] { 70, 100, 210, 200, 100 }, results[6]);
+            CollectionAssert.AreEqual(new int[] { 80, 120, 240 }, results[7]);
+            CollectionAssert.AreEqual(new int[] { 90, 140 }, results[8]);
+            CollectionAssert.AreEqual(new int[] { 100, 160 }, results[9]);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SparseVectorBufferCompletionTest()
+        {
+            var frames =
+                new[]
+                {
+                    new Dictionary<int, int> { { 1, 10 }            },
+                    new Dictionary<int, int> { { 1, 11 }            },
+                    new Dictionary<int, int> { { 1, 12 }            },
+                    new Dictionary<int, int> { { 1, 13 }            },
+                    new Dictionary<int, int> { { 1, 14 }            },
+                    new Dictionary<int, int> { { 1, 15 }, { 2, 20 } },
+                    new Dictionary<int, int> { { 1, 16 }, { 2, 21 } },
+                    new Dictionary<int, int> { { 1, 17 }, { 2, 22 } },
+                    new Dictionary<int, int> { { 1, 18 }, { 2, 23 } },
+                    new Dictionary<int, int> { { 1, 19 }, { 2, 24 } },
+                    new Dictionary<int, int> {            { 2, 25 } },
+                    new Dictionary<int, int> {            { 2, 26 } },
+                    new Dictionary<int, int> {            { 2, 27 } },
+                    new Dictionary<int, int> {            { 2, 28 } },
+                    new Dictionary<int, int> {            { 2, 29 } }
+                };
+
+            var results = new List<string>();
+
+            using (var p = Pipeline.Create())
+            {
+                Generators.Range(p, 0, 15, TimeSpan.FromMilliseconds(10))
+                    .Select(i => frames[i])
+                    .Parallel((_, stream) => stream.Window(new RelativeTimeInterval(-TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(20))))
+                    .Do(x =>
+                    {
+                        var sb = new StringBuilder();
+                        foreach (var k in x.Keys)
+                        {
+                            sb.Append($" {k}->");
+                            foreach (var v in x[k])
+                            {
+                                sb.Append($"{v.Data},");
+                            }
+                            sb.Remove(sb.Length - 1, 1);
+                        }
+                        results.Add(sb.ToString().Substring(1));
+                    });
+                p.Run();
+            }
+
+            Assert.AreEqual("1->10,11,12", results[0]);
+            Assert.AreEqual("1->10,11,12,13", results[1]);
+            Assert.AreEqual("1->11,12,13,14", results[2]);
+            Assert.AreEqual("1->12,13,14,15", results[3]);
+            Assert.AreEqual("1->13,14,15,16", results[4]);
+            Assert.AreEqual("1->14,15,16,17 2->20,21,22", results[5]);
+            Assert.AreEqual("1->15,16,17,18 2->20,21,22,23", results[6]);
+            Assert.AreEqual("1->16,17,18,19 2->21,22,23,24", results[7]); // most importantly, these last frames (final of first stream)
+            Assert.AreEqual("1->17,18,19 2->22,23,24,25", results[8]);
+            Assert.AreEqual("1->18,19 2->23,24,25,26", results[9]);
+            Assert.AreEqual("2->24,25,26,27", results[10]);
+            Assert.AreEqual("2->25,26,27,28", results[11]);
         }
 
         [TestMethod]
@@ -196,7 +259,7 @@ namespace Test.Psi
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => values[i])
                     .Do(dict => original.Add(dict.DeepClone()))
-                    .Parallel((k, v) => v.Where(value => value % 2 == 0), true)
+                    .Parallel(v => v.Where(value => value % 2 == 0), true)
                     .Do(dict => results.Add(dict.DeepClone()));
                 p.Run();
             }
@@ -213,7 +276,7 @@ namespace Test.Psi
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => values[i])
                     .Do(dict => original.Add(dict.DeepClone()))
-                    .Parallel((k, v) => v.Where(value => value % 2 == 0), false)
+                    .Parallel(v => v.Where(value => value % 2 == 0), false)
                     .Do(dict => results.Add(dict.DeepClone()));
                 p.Run();
             }
@@ -229,7 +292,7 @@ namespace Test.Psi
             // verify that Parallel* components don't expose emitters of inner Subpipeline
             using (var p = Pipeline.Create())
             {
-                var parallel = new Parallel<int, int>(p, 10, (i, prod) => prod, false);
+                var parallel = new ParallelFixedLength<int, int>(p, 10, (i, prod) => prod, false);
                 Assert.AreEqual(p, parallel.Out.Pipeline); // composite components shouldn't expose subpipelines
 
                 var parallelVarLen = new ParallelVariableLength<int, int>(p, (i, prod) => prod, false);

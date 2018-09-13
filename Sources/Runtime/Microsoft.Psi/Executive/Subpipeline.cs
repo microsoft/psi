@@ -6,6 +6,7 @@ namespace Microsoft.Psi
     using System;
     using System.Linq;
     using Microsoft.Psi.Components;
+    using Microsoft.Psi.Executive;
 
     /// <summary>
     /// Represents a graph of components and controls scheduling and message passing.
@@ -15,6 +16,9 @@ namespace Microsoft.Psi
     {
         private Action onCompleted;
         private bool hasSourceComponents;
+        private bool suspended = false;
+        private bool stopping = false;
+        private bool parentStopping = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Subpipeline"/> class.
@@ -26,7 +30,12 @@ namespace Microsoft.Psi
             : base(name ?? $"Sub{parent.Name}", globalPolicy ?? parent.GlobalPolicy, parent.Scheduler)
         {
             parent.RegisterPipelineStartHandler(this, () => this.Start(parent));
-            parent.RegisterPipelineStopHandler(this, () => this.Stop(false, false));
+            parent.RegisterPipelineStopHandler(this, this.Suspend);
+            parent.RegisterPipelineFinalHandler(this, () =>
+            {
+                this.parentStopping = true;
+                this.Stop(false);
+            });
             parent.PipelineCompletionEvent += (_, e) => this.Complete(true);
         }
 
@@ -68,7 +77,11 @@ namespace Microsoft.Psi
         /// <remarks>Deactivate components.</remarks>
         public void Suspend()
         {
-            this.Stop(false, false);
+            if (!this.suspended)
+            {
+                this.suspended = true;
+                this.DeactivateComponents();
+            }
         }
 
         /// <summary>
@@ -76,14 +89,28 @@ namespace Microsoft.Psi
         /// The pipeline configuration is not changed and the pipeline can be restarted later.
         /// </summary>
         /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
-        /// <param name="stopScheduler">Stops the scheduler.</param>
-        protected override void Stop(bool abandonPendingWorkitems = false, bool stopScheduler = true)
+        protected override void Stop(bool abandonPendingWorkitems = false)
         {
-            base.Stop(abandonPendingWorkitems, false);
+            if (this.stopping)
+            {
+                this.Completed.WaitOne();
+                return;
+            }
+
+            this.stopping = true;
+            this.Suspend();
+
+            if (this.parentStopping)
+            {
+                this.StopComponents();
+            }
+
             if (this.hasSourceComponents)
             {
                 this.onCompleted();
             }
+
+            this.Completed.Set();
         }
 
         private void Start(Pipeline parent)

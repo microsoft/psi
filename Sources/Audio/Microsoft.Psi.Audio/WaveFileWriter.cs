@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements a Wave file writer.
+    /// Component that writes an audio stream into a WAVE file.
     /// </summary>
     public sealed class WaveFileWriter : SimpleConsumer<AudioBuffer>, IDisposable
     {

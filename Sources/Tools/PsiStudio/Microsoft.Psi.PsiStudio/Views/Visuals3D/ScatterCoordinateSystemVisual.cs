@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void VisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var coordinateSystems = this.visualizationObject.CurrentValue.Data;
+            var coordinateSystems = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
             if (coordinateSystems != null)
             {
                 for (int i = this.axes.Count; i < coordinateSystems.Count; i++)
@@ -61,22 +61,23 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 for (int i = 0; i < coordinateSystems.Count; i++)
                 {
                     // get the coordinate system
+                    var size = this.visualizationObject.Configuration.Size;
                     var cs = coordinateSystems[i];
-                    var x = cs.Origin + (this.visualizationObject.Configuration.Size * cs.XAxis.Normalize());
-                    var y = cs.Origin + (this.visualizationObject.Configuration.Size * cs.YAxis.Normalize());
-                    var z = cs.Origin + (this.visualizationObject.Configuration.Size * cs.ZAxis.Normalize());
+                    var x = cs.Origin + (size * cs.XAxis.Normalize());
+                    var y = cs.Origin + (size * cs.YAxis.Normalize());
+                    var z = cs.Origin + (size * cs.ZAxis.Normalize());
                     this.axes[i].Item1.Point1 = new Point3D(cs.Origin.X, cs.Origin.Y, cs.Origin.Z);
                     this.axes[i].Item1.Point2 = new Point3D(x.X, x.Y, x.Z);
                     this.axes[i].Item1.Visible = true;
-                    this.axes[i].Item1.Diameter = this.visualizationObject.Configuration.Size * 0.2;
+                    this.axes[i].Item1.Diameter = size * 0.2;
                     this.axes[i].Item2.Point1 = new Point3D(cs.Origin.X, cs.Origin.Y, cs.Origin.Z);
                     this.axes[i].Item2.Point2 = new Point3D(y.X, y.Y, y.Z);
                     this.axes[i].Item2.Visible = true;
-                    this.axes[i].Item2.Diameter = this.visualizationObject.Configuration.Size * 0.2;
+                    this.axes[i].Item2.Diameter = size * 0.2;
                     this.axes[i].Item3.Point1 = new Point3D(cs.Origin.X, cs.Origin.Y, cs.Origin.Z);
                     this.axes[i].Item3.Point2 = new Point3D(z.X, z.Y, z.Z);
                     this.axes[i].Item3.Visible = true;
-                    this.axes[i].Item3.Diameter = this.visualizationObject.Configuration.Size * 0.2;
+                    this.axes[i].Item3.Diameter = size * 0.2;
                 }
             }
 

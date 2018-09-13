@@ -11,7 +11,9 @@ namespace Microsoft.Psi.PsiStudio
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
+    using System.Threading.Tasks;
     using System.Windows;
+    using GalaSoft.MvvmLight.CommandWpf;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data;
@@ -26,10 +28,12 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Microsoft.Psi.Visualization.Windows;
+    using Microsoft.Win32;
 
     /// <summary>
     /// Data context for PsiStudio.
@@ -41,10 +45,32 @@ namespace Microsoft.Psi.PsiStudio
         private DatasetViewModel datasetViewModel;
 
         private Pipeline audioPlaybackPipeline;
-        private RelayCommand playCommand;
         private string playbackSpeed = "1.0";
+        private int tabControlIndex = (int)TabControlInicies.Visualizations;
+
+        private RelayCommand closedCommand;
+        private RelayCommand openStoreCommand;
+        private RelayCommand openDatasetCommand;
+        private RelayCommand saveDatasetCommand;
+        private RelayCommand loadLayoutCommand;
+        private RelayCommand saveLayoutCommand;
+        private RelayCommand insertTimelinePanelCommand;
+        private RelayCommand insert2DPanelCommand;
+        private RelayCommand insert3DPanelCommand;
+        private RelayCommand insertAnnotationCommand;
+        private RelayCommand absoluteTimingCommand;
+        private RelayCommand timingRelativeToSessionStartCommand;
+        private RelayCommand timingRelativeToSelectionStartCommand;
+        private RelayCommand zoomToSessionExtentsCommand;
+        private RelayCommand zoomToSelectionCommand;
+        private RelayCommand playbackStartCommand;
+        private RelayCommand playbackStopCommand;
+
+        private RelayCommand deleteVisualizationCommand;
+        private RelayCommand<RoutedPropertyChangedEventArgs<object>> selectedVisualizationChangedCommand;
 
         private List<TypeKeyedActionCommand> typeVisualizerActions = new List<TypeKeyedActionCommand>();
+        private object selectedVisualization;
 
         static PsiStudioContext()
         {
@@ -63,6 +89,12 @@ namespace Microsoft.Psi.PsiStudio
 
             this.DatasetViewModel = new DatasetViewModel();
             this.DatasetViewModels = new ObservableCollection<DatasetViewModel> { this.datasetViewModel };
+        }
+
+        private enum TabControlInicies : int
+        {
+            Visualizations = 0,
+            Datasets = 1
         }
 
         /// <summary>
@@ -86,11 +118,7 @@ namespace Microsoft.Psi.PsiStudio
         public DatasetViewModel DatasetViewModel
         {
             get => this.datasetViewModel;
-            set
-            {
-                this.datasetViewModel = value;
-                this.RaisePropertyChanged(nameof(this.DatasetViewModel));
-            }
+            set => this.Set(nameof(this.DatasetViewModel), ref this.datasetViewModel, value);
         }
 
         /// <summary>
@@ -99,11 +127,7 @@ namespace Microsoft.Psi.PsiStudio
         public VisualizationContainer VisualizationContainer
         {
             get => this.visualizationContainer;
-            set
-            {
-                this.visualizationContainer = value;
-                this.RaisePropertyChanged(nameof(this.VisualizationContainer));
-            }
+            set => this.Set(nameof(this.VisualizationContainer), ref this.visualizationContainer, value);
         }
 
         /// <summary>
@@ -125,22 +149,481 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the play command.
+        /// Gets or sets the current tab control index.
+        /// </summary>
+        public int TabControlIndex
+        {
+            get => this.tabControlIndex;
+            set { this.Set(nameof(this.TabControlIndex), ref this.tabControlIndex, value); }
+        }
+
+        /// <summary>
+        /// Gets the closed command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand PlayCommand
+        public RelayCommand ClosedCommand
         {
             get
             {
-                if (this.playCommand == null)
+                if (this.closedCommand == null)
                 {
-                    this.playCommand = new RelayCommand(
-                        o => this.Play(),
-                        o => this.VisualizationContainer.Navigator.NavigationMode == Visualization.Navigation.NavigationMode.Playback);
+                    // Ensure playback is stopped before exiting
+                    this.closedCommand = new RelayCommand(
+                        () =>
+                        {
+                            this.PlaybackStop();
+
+                            // Explicitly dispose so that DataManager doesn't keep the app running for a while longer.
+                            DataManager.Instance?.Dispose();
+                        });
                 }
 
-                return this.playCommand;
+                return this.closedCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the open store command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand OpenStoreCommand
+        {
+            get
+            {
+                if (this.openStoreCommand == null)
+                {
+                    this.openStoreCommand = new RelayCommand(
+                        async () =>
+                        {
+                            OpenFileDialog dlg = new OpenFileDialog();
+                            dlg.DefaultExt = ".psi";
+                            dlg.Filter = "Psi Store (.psi)|*.psi";
+
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                string filename = dlg.FileName;
+                                await this.OpenDatasetAsync(filename);
+                            }
+                        });
+                }
+
+                return this.openStoreCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the open dataset command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand OpenDatasetCommand
+        {
+            get
+            {
+                if (this.openDatasetCommand == null)
+                {
+                    this.openDatasetCommand = new RelayCommand(
+                        async () =>
+                        {
+                            OpenFileDialog dlg = new OpenFileDialog();
+                            dlg.DefaultExt = ".pds";
+                            dlg.Filter = "Psi Dataset (.pds)|*.pds";
+
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                string filename = dlg.FileName;
+                                await this.OpenDatasetAsync(filename);
+                            }
+                        });
+                }
+
+                return this.openDatasetCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the save dataset command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand SaveDatasetCommand
+        {
+            get
+            {
+                if (this.saveDatasetCommand == null)
+                {
+                    this.saveDatasetCommand = new RelayCommand(
+                        async () =>
+                        {
+                            SaveFileDialog dlg = new SaveFileDialog();
+                            dlg.DefaultExt = ".pds";
+                            dlg.Filter = "Psi Dataset (.pds)|*.pds";
+
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                string filename = dlg.FileName;
+
+                                // this should be a relatively quick operation so no need to show progress
+                                await this.DatasetViewModel.SaveAsync(filename);
+                            }
+                        });
+                }
+
+                return this.saveDatasetCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the load layout command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand LoadLayoutCommand
+        {
+            get
+            {
+                if (this.loadLayoutCommand == null)
+                {
+                    this.loadLayoutCommand = new RelayCommand(
+                        () =>
+                        {
+                            OpenFileDialog dlg = new OpenFileDialog();
+                            dlg.DefaultExt = ".plo";
+                            dlg.Filter = "Psi Layout (.plo)|*.plo";
+
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                string filename = dlg.FileName;
+                                this.OpenLayout(filename);
+                                this.TabControlIndex = (int)TabControlInicies.Visualizations;
+                            }
+                        });
+                }
+
+                return this.loadLayoutCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the save layout command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand SaveLayoutCommand
+        {
+            get
+            {
+                if (this.saveLayoutCommand == null)
+                {
+                    this.saveLayoutCommand = new RelayCommand(
+                        () =>
+                        {
+                            SaveFileDialog dlg = new SaveFileDialog();
+                            dlg.DefaultExt = ".plo";
+                            dlg.Filter = "Psi Layout (.plo)|*.plo";
+
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                string filename = dlg.FileName;
+                                this.VisualizationContainer.Save(filename);
+                            }
+                        });
+                }
+
+                return this.saveLayoutCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the insert timeline panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand InsertTimelinePanelCommand
+        {
+            get
+            {
+                if (this.insertTimelinePanelCommand == null)
+                {
+                    this.insertTimelinePanelCommand = new RelayCommand(
+                        () => this.VisualizationContainer.AddPanel(new TimelineVisualizationPanel()),
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.insertTimelinePanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the insert 2D panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand Insert2DPanelCommand
+        {
+            get
+            {
+                if (this.insert2DPanelCommand == null)
+                {
+                    this.insert2DPanelCommand = new RelayCommand(
+                        () => this.VisualizationContainer.AddPanel(new XYVisualizationPanel()),
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.insert2DPanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the insert 3D panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand Insert3DPanelCommand
+        {
+            get
+            {
+                if (this.insert3DPanelCommand == null)
+                {
+                    this.insert3DPanelCommand = new RelayCommand(
+                        () => this.VisualizationContainer.AddPanel(new XYZVisualizationPanel()),
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.insert3DPanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the insert annotation command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand InsertAnnotationCommand
+        {
+            get
+            {
+                if (this.insertAnnotationCommand == null)
+                {
+                    this.insertAnnotationCommand = new RelayCommand(
+                        () => this.AddAnnotation(App.Current.MainWindow),
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.insertAnnotationCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the absolute timing command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AbsoluteTimingCommand
+        {
+            get
+            {
+                if (this.absoluteTimingCommand == null)
+                {
+                    this.absoluteTimingCommand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.ShowAbsoluteTiming = !this.VisualizationContainer.Navigator.ShowAbsoluteTiming,
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.absoluteTimingCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the timing relative to session start command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand TimingRelativeToSessionStartCommand
+        {
+            get
+            {
+                if (this.timingRelativeToSessionStartCommand == null)
+                {
+                    this.timingRelativeToSessionStartCommand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart = !this.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart,
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.timingRelativeToSessionStartCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the timing relative to selection start command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand TimingRelativeToSelectionStartCommand
+        {
+            get
+            {
+                if (this.timingRelativeToSelectionStartCommand == null)
+                {
+                    this.timingRelativeToSelectionStartCommand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.ShowTimingRelativeToSelectionStart = !this.VisualizationContainer.Navigator.ShowTimingRelativeToSelectionStart,
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.timingRelativeToSelectionStartCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the zoom to session extents command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ZoomToSessionExtentsCommand
+        {
+            get
+            {
+                if (this.zoomToSessionExtentsCommand == null)
+                {
+                    this.zoomToSessionExtentsCommand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.ZoomToDataRange(),
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.zoomToSessionExtentsCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the zoom to selection command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ZoomToSelectionCommand
+        {
+            get
+            {
+                if (this.zoomToSelectionCommand == null)
+                {
+                    this.zoomToSelectionCommand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.ZoomToSelection(),
+                        () => this.IsDatasetLoaded());
+                }
+
+                return this.zoomToSelectionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the playback start command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand PlaybackStartCommand
+        {
+            get
+            {
+                if (this.playbackStartCommand == null)
+                {
+                    this.playbackStartCommand = new RelayCommand(
+                        () => this.PlaybackStart(),
+                        () => this.VisualizationContainer.Navigator.NavigationMode != Visualization.Navigation.NavigationMode.Live && this.IsDatasetLoaded());
+                }
+
+                return this.playbackStartCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the playback stop command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand PlaybackStopCommand
+        {
+            get
+            {
+                if (this.playbackStopCommand == null)
+                {
+                    this.playbackStopCommand = new RelayCommand(
+                        () => this.PlaybackStop(),
+                        () => this.VisualizationContainer.Navigator.NavigationMode != Visualization.Navigation.NavigationMode.Live && this.IsDatasetLoaded());
+                }
+
+                return this.playbackStopCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the delete visualization command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand DeleteVisualizationCommand
+        {
+            get
+            {
+                if (this.deleteVisualizationCommand == null)
+                {
+                    this.deleteVisualizationCommand = new RelayCommand(
+                        () =>
+                        {
+                            if (this.selectedVisualization is VisualizationPanel)
+                            {
+                                var visualizationPanel = this.selectedVisualization as VisualizationPanel;
+                                visualizationPanel.Container.RemovePanel(visualizationPanel);
+                            }
+                            else if (this.selectedVisualization is VisualizationObject)
+                            {
+                                var visualizationObject = this.selectedVisualization as VisualizationObject;
+                                visualizationObject.Panel.RemoveVisualizationObject(visualizationObject);
+                            }
+                        },
+                        () => this.selectedVisualization is VisualizationPanel || this.selectedVisualization is VisualizationObject);
+                }
+
+                return this.deleteVisualizationCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the selected visualzation changed command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<RoutedPropertyChangedEventArgs<object>> SelectedVisualizationChangedCommand
+        {
+            get
+            {
+                if (this.selectedVisualizationChangedCommand == null)
+                {
+                    this.selectedVisualizationChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
+                        e =>
+                        {
+                            if (e.NewValue is VisualizationPanel)
+                            {
+                                this.VisualizationContainer.CurrentPanel = e.NewValue as VisualizationPanel;
+                            }
+                            else if (e.NewValue is VisualizationObject)
+                            {
+                                var visualizationObject = e.NewValue as VisualizationObject;
+                                this.VisualizationContainer.CurrentPanel = visualizationObject.Panel;
+                                visualizationObject.Panel.CurrentVisualizationObject = visualizationObject;
+                            }
+
+                            this.selectedVisualization = e.NewValue;
+                            e.Handled = true;
+                        });
+                }
+
+                return this.selectedVisualizationChangedCommand;
             }
         }
 
@@ -217,38 +700,9 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Opens a previously persisted dataset.
+        /// Start playback of audio stream.
         /// </summary>
-        /// <param name="filename">Fully qualified path to dataset file.</param>
-        public void OpenDataset(string filename)
-        {
-            var fileInfo = new FileInfo(filename);
-            if (fileInfo.Extension == ".psi")
-            {
-                var name = fileInfo.Name.Substring(0, Path.GetFileNameWithoutExtension(filename).LastIndexOf('.'));
-                this.DatasetViewModel = DatasetViewModel.CreateFromExistingStore(name, fileInfo.DirectoryName);
-            }
-            else
-            {
-                this.DatasetViewModel = DatasetViewModel.Load(filename);
-            }
-
-            this.DatasetViewModels.Clear();
-            this.DatasetViewModels.Add(this.DatasetViewModel);
-
-            // set the data range to the dataset
-            this.VisualizationContainer.Navigator.DataRange.SetRange(this.DatasetViewModel.OriginatingTimeInterval);
-
-            // zoom into the current session
-            var timeInterval = this.DatasetViewModel.CurrentSessionViewModel?.OriginatingTimeInterval;
-            timeInterval = timeInterval ?? new TimeInterval(DateTime.MinValue, DateTime.MaxValue);
-            this.VisualizationContainer.ZoomToRange(timeInterval);
-        }
-
-        /// <summary>
-        /// Inovke playback of audio stream.
-        /// </summary>
-        public void Play()
+        public void PlaybackStart()
         {
             double speed = 1.0;
             double.TryParse(this.playbackSpeed, out speed);
@@ -284,7 +738,7 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// Stop playback of audio stream.
         /// </summary>
-        public void StopPlaying()
+        public void PlaybackStop()
         {
             this.VisualizationContainer.Navigator.StopPlaying();
             if (this.audioPlaybackPipeline != null)
@@ -295,22 +749,100 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
+        /// Asynchronously opens a previously persisted dataset.
+        /// </summary>
+        /// <param name="filename">Fully qualified path to dataset file.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        internal async Task OpenDatasetAsync(string filename)
+        {
+            // Window that will be used to indicate that an open operation is in progress.
+            // Progress notification and cancellation are not yet supported.
+            var statusWindow = new LoadingDatasetWindow(filename, App.Current.MainWindow);
+
+            // Wrap the open dataset operation in a task that will close the modal status
+            // window once the open dataset operation has completed.
+            async Task openDatasetTask()
+            {
+                try
+                {
+                    var fileInfo = new FileInfo(filename);
+                    if (fileInfo.Extension == ".psi")
+                    {
+                        var name = fileInfo.Name.Substring(0, Path.GetFileNameWithoutExtension(filename).LastIndexOf('.'));
+                        this.DatasetViewModel = await DatasetViewModel.CreateFromExistingStoreAsync(name, fileInfo.DirectoryName);
+                    }
+                    else
+                    {
+                        this.DatasetViewModel = await DatasetViewModel.LoadAsync(filename);
+                    }
+
+                    this.DatasetViewModels.Clear();
+                    this.DatasetViewModels.Add(this.DatasetViewModel);
+
+                    // We may have previously been in Live mode, so explicitly switch to Playback mode
+                    this.VisualizationContainer.Navigator.NavigationMode = NavigationMode.Playback;
+
+                    // set the data range to the dataset
+                    this.VisualizationContainer.Navigator.DataRange.SetRange(this.DatasetViewModel.OriginatingTimeInterval);
+
+                    // zoom into the current session
+                    var timeInterval = this.DatasetViewModel.CurrentSessionViewModel?.OriginatingTimeInterval;
+                    timeInterval = timeInterval ?? new TimeInterval(DateTime.MinValue, DateTime.MaxValue);
+                    this.VisualizationContainer.ZoomToRange(timeInterval);
+                }
+                finally
+                {
+                    // closes the modal status window
+                    statusWindow.Close();
+                }
+            }
+
+            // start the open dataset task
+            var task = openDatasetTask();
+
+            try
+            {
+                // show the modal status window, which will be closed once the open dataset operation completes
+                statusWindow.ShowDialog();
+            }
+            catch (InvalidOperationException)
+            {
+                // This indicates that the window has already been closed in the async task,
+                // which means the operation has already completed, so just ignore and continue.
+            }
+
+            try
+            {
+                // await completion of the open dataset task
+                await task;
+
+                // show the new dataset UI
+                this.TabControlIndex = (int)TabControlInicies.Datasets;
+            }
+            catch (Exception e)
+            {
+                // catch and display any exceptions that occurred during the open dataset operation
+                var exception = e.InnerException ?? e;
+                MessageBox.Show(exception.Message, exception.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
         /// Gets the list of visualization stream commands for a given stream tree node.
         /// </summary>
         /// <param name="streamTreeNode">Stream tree node.</param>
         /// <returns>List of visualization stream commands.</returns>
         internal List<TypeKeyedActionCommand> GetVisualizeStreamCommands(IStreamTreeNode streamTreeNode)
         {
-            List<TypeKeyedActionCommand> result = null;
+            List<TypeKeyedActionCommand> result = new List<TypeKeyedActionCommand>();
             if (streamTreeNode != null && streamTreeNode.TypeName != null)
             {
                 // Get the Type from the loaded assemblies that matches the stream type
                 var streamType = Type.GetType(streamTreeNode.TypeName, this.AssemblyResolver, null) ?? Type.GetType(streamTreeNode.TypeName.Split(',')[0], this.AssemblyResolver, null);
-
                 if (streamType != null)
                 {
                     // Get the list of commands
-                    result = this.typeVisualizerActions.Where(a => a.TypeKey.AssemblyQualifiedName == streamType?.AssemblyQualifiedName).ToList();
+                    result.AddRange(this.typeVisualizerActions.Where(a => a.TypeKey.AssemblyQualifiedName == streamType.AssemblyQualifiedName));
 
                     // generate generic Plot Latency
                     var genericPlotLatency = typeof(PsiStudioContext).GetMethod("PlotLatency", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
@@ -322,8 +854,8 @@ namespace Microsoft.Psi.PsiStudio
                     var plotMessagesAction = new Action<IStreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s }));
                     result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { "Visualize Messages", plotMessagesAction }) as TypeKeyedActionCommand);
 
-                    var genericZoomToStreamExtents = typeof(PsiStudioContext).GetMethod("ZoomToStreamExtents", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
-                    var zoomToStreamExtentsAction = new Action<IStreamTreeNode>(s => genericZoomToStreamExtents.Invoke(this, new object[] { s }));
+                    var zoomToStreamExtents = typeof(PsiStudioContext).GetMethod("ZoomToStreamExtents", BindingFlags.NonPublic | BindingFlags.Instance);
+                    var zoomToStreamExtentsAction = new Action<IStreamTreeNode>(s => zoomToStreamExtents.Invoke(this, new object[] { s }));
                     result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { "Zoom to Stream Extents", zoomToStreamExtentsAction }) as TypeKeyedActionCommand);
                 }
             }
@@ -337,10 +869,15 @@ namespace Microsoft.Psi.PsiStudio
 
             this.AddVisualizeStreamCommand<AnnotatedEvent>("Visualize", (s) => this.ShowAnnotations(s, false));
             this.AddVisualizeStreamCommand<double>("Plot", (s) => this.PlotDouble(s, false));
+            this.AddVisualizeStreamCommand<double>("Plot in New Panel", (s) => this.PlotDouble(s, true));
             this.AddVisualizeStreamCommand<float>("Plot", (s) => this.PlotFloat(s, false));
+            this.AddVisualizeStreamCommand<float>("Plot in New Panel", (s) => this.PlotFloat(s, true));
             this.AddVisualizeStreamCommand<TimeSpan>("Plot (as ms)", (s) => this.PlotTimeSpan(s, false));
+            this.AddVisualizeStreamCommand<TimeSpan>("Plot (as ms) in New Panel", (s) => this.PlotTimeSpan(s, true));
             this.AddVisualizeStreamCommand<int>("Plot", (s) => this.PlotInt(s, false));
+            this.AddVisualizeStreamCommand<int>("Plot in New Panel", (s) => this.PlotInt(s, true));
             this.AddVisualizeStreamCommand<bool>("Plot", (s) => this.PlotBool(s, false));
+            this.AddVisualizeStreamCommand<bool>("Plot in New Panel", (s) => this.PlotBool(s, true));
             this.AddVisualizeStreamCommand<Shared<Image>>("Visualize", (s) => this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(s, true));
             this.AddVisualizeStreamCommand<Shared<EncodedImage>>("Visualize", (s) => this.Show2D<EncodedImageVisualizationObject, Shared<EncodedImage>, ImageVisualizationObjectBaseConfiguration>(s, true));
             this.AddVisualizeStreamCommand<IStreamingSpeechRecognitionResult>("Visualize", (s) => this.Show<SpeechRecognitionVisualizationObject, IStreamingSpeechRecognitionResult, SpeechRecognitionVisualizationObjectConfiguration>(s, false));
@@ -384,13 +921,6 @@ namespace Microsoft.Psi.PsiStudio
             this.Show<TimelineVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel);
         }
 
-        private void Show<TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType)
-            where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
-            where TConfig : StreamVisualizationObjectConfiguration, new()
-        {
-            this.Show<TimelineVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel, streamAdapterType);
-        }
-
         private TVisObj Show<TPanel, TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType = null, Type summarizerType = null, params object[] summarizerArgs)
             where TPanel : VisualizationPanel, new()
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
@@ -406,12 +936,6 @@ namespace Microsoft.Psi.PsiStudio
             var streamBinding = new StreamBinding(
                 streamTreeNode.StreamName, partition.Name, partition.StoreName, partition.StorePath, typeof(SimpleReader), streamAdapterType, summarizerType, summarizerArgs);
             visObj.OpenStream(streamBinding);
-
-            // Don't zoom to range in live mode
-            if (this.VisualizationContainer.Navigator.NavigationMode != Visualization.Navigation.NavigationMode.Live)
-            {
-                this.VisualizationContainer.ZoomToRange(streamTreeNode.Partition.OriginatingTimeInterval);
-            }
 
             return visObj;
         }
@@ -512,7 +1036,7 @@ namespace Microsoft.Psi.PsiStudio
 
         private void PlotMessages<TData>(IStreamTreeNode streamTreeNode)
         {
-            var visObj = this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, false, typeof(MessageAdapter<TData>));
+            var visObj = this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, false, typeof(MessageAdapter<TData>), typeof(RangeSummarizer));
             visObj.Configuration.MarkerSize = 4;
             visObj.Configuration.MarkerStyle = Visualization.Common.MarkerStyle.Circle;
             visObj.Configuration.Name = streamTreeNode.StreamName;
@@ -523,7 +1047,7 @@ namespace Microsoft.Psi.PsiStudio
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, newPanel, typeof(TimeSpanAdapter), typeof(RangeSummarizer));
         }
 
-        private void ZoomToStreamExtents<TData>(IStreamTreeNode streamTreeNode)
+        private void ZoomToStreamExtents(IStreamTreeNode streamTreeNode)
         {
             if (streamTreeNode.FirstMessageOriginatingTime.HasValue && streamTreeNode.LastMessageOriginatingTime.HasValue)
             {
@@ -552,6 +1076,11 @@ namespace Microsoft.Psi.PsiStudio
             }
 
             return null;
+        }
+
+        private bool IsDatasetLoaded()
+        {
+            return this.DatasetViewModel?.CurrentSessionViewModel?.PartitionViewModels.FirstOrDefault() != null;
         }
     }
 }

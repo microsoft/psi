@@ -55,9 +55,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
         {
             if (e.PropertyName == nameof(this.visualizationObject.CurrentValue))
             {
-                if (this.visualizationObject.CurrentValue.Data != null)
+                var data = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
+                if (data != null)
                 {
-                    this.Transform = new MatrixTransform3D(this.visualizationObject.CurrentValue.Data.GetMatrix3D());
+                    this.Transform = new MatrixTransform3D(data.GetMatrix3D());
                 }
             }
         }

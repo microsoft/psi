@@ -186,10 +186,13 @@ namespace Microsoft.Psi.Data
                             break;
                         case WriteWhichEmitters.Connected:
                             var theEmitter = f.GetValue(sensor);
-                            var hasSubscribers = objPropType.GetProperty("HasSubscribers").GetValue(theEmitter);
-                            if ((bool)hasSubscribers)
+                            if (theEmitter != null)
                             {
-                                emit = true;
+                                var hasSubscribers = objPropType.GetProperty("HasSubscribers").GetValue(theEmitter);
+                                if ((bool)hasSubscribers)
+                                {
+                                    emit = true;
+                                }
                             }
 
                             break;

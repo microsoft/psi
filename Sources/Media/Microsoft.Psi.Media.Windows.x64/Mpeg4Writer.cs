@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Media
     using Microsoft.Psi.Media_Interop;
 
     /// <summary>
-    /// This class defines a component for writing image+sound data into an MPEG-4 file (.mp4)
+    /// Component that writes video and audio streams into an MPEG-4 file.
     /// </summary>
     public class Mpeg4Writer : IConsumer<Shared<Image>>, IDisposable
     {

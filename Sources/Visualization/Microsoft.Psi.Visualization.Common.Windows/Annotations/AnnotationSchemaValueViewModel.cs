@@ -33,6 +33,7 @@ namespace Microsoft.Psi.Visualization.Annotations
             {
                 if (this.schemaValue.Color != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Color));
                     this.schemaValue.Color = value;
                     this.RaisePropertyChanged(nameof(this.Color));
                 }
@@ -49,6 +50,7 @@ namespace Microsoft.Psi.Visualization.Annotations
             {
                 if (this.schemaValue.Description != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Description));
                     this.schemaValue.Description = value;
                     this.RaisePropertyChanged(nameof(this.Description));
                 }
@@ -65,6 +67,7 @@ namespace Microsoft.Psi.Visualization.Annotations
             {
                 if (this.schemaValue.Shortcut != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Shortcut));
                     this.schemaValue.Shortcut = value;
                     this.RaisePropertyChanged(nameof(this.Shortcut));
                 }
@@ -81,6 +84,7 @@ namespace Microsoft.Psi.Visualization.Annotations
             {
                 if (this.schemaValue.Value != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Value));
                     this.schemaValue.Value = value;
                     this.RaisePropertyChanged(nameof(this.Value));
                 }

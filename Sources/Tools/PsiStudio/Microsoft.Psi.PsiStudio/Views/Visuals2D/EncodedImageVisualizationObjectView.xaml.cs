@@ -55,15 +55,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (e.PropertyName == nameof(this.EncodedImageVisualizationObject.CurrentValue))
             {
-                var current = this.EncodedImageVisualizationObject.CurrentValue;
                 Imaging.Image psiImage = null;
-                if (current != default(Message<Shared<EncodedImage>>))
+                if (this.EncodedImageVisualizationObject.CurrentValue.HasValue)
                 {
-                    this.lastKnownImageWidth = current.Data.Resource.Width;
-                    this.lastKnownImageHeight = current.Data.Resource.Height;
-                    this.lastKnownPixelFormat = current.Data.Resource.GetPixelFormat();
+                    var resource = this.EncodedImageVisualizationObject.CurrentValue.Value.Data.Resource;
+                    this.lastKnownImageWidth = resource.Width;
+                    this.lastKnownImageHeight = resource.Height;
+                    this.lastKnownPixelFormat = resource.GetPixelFormat();
                     psiImage = new Imaging.Image(this.lastKnownImageWidth, this.lastKnownImageHeight, this.lastKnownPixelFormat);
-                    current.Data.Resource.DecodeTo(psiImage);
+                    resource.DecodeTo(psiImage);
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     }
                     else
                     {
-                        this.DisplayImage.UpdateImage((Microsoft.Psi.Imaging.Image)null);
+                        this.DisplayImage.UpdateImage((Imaging.Image)null);
                     }
                 }
                 else

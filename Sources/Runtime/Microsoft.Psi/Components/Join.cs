@@ -44,6 +44,7 @@ namespace Microsoft.Psi.Components
             Func<TPrimary, IEnumerable<int>> secondarySelector = null)
             : base()
         {
+            pipeline.RegisterPipelineFinalHandler(this, () => this.Publish(true));
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.InPrimary = pipeline.CreateReceiver<TPrimary>(this, this.ReceivePrimary, nameof(this.InPrimary));
@@ -99,17 +100,17 @@ namespace Microsoft.Psi.Components
         {
             var clone = message.DeepClone(this.InPrimary.Recycler);
             this.primaryQueue.Enqueue(Message.Create(clone, e));
-            this.Publish();
+            this.Publish(false);
         }
 
         private void ReceiveSecondary(int id, TSecondary message, Envelope e)
         {
             var clone = message.DeepClone(this.InSecondaries[id].Recycler);
             this.secondaryQueues[id].Enqueue(Message.Create(clone, e));
-            this.Publish();
+            this.Publish(false);
         }
 
-        private void Publish()
+        private void Publish(bool final)
         {
             while (this.primaryQueue.Count > 0)
             {
@@ -119,7 +120,7 @@ namespace Microsoft.Psi.Components
                 foreach (var iSecondary in secondarySet)
                 {
                     var secondaryQueue = this.secondaryQueues[iSecondary];
-                    var matchResult = this.interpolator.Match(primary.OriginatingTime, secondaryQueue);
+                    var matchResult = this.interpolator.Match(primary.OriginatingTime, secondaryQueue, final);
                     if (matchResult.Type == MatchResultType.InsufficientData)
                     {
                         // we need to wait more

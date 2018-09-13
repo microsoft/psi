@@ -12,6 +12,7 @@ namespace Test.Psi.Data.Annotations
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Data.Json;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Test.Psi.Common;
 
     [TestClass]
     public class AnnotationTests
@@ -52,6 +53,7 @@ namespace Test.Psi.Data.Annotations
         /// Test writing and reading an empty Annotation store.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void EmptyAnnotationStore()
         {
             // write store
@@ -95,6 +97,7 @@ namespace Test.Psi.Data.Annotations
         /// Test writing and reading an empty Annotation store.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void AnnotationPipeline()
         {
             string path = this.path;
@@ -131,7 +134,7 @@ namespace Test.Psi.Data.Annotations
 
         private static void DeleteStore(string path)
         {
-            Directory.Delete(path, true);
+            TestRunner.SafeDirectoryDelete(path, true);
         }
 
         /// <summary>

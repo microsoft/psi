@@ -26,6 +26,11 @@ namespace Microsoft.Psi.Visualization.Config
         private double lineWidth;
 
         /// <summary>
+        /// How lines in the plot are interpolated from the points
+        /// </summary>
+        private InterpolationStyle interpolationStyle;
+
+        /// <summary>
         /// The color of the marker to draw
         /// </summary>
         private Color markerColor;
@@ -85,6 +90,16 @@ namespace Microsoft.Psi.Visualization.Config
         {
             get { return this.lineWidth; }
             set { this.Set(nameof(this.LineWidth), ref this.lineWidth, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the plot interpolation style.
+        /// </summary>
+        [DataMember]
+        public InterpolationStyle InterpolationStyle
+        {
+            get { return this.interpolationStyle; }
+            set { this.Set(nameof(this.InterpolationStyle), ref this.interpolationStyle, value); }
         }
 
         /// <summary>

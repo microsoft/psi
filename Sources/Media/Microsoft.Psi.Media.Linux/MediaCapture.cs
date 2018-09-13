@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Media
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Media capture component for Linux.
+    /// Component that captures and streams video from a camera.
     /// </summary>
     public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable
     {

@@ -26,33 +26,8 @@ namespace Microsoft.Psi.CognitiveServices.Speech
     /// </remarks>
     public sealed class BingSpeechRecognizer : AsyncConsumerProducer<ValueTuple<AudioBuffer, bool>, IStreamingSpeechRecognitionResult>, IDisposable
     {
-        /// <summary>
-        /// The configuration for this component.
-        /// </summary>
-        private readonly BingSpeechRecognizerConfiguration configuration;
-
         // For cancelling any pending recognition tasks before disposal
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-        /// <summary>
-        /// The output stream of intents and entities.
-        /// </summary>
-        private readonly Emitter<IntentData> intentData;
-
-        /// <summary>
-        /// The output stream of PartialSpeechResponseEventArgs
-        /// </summary>
-        private readonly Emitter<PartialSpeechResponseEventArgs> partialSpeechResponseEvent;
-
-        /// <summary>
-        /// The output stream of SpeechErrorEventArgs
-        /// </summary>
-        private readonly Emitter<SpeechErrorEventArgs> speechErrorEvent;
-
-        /// <summary>
-        /// The output stream of SpeechResponseEventArgs
-        /// </summary>
-        private readonly Emitter<SpeechResponseEventArgs> speechResponseEvent;
 
         /// <summary>
         /// The client that communicates with the cloud speech recognition service.
@@ -125,13 +100,13 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         public BingSpeechRecognizer(Pipeline pipeline, BingSpeechRecognizerConfiguration configuration)
             : base(pipeline)
         {
-            this.configuration = configuration ?? new BingSpeechRecognizerConfiguration();
-            this.intentData = pipeline.CreateEmitter<IntentData>(this, "IntentData");
+            this.Configuration = configuration ?? new BingSpeechRecognizerConfiguration();
+            this.PartialRecognitionResults = pipeline.CreateEmitter<IStreamingSpeechRecognitionResult>(this, nameof(this.PartialRecognitionResults));
 
             // create emitters for all possible Bing speech recognition events
-            this.partialSpeechResponseEvent = pipeline.CreateEmitter<PartialSpeechResponseEventArgs>(this, nameof(PartialSpeechResponseEventArgs));
-            this.speechErrorEvent = pipeline.CreateEmitter<SpeechErrorEventArgs>(this, nameof(SpeechErrorEventArgs));
-            this.speechResponseEvent = pipeline.CreateEmitter<SpeechResponseEventArgs>(this, nameof(SpeechResponseEventArgs));
+            this.PartialSpeechResponseEvent = pipeline.CreateEmitter<PartialSpeechResponseEventArgs>(this, nameof(PartialSpeechResponseEventArgs));
+            this.SpeechErrorEvent = pipeline.CreateEmitter<SpeechErrorEventArgs>(this, nameof(SpeechErrorEventArgs));
+            this.SpeechResponseEvent = pipeline.CreateEmitter<SpeechResponseEventArgs>(this, nameof(SpeechResponseEventArgs));
 
             // Create the Cognitive Services DataRecognitionClient
             this.speechRecognitionClient = this.CreateSpeechRecognitionClient();
@@ -150,36 +125,29 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         }
 
         /// <summary>
+        /// Gets the output stream of partial recognition results.
+        /// </summary>
+        public Emitter<IStreamingSpeechRecognitionResult> PartialRecognitionResults { get; }
+
+        /// <summary>
         /// Gets the output stream of PartialSpeechResponseEventArgs
         /// </summary>
-        public Emitter<PartialSpeechResponseEventArgs> PartialSpeechResponseEvent
-        {
-            get { return this.partialSpeechResponseEvent; }
-        }
+        public Emitter<PartialSpeechResponseEventArgs> PartialSpeechResponseEvent { get; }
 
         /// <summary>
         /// Gets the output stream of SpeechErrorEventArgs
         /// </summary>
-        public Emitter<SpeechErrorEventArgs> SpeechErrorEvent
-        {
-            get { return this.speechErrorEvent; }
-        }
+        public Emitter<SpeechErrorEventArgs> SpeechErrorEvent { get; }
 
         /// <summary>
         /// Gets the output stream of SpeechResponseEventArgs
         /// </summary>
-        public Emitter<SpeechResponseEventArgs> SpeechResponseEvent
-        {
-            get { return this.speechResponseEvent; }
-        }
+        public Emitter<SpeechResponseEventArgs> SpeechResponseEvent { get; }
 
         /// <summary>
         /// Gets the configuration for this component.
         /// </summary>
-        private BingSpeechRecognizerConfiguration Configuration
-        {
-            get { return this.configuration; }
-        }
+        private BingSpeechRecognizerConfiguration Configuration { get; }
 
         /// <summary>
         /// Dispose method.
@@ -269,7 +237,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
                 // Also post a null partial recognition result
                 this.lastPartialResult = string.Empty;
-                this.OutputResult(this.BuildPartialSpeechRecognitionResult(this.lastPartialResult), e.OriginatingTime);
+                this.PartialRecognitionResults.Post(this.BuildPartialSpeechRecognitionResult(this.lastPartialResult), e.OriginatingTime);
             }
 
             // Remember last audio state.
@@ -309,7 +277,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
             // Set the audio format (16-bit, 1-channel PCM samples). Currently
             // only 16kHz and 8kHz sampling rates are supported.
-            client.SetAudioFormat(this.configuration.InputFormat);
+            client.SetAudioFormat(this.Configuration.InputFormat);
 
             return client;
         }
@@ -340,7 +308,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             }
 
             // Post the raw result from the underlying recognition engine
-            this.speechResponseEvent.Post(e, originatingTime);
+            this.SpeechResponseEvent.Post(e, originatingTime);
         }
 
         /// <summary>
@@ -355,10 +323,10 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
             // Since this is a partial response, VAD may not yet have signalled the end of speech
             // so just use the last audio packet time (which will probably be ahead).
-            this.OutputResult(result, this.lastAudioOriginatingTime);
+            this.PartialRecognitionResults.Post(result, this.lastAudioOriginatingTime);
 
             // Post the raw result from the underlying recognition engine
-            this.partialSpeechResponseEvent.Post(e, this.lastAudioOriginatingTime);
+            this.PartialSpeechResponseEvent.Post(e, this.lastAudioOriginatingTime);
         }
 
         /// <summary>
@@ -409,7 +377,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             // Do not post further errors if a fatal error condition exists - the pipeline may be shutting down
             if (!this.fatalError)
             {
-                this.speechErrorEvent.Post(e, this.lastAudioOriginatingTime);
+                this.SpeechErrorEvent.Post(e, this.lastAudioOriginatingTime);
             }
         }
 

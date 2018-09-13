@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Imaging
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Pipeline component for encoding an image
+    /// Component that encodes an image using a specified encoder (e.g. JPEG, PNG).
     /// </summary>
     public class ImageEncoder : ConsumerProducer<Shared<Image>, Shared<EncodedImage>>
     {

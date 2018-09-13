@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Audio
     /// <summary>
     /// The WASAPI renderer class.
     /// </summary>
-    internal class WasapiRenderer : IDisposable
+    internal class WasapiRenderClient : IDisposable
     {
         private static Guid audioClientIID = new Guid(Guids.IAudioClientIIDString);
 
@@ -49,10 +49,10 @@ namespace Microsoft.Psi.Audio
         private int bytesRendered;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WasapiRenderer"/> class.
+        /// Initializes a new instance of the <see cref="WasapiRenderClient"/> class.
         /// </summary>
         /// <param name="endpoint">The audio endpoint device.</param>
-        public WasapiRenderer(IMMDevice endpoint)
+        public WasapiRenderClient(IMMDevice endpoint)
         {
             this.endpoint = endpoint;
         }
@@ -68,7 +68,7 @@ namespace Microsoft.Psi.Audio
         public int BytesRendered => this.bytesRendered;
 
         /// <summary>
-        /// Disposes the <see cref="WasapiRenderer"/> object.
+        /// Disposes the <see cref="WasapiRenderClient"/> object.
         /// </summary>
         public void Dispose()
         {

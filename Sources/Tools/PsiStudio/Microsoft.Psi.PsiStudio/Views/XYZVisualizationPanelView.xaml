@@ -8,12 +8,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d" 
     d:DesignHeight="300"
     d:DesignWidth="300"
-    Height="{Binding Configuration.Height}">
+    Height="{Binding Configuration.Height}"
+    IsHitTestVisible="True">
 
-    <Grid KeyDown="Grid_KeyDown" Background="Gray" MouseLeftButtonDown="Root_MouseLeftButtonDown">
+    <Grid KeyDown="Grid_KeyDown" Background="Gray" MouseMove="Grid_MouseMove">
         <Border BorderBrush="{StaticResource LightBorderColorBrush}" Background="{StaticResource MediumBackgroundColorBrush}" BorderThickness="1" />
 
         <h:HelixViewport3D Name="ViewPort3D">
@@ -51,5 +54,19 @@
                 </Style>
             </Border.Style>
         </Border>
+
+        <Thumb Height="3" Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DragDelta">
+                    <cmd:EventToCommand Command="{Binding Path=ResizePanelCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Thumb>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     </Grid>
 </UserControl>

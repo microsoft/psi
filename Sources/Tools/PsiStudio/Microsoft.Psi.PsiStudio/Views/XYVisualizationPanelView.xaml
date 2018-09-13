@@ -7,21 +7,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d" 
     d:DesignHeight="300" 
     d:DesignWidth="300"
-    Height="{Binding Configuration.Height}">
+    Height="{Binding Configuration.Height}"
+    IsHitTestVisible="True">
     
-    <Grid Name="Root" MouseLeftButtonDown="Root_MouseLeftButtonDown" MouseWheel="Root_MouseWheel" ClipToBounds="True">
+    <Grid Name="Root" ClipToBounds="True" MouseMove="Root_MouseMove">
         <Grid.Resources>
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </Grid.Resources>
 
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Name="RemovePanel" Header="Remove panel" Click="RemovePanel_Click" Height="25" />
-                <MenuItem Name="Clear" Header="Clear" Click="Clear_Click" Height="25" />
+                <MenuItem Name="RemovePanel" Header="Remove panel" Command="{Binding RemovePanelCommand}" Height="25" />
+                <MenuItem Name="Clear" Header="Clear" Command="{Binding ClearPanelCommand}" Height="25" />
             </ContextMenu>
         </Grid.ContextMenu>
 
@@ -54,5 +57,19 @@
                 </Style>
             </Border.Style>
         </Border>
+
+        <Thumb Height="3" Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DragDelta">
+                    <cmd:EventToCommand Command="{Binding Path=ResizePanelCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Thumb>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     </Grid>
 </UserControl>

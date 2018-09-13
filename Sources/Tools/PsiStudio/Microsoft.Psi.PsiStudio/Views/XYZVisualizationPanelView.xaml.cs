@@ -9,7 +9,9 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Media.Imaging;
     using System.Windows.Media.Media3D;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Server;
     using Microsoft.Psi.Visualization.Views.Visuals3D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -135,23 +137,24 @@ namespace Microsoft.Psi.Visualization.Views
             return null;
         }
 
-        private void Root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Grid_MouseMove(object sender, MouseEventArgs e)
         {
-            // Set the current panel on click
-            if (!this.VisualizationPanel.IsCurrentPanel)
+            // If the user has the Left Mouse button pressed, and we're not near the bottom edge
+            // of the panel (where resizing occurs), then initiate a Drag & Drop reorder operation
+            Point mousePosition = e.GetPosition(this);
+            if (e.LeftButton == MouseButtonState.Pressed && !DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
             {
-                this.VisualizationPanel.Container.CurrentPanel = this.VisualizationPanel;
+                    DataObject data = new DataObject();
+                data.SetData("DragOperation", "ReorderPanels");
+                data.SetData("VisualizationPanel", this.VisualizationPanel);
+                data.SetData("MouseOffsetFromTop", e.GetPosition(this).Y);
+                data.SetData("PanelSize", new Size?(new Size(this.ActualWidth, this.ActualHeight)));
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                renderTargetBitmap.Render(this);
+                data.SetImage(renderTargetBitmap);
+
+                DragDrop.DoDragDrop(this, data, DragDropEffects.Move);
             }
-        }
-
-        private void RemovePanel_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Container.RemovePanel(this.VisualizationPanel);
-        }
-
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Clear();
         }
     }
 }

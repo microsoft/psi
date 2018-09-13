@@ -9,7 +9,7 @@ namespace Microsoft.Psi.RealSense.Windows
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Defines a component for getting depth/RGB images from an Intel RealSense depth camera
+    /// Component that captures and streams video and depth from an Intel RealSense camera.
     /// </summary>
     public class RealSenseSensor : ISourceComponent, IDisposable
     {

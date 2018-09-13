@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:base="clr-namespace:Microsoft.Psi.Visualization.Base"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
     xmlns:local="clr-namespace:Microsoft.Psi.Visualization.Views.Visuals2D"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -93,7 +93,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="ContextMenuOpening">
-                        <base:EventToCommand Command="{Binding Mode=OneWay, Path=DynamicCanvasContextMenuOpeningCommand}" PassEventArgsToCommand="True" />
+                        <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=DynamicCanvasContextMenuOpeningCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Canvas>

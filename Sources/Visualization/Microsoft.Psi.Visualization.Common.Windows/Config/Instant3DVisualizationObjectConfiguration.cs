@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Visualization.Config
 {
     using System.Runtime.Serialization;
     using MathNet.Spatial.Euclidean;
+    using MathNet.Spatial.Units;
 
     /// <summary>
     /// Represents an instant 3D visualization object configuration.
@@ -82,7 +83,15 @@ namespace Microsoft.Psi.Visualization.Config
 
         private void UpdateLocalTranformation()
         {
-            this.LocalTransform = new CoordinateSystem();
+            this.LocalTransform = CoordinateSystem.Pitch(Angle.FromDegrees(this.localRotation.X))
+                .Transform(CoordinateSystem.Yaw(Angle.FromDegrees(this.localRotation.Y)))
+                .Transform(CoordinateSystem.Roll(Angle.FromDegrees(this.localRotation.Z))
+                .Transform(new CoordinateSystem(
+                    new Point3D(0, 0, 0),
+                    new Vector3D(this.localScale.X, 0, 0),
+                    new Vector3D(0, this.localScale.Y, 0),
+                    new Vector3D(0, 0, this.localScale.Z)))
+                .Transform(CoordinateSystem.Translation(this.localOffset)));
         }
     }
 }

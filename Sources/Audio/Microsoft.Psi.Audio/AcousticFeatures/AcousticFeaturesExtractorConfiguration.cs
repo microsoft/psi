@@ -4,14 +4,14 @@
 namespace Microsoft.Psi.Audio
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="AcousticFeatures"/> component.
+    /// Represents the configuration for the <see cref="AcousticFeaturesExtractor"/> component.
     /// </summary>
-    public sealed class AcousticFeaturesConfiguration
+    public sealed class AcousticFeaturesExtractorConfiguration
     {
         /// <summary>
         /// The default configuration.
         /// </summary>
-        public static readonly AcousticFeaturesConfiguration Default = new AcousticFeaturesConfiguration();
+        public static readonly AcousticFeaturesExtractorConfiguration Default = new AcousticFeaturesExtractorConfiguration();
 
         /// <summary>
         /// Backing store for the InputFormat property.
@@ -29,9 +29,9 @@ namespace Microsoft.Psi.Audio
         private bool computeFFTPower;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcousticFeaturesConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="AcousticFeaturesExtractorConfiguration"/> class.
         /// </summary>
-        public AcousticFeaturesConfiguration()
+        public AcousticFeaturesExtractorConfiguration()
         {
             // Default parameters for acoustic features computation
             this.FrameDurationInSeconds = 0.025f;

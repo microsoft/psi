@@ -15,6 +15,8 @@ namespace Microsoft.Psi.PsiStudio
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
+
+            // Shutdown COM server.
             ComServer.Instance.Uninitialize();
         }
 
@@ -22,6 +24,8 @@ namespace Microsoft.Psi.PsiStudio
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            // Startup COM server.
             ComServer.Instance.Initialize(Guids.RemoteVisualizationServiceCLSID, new ServerClassFactory());
         }
     }

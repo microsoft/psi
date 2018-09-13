@@ -205,9 +205,29 @@ namespace Microsoft.Psi.Persistence
                 string fullName = System.IO.Path.Combine(this.path, name);
                 if (File.Exists(fullName))
                 {
-                    using (var file = File.Open(fullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    int maxAttempts = 5;
+                    int attempts = 0;
+
+                    // Retry opening the file up to a maximum number of attempts - this is to handle the possible race
+                    // condition where the file is being resized on disposal (see InfiniteFileWriter.CloseCurrent),
+                    // which will result in an IOException being thrown if we attempt to open the file simultaneously.
+                    while (this.mappedFile == null && attempts++ < maxAttempts)
                     {
-                        this.mappedFile = MemoryMappedFile.CreateFromFile(file, null, 0, MemoryMappedFileAccess.Read, HandleInheritability.Inheritable, false);
+                        try
+                        {
+                            using (var file = File.Open(fullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                            {
+                                this.mappedFile = MemoryMappedFile.CreateFromFile(file, null, 0, MemoryMappedFileAccess.Read, HandleInheritability.Inheritable, false);
+                            }
+                        }
+                        catch (IOException)
+                        {
+                            if (attempts == maxAttempts)
+                            {
+                                // rethrow the exception if we have exhausted the maximum number of attempts
+                                throw;
+                            }
+                        }
                     }
                 }
             }

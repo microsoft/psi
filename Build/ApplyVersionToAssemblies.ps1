@@ -76,7 +76,24 @@ $NewVersion = $NewStringVersion -replace "\.", ","
 Write-Verbose "Version: $NewVersion, VersionString: $NewStringVersion"
 
 # Apply the version to the assembly property files
-$files = gci $Env:BUILD_SOURCESDIRECTORY -recurse -include AssemblyInfo.cpp,AssemblyInfo.cs,AssemblyInfo.rc,Directory.Build.props
+$files = gci $Env:BUILD_SOURCESDIRECTORY -recurse -include AssemblyInfo.cpp,AssemblyInfo.cs,Directory.Build.props
+if($files)
+{
+    Write-Verbose "Will apply $NewStringVersion to $($files.count) files."
+
+    foreach ($file in $files) {
+        $filecontent = Get-Content($file)
+        attrib $file -r
+        $filecontent -replace $VersionStringRegex, $NewStringVersion -replace $VersionRegex, $NewVersion | Out-File -Encoding "UTF8" $file
+        Write-Verbose "$file.FullName - version applied"
+    }
+}
+else
+{
+    Write-Warning "Found no files."
+}
+
+$files = gci $Env:BUILD_SOURCESDIRECTORY -recurse -include AssemblyInfo.rc
 if($files)
 {
     Write-Verbose "Will apply $NewStringVersion to $($files.count) files."
@@ -87,8 +104,4 @@ if($files)
         $filecontent -replace $VersionStringRegex, $NewStringVersion -replace $VersionRegex, $NewVersion | Out-File $file
         Write-Verbose "$file.FullName - version applied"
     }
-}
-else
-{
-    Write-Warning "Found no files."
 }

@@ -18,11 +18,11 @@ namespace Microsoft.Psi.Scheduling
         private readonly int threadCount;
         private readonly ManualResetEvent stopped = new ManualResetEvent(true);
         private readonly AutoResetEvent futureAdded = new AutoResetEvent(false);
-        private readonly Thread futuresThread;
 
         // the queue of pending workitems, ordered by start time
         private readonly WorkItemQueue globalWorkitems;
         private readonly FutureWorkItemQueue futureWorkitems;
+        private Thread futuresThread;
         private IPerfCounterCollection<SchedulerCounters> counters;
         private bool forcedShutdownRequested;
         private ThreadLocal<WorkItem?> nextWorkitem = new ThreadLocal<WorkItem?>();
@@ -40,8 +40,6 @@ namespace Microsoft.Psi.Scheduling
             this.threadCount = threadCount;
             this.globalWorkitems = new WorkItemQueue(name);
             this.futureWorkitems = new FutureWorkItemQueue(name + "_future", this);
-            this.futuresThread = new Thread(new ThreadStart(this.ProcessFutureQueue));
-            Platform.Specific.SetApartmentState(this.futuresThread, ApartmentState.MTA);
 
             // set virtual time such that any scheduled item appears to be in the future and gets queued in the future workitem queue
             // the time will change when the scheduler is started, and the future workitem queue will be drained then as appropriate
@@ -227,11 +225,27 @@ namespace Microsoft.Psi.Scheduling
             this.delayFutureWorkitemsUntilDue = delayFutureWorkitemsUntilDue;
             this.clock = clock;
             this.stopped.Reset();
-            this.futuresThread.Start();
+            this.StartFuturesThread();
+        }
+
+        public void PauseForQuiescence()
+        {
+            if (this.stopped.WaitOne(0))
+            {
+                return;
+            }
+
+            // let queues drain
+            this.stopped.Set();
+            this.futuresThread.Join();
+
+            // continue for phase two - stop
+            this.stopped.Reset();
+            this.StartFuturesThread();
         }
 
         // sets a flag to reject any new scheduling and blocks until running threads finish their current work
-        // assumes Startable components have been shut down
+        // assumes source components have been shut down
         public void Stop(bool abandonPendingWorkitems = false)
         {
             if (this.stopped.WaitOne(0))
@@ -291,6 +305,13 @@ namespace Microsoft.Psi.Scheduling
         private static void ReleaseExclusiveLock(SynchronizationLock synchronizationObject)
         {
             synchronizationObject.Release();
+        }
+
+        private void StartFuturesThread()
+        {
+            this.futuresThread = new Thread(new ThreadStart(this.ProcessFutureQueue));
+            Platform.Specific.SetApartmentState(this.futuresThread, ApartmentState.MTA);
+            this.futuresThread.Start();
         }
 
         // a thread enters Run as a result of a workitem being enqueued when the thread limit is not yet reached

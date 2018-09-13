@@ -89,7 +89,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
             else if (e.PropertyName == "CurrentValue")
             {
-                this.DataCollection.SetSource(this.ScatterRectangleVisualizationObject.CurrentValue.Data);
+                this.DataCollection.SetSource(this.ScatterRectangleVisualizationObject.CurrentValue.GetValueOrDefault().Data);
             }
         }
 

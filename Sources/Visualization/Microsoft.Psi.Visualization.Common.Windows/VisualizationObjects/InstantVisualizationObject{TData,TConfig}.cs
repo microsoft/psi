@@ -87,7 +87,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // No indices - use default value
             if (this.Indices == null)
             {
-                this.CurrentValue = default(Message<TData>);
+                this.CurrentValue = null;
             }
             else
             {
@@ -154,9 +154,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     interval = this.Navigator.Cursor + this.CursorEpsilon;
                 }
 
-                if (this.CurrentValue != default(Message<TData>) && !interval.PointIsWithin(this.CurrentValue.OriginatingTime))
+                if (this.CurrentValue.HasValue && !interval.PointIsWithin(this.CurrentValue.Value.OriginatingTime))
                 {
-                    this.CurrentValue = default(Message<TData>);
+                    this.CurrentValue = null;
                 }
             }
         }

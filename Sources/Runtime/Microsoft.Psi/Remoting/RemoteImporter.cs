@@ -286,7 +286,6 @@ namespace Microsoft.Psi.Remoting
                         }
 
                         this.storeWriter.Write(new BufferReader(message), envelope);
-                        Trace.WriteLine($"RemoteImporter data written (Stream={envelope.SourceId}, ID={id}, SequenceId={envelope.SequenceId}, Size={message.Length})");
                     }
                 }
                 catch (Exception ex)

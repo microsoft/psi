@@ -5,8 +5,10 @@ namespace Test.Psi.Common
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -187,6 +189,34 @@ namespace Test.Psi.Common
 
                 Console.ForegroundColor = color;
             }
+        }
+
+        /// <summary>
+        /// Due to the runtime's asynchronous behaviour, we may try to
+        /// delete our test directory before the runtime has finished
+        /// messing with it.  This method will keep trying to delete
+        /// the directory until the runtime shuts down
+        /// </summary>
+        /// <param name="path">The path to the Directory to be deleted</param>
+        /// <param name="recursive">Delete all subdirectories and files</param>
+        public static void SafeDirectoryDelete(string path, bool recursive)
+        {
+            for (int iteration = 0; iteration < 10; iteration++)
+            {
+                try
+                {
+                    Directory.Delete(path, recursive);
+                    return;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Something in the directory is probably still being
+                    // accessed by the process under test, so try again shortly.
+                    Thread.Sleep(200);
+                }
+            }
+
+            throw new ApplicationException(string.Format("Unable to delete directory \"{0}\" after multiple attempts", path));
         }
     }
 }

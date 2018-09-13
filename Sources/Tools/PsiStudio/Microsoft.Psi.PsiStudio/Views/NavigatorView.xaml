@@ -15,7 +15,13 @@
     d:DesignWidth="300">
     
     <UserControl.Resources>
-        <conv:TimeSpanConverter x:Key="TimeSpanConverter" />
+        <ResourceDictionary>
+            <conv:TimeSpanConverter x:Key="TimeSpanConverter" />
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Themes\Brushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid x:Name="Root" Background="{StaticResource LightBackgroundBrush}" ClipToBounds="True" MouseLeftButtonDown="Root_MouseLeftButtonDown" MouseRightButtonDown="Root_MouseRightButtonDown">
@@ -23,11 +29,78 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Border Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1">
+
+        <Border Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" IsHitTestVisible="False">
             <Grid>
-                <TextBlock Text="{Binding DataRange.StartTime, StringFormat=StartTime: {0}}" Foreground="{StaticResource ForegroundBrush}" Margin="5"/>
-                <TextBlock Text="{Binding DataRange.Duration, StringFormat=Duration: {0:\hh\\:mm\\:ss\\.ffff}}" Foreground="{StaticResource ForegroundBrush}" Margin="5" HorizontalAlignment="Right"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Visibility="{Binding ShowTimingHeader, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Text="Selection Start" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="Cursor" Foreground="{StaticResource CursorBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="3" Text="Selection End" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="Session End" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right"/>
+                </Grid>
+
+                <Grid Grid.Row="1" Visibility="{Binding ShowAbsoluteTiming, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Absolute Time" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionRange.StartTime, StringFormat=M/d/yyyy \hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="{Binding Cursor, StringFormat=M/d/yyyy \hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource CursorBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionRange.EndTime, StringFormat=M/d/yyyy \hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{Binding DataRange.EndTime, StringFormat=M/d/yyyy \hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right"/>
+                </Grid>
+
+                <Grid Grid.Row="2" Visibility="{Binding ShowTimingRelativeToSessionStart, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Relative to Session Start" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="{Binding CursorRelativeToSessionStartFormatted}" Foreground="{StaticResource CursorBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{Binding DataRange.Duration, StringFormat=hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right"/>
+                </Grid>
+
+                <Grid Grid.Row="3" Visibility="{Binding ShowTimingRelativeToSelectionStart, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Relative to Selection Start" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="00:00:00.0000" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="{Binding CursorRelativeToSelectionStartFormatted}" Foreground="{StaticResource CursorBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionRange.Duration, StringFormat=hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{Binding SessionEndRelativeToSelectionStartFormatted}" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right"/>
+                </Grid>
             </Grid>
         </Border>
 

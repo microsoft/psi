@@ -12,6 +12,7 @@ namespace Test.Psi.Data
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Test.Psi.Common;
 
     [TestClass]
     public class SimpleReaderTests
@@ -27,7 +28,7 @@ namespace Test.Psi.Data
         [TestCleanup]
         public void Cleanup()
         {
-            Directory.Delete(this.path, true);
+            TestRunner.SafeDirectoryDelete(this.path, true);
         }
 
         [TestMethod]

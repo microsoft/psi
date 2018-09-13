@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Imaging
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Pipeline component for decoding an image
+    /// Component that decodes an image using a specified decoder (e.g. JPEG, PNG)
     /// </summary>
     public class ImageDecoder : ConsumerProducer<Shared<EncodedImage>, Shared<Image>>
     {

@@ -23,6 +23,7 @@ namespace Test.Psi.Kinect.Windows
         // rotates the entire result by 90 degrees. After this the resulting quaternion
         // should be rotated 100 degrees around Y axis.
         [TestMethod]
+        [Timeout(60000)]
         [Ignore]
         public void TestQuaternion()
         {

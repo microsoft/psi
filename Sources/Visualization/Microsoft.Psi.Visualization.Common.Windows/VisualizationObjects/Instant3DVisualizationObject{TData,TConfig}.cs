@@ -38,14 +38,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             get => string.Format($"{this.Configuration.LocalOffset.X}, {this.Configuration.LocalOffset.Y}, {this.Configuration.LocalOffset.Z}");
             set
             {
-                double x = 0, y = 0, z = 0;
+                double x = 0;
+                double y = 0;
+                double z = 0;
                 string[] values = value.Split(',');
                 if (values.Length == 3 && double.TryParse(values[0], out x) && double.TryParse(values[1], out y) && double.TryParse(values[2], out z))
                 {
+                    this.RaisePropertyChanging(nameof(this.LocalOffsetString));
                     this.Configuration.LocalOffset = new MathNet.Spatial.Euclidean.Vector3D(x, y, z);
+                    this.RaisePropertyChanged(nameof(this.LocalOffsetString));
                 }
-
-                this.RaisePropertyChanged(nameof(this.LocalOffsetString));
             }
         }
 
@@ -57,14 +59,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             get => string.Format($"{this.Configuration.LocalScale.X}, {this.Configuration.LocalScale.Y}, {this.Configuration.LocalScale.Z}");
             set
             {
-                double x = 1, y = 1, z = 1;
+                double x = 1;
+                double y = 1;
+                double z = 1;
                 string[] values = value.Split(',');
                 if (values.Length == 3 && double.TryParse(values[0], out x) && double.TryParse(values[1], out y) && double.TryParse(values[2], out z))
                 {
+                    this.RaisePropertyChanging(nameof(this.LocalScaleString));
                     this.Configuration.LocalScale = new MathNet.Spatial.Euclidean.Vector3D(x, y, z);
+                    this.RaisePropertyChanged(nameof(this.LocalScaleString));
                 }
-
-                this.RaisePropertyChanged(nameof(this.LocalScaleString));
             }
         }
 
@@ -76,14 +80,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             get => string.Format($"{this.Configuration.LocalRotation.X}, {this.Configuration.LocalRotation.Y}, {this.Configuration.LocalRotation.Z}");
             set
             {
-                double x = 0, y = 0, z = 0;
+                double x = 0;
+                double y = 0;
+                double z = 0;
                 string[] values = value.Split(',');
                 if (values.Length == 3 && double.TryParse(values[0], out x) && double.TryParse(values[1], out y) && double.TryParse(values[2], out z))
                 {
+                    this.RaisePropertyChanging(nameof(this.LocalRotationString));
                     this.Configuration.LocalRotation = new MathNet.Spatial.Euclidean.Vector3D(x, y, z);
+                    this.RaisePropertyChanged(nameof(this.LocalRotationString));
                 }
-
-                this.RaisePropertyChanged(nameof(this.LocalRotationString));
             }
         }
 

@@ -21,8 +21,8 @@ namespace Test.Psi.Speech
             using (var pipeline = Pipeline.Create(nameof(this.VoiceActivity_DetectFromFile)))
             {
                 var vad = new SimpleVoiceActivityDetector(pipeline, new SimpleVoiceActivityDetectorConfiguration());
-                var audioSource = new WaveFileAudioSource(pipeline, "16kHz1chan.wav", null, 20);
-                audioSource.PipeTo(vad);
+                var audioInput = new WaveFileAudioSource(pipeline, "16kHz1chan.wav", null, 20);
+                audioInput.PipeTo(vad);
 
                 // Add results from outputs.
                 var results = new List<bool>();

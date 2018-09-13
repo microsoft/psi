@@ -3,8 +3,12 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
+    using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.Config;
     using Newtonsoft.Json;
 
@@ -16,7 +20,14 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     public abstract class VisualizationPanel<TConfig> : VisualizationPanel
         where TConfig : VisualizationPanelConfiguration, new()
     {
+        // The minimum height of a Visualization Panel
+        private const double MinHeight = 10;
+
         private TConfig configuration;
+        private RelayCommand removePanelCommand;
+        private RelayCommand clearPanelCommand;
+        private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
+        private RelayCommand<DragDeltaEventArgs> resizePanelCommand;
 
         /// <summary>
         /// Gets or sets the visualization panel configuration.
@@ -50,6 +61,86 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [IgnoreDataMember]
         public override double Width => this.Configuration.Width;
 
+        /// <summary>
+        /// Gets the remove panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand RemovePanelCommand
+        {
+            get
+            {
+                if (this.removePanelCommand == null)
+                {
+                    this.removePanelCommand = new RelayCommand(() => this.Container.RemovePanel(this));
+                }
+
+                return this.removePanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the clear panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ClearPanelCommand
+        {
+            get
+            {
+                if (this.clearPanelCommand == null)
+                {
+                    this.clearPanelCommand = new RelayCommand(() => this.Clear());
+                }
+
+                return this.clearPanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mouse left button down command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual RelayCommand<MouseButtonEventArgs> MouseLeftButtonDownCommand
+        {
+            get
+            {
+                if (this.mouseLeftButtonDownCommand == null)
+                {
+                    this.mouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
+                        e =>
+                        {
+                            // Set the current panel on click
+                            if (!this.IsCurrentPanel)
+                            {
+                                this.Container.CurrentPanel = this;
+                            }
+                        });
+                }
+
+                return this.mouseLeftButtonDownCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the resize panel command
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<DragDeltaEventArgs> ResizePanelCommand
+        {
+            get
+            {
+                if (this.resizePanelCommand == null)
+                {
+                    this.resizePanelCommand = new RelayCommand<DragDeltaEventArgs>(o => this.Configuration.Height = Math.Max(this.Configuration.Height + o.VerticalChange, MinHeight));
+                }
+
+                return this.resizePanelCommand;
+            }
+        }
+
         /// <inheritdoc />
         public override string GetConfiguration()
         {
@@ -72,6 +163,10 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <inheritdoc />
         protected override void OnConfigurationChanged()
         {
+            // RaisePropertyChanging for both Width and Height as they take their values from the configuration
+            this.RaisePropertyChanging(nameof(this.Width));
+            this.RaisePropertyChanging(nameof(this.Height));
+
             base.OnConfigurationChanged();
 
             // RaisePropertyChanged for both Width and Height as they take their values from the configuration
@@ -82,6 +177,17 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <inheritdoc />
         protected override void OnConfigurationPropertyChanged(string propertyName)
         {
+            if (propertyName == nameof(this.configuration.Width))
+            {
+                // RaisePropertyChanging since this.Width => this.configuration.Width
+                this.RaisePropertyChanging(nameof(this.Width));
+            }
+            else if (propertyName == nameof(this.configuration.Height))
+            {
+                // RaisePropertyChanging since this.Height => this.configuration.Height
+                this.RaisePropertyChanging(nameof(this.Height));
+            }
+
             base.OnConfigurationPropertyChanged(propertyName);
             if (propertyName == nameof(this.configuration.Width))
             {

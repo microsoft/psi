@@ -145,7 +145,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Executes a function for each item in the input stream, generating a new stream with the (zero or more) values returned by the function.
         /// The function must return an <see cref="IEnumerable{TOut}"/>, which can be <see cref="System.Linq.Enumerable.Empty{TOut}"/> to indicate zero results.
-        /// The values in the returned <see cref="IEnumerable{TOut}"/> are emitted as separate messages with the same oringinating time.
+        /// The values in the returned <see cref="IEnumerable{TOut}"/> are emitted as separate messages with the same originating time.
         /// </summary>
         /// <typeparam name="TIn">The input message type</typeparam>
         /// <typeparam name="TOut">The output message type</typeparam>

@@ -9,22 +9,22 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements an audio source which captures live audio from an input device such as a microphone.
+    /// Component that captures and streams audio from an input device such as a microphone.
     /// </summary>
     /// <remarks>
     /// This sensor component produces an audio output stream of type <see cref="AudioBuffer"/> which may be piped to
     /// downstream components for further processing and optionally saved to a data store. The audio input device from
-    /// which to capture may be specified via the <see cref="AudioConfiguration.DeviceName"/> configuration
+    /// which to capture may be specified via the <see cref="AudioCaptureConfiguration.DeviceName"/> configuration
     /// parameter (e.g. "plughw:0,0").
     /// </remarks>
-    public sealed class AudioSource : IProducer<AudioBuffer>, ISourceComponent, IDisposable
+    public sealed class AudioCapture : IProducer<AudioBuffer>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
 
         /// <summary>
         /// The configuration for this component.
         /// </summary>
-        private readonly AudioConfiguration configuration;
+        private readonly AudioCaptureConfiguration configuration;
 
         /// <summary>
         /// The output stream of audio buffers.
@@ -47,11 +47,11 @@ namespace Microsoft.Psi.Audio
         private DateTime lastPostedAudioTime = DateTime.MinValue;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioSource"/> class.
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioSource(Pipeline pipeline, AudioConfiguration configuration)
+        public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration)
         {
             pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
             pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
@@ -61,12 +61,12 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioSource"/> class.
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public AudioSource(Pipeline pipeline, string configurationFilename = null)
-            : this(pipeline, (configurationFilename == null) ? new AudioConfiguration() : new ConfigurationHelper<AudioConfiguration>(configurationFilename).Configuration)
+        public AudioCapture(Pipeline pipeline, string configurationFilename = null)
+            : this(pipeline, (configurationFilename == null) ? new AudioCaptureConfiguration() : new ConfigurationHelper<AudioCaptureConfiguration>(configurationFilename).Configuration)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Gets the configuration for this component.
         /// </summary>
-        private AudioConfiguration Configuration
+        private AudioCaptureConfiguration Configuration
         {
             get { return this.configuration; }
         }
@@ -112,7 +112,7 @@ namespace Microsoft.Psi.Audio
                 LinuxAudioInterop.Mode.Capture,
                 (int)this.configuration.Format.SamplesPerSec,
                 this.configuration.Format.Channels,
-                LinuxAudioInterop.ConfigurationFormat(this.configuration));
+                LinuxAudioInterop.ConvertFormat(this.configuration.Format));
 
             new Thread(new ThreadStart(() =>
             {

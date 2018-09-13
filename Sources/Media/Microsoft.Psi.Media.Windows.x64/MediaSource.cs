@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Media
     using SharpDX.MediaFoundation;
 
     /// <summary>
-    /// MediaSource defines a component that plays back media
+    /// Component that streams video and audio from a media file.
     /// </summary>
     public class MediaSource : Generator, IDisposable
     {

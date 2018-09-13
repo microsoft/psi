@@ -76,6 +76,11 @@ namespace Microsoft.Psi.Imaging
     public enum FlipMode
     {
         /// <summary>
+        /// Leave image unflipped
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Flips image along the horizontal axis
         /// </summary>
         AlongHorizontalAxis,
@@ -99,23 +104,69 @@ namespace Microsoft.Psi.Imaging
         /// <returns>A new flipped image</returns>
         public static Shared<Image> Flip(this Image image, FlipMode mode)
         {
-            var bitmap = new Bitmap(image.Width, image.Height);
-            var graphics = Graphics.FromImage(bitmap);
-            switch (mode)
+            if (image.PixelFormat == PixelFormat.Gray_16bpp)
             {
-                case FlipMode.AlongHorizontalAxis:
-                    graphics.TranslateTransform(0.0f, image.Height - 1);
-                    graphics.ScaleTransform(1.0f, -1.0f);
-                    break;
+                // We can't handle this through GDI.
+                Shared<Image> dstImage = ImagePool.GetOrCreate(image.Width, image.Height, image.PixelFormat);
+                unsafe
+                {
+                    int srcBytesPerPixel = PixelFormatHelper.GetBytesPerPixel(image.PixelFormat);
+                    int dstBytesPerPixel = PixelFormatHelper.GetBytesPerPixel(dstImage.Resource.PixelFormat);
+                    byte* srcRow = (byte*)image.ImageData.ToPointer();
+                    byte* dstRow = (byte*)dstImage.Resource.ImageData.ToPointer();
+                    int ystep = dstImage.Resource.Stride;
+                    if (mode == FlipMode.AlongHorizontalAxis)
+                    {
+                        dstRow += dstImage.Resource.Stride * (image.Height - 1);
+                        ystep = -dstImage.Resource.Stride;
+                    }
 
-                case FlipMode.AlongVerticalAxis:
-                    graphics.TranslateTransform(image.Width - 1, 0.0f);
-                    graphics.ScaleTransform(-1.0f, 1.0f);
-                    break;
+                    int xstep = dstBytesPerPixel;
+                    int xoffset = 0;
+                    if (mode == FlipMode.AlongVerticalAxis)
+                    {
+                        xoffset = dstBytesPerPixel * (dstImage.Resource.Width - 1);
+                        xstep = -dstBytesPerPixel;
+                    }
+
+                    for (int i = 0; i < image.Height; i++)
+                    {
+                        byte* srcCol = srcRow;
+                        byte* dstCol = dstRow + xoffset;
+                        for (int j = 0; j < image.Width; j++)
+                        {
+                            ((ushort*)dstCol)[0] = ((ushort*)srcCol)[0];
+                            srcCol += srcBytesPerPixel;
+                            dstCol += xstep;
+                        }
+
+                        srcRow += image.Stride;
+                        dstRow += ystep;
+                    }
+                }
+
+                return dstImage;
             }
+            else
+            {
+                var bitmap = new Bitmap(image.Width, image.Height);
+                var graphics = Graphics.FromImage(bitmap);
+                switch (mode)
+                {
+                    case FlipMode.AlongHorizontalAxis:
+                        graphics.TranslateTransform(0.0f, image.Height - 1);
+                        graphics.ScaleTransform(1.0f, -1.0f);
+                        break;
 
-            graphics.DrawImage(image.ToManagedImage(), new Point(0, 0));
-            return ImagePool.GetOrCreate(bitmap);
+                    case FlipMode.AlongVerticalAxis:
+                        graphics.TranslateTransform(image.Width - 1, 0.0f);
+                        graphics.ScaleTransform(-1.0f, 1.0f);
+                        break;
+                }
+
+                graphics.DrawImage(image.ToManagedImage(), new Point(0, 0));
+                return ImagePool.GetOrCreate(bitmap);
+            }
         }
 
         /// <summary>

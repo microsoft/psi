@@ -67,11 +67,11 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void SetTransform()
         {
-            if (this.visualizationObject.CurrentValue.Data != null)
+            var globalTransform = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
+            if (globalTransform != null)
             {
-                var globalPlacement = this.visualizationObject.CurrentValue.Data;
-                globalPlacement = globalPlacement.Transform(this.visualizationObject.Configuration.LocalTransform);
-                this.Transform = new MatrixTransform3D(globalPlacement.GetMatrix3D());
+                globalTransform = globalTransform.Transform(this.visualizationObject.Configuration.LocalTransform);
+                this.Transform = new MatrixTransform3D(globalTransform.GetMatrix3D());
             }
         }
 

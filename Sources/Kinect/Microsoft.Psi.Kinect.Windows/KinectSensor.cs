@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Kinect
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Used for receiving information from a Kinect sensor
+    /// Component that captures and streams information (images, depth, audio, bodies, etc.) from a Kinect One (v2) sensor.
     /// </summary>
     public class KinectSensor : IKinectSensor, ISourceComponent, IDisposable
     {

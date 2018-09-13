@@ -49,10 +49,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void UpdateTransform()
         {
-            var image = this.visualizationObject.CurrentValue.Data;
-            if (image?.Resource != null)
+            var resource = this.visualizationObject.CurrentValue.GetValueOrDefault().Data?.Resource;
+            if (resource != null)
             {
-                this.UpdateMesh(image.Resource);
+                this.UpdateMesh(resource);
                 this.Transform = new MatrixTransform3D(this.visualizationObject.Configuration.LocalTransform.GetMatrix3D());
             }
         }

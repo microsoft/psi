@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
-    <PackageReference Include="SharpDX.MediaFoundation" Version="4.0.1" />
+    <PackageReference Include="SharpDX.MediaFoundation" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj" />

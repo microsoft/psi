@@ -74,7 +74,11 @@ namespace Microsoft.Psi.Data
         /// Gets the orginating time interval (earliest to latest) of the messages in this session.
         /// </summary>
         [IgnoreDataMember]
-        public TimeInterval OriginatingTimeInterval => TimeInterval.Coverage(this.InternalPartitions.Select(p => p.OriginatingTimeInterval));
+        public TimeInterval OriginatingTimeInterval =>
+            TimeInterval.Coverage(
+                this.InternalPartitions
+                    .Where(p => p.OriginatingTimeInterval.Left > DateTime.MinValue && p.OriginatingTimeInterval.Right < DateTime.MaxValue)
+                    .Select(p => p.OriginatingTimeInterval));
 
         /// <summary>
         /// Gets the collection of partitions in this session.
@@ -224,7 +228,7 @@ namespace Microsoft.Psi.Data
                         // if operation was canceled, remove the partially-written store
                         if (StoreCommon.TryGetPathToLatestVersion(outputStoreName, outputPartitionPath, out string storePath))
                         {
-                            Directory.Delete(storePath, true);
+                            this.SafeDirectoryDelete(storePath, true);
                         }
 
                         throw;
@@ -281,6 +285,34 @@ namespace Microsoft.Psi.Data
             {
                 partition.Session = this;
             }
+        }
+
+        /// <summary>
+        /// Due to the runtime's asynchronous behaviour, we may try to
+        /// delete our test directory before the runtime has finished
+        /// messing with it.  This method will keep trying to delete
+        /// the directory until the runtime shuts down
+        /// </summary>
+        /// <param name="path">The path to the Directory to be deleted</param>
+        /// <param name="recursive">Delete all subdirectories and files</param>
+        private void SafeDirectoryDelete(string path, bool recursive)
+        {
+            for (int iteration = 0; iteration < 10; iteration++)
+            {
+                try
+                {
+                    Directory.Delete(path, recursive);
+                    return;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Something in the directory is probably still being
+                    // accessed by the process under test, so try again shortly.
+                    Thread.Sleep(200);
+                }
+            }
+
+            throw new ApplicationException(string.Format("Unable to delete directory \"{0}\" after multiple attempts", path));
         }
     }
 }

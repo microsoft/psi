@@ -11,21 +11,21 @@ namespace Microsoft.Psi.Audio
     /// <summary>
     /// Implements the services required to play audio to audio renderer devices.
     /// </summary>
-    internal class AudioRenderer : IDisposable
+    internal class WasapiRender : IDisposable
     {
         private static Guid guidEventContext = new Guid(0x65717dc8, 0xe74c, 0x4087, 0x90, 0x1, 0xdb, 0xc5, 0xdd, 0x5c, 0x9e, 0x19);
 
         private IMMDevice audioDevice;
         private IAudioEndpointVolume volume;
         private AudioEndpointVolumeCallback volumeCallback;
-        private WasapiRenderer wasapiRenderer;
+        private WasapiRenderClient wasapiRenderClient;
         private AudioDataRequestedCallback callbackDelegate;
         private CircularBufferStream audioBufferStream;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioRenderer"/> class.
+        /// Initializes a new instance of the <see cref="WasapiRender"/> class.
         /// </summary>
-        public AudioRenderer()
+        public WasapiRender()
         {
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Audio
         /// Gets the expected audio format. This property will only be valid after StartRendering has been called
         /// and will return the expected format of the audio being rendered on the selected audio renderer device.
         /// </summary>
-        public WaveFormat MixFormat => this.wasapiRenderer?.MixFormat;
+        public WaveFormat MixFormat => this.wasapiRenderClient?.MixFormat;
 
         /// <summary>
         /// Gets or sets the audio output level.
@@ -102,7 +102,7 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Disposes an instance of the <see cref="AudioRenderer"/> class.
+        /// Disposes an instance of the <see cref="WasapiRender"/> class.
         /// </summary>
         public void Dispose()
         {
@@ -182,7 +182,7 @@ namespace Microsoft.Psi.Audio
         /// </param>
         public void StartRendering(double maxBufferSeconds, int targetLatencyInMs, float gain, WaveFormat inFormat)
         {
-            if (this.wasapiRenderer != null)
+            if (this.wasapiRenderClient != null)
             {
                 this.StopRendering();
             }
@@ -190,17 +190,17 @@ namespace Microsoft.Psi.Audio
             // Create an audio buffer to buffer audio awaiting playback.
             this.audioBufferStream = new CircularBufferStream((long)Math.Ceiling(maxBufferSeconds * inFormat.AvgBytesPerSec), false);
 
-            this.wasapiRenderer = new WasapiRenderer(this.audioDevice);
+            this.wasapiRenderClient = new WasapiRenderClient(this.audioDevice);
 
             // Create a callback delegate and marshal it to a function pointer. Keep a
             // reference to the delegate as a class field to prevent it from being GC'd.
             this.callbackDelegate = new AudioDataRequestedCallback(this.AudioDataRequestedCallback);
 
             // initialize the renderer with the desired parameters
-            this.wasapiRenderer.Initialize(targetLatencyInMs, gain, inFormat, this.callbackDelegate);
+            this.wasapiRenderClient.Initialize(targetLatencyInMs, gain, inFormat, this.callbackDelegate);
 
             // tell WASAPI to start rendering
-            this.wasapiRenderer.Start();
+            this.wasapiRenderClient.Start();
         }
 
         /// <summary>
@@ -234,10 +234,10 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void StopRendering()
         {
-            if (this.wasapiRenderer != null)
+            if (this.wasapiRenderClient != null)
             {
-                this.wasapiRenderer.Dispose();
-                this.wasapiRenderer = null;
+                this.wasapiRenderClient.Dispose();
+                this.wasapiRenderClient = null;
             }
 
             if (this.audioBufferStream != null)

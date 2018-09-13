@@ -10,6 +10,7 @@ namespace Test.Psi.CognitiveServices.Speech
     public class SpeechServiceTester
     {
         [TestMethod]
+        [Timeout(60000)]
         public void SpeechService_TurnStartMessage()
         {
             var json = "X-RequestId:ad7c8760806b43eead0ccc43aa69ea59\r\n" +
@@ -33,6 +34,7 @@ namespace Test.Psi.CognitiveServices.Speech
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void SpeechService_SpeechStartDetectedMessage()
         {
             var json = "X-RequestId:ad7c8760806b43eead0ccc43aa69ea59\r\n" +
@@ -51,6 +53,7 @@ namespace Test.Psi.CognitiveServices.Speech
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void SpeechService_SpeechHypothesisMessage()
         {
             var json = "X-RequestId:ad7c8760806b43eead0ccc43aa69ea59\r\n" +
@@ -71,6 +74,7 @@ namespace Test.Psi.CognitiveServices.Speech
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void SpeechService_SpeechEndDetectedMessage()
         {
             var json = "X-RequestId:ad7c8760806b43eead0ccc43aa69ea59\r\n" +
@@ -89,6 +93,7 @@ namespace Test.Psi.CognitiveServices.Speech
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void SpeechService_SpeechPhraseMessage()
         {
             var json = "X-RequestId:ad7c8760806b43eead0ccc43aa69ea59\r\n" +
@@ -131,6 +136,7 @@ namespace Test.Psi.CognitiveServices.Speech
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void SpeechService_TurnEndMessage()
         {
             var json = "X-RequestId:ad7c8760806b43eead0ccc43aa69ea59\r\n" +

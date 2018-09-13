@@ -30,6 +30,11 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         private double zoomToSelectionPadding;
 
+        // The various Timing displays
+        private bool showAbsoluteTiming = false;
+        private bool showTimingRelativeToSessionStart = false;
+        private bool showTimingRelativeToSelectionStart = false;
+
         private DispatcherTimer playTimer;
 
         /// <summary>
@@ -45,6 +50,8 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.zoomToSelectionPadding = 0.1;
 
             this.dataRange.SetRange(DateTime.MinValue, TimeSpan.FromSeconds(60));
+
+            this.SelectionRange.RangeChanged += this.SelectionRange_RangeChanged;
         }
 
         /// <summary>
@@ -66,19 +73,39 @@ namespace Microsoft.Psi.Visualization.Navigation
             {
                 if (this.cursor != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Cursor));
+                    this.RaisePropertyChanging(nameof(this.CursorRelativeToSessionStartFormatted));
+                    this.RaisePropertyChanging(nameof(this.CursorRelativeToSelectionStartFormatted));
                     var original = this.cursor;
                     this.cursor = value;
                     this.CursorChanged?.Invoke(this, new NavigatorTimeChangedEventArgs(original, value));
                     this.RaisePropertyChanged(nameof(this.Cursor));
+                    this.RaisePropertyChanged(nameof(this.CursorRelativeToSessionStartFormatted));
+                    this.RaisePropertyChanged(nameof(this.CursorRelativeToSelectionStartFormatted));
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the cursor position relative to the Session Start time
+        /// </summary>
+        public string CursorRelativeToSessionStartFormatted => this.FormatTimespan(this.Cursor - this.DataRange.StartTime);
+
+        /// <summary>
+        /// Gets the cursor position relative to the Selection Start time
+        /// </summary>
+        public string CursorRelativeToSelectionStartFormatted => this.FormatTimespan(this.Cursor - this.SelectionRange.StartTime);
 
         /// <summary>
         /// Gets the data range.
         /// </summary>
         [DataMember]
         public NavigatorRange DataRange => this.dataRange;
+
+        /// <summary>
+        /// Gets the Session End time relative to the Selection Start time
+        /// </summary>
+        public string SessionEndRelativeToSelectionStartFormatted => this.FormatTimespan(this.DataRange.EndTime - this.SelectionRange.StartTime);
 
         /// <summary>
         /// Gets a value indicating whether the navigator has a finite range.
@@ -96,6 +123,7 @@ namespace Microsoft.Psi.Visualization.Navigation
             {
                 if (this.navigationMode != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.NavigationMode));
                     var original = this.navigationMode;
                     this.navigationMode = value;
                     this.NavigationModeChanged?.Invoke(this, new NavigatorModeChangedEventArgs(original, value));
@@ -111,6 +139,16 @@ namespace Microsoft.Psi.Visualization.Navigation
         public NavigatorRange SelectionRange => this.selectionRange;
 
         /// <summary>
+        /// Gets the offset of the Section Start marker from the start of the Session
+        /// </summary>
+        public string SelectionStartRelativeToSessionStartFormatted => this.FormatTimespan(this.SelectionRange.StartTime - this.DataRange.StartTime);
+
+        /// <summary>
+        /// Gets the offset of the Section End marker from the start of the Session
+        /// </summary>
+        public string SelectionEndRelativeToSessionStartFormatted => this.FormatTimespan(this.SelectionRange.EndTime - this.DataRange.StartTime);
+
+        /// <summary>
         /// Gets the view range.
         /// </summary>
         [DataMember]
@@ -120,8 +158,8 @@ namespace Microsoft.Psi.Visualization.Navigation
         [DataMember]
         public double ZoomToSelectionPadding
         {
-            get { return this.zoomToSelectionPadding; }
-            set { this.Set(nameof(this.ZoomToSelectionPadding), ref this.zoomToSelectionPadding, value); }
+            get => this.zoomToSelectionPadding;
+            set => this.Set(nameof(this.ZoomToSelectionPadding), ref this.zoomToSelectionPadding, value);
         }
 
         /// <inheritdoc />
@@ -136,28 +174,57 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <inheritdoc />
         RemoteNavigationMode IRemoteNavigator.NavigationMode
         {
-            get
-            {
-                if (this.NavigationMode == NavigationMode.Live)
-                {
-                    return RemoteNavigationMode.Live;
-                }
-                else
-                {
-                    return RemoteNavigationMode.Playback;
-                }
-            }
+            get => (this.NavigationMode == NavigationMode.Live) ? RemoteNavigationMode.Live : RemoteNavigationMode.Playback;
+            set => this.NavigationMode = (value == RemoteNavigationMode.Live) ? NavigationMode.Live : NavigationMode.Playback;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the Timing Header is visible
+        /// </summary>
+        public bool ShowTimingHeader => this.ShowAbsoluteTiming || this.ShowTimingRelativeToSessionStart || this.ShowTimingRelativeToSelectionStart;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Absolute Timing is displayed
+        /// </summary>
+        public bool ShowAbsoluteTiming
+        {
+            get => this.showAbsoluteTiming;
 
             set
             {
-                if (value == RemoteNavigationMode.Live)
-                {
-                    this.NavigationMode = NavigationMode.Live;
-                }
-                else
-                {
-                    this.NavigationMode = NavigationMode.Playback;
-                }
+                this.RaisePropertyChanging(nameof(this.ShowTimingHeader));
+                this.Set(nameof(this.ShowAbsoluteTiming), ref this.showAbsoluteTiming, value);
+                this.RaisePropertyChanged(nameof(this.ShowTimingHeader));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Timing Relative to the Session Start is displayed
+        /// </summary>
+        public bool ShowTimingRelativeToSessionStart
+        {
+            get => this.showTimingRelativeToSessionStart;
+
+            set
+            {
+                this.RaisePropertyChanging(nameof(this.ShowTimingHeader));
+                this.Set(nameof(this.ShowTimingRelativeToSessionStart), ref this.showTimingRelativeToSessionStart, value);
+                this.RaisePropertyChanged(nameof(this.ShowTimingHeader));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Timing Relative to the Selection Start is displayed
+        /// </summary>
+        public bool ShowTimingRelativeToSelectionStart
+        {
+            get => this.showTimingRelativeToSelectionStart;
+
+            set
+            {
+                this.RaisePropertyChanging(nameof(this.ShowTimingHeader));
+                this.Set(nameof(this.ShowTimingRelativeToSelectionStart), ref this.showTimingRelativeToSelectionStart, value);
+                this.RaisePropertyChanged(nameof(this.ShowTimingHeader));
             }
         }
 
@@ -328,6 +395,18 @@ namespace Microsoft.Psi.Visualization.Navigation
             {
                 this.dataRange.SetRange(this.dataRange.StartTime, currentTime);
             }
+        }
+
+        private string FormatTimespan(TimeSpan timespan)
+        {
+            return timespan.ToString(timespan < TimeSpan.Zero ? "\\-hh\\:mm\\:ss\\.ffff" : "hh\\:mm\\:ss\\.ffff");
+        }
+
+        private void SelectionRange_RangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
+        {
+            this.RaisePropertyChanged(nameof(this.SelectionStartRelativeToSessionStartFormatted));
+            this.RaisePropertyChanged(nameof(this.SelectionEndRelativeToSessionStartFormatted));
+            this.RaisePropertyChanged(nameof(this.SessionEndRelativeToSelectionStartFormatted));
         }
     }
 }

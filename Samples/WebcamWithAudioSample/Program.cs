@@ -69,8 +69,8 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
                 // Create our webcam
                 MediaCapture webcam = new MediaCapture(pipeline, 1920, 1080, 30);
 
-                // Create the AudioSource component to capture audio from the default device in 16 kHz 1-channel
-                IProducer<AudioBuffer> audioInput = new AudioSource(pipeline, new AudioSourceConfiguration() { OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm() });
+                // Create the AudioCapture component to capture audio from the default device in 16 kHz 1-channel
+                IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm() });
 
                 var images = webcam.Out.EncodeJpeg(90, DeliveryPolicy.LatestMessage).Out;
 

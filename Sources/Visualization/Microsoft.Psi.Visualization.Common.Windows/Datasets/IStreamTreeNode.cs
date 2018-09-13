@@ -57,6 +57,11 @@ namespace Microsoft.Psi.Visualization.Datasets
         int? MessageCount { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the node represents a stream.
+        /// </summary>
+        bool IsStream { get; }
+
+        /// <summary>
         /// Gets the name of this stream tree node.
         /// </summary>
         string Name { get; }

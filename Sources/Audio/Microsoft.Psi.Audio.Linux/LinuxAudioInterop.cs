@@ -294,19 +294,19 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Convert supported `AudioConfiguration` to interop `Format`.
+        /// Convert supported `AudioCaptureConfiguration` and `AudioPlayerConfiguration` to interop `Format`.
         /// </summary>
         /// <remarks>
         /// Only 8-, 16- and 32-bit PCM and 32- or 64-bit float are supported.
         /// </remarks>
-        /// <param name="config">Audio configuration</param>
+        /// <param name="configFormat">Audio format.</param>
         /// <returns>Converted interop `Format`</returns>
-        internal static Format ConfigurationFormat(AudioConfiguration config)
+        internal static Format ConvertFormat(WaveFormat configFormat)
         {
-            switch (config.Format.FormatTag)
+            switch (configFormat.FormatTag)
             {
                 case WaveFormatTag.WAVE_FORMAT_PCM:
-                    switch (config.Format.BitsPerSample)
+                    switch (configFormat.BitsPerSample)
                     {
                         case 8:
                             return LinuxAudioInterop.Format.S8;
@@ -319,7 +319,7 @@ namespace Microsoft.Psi.Audio
                     }
 
                 case WaveFormatTag.WAVE_FORMAT_IEEE_FLOAT:
-                    switch (config.Format.BitsPerSample)
+                    switch (configFormat.BitsPerSample)
                     {
                         case 32:
                             return LinuxAudioInterop.Format.F32LE;

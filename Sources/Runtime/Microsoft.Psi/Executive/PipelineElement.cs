@@ -18,9 +18,9 @@ namespace Microsoft.Psi.Executive
         private Dictionary<string, IEmitter> outputs = new Dictionary<string, IEmitter>();
         private Dictionary<string, IReceiver> inputs = new Dictionary<string, IReceiver>();
         private SynchronizationLock syncContext;
-        private int activationCount;
         private string name;
         private Pipeline pipeline;
+        private State state = State.Initial;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineElement"/> class.
@@ -36,6 +36,14 @@ namespace Microsoft.Psi.Executive
             this.syncContext = new SynchronizationLock(this.stateObject);
         }
 
+        private enum State
+        {
+            Initial,
+            Active,
+            Deactivated,
+            Stopped
+        }
+
         /// <summary>
         /// Gets the name of the entity
         /// </summary>
@@ -46,7 +54,12 @@ namespace Microsoft.Psi.Executive
         /// <summary>
         /// Gets a value indicating whether the component is active.
         /// </summary>
-        internal bool IsActive => this.activationCount > 0;
+        internal bool IsActive => this.state == State.Active;
+
+        /// <summary>
+        /// Gets a value indicating whether the component is deactivated.
+        /// </summary>
+        internal bool IsDeactivated => this.state == State.Deactivated;
 
         /// <summary>
         /// Gets a value indicating whether the entity is a source component
@@ -68,6 +81,8 @@ namespace Microsoft.Psi.Executive
 
         internal Action OnStopHandler { get; set; }
 
+        internal Action OnFinalHandler { get; set; }
+
         /// <summary>
         /// Delayed initialization of the state object. Note that we don't have a Scheduler yet.
         /// </summary>
@@ -75,9 +90,9 @@ namespace Microsoft.Psi.Executive
         internal void Initialize(Pipeline pipeline)
         {
             this.pipeline = pipeline;
-            if (this.activationCount != 0)
+            if (this.state != State.Initial)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"Initialize was called on component {this.Name}, which is has already started (state={this.state}).");
             }
         }
 
@@ -106,47 +121,64 @@ namespace Microsoft.Psi.Executive
         /// <param name="replayContext">If the pipeline is in replay mode, this is set and provides replay information</param>
         internal void Start(ReplayDescriptor replayContext)
         {
-            if (this.activationCount == 0)
+            if (this.state != State.Initial)
             {
-                if (this.isFiniteSource)
-                {
-                    ((IFiniteSourceComponent)this.stateObject).Initialize(this.OnCompleted);
-                }
-
-                // tell the component it's being activated
-                if (this.OnStartHandler != null)
-                {
-                    // start through the Scheduler to ensure exclusive execution of Start with respect to any receivers.
-                    this.pipeline.Scheduler.Schedule(
-                        this.syncContext,
-                        this.OnStartHandler,
-                        replayContext.Start);
-                }
+                throw new InvalidOperationException($"Start was called on component {this.Name}, which is has already started (state={this.state}).");
             }
 
-            this.activationCount++;
+            this.state = State.Active;
+
+            if (this.isFiniteSource)
+            {
+                ((IFiniteSourceComponent)this.stateObject).Initialize(this.OnCompleted);
+            }
+
+            // tell the component it's being activated
+            if (this.OnStartHandler != null)
+            {
+                // start through the Scheduler to ensure exclusive execution of Start with respect to any receivers.
+                this.pipeline.Scheduler.Schedule(
+                    this.syncContext,
+                    this.OnStartHandler,
+                    replayContext.Start);
+            }
         }
 
         /// <summary>
         /// Deactivates the entity.
         /// </summary>
-        internal void Stop()
+        internal void Deactivate()
         {
-            if (this.activationCount == 0)
+            if (this.state == State.Active || this.stateObject is Subpipeline)
+            {
+                this.state = State.Deactivated;
+
+                if (this.OnStopHandler != null)
+                {
+                    // tell the component it is being deactivated, let any exception bubble up
+                    // stop through the Scheduler to ensure exclusive execution of Stop with respect to any receivers.
+                    this.pipeline.Scheduler.Schedule(this.syncContext, this.OnStopHandler, this.pipeline.GetCurrentTime());
+                }
+            }
+            else
             {
                 // This is an early bug avoidance measure. Outside of component infrastructure, nothing should call deactivate
-                throw new InvalidOperationException(string.Format("Deactivate was called on component {0}, which is not active.", this.Name));
+                throw new InvalidOperationException($"Deactivate was called on component {this.Name}, which is not active (state={this.state}).");
             }
+        }
 
-            this.activationCount--;
-            if (this.activationCount == 0 && this.OnStopHandler != null)
+        /// <summary>
+        /// Stop the entity.
+        /// </summary>
+        internal void Stop()
+        {
+            this.state = State.Stopped;
+
+            if (this.OnFinalHandler != null)
             {
                 // tell the component it is being deactivated, let any exception bubble up
-                // stop through the Scheduler to ensure exclusive execution of Start with respect to any receivers.
-                this.pipeline.Scheduler.Schedule(
-                    this.syncContext,
-                    this.OnStopHandler,
-                    this.pipeline.GetCurrentTime());
+                // stop through the Scheduler to ensure exclusive execution of Stop with respect to any receivers.
+                this.pipeline.Scheduler.Schedule(this.syncContext, this.OnFinalHandler, this.pipeline.GetCurrentTime());
             }
         }
 

@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Speech
     using Microsoft.Psi.Data;
 
     /// <summary>
-    /// Component that implements a speech synthesizer.
+    /// Component that performs speech synthesis via the desktop speech synthesis engine from `System.Speech`.
     /// </summary>
     /// <remarks>
     /// This component performs text-to-speech synthesis, operating on an input stream of text strings and producing a

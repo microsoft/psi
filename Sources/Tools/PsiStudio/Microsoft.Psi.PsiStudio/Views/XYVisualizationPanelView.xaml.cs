@@ -7,6 +7,9 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
@@ -27,33 +30,24 @@ namespace Microsoft.Psi.Visualization.Views
         /// </summary>
         protected XYVisualizationPanel VisualizationPanel => (XYVisualizationPanel)this.DataContext;
 
-        private void Root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Root_MouseMove(object sender, MouseEventArgs e)
         {
-            // Set the current panel on click
-            if (!this.VisualizationPanel.IsCurrentPanel)
+            // If the user has the Left Mouse button pressed, and we're not near the bottom edge
+            // of the panel (where resizing occurs), then initiate a Drag & Drop reorder operation
+            Point mousePosition = e.GetPosition(this);
+            if (e.LeftButton == MouseButtonState.Pressed && !DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
             {
-                this.VisualizationPanel.Container.CurrentPanel = this.VisualizationPanel;
+                DataObject data = new DataObject();
+                data.SetData("DragOperation", "ReorderPanels");
+                data.SetData("VisualizationPanel", this.VisualizationPanel);
+                data.SetData("MouseOffsetFromTop", mousePosition.Y);
+                data.SetData("PanelSize", new Size?(new Size(this.ActualWidth, this.ActualHeight)));
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                renderTargetBitmap.Render(this);
+                data.SetImage(renderTargetBitmap);
+
+                DragDrop.DoDragDrop(this, data, DragDropEffects.Move);
             }
-        }
-
-        private void Root_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                var factor = 1.0 + Math.Min(Math.Max(((double)e.Delta) / 200.0, -0.2), 0.2);
-                this.VisualizationPanel.Configuration.Height = (float)(this.VisualizationPanel.Configuration.Height * factor);
-                e.Handled = true;
-            }
-        }
-
-        private void RemovePanel_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Container.RemovePanel(this.VisualizationPanel);
-        }
-
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Clear();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Speech
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements a voice activity detector.
+    /// Component that performs voice activity detection via a simple heuristic using the energy in the audio stream.
     /// </summary>
     /// <remarks>
     /// This component monitors an input audio stream and outputs a boolean flag for each input message indicating
@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Speech
     {
         private readonly SimpleVoiceActivityDetectorConfiguration configuration;
         private readonly Connector<AudioBuffer> audioInputConnector;
-        private readonly AcousticFeatures acousticFeaturesComponent;
+        private readonly AcousticFeaturesExtractor acousticFeaturesExtractor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleVoiceActivityDetector"/> class.
@@ -37,19 +37,19 @@ namespace Microsoft.Psi.Speech
             this.Out = pipeline.CreateEmitter<bool>(this, nameof(this.Out));
 
             // Currently using only the log energy feature for voice activity detection
-            var acousticFeaturesConfiguration = new AcousticFeaturesConfiguration()
+            var acousticFeaturesExtractorConfiguration = new AcousticFeaturesExtractorConfiguration()
             {
                 FrameDurationInSeconds = (float)this.configuration.FrameDuration,
                 FrameRateInHz = (float)this.configuration.FrameRate,
                 ComputeLogEnergy = true,
             };
 
-            // Pipe the input audio to the audio features component
-            this.acousticFeaturesComponent = new AcousticFeatures(pipeline, acousticFeaturesConfiguration);
-            this.audioInputConnector.PipeTo(this.acousticFeaturesComponent);
+            // Pipe the input audio to the audio features extractor component
+            this.acousticFeaturesExtractor = new AcousticFeaturesExtractor(pipeline, acousticFeaturesExtractorConfiguration);
+            this.audioInputConnector.PipeTo(this.acousticFeaturesExtractor);
 
             // Use a simple threshold for detection
-            var logEnergy = this.acousticFeaturesComponent.LogEnergy;
+            var logEnergy = this.acousticFeaturesExtractor.LogEnergy;
             var logEnergyThreshold = logEnergy.Select(e => (e > this.configuration.LogEnergyThreshold) ? 1.0f : 0);
 
             // We use a sliding window of frames for both detection of voice activity and silence

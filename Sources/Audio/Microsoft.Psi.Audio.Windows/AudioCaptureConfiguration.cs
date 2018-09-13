@@ -4,18 +4,18 @@
 namespace Microsoft.Psi.Audio
 {
     /// <summary>
-    /// Represents the configuration for the <see cref="AudioSource"/> component.
+    /// Represents the configuration for the <see cref="AudioCapture"/> component.
     /// </summary>
     /// <remarks>
-    /// Use this class to configure a new instance of the <see cref="AudioSource"/> component.
+    /// Use this class to configure a new instance of the <see cref="AudioCapture"/> component.
     /// Refer to the properties in this class for more information on the various configuration options.
     /// </remarks>
-    public sealed class AudioSourceConfiguration
+    public sealed class AudioCaptureConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioSourceConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="AudioCaptureConfiguration"/> class.
         /// </summary>
-        public AudioSourceConfiguration()
+        public AudioCaptureConfiguration()
         {
             this.DeviceName = string.Empty;
             this.TargetLatencyInMs = 20;
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Audio
         /// <remarks>
         /// Use this to specify the name of the audio recording device from which to capture audio.
         /// To obtain a list of available recording devices on the system, use the
-        /// <see cref="AudioSource.GetAvailableDevices"/> static method. If not specified, the
+        /// <see cref="AudioCapture.GetAvailableDevices"/> static method. If not specified, the
         /// default recording device will be selected.
         /// </remarks>
         public string DeviceName { get; set; }
@@ -42,7 +42,7 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <remarks>
         /// Captured audio will be output as a stream of type <see cref="AudioBuffer"/> in the
-        /// <see cref="AudioSource"/> component. This parameter controls the amount of audio to capture
+        /// <see cref="AudioCapture"/> component. This parameter controls the amount of audio to capture
         /// for each <see cref="AudioBuffer"/> message, which in turn determines the latency of the
         /// audio (i.e. the amount of lag between when the audio was produced and when a captured
         /// <see cref="AudioBuffer"/> is output on the stream). The larger this value, the more audio
@@ -100,7 +100,7 @@ namespace Microsoft.Psi.Audio
         /// <remarks>
         /// By default, audio will be captured in the default format of the audio recording device.
         /// Use this to specify a different format for the <see cref="AudioBuffer"/> Out stream of
-        /// the <see cref="AudioSource"/> component.
+        /// the <see cref="AudioCapture"/> component.
         /// </remarks>
         public WaveFormat OutputFormat { get; set; }
     }

@@ -16,21 +16,17 @@ namespace Microsoft.Psi.Data.Json
     public class JsonSimpleWriter : ISimpleWriter, IDisposable
     {
         private readonly Dictionary<int, Func<(bool hasData, JToken data, Envelope envelope)>> outputs = new Dictionary<int, Func<(bool hasData, JToken data, Envelope envelope)>>();
-        private readonly string dataSchemaString;
         private readonly string extension;
-        private readonly IDictionary<Uri, string> preloadSchemas;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSimpleWriter"/> class.
         /// </summary>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="dataSchemaString">JSON schema used to validate data stream.</param>
         /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store</param>
         /// <param name="extension">The extension for the underlying file.</param>
-        /// <param name="preloadSchemas">Dictionary of URis to JSON schemas to preload before validating any JSON. Would likely include schemas references by the catalog and data schemas.</param>
-        public JsonSimpleWriter(string name, string path, string dataSchemaString = JsonStoreBase.DataSchemaString, bool createSubdirectory = true, string extension = JsonStoreBase.DefaultExtension, IDictionary<Uri, string> preloadSchemas = null)
-            : this(dataSchemaString, extension, preloadSchemas)
+        public JsonSimpleWriter(string name, string path, bool createSubdirectory = true, string extension = JsonStoreBase.DefaultExtension)
+            : this(extension)
         {
             this.CreateStore(name, path, createSubdirectory);
         }
@@ -38,14 +34,10 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSimpleWriter"/> class.
         /// </summary>
-        /// <param name="dataSchemaString">JSON schema used to validate data stream.</param>
         /// <param name="extension">The extension for the underlying file.</param>
-        /// <param name="preloadSchemas">Dictionary of URis to JSON schemas to preload before validating any JSON. Would likely include schemas references by the catalog and data schemas.</param>
-        public JsonSimpleWriter(string dataSchemaString = JsonStoreBase.DataSchemaString, string extension = JsonStoreBase.DefaultExtension, IDictionary<Uri, string> preloadSchemas = null)
+        public JsonSimpleWriter(string extension = JsonStoreBase.DefaultExtension)
         {
-            this.dataSchemaString = dataSchemaString;
             this.extension = extension;
-            this.preloadSchemas = preloadSchemas;
         }
 
         /// <inheritdoc />
@@ -67,7 +59,7 @@ namespace Microsoft.Psi.Data.Json
                 throw new ArgumentException("Serializers are not used by JsonSimpleWriter and must be null.", nameof(serializers));
             }
 
-            this.Writer = new JsonStoreWriter(name, path, this.dataSchemaString, createSubdirectory, this.extension, this.preloadSchemas);
+            this.Writer = new JsonStoreWriter(name, path, createSubdirectory, this.extension);
         }
 
         /// <inheritdoc />

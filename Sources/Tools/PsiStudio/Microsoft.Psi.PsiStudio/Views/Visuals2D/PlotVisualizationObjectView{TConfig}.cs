@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Windows.Data;
     using System.Windows.Media;
     using System.Windows.Shapes;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Navigation;
@@ -91,6 +92,17 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 if (this.CalculateYTransform())
                 {
                     this.ReRenderMarkers();
+                }
+            }
+            else if (e.PropertyName == nameof(PlotVisualizationObjectConfiguration.InterpolationStyle))
+            {
+                if (this.PlotVisualizationObject.Data != null)
+                {
+                    this.Data_CollectionChanged(this.PlotVisualizationObject.Data, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                }
+                else if (this.PlotVisualizationObject.SummaryData != null)
+                {
+                    this.SummaryData_CollectionChanged(this.PlotVisualizationObject.SummaryData, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 }
             }
         }
@@ -576,8 +588,18 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     --i;
                 }
 
-                // Insert new point immediately after previous
-                this.lineFigure.Segments.Insert(i + 1, new LineSegment(point, this.previousPointIsValid));
+                InterpolationStyle interpolationStyle = this.parent.PlotVisualizationObject.Configuration.InterpolationStyle;
+
+                // If we're doing step interpolation and there are existing points in the segment, then insert a horizontal joiner
+                if (i >= 0 && interpolationStyle == InterpolationStyle.Step)
+                {
+                    this.lineFigure.Segments.Insert(i + 1, new LineSegment(new Point(point.X, ((LineSegment)this.lineFigure.Segments[i]).Point.Y), this.previousPointIsValid));
+                    this.previousPointIsValid = true;
+                    i++;
+                }
+
+                // Insert new point immediately after previous.
+                this.lineFigure.Segments.Insert(i + 1, new LineSegment(point, this.previousPointIsValid && interpolationStyle != InterpolationStyle.None));
                 this.previousPointIsValid = true;
                 this.PointCount++;
             }

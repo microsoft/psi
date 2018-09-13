@@ -34,35 +34,43 @@ namespace Test.Psi.Data
             Assert.AreEqual("\"file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format(".\\file.txt"));
+            serializer.Serialize(stringWriter, ".\\file.txt");
             Assert.AreEqual("\".\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("./file.txt"));
+            serializer.Serialize(stringWriter, "./file.txt");
             Assert.AreEqual("\".\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("subdir1\\file.txt"));
+            serializer.Serialize(stringWriter, "subdir1\\file.txt");
             Assert.AreEqual("\"subdir1\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("subdir1\\subdir2\\file.txt"));
+            serializer.Serialize(stringWriter, "subdir1\\subdir2\\file.txt");
             Assert.AreEqual("\"subdir1\\\\subdir2\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("C:\\file.txt"));
+            serializer.Serialize(stringWriter, "C:\\file.txt");
             Assert.AreEqual("\"..\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("\\subdir1\\file.txt"));
+            serializer.Serialize(stringWriter, "C:\\subdir3\\file.txt");
+            Assert.AreEqual("\"..\\\\subdir3\\\\file.txt\"", sb.ToString());
+
+            sb.Clear();
+            serializer.Serialize(stringWriter, "\\subdir1\\file.txt");
             Assert.AreEqual("\"\\\\subdir1\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("C:\\subdir1\\subdir2\\file.txt"));
+            serializer.Serialize(stringWriter, "\\\\networkpath\\share\\file.txt");
+            Assert.AreEqual("\"\\\\\\\\networkpath\\\\share\\\\file.txt\"", sb.ToString());
+
+            sb.Clear();
+            serializer.Serialize(stringWriter, "C:\\subdir1\\subdir2\\file.txt");
             Assert.AreEqual("\"subdir2\\\\file.txt\"", sb.ToString());
 
             sb.Clear();
-            serializer.Serialize(stringWriter, string.Format("D:\\subdir1\\subdir2\\file.txt"));
+            serializer.Serialize(stringWriter, "D:\\subdir1\\subdir2\\file.txt");
             Assert.AreEqual("\"D:\\\\subdir1\\\\subdir2\\\\file.txt\"", sb.ToString());
         }
 
@@ -99,8 +107,14 @@ namespace Test.Psi.Data
             stringReader = new StringReader("\"../file.txt\"");
             Assert.AreEqual("C:\\file.txt", serializer.Deserialize(stringReader, typeof(string)));
 
+            stringReader = new StringReader("\"..\\\\subdir3\\\\file.txt\"");
+            Assert.AreEqual("C:\\subdir3\\file.txt", serializer.Deserialize(stringReader, typeof(string)));
+
             stringReader = new StringReader("\"\\\\subdir1\\\\file.txt\"");
             Assert.AreEqual("C:\\subdir1\\file.txt", serializer.Deserialize(stringReader, typeof(string)));
+
+            stringReader = new StringReader("\"\\\\\\\\networkpath\\\\share\\\\file.txt\"");
+            Assert.AreEqual("\\\\networkpath\\share\\file.txt", serializer.Deserialize(stringReader, typeof(string)));
 
             stringReader = new StringReader("\"C:/subdir1/subdir2/file.txt\"");
             Assert.AreEqual("C:\\subdir1\\subdir2\\file.txt", serializer.Deserialize(stringReader, typeof(string)));

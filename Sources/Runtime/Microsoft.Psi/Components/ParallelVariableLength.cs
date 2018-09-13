@@ -17,22 +17,34 @@ namespace Microsoft.Psi.Components
     {
         private readonly List<Emitter<TIn>> branches = new List<Emitter<TIn>>();
         private readonly Join<int, TOut, TOut[]> join;
-        private readonly Receiver<TIn[]> input;
         private readonly Emitter<int> activeBranchesEmitter;
-        private readonly Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector;
+        private readonly Func<int, IProducer<TIn>, IProducer<TOut>> parallelTransform;
+        private readonly Action<int, IProducer<TIn>> parallelAction;
         private readonly Pipeline pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelVariableLength{TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
-        /// <param name="transformSelector">Function mapping keyed input producers to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector, bool joinOrDefault)
+        /// <param name="action">Function mapping keyed input producers to output producers.</param>
+        public ParallelVariableLength(Pipeline pipeline, Action<int, IProducer<TIn>> action)
         {
             this.pipeline = pipeline;
-            this.transformSelector = transformSelector;
-            this.input = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
+            this.parallelAction = action;
+            this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParallelVariableLength{TIn, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="transform">Function mapping keyed input producers to output producers.</param>
+        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
+        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault)
+        {
+            this.pipeline = pipeline;
+            this.parallelTransform = transform;
+            this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
             this.activeBranchesEmitter = pipeline.CreateEmitter<int>(this, nameof(this.activeBranchesEmitter));
             var interpolator = joinOrDefault ?
                 Match.BestOrDefault<TOut>(new RelativeTimeInterval(-default(TimeSpan), default(TimeSpan))) :
@@ -41,7 +53,7 @@ namespace Microsoft.Psi.Components
         }
 
         /// <inheritdoc />
-        public Receiver<TIn[]> In => this.input;
+        public Receiver<TIn[]> In { get; }
 
         /// <inheritdoc />
         public Emitter<TOut[]> Out => this.join.Out;
@@ -56,16 +68,24 @@ namespace Microsoft.Psi.Components
                     var branch = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
 
                     this.branches.Add(branch);
-                    var branchResult = this.transformSelector(i, branch);
 
-                    branchResult.PipeTo(this.join.AddInput());
+                    if (this.parallelTransform != null)
+                    {
+                        var branchResult = this.parallelTransform(i, branch);
+                        branchResult.PipeTo(this.join.AddInput());
+                    }
+                    else
+                    {
+                        this.parallelAction(i, branch);
+                    }
+
                     subpipeline.RunAsync(this.pipeline.ReplayDescriptor);
                 }
 
                 this.branches[i].Post(message[i], e.OriginatingTime);
             }
 
-            this.activeBranchesEmitter.Post(message.Length, e.OriginatingTime);
+            this.activeBranchesEmitter?.Post(message.Length, e.OriginatingTime);
         }
     }
 }

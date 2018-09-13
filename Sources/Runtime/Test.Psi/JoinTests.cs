@@ -15,6 +15,28 @@ namespace Test.Psi
     {
         [TestMethod]
         [Timeout(60000)]
+        public void JoinClosingSecondary()
+        {
+            using (var p = Pipeline.Create())
+            {
+                // primary    0       1       2       3       4       5       6       7       8       9
+                // secondary  0   1   2   3   4   5   6   7   8   9
+                // joined    (0,0)   (1,2)   (2,4)   (3,6)   (4,8)   (5,9)   (6,9)   (7,9)   (8,9)   (9,9)
+                //                                                    ^       ^       ^       ^       ^
+                //                                                    note: normally these would remain unpaired
+                //                                                          until seeing next secondary message
+                var primary = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(100));
+                var secondary = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(50));
+                var joined = primary.Join(secondary, RelativeTimeInterval.Infinite);
+                var results = joined.Select(x => $"{x.Item1},{x.Item2}").ToObservable().ToListObservable();
+                p.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new[] { "0,0", "1,2", "2,4", "3,6", "4,8", "5,9", "6,9", "7,9", "8,9", "9,9" }, results));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void ScalarJoin()
         {
             var resultsAB = new List<ValueTuple<int, int>>();

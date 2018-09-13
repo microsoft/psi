@@ -3,9 +3,13 @@
 
 namespace Microsoft.Psi.Visualization.Datasets
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Visualization.Base;
@@ -19,6 +23,10 @@ namespace Microsoft.Psi.Visualization.Datasets
         private DatasetViewModel datasetViewModel;
         private ObservableCollection<PartitionViewModel> internalPartitionViewModels;
         private ReadOnlyObservableCollection<PartitionViewModel> partitionViewModels;
+
+        private RelayCommand addPartitionCommand;
+        private RelayCommand removeSessionCommand;
+        private RelayCommand visualizeSessionCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionViewModel"/> class.
@@ -39,6 +47,11 @@ namespace Microsoft.Psi.Visualization.Datasets
         }
 
         /// <summary>
+        /// Gets the dataset viewmodel.
+        /// </summary>
+        public DatasetViewModel DatasetViewModel => this.datasetViewModel;
+
+        /// <summary>
         /// Gets or sets the session name.
         /// </summary>
         public string Name
@@ -48,6 +61,7 @@ namespace Microsoft.Psi.Visualization.Datasets
             {
                 if (this.session.Name != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Name));
                     this.session.Name = value;
                     this.RaisePropertyChanged(nameof(this.Name));
                 }
@@ -65,6 +79,97 @@ namespace Microsoft.Psi.Visualization.Datasets
         /// </summary>
         [Browsable(false)]
         public ReadOnlyObservableCollection<PartitionViewModel> PartitionViewModels => this.partitionViewModels;
+
+        /// <summary>
+        /// Gets the add partition command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AddPartitionCommand
+        {
+            get
+            {
+                if (this.addPartitionCommand == null)
+                {
+                    this.addPartitionCommand = new RelayCommand(
+                        () =>
+                        {
+                            Win32.OpenFileDialog dlg = new Win32.OpenFileDialog();
+                            dlg.DefaultExt = ".psi";
+                            dlg.Filter = "Psi Store (.psi)|*.psi|Psi Annotation Store (.pas)|*.pas";
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                var fileInfo = new FileInfo(dlg.FileName);
+                                var name = fileInfo.Name.Split('.')[0];
+
+                                if (fileInfo.Extension == ".psi")
+                                {
+                                    this.AddStorePartition(name, fileInfo.DirectoryName);
+                                }
+                                else if (fileInfo.Extension == ".pas")
+                                {
+                                    this.AddAnnotationPartition(name, fileInfo.DirectoryName);
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("Invalid file type selected when adding partition.");
+                                }
+
+                                this.DatasetViewModel.CurrentSessionViewModel = this;
+                                //// Add this code back and use in bindings when a back pointer to the PsiStudioContext is available.
+                                ////this.context.VisualizationContainer.ZoomToRange(this.OriginatingTimeInterval);
+                            }
+                        });
+                }
+
+                return this.addPartitionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the remove session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand RemoveSessionCommand
+        {
+            get
+            {
+                if (this.removeSessionCommand == null)
+                {
+                    this.removeSessionCommand = new RelayCommand(() => this.RemoveSession());
+                }
+
+                return this.removeSessionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the visualize session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand VisualizeSessionCommand
+        {
+            get
+            {
+                if (this.visualizeSessionCommand == null)
+                {
+                    this.visualizeSessionCommand = new RelayCommand(
+                        () =>
+                        {
+                            this.DatasetViewModel.CurrentSessionViewModel = this;
+                            //// Add this code back and use in bindings when a back pointer to the PsiStudioContext is available.
+                            ////this.context.VisualizationContainer.Navigator.DataRange.SetRange(this.OriginatingTimeInterval);
+                            ////this.context.VisualizationContainer.ZoomToRange(this.OriginatingTimeInterval);
+                            ////this.context.VisualizationContainer.UpdateStoreBindings(this.PartitionViewModels.ToList());
+                        });
+                }
+
+                return this.visualizeSessionCommand;
+            }
+        }
 
         /// <summary>
         /// Gets the underlying session.

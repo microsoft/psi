@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements an audio player component which plays back a stream of audio to an output device such as the speakers.
+    /// Component that plays back an audio stream to an output device such as the speakers.
     /// </summary>
     /// <remarks>
     /// This output component renders an audio input stream of type <see cref="AudioBuffer"/> to the
@@ -29,7 +29,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// The audio render device
         /// </summary>
-        private AudioRenderer audioRenderDevice;
+        private WasapiRender wasapiRender;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioPlayer"/> class.
@@ -47,14 +47,14 @@ namespace Microsoft.Psi.Audio
             this.AudioLevelInput = pipeline.CreateReceiver<double>(this, this.SetAudioLevel, nameof(this.AudioLevelInput));
             this.AudioLevel = pipeline.CreateEmitter<double>(this, nameof(this.AudioLevel));
 
-            this.audioRenderDevice = new AudioRenderer();
-            this.audioRenderDevice.Initialize(configuration.DeviceName);
+            this.wasapiRender = new WasapiRender();
+            this.wasapiRender.Initialize(configuration.DeviceName);
 
             this.pipeline.PipelineCompletionEvent += this.OnPipelineCompletionEvent;
 
             if (configuration.AudioLevel >= 0)
             {
-                this.audioRenderDevice.AudioLevel = configuration.AudioLevel;
+                this.wasapiRender.AudioLevel = configuration.AudioLevel;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Microsoft.Psi.Audio
         /// </returns>
         public static string[] GetAvailableDevices()
         {
-            return AudioRenderer.GetAvailableRenderDevices();
+            return WasapiRender.GetAvailableRenderDevices();
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="level">The audio level.</param>
         public void SetAudioLevel(Message<double> level)
         {
-            this.audioRenderDevice.AudioLevel = (float)level.Data;
+            this.wasapiRender.AudioLevel = (float)level.Data;
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace Microsoft.Psi.Audio
                     this.configuration.InputFormat = this.currentInputFormat;
 
                     // stop and restart the renderer to switch formats
-                    this.audioRenderDevice.StopRendering();
-                    this.audioRenderDevice.StartRendering(
+                    this.wasapiRender.StopRendering();
+                    this.wasapiRender.StartRendering(
                         this.configuration.BufferLengthSeconds,
                         this.configuration.TargetLatencyInMs,
                         this.configuration.Gain,
@@ -127,7 +127,7 @@ namespace Microsoft.Psi.Audio
 
                 // Append the audio buffer to the audio renderer, specifying whether or not to
                 // overwrite existing data or block until internal rendering queue is available.
-                this.audioRenderDevice.AppendAudio(audioData.Data.Data, this.overwrite);
+                this.wasapiRender.AppendAudio(audioData.Data.Data, this.overwrite);
             }
         }
 
@@ -142,13 +142,13 @@ namespace Microsoft.Psi.Audio
             this.overwrite = this.pipeline.ReplayDescriptor.ReplaySpeedFactor < 1;
 
             // publish initial volume level at startup
-            this.AudioLevel.Post(this.audioRenderDevice.AudioLevel, this.pipeline.GetCurrentTime());
+            this.AudioLevel.Post(this.wasapiRender.AudioLevel, this.pipeline.GetCurrentTime());
 
             // register the volume changed notification event handler
-            this.audioRenderDevice.AudioVolumeNotification += this.HandleVolumeChangedNotification;
+            this.wasapiRender.AudioVolumeNotification += this.HandleVolumeChangedNotification;
 
             // start the audio renderer
-            this.audioRenderDevice.StartRendering(
+            this.wasapiRender.StartRendering(
                 this.configuration.BufferLengthSeconds,
                 this.configuration.TargetLatencyInMs,
                 this.configuration.Gain,
@@ -160,10 +160,10 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void OnPipelineStop()
         {
-            this.audioRenderDevice.StopRendering();
+            this.wasapiRender.StopRendering();
 
             // unregister the volume changed notification event handler
-            this.audioRenderDevice.AudioVolumeNotification -= this.HandleVolumeChangedNotification;
+            this.wasapiRender.AudioVolumeNotification -= this.HandleVolumeChangedNotification;
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Microsoft.Psi.Audio
         public void Dispose()
         {
             this.OnPipelineStop();
-            this.audioRenderDevice.Dispose();
-            this.audioRenderDevice = null;
+            this.wasapiRender.Dispose();
+            this.wasapiRender = null;
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Microsoft.Psi.Audio
         private void OnPipelineCompletionEvent(object sender, PipelineCompletionEventArgs e)
         {
             // Unsubscribe from volume change notifications if pipeline has finished
-            this.audioRenderDevice.AudioVolumeNotification -= this.HandleVolumeChangedNotification;
+            this.wasapiRender.AudioVolumeNotification -= this.HandleVolumeChangedNotification;
         }
     }
 }

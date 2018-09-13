@@ -7,34 +7,34 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that aggregates a set of acoustic feature streams computed on an input audio stream into a single component.
+    /// Component that extracts acoustic features (e.g. LogEnergy, ZeroCrossing, FFT) from an audio stream.
     /// </summary>
     /// <remarks>
     /// The acoustic feature streams available from this component are: <see cref="LogEnergy"/>, <see cref="ZeroCrossingRate"/>,
     /// <see cref="FFT"/>, <see cref="FFTPower"/>, <see cref="FrequencyDomainEnergy"/>, <see cref="LowFrequencyEnergy"/>,
-    /// <see cref="HighFrequencyEnergy"/> and <see cref="SpectralEntropy"/>. Use the <see cref="AcousticFeaturesConfiguration"/>
+    /// <see cref="HighFrequencyEnergy"/> and <see cref="SpectralEntropy"/>. Use the <see cref="AcousticFeaturesExtractorConfiguration"/>
     /// class to control which acoustic features to compute.
     /// </remarks>
-    public sealed class AcousticFeatures : IConsumer<AudioBuffer>
+    public sealed class AcousticFeaturesExtractor : IConsumer<AudioBuffer>
     {
         private Connector<AudioBuffer> inAudio;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcousticFeatures"/> class.
+        /// Initializes a new instance of the <see cref="AcousticFeaturesExtractor"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public AcousticFeatures(Pipeline pipeline, string configurationFilename = null)
-            : this(pipeline, new ConfigurationHelper<AcousticFeaturesConfiguration>(configurationFilename).Configuration)
+        public AcousticFeaturesExtractor(Pipeline pipeline, string configurationFilename = null)
+            : this(pipeline, new ConfigurationHelper<AcousticFeaturesExtractorConfiguration>(configurationFilename).Configuration)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcousticFeatures"/> class.
+        /// Initializes a new instance of the <see cref="AcousticFeaturesExtractor"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AcousticFeatures(Pipeline pipeline, AcousticFeaturesConfiguration configuration)
+        public AcousticFeaturesExtractor(Pipeline pipeline, AcousticFeaturesExtractorConfiguration configuration)
         {
             // Create the Audio passthrough emitter and hook it up to the receiver
             this.inAudio = pipeline.CreateConnector<AudioBuffer>(this, nameof(this.inAudio));

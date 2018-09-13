@@ -76,11 +76,23 @@
     <Reference Include="C5, Version=2.5.0.0, Culture=neutral, PublicKeyToken=282361b99ded7e8e, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\C5.2.5.3\lib\net45\C5.dll</HintPath>
     </Reference>
-    <Reference Include="HelixToolkit, Version=1.1.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\HelixToolkit.1.1.0\lib\portable-net45+win8+wpa81+wp8\HelixToolkit.dll</HintPath>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="HelixToolkit.Wpf, Version=1.1.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\HelixToolkit.Wpf.1.1.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit, Version=2.3.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\HelixToolkit.2.3.0\lib\netstandard1.1\HelixToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2.3.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\HelixToolkit.Wpf.2.3.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=3.20.2.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\MathNet.Numerics.Signed.3.20.2\lib\net40\MathNet.Numerics.dll</HintPath>
@@ -97,27 +109,26 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\System.Drawing.Common.4.5.0-preview1-26216-02\lib\net461\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\..\..\..\packages\System.Drawing.Common.4.5.0\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -163,16 +174,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base\EventToCommand.cs" />
-    <Compile Include="Base\IEventArgsConverter.cs" />
-    <Compile Include="Base\RelayCommand.cs" />
-    <Compile Include="Base\RelayCommand{T}.cs" />
     <Compile Include="Collections\ObservableDataCollection{T}.cs" />
     <Compile Include="Collections\ObservableDataItem{T}.cs" />
     <Compile Include="Common\LabeledValue.cs" />
     <Compile Include="Common\LineStyle.cs" />
-    <Compile Include="Common\PlotType.cs" />
-    <Compile Include="Common\Point.cs" />
     <Compile Include="Common\Rectangle.cs" />
     <Compile Include="Common\TicksComputeMode.cs" />
     <Compile Include="Common\VisualizationRange.cs" />
@@ -185,10 +190,12 @@
     <Compile Include="Converters\ObjectToPointConverter.cs" />
     <Compile Include="Converters\PassThroughConverter.cs" />
     <Compile Include="Converters\PlacementConverter.cs" />
+    <Compile Include="Converters\StreamTreeNodeToVisibilityConverter.cs" />
     <Compile Include="Converters\StreamTreeNodeToCommandsConverter.cs" />
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\TreeViewItemExtensions.cs" />
     <Compile Include="Converters\VisualizationObjectToColorConverter.cs" />
+    <Compile Include="Helpers\DragDropHelper.cs" />
     <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -217,6 +224,7 @@
     <Compile Include="Views\VisualizationContainerView.xaml.cs">
       <DependentUpon>VisualizationContainerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VisualizationContainerDragDropAdorner.cs" />
     <Compile Include="Views\VisualizationTemplateSelector.cs" />
     <Compile Include="Views\Visuals2D\AnnotatedEventVisualizationObjectView.xaml.cs">
       <DependentUpon>AnnotatedEventVisualizationObjectView.xaml</DependentUpon>
@@ -299,6 +307,9 @@
     <Compile Include="VisualizationService.cs" />
     <Compile Include="TypeKeyedActionCommand.cs" />
     <Compile Include="VisualizationTypeResolver.cs" />
+    <Compile Include="Windows\LoadingDatasetWindow.xaml.cs">
+      <DependentUpon>LoadingDatasetWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddAnnotationWindow.xaml.cs">
       <DependentUpon>AddAnnotationWindow.xaml</DependentUpon>
     </Compile>
@@ -504,6 +515,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\XYZVisualizationPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\LoadingDatasetWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1544,7 +1559,19 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\timing-absolute_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\timing-relative-selection_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\timing-relative-session_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -111,6 +111,7 @@ namespace Test.Psi
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void ExceptionHandling()
         {
             using (var p = Pipeline.Create(nameof(this.ExceptionHandling)))

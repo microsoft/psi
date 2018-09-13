@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Persistence
     using System.IO;
     using System.IO.MemoryMappedFiles;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Psi.Common;
 
     internal unsafe sealed class InfiniteFileWriter : IDisposable
@@ -295,13 +296,13 @@ namespace Microsoft.Psi.Persistence
             {
                 this.view.SafeMemoryMappedViewHandle.ReleasePointer();
 
-                // intentionally don't call view.Dispose, to avoid calling Flush. Instead, let the OS flush the file async after the mapped file is closed
-                // if (!disposing)
-                // GC.SuppressFinalize(thisresize.view);
-                /*if (disposing)
-                {*/
-                    this.view.Dispose();
-                /*}*/
+                // Calling `view.Dispose()` flushes the underlying MemoryMappedView, in turn making
+                // blocking system calls and with retry logic and `Thread.Sleep()`s.
+                // To avoid taking this hit on our thread here (which blocks writing to the infinite file for
+                // human-noticeable time when crossing extents), we queue this work to the thread pool.
+                // See: https://referencesource.microsoft.com/#System.Core/System/IO/MemoryMappedFiles/MemoryMappedView.cs,176
+                var temp = this.view;
+                Task.Run(() => temp.Dispose());
 
                 this.view = null;
 

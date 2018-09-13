@@ -42,6 +42,7 @@ namespace Microsoft.Psi.Visualization.Annotations
             {
                 if (this.schema.Name != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Name));
                     this.schema.Name = value;
                     this.RaisePropertyChanged(nameof(this.Name));
                 }
@@ -58,6 +59,7 @@ namespace Microsoft.Psi.Visualization.Annotations
             {
                 if (this.schema.Dynamic != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Dynamic));
                     this.schema.Dynamic = value;
                     this.RaisePropertyChanged(nameof(this.Dynamic));
                 }

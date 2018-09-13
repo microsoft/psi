@@ -14,20 +14,20 @@ namespace Microsoft.Psi.Imaging
     public delegate void TransformDelegate(Image src, Image dest);
 
     /// <summary>
-    /// Pipeline component for transforming an image
+    /// Component that transforms an image given a specified transformer.
     /// </summary>
-    public class TransformImageComponent : ConsumerProducer<Shared<Image>, Shared<Image>>
+    public class ImageTransformer : ConsumerProducer<Shared<Image>, Shared<Image>>
     {
         private TransformDelegate transformer;
         private PixelFormat pixelFormat;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TransformImageComponent"/> class.
+        /// Initializes a new instance of the <see cref="ImageTransformer"/> class.
         /// </summary>
         /// <param name="pipeline">Pipeline this component is a part of</param>
         /// <param name="transformer">Function for transforming the source image</param>
         /// <param name="pixelFormat">Pixel format for destination image</param>
-        public TransformImageComponent(Pipeline pipeline, TransformDelegate transformer, PixelFormat pixelFormat)
+        public ImageTransformer(Pipeline pipeline, TransformDelegate transformer, PixelFormat pixelFormat)
             : base(pipeline)
         {
             this.transformer = transformer;

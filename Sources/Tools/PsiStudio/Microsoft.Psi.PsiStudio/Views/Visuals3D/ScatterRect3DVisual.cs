@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void UpdateProperties()
         {
-            var data = this.visualizationObject.CurrentValue.Data;
+            var data = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
             if (data != null)
             {
                 for (int i = this.rectangles.Count; i < data.Count; i++)

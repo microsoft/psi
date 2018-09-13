@@ -71,6 +71,7 @@ namespace Test.Psi.Speech.Windows
         /// </summary>
         /// <param name="filename">The Wave file containing the audio data.</param>
         /// <param name="expectedText">The expected recognized text.</param>
+        /// <param name="srgsXmlGrammar">The grammar to use when decoding.</param>
         private void RecognizeSpeechFromWaveFile(string filename, string expectedText, string srgsXmlGrammar = null)
         {
             if (SpeechRecognitionEngine.InstalledRecognizers().Count == 0)
@@ -86,8 +87,8 @@ namespace Test.Psi.Speech.Windows
             using (var pipeline = Pipeline.Create(nameof(this.RecognizeSpeechFromWaveFile)))
             {
                 var recognizer = new SystemSpeechRecognizer(pipeline, new SystemSpeechRecognizerConfiguration() { BufferLengthInMs = 10000, InputFormat = format });
-                var audioSource = new WaveFileAudioSource(pipeline, filename);
-                audioSource.Out.PipeTo(recognizer.In);
+                var audioInput = new WaveFileAudioSource(pipeline, filename);
+                audioInput.Out.PipeTo(recognizer.In);
 
                 // Test dynamic update of speech recognition grammar
                 if (srgsXmlGrammar != null)
@@ -98,8 +99,9 @@ namespace Test.Psi.Speech.Windows
 
                 // Add results from outputs. Note that we need to call DeepClone on each result as we
                 // do not want them to be resused by the runtime.
-                    var results = new List<IStreamingSpeechRecognitionResult>();
+                var results = new List<IStreamingSpeechRecognitionResult>();
                 recognizer.Out.Do(r => results.Add(r.DeepClone()));
+                recognizer.PartialRecognitionResults.Do(r => results.Add(r.DeepClone()));
 
                 // Run pipeline and wait for completion.
                 pipeline.Run();

@@ -10,7 +10,6 @@ namespace Microsoft.Psi.Data.Json
     using Microsoft.Psi.Persistence;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using Newtonsoft.Json.Schema;
 
     /// <summary>
     /// Represents a reader for JSON data stores.
@@ -27,18 +26,15 @@ namespace Microsoft.Psi.Data.Json
         private JToken data = null;
         private StreamReader streamReader = null;
         private JsonReader jsonReader = null;
-        private JSchemaValidatingReader validatingReader = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonStoreReader"/> class.
         /// </summary>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="dataSchemaString">JSON schema used to validate data stream.</param>
         /// <param name="extension">The extension for the underlying file.</param>
-        /// <param name="preloadSchemas">Dictionary of URis to JSON schemas to preload before validating any JSON. Would likely include schemas references by the catalog and data schemas.</param>
-        public JsonStoreReader(string name, string path, string dataSchemaString, string extension = DefaultExtension, IDictionary<Uri, string> preloadSchemas = null)
-            : base(dataSchemaString, extension, preloadSchemas)
+        public JsonStoreReader(string name, string path, string extension = DefaultExtension)
+            : base(extension)
         {
             this.Name = name;
             this.Path = StoreCommon.GetPathToLatestVersion(name, path);
@@ -47,11 +43,8 @@ namespace Microsoft.Psi.Data.Json
             string metadataPath = System.IO.Path.Combine(this.Path, StoreCommon.GetCatalogFileName(this.Name) + this.Extension);
             using (var file = File.OpenText(metadataPath))
             using (var reader = new JsonTextReader(file))
-            using (var validatingReader = new JSchemaValidatingReader(reader))
             {
-                validatingReader.Schema = this.CatalogSchema;
-                validatingReader.ValidationEventHandler += (s, e) => throw new InvalidDataException(e.Message);
-                this.catalog = this.Serializer.Deserialize<List<JsonStreamMetadata>>(validatingReader);
+                this.catalog = this.Serializer.Deserialize<List<JsonStreamMetadata>>(reader);
             }
 
             // compute originating time interval
@@ -61,16 +54,6 @@ namespace Microsoft.Psi.Data.Json
                 var metadataTimeInterval = new TimeInterval(metadata.FirstMessageOriginatingTime, metadata.LastMessageOriginatingTime);
                 this.originatingTimeInterval = TimeInterval.Coverage(new TimeInterval[] { this.originatingTimeInterval, metadataTimeInterval });
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonStoreReader"/> class.
-        /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        public JsonStoreReader(string name, string path)
-            : this(name, path, JsonStoreBase.DataSchemaString)
-        {
         }
 
         /// <summary>
@@ -131,7 +114,6 @@ namespace Microsoft.Psi.Data.Json
             this.streamReader?.Dispose();
             this.streamReader = null;
             this.jsonReader = null;
-            this.validatingReader = null;
         }
 
         /// <summary>
@@ -253,8 +235,8 @@ namespace Microsoft.Psi.Data.Json
 
                 // read closing object, opening object tags, envelope
                 this.hasMoreData =
-                    this.validatingReader.Read() && this.validatingReader.TokenType == JsonToken.StartObject &&
-                    this.validatingReader.Read() && this.ReadEnvelope(out this.envelope);
+                    this.jsonReader.Read() && this.jsonReader.TokenType == JsonToken.StartObject &&
+                    this.jsonReader.Read() && this.ReadEnvelope(out this.envelope);
             }
             while (this.enabledStreams.Count() > 0);
 
@@ -270,8 +252,8 @@ namespace Microsoft.Psi.Data.Json
         {
             // read closing object, opening object tags, envelope
             this.hasMoreData =
-                this.validatingReader.Read() && this.validatingReader.TokenType == JsonToken.StartObject &&
-                this.validatingReader.Read() && this.ReadEnvelope(out this.envelope);
+                this.jsonReader.Read() && this.jsonReader.TokenType == JsonToken.StartObject &&
+                this.jsonReader.Read() && this.ReadEnvelope(out this.envelope);
             data = this.data;
             return this.hasMoreData;
         }
@@ -289,17 +271,15 @@ namespace Microsoft.Psi.Data.Json
             this.streamReader?.Dispose();
             this.streamReader = File.OpenText(dataPath);
             this.jsonReader = new JsonTextReader(this.streamReader);
-            this.validatingReader = new JSchemaValidatingReader(this.jsonReader) { Schema = this.DataSchema };
-            this.validatingReader.ValidationEventHandler += (s, e) => throw new InvalidDataException(e.Message);
 
             // iterate through data store until we either reach the end or we find the start of the replay descriptor
-            while (this.validatingReader.Read())
+            while (this.jsonReader.Read())
             {
                 // data stores are arrays of messages, messages start as objects
-                if (this.validatingReader.TokenType == JsonToken.StartObject)
+                if (this.jsonReader.TokenType == JsonToken.StartObject)
                 {
                     // read envelope
-                    if (!this.validatingReader.Read() || !this.ReadEnvelope(out this.envelope))
+                    if (!this.jsonReader.Read() || !this.ReadEnvelope(out this.envelope))
                     {
                         throw new InvalidDataException("Messages must be an ordered object: {\"Envelope\": <Envelope>, \"Data\": <Data>}. Deserialization needs to read the envelope before the data to know what type of data to deserialize.");
                     }
@@ -321,16 +301,16 @@ namespace Microsoft.Psi.Data.Json
 
         private bool ReadData(out JToken data)
         {
-            this.hasMoreData = this.validatingReader.TokenType == JsonToken.PropertyName && string.Equals(this.validatingReader.Value, "Data") && this.validatingReader.Read();
-            data = this.hasMoreData ? JToken.ReadFrom(this.validatingReader) : null;
-            this.hasMoreData = this.hasMoreData && this.validatingReader.TokenType == JsonToken.EndObject && this.validatingReader.Read();
+            this.hasMoreData = this.jsonReader.TokenType == JsonToken.PropertyName && string.Equals(this.jsonReader.Value, "Data") && this.jsonReader.Read();
+            data = this.hasMoreData ? JToken.ReadFrom(this.jsonReader) : null;
+            this.hasMoreData = this.hasMoreData && this.jsonReader.TokenType == JsonToken.EndObject && this.jsonReader.Read();
             return this.hasMoreData;
         }
 
         private bool ReadEnvelope(out Envelope envelope)
         {
-            this.hasMoreData = this.validatingReader.TokenType == JsonToken.PropertyName && string.Equals(this.validatingReader.Value, "Envelope") && this.validatingReader.Read();
-            envelope = this.hasMoreData ? this.Serializer.Deserialize<Envelope>(this.validatingReader) : default(Envelope);
+            this.hasMoreData = this.jsonReader.TokenType == JsonToken.PropertyName && string.Equals(this.jsonReader.Value, "Envelope") && this.jsonReader.Read();
+            envelope = this.hasMoreData ? this.Serializer.Deserialize<Envelope>(this.jsonReader) : default(Envelope);
             if (this.hasMoreData)
             {
                 var metadata = this.catalog.FirstOrDefault(m => m.Id == this.envelope.SourceId);
@@ -340,7 +320,7 @@ namespace Microsoft.Psi.Data.Json
                 }
             }
 
-            this.hasMoreData = this.hasMoreData && this.validatingReader.TokenType == JsonToken.EndObject && this.validatingReader.Read();
+            this.hasMoreData = this.hasMoreData && this.jsonReader.TokenType == JsonToken.EndObject && this.jsonReader.Read();
             return this.hasMoreData;
         }
     }

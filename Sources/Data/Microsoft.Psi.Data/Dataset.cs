@@ -45,7 +45,11 @@ namespace Microsoft.Psi.Data
         /// Gets the orginating time interval (earliest to latest) of the messages in this dataset.
         /// </summary>
         [IgnoreDataMember]
-        public TimeInterval OriginatingTimeInterval => TimeInterval.Coverage(this.InternalSessions.Select(s => s.OriginatingTimeInterval));
+        public TimeInterval OriginatingTimeInterval =>
+            TimeInterval.Coverage(
+                this.InternalSessions
+                    .Where(s => s.OriginatingTimeInterval.Left > DateTime.MinValue && s.OriginatingTimeInterval.Right < DateTime.MaxValue)
+                    .Select(s => s.OriginatingTimeInterval));
 
         /// <summary>
         /// Gets the collection of sessions in this dataset.

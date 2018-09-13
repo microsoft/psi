@@ -42,8 +42,8 @@
 
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
-    <PackageReference Update="FSharp.Core" Version="4.3.4" />
-    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+    <PackageReference Update="NETStandard.Library" Version="2.0.3" />
   </ItemGroup>
 
 </Project>

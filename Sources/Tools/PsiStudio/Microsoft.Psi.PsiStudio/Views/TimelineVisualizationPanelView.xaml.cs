@@ -7,6 +7,10 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
@@ -14,19 +18,36 @@ namespace Microsoft.Psi.Visualization.Views
     /// </summary>
     public partial class TimelineVisualizationPanelView : UserControl
     {
+        private Point lastMousePosition = new Point(0, 0);
+        private DragOperation currentDragOperation = DragOperation.None;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TimelineVisualizationPanelView"/> class.
         /// </summary>
         public TimelineVisualizationPanelView()
         {
             this.InitializeComponent();
-            this.DataContextChanged += this.TimelineVisualizationPanelView_DataContextChanged;
+        }
+
+        private enum DragOperation
+        {
+            None,
+            PanelReorder,
+            TimelineScroll
         }
 
         /// <summary>
-        /// Gets or sets the timeline visualization panel.
+        /// Gets the timeline visualization panel.
         /// </summary>
-        protected TimelineVisualizationPanel VisualizationPanel { get; set; }
+        private TimelineVisualizationPanel VisualizationPanel => this.DataContext as TimelineVisualizationPanel;
+
+        /// <summary>
+        /// Signals to the panel that a drag and drop operation it may have initiated has been completed
+        /// </summary>
+        public void FinishDragDrop()
+        {
+            this.currentDragOperation = DragOperation.None;
+        }
 
         /// <inheritdoc />
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -41,25 +62,6 @@ namespace Microsoft.Psi.Visualization.Views
             }
         }
 
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Clear();
-        }
-
-        private DateTime GetTimeAtMousePointer(MouseEventArgs e)
-        {
-            Point point = e.GetPosition(this.Root);
-            double percent = point.X / this.Root.ActualWidth;
-            var viewRange = this.VisualizationPanel.Navigator.ViewRange;
-            DateTime time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
-            return time;
-        }
-
-        private void RemovePanel_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Container.RemovePanel(this.VisualizationPanel);
-        }
-
         private void Root_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
@@ -69,61 +71,81 @@ namespace Microsoft.Psi.Visualization.Views
             }
         }
 
-        private void Root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Root_MouseMove(object sender, MouseEventArgs e)
         {
-            // Set the current panel on click
-            if (!this.VisualizationPanel.IsCurrentPanel)
+            Point mousePosition = e.GetPosition(this);
+
+            // If the user has the Left Mouse button pressed, initiate a Drag & Drop reorder operation
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.VisualizationPanel.Container.CurrentPanel = this.VisualizationPanel;
+                switch (this.currentDragOperation)
+                {
+                    case DragOperation.None:
+                        this.BeginDragOperation(mousePosition);
+                        break;
+                    case DragOperation.TimelineScroll:
+                        this.DoDragTimeline(mousePosition);
+                        break;
+                }
+            }
+            else
+            {
+                this.currentDragOperation = DragOperation.None;
             }
 
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-            {
-                DateTime time = this.GetTimeAtMousePointer(e);
-                this.VisualizationPanel.Navigator.SelectionRange.SetRange(time, this.VisualizationPanel.Navigator.SelectionRange.EndTime);
-                e.Handled = true;
-            }
-        }
-
-        private void Root_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-            {
-                DateTime time = this.GetTimeAtMousePointer(e);
-                this.VisualizationPanel.Navigator.SelectionRange.SetRange(this.VisualizationPanel.Navigator.SelectionRange.StartTime, time);
-                e.Handled = true;
-            }
-        }
-
-        private void Root_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                var factor = 1.0 + Math.Min(Math.Max(((double)e.Delta) / 200.0, -0.2), 0.2);
-                this.VisualizationPanel.Configuration.Height = (float)(this.VisualizationPanel.Configuration.Height * factor);
-            }
-
+            this.lastMousePosition = mousePosition;
             e.Handled = true;
         }
 
-        private void ShowHideLegend_Click(object sender, RoutedEventArgs e)
+        private void BeginDragOperation(Point mousePosition)
         {
-            this.VisualizationPanel.Configuration.ShowLegend = !this.VisualizationPanel.Configuration.ShowLegend;
+            // If the mouse moved mostly horizontally, then we'll begin a timeline scroll
+            // operation, otherwise we'll begin a Visualization Panel reorder operation
+            if (this.IsHorizontalDrag(mousePosition))
+            {
+                this.currentDragOperation = DragOperation.TimelineScroll;
+                this.DoDragTimeline(mousePosition);
+                this.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                if (!DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
+                {
+                    this.currentDragOperation = DragOperation.PanelReorder;
+
+                    DataObject data = new DataObject();
+                    data.SetData("DragOperation", "ReorderPanels");
+                    data.SetData("VisualizationPanel", this.VisualizationPanel);
+                    data.SetData("VisualizationPanelView", this);
+                    data.SetData("MouseOffsetFromTop", mousePosition.Y);
+                    data.SetData("PanelSize", new Size?(new Size(this.ActualWidth, this.ActualHeight)));
+                    RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                    renderTargetBitmap.Render(this);
+                    data.SetImage(renderTargetBitmap);
+
+                    DragDrop.DoDragDrop(this, data, DragDropEffects.Move);
+                    this.Cursor = Cursors.Hand;
+                }
+            }
         }
 
-        private void TimelineVisualizationPanelView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void DoDragTimeline(Point mousePosition)
         {
-            this.VisualizationPanel = e.NewValue as TimelineVisualizationPanel;
+            // Calculate how far we dragged the panel (timewise)
+            double percent = (mousePosition.X - this.lastMousePosition.X) / this.ActualWidth;
+            NavigatorRange viewRange = this.VisualizationPanel.Navigator.ViewRange;
+            TimeSpan timeMoved = TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
+
+            // Scroll the view
+            viewRange.ScrollBy(-timeMoved);
         }
 
-        private void ZoomToSelection_Click(object sender, RoutedEventArgs e)
+        private bool IsHorizontalDrag(Point mousePosition)
         {
-            this.VisualizationPanel.Container.Navigator.ZoomToSelection();
-        }
-
-        private void ZoomToSessionExtents_Click(object sender, RoutedEventArgs e)
-        {
-            this.VisualizationPanel.Container.Navigator.ZoomToDataRange();
+            // Users will most likely be wanting to scroll the panel horizontally much more often
+            // than they'll re-order the panels, so only call this a Vertical drag if the Y mouse
+            // movement is at least 3 times the X mouse movement.
+            return 3 * Math.Abs(mousePosition.X - this.lastMousePosition.X) > Math.Abs(mousePosition.Y - this.lastMousePosition.Y);
         }
     }
 }

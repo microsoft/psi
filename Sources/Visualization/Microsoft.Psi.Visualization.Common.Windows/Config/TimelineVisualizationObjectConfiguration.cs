@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Config
 {
     using System;
+    using System.ComponentModel;
     using System.Runtime.Serialization;
 
     /// <summary>
@@ -17,6 +18,7 @@ namespace Microsoft.Psi.Visualization.Config
         /// <summary>
         /// Gets or sets the sampling ticks.
         /// </summary>
+        [Browsable(false)]
         [DataMember]
         public long SamplingTicks
         {

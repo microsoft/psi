@@ -90,7 +90,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             }
             else if (e.PropertyName == nameof(Points3DVisualizationObject.CurrentValue))
             {
-                this.UpdatePoints(this.visualizationObject.CurrentValue.Data);
+                this.UpdatePoints(this.visualizationObject.CurrentValue.GetValueOrDefault().Data);
             }
         }
     }

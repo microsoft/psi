@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
-    <PackageReference Include="SkiaSharp" Version="1.60.0" />
+    <PackageReference Include="SkiaSharp" Version="1.60.3" />
   </ItemGroup>
 
   <ItemGroup>

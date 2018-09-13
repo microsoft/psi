@@ -20,6 +20,7 @@ namespace Test.Psi
         {
             var scheduler = new Scheduler(DeliveryPolicy.Unlimited, error => { throw new AggregateException(error); });
             scheduler.Start(new Clock(), false);
+            scheduler.PauseForQuiescence();
             scheduler.Stop();
         }
 

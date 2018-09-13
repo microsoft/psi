@@ -19,15 +19,14 @@ namespace Microsoft.Psi.Speech
     using Microsoft.Psi.Language;
 
     /// <summary>
-    /// Component that implements a speech recognizer.
+    /// Component that performs speech recognition using the desktop speech recognition engine from `System.Speech`.
     /// </summary>
     /// <remarks>
-    /// This component performs continuous recognition on an audio stream. Recognition results are posted as they are available on its
-    /// Out stream. Recognition results are of type <see cref="StreamingSpeechRecognitionResult"/> which
-    /// implements the <see cref="IStreamingSpeechRecognitionResult"/> interface. This pattern allows for results from speech recognition
-    /// components based on different underlying technologies to conform to a common interface for consumption by downstream components.
-    /// Messages on the Out stream may contain partial or final results, distinguished by the
-    /// <see cref="StreamingSpeechRecognitionResult.IsFinal"/> property. Partial results contain partial hypotheses while speech is in
+    /// This component performs continuous recognition on an audio stream. Recognition results are of type
+    /// <see cref="StreamingSpeechRecognitionResult"/> which implements the <see cref="IStreamingSpeechRecognitionResult"/> interface.
+    /// This pattern allows for results from speech recognition components based on different underlying technologies to conform to a
+    /// common interface for consumption by downstream components. Messages on the Out stream contain final results, while messages on
+    /// the PartialRecognitionResults stream contain partial results. Partial results contain partial hypotheses while speech is in
     /// progress and are useful for displaying hypothesized text as feedback to the user. The final result is emitted once the recognizer
     /// has determined that speech has ended, and will contain the top hypothesis for the utterance.
     ///
@@ -38,71 +37,6 @@ namespace Microsoft.Psi.Speech
     /// </remarks>
     public sealed class SystemSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, IDisposable
     {
-        /// <summary>
-        /// The configuration for this component.
-        /// </summary>
-        private readonly SystemSpeechRecognizerConfiguration configuration;
-
-        /// <summary>
-        /// The output stream of intents and entities.
-        /// </summary>
-        private readonly Emitter<IntentData> intentData;
-
-        /// <summary>
-        /// The output stream of speech detected events
-        /// </summary>
-        private readonly Emitter<SpeechDetectedEventArgs> speechDetected;
-
-        /// <summary>
-        /// The output stream of speech hypothesized events
-        /// </summary>
-        private readonly Emitter<SpeechHypothesizedEventArgs> speechHypothesized;
-
-        /// <summary>
-        /// The output stream of speech recognized events
-        /// </summary>
-        private readonly Emitter<SpeechRecognizedEventArgs> speechRecognized;
-
-        /// <summary>
-        /// The output stream of speech recognition rejected events
-        /// </summary>
-        private readonly Emitter<SpeechRecognitionRejectedEventArgs> speechRecognitionRejected;
-
-        /// <summary>
-        /// The output stream of audio signal problem occurred events
-        /// </summary>
-        private readonly Emitter<AudioSignalProblemOccurredEventArgs> audioSignalProblemOccurred;
-
-        /// <summary>
-        /// The output stream of audio state changed events
-        /// </summary>
-        private readonly Emitter<AudioStateChangedEventArgs> audioStateChanged;
-
-        /// <summary>
-        /// The output stream of recognize completed events
-        /// </summary>
-        private readonly Emitter<RecognizeCompletedEventArgs> recognizeCompleted;
-
-        /// <summary>
-        /// The output stream of audio level updated events
-        /// </summary>
-        private readonly Emitter<AudioLevelUpdatedEventArgs> audioLevelUpdated;
-
-        /// <summary>
-        /// The output stream of emulate recognize completed events
-        /// </summary>
-        private readonly Emitter<EmulateRecognizeCompletedEventArgs> emulateRecognizeCompleted;
-
-        /// <summary>
-        /// The output stream of load grammar completed events
-        /// </summary>
-        private readonly Emitter<LoadGrammarCompletedEventArgs> loadGrammarCompleted;
-
-        /// <summary>
-        /// The output stream of recognizer update reached events
-        /// </summary>
-        private readonly Emitter<RecognizerUpdateReachedEventArgs> recognizerUpdateReached;
-
         /// <summary>
         /// The System.Speech speech recognition engine.
         /// </summary>
@@ -138,26 +72,27 @@ namespace Microsoft.Psi.Speech
         {
             pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
 
-            this.configuration = configuration ?? new SystemSpeechRecognizerConfiguration();
+            this.Configuration = configuration ?? new SystemSpeechRecognizerConfiguration();
 
             // create receiver of grammar updates
             this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars), true);
 
             // create the additional output streams
-            this.intentData = pipeline.CreateEmitter<IntentData>(this, "IntentData");
+            this.PartialRecognitionResults = pipeline.CreateEmitter<IStreamingSpeechRecognitionResult>(this, nameof(this.PartialRecognitionResults));
+            this.IntentData = pipeline.CreateEmitter<IntentData>(this, nameof(this.IntentData));
 
             // create output streams for all the event args
-            this.speechDetected = pipeline.CreateEmitter<SpeechDetectedEventArgs>(this, nameof(this.SpeechDetected));
-            this.speechHypothesized = pipeline.CreateEmitter<SpeechHypothesizedEventArgs>(this, nameof(this.SpeechHypothesized));
-            this.speechRecognized = pipeline.CreateEmitter<SpeechRecognizedEventArgs>(this, nameof(this.SpeechRecognized));
-            this.speechRecognitionRejected = pipeline.CreateEmitter<SpeechRecognitionRejectedEventArgs>(this, nameof(this.SpeechRecognitionRejected));
-            this.audioSignalProblemOccurred = pipeline.CreateEmitter<AudioSignalProblemOccurredEventArgs>(this, nameof(this.AudioSignalProblemOccurred));
-            this.audioStateChanged = pipeline.CreateEmitter<AudioStateChangedEventArgs>(this, nameof(this.AudioStateChanged));
-            this.recognizeCompleted = pipeline.CreateEmitter<RecognizeCompletedEventArgs>(this, nameof(this.RecognizeCompleted));
-            this.audioLevelUpdated = pipeline.CreateEmitter<AudioLevelUpdatedEventArgs>(this, nameof(this.AudioLevelUpdated));
-            this.emulateRecognizeCompleted = pipeline.CreateEmitter<EmulateRecognizeCompletedEventArgs>(this, nameof(this.EmulateRecognizeCompleted));
-            this.loadGrammarCompleted = pipeline.CreateEmitter<LoadGrammarCompletedEventArgs>(this, nameof(this.LoadGrammarCompleted));
-            this.recognizerUpdateReached = pipeline.CreateEmitter<RecognizerUpdateReachedEventArgs>(this, nameof(this.RecognizerUpdateReached));
+            this.SpeechDetected = pipeline.CreateEmitter<SpeechDetectedEventArgs>(this, nameof(this.SpeechDetected));
+            this.SpeechHypothesized = pipeline.CreateEmitter<SpeechHypothesizedEventArgs>(this, nameof(this.SpeechHypothesized));
+            this.SpeechRecognized = pipeline.CreateEmitter<SpeechRecognizedEventArgs>(this, nameof(this.SpeechRecognized));
+            this.SpeechRecognitionRejected = pipeline.CreateEmitter<SpeechRecognitionRejectedEventArgs>(this, nameof(this.SpeechRecognitionRejected));
+            this.AudioSignalProblemOccurred = pipeline.CreateEmitter<AudioSignalProblemOccurredEventArgs>(this, nameof(this.AudioSignalProblemOccurred));
+            this.AudioStateChanged = pipeline.CreateEmitter<AudioStateChangedEventArgs>(this, nameof(this.AudioStateChanged));
+            this.RecognizeCompleted = pipeline.CreateEmitter<RecognizeCompletedEventArgs>(this, nameof(this.RecognizeCompleted));
+            this.AudioLevelUpdated = pipeline.CreateEmitter<AudioLevelUpdatedEventArgs>(this, nameof(this.AudioLevelUpdated));
+            this.EmulateRecognizeCompleted = pipeline.CreateEmitter<EmulateRecognizeCompletedEventArgs>(this, nameof(this.EmulateRecognizeCompleted));
+            this.LoadGrammarCompleted = pipeline.CreateEmitter<LoadGrammarCompletedEventArgs>(this, nameof(this.LoadGrammarCompleted));
+            this.RecognizerUpdateReached = pipeline.CreateEmitter<RecognizerUpdateReachedEventArgs>(this, nameof(this.RecognizerUpdateReached));
 
             // create table of last stream originating times
             this.lastPostedOriginatingTimes = new Dictionary<IEmitter, DateTime>();
@@ -191,108 +126,74 @@ namespace Microsoft.Psi.Speech
         public Receiver<IEnumerable<string>> ReceiveGrammars { get; }
 
         /// <summary>
+        /// Gets the output stream of partial recognition results.
+        /// </summary>
+        public Emitter<IStreamingSpeechRecognitionResult> PartialRecognitionResults { get; }
+
+        /// <summary>
         /// Gets the output stream of intents and entities.
         /// </summary>
-        public Emitter<IntentData> IntentData
-        {
-            get { return this.intentData; }
-        }
+        public Emitter<IntentData> IntentData { get; }
 
         /// <summary>
         /// Gets the output stream of speech detected events
         /// </summary>
-        public Emitter<SpeechDetectedEventArgs> SpeechDetected
-        {
-            get { return this.speechDetected; }
-        }
+        public Emitter<SpeechDetectedEventArgs> SpeechDetected { get; }
 
         /// <summary>
         /// Gets the output stream of speech hypothesized events
         /// </summary>
-        public Emitter<SpeechHypothesizedEventArgs> SpeechHypothesized
-        {
-            get { return this.speechHypothesized; }
-        }
+        public Emitter<SpeechHypothesizedEventArgs> SpeechHypothesized { get; }
 
         /// <summary>
         /// Gets the output stream of speech recognized events
         /// </summary>
-        public Emitter<SpeechRecognizedEventArgs> SpeechRecognized
-        {
-            get { return this.speechRecognized; }
-        }
+        public Emitter<SpeechRecognizedEventArgs> SpeechRecognized { get; }
 
         /// <summary>
         /// Gets the output stream of speech recognition rejected events
         /// </summary>
-        public Emitter<SpeechRecognitionRejectedEventArgs> SpeechRecognitionRejected
-        {
-            get { return this.speechRecognitionRejected; }
-        }
+        public Emitter<SpeechRecognitionRejectedEventArgs> SpeechRecognitionRejected { get; }
 
         /// <summary>
         /// Gets the output stream of audio problem events
         /// </summary>
-        public Emitter<AudioSignalProblemOccurredEventArgs> AudioSignalProblemOccurred
-        {
-            get { return this.audioSignalProblemOccurred; }
-        }
+        public Emitter<AudioSignalProblemOccurredEventArgs> AudioSignalProblemOccurred { get; }
 
         /// <summary>
         /// Gets the output stream of audio state change events
         /// </summary>
-        public Emitter<AudioStateChangedEventArgs> AudioStateChanged
-        {
-            get { return this.audioStateChanged; }
-        }
+        public Emitter<AudioStateChangedEventArgs> AudioStateChanged { get; }
 
         /// <summary>
         /// Gets the output stream of recognize completed events
         /// </summary>
-        public Emitter<RecognizeCompletedEventArgs> RecognizeCompleted
-        {
-            get { return this.recognizeCompleted; }
-        }
+        public Emitter<RecognizeCompletedEventArgs> RecognizeCompleted { get; }
 
         /// <summary>
         /// Gets the output stream of audio level updated events
         /// </summary>
-        public Emitter<AudioLevelUpdatedEventArgs> AudioLevelUpdated
-        {
-            get { return this.audioLevelUpdated; }
-        }
+        public Emitter<AudioLevelUpdatedEventArgs> AudioLevelUpdated { get; }
 
         /// <summary>
         /// Gets the output stream of emulate recognize completed completed events
         /// </summary>
-        public Emitter<EmulateRecognizeCompletedEventArgs> EmulateRecognizeCompleted
-        {
-            get { return this.emulateRecognizeCompleted; }
-        }
+        public Emitter<EmulateRecognizeCompletedEventArgs> EmulateRecognizeCompleted { get; }
 
         /// <summary>
         /// Gets the output stream of load grammar completed events
         /// </summary>
-        public Emitter<LoadGrammarCompletedEventArgs> LoadGrammarCompleted
-        {
-            get { return this.loadGrammarCompleted; }
-        }
+        public Emitter<LoadGrammarCompletedEventArgs> LoadGrammarCompleted { get; }
 
         /// <summary>
         /// Gets the output stream of recognizer update reached events
         /// </summary>
-        public Emitter<RecognizerUpdateReachedEventArgs> RecognizerUpdateReached
-        {
-            get { return this.recognizerUpdateReached; }
-        }
+        public Emitter<RecognizerUpdateReachedEventArgs> RecognizerUpdateReached { get; }
 
         /// <summary>
         /// Gets the configuration for this component.
         /// </summary>
-        private SystemSpeechRecognizerConfiguration Configuration
-        {
-            get { return this.configuration; }
-        }
+        private SystemSpeechRecognizerConfiguration Configuration { get; }
 
         /// <summary>
         /// Called once all the subscriptions are established.
@@ -433,7 +334,7 @@ namespace Microsoft.Psi.Speech
             this.recognizeComplete.Set();
 
             DateTime originatingTime = this.streamStartTime + e.AudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.recognizeCompleted, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.RecognizeCompleted, e, originatingTime);
         }
 
         /// <summary>
@@ -447,7 +348,7 @@ namespace Microsoft.Psi.Speech
             DateTime originatingTime = this.streamStartTime + e.Result.Audio.AudioPosition + e.Result.Audio.Duration;
 
             // Post the raw result from the underlying recognition engine
-            this.PostWithOriginatingTimeConsistencyCheck(this.speechRecognized, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.SpeechRecognized, e, originatingTime);
 
             if (e.Result.Alternates.Count > 0)
             {
@@ -457,7 +358,7 @@ namespace Microsoft.Psi.Speech
                 if (e.Result.Semantics != null)
                 {
                     IntentData intents = this.BuildIntentData(e.Result.Semantics);
-                    this.PostWithOriginatingTimeConsistencyCheck(this.intentData, intents, originatingTime);
+                    this.PostWithOriginatingTimeConsistencyCheck(this.IntentData, intents, originatingTime);
                 }
             }
         }
@@ -474,10 +375,10 @@ namespace Microsoft.Psi.Speech
             DateTime originatingTime = this.streamStartTime + this.speechRecognitionEngine.RecognizerAudioPosition;
 
             // Post the raw result from the underlying recognition engine
-            this.PostWithOriginatingTimeConsistencyCheck(this.speechHypothesized, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.SpeechHypothesized, e, originatingTime);
 
             var result = this.BuildPartialSpeechRecognitionResult(e.Result);
-            this.PostWithOriginatingTimeConsistencyCheck(this.Out, result, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, result, originatingTime);
         }
 
         /// <summary>
@@ -488,7 +389,7 @@ namespace Microsoft.Psi.Speech
         private void OnSpeechDetected(object sender, SpeechDetectedEventArgs e)
         {
             DateTime originatingTime = this.streamStartTime + e.AudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.speechDetected, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.SpeechDetected, e, originatingTime);
         }
 
         /// <summary>
@@ -502,7 +403,7 @@ namespace Microsoft.Psi.Speech
             DateTime originatingTime = this.streamStartTime + e.Result.Audio.AudioPosition + e.Result.Audio.Duration;
 
             // Post the raw result from the underlying recognition engine
-            this.PostWithOriginatingTimeConsistencyCheck(this.speechRecognitionRejected, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.SpeechRecognitionRejected, e, originatingTime);
 
             if (e.Result.Alternates.Count > 0)
             {
@@ -530,37 +431,37 @@ namespace Microsoft.Psi.Speech
             }
 
             DateTime originatingTime = this.streamStartTime + e.AudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.recognizerUpdateReached, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.RecognizerUpdateReached, e, originatingTime);
         }
 
         private void OnAudioSignalProblemOccurred(object sender, AudioSignalProblemOccurredEventArgs e)
         {
             DateTime originatingTime = this.streamStartTime + e.AudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.audioSignalProblemOccurred, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.AudioSignalProblemOccurred, e, originatingTime);
         }
 
         private void OnAudioStateChanged(object sender, AudioStateChangedEventArgs e)
         {
             DateTime originatingTime = this.streamStartTime + this.speechRecognitionEngine.RecognizerAudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.audioStateChanged, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.AudioStateChanged, e, originatingTime);
         }
 
         private void OnAudioLevelUpdated(object sender, AudioLevelUpdatedEventArgs e)
         {
             DateTime originatingTime = this.streamStartTime + this.speechRecognitionEngine.RecognizerAudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.audioLevelUpdated, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.AudioLevelUpdated, e, originatingTime);
         }
 
         private void OnEmulateRecognizeCompleted(object sender, EmulateRecognizeCompletedEventArgs e)
         {
             DateTime originatingTime = this.streamStartTime + this.speechRecognitionEngine.RecognizerAudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.emulateRecognizeCompleted, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.EmulateRecognizeCompleted, e, originatingTime);
         }
 
         private void OnLoadGrammarCompleted(object sender, LoadGrammarCompletedEventArgs e)
         {
             DateTime originatingTime = this.streamStartTime + this.speechRecognitionEngine.RecognizerAudioPosition;
-            this.PostWithOriginatingTimeConsistencyCheck(this.loadGrammarCompleted, e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.LoadGrammarCompleted, e, originatingTime);
         }
 
         /// <summary>

@@ -50,10 +50,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (e.PropertyName == nameof(this.ImageVisualizationObject.CurrentValue))
             {
-                var current = this.ImageVisualizationObject.CurrentValue;
+                var image = this.ImageVisualizationObject.CurrentValue.GetValueOrDefault().Data?.Resource;
                 if (this.ImageVisualizationObject.Configuration.HorizontalFlip)
                 {
-                    var image = current.Data?.Resource;
                     if (image != null)
                     {
                         var bitmap = image.ToManagedImage(true);
@@ -62,12 +61,12 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     }
                     else
                     {
-                        this.DisplayImage.UpdateImage((Imaging.Image)null);
+                        this.DisplayImage.UpdateImage(image);
                     }
                 }
                 else
                 {
-                    this.DisplayImage.UpdateImage(current.Data?.Resource);
+                    this.DisplayImage.UpdateImage(image);
                 }
             }
         }

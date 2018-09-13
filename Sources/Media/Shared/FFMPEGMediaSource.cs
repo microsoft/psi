@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Media
 #endif
 
     /// <summary>
-    /// FFMPEGMediaSource defines a component that plays back media
+    /// Component that streams video and audio from an MPEG file.
     /// </summary>
     public class FFMPEGMediaSource : Generator, IDisposable
     {

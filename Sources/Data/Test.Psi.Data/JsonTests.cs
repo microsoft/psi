@@ -77,6 +77,7 @@ namespace Test.Psi.Data
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void JsonSimpleReaderTest()
         {
             List<Message<SimpleObject>> stream1 = new List<Message<SimpleObject>>();
@@ -109,6 +110,7 @@ namespace Test.Psi.Data
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void JsonSimpleWriterTest()
         {
             using (var writer = new JsonSimpleWriter())
@@ -157,6 +159,7 @@ namespace Test.Psi.Data
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void JsonGeneratorTest()
         {
             List<Message<SimpleObject>> stream1 = new List<Message<SimpleObject>>();

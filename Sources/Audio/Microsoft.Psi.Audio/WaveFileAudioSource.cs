@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements a Wave file reader.
+    /// Component that streams audio from a WAVE file.
     /// </summary>
     public sealed class WaveFileAudioSource : Generator<AudioBuffer>
     {

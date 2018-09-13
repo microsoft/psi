@@ -5,7 +5,11 @@ namespace Microsoft.Psi.Visualization.Datasets
 {
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Threading.Tasks;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Base;
 
@@ -19,6 +23,10 @@ namespace Microsoft.Psi.Visualization.Datasets
         private SessionViewModel currentSessionViewModel;
         private ObservableCollection<SessionViewModel> internalSessionViewModels;
         private ReadOnlyObservableCollection<SessionViewModel> sessionViewModels;
+
+        private RelayCommand createSessionCommand;
+        private RelayCommand createSessionFromExistingStoreCommand;
+        private RelayCommand closeDatasetCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DatasetViewModel"/> class.
@@ -55,6 +63,7 @@ namespace Microsoft.Psi.Visualization.Datasets
             {
                 if (this.dataset.Name != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Name));
                     this.dataset.Name = value;
                     this.RaisePropertyChanged(nameof(this.Name));
                 }
@@ -67,8 +76,8 @@ namespace Microsoft.Psi.Visualization.Datasets
         [Browsable(false)]
         public SessionViewModel CurrentSessionViewModel
         {
-            get { return this.currentSessionViewModel; }
-            set { this.Set(nameof(this.CurrentSessionViewModel), ref this.currentSessionViewModel, value); }
+            get => this.currentSessionViewModel;
+            set => this.Set(nameof(this.CurrentSessionViewModel), ref this.currentSessionViewModel, value);
         }
 
         /// <summary>
@@ -76,8 +85,8 @@ namespace Microsoft.Psi.Visualization.Datasets
         /// </summary>
         public string FileName
         {
-            get { return this.filename; }
-            private set { this.Set(nameof(this.filename), ref this.filename, value); }
+            get => this.filename;
+            private set => this.Set(nameof(this.filename), ref this.filename, value);
         }
 
         /// <summary>
@@ -93,15 +102,98 @@ namespace Microsoft.Psi.Visualization.Datasets
         public ReadOnlyObservableCollection<SessionViewModel> SessionViewModels => this.sessionViewModels;
 
         /// <summary>
+        /// Gets the create session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CreateSessionCommand
+        {
+            get
+            {
+                if (this.createSessionCommand == null)
+                {
+                    this.createSessionCommand = new RelayCommand(() => this.CreateSession());
+                }
+
+                return this.createSessionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the create session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CreateSessionFromExistingStoreCommand
+        {
+            get
+            {
+                if (this.createSessionFromExistingStoreCommand == null)
+                {
+                    this.createSessionFromExistingStoreCommand = new RelayCommand(
+                        () =>
+                        {
+                            Win32.OpenFileDialog dlg = new Win32.OpenFileDialog();
+                            dlg.DefaultExt = ".psi";
+                            dlg.Filter = "Psi Store (.psi)|*.psi";
+
+                            bool? result = dlg.ShowDialog();
+                            if (result == true)
+                            {
+                                var fileInfo = new FileInfo(dlg.FileName);
+                                var name = fileInfo.Name.Split('.')[0];
+                                this.AddSessionFromExistingStore(name, name, fileInfo.DirectoryName);
+                            }
+                        });
+                }
+
+                return this.createSessionFromExistingStoreCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the close dataset command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CloseDatasetCommand
+        {
+            get
+            {
+                if (this.closeDatasetCommand == null)
+                {
+                    this.closeDatasetCommand = new RelayCommand(() => { });
+                }
+
+                return this.closeDatasetCommand;
+            }
+        }
+
+        /// <summary>
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
-        /// <returns>The newly loaded dataset.</returns>
+        /// <returns>The newly loaded dataset view model.</returns>
         public static DatasetViewModel Load(string filename)
         {
             var viewModel = new DatasetViewModel(Dataset.Load(filename));
             viewModel.FileName = filename;
             return viewModel;
+        }
+
+        /// <summary>
+        /// Asynchronously loads a dataset from the specified file.
+        /// </summary>
+        /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The value of the TResult parameter
+        /// contains the newly loaded dataset view model.
+        /// </returns>
+        public static Task<DatasetViewModel> LoadAsync(string filename)
+        {
+            // Wrapping synchronous Load method in a Task for now. Eventually we should plumb this all
+            // the way down into the Dataset and implement progressive loading.
+            return Task.Run(() => Load(filename));
         }
 
         /// <summary>
@@ -114,6 +206,23 @@ namespace Microsoft.Psi.Visualization.Datasets
         public static DatasetViewModel CreateFromExistingStore(string storeName, string storePath, string partitionName = null)
         {
             return new DatasetViewModel(Dataset.CreateFromExistingStore(storeName, storePath, partitionName));
+        }
+
+        /// <summary>
+        /// Asynchronously creates a new dataset from an exising data store.
+        /// </summary>
+        /// <param name="storeName">The name of the data store.</param>
+        /// <param name="storePath">The path of the data store.</param>
+        /// <param name="partitionName">The partition name.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The value of the TResult parameter
+        /// contains the newly created dataset view model.
+        /// </returns>
+        public static Task<DatasetViewModel> CreateFromExistingStoreAsync(string storeName, string storePath, string partitionName = null)
+        {
+            // Wrapping synchronous CreateFromExistingStore method in a Task for now. Eventually we should
+            // plumb this all the way down into the Dataset and implement progressive loading.
+            return Task.Run(() => CreateFromExistingStore(storeName, storePath, partitionName));
         }
 
         /// <summary>
@@ -148,6 +257,18 @@ namespace Microsoft.Psi.Visualization.Datasets
         {
             this.dataset.Save(filename);
             this.FileName = filename;
+        }
+
+        /// <summary>
+        /// Asynchronously saves this dataset to the specified file.
+        /// </summary>
+        /// <param name="filename">The name of the file to save this dataset into.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public Task SaveAsync(string filename)
+        {
+            // Wrapping synchronous Save method in a Task for now. Eventually we should plumb this all
+            // the way down into the Dataset.
+            return Task.Run(() => this.Save(filename));
         }
 
         /// <summary>

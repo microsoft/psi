@@ -16,20 +16,16 @@ namespace Microsoft.Psi.Data.Json
     public class JsonSimpleReader : ISimpleReader, IDisposable
     {
         private readonly Dictionary<int, Action<JToken, Envelope>> outputs = new Dictionary<int, Action<JToken, Envelope>>();
-        private readonly string dataSchemaString;
         private readonly string extension;
-        private readonly IDictionary<Uri, string> preloadSchemas;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSimpleReader"/> class.
         /// </summary>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="dataSchemaString">JSON schema used to validate data stream.</param>
         /// <param name="extension">The extension for the underlying file.</param>
-        /// <param name="preloadSchemas">Dictionary of URis to JSON schemas to preload before validating any JSON. Would likely include schemas references by the catalog and data schemas.</param>
-        public JsonSimpleReader(string name, string path, string dataSchemaString = JsonStoreBase.DataSchemaString, string extension = JsonStoreBase.DefaultExtension, IDictionary<Uri, string> preloadSchemas = null)
-            : this(dataSchemaString, extension, preloadSchemas)
+        public JsonSimpleReader(string name, string path, string extension = JsonStoreBase.DefaultExtension)
+            : this(extension)
         {
             this.OpenStore(name, path);
         }
@@ -39,21 +35,17 @@ namespace Microsoft.Psi.Data.Json
         /// </summary>
         /// <param name="that">Existing <see cref="JsonSimpleReader"/> used to initialize new instance.</param>
         public JsonSimpleReader(JsonSimpleReader that)
-            : this(that.Name, that.Path, that.dataSchemaString, that.extension, that.preloadSchemas)
+            : this(that.Name, that.Path, that.extension)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSimpleReader"/> class.
         /// </summary>
-        /// <param name="dataSchemaString">JSON schema used to validate data stream.</param>
         /// <param name="extension">The extension for the underlying file.</param>
-        /// <param name="preloadSchemas">Dictionary of URis to JSON schemas to preload before validating any JSON. Would likely include schemas references by the catalog and data schemas.</param>
-        public JsonSimpleReader(string dataSchemaString = JsonStoreBase.DataSchemaString, string extension = JsonStoreBase.DefaultExtension, IDictionary<Uri, string> preloadSchemas = null)
+        public JsonSimpleReader(string extension = JsonStoreBase.DefaultExtension)
         {
-            this.dataSchemaString = dataSchemaString;
             this.extension = extension;
-            this.preloadSchemas = preloadSchemas;
         }
 
         /// <inheritdoc />
@@ -99,7 +91,7 @@ namespace Microsoft.Psi.Data.Json
                 throw new ArgumentException("Serializers are not used by JsonStoreReader and must be null.", nameof(serializers));
             }
 
-            this.Reader = new JsonStoreReader(name, path, this.dataSchemaString, this.extension, this.preloadSchemas);
+            this.Reader = new JsonStoreReader(name, path, this.extension);
         }
 
         /// <inheritdoc />

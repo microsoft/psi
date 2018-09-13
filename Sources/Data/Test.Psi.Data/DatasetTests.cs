@@ -12,6 +12,7 @@ namespace Test.Psi.Data
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Test.Psi.Common;
 
     [TestClass]
     public class DatasetTests
@@ -27,7 +28,7 @@ namespace Test.Psi.Data
         [TestCleanup]
         public void Cleanup()
         {
-            Directory.Delete(StorePath, true);
+            TestRunner.SafeDirectoryDelete(StorePath, true);
         }
 
         [TestMethod]

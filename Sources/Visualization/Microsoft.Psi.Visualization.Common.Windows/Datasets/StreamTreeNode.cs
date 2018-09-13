@@ -57,6 +57,9 @@ namespace Microsoft.Psi.Visualization.Datasets
         public int? MessageCount => this.StreamMetadata?.MessageCount;
 
         /// <inheritdoc />
+        public bool IsStream => this.StreamMetadata != null;
+
+        /// <inheritdoc />
         public string Name { get; protected set; }
 
         /// <inheritdoc />

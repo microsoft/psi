@@ -69,7 +69,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void Update()
         {
-            var data = this.visualizationObject.CurrentValue.Data;
+            var data = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
             if (data != null)
             {
                 // if we have more people than we need, clear all

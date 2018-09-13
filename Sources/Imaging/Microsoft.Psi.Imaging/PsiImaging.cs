@@ -33,7 +33,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>Returns a producer that generates the transformed images</returns>
         public static IProducer<Shared<Image>> Transform(this IProducer<Shared<Image>> source, TransformDelegate transformer, PixelFormat pixelFormat, DeliveryPolicy deliveryPolicy = null)
         {
-            return source.PipeTo(new TransformImageComponent(source.Out.Pipeline, transformer, pixelFormat), deliveryPolicy);
+            return source.PipeTo(new ImageTransformer(source.Out.Pipeline, transformer, pixelFormat), deliveryPolicy);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Microsoft.Psi.Imaging
             return source.Process<Shared<Image>, Shared<Image>>(
                 (image, env, emitter) =>
                 {
-                    emitter.Post(image.Resource.Flip(mode), env.OriginatingTime);
+                    emitter.Post((mode == FlipMode.None) ? image : image.Resource.Flip(mode), env.OriginatingTime);
                 });
         }
 

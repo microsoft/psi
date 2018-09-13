@@ -89,7 +89,16 @@ namespace Microsoft.Psi
             Func<Message<T>, DateTime, bool> bufferRemoveCondition =
                 (b, ct) => b.OriginatingTime < ct - timeSpan;
 
-            var buffer = new BufferSelect<T, U>(source.Out.Pipeline, bufferRemoveCondition, selector);
+            var buffer = new BufferProcess<T, U>(
+                source.Out.Pipeline,
+                bufferRemoveCondition,
+                (m, f, e) =>
+                {
+                    if (!f)
+                    {
+                        BufferSelectProcessor(selector, m, e);
+                    }
+                });
             source.PipeTo(buffer.In, policy ?? DeliveryPolicy.Immediate);
             return buffer.Out;
         }
@@ -105,6 +114,21 @@ namespace Microsoft.Psi
         public static IProducer<IEnumerable<T>> History<T>(this IProducer<T> source, TimeSpan timeSpan, DeliveryPolicy policy = null)
         {
             return History(source, timeSpan, LastTimestamp, policy);
+        }
+
+        /// <summary>
+        /// Get a window of messages relative to the current message.
+        /// </summary>
+        /// <typeparam name="T">Type of source messages.</typeparam>
+        /// <param name="source">Source stream of messages.</param>
+        /// <param name="relativeTimeInterval">The relative time interval over which to gather messages.</param>
+        /// <param name="policy">Delivery policy.</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<IEnumerable<Message<T>>> Window<T>(this IProducer<T> source, RelativeTimeInterval relativeTimeInterval, DeliveryPolicy policy = null)
+        {
+            var window = new Window<T>(source.Out.Pipeline, relativeTimeInterval);
+            source.PipeTo(window.In, policy ?? DeliveryPolicy.Immediate);
+            return window.Out;
         }
 
         /// <summary>
@@ -127,7 +151,16 @@ namespace Microsoft.Psi
                 throw new ArgumentOutOfRangeException("size", size, "The size should be positive (and non-zero).");
             }
 
-            var buffer = new BufferSelect<T, U>(source.Out.Pipeline, selector, size);
+            var buffer = new BufferProcess<T, U>(
+                source.Out.Pipeline,
+                (m, f, e) =>
+                {
+                    if (!f)
+                    {
+                        BufferSelectProcessor(selector, m, e);
+                    }
+                },
+                size);
             return PipeTo(source, buffer, policy);
         }
 
@@ -139,6 +172,12 @@ namespace Microsoft.Psi
         private static ValueTuple<IEnumerable<T>, DateTime> LastTimestamp<T>(IEnumerable<Message<T>> messages)
         {
             return ValueTuple.Create(messages.Select(x => x.Data), messages.Last().OriginatingTime);
+        }
+
+        private static void BufferSelectProcessor<TInput, TOutput>(Func<IEnumerable<Message<TInput>>, (TOutput, DateTime)> selector, IEnumerable<Message<TInput>> buffer, Emitter<TOutput> emitter)
+        {
+            (var value, var originatingTime) = selector(buffer);
+            emitter.Post(value, originatingTime);
         }
     }
 }

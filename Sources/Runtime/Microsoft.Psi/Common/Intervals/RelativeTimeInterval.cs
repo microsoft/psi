@@ -29,16 +29,10 @@ namespace Microsoft.Psi
         public static readonly RelativeTimeInterval Zero =
             new RelativeTimeInterval(TimeSpan.Zero, true, true, TimeSpan.Zero, true, true);
 
-        /// <summary>
-        /// Canonical interval describing the past (including the present moment).
-        /// </summary>
-        public static readonly RelativeTimeInterval Past =
+        private static readonly RelativeTimeInterval PastInterval =
             new RelativeTimeInterval(TimeSpan.MinValue, false, false, TimeSpan.Zero, true, true);
 
-        /// <summary>
-        /// Canonical interval describing the future (including the present moment).
-        /// </summary>
-        public static readonly RelativeTimeInterval Future =
+        private static readonly RelativeTimeInterval FutureInterval =
             new RelativeTimeInterval(TimeSpan.Zero, true, true, TimeSpan.MaxValue, false, false);
 
         /// <summary>
@@ -139,6 +133,46 @@ namespace Microsoft.Psi
         public static TimeInterval operator +(DateTime origin, RelativeTimeInterval relative)
         {
             return new TimeInterval(origin, relative);
+        }
+
+        /// <summary>
+        /// Returns a relative time interval describing the past. The returned interval includes the present moment.
+        /// </summary>
+        /// <returns>A relative time interval describing the past.</returns>
+        public static RelativeTimeInterval Past()
+        {
+            return PastInterval;
+        }
+
+        /// <summary>
+        /// Returns a relative time interval of a specified duration in the past. The returned interval includes the present moment.
+        /// </summary>
+        /// <param name="duration">The duration of the time interval.</param>
+        /// <param name="inclusive">Indicates if the interval should be inclusive of the left endpoint.</param>
+        /// <returns>A relative time interval of a specified duration in the past.</returns>
+        public static RelativeTimeInterval Past(TimeSpan duration, bool inclusive = true)
+        {
+            return new RelativeTimeInterval(-duration, inclusive, true, TimeSpan.Zero, true, true);
+        }
+
+        /// <summary>
+        /// Returns a relative time interval describing the future. The returned interval includes the present moment.
+        /// </summary>
+        /// <returns>A relative time interval describing the future.</returns>
+        public static RelativeTimeInterval Future()
+        {
+            return FutureInterval;
+        }
+
+        /// <summary>
+        /// Returns a relative time interval of a specified duration in the future. The returned interval includes the present moment.
+        /// </summary>
+        /// <param name="duration">The duration of the time interval.</param>
+        /// <param name="inclusive">Indicates if the interval should be inclusive of the right endpoint.</param>
+        /// <returns>A relative time interval of a specified duration in the future.</returns>
+        public static RelativeTimeInterval Future(TimeSpan duration, bool inclusive = true)
+        {
+            return new RelativeTimeInterval(TimeSpan.Zero, true, true, duration, inclusive, true);
         }
 
         /// <summary>

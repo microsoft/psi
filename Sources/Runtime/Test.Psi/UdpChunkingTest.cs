@@ -24,6 +24,7 @@ namespace Test.Robotics.Runtime
         /// Small data test - fits within single datagram.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpSmallDataTest()
         {
             var sender = new DataChunker(MaxDatagramSize);
@@ -36,6 +37,7 @@ namespace Test.Robotics.Runtime
         /// Medium data test - split into two chunks.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpMediumDataTest()
         {
             var sender = new DataChunker(MaxDatagramSize);
@@ -48,6 +50,7 @@ namespace Test.Robotics.Runtime
         /// Medium data reversed test - split into two chunks, received in reverse order.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpMediumDataReversedTest()
         {
             var data64KB = RandomData(0xFFFF);
@@ -60,6 +63,7 @@ namespace Test.Robotics.Runtime
         /// Medium data scrambled test - split into two chunks, received totally out of order.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpMediumDataScrambledTest()
         {
             var data64KB = RandomData(0xFFFF);
@@ -71,6 +75,7 @@ namespace Test.Robotics.Runtime
         /// Large data test - split into many chunks.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpLargeDataTest()
         {
             var data1MB = RandomData(0xFFFFF);
@@ -82,6 +87,7 @@ namespace Test.Robotics.Runtime
         /// Large data reversed test - split into many chunks, received in reverse order.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpLargeDataReversedTest()
         {
             var data1MB = RandomData(0xFFFFF);
@@ -94,6 +100,7 @@ namespace Test.Robotics.Runtime
         /// Large data scrambled test - split into many chunks, received totally out of order.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpLargeDataScrambledTest()
         {
             var data1MB = RandomData(0xFFFFF);
@@ -105,6 +112,7 @@ namespace Test.Robotics.Runtime
         /// Data dropped test - two sets of chunks, first with dropped datagrams.
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpDroppedDatagramsTest()
         {
             var data1MB = RandomData(0xFFFFF);
@@ -120,6 +128,7 @@ namespace Test.Robotics.Runtime
         /// Data interleaving test - two large sets of chunks interleaved (both fail)
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UdpInterleavedDatagramsTest()
         {
             var sender = new DataChunker(MaxDatagramSize);

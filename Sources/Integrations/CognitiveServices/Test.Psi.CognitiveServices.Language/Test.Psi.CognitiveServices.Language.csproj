@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <StartupObject>Test.Psi.CognitiveServices.Language.ConsoleMain</StartupObject>
@@ -27,10 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
   </ItemGroup>
 
   <ItemGroup>

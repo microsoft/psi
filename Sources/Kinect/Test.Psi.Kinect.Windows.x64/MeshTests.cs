@@ -30,6 +30,7 @@ namespace Test.Psi.Kinect
         }
 
         [TestMethod]
+        [Timeout(60000)]
         [Ignore]
         public void GenerateTexturedMappedMesh()
         {

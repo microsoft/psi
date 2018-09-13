@@ -271,7 +271,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             }
             else if (e.PropertyName == nameof(KinectBodies3DVisualizationObject.CurrentValue))
             {
-                this.UpdateBodies(this.visualizationObject.CurrentValue.Data);
+                this.UpdateBodies(this.visualizationObject.CurrentValue.GetValueOrDefault().Data);
             }
         }
     }

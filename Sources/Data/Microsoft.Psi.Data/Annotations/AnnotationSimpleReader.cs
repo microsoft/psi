@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
         public AnnotationSimpleReader(string name, string path)
-            : base(name, path, AnnotationStoreCommon.DataSchema, AnnotationStoreCommon.DefaultExtension, AnnotationStoreCommon.PreloadSchemas)
+            : base(name, path, AnnotationStoreCommon.DefaultExtension)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Data.Annotations
         /// Initializes a new instance of the <see cref="AnnotationSimpleReader"/> class.
         /// </summary>
         public AnnotationSimpleReader()
-            : base(AnnotationStoreCommon.DataSchema, AnnotationStoreCommon.DefaultExtension, AnnotationStoreCommon.PreloadSchemas)
+            : base(AnnotationStoreCommon.DefaultExtension)
         {
         }
 

@@ -47,6 +47,15 @@ namespace Microsoft.Psi.Visualization.Navigation
         [DataMember]
         public DateTime StartTime { get; private set; }
 
+        /// <summary>
+        /// Scrolls the start and end times of the Range
+        /// </summary>
+        /// <param name="timespan">The amount of time to scroll the range</param>
+        public void ScrollBy(TimeSpan timespan)
+        {
+            this.SetRange(this.StartTime + timespan, this.EndTime + timespan);
+        }
+
         /// <inheritdoc />
         public void SetRange(DateTime startTime, DateTime endTime)
         {
@@ -58,6 +67,22 @@ namespace Microsoft.Psi.Visualization.Navigation
 
             var originalStartTime = this.StartTime;
             var originalEndTime = this.EndTime;
+
+            if (startTime != originalStartTime)
+            {
+                this.RaisePropertyChanging(nameof(this.StartTime));
+            }
+
+            if (endTime != originalEndTime)
+            {
+                this.RaisePropertyChanging(nameof(this.EndTime));
+            }
+
+            if (this.Duration != originalEndTime - originalStartTime)
+            {
+                this.RaisePropertyChanging(nameof(this.Duration));
+            }
+
             this.StartTime = startTime;
             this.EndTime = endTime;
 

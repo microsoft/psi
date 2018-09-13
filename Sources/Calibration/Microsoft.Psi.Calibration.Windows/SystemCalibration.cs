@@ -69,8 +69,15 @@ namespace Microsoft.Psi.Calibration
         /// Gets or sets the camera calibration for each camera
         /// </summary>
         [XmlArray("CameraPoses")]
-        [XmlArrayItem(typeof(CameraCalibration), ElementName ="CameraCalibration")]
+        [XmlArrayItem(typeof(CameraCalibration), ElementName = "CameraCalibration")]
         public List<CameraCalibration> CameraPoses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the solved board positions
+        /// </summary>
+        [XmlArray("SolvedBoards")]
+        [XmlArrayItem(typeof(SolvedBoard), ElementName = "SolvedBoard")]
+        public List<SolvedBoard> SolvedBoards { get; set; }
 
         /// <summary>
         /// Defines the calibration results for a single camera
@@ -107,6 +114,37 @@ namespace Microsoft.Psi.Calibration
             /// </summary>
             [XmlArray]
             public double[] Extrinsics { get; set; }
+
+            /// <summary>
+            /// Gets or sets the camera's intrinsics reprojection error
+            /// </summary>
+            [XmlElement]
+            public double IntrinsicsReprojectionError { get; set; }
+
+            /// <summary>
+            /// Gets or sets the camera's extrinsics reprojection error
+            /// </summary>
+            [XmlElement]
+            public double ExtrinsicsReprojectionError { get; set; }
+        }
+
+        /// <summary>
+        /// Defines the relative orientation of a solved board
+        /// </summary>
+        [XmlRoot("SolvedBoards")]
+        public class SolvedBoard
+        {
+            /// <summary>
+            /// Gets or sets the board position
+            /// </summary>
+            [XmlArray]
+            public double[] Position { get; set; }
+
+            /// <summary>
+            /// Gets or sets the board orientation
+            /// </summary>
+            [XmlArray]
+            public double[] Orientation { get; set; }
         }
     }
 }

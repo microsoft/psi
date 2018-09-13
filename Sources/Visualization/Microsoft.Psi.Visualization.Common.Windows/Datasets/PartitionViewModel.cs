@@ -4,6 +4,8 @@
 namespace Microsoft.Psi.Visualization.Datasets
 {
     using System.ComponentModel;
+    using System.Runtime.Serialization;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Base;
 
@@ -15,6 +17,9 @@ namespace Microsoft.Psi.Visualization.Datasets
         private IPartition partition;
         private IStreamTreeNode streamTreeRoot;
         private SessionViewModel sessionViewModel;
+
+        private RelayCommand removePartitionCommand;
+        private RelayCommand visualizePartitionCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PartitionViewModel"/> class.
@@ -42,6 +47,7 @@ namespace Microsoft.Psi.Visualization.Datasets
             {
                 if (this.partition.Name != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.Name));
                     this.partition.Name = value;
                     this.RaisePropertyChanged(nameof(this.Name));
                 }
@@ -76,8 +82,51 @@ namespace Microsoft.Psi.Visualization.Datasets
         [Browsable(false)]
         public IStreamTreeNode StreamTreeRoot
         {
-            get { return this.streamTreeRoot; }
-            set { this.Set(nameof(this.StreamTreeRoot), ref this.streamTreeRoot, value); }
+            get => this.streamTreeRoot;
+            set => this.Set(nameof(this.StreamTreeRoot), ref this.streamTreeRoot, value);
+        }
+
+        /// <summary>
+        /// Gets the remove partition command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand RemovePartitionCommand
+        {
+            get
+            {
+                if (this.removePartitionCommand == null)
+                {
+                    this.removePartitionCommand = new RelayCommand(() => this.RemovePartition());
+                }
+
+                return this.removePartitionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the visualize partition command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand VisualizePartitionCommand
+        {
+            get
+            {
+                if (this.visualizePartitionCommand == null)
+                {
+                    this.visualizePartitionCommand = new RelayCommand(
+                        () =>
+                        {
+                            this.SessionViewModel.DatasetViewModel.CurrentSessionViewModel = this.SessionViewModel;
+                            //// Add this code back and use in bindings when a back pointer to the PsiStudioContext is available.
+                            ////this.context.VisualizationContainer.ZoomToRange(this.SessionViewModel.OriginatingTimeInterval);
+                            ////this.context.VisualizationContainer.UpdateStoreBindings(new PartitionViewModel[] { this });
+                        });
+                }
+
+                return this.visualizePartitionCommand;
+            }
         }
 
         /// <summary>

@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Components
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Creates and applies a sub-pipeline to each element in the input array. The input array must have the same length across all messages.
@@ -12,29 +11,46 @@ namespace Microsoft.Psi.Components
     /// </summary>
     /// <typeparam name="TIn">The input message type</typeparam>
     /// <typeparam name="TOut">The result type</typeparam>
-    public class Parallel<TIn, TOut> : IConsumer<TIn[]>, IProducer<TOut[]>
+    public class ParallelFixedLength<TIn, TOut> : IConsumer<TIn[]>, IProducer<TOut[]>
     {
         private readonly Emitter<TIn>[] branches;
         private readonly IProducer<TOut[]> join;
-        private readonly Receiver<TIn[]> input;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Parallel{TIn, TOut}"/> class.
+        /// Initializes a new instance of the <see cref="ParallelFixedLength{TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="vectorSize">Vector size.</param>
-        /// <param name="transformSelector">Function mapping keyed input producers to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        public Parallel(Pipeline pipeline, int vectorSize, Func<int, IProducer<TIn>, IProducer<TOut>> transformSelector, bool joinOrDefault)
+        /// <param name="action">Action to apply to output producers.</param>
+        public ParallelFixedLength(Pipeline pipeline, int vectorSize, Action<int, IProducer<TIn>> action)
         {
-            this.input = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
+            this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
+            this.branches = new Emitter<TIn>[vectorSize];
+            for (int i = 0; i < vectorSize; i++)
+            {
+                var subpipeline = Subpipeline.Create(pipeline, $"subpipeline{i}");
+                this.branches[i] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
+                action(i, this.branches[i]);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParallelFixedLength{TIn, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="vectorSize">Vector size.</param>
+        /// <param name="transform">Function mapping keyed input producers to output producers.</param>
+        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
+        public ParallelFixedLength(Pipeline pipeline, int vectorSize, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault)
+        {
+            this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
             this.branches = new Emitter<TIn>[vectorSize];
             var branchResults = new IProducer<TOut>[vectorSize];
             for (int i = 0; i < vectorSize; i++)
             {
                 var subpipeline = Subpipeline.Create(pipeline, $"subpipeline{i}");
                 this.branches[i] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
-                branchResults[i] = transformSelector(i, this.branches[i]);
+                branchResults[i] = transform(i, this.branches[i]);
             }
 
             var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();
@@ -42,7 +58,7 @@ namespace Microsoft.Psi.Components
         }
 
         /// <inheritdoc />
-        public Receiver<TIn[]> In => this.input;
+        public Receiver<TIn[]> In { get; }
 
         /// <inheritdoc />
         public Emitter<TOut[]> Out => this.join.Out;

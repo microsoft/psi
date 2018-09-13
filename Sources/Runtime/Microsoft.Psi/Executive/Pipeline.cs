@@ -59,6 +59,9 @@ namespace Microsoft.Psi
 
         private List<Exception> errors = new List<Exception>();
 
+        // true once started
+        private bool started;
+
         // true while stopping
         private bool stopping;
 
@@ -135,6 +138,11 @@ namespace Microsoft.Psi
         internal ConcurrentQueue<PipelineElement> Components => this.components;
 
         /// <summary>
+        /// Gets pipeline completion wait handle.
+        /// </summary>
+        protected ManualResetEvent Completed => this.completed;
+
+        /// <summary>
         /// Create pipeline.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
@@ -185,17 +193,34 @@ namespace Microsoft.Psi
         /// <param name="onStart">The action to be called upon pipeline start.</param>
         public void RegisterPipelineStartHandler(object owner, Action onStart)
         {
-            this.GetOrCreateNode(owner).OnStartHandler = onStart;
+            var node = this.GetOrCreateNode(owner);
+            node.OnStartHandler = onStart;
+            if (this.started && !(owner is Subpipeline))
+            {
+                throw new InvalidOperationException($"Register pipeline start handler called when pipeline already running. Consider using Subpipeline.");
+            }
         }
 
         /// <summary>
         /// Registers handler to be called upon pipeline stop.
         /// </summary>
         /// <param name="owner">The component that owns the handler. This is usually the state object that the receiver operates on.</param>
-        /// <param name="onStop">The action to be called upon pipeline stop.</param>
+        /// <param name="onStop">The action to be called upon pipeline stopping.</param>
+        /// <remarks>This means the pipeline is shutting down. Messages may still be flowing, but source components should cease.</remarks>
         public void RegisterPipelineStopHandler(object owner, Action onStop)
         {
             this.GetOrCreateNode(owner).OnStopHandler = onStop;
+        }
+
+        /// <summary>
+        /// Registers handler to be called upon pipeline stop.
+        /// </summary>
+        /// <param name="owner">The component that owns the handler. This is usually the state object that the receiver operates on.</param>
+        /// <param name="onFinal">The action to be called upon pipeline final call after quiescence.</param>
+        /// <remarks>This means that the pipeline has deactivated all source components and shutdown is eminent. This is a last chance to post final messages.</remarks>
+        public void RegisterPipelineFinalHandler(object owner, Action onFinal)
+        {
+            this.GetOrCreateNode(owner).OnFinalHandler = onFinal;
         }
 
         /// <summary>
@@ -586,6 +611,7 @@ namespace Microsoft.Psi
         /// <returns>Disposable used to terminate pipeline.</returns>
         internal virtual IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock)
         {
+            this.started = true;
             descriptor = descriptor ?? ReplayDescriptor.ReplayAll;
             this.replayDescriptor = descriptor.Intersect(descriptor.UseOriginatingTime ? this.proposedOriginatingTimeInterval : this.proposedTimeInterval);
 
@@ -638,12 +664,20 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Deactivate all active components.
+        /// </summary>
+        /// <returns>Number of components deactivated</returns>
+        protected int DeactivateComponents()
+        {
+            return this.ForEachComponent(c => c.Deactivate(), true);
+        }
+
+        /// <summary>
         /// Stops the pipeline by disabling message passing between the pipeline components.
         /// The pipeline configuration is not changed and the pipeline can be restarted later.
         /// </summary>
         /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
-        /// <param name="stopScheduler">Stops the scheduler.</param>
-        protected virtual void Stop(bool abandonPendingWorkitems = false, bool stopScheduler = true)
+        protected virtual void Stop(bool abandonPendingWorkitems = false)
         {
             if (this.stopping)
             {
@@ -654,19 +688,29 @@ namespace Microsoft.Psi
             this.stopping = true;
 
             // stop all started components, to disable the streaming of new messages
-            this.DeactivateComponents();
-
-            if (stopScheduler)
+            var deactivated = false;
+            do
             {
-                // block until all messages in the pipeline are fully processed
-                this.scheduler.Stop(abandonPendingWorkitems);
+                deactivated = this.DeactivateComponents() > 0;
+                this.scheduler.PauseForQuiescence();
             }
+            while (deactivated);
 
+            // final call for components to post and cease
+            this.StopComponents();
+
+            // block until all messages in the pipeline are fully processed
+            this.scheduler.Stop(abandonPendingWorkitems);
             this.completed.Set();
-            if (stopScheduler)
-            {
-                this.Complete(abandonPendingWorkitems);
-            }
+            this.Complete(abandonPendingWorkitems);
+        }
+
+        /// <summary>
+        /// Stop child components.
+        /// </summary>
+        protected void StopComponents()
+        {
+            this.ForEachComponent(c => c.Stop(), false);
         }
 
         private PipelineElement GetOrCreateNode(object component)
@@ -679,12 +723,17 @@ namespace Microsoft.Psi
                 var fullName = $"{id}.{name}";
                 node = new PipelineElement(fullName, component);
                 this.AddComponent(node);
+
+                if (this.started && node.IsSource && !(component is Subpipeline))
+                {
+                    throw new InvalidOperationException($"Source component added when pipeline already running. Consider using Subpipeline.");
+                }
             }
 
             return node;
         }
 
-        private void DeactivateComponents()
+        private int ForEachComponent(Action<PipelineElement> action, bool activeOnly)
         {
             // to avoid deadlocks resulting from component calls to NotifyCompleted, copy and empty the list before calling each source component
             PipelineElement[] components;
@@ -693,13 +742,17 @@ namespace Microsoft.Psi
                 components = this.components.ToArray();
             }
 
+            var count = 0;
             foreach (var component in components)
             {
-                if (component.IsActive)
+                if (!activeOnly || component.IsActive || (component.StateObject is Subpipeline && !component.IsDeactivated))
                 {
-                    component.Stop();
+                    action(component);
+                    count++;
                 }
             }
+
+            return count;
         }
 
         private void DisposeComponents()

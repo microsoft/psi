@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Speech
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that implements a voice activity detector.
+    /// Component that performs voice activity detection by using the desktop speech recognition engine from `System.Speech`.
     /// </summary>
     /// <remarks>
     /// This component monitors an input audio stream and outputs a boolean flag for each input message indicating

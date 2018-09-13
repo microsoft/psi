@@ -55,6 +55,7 @@ namespace Test.Psi.Visualization
         /// Insert tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void AddTest()
         {
             this.test.Add(6);
@@ -66,6 +67,7 @@ namespace Test.Psi.Visualization
         /// AddRange tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void AddRangeTest()
         {
             double[] range = { 320, 45, 16, -19, 1, 12 };
@@ -93,6 +95,7 @@ namespace Test.Psi.Visualization
         /// UpdateOrAdd tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UpdateOrAddTest()
         {
             var eventCount = 0;
@@ -125,6 +128,7 @@ namespace Test.Psi.Visualization
         /// Clear tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ClearTest()
         {
             Assert.AreNotEqual(this.test.Count, 0);
@@ -139,6 +143,7 @@ namespace Test.Psi.Visualization
         /// Contains tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ContainsTest()
         {
             Assert.IsTrue(this.test.Contains(44));
@@ -151,6 +156,7 @@ namespace Test.Psi.Visualization
         /// CopyTo tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void CopyToTest()
         {
             var testArray = new double[10];
@@ -172,6 +178,7 @@ namespace Test.Psi.Visualization
         /// Empty list tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void EmptyTest()
         {
             var basisEmpty = new SortedList<double, double>();
@@ -185,6 +192,7 @@ namespace Test.Psi.Visualization
         /// Enumerator tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void EnumeratorTest()
         {
             using (var basisEnum = this.basis.GetEnumerator())
@@ -208,6 +216,7 @@ namespace Test.Psi.Visualization
         /// IndexOf tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void IndexOfTest()
         {
             Assert.AreEqual(this.test.IndexOf(100), 8);
@@ -220,6 +229,7 @@ namespace Test.Psi.Visualization
         /// Indexer tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void IndexerTest()
         {
             Assert.AreEqual(this.test[5], 15);
@@ -236,6 +246,7 @@ namespace Test.Psi.Visualization
         /// Remove tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void RemoveTest()
         {
             this.test.RemoveAt(6);
@@ -254,6 +265,7 @@ namespace Test.Psi.Visualization
         /// RemoveRange tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void RemoveRangeTest()
         {
             this.test.RemoveRange(3, 2);

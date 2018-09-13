@@ -78,7 +78,10 @@ namespace Microsoft.Psi.Visualization.Client
             TObject visualizationObject = new TObject();
             visualizationObject.Panel = this;
 
-            var executingAssembly = Assembly.GetExecutingAssembly();
+            //// Due to security concerns around running unknown code, we've temporarily
+            //// disabled the ability to load 3rd party remote Visualizers in Psi Studio.
+
+            /*var executingAssembly = Assembly.GetExecutingAssembly();
             if (executingAssembly.GetType(visualizationObject.TypeName) != null)
             {
                 visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(executingAssembly.Location, visualizationObject.TypeName);
@@ -96,7 +99,9 @@ namespace Microsoft.Psi.Visualization.Client
                 {
                     visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(visualizationObject.TypeName);
                 }
-            }
+            }*/
+
+            visualizationObject.IVisualizationObject = this.RemoteVisualizationPanel.AddVisualizationObject(visualizationObject.TypeName);
 
             return visualizationObject;
         }

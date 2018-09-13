@@ -209,5 +209,22 @@ namespace Test.Psi
                 now = now + TimeSpan.FromMilliseconds(5);
             }
         }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void DisallowAddingComponentsToAlreadyRunningPipeline()
+        {
+            using (var p = Pipeline.Create())
+            {
+                var gen = Generators.Range(p, 0, 10);
+                p.RunAsync();
+                Assert.IsFalse(p.WaitAll(0)); // running
+
+                // add generator while running
+                // the underlying Sequence component is an IFiniteSourceComponent and requires RegisterPipelineStartHandler
+                Generators.Range(p, 0, 10);
+            }
+        }
     }
 }

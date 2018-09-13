@@ -14,9 +14,14 @@
     IsHitTestVisible="False"
     d:DesignHeight="100"
     d:DesignWidth="300">
-
+    
     <UserControl.Resources>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <ResourceDictionary>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Themes\Brushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid Name="Root" VerticalAlignment="Stretch" Background="{x:Null}">
@@ -25,9 +30,9 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="CursorMarker" Stroke="White" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" />
-        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionStartMarker" Stroke="Green" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding NavigationMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static nav:NavigationMode.Playback}}"/>
-        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionEndMarker" Stroke="Red" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding NavigationMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static nav:NavigationMode.Playback}}"/>
+        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="CursorMarker" Stroke="{StaticResource CursorBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" />
+        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionStartMarker" Stroke="{StaticResource SelectionStartBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding NavigationMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static nav:NavigationMode.Playback}}"/>
+        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionEndMarker" Stroke="{StaticResource SelectionEndBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding NavigationMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static nav:NavigationMode.Playback}}"/>
 
         <ctrl:TimelineCanvas
             Grid.Row="1"

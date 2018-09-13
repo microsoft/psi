@@ -20,6 +20,7 @@ namespace Test.Psi.Imaging
         private Image testImage_73_41_59_37 = Image.FromManagedImage(Properties.Resources.TestImage_Crop_73_41_59_37);
 
         [TestMethod]
+        [Timeout(60000)]
         public void Image_CropViaOperator()
         {
             // Test that the pipeline's operator Crop() works on a stream of images and random rectangles
@@ -48,6 +49,7 @@ namespace Test.Psi.Imaging
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void Image_CropViaJoinOperator()
         {
             // Test that the pipeline's operator Crop() works on a stream of images and random rectangles
@@ -86,6 +88,7 @@ namespace Test.Psi.Imaging
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void Image_Crop()
         {
             // Crop the entire image region (a no-op) and verify that the original image is preserved
@@ -102,6 +105,7 @@ namespace Test.Psi.Imaging
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void Image_CropDifferentRegions()
         {
             // Crop a slightly different interior region of the same size and verify that the data is different (as a sanity check)
@@ -112,6 +116,7 @@ namespace Test.Psi.Imaging
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void EncodeImage()
         {
             // Crop a slightly different interior region of the same size and verify that the data is different (as a sanity check)
@@ -123,6 +128,7 @@ namespace Test.Psi.Imaging
         }
 
         [TestMethod]
+        [Timeout(60000)]
         public void EncodeImageJpg()
         {
             // Crop a slightly different interior region of the same size and verify that the data is different (as a sanity check)

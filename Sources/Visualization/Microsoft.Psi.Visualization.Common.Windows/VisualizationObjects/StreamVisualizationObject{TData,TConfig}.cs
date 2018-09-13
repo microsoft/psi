@@ -12,6 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.Serialization;
     using Microsoft.Psi;
     using Microsoft.Psi.Visualization.Collections;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Datasets;
@@ -39,7 +40,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// The current (based on navigation cursor) value of the stream.
         /// </summary>
-        private Message<TData> currentValue;
+        private Message<TData>? currentValue;
 
         /// <summary>
         /// Gets or sets the epsilon around the cursor for which we show the instant visualization
@@ -56,13 +57,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public Message<TData> CurrentValue
+        public Message<TData>? CurrentValue
         {
             get => this.currentValue;
             protected set
             {
                 if (this.currentValue != value)
                 {
+                    this.RaisePropertyChanging(nameof(this.CurrentValue));
+
                     if (this.isShared)
                     {
                         value.DeepClone(ref this.currentValue);
@@ -111,6 +114,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.Set(nameof(this.Data), ref this.data, value);
                     this.OnDataChanged(oldValue, this.data);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets how to interpolate values at times that are between messages
+        /// </summary>
+        protected virtual InterpolationStyle InterpolationStyle
+        {
+            get
+            {
+                return InterpolationStyle.Direct;
             }
         }
 
@@ -164,7 +178,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         /// <param name="currentTime">Time to search for.</param>
         /// <param name="count">Number of entries to search within.</param>
-        /// <param name="timeAtIndex">Fucntion that returns and index given a time.</param>
+        /// <param name="timeAtIndex">Function that returns and index given a time.</param>
         /// <returns>Best matching index or -1 if no qualifying match was found.</returns>
         protected int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
         {
@@ -194,7 +208,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             // if no exact match, lo and hi indicate ticks that
-            // are right below and right after the time we're looking for
+            // are right before and right after the time we're looking for.
+            // If we're using Step interpolation, then we should return
+            // lo, otherwise we should return whichever value is closest
+            if (this.InterpolationStyle == InterpolationStyle.Step)
+            {
+                return lo;
+            }
+
             var interval = currentTime + this.CursorEpsilon;
             if (lo == hi - 1)
             {
@@ -302,7 +323,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
             else
             {
-                this.CurrentValue = default(Message<TData>);
+                this.CurrentValue = null;
             }
         }
 
@@ -349,7 +370,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="currentTime">Time to set value with.</param>
         protected virtual void SetCurrentValue(DateTime currentTime)
         {
-            this.CurrentValue = default(Message<TData>);
+            this.CurrentValue = null;
         }
 
         private void OnDataDetailedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

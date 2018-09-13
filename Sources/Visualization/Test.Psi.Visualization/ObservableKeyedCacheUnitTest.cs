@@ -55,6 +55,7 @@ namespace Test.Psi.Visualization
         /// Insert tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void AddTest()
         {
             this.test.Add(6);
@@ -66,6 +67,7 @@ namespace Test.Psi.Visualization
         /// AddRange tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void AddRangeTest()
         {
             double[] range = { 320, 45, 16, -19, 1, 12 };
@@ -93,6 +95,7 @@ namespace Test.Psi.Visualization
         /// UpdateOrAdd tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void UpdateOrAddTest()
         {
             var eventCount = 0;
@@ -125,6 +128,7 @@ namespace Test.Psi.Visualization
         /// Clear tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ClearTest()
         {
             Assert.AreNotEqual(this.test.Count, 0);
@@ -139,6 +143,7 @@ namespace Test.Psi.Visualization
         /// Contains tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ContainsTest()
         {
             Assert.IsTrue(this.test.Contains(44));
@@ -151,6 +156,7 @@ namespace Test.Psi.Visualization
         /// CopyTo tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void CopyToTest()
         {
             var testArray = new double[10];
@@ -172,6 +178,7 @@ namespace Test.Psi.Visualization
         /// Empty list tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void EmptyTest()
         {
             var basisEmpty = new SortedList<double, double>();
@@ -185,6 +192,7 @@ namespace Test.Psi.Visualization
         /// Enumerator tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void EnumeratorTest()
         {
             using (var basisEnum = this.basis.GetEnumerator())
@@ -208,6 +216,7 @@ namespace Test.Psi.Visualization
         /// Get view tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void GetViewTest()
         {
             var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -238,6 +247,7 @@ namespace Test.Psi.Visualization
         /// IndexOf tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void IndexOfTest()
         {
             Assert.AreEqual(this.test.IndexOf(100), 8);
@@ -250,6 +260,7 @@ namespace Test.Psi.Visualization
         /// Indexer tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void IndexerTest()
         {
             Assert.AreEqual(this.test[5], 15);
@@ -266,6 +277,7 @@ namespace Test.Psi.Visualization
         /// Remove tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void RemoveTest()
         {
             this.test.RemoveAt(6);
@@ -284,6 +296,7 @@ namespace Test.Psi.Visualization
         /// TryGetValue tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void TryGetValueTest()
         {
             double value = 0;
@@ -305,6 +318,7 @@ namespace Test.Psi.Visualization
         /// View Add tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewAddTest()
         {
             var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -333,6 +347,7 @@ namespace Test.Psi.Visualization
         /// View AddRange tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewAddRangeTest()
         {
             double[] range = { 32, 40, 16, 19, 11, 12 };
@@ -363,6 +378,7 @@ namespace Test.Psi.Visualization
         /// View Clear tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewClearTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -382,6 +398,7 @@ namespace Test.Psi.Visualization
         /// View Contains tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewContainsTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -393,6 +410,7 @@ namespace Test.Psi.Visualization
         /// View CopyTo tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewCopyToTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -415,6 +433,7 @@ namespace Test.Psi.Visualization
         /// View empty view tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewEmptyTest()
         {
             var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 1, 2, 0, null);
@@ -428,6 +447,7 @@ namespace Test.Psi.Visualization
         /// View Enumerator tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewEnumeratorTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -453,6 +473,7 @@ namespace Test.Psi.Visualization
         /// View IndexOf tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewIndexOfTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -465,6 +486,7 @@ namespace Test.Psi.Visualization
         /// View Indexer tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewIndexerTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -480,6 +502,7 @@ namespace Test.Psi.Visualization
         /// View Remove tests
         /// </summary>
         [TestMethod]
+        [Timeout(60000)]
         public void ViewRemoveTest()
         {
             var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, -1000, 1000, 0, null);

@@ -10,10 +10,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Data.Json;
     using Microsoft.Psi.Visualization.Annotations;
-    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Extensions;
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private RelayCommand previousAnnotatedEventCommand;
         private RelayCommand startAnnotatedEventCommand;
         private RelayCommand endAnnotatedEventCommand;
-        private RelayCommand addAnnotatedEventCommand;
+        private RelayCommand<AnnotationSchemaValue> addAnnotatedEventCommand;
         private RelayCommand addPointEventCommand;
         private RelayCommand addSchemaCommand;
         private RelayCommand<Message<AnnotatedEvent>> deleteEventCommand;
@@ -75,7 +75,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.nextAnnotatedEventCommand == null)
                 {
                     this.nextAnnotatedEventCommand = new RelayCommand(
-                        o =>
+                        () =>
                         {
                             var annotatedEvent = this.Data.Where(m => m.Data.StartTime >= this.Navigator.SelectionRange.EndTime).OrderBy(m => m.Data.StartTime).FirstOrDefault();
                             if (annotatedEvent == default(Message<AnnotatedEvent>))
@@ -106,7 +106,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.previousAnnotatedEventCommand == null)
                 {
                     this.previousAnnotatedEventCommand = new RelayCommand(
-                        o =>
+                        () =>
                         {
                             var annotatedEvent = this.Data.Where(m => m.Data.EndTime <= this.Navigator.SelectionRange.StartTime).OrderBy(m => m.Data.EndTime).LastOrDefault();
                             if (annotatedEvent == default(Message<AnnotatedEvent>))
@@ -137,7 +137,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.startAnnotatedEventCommand == null)
                 {
                     this.startAnnotatedEventCommand = new RelayCommand(
-                        o =>
+                        () =>
                         {
                             if (this.currentContinuousAnnotatedEvent == default(Message<AnnotatedEvent>))
                             {
@@ -166,7 +166,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.endAnnotatedEventCommand == null)
                 {
                     this.endAnnotatedEventCommand = new RelayCommand(
-                        o =>
+                        () =>
                         {
                             // remove the event
                             this.Data.Remove(this.currentContinuousAnnotatedEvent);
@@ -192,16 +192,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand AddAnnotatedEventCommand
+        public RelayCommand<AnnotationSchemaValue> AddAnnotatedEventCommand
         {
             get
             {
                 if (this.addAnnotatedEventCommand == null)
                 {
-                    this.addAnnotatedEventCommand = new RelayCommand(
-                        o =>
+                    this.addAnnotatedEventCommand = new RelayCommand<AnnotationSchemaValue>(
+                        schemaValue =>
                         {
-                            var schemaValue = (AnnotationSchemaValue)o;
                             var annotatedEvent = this.Definition.CreateAnnotatedEvent(this.Navigator.SelectionRange.StartTime, this.Navigator.SelectionRange.EndTime);
                             annotatedEvent.SetAnnotation(0, schemaValue.Value, this.Definition.Schemas[0]);
 
@@ -210,7 +209,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                             this.Data.Add(message);
                             this.IsDirty = true;
                         },
-                        o =>
+                        _ =>
                         {
                             // selection range must be valid
                             if (this.Navigator.SelectionRange.Duration.Ticks <= 0)
@@ -238,7 +237,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.addPointEventCommand == null)
                 {
-                    this.addPointEventCommand = new RelayCommand(o => { }, o => false);
+                    this.addPointEventCommand = new RelayCommand(() => { }, () => false);
                 }
 
                 return this.addPointEventCommand;
@@ -257,7 +256,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.addSchemaCommand == null)
                 {
                     this.addSchemaCommand = new RelayCommand(
-                        o =>
+                        () =>
                         {
                             AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistryViewModel.Default.Schemas, false);
                             var result = dlg.ShowDialog();
@@ -275,7 +274,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                                 this.IsDirty = true;
                             }
                         },
-                        o => false);
+                        () => false);
                 }
 
                 return this.addSchemaCommand;
@@ -376,7 +375,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.saveAnnotationsCommand == null)
                 {
-                    this.saveAnnotationsCommand = new RelayCommand(o => this.Save(), o => this.IsDirty);
+                    this.saveAnnotationsCommand = new RelayCommand(() => this.Save(), () => this.IsDirty);
                 }
 
                 return this.saveAnnotationsCommand;
@@ -458,6 +457,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             using (var reader = DataManager.Instance.GetReader(this.Configuration.StreamBinding))
             {
                 this.metadata = reader.AvailableStreams.First(s => s.Name == this.Configuration.StreamBinding.StreamName) as JsonStreamMetadata;
+                this.RaisePropertyChanging(nameof(this.Definition));
                 this.definition = (reader as AnnotationSimpleReader).Definition;
                 this.RaisePropertyChanged(nameof(this.Definition));
             }

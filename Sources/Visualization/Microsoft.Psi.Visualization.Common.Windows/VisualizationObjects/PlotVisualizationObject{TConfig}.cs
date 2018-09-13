@@ -22,6 +22,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private static int nextColorChoice;
         private AxisComputeMode currentYAxisComputeMode;
 
+        /// <inheritdoc/>
+        protected override InterpolationStyle InterpolationStyle => this.Configuration.InterpolationStyle;
+
         /// <inheritdoc />
         protected override void InitNew()
         {
@@ -29,6 +32,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             var color = colorChoice[nextColorChoice % colorChoice.Length];
             this.Configuration.LineColor = color;
             this.Configuration.LineWidth = 1;
+            this.Configuration.InterpolationStyle = InterpolationStyle.Direct;
             this.Configuration.MarkerColor = color;
             this.Configuration.MarkerSize = 4;
             this.Configuration.MarkerStyle = MarkerStyle.None;

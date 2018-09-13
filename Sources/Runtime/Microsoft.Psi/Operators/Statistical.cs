@@ -181,6 +181,11 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">The source stream.</param>
         /// <returns>Stream of sums.</returns>
+        /// <remarks>
+        /// This operator considers the sum of a number and NaN as NaN. Consequently, once a value
+        /// of NaN is encountered on the source stream, the corresponding output value and all
+        /// subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<float> Sum(this IProducer<float> source)
         {
             checked
@@ -229,6 +234,11 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">The source stream.</param>
         /// <returns>Stream of sums.</returns>
+        /// <remarks>
+        /// This operator considers the sum of a number and NaN as NaN. Consequently, once a value
+        /// of NaN is encountered on the source stream, the corresponding output value and all
+        /// subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<double> Sum(this IProducer<double> source)
         {
             checked
@@ -329,9 +339,29 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">The source stream</param>
         /// <returns>Stream of minimum values.</returns>
+        /// <remarks>
+        /// This operator considers the minimum of a number and NaN to be NaN. Consequently, once a
+        /// value of NaN is encountered on the source stream, the corresponding output value and all
+        /// subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<double> Min(this IProducer<double> source)
         {
             // special case commonly used `double` for performance
+            return source.Aggregate(Math.Min);
+        }
+
+        /// <summary>
+        /// Compute the minimum of a stream of float values.
+        /// </summary>
+        /// <param name="source">The source stream</param>
+        /// <returns>Stream of minimum values.</returns>
+        /// <remarks>
+        /// This operator considers the minimum of a number and NaN to be NaN. Consequently, once a
+        /// value of NaN is encountered on the source stream, the corresponding output value and all
+        /// subsequent output values will be NaN.
+        /// </remarks>
+        public static IProducer<float> Min(this IProducer<float> source)
+        {
             return source.Aggregate(Math.Min);
         }
 
@@ -352,13 +382,33 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">The source stream</param>
         /// <returns>Stream of maximum values.</returns>
+        /// <remarks>
+        /// This operator considers the maximum of a number and NaN to be NaN. Consequently, once a
+        /// value of NaN is encountered on the source stream, the corresponding output value and all
+        /// subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<double> Max(this IProducer<double> source)
         {
-            return source.Aggregate(double.NaN, (max, value) => double.IsNaN(max) ? value : Math.Max(max, value));
+            return source.Aggregate(Math.Max);
         }
 
-#endregion `Min`/`Max`
-#region `Average`
+        /// <summary>
+        /// Compute the maximum of a stream of float values.
+        /// </summary>
+        /// <param name="source">The source stream</param>
+        /// <returns>Stream of maximum values.</returns>
+        /// <remarks>
+        /// This operator considers the maximum of a number and NaN to be NaN. Consequently, once a
+        /// value of NaN is encountered on the source stream, the corresponding output value and all
+        /// subsequent output values will be NaN.
+        /// </remarks>
+        public static IProducer<float> Max(this IProducer<float> source)
+        {
+            return source.Aggregate(Math.Max);
+        }
+
+        #endregion `Min`/`Max`
+        #region `Average`
 
         /// <summary>
         /// Compute the average of a stream of decimal values.
@@ -380,6 +430,11 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">The source stream.</param>
         /// <returns>Stream of average values.</returns>
+        /// <remarks>
+        /// This operator considers the average of a sequence of values containing NaN to be NaN.
+        /// Consequently, once a value of NaN is encountered on the source stream, the corresponding
+        /// output value and all subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<double> Average(this IProducer<double> source)
         {
             // keeping (most common) double-specific implementation for performance
@@ -396,6 +451,11 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">The source stream.</param>
         /// <returns>Stream of average values.</returns>
+        /// <remarks>
+        /// This operator considers the average of a sequence of values containing NaN to be NaN.
+        /// Consequently, once a value of NaN is encountered on the source stream, the corresponding
+        /// output value and all subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<float> Average(this IProducer<float> source)
         {
             return source.Select(f => (double)f).Average().Select(d => (float)d);
@@ -421,14 +481,19 @@ namespace Microsoft.Psi
             return source.Select(i => (double)i).Average();
         }
 
-#endregion `Average`
-#region `Std`
+        #endregion `Average`
+        #region `Std`
 
         /// <summary>
         /// Compute standard deviation of (double) values.
         /// </summary>
         /// <param name="source">Source stream.</param>
         /// <returns>Stream of standard deviation (double) values.</returns>
+        /// <remarks>
+        /// This operator considers the standard deviation of a sequence of values containing NaN
+        /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
+        /// corresponding output value and all subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<double> Std(this IProducer<double> source)
         {
             long count = 0;
@@ -442,7 +507,7 @@ namespace Microsoft.Psi
                     var oldmean = mean;
                     mean = mean + ((value - mean) / count);
                     q = q + ((value - oldmean) * (value - mean));
-                    return Math.Sqrt(q / count);
+                    return Math.Sqrt(q / (count - 1));
                 });
         }
 
@@ -451,6 +516,11 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="source">Source stream.</param>
         /// <returns>Stream of standard deviation (double) values.</returns>
+        /// <remarks>
+        /// This operator considers the standard deviation of a sequence of values containing NaN
+        /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
+        /// corresponding output value and all subsequent output values will be NaN.
+        /// </remarks>
         public static IProducer<float> Std(this IProducer<float> source)
         {
             long count = 0;
@@ -464,7 +534,7 @@ namespace Microsoft.Psi
                     var oldmean = mean;
                     mean = mean + ((value - mean) / count);
                     q = q + ((value - oldmean) * (value - mean));
-                    return (float)Math.Sqrt(q / count);
+                    return (float)Math.Sqrt(q / (count - 1));
                 });
         }
 
@@ -486,58 +556,8 @@ namespace Microsoft.Psi
                     var oldmean = mean;
                     mean = mean + ((value - mean) / count);
                     q = q + ((value - oldmean) * (value - mean));
-                    return (decimal)Math.Sqrt((double)q / count);
+                    return (decimal)Math.Sqrt((double)q / (count - 1));
                 });
-        }
-
-        /// <summary>
-        /// Compute standard deviation of (float) values.
-        /// </summary>
-        /// <param name="source">Source stream.</param>
-        /// <returns>Stream of standard deviation (float) values.</returns>
-        public static float Std(this IEnumerable<float> source)
-        {
-            var count = source.Count();
-            if (count < 1)
-            {
-                return 0f;
-            }
-
-            return (float)Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
-        }
-
-        /// <summary>
-        /// Compute standard deviation of (double) values.
-        /// </summary>
-        /// <param name="source">Source stream.</param>
-        /// <returns>Stream of standard deviation (double) values.</returns>
-        public static double Std(this IEnumerable<double> source)
-        {
-            var count = source.Count();
-            if (count < 1)
-            {
-                return 0;
-            }
-
-            return Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
-        }
-
-        /// <summary>
-        /// Compute standard deviation of (decimal) values.
-        /// </summary>
-        /// <param name="source">Source stream.</param>
-        /// <returns>Stream of standard deviation (decimal) values.</returns>
-        public static decimal Std(this IEnumerable<decimal> source)
-        {
-            var count = source.Count();
-            if (count < 1)
-            {
-                return 0;
-            }
-
-            Func<decimal, decimal> sq = x => x * x;
-
-            return (decimal)Math.Sqrt((double)source.Sum(d => sq(d - source.Average())) / (count - 1));
         }
 
 #endregion
@@ -810,7 +830,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (int) values.</returns>
         public static IProducer<float> Min(this IProducer<IEnumerable<float>> source)
         {
-            return source.Select(xs => xs.Min());
+            return source.Select(xs => MathExtensions.Min(xs));
         }
 
         /// <summary>
@@ -820,7 +840,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (int) values.</returns>
         public static IProducer<float?> Min(this IProducer<IEnumerable<float?>> source)
         {
-            return source.Select(xs => xs.Min());
+            return source.Select(xs => MathExtensions.Min(xs));
         }
 
         /// <summary>
@@ -830,7 +850,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (int) values.</returns>
         public static IProducer<double> Min(this IProducer<IEnumerable<double>> source)
         {
-            return source.Select(xs => xs.Min());
+            return source.Select(xs => MathExtensions.Min(xs));
         }
 
         /// <summary>
@@ -840,7 +860,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (int) values.</returns>
         public static IProducer<double?> Min(this IProducer<IEnumerable<double?>> source)
         {
-            return source.Select(xs => xs.Min());
+            return source.Select(xs => MathExtensions.Min(xs));
         }
 
         /// <summary>
@@ -931,7 +951,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (float) values.</returns>
         public static IProducer<float> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector)
         {
-            return source.Select(xs => xs.Min(selector));
+            return source.Select(xs => MathExtensions.Min(xs.Select(selector)));
         }
 
         /// <summary>
@@ -943,7 +963,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (nullable float) values.</returns>
         public static IProducer<float?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector)
         {
-            return source.Select(xs => xs.Min(selector));
+            return source.Select(xs => MathExtensions.Min(xs.Select(selector)));
         }
 
         /// <summary>
@@ -955,7 +975,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (double) values.</returns>
         public static IProducer<double> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector)
         {
-            return source.Select(xs => xs.Min(selector));
+            return source.Select(xs => MathExtensions.Min(xs.Select(selector)));
         }
 
         /// <summary>
@@ -967,7 +987,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of minimum (nullable double) values.</returns>
         public static IProducer<double?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector)
         {
-            return source.Select(xs => xs.Min(selector));
+            return source.Select(xs => MathExtensions.Min(xs.Select(selector)));
         }
 
         /// <summary>
@@ -1054,7 +1074,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (double) values.</returns>
         public static IProducer<double> Max(this IProducer<IEnumerable<double>> source)
         {
-            return source.Select(xs => xs.Max());
+            return source.Select(xs => MathExtensions.Max(xs));
         }
 
         /// <summary>
@@ -1064,7 +1084,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (nullable double) values.</returns>
         public static IProducer<double?> Max(this IProducer<IEnumerable<double?>> source)
         {
-            return source.Select(xs => xs.Max());
+            return source.Select(xs => MathExtensions.Max(xs));
         }
 
         /// <summary>
@@ -1074,7 +1094,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (float) values.</returns>
         public static IProducer<float> Max(this IProducer<IEnumerable<float>> source)
         {
-            return source.Select(xs => xs.Max());
+            return source.Select(xs => MathExtensions.Max(xs));
         }
 
         /// <summary>
@@ -1084,7 +1104,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (nullable float) values.</returns>
         public static IProducer<float?> Max(this IProducer<IEnumerable<float?>> source)
         {
-            return source.Select(xs => xs.Max());
+            return source.Select(xs => MathExtensions.Max(xs));
         }
 
         /// <summary>
@@ -1175,7 +1195,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (float) values.</returns>
         public static IProducer<float> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector)
         {
-            return source.Select(xs => xs.Max(selector));
+            return source.Select(xs => MathExtensions.Max(xs.Select(selector)));
         }
 
         /// <summary>
@@ -1187,7 +1207,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (nullable float) values.</returns>
         public static IProducer<float?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector)
         {
-            return source.Select(xs => xs.Max(selector));
+            return source.Select(xs => MathExtensions.Max(xs.Select(selector)));
         }
 
         /// <summary>
@@ -1199,7 +1219,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (double) values.</returns>
         public static IProducer<double> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector)
         {
-            return source.Select(xs => xs.Max(selector));
+            return source.Select(xs => MathExtensions.Max(xs.Select(selector)));
         }
 
         /// <summary>
@@ -1211,7 +1231,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of maximum (nullable double) values.</returns>
         public static IProducer<double?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector)
         {
-            return source.Select(xs => xs.Max(selector));
+            return source.Select(xs => MathExtensions.Max(xs.Select(selector)));
         }
 
         /// <summary>
@@ -1469,6 +1489,56 @@ namespace Microsoft.Psi
         public static IProducer<decimal?> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal?> selector)
         {
             return source.Select(xs => xs.Average(selector));
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (float) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (float) values.</returns>
+        public static float Std(this IEnumerable<float> source)
+        {
+            var count = source.Count();
+            if (count < 1)
+            {
+                return 0f;
+            }
+
+            return (float)Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (double) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (double) values.</returns>
+        public static double Std(this IEnumerable<double> source)
+        {
+            var count = source.Count();
+            if (count < 1)
+            {
+                return 0;
+            }
+
+            return Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+        }
+
+        /// <summary>
+        /// Compute standard deviation of (decimal) values.
+        /// </summary>
+        /// <param name="source">Source stream.</param>
+        /// <returns>Stream of standard deviation (decimal) values.</returns>
+        public static decimal Std(this IEnumerable<decimal> source)
+        {
+            var count = source.Count();
+            if (count < 1)
+            {
+                return 0;
+            }
+
+            Func<decimal, decimal> sq = x => x * x;
+
+            return (decimal)Math.Sqrt((double)source.Sum(d => sq(d - source.Average())) / (count - 1));
         }
 
         /// <summary>

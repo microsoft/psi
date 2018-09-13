@@ -19,30 +19,44 @@ namespace Microsoft.Psi.Components
         private readonly Dictionary<TKey, Emitter<TIn>> branches = new Dictionary<TKey, Emitter<TIn>>();
         private readonly Dictionary<TKey, int> keyToBranchMapping = new Dictionary<TKey, int>();
         private readonly Join<Dictionary<TKey, int>, TOut, Dictionary<TKey, TOut>> join;
-        private readonly Receiver<Dictionary<TKey, TIn>> input;
         private readonly Emitter<Dictionary<TKey, int>> activeBranchesEmitter;
-        private readonly Func<TKey, IProducer<TIn>, IProducer<TOut>> transformSelector;
+        private readonly Func<TKey, IProducer<TIn>, IProducer<TOut>> parallelTransform;
+        private readonly Action<TKey, IProducer<TIn>> parallelAction;
         private readonly Pipeline pipeline;
-
-        private int branchKey = 0;
-        private Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy;
+        private readonly Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy;
 
         // buffers
-        private Dictionary<TKey, int> activeBranches = new Dictionary<TKey, int>();
+        private readonly Dictionary<TKey, int> activeBranches = new Dictionary<TKey, int>();
+
+        private int branchKey = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelSparse{TIn, TKey, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
-        /// <param name="transformSelector">Function mapping keyed input producers to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
+        /// <param name="action">Action to perform in parallel.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
-        public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transformSelector, bool joinOrDefault, Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        public ParallelSparse(Pipeline pipeline, Action<TKey, IProducer<TIn>> action, Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
         {
             this.pipeline = pipeline;
-            this.transformSelector = transformSelector;
+            this.parallelAction = action;
             this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminateWhenKeyNotPresent;
-            this.input = pipeline.CreateReceiver<Dictionary<TKey, TIn>>(this, this.Receive, nameof(this.In));
+            this.In = pipeline.CreateReceiver<Dictionary<TKey, TIn>>(this, this.Receive, nameof(this.In));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParallelSparse{TIn, TKey, TOut}"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="transform">Function mapping keyed input producers to output producers.</param>
+        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
+        public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault, Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        {
+            this.pipeline = pipeline;
+            this.parallelTransform = transform;
+            this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminateWhenKeyNotPresent;
+            this.In = pipeline.CreateReceiver<Dictionary<TKey, TIn>>(this, this.Receive, nameof(this.In));
             this.activeBranchesEmitter = pipeline.CreateEmitter<Dictionary<TKey, int>>(this, nameof(this.activeBranchesEmitter));
             var interpolator = joinOrDefault ?
                 Match.BestOrDefault<TOut>(new RelativeTimeInterval(-default(TimeSpan), default(TimeSpan))) :
@@ -51,7 +65,7 @@ namespace Microsoft.Psi.Components
         }
 
         /// <inheritdoc />
-        public Receiver<Dictionary<TKey, TIn>> In => this.input;
+        public Receiver<Dictionary<TKey, TIn>> In { get; }
 
         /// <inheritdoc />
         public Emitter<Dictionary<TKey, TOut>> Out => this.join.Out;
@@ -78,8 +92,16 @@ namespace Microsoft.Psi.Components
                     this.keyToBranchMapping[pair.Key] = this.branchKey++;
                     var subpipeline = Subpipeline.Create(this.pipeline, $"subpipeline{pair.Key}");
                     var branch = this.branches[pair.Key] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{pair.Key}");
-                    var branchResult = this.transformSelector(pair.Key, branch);
-                    branchResult.PipeTo(this.join.AddInput());
+                    if (this.parallelTransform != null)
+                    {
+                        var branchResult = this.parallelTransform(pair.Key, branch);
+                        branchResult.PipeTo(this.join.AddInput());
+                    }
+                    else
+                    {
+                        this.parallelAction(pair.Key, branch);
+                    }
+
                     subpipeline.RunAsync(this.pipeline.ReplayDescriptor);
                 }
 
@@ -96,7 +118,7 @@ namespace Microsoft.Psi.Components
                 }
             }
 
-            this.activeBranchesEmitter.Post(this.activeBranches, e.OriginatingTime);
+            this.activeBranchesEmitter?.Post(this.activeBranches, e.OriginatingTime);
         }
     }
 }

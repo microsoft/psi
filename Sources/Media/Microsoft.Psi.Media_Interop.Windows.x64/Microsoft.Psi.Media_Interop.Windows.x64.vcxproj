@@ -16,7 +16,7 @@
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>VideoCapture</RootNamespace>
     <ProjectName>Microsoft.Psi.Media_Interop.Windows.x64</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(FFMPEGDir)'!=''">
     <FFMpegLibs>$(FFMPEGDir)\lib\avdevice.lib;$(FFMPEGDir)\lib\avfilter.lib;$(FFMPEGDir)\lib\postproc.lib;$(FFMPEGDir)\lib\swresample.lib;$(FFMPEGDir)\lib\avcodec.lib;$(FFMPEGDir)\lib\avformat.lib;$(FFMPEGDir)\lib\avutil.lib;$(FFMPEGDir)\lib\swscale.lib</FFMpegLibs>
@@ -35,6 +35,7 @@
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
+    <SpectreMitigation>Spectre</SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -42,6 +43,7 @@
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
+    <SpectreMitigation>Spectre</SpectreMitigation>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -54,7 +56,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
     <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
     <LinkKeyFile>
     </LinkKeyFile>
@@ -84,6 +86,7 @@
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <ControlFlowGuard>false</ControlFlowGuard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

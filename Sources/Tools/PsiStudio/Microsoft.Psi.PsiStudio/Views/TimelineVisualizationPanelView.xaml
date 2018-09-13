@@ -7,39 +7,42 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     xmlns:ctrls="clr-namespace:Microsoft.Psi.Visualization.Controls"
     xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
     xmlns:views="clr-namespace:Microsoft.Psi.Visualization.Views"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d" 
     d:DesignHeight="300"
     d:DesignWidth="300"
-    Height="{Binding Configuration.Height}">
+    Height="{Binding Configuration.Height}"
+    IsHitTestVisible="True">
 
     <UserControl.Resources>
         <conv:ColorConverter x:Key="ColorConverter" />
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Grid x:Name="Root" ContextMenuOpening="Root_ContextMenuOpening" MouseWheel="Root_MouseWheel" MouseLeftButtonDown="Root_MouseLeftButtonDown" MouseRightButtonDown="Root_MouseRightButtonDown" ClipToBounds="True" Background="{x:Null}">
+    <Grid x:Name="Root" ContextMenuOpening="Root_ContextMenuOpening" MouseMove="Root_MouseMove" ClipToBounds="True" Background="{x:Null}">
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Name="ShowLegend" Header="Show/Hide legend" Click="ShowHideLegend_Click" Height="25" />
-                <MenuItem Name="RemovePanel" Header="Remove panel" Click="RemovePanel_Click" Height="25">
+                <MenuItem Name="ShowLegend" Header="Show/Hide legend" Command="{Binding ShowHideLegendCommand}" Height="25" />
+                <MenuItem Name="RemovePanel" Header="Remove panel" Command="{Binding RemovePanelCommand}" Height="25">
                     <MenuItem.Icon>
                         <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="Clear" Header="Clear" Click="Clear_Click" Height="25">
+                <MenuItem Name="Clear" Header="Clear" Command="{Binding ClearPanelCommand}" Height="25">
                     <MenuItem.Icon>
                         <Image Source="Icons\clear-panel_x4.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="ZoomToSelection" Header="Zoom to Selection" Click="ZoomToSelection_Click" Height="25">
+                <MenuItem Name="ZoomToSelection" Header="Zoom to Selection" Command="{Binding ZoomToSelectionCommand}" Height="25">
                     <MenuItem.Icon>
                         <Image Source="Icons\zoom-extents_x4.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="ZoomToSessionExtents" Header="Zoom to Session Extents" Click="ZoomToSessionExtents_Click" Height="25">
+                <MenuItem Name="ZoomToSessionExtents" Header="Zoom to Session Extents" Command="{Binding ZoomToSessionExtentsCommand}" Height="25">
                     <MenuItem.Icon>
                         <Image Source="Icons\zoom-extents_x4.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
@@ -57,7 +60,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ContentPresenter ContentTemplate="{Binding DefaultViewTemplate}" Visibility="{Binding Configuration.Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <ContentPresenter ContentTemplate="{Binding DefaultViewTemplate}" Visibility="{Binding Configuration.Visible, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -128,6 +131,24 @@
                     </Style>
                 </Border.Style>
             </Border>
+
+            <Thumb Height="3" Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="DragDelta">
+                        <cmd:EventToCommand Command="{Binding Path=ResizePanelCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Thumb>
+
         </ctrls:TimelineScroller>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseRightButtonDown">
+                <cmd:EventToCommand Command="{Binding Path=MouseRightButtonDownCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     </Grid>
 </UserControl>

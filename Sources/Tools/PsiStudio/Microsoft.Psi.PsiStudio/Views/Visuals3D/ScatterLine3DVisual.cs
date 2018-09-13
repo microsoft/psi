@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
         private void UpdateProperties()
         {
-            var linesList = this.visualizationObject.CurrentValue.Data;
+            var linesList = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
             if (linesList != null)
             {
                 for (int i = this.lines.Count; i < linesList.Count; i++)

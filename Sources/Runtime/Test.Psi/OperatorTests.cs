@@ -1089,6 +1089,24 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void Window()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var intRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromMilliseconds(10));
+                var intWindowPlus35 = intRange.Window(new RelativeTimeInterval(TimeSpan.Zero, TimeSpan.FromMilliseconds(35))).Select(m => m.Select(v => v.Data)).Average().ToObservable().ToListObservable();
+                var intWindowMinus15Plus25 = intRange.Window(new RelativeTimeInterval(TimeSpan.FromMilliseconds(-15), TimeSpan.FromMilliseconds(25))).Select(m => m.Select(v => v.Data)).Average().ToObservable().ToListObservable();
+
+                pipeline.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 1.5, 2.5, 3.5, 4.5, 5.0, 5.5, 6.0 }, intWindowPlus35.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 1, 1.5, 2.5, 3.5, 4.5, 5.0, 5.5 }, intWindowMinus15Plus25.AsEnumerable()));
+            }
+        }
+
+
+        [TestMethod]
+        [Timeout(60000)]
         public void StdOverIEnumerable()
         {
             Assert.IsTrue(Math.Abs(new [] { 727.7m, 1086.5m, 1091.0m, 1361.3m, 1490.5m, 1956.1m }.Std() - 420.96248961952256m) < 0.0000000001m); // decimal

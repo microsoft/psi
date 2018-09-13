@@ -15,7 +15,7 @@
     <ProjectGuid>{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MicrosoftPsiMediaNativex64</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(FFMPEGDir)'!=''">
     <FFMpegLibs>$(FFMPEGDir)\lib\avdevice.lib;$(FFMPEGDir)\lib\avfilter.lib;$(FFMPEGDir)\lib\postproc.lib;$(FFMPEGDir)\lib\swresample.lib;$(FFMPEGDir)\lib\avcodec.lib;$(FFMPEGDir)\lib\avformat.lib;$(FFMPEGDir)\lib\avutil.lib;$(FFMPEGDir)\lib\swscale.lib</FFMpegLibs>
@@ -33,6 +33,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <SpectreMitigation>Spectre</SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -40,6 +41,7 @@
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <SpectreMitigation>Spectre</SpectreMitigation>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -54,7 +56,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(IncludePath);$(FFMpegIncludes)</IncludePath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)\$(Platform)\$(Configuration)\</IntDir>
@@ -73,6 +75,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;MICROSOFTPSIMEDIANATIVEX64_EXPORTS;_WINDOWS;_USRDLL;$(FFMpegDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -90,6 +94,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;MICROSOFTPSIMEDIANATIVEX64_EXPORTS;_WINDOWS;_USRDLL;$(FFMpegDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

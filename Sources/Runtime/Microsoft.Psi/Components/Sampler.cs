@@ -54,7 +54,7 @@ namespace Microsoft.Psi.Components
 
             while (this.nextPublishTime <= now)
             {
-                var matchResult = this.interpolator.Match(this.nextPublishTime, this.inputQueue);
+                var matchResult = this.interpolator.Match(this.nextPublishTime, this.inputQueue, false);
                 if (matchResult.Type == MatchResultType.InsufficientData)
                 {
                     // we need to wait more
