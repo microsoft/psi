@@ -7,7 +7,17 @@ title:  Release Notes
 
 **2018/09/13**: Beta-release, version 0.5.48.2
 
-NOTE: For this release we have added the compiler switch /Qspectre to our C++ projects which helps mitigate against Spectre security vulnerabilities.  You should upgrade your Visual Studio instance to version 15.8 or later to take advantage of these Spectre mitigations.  In addition, you should install the new library component **VC++ 2017 version X.X.XX Libs for Spectre (x86 and x64)** to your Visual Studio instance.  For more details see https://docs.microsoft.com/en-us/cpp/build/reference/qspectre?view=vs-2017
+<div style="color:red;font-weight:bold">IMPORTANT NOTE:</div>
+
+For this release we have added the compiler switch /Qspectre to our C++ projects which helps mitigate against Spectre security vulnerabilities.  In order to successfully compile the Platform for Situated Intelligence solution you must upgrade your Visual Studio instance to version 15.7 or later and add the two following components to your Visual Studio installation:
+
+* VC++ 2017 version *version_number* Libs for Spectre (x86 and x64)
+* Visual C++ ATL (x86/x64) with Spectre Mitigations
+
+For more information on the Spectre vulnerabilities and information about how to add the above components to Visual Studio, please see the following pages:
+
+* [Visual C++ Team Blog - Spectre mitigations in MSVC](https://blogs.msdn.microsoft.com/vcblog/2018/01/15/spectre-mitigations-in-msvc/)
+* [Microsoft Docs - /QSpectre](https://docs.microsoft.com/en-us/cpp/build/reference/qspectre?view=vs-2017)
 
 New Features in Platform for Situated Intelligence Studio:
 
