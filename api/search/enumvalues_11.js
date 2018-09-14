@@ -10,6 +10,7 @@ var searchData=
   ['specified',['Specified',['../class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6eab4b379bf7ded74c07595ccb85bc6fdc3',1,'Microsoft::Psi::Data::Exporter']]],
   ['square',['Square',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833aceb46ca115d05c51aa5a16a8867c3304',1,'Microsoft::Psi::Visualization::Common']]],
   ['srgb',['SRGB',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba1f3f09bca5728eb7af4ea263ae84b9f1',1,'Microsoft::Psi::Media']]],
+  ['step',['Step',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973a48c7c41b72e1d678923ce3571aa65b2d',1,'Microsoft::Psi::Visualization::Common']]],
   ['streammetadata',['StreamMetadata',['../namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41cad41aa02dcf5298202e860bef68835ad3',1,'Microsoft::Psi']]],
   ['strict',['Strict',['../namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75da2e979835dd62324f5bfe217449ba4974',1,'Microsoft::Psi']]],
   ['success',['Success',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106a505a83f220c02df2f85c3810cd9ceb38',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],

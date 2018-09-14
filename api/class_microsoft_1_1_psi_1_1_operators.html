@@ -119,6 +119,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a992fdfd1c9ff878614baf95ed3ce7484"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; IEnumerable&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a992fdfd1c9ff878614baf95ed3ce7484">History&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, TimeSpan timeSpan, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
 <tr class="memdesc:a992fdfd1c9ff878614baf95ed3ce7484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Historical messages by time span.  <a href="#a992fdfd1c9ff878614baf95ed3ce7484">More...</a><br /></td></tr>
 <tr class="separator:a992fdfd1c9ff878614baf95ed3ce7484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bd9f0694a1d7ca3375e9bcd745be15d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; T &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a2bd9f0694a1d7ca3375e9bcd745be15d">Window&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> relativeTimeInterval, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
+<tr class="memdesc:a2bd9f0694a1d7ca3375e9bcd745be15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a window of messages relative to the current message.  <a href="#a2bd9f0694a1d7ca3375e9bcd745be15d">More...</a><br /></td></tr>
+<tr class="separator:a2bd9f0694a1d7ca3375e9bcd745be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab419c0e1405ce7f246d6b3f8717c8384"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ab419c0e1405ce7f246d6b3f8717c8384">Previous&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, int index, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
 <tr class="memdesc:ab419c0e1405ce7f246d6b3f8717c8384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Previous message nth back.  <a href="#ab419c0e1405ce7f246d6b3f8717c8384">More...</a><br /></td></tr>
 <tr class="separator:ab419c0e1405ce7f246d6b3f8717c8384"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -405,7 +408,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a066164df5d6345f4c53e48dbef0c66f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a function for each item in the input stream, generating a new stream with the (zero or more) values returned by the function. The function must return an IEnumerable&lt;TOut&gt;, which can be System.Linq.Enumerable.Empty&lt;TOut&gt; to indicate zero results. The values in the returned IEnumerable&lt;TOut&gt; are emitted as separate messages with the same oringinating time.  <a href="#a066164df5d6345f4c53e48dbef0c66f0">More...</a><br /></td></tr>
 <tr class="separator:a066164df5d6345f4c53e48dbef0c66f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e1637505d0a5fe0e9cff5b92e0cd94f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a2e1637505d0a5fe0e9cff5b92e0cd94f">SelectMany&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, Func&lt; TIn, IEnumerable&lt; TOut &gt;&gt; selector, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a2e1637505d0a5fe0e9cff5b92e0cd94f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a function for each item in the input stream, generating a new stream with the (zero or more) values returned by the function. The function must return an IEnumerable&lt;TOut&gt;, which can be System.Linq.Enumerable.Empty&lt;TOut&gt; to indicate zero results. The values in the returned IEnumerable&lt;TOut&gt; are emitted as separate messages with the same oringinating time.  <a href="#a2e1637505d0a5fe0e9cff5b92e0cd94f">More...</a><br /></td></tr>
+<tr class="memdesc:a2e1637505d0a5fe0e9cff5b92e0cd94f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a function for each item in the input stream, generating a new stream with the (zero or more) values returned by the function. The function must return an IEnumerable&lt;TOut&gt;, which can be System.Linq.Enumerable.Empty&lt;TOut&gt; to indicate zero results. The values in the returned IEnumerable&lt;TOut&gt; are emitted as separate messages with the same originating time.  <a href="#a2e1637505d0a5fe0e9cff5b92e0cd94f">More...</a><br /></td></tr>
 <tr class="separator:a2e1637505d0a5fe0e9cff5b92e0cd94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dd6f334aca59ff5b8dff64bd85ac7cb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;(T2, T1)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5dd6f334aca59ff5b8dff64bd85ac7cb">Flip&lt; T1, T2 &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;(T1, T2)&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
 <tr class="memdesc:a5dd6f334aca59ff5b8dff64bd85ac7cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flip takes a tuple of 2 elements and flips their order  <a href="#a5dd6f334aca59ff5b8dff64bd85ac7cb">More...</a><br /></td></tr>
@@ -518,12 +521,18 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a483a26879e9c604db66e5acd7efe96d2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a483a26879e9c604db66e5acd7efe96d2">Min</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; double &gt; source)</td></tr>
 <tr class="memdesc:a483a26879e9c604db66e5acd7efe96d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the minimum of a stream of double values.  <a href="#a483a26879e9c604db66e5acd7efe96d2">More...</a><br /></td></tr>
 <tr class="separator:a483a26879e9c604db66e5acd7efe96d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f575e73a51d2355526bbc9bc93a0f0a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a4f575e73a51d2355526bbc9bc93a0f0a">Min</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt; source)</td></tr>
+<tr class="memdesc:a4f575e73a51d2355526bbc9bc93a0f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the minimum of a stream of float values.  <a href="#a4f575e73a51d2355526bbc9bc93a0f0a">More...</a><br /></td></tr>
+<tr class="separator:a4f575e73a51d2355526bbc9bc93a0f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0410e48a037d38151e3d7b6025d7d956"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a0410e48a037d38151e3d7b6025d7d956">Max&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source)</td></tr>
 <tr class="memdesc:a0410e48a037d38151e3d7b6025d7d956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the maximum of a stream of numeric values.  <a href="#a0410e48a037d38151e3d7b6025d7d956">More...</a><br /></td></tr>
 <tr class="separator:a0410e48a037d38151e3d7b6025d7d956"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71fc0e72cdfe295cca5443dfba016877"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a71fc0e72cdfe295cca5443dfba016877">Max</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; double &gt; source)</td></tr>
 <tr class="memdesc:a71fc0e72cdfe295cca5443dfba016877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the maximum of a stream of double values.  <a href="#a71fc0e72cdfe295cca5443dfba016877">More...</a><br /></td></tr>
 <tr class="separator:a71fc0e72cdfe295cca5443dfba016877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3986ff083d167de84642b9fdab457f68"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a3986ff083d167de84642b9fdab457f68">Max</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt; source)</td></tr>
+<tr class="memdesc:a3986ff083d167de84642b9fdab457f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the maximum of a stream of float values.  <a href="#a3986ff083d167de84642b9fdab457f68">More...</a><br /></td></tr>
+<tr class="separator:a3986ff083d167de84642b9fdab457f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee8205293f8b8041e621ebdb4bceeb03"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; decimal &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#aee8205293f8b8041e621ebdb4bceeb03">Average</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; decimal &gt; source)</td></tr>
 <tr class="memdesc:aee8205293f8b8041e621ebdb4bceeb03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of a stream of decimal values.  <a href="#aee8205293f8b8041e621ebdb4bceeb03">More...</a><br /></td></tr>
 <tr class="separator:aee8205293f8b8041e621ebdb4bceeb03"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -548,15 +557,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0906c735fb60a70341a84dcd7f90e3b7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; decimal &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a0906c735fb60a70341a84dcd7f90e3b7">Std</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; decimal &gt; source)</td></tr>
 <tr class="memdesc:a0906c735fb60a70341a84dcd7f90e3b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (double) values.  <a href="#a0906c735fb60a70341a84dcd7f90e3b7">More...</a><br /></td></tr>
 <tr class="separator:a0906c735fb60a70341a84dcd7f90e3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5316078726bff176c689854e8974adc0"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5316078726bff176c689854e8974adc0">Std</a> (this IEnumerable&lt; float &gt; source)</td></tr>
-<tr class="memdesc:a5316078726bff176c689854e8974adc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (float) values.  <a href="#a5316078726bff176c689854e8974adc0">More...</a><br /></td></tr>
-<tr class="separator:a5316078726bff176c689854e8974adc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04246009f04cbddc005909b3e573eaed"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a04246009f04cbddc005909b3e573eaed">Std</a> (this IEnumerable&lt; double &gt; source)</td></tr>
-<tr class="memdesc:a04246009f04cbddc005909b3e573eaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (double) values.  <a href="#a04246009f04cbddc005909b3e573eaed">More...</a><br /></td></tr>
-<tr class="separator:a04246009f04cbddc005909b3e573eaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5400189534c6be303d1031bbe8f0f181"><td class="memItemLeft" align="right" valign="top">static decimal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5400189534c6be303d1031bbe8f0f181">Std</a> (this IEnumerable&lt; decimal &gt; source)</td></tr>
-<tr class="memdesc:a5400189534c6be303d1031bbe8f0f181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (decimal) values.  <a href="#a5400189534c6be303d1031bbe8f0f181">More...</a><br /></td></tr>
-<tr class="separator:a5400189534c6be303d1031bbe8f0f181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88842db4b6a0f8917424ddcf6bc5d139"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a88842db4b6a0f8917424ddcf6bc5d139">Sum</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; IEnumerable&lt; int &gt;&gt; source)</td></tr>
 <tr class="memdesc:a88842db4b6a0f8917424ddcf6bc5d139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the sum of a stream of int values.  <a href="#a88842db4b6a0f8917424ddcf6bc5d139">More...</a><br /></td></tr>
 <tr class="separator:a88842db4b6a0f8917424ddcf6bc5d139"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -809,6 +809,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8e5f8932a37f280000f23d4cb2e9c951"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; decimal?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a8e5f8932a37f280000f23d4cb2e9c951">Average&lt; TSource &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; IEnumerable&lt; TSource &gt;&gt; source, Func&lt; TSource, decimal?&gt; selector)</td></tr>
 <tr class="memdesc:a8e5f8932a37f280000f23d4cb2e9c951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invoke a transform function on each element and compute the average (nullable decimal) within each window.  <a href="#a8e5f8932a37f280000f23d4cb2e9c951">More...</a><br /></td></tr>
 <tr class="separator:a8e5f8932a37f280000f23d4cb2e9c951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5316078726bff176c689854e8974adc0"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5316078726bff176c689854e8974adc0">Std</a> (this IEnumerable&lt; float &gt; source)</td></tr>
+<tr class="memdesc:a5316078726bff176c689854e8974adc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (float) values.  <a href="#a5316078726bff176c689854e8974adc0">More...</a><br /></td></tr>
+<tr class="separator:a5316078726bff176c689854e8974adc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04246009f04cbddc005909b3e573eaed"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a04246009f04cbddc005909b3e573eaed">Std</a> (this IEnumerable&lt; double &gt; source)</td></tr>
+<tr class="memdesc:a04246009f04cbddc005909b3e573eaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (double) values.  <a href="#a04246009f04cbddc005909b3e573eaed">More...</a><br /></td></tr>
+<tr class="separator:a04246009f04cbddc005909b3e573eaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5400189534c6be303d1031bbe8f0f181"><td class="memItemLeft" align="right" valign="top">static decimal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5400189534c6be303d1031bbe8f0f181">Std</a> (this IEnumerable&lt; decimal &gt; source)</td></tr>
+<tr class="memdesc:a5400189534c6be303d1031bbe8f0f181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of (decimal) values.  <a href="#a5400189534c6be303d1031bbe8f0f181">More...</a><br /></td></tr>
+<tr class="separator:a5400189534c6be303d1031bbe8f0f181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68b0e3c6349ce38ba956f2441f3a41bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a68b0e3c6349ce38ba956f2441f3a41bb">Std</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; IEnumerable&lt; float &gt;&gt; source)</td></tr>
 <tr class="memdesc:a68b0e3c6349ce38ba956f2441f3a41bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute standard deviation of each window.  <a href="#a68b0e3c6349ce38ba956f2441f3a41bb">More...</a><br /></td></tr>
 <tr class="separator:a68b0e3c6349ce38ba956f2441f3a41bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1094,24 +1103,42 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a61afaa62a484cec78daf2ecd1cfefef8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TimeSpan &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a61afaa62a484cec78daf2ecd1cfefef8">Latency&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source)</td></tr>
 <tr class="memdesc:a61afaa62a484cec78daf2ecd1cfefef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map messages to their current latency (time since origination).  <a href="#a61afaa62a484cec78daf2ecd1cfefef8">More...</a><br /></td></tr>
 <tr class="separator:a61afaa62a484cec78daf2ecd1cfefef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c6c5781de528226b7e2e7a0d9e19a89"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a8c6c5781de528226b7e2e7a0d9e19a89">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, int vectorSize, Func&lt; int, TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TOut &gt; action, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a8c6c5781de528226b7e2e7a0d9e19a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of fixed-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream.  <a href="#a8c6c5781de528226b7e2e7a0d9e19a89">More...</a><br /></td></tr>
-<tr class="separator:a8c6c5781de528226b7e2e7a0d9e19a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cef1288d0712d642bc1556ba50f74cf"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a7cef1288d0712d642bc1556ba50f74cf">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a7cef1288d0712d642bc1556ba50f74cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of fixed-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream.  <a href="#a7cef1288d0712d642bc1556ba50f74cf">More...</a><br /></td></tr>
-<tr class="separator:a7cef1288d0712d642bc1556ba50f74cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e04a9be38f432e758dcb0b982b2d9c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a6e04a9be38f432e758dcb0b982b2d9c1">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Func&lt; int, TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TOut &gt; action, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a6e04a9be38f432e758dcb0b982b2d9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of variable-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream.  <a href="#a6e04a9be38f432e758dcb0b982b2d9c1">More...</a><br /></td></tr>
-<tr class="separator:a6e04a9be38f432e758dcb0b982b2d9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b2ada148cc387e77e86f7b41790b24f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a7b2ada148cc387e77e86f7b41790b24f">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a7b2ada148cc387e77e86f7b41790b24f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of variable-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream.  <a href="#a7b2ada148cc387e77e86f7b41790b24f">More...</a><br /></td></tr>
-<tr class="separator:a7b2ada148cc387e77e86f7b41790b24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dbd69ca35ad7ad0d74187304b87faa3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a7dbd69ca35ad7ad0d74187304b87faa3">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; TKey, TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TOut &gt; action, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a7dbd69ca35ad7ad0d74187304b87faa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating and applying a sub-pipeline to each element in the dictionary, and assembling the results into a corresponding output array dictionary.  <a href="#a7dbd69ca35ad7ad0d74187304b87faa3">More...</a><br /></td></tr>
-<tr class="separator:a7dbd69ca35ad7ad0d74187304b87faa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb91097b021bbf577fdf43332cb21a96"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#afb91097b021bbf577fdf43332cb21a96">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
-<tr class="memdesc:afb91097b021bbf577fdf43332cb21a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating and applying a sub-pipeline to each element in the dictionary, and assembling the results into a corresponding output array dictionary.  <a href="#afb91097b021bbf577fdf43332cb21a96">More...</a><br /></td></tr>
-<tr class="separator:afb91097b021bbf577fdf43332cb21a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d164f022ca946b0337aeaa1e84b0c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a98d164f022ca946b0337aeaa1e84b0c1">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a98d164f022ca946b0337aeaa1e84b0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of fixed-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream.  <a href="#a98d164f022ca946b0337aeaa1e84b0c1">More...</a><br /></td></tr>
+<tr class="separator:a98d164f022ca946b0337aeaa1e84b0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac09905d36b2f05268028cf83fcc676be"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ac09905d36b2f05268028cf83fcc676be">Parallel&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, int vectorSize, Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ac09905d36b2f05268028cf83fcc676be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of fixed-size array messages by creating a stream for each element in the array, and performing an action on each of these streams.  <a href="#ac09905d36b2f05268028cf83fcc676be">More...</a><br /></td></tr>
+<tr class="separator:ac09905d36b2f05268028cf83fcc676be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a812a1934c319758b3a343775729635d1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a812a1934c319758b3a343775729635d1">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, int vectorSize, Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a812a1934c319758b3a343775729635d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of fixed-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream.  <a href="#a812a1934c319758b3a343775729635d1">More...</a><br /></td></tr>
+<tr class="separator:a812a1934c319758b3a343775729635d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c6ff9d7e5f951ea7ef725d2d43dc8a4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a6c6ff9d7e5f951ea7ef725d2d43dc8a4">Parallel&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, int vectorSize, Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a6c6ff9d7e5f951ea7ef725d2d43dc8a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of fixed-size array messages by creating a stream for each element in the array, and performing an action on each of these streams.  <a href="#a6c6ff9d7e5f951ea7ef725d2d43dc8a4">More...</a><br /></td></tr>
+<tr class="separator:a6c6ff9d7e5f951ea7ef725d2d43dc8a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af52faff3e6e2473a2dbd98b8713df90e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#af52faff3e6e2473a2dbd98b8713df90e">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:af52faff3e6e2473a2dbd98b8713df90e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of variable-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream.  <a href="#af52faff3e6e2473a2dbd98b8713df90e">More...</a><br /></td></tr>
+<tr class="separator:af52faff3e6e2473a2dbd98b8713df90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2a27e22c296de11b39595249fd3dcd0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ac2a27e22c296de11b39595249fd3dcd0">Parallel&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ac2a27e22c296de11b39595249fd3dcd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of variable-size array messages by creating a stream for each element in the array, and performing an action on each of these streams.  <a href="#ac2a27e22c296de11b39595249fd3dcd0">More...</a><br /></td></tr>
+<tr class="separator:ac2a27e22c296de11b39595249fd3dcd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cf2039f1f5d74d1abd1b2c96b433cda"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a8cf2039f1f5d74d1abd1b2c96b433cda">Parallel&lt; TIn, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a8cf2039f1f5d74d1abd1b2c96b433cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of variable-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream.  <a href="#a8cf2039f1f5d74d1abd1b2c96b433cda">More...</a><br /></td></tr>
+<tr class="separator:a8cf2039f1f5d74d1abd1b2c96b433cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65ef49a7f9ff9d811f3c9251e8f74732"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a65ef49a7f9ff9d811f3c9251e8f74732">Parallel&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a65ef49a7f9ff9d811f3c9251e8f74732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of variable-size array messages by creating a stream for each element in the array, and performing an action on each of these streams.  <a href="#a65ef49a7f9ff9d811f3c9251e8f74732">More...</a><br /></td></tr>
+<tr class="separator:a65ef49a7f9ff9d811f3c9251e8f74732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e3b52df122345cb1f7c8ee490c07e00"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a2e3b52df122345cb1f7c8ee490c07e00">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a2e3b52df122345cb1f7c8ee490c07e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream.  <a href="#a2e3b52df122345cb1f7c8ee490c07e00">More...</a><br /></td></tr>
+<tr class="separator:a2e3b52df122345cb1f7c8ee490c07e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0a3600e269fd2cc3544a85db4175ba"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5b0a3600e269fd2cc3544a85db4175ba">Parallel&lt; TIn, TKey &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Action&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a5b0a3600e269fd2cc3544a85db4175ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams.  <a href="#a5b0a3600e269fd2cc3544a85db4175ba">More...</a><br /></td></tr>
+<tr class="separator:a5b0a3600e269fd2cc3544a85db4175ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e86869c5900d2b0d0ba40c3873589ac"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a4e86869c5900d2b0d0ba40c3873589ac">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a4e86869c5900d2b0d0ba40c3873589ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream.  <a href="#a4e86869c5900d2b0d0ba40c3873589ac">More...</a><br /></td></tr>
+<tr class="separator:a4e86869c5900d2b0d0ba40c3873589ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad336cc671ab9c45e90e9ad8c3cc2a24a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ad336cc671ab9c45e90e9ad8c3cc2a24a">Parallel&lt; TIn, TKey &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:ad336cc671ab9c45e90e9ad8c3cc2a24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams.  <a href="#ad336cc671ab9c45e90e9ad8c3cc2a24a">More...</a><br /></td></tr>
+<tr class="separator:ad336cc671ab9c45e90e9ad8c3cc2a24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extension methods that simplify operator usage </p>
@@ -1480,6 +1507,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of average values.</dd></dl>
+<p>This operator considers the average of a sequence of values containing NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
@@ -1515,6 +1543,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of average values.</dd></dl>
+<p>This operator considers the average of a sequence of values containing NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
@@ -7857,7 +7886,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a71fc0e72cdfe295cca5443dfba016877"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71fc0e72cdfe295cca5443dfba016877">&#9670;&nbsp;</a></span>Max() <span class="overload">[1/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a71fc0e72cdfe295cca5443dfba016877">&#9670;&nbsp;</a></span>Max() <span class="overload">[1/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7888,11 +7917,48 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of maximum values.</dd></dl>
+<p>This operator considers the maximum of a number and NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
+
+</div>
+</div>
+<a id="a3986ff083d167de84642b9fdab457f68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3986ff083d167de84642b9fdab457f68">&#9670;&nbsp;</a></span>Max() <span class="overload">[2/32]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;float&gt; Microsoft.Psi.Operators.Max </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td>
+          <td class="paramname"><em>source</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the maximum of a stream of float values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The source stream</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of maximum values.</dd></dl>
+<p>This operator considers the maximum of a number and NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
 <a id="a6f852f45978a2a3851fcada732b35bc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f852f45978a2a3851fcada732b35bc9">&#9670;&nbsp;</a></span>Max() <span class="overload">[2/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f852f45978a2a3851fcada732b35bc9">&#9670;&nbsp;</a></span>Max() <span class="overload">[3/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7927,7 +7993,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="acbbaf14bc53616d44f0f3086f78ee9e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbbaf14bc53616d44f0f3086f78ee9e9">&#9670;&nbsp;</a></span>Max() <span class="overload">[3/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acbbaf14bc53616d44f0f3086f78ee9e9">&#9670;&nbsp;</a></span>Max() <span class="overload">[4/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7962,7 +8028,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa0a7284dda6cc1a73af114a02b864dd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0a7284dda6cc1a73af114a02b864dd5">&#9670;&nbsp;</a></span>Max() <span class="overload">[4/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a7284dda6cc1a73af114a02b864dd5">&#9670;&nbsp;</a></span>Max() <span class="overload">[5/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -7997,7 +8063,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5e9a81e7173e89f25fdcb2093e6347a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e9a81e7173e89f25fdcb2093e6347a4">&#9670;&nbsp;</a></span>Max() <span class="overload">[5/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e9a81e7173e89f25fdcb2093e6347a4">&#9670;&nbsp;</a></span>Max() <span class="overload">[6/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8032,7 +8098,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae9c889c19bb1400680eeb548ffdd2c17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9c889c19bb1400680eeb548ffdd2c17">&#9670;&nbsp;</a></span>Max() <span class="overload">[6/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9c889c19bb1400680eeb548ffdd2c17">&#9670;&nbsp;</a></span>Max() <span class="overload">[7/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8067,7 +8133,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a49816fb9b392a8980c5aa6ca70232e40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49816fb9b392a8980c5aa6ca70232e40">&#9670;&nbsp;</a></span>Max() <span class="overload">[7/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a49816fb9b392a8980c5aa6ca70232e40">&#9670;&nbsp;</a></span>Max() <span class="overload">[8/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8102,7 +8168,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4dd4a9070c8b30d53ac5a8cddfba4910"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dd4a9070c8b30d53ac5a8cddfba4910">&#9670;&nbsp;</a></span>Max() <span class="overload">[8/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dd4a9070c8b30d53ac5a8cddfba4910">&#9670;&nbsp;</a></span>Max() <span class="overload">[9/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8137,7 +8203,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a0e68f9c5ea85b0fd53091707426f257f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e68f9c5ea85b0fd53091707426f257f">&#9670;&nbsp;</a></span>Max() <span class="overload">[9/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e68f9c5ea85b0fd53091707426f257f">&#9670;&nbsp;</a></span>Max() <span class="overload">[10/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8172,7 +8238,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a86de71fb22f0cb5a66c29474f47fd901"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86de71fb22f0cb5a66c29474f47fd901">&#9670;&nbsp;</a></span>Max() <span class="overload">[10/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a86de71fb22f0cb5a66c29474f47fd901">&#9670;&nbsp;</a></span>Max() <span class="overload">[11/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8207,7 +8273,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a10a5777e36f23f32eb0c94a4ad62db68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10a5777e36f23f32eb0c94a4ad62db68">&#9670;&nbsp;</a></span>Max() <span class="overload">[11/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a10a5777e36f23f32eb0c94a4ad62db68">&#9670;&nbsp;</a></span>Max() <span class="overload">[12/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8242,7 +8308,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="acc62efb256f48d9bd305822101ab66aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc62efb256f48d9bd305822101ab66aa">&#9670;&nbsp;</a></span>Max() <span class="overload">[12/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acc62efb256f48d9bd305822101ab66aa">&#9670;&nbsp;</a></span>Max() <span class="overload">[13/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8288,7 +8354,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a03e66a6e5770fd62b0ea85830eefc1a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03e66a6e5770fd62b0ea85830eefc1a7">&#9670;&nbsp;</a></span>Max() <span class="overload">[13/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a03e66a6e5770fd62b0ea85830eefc1a7">&#9670;&nbsp;</a></span>Max() <span class="overload">[14/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8334,7 +8400,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aff16420908f2fbacae7a6fccbabcf971"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff16420908f2fbacae7a6fccbabcf971">&#9670;&nbsp;</a></span>Max() <span class="overload">[14/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aff16420908f2fbacae7a6fccbabcf971">&#9670;&nbsp;</a></span>Max() <span class="overload">[15/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8380,7 +8446,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6416c104a8abdd35389898a4e273523c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6416c104a8abdd35389898a4e273523c">&#9670;&nbsp;</a></span>Max() <span class="overload">[15/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6416c104a8abdd35389898a4e273523c">&#9670;&nbsp;</a></span>Max() <span class="overload">[16/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8426,7 +8492,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a28316bf91677ec0e6ffb7c10e934947f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28316bf91677ec0e6ffb7c10e934947f">&#9670;&nbsp;</a></span>Max() <span class="overload">[16/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a28316bf91677ec0e6ffb7c10e934947f">&#9670;&nbsp;</a></span>Max() <span class="overload">[17/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8472,7 +8538,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7178128c5b459177ac769406ddcde1a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7178128c5b459177ac769406ddcde1a6">&#9670;&nbsp;</a></span>Max() <span class="overload">[17/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7178128c5b459177ac769406ddcde1a6">&#9670;&nbsp;</a></span>Max() <span class="overload">[18/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8518,7 +8584,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a80654e182f0963542c85f32c54dd6ab2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80654e182f0963542c85f32c54dd6ab2">&#9670;&nbsp;</a></span>Max() <span class="overload">[18/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a80654e182f0963542c85f32c54dd6ab2">&#9670;&nbsp;</a></span>Max() <span class="overload">[19/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8564,7 +8630,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6771bf4cc66a695ea871d38b1286be79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6771bf4cc66a695ea871d38b1286be79">&#9670;&nbsp;</a></span>Max() <span class="overload">[19/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6771bf4cc66a695ea871d38b1286be79">&#9670;&nbsp;</a></span>Max() <span class="overload">[20/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8610,7 +8676,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab2f7a565c28e2db942558e47add15b69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2f7a565c28e2db942558e47add15b69">&#9670;&nbsp;</a></span>Max() <span class="overload">[20/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2f7a565c28e2db942558e47add15b69">&#9670;&nbsp;</a></span>Max() <span class="overload">[21/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8656,7 +8722,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="abcf0c129fdb11b6a0ca2b8e61c7de44f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcf0c129fdb11b6a0ca2b8e61c7de44f">&#9670;&nbsp;</a></span>Max() <span class="overload">[21/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abcf0c129fdb11b6a0ca2b8e61c7de44f">&#9670;&nbsp;</a></span>Max() <span class="overload">[22/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8702,7 +8768,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a73fd884a53723670675300d94555515f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73fd884a53723670675300d94555515f">&#9670;&nbsp;</a></span>Max() <span class="overload">[22/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a73fd884a53723670675300d94555515f">&#9670;&nbsp;</a></span>Max() <span class="overload">[23/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8748,7 +8814,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab324931cf195c3ae3ca900e7197f9849"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab324931cf195c3ae3ca900e7197f9849">&#9670;&nbsp;</a></span>Max() <span class="overload">[23/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab324931cf195c3ae3ca900e7197f9849">&#9670;&nbsp;</a></span>Max() <span class="overload">[24/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8794,7 +8860,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6fd752dbe4d367573a8d921c9f2b51a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fd752dbe4d367573a8d921c9f2b51a8">&#9670;&nbsp;</a></span>Max() <span class="overload">[24/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fd752dbe4d367573a8d921c9f2b51a8">&#9670;&nbsp;</a></span>Max() <span class="overload">[25/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8840,7 +8906,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a79604aa8297e87ca20b5313e82c397f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79604aa8297e87ca20b5313e82c397f4">&#9670;&nbsp;</a></span>Max() <span class="overload">[25/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a79604aa8297e87ca20b5313e82c397f4">&#9670;&nbsp;</a></span>Max() <span class="overload">[26/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8886,7 +8952,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab3ebfb5d96a2dfa6835c53c8a85717cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3ebfb5d96a2dfa6835c53c8a85717cf">&#9670;&nbsp;</a></span>Max() <span class="overload">[26/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3ebfb5d96a2dfa6835c53c8a85717cf">&#9670;&nbsp;</a></span>Max() <span class="overload">[27/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8932,7 +8998,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a24f32b5774f05d2235eb897168986264"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24f32b5774f05d2235eb897168986264">&#9670;&nbsp;</a></span>Max() <span class="overload">[27/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a24f32b5774f05d2235eb897168986264">&#9670;&nbsp;</a></span>Max() <span class="overload">[28/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -8978,7 +9044,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a89fb85369fee99c493065bfdd40b55f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89fb85369fee99c493065bfdd40b55f5">&#9670;&nbsp;</a></span>Max() <span class="overload">[28/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a89fb85369fee99c493065bfdd40b55f5">&#9670;&nbsp;</a></span>Max() <span class="overload">[29/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9024,7 +9090,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a66adfaaa4da9e0de009fa882862b3363"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66adfaaa4da9e0de009fa882862b3363">&#9670;&nbsp;</a></span>Max() <span class="overload">[29/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a66adfaaa4da9e0de009fa882862b3363">&#9670;&nbsp;</a></span>Max() <span class="overload">[30/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9070,7 +9136,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a04c5a148431a052140cbdded4fbbd4ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04c5a148431a052140cbdded4fbbd4ed">&#9670;&nbsp;</a></span>Max() <span class="overload">[30/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c5a148431a052140cbdded4fbbd4ed">&#9670;&nbsp;</a></span>Max() <span class="overload">[31/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9116,7 +9182,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a0d546244b8cef65c2e42cfe39ac91b18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d546244b8cef65c2e42cfe39ac91b18">&#9670;&nbsp;</a></span>Max() <span class="overload">[31/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d546244b8cef65c2e42cfe39ac91b18">&#9670;&nbsp;</a></span>Max() <span class="overload">[32/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9817,7 +9883,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a483a26879e9c604db66e5acd7efe96d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a483a26879e9c604db66e5acd7efe96d2">&#9670;&nbsp;</a></span>Min() <span class="overload">[1/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a483a26879e9c604db66e5acd7efe96d2">&#9670;&nbsp;</a></span>Min() <span class="overload">[1/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9848,11 +9914,48 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of minimum values.</dd></dl>
+<p>This operator considers the minimum of a number and NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
+
+</div>
+</div>
+<a id="a4f575e73a51d2355526bbc9bc93a0f0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f575e73a51d2355526bbc9bc93a0f0a">&#9670;&nbsp;</a></span>Min() <span class="overload">[2/32]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;float&gt; Microsoft.Psi.Operators.Min </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td>
+          <td class="paramname"><em>source</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the minimum of a stream of float values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The source stream</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of minimum values.</dd></dl>
+<p>This operator considers the minimum of a number and NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
 <a id="a23ebadb147c143d95583c9ffb3e7d627"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23ebadb147c143d95583c9ffb3e7d627">&#9670;&nbsp;</a></span>Min() <span class="overload">[2/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ebadb147c143d95583c9ffb3e7d627">&#9670;&nbsp;</a></span>Min() <span class="overload">[3/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9887,7 +9990,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a033ad834288824e4b86234bc7da8f837"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a033ad834288824e4b86234bc7da8f837">&#9670;&nbsp;</a></span>Min() <span class="overload">[3/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a033ad834288824e4b86234bc7da8f837">&#9670;&nbsp;</a></span>Min() <span class="overload">[4/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9922,7 +10025,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2bbbe0b4bcb63e1073a94a66cbb46fb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bbbe0b4bcb63e1073a94a66cbb46fb3">&#9670;&nbsp;</a></span>Min() <span class="overload">[4/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bbbe0b4bcb63e1073a94a66cbb46fb3">&#9670;&nbsp;</a></span>Min() <span class="overload">[5/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9957,7 +10060,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9c7e3f1cef0776246f052abdd662fd5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c7e3f1cef0776246f052abdd662fd5d">&#9670;&nbsp;</a></span>Min() <span class="overload">[5/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c7e3f1cef0776246f052abdd662fd5d">&#9670;&nbsp;</a></span>Min() <span class="overload">[6/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -9992,7 +10095,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="adff1bd3f5aa3e1c27a921399f3df85e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adff1bd3f5aa3e1c27a921399f3df85e6">&#9670;&nbsp;</a></span>Min() <span class="overload">[6/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adff1bd3f5aa3e1c27a921399f3df85e6">&#9670;&nbsp;</a></span>Min() <span class="overload">[7/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10027,7 +10130,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="abed2649f5e6d2d103e372c82af1e58e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abed2649f5e6d2d103e372c82af1e58e3">&#9670;&nbsp;</a></span>Min() <span class="overload">[7/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abed2649f5e6d2d103e372c82af1e58e3">&#9670;&nbsp;</a></span>Min() <span class="overload">[8/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10062,7 +10165,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a352fdef3ee680bde0f3c7b933c552796"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a352fdef3ee680bde0f3c7b933c552796">&#9670;&nbsp;</a></span>Min() <span class="overload">[8/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a352fdef3ee680bde0f3c7b933c552796">&#9670;&nbsp;</a></span>Min() <span class="overload">[9/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10097,7 +10200,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a19867d50073e6dd08e3675ad1c3c64d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19867d50073e6dd08e3675ad1c3c64d6">&#9670;&nbsp;</a></span>Min() <span class="overload">[9/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a19867d50073e6dd08e3675ad1c3c64d6">&#9670;&nbsp;</a></span>Min() <span class="overload">[10/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10132,7 +10235,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a38fa90eb56d8e3f5a99d309d875685cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38fa90eb56d8e3f5a99d309d875685cf">&#9670;&nbsp;</a></span>Min() <span class="overload">[10/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a38fa90eb56d8e3f5a99d309d875685cf">&#9670;&nbsp;</a></span>Min() <span class="overload">[11/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10167,7 +10270,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2cdf8d3f40655e7c53e5d667376450df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cdf8d3f40655e7c53e5d667376450df">&#9670;&nbsp;</a></span>Min() <span class="overload">[11/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cdf8d3f40655e7c53e5d667376450df">&#9670;&nbsp;</a></span>Min() <span class="overload">[12/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10202,7 +10305,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="abd87471e47524aba4e43b6c02bbf236c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd87471e47524aba4e43b6c02bbf236c">&#9670;&nbsp;</a></span>Min() <span class="overload">[12/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abd87471e47524aba4e43b6c02bbf236c">&#9670;&nbsp;</a></span>Min() <span class="overload">[13/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10248,7 +10351,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a0cc74d1d05a60d988110f171a906920f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cc74d1d05a60d988110f171a906920f">&#9670;&nbsp;</a></span>Min() <span class="overload">[13/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc74d1d05a60d988110f171a906920f">&#9670;&nbsp;</a></span>Min() <span class="overload">[14/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10294,7 +10397,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a09e0b9ed8e20f390252ea64a85167c6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09e0b9ed8e20f390252ea64a85167c6c">&#9670;&nbsp;</a></span>Min() <span class="overload">[14/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e0b9ed8e20f390252ea64a85167c6c">&#9670;&nbsp;</a></span>Min() <span class="overload">[15/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10340,7 +10443,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a206215b7df47c1d9c3282bbbc438d2c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a206215b7df47c1d9c3282bbbc438d2c5">&#9670;&nbsp;</a></span>Min() <span class="overload">[15/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a206215b7df47c1d9c3282bbbc438d2c5">&#9670;&nbsp;</a></span>Min() <span class="overload">[16/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10386,7 +10489,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a41052acc2e4ebcafe2ffb956242f7e69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41052acc2e4ebcafe2ffb956242f7e69">&#9670;&nbsp;</a></span>Min() <span class="overload">[16/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a41052acc2e4ebcafe2ffb956242f7e69">&#9670;&nbsp;</a></span>Min() <span class="overload">[17/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10432,7 +10535,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a3a7bd3a492a994ee105a804fefb2e0be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a7bd3a492a994ee105a804fefb2e0be">&#9670;&nbsp;</a></span>Min() <span class="overload">[17/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a7bd3a492a994ee105a804fefb2e0be">&#9670;&nbsp;</a></span>Min() <span class="overload">[18/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10478,7 +10581,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad3f9a5d108aeab0b5819e4584d39335f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3f9a5d108aeab0b5819e4584d39335f">&#9670;&nbsp;</a></span>Min() <span class="overload">[18/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3f9a5d108aeab0b5819e4584d39335f">&#9670;&nbsp;</a></span>Min() <span class="overload">[19/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10524,7 +10627,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9cd85ca0b529cf12f13683fbf99eea06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cd85ca0b529cf12f13683fbf99eea06">&#9670;&nbsp;</a></span>Min() <span class="overload">[19/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cd85ca0b529cf12f13683fbf99eea06">&#9670;&nbsp;</a></span>Min() <span class="overload">[20/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10570,7 +10673,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aaa6fcfffd55e0b5df06f61cbdd46ec0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa6fcfffd55e0b5df06f61cbdd46ec0e">&#9670;&nbsp;</a></span>Min() <span class="overload">[20/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa6fcfffd55e0b5df06f61cbdd46ec0e">&#9670;&nbsp;</a></span>Min() <span class="overload">[21/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10616,7 +10719,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7264e1dedb2fe0c1d0fe3e6b023a5bf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7264e1dedb2fe0c1d0fe3e6b023a5bf3">&#9670;&nbsp;</a></span>Min() <span class="overload">[21/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7264e1dedb2fe0c1d0fe3e6b023a5bf3">&#9670;&nbsp;</a></span>Min() <span class="overload">[22/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10662,7 +10765,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2c0461f9cf57c4a5bffe5fce5523de90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c0461f9cf57c4a5bffe5fce5523de90">&#9670;&nbsp;</a></span>Min() <span class="overload">[22/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c0461f9cf57c4a5bffe5fce5523de90">&#9670;&nbsp;</a></span>Min() <span class="overload">[23/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10708,7 +10811,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad0fcb3c1b79a9504252e79fca45797b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0fcb3c1b79a9504252e79fca45797b1">&#9670;&nbsp;</a></span>Min() <span class="overload">[23/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0fcb3c1b79a9504252e79fca45797b1">&#9670;&nbsp;</a></span>Min() <span class="overload">[24/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10754,7 +10857,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a173292ee8980414cfacdcb08ad93ab59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a173292ee8980414cfacdcb08ad93ab59">&#9670;&nbsp;</a></span>Min() <span class="overload">[24/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a173292ee8980414cfacdcb08ad93ab59">&#9670;&nbsp;</a></span>Min() <span class="overload">[25/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10800,7 +10903,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a809b08c9a55c2ab9cd950fc46be73988"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a809b08c9a55c2ab9cd950fc46be73988">&#9670;&nbsp;</a></span>Min() <span class="overload">[25/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a809b08c9a55c2ab9cd950fc46be73988">&#9670;&nbsp;</a></span>Min() <span class="overload">[26/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10846,7 +10949,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac2882b3f8a648ad50a81aa11a09eddc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2882b3f8a648ad50a81aa11a09eddc0">&#9670;&nbsp;</a></span>Min() <span class="overload">[26/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2882b3f8a648ad50a81aa11a09eddc0">&#9670;&nbsp;</a></span>Min() <span class="overload">[27/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10892,7 +10995,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab361a11a76bedc3f4d7d8fcdc4bc8903"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab361a11a76bedc3f4d7d8fcdc4bc8903">&#9670;&nbsp;</a></span>Min() <span class="overload">[27/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab361a11a76bedc3f4d7d8fcdc4bc8903">&#9670;&nbsp;</a></span>Min() <span class="overload">[28/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10938,7 +11041,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa14db62a0c7e0bfab9e31d7b187a64ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa14db62a0c7e0bfab9e31d7b187a64ad">&#9670;&nbsp;</a></span>Min() <span class="overload">[28/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa14db62a0c7e0bfab9e31d7b187a64ad">&#9670;&nbsp;</a></span>Min() <span class="overload">[29/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10984,7 +11087,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aaa30d5ab6e6e5be3e45abdf7de6dac88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa30d5ab6e6e5be3e45abdf7de6dac88">&#9670;&nbsp;</a></span>Min() <span class="overload">[29/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa30d5ab6e6e5be3e45abdf7de6dac88">&#9670;&nbsp;</a></span>Min() <span class="overload">[30/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -11030,7 +11133,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a1024ec2b853ddd3d4331456458876d2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1024ec2b853ddd3d4331456458876d2f">&#9670;&nbsp;</a></span>Min() <span class="overload">[30/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1024ec2b853ddd3d4331456458876d2f">&#9670;&nbsp;</a></span>Min() <span class="overload">[31/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -11076,7 +11179,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a70f73907c6649a019146de46002b3d1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70f73907c6649a019146de46002b3d1a">&#9670;&nbsp;</a></span>Min() <span class="overload">[31/31]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a70f73907c6649a019146de46002b3d1a">&#9670;&nbsp;</a></span>Min() <span class="overload">[32/32]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13400,8 +13503,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7dbd69ca35ad7ad0d74187304b87faa3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dbd69ca35ad7ad0d74187304b87faa3">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[1/2]</span></h2>
+<a id="ac09905d36b2f05268028cf83fcc676be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac09905d36b2f05268028cf83fcc676be">&#9670;&nbsp;</a></span>Parallel&lt; TIn &gt;() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13410,28 +13513,28 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;Dictionary&lt;TKey, TOut&gt; &gt; Microsoft.Psi.Operators.Parallel&lt; TIn, TKey, TOut &gt; </td>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TIn[]&gt; Microsoft.Psi.Operators.Parallel&lt; TIn &gt; </td>
           <td>(</td>
-          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt;&#160;</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; TKey, TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TOut &gt;&#160;</td>
-          <td class="paramname"><em>action</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vectorSize</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>joinOrDefault</em> = <code>false</code>, </td>
+          <td class="paramtype">Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamAction</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -13446,30 +13549,346 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a stream of dictionary messages by creating and applying a sub-pipeline to each element in the dictionary, and assembling the results into a corresponding output array dictionary. </p>
+<p>Processes a stream of fixed-size array messages by creating a stream for each element in the array, and performing an action on each of these streams. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>Type of input messages.</td></tr>
-    <tr><td class="paramname">TKey</td><td>Type of key.</td></tr>
-    <tr><td class="paramname">TOut</td><td>Type of output messages.</td></tr>
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
-    <tr><td class="paramname">action</td><td>Action function.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
-    <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">vectorSize</td><td>Vector arity.</td></tr>
+    <tr><td class="paramname">streamAction</td><td>Action to apply to the individual element streams.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Stream of key to output mappings.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
 
 </div>
 </div>
-<a id="afb91097b021bbf577fdf43332cb21a96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb91097b021bbf577fdf43332cb21a96">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[2/2]</span></h2>
+<a id="a6c6ff9d7e5f951ea7ef725d2d43dc8a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c6ff9d7e5f951ea7ef725d2d43dc8a4">&#9670;&nbsp;</a></span>Parallel&lt; TIn &gt;() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TIn[]&gt; Microsoft.Psi.Operators.Parallel&lt; TIn &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vectorSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamAction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Processes a stream of fixed-size array messages by creating a stream for each element in the array, and performing an action on each of these streams. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream.</td></tr>
+    <tr><td class="paramname">vectorSize</td><td>Vector arity.</td></tr>
+    <tr><td class="paramname">streamAction</td><td>Action to apply to the individual element streams.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
+
+</div>
+</div>
+<a id="ac2a27e22c296de11b39595249fd3dcd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2a27e22c296de11b39595249fd3dcd0">&#9670;&nbsp;</a></span>Parallel&lt; TIn &gt;() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TIn[]&gt; Microsoft.Psi.Operators.Parallel&lt; TIn &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamAction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Processes a stream of variable-size array messages by creating a stream for each element in the array, and performing an action on each of these streams. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream.</td></tr>
+    <tr><td class="paramname">streamAction</td><td>Action to apply to the individual element streams.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
+
+</div>
+</div>
+<a id="a65ef49a7f9ff9d811f3c9251e8f74732"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65ef49a7f9ff9d811f3c9251e8f74732">&#9670;&nbsp;</a></span>Parallel&lt; TIn &gt;() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TIn[]&gt; Microsoft.Psi.Operators.Parallel&lt; TIn &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamAction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Processes a stream of variable-size array messages by creating a stream for each element in the array, and performing an action on each of these streams. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream.</td></tr>
+    <tr><td class="paramname">streamAction</td><td>Action to apply to the individual element streams.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
+
+</div>
+</div>
+<a id="a5b0a3600e269fd2cc3544a85db4175ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b0a3600e269fd2cc3544a85db4175ba">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey &gt;() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;Dictionary&lt;TKey, TIn&gt; &gt; Microsoft.Psi.Operators.Parallel&lt; TIn, TKey &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamAction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIn</td><td>Type of input dictionary values.</td></tr>
+    <tr><td class="paramname">TKey</td><td>Type of input dictionary keys.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream.</td></tr>
+    <tr><td class="paramname">streamAction</td><td>The action to apply to each element stream.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output dictionaries.</dd></dl>
+
+</div>
+</div>
+<a id="ad336cc671ab9c45e90e9ad8c3cc2a24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad336cc671ab9c45e90e9ad8c3cc2a24a">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey &gt;() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;Dictionary&lt;TKey, TIn&gt; &gt; Microsoft.Psi.Operators.Parallel&lt; TIn, TKey &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamAction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIn</td><td>Type of input dictionary values.</td></tr>
+    <tr><td class="paramname">TKey</td><td>Type of input dictionary keys.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream.</td></tr>
+    <tr><td class="paramname">streamAction</td><td>The action to apply to each element stream.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output dictionaries.</dd></dl>
+
+</div>
+</div>
+<a id="a2e3b52df122345cb1f7c8ee490c07e00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e3b52df122345cb1f7c8ee490c07e00">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13487,7 +13906,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
-          <td class="paramname"><em>transformSelector</em>, </td>
+          <td class="paramname"><em>streamTransform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -13520,31 +13939,31 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a stream of dictionary messages by creating and applying a sub-pipeline to each element in the dictionary, and assembling the results into a corresponding output array dictionary. </p>
+<p>Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>Type of input messages.</td></tr>
-    <tr><td class="paramname">TKey</td><td>Type of key.</td></tr>
-    <tr><td class="paramname">TOut</td><td>Type of output messages.</td></tr>
+    <tr><td class="paramname">TIn</td><td>Type of input dictionary values.</td></tr>
+    <tr><td class="paramname">TKey</td><td>Type of input dictionary keys.</td></tr>
+    <tr><td class="paramname">TOut</td><td>Type of output dictionary values.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
-    <tr><td class="paramname">transformSelector</td><td>Function mapping indexes to output producers.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
+    <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output element stream.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
-    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Stream of key to output mappings.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output dictionaries.</dd></dl>
 
 </div>
 </div>
-<a id="a8c6c5781de528226b7e2e7a0d9e19a89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c6c5781de528226b7e2e7a0d9e19a89">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[1/4]</span></h2>
+<a id="a4e86869c5900d2b0d0ba40c3873589ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e86869c5900d2b0d0ba40c3873589ac">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13553,22 +13972,16 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TOut[]&gt; Microsoft.Psi.Operators.Parallel&lt; TIn, TOut &gt; </td>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;Dictionary&lt;TKey, TOut&gt; &gt; Microsoft.Psi.Operators.Parallel&lt; TIn, TKey, TOut &gt; </td>
           <td>(</td>
-          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>vectorSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Func&lt; int, TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TOut &gt;&#160;</td>
-          <td class="paramname"><em>action</em>, </td>
+          <td class="paramtype">Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamTransform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -13580,7 +13993,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -13595,30 +14014,31 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a stream of fixed-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream. </p>
+<p>Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>Type of input messages.</td></tr>
-    <tr><td class="paramname">TOut</td><td>Type of output messages.</td></tr>
+    <tr><td class="paramname">TIn</td><td>Type of input dictionary values.</td></tr>
+    <tr><td class="paramname">TKey</td><td>Type of input dictionary keys.</td></tr>
+    <tr><td class="paramname">TOut</td><td>Type of output dictionary values.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
-    <tr><td class="paramname">vectorSize</td><td>The arity of the array messages on the input stream.</td></tr>
-    <tr><td class="paramname">action</td><td>Action function.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
-    <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output output element stream.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Stream of collections of output.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output dictionaries.</dd></dl>
 
 </div>
 </div>
-<a id="a7cef1288d0712d642bc1556ba50f74cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7cef1288d0712d642bc1556ba50f74cf">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[2/4]</span></h2>
+<a id="a98d164f022ca946b0337aeaa1e84b0c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98d164f022ca946b0337aeaa1e84b0c1">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13642,7 +14062,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
-          <td class="paramname"><em>transformSelector</em>, </td>
+          <td class="paramname"><em>streamTransform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -13654,7 +14074,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -13669,11 +14089,11 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a stream of fixed-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream. </p>
+<p>Transforms a stream of fixed-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>Type of input messages.</td></tr>
-    <tr><td class="paramname">TOut</td><td>Type of output messages.</td></tr>
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+    <tr><td class="paramname">TOut</td><td>Type of output array element.</td></tr>
   </table>
   </dd>
 </dl>
@@ -13681,18 +14101,18 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
     <tr><td class="paramname">vectorSize</td><td>Vector arity.</td></tr>
-    <tr><td class="paramname">transformSelector</td><td>Function mapping indexes to output producers.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
-    <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">streamTransform</td><td>Function mapping from an index and stream of input element to a stream of output element.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Stream of collections of output.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
 
 </div>
 </div>
-<a id="a6e04a9be38f432e758dcb0b982b2d9c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e04a9be38f432e758dcb0b982b2d9c1">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[3/4]</span></h2>
+<a id="a812a1934c319758b3a343775729635d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a812a1934c319758b3a343775729635d1">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13709,8 +14129,14 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; int, TIn, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>, TOut &gt;&#160;</td>
-          <td class="paramname"><em>action</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vectorSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamTransform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -13722,7 +14148,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -13737,29 +14163,30 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a stream of variable-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream. </p>
+<p>Transforms a stream of fixed-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>Type of input messages.</td></tr>
-    <tr><td class="paramname">TOut</td><td>Type of output messages.</td></tr>
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+    <tr><td class="paramname">TOut</td><td>Type of output array element.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
-    <tr><td class="paramname">action</td><td>Action function.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
-    <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">vectorSize</td><td>Vector arity.</td></tr>
+    <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output element stream.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Stream of key to output mappings.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
 
 </div>
 </div>
-<a id="a7b2ada148cc387e77e86f7b41790b24f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b2ada148cc387e77e86f7b41790b24f">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[4/4]</span></h2>
+<a id="af52faff3e6e2473a2dbd98b8713df90e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af52faff3e6e2473a2dbd98b8713df90e">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13777,7 +14204,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
-          <td class="paramname"><em>transformSelector</em>, </td>
+          <td class="paramname"><em>streamTransform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -13789,7 +14216,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -13804,24 +14231,91 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a stream of variable-size array messages by creating and applying a sub-pipeline to each element in the input array, and assembling the results into a corresponding output array stream. </p>
+<p>Transforms a stream of variable-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>Type of input messages.</td></tr>
-    <tr><td class="paramname">TOut</td><td>Type of output messages.</td></tr>
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+    <tr><td class="paramname">TOut</td><td>Type of output array element.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
-    <tr><td class="paramname">transformSelector</td><td>Function mapping indexes to output producers.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
-    <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
+    <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output element stream.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Stream of key to output mappings.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
+
+</div>
+</div>
+<a id="a8cf2039f1f5d74d1abd1b2c96b433cda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cf2039f1f5d74d1abd1b2c96b433cda">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TOut &gt;() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TOut[]&gt; Microsoft.Psi.Operators.Parallel&lt; TIn, TOut &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
+          <td class="paramname"><em>streamTransform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>joinOrDefault</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transforms a stream of variable-size array messages by creating a stream for each element in the array, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output array stream. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TIn</td><td>Type of input array element.</td></tr>
+    <tr><td class="paramname">TOut</td><td>Type of output array element.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream.</td></tr>
+    <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output element stream.</td></tr>
+    <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Stream of output arrays.</dd></dl>
 
 </div>
 </div>
@@ -14705,7 +15199,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Executes a function for each item in the input stream, generating a new stream with the (zero or more) values returned by the function. The function must return an IEnumerable&lt;TOut&gt;, which can be System.Linq.Enumerable.Empty&lt;TOut&gt; to indicate zero results. The values in the returned IEnumerable&lt;TOut&gt; are emitted as separate messages with the same oringinating time. </p>
+<p>Executes a function for each item in the input stream, generating a new stream with the (zero or more) values returned by the function. The function must return an IEnumerable&lt;TOut&gt;, which can be System.Linq.Enumerable.Empty&lt;TOut&gt; to indicate zero results. The values in the returned IEnumerable&lt;TOut&gt; are emitted as separate messages with the same originating time. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TIn</td><td>The input message type</td></tr>
@@ -14757,6 +15251,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of standard deviation (double) values.</dd></dl>
+<p>This operator considers the standard deviation of a sequence of values containing NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
@@ -14792,6 +15287,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of standard deviation (double) values.</dd></dl>
+<p>This operator considers the standard deviation of a sequence of values containing NaN to be NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
@@ -15718,6 +16214,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of sums.</dd></dl>
+<p>This operator considers the sum of a number and NaN as NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
@@ -15880,6 +16377,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Stream of sums.</dd></dl>
+<p>This operator considers the sum of a number and NaN as NaN. Consequently, once a value of NaN is encountered on the source stream, the corresponding output value and all subsequent output values will be NaN. </p>
 
 </div>
 </div>
@@ -18161,6 +18659,65 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
     <tr><td class="paramname">condition</td><td>Predicate function by which to filter messages.</td></tr>
+    <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Output stream.</dd></dl>
+
+</div>
+</div>
+<a id="a2bd9f0694a1d7ca3375e9bcd745be15d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bd9f0694a1d7ca3375e9bcd745be15d">&#9670;&nbsp;</a></span>Window&lt; T &gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;IEnumerable&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt;T&gt; &gt; &gt; Microsoft.Psi.Operators.Window&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a>&#160;</td>
+          <td class="paramname"><em>relativeTimeInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a window of messages relative to the current message. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of source messages.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source stream of messages.</td></tr>
+    <tr><td class="paramname">relativeTimeInterval</td><td>The relative time interval over which to gather messages.</td></tr>
     <tr><td class="paramname">policy</td><td>Delivery policy.</td></tr>
   </table>
   </dd>

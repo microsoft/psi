@@ -99,6 +99,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a727ae6e8b9b48ada541fdb0738138065"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a727ae6e8b9b48ada541fdb0738138065">Save</a> (string filename)</td></tr>
 <tr class="memdesc:a727ae6e8b9b48ada541fdb0738138065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves this dataset to the specified file.  <a href="#a727ae6e8b9b48ada541fdb0738138065">More...</a><br /></td></tr>
 <tr class="separator:a727ae6e8b9b48ada541fdb0738138065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6e720235f00c962c6115bcca773f42"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a5f6e720235f00c962c6115bcca773f42">SaveAsync</a> (string filename)</td></tr>
+<tr class="memdesc:a5f6e720235f00c962c6115bcca773f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously saves this dataset to the specified file.  <a href="#a5f6e720235f00c962c6115bcca773f42">More...</a><br /></td></tr>
+<tr class="separator:a5f6e720235f00c962c6115bcca773f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a659ae1d6a8e63c970d49d6a947ccf853"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a659ae1d6a8e63c970d49d6a947ccf853">RemoveSession</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html">SessionViewModel</a> sessionViewModel)</td></tr>
 <tr class="memdesc:a659ae1d6a8e63c970d49d6a947ccf853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the specified session from the underlying dataset.  <a href="#a659ae1d6a8e63c970d49d6a947ccf853">More...</a><br /></td></tr>
 <tr class="separator:a659ae1d6a8e63c970d49d6a947ccf853"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,9 +111,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab91ab5d0616e686d00ece91b23634cdb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#ab91ab5d0616e686d00ece91b23634cdb">Load</a> (string filename)</td></tr>
 <tr class="memdesc:ab91ab5d0616e686d00ece91b23634cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a dataset from the specified file.  <a href="#ab91ab5d0616e686d00ece91b23634cdb">More...</a><br /></td></tr>
 <tr class="separator:ab91ab5d0616e686d00ece91b23634cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa300774b15d436e9a410aa61cc56754"><td class="memItemLeft" align="right" valign="top">static Task&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#afa300774b15d436e9a410aa61cc56754">LoadAsync</a> (string filename)</td></tr>
+<tr class="memdesc:afa300774b15d436e9a410aa61cc56754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously loads a dataset from the specified file.  <a href="#afa300774b15d436e9a410aa61cc56754">More...</a><br /></td></tr>
+<tr class="separator:afa300774b15d436e9a410aa61cc56754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a987fdfebeed155d9f87f2e226b050306"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a987fdfebeed155d9f87f2e226b050306">CreateFromExistingStore</a> (string storeName, string storePath, string partitionName=null)</td></tr>
 <tr class="memdesc:a987fdfebeed155d9f87f2e226b050306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new dataset from an exising data store.  <a href="#a987fdfebeed155d9f87f2e226b050306">More...</a><br /></td></tr>
 <tr class="separator:a987fdfebeed155d9f87f2e226b050306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76dc7e143112e2e8eba61ea76631054f"><td class="memItemLeft" align="right" valign="top">static Task&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a76dc7e143112e2e8eba61ea76631054f">CreateFromExistingStoreAsync</a> (string storeName, string storePath, string partitionName=null)</td></tr>
+<tr class="memdesc:a76dc7e143112e2e8eba61ea76631054f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously creates a new dataset from an exising data store.  <a href="#a76dc7e143112e2e8eba61ea76631054f">More...</a><br /></td></tr>
+<tr class="separator:a76dc7e143112e2e8eba61ea76631054f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -132,6 +141,15 @@ Properties</h2></td></tr>
 <tr class="memitem:a9e42d638a28218984e55fa66dd12b7dd"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a9e42d638a28218984e55fa66dd12b7dd">FileName</a><code> [get]</code></td></tr>
 <tr class="memdesc:a9e42d638a28218984e55fa66dd12b7dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the filename of the underlying dataset.  <a href="#a9e42d638a28218984e55fa66dd12b7dd">More...</a><br /></td></tr>
 <tr class="separator:a9e42d638a28218984e55fa66dd12b7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadcd711bea7f65ad4d827aa1437f9cc9"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#aadcd711bea7f65ad4d827aa1437f9cc9">CreateSessionCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:aadcd711bea7f65ad4d827aa1437f9cc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the create session command.  <a href="#aadcd711bea7f65ad4d827aa1437f9cc9">More...</a><br /></td></tr>
+<tr class="separator:aadcd711bea7f65ad4d827aa1437f9cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21e26df77dcde0e9c78f2f93582c6040"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a21e26df77dcde0e9c78f2f93582c6040">CreateSessionFromExistingStoreCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:a21e26df77dcde0e9c78f2f93582c6040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the create session command.  <a href="#a21e26df77dcde0e9c78f2f93582c6040">More...</a><br /></td></tr>
+<tr class="separator:a21e26df77dcde0e9c78f2f93582c6040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c4af9ad587bdacff3f88ca5c9cc058b"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a6c4af9ad587bdacff3f88ca5c9cc058b">CloseDatasetCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6c4af9ad587bdacff3f88ca5c9cc058b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the close dataset command.  <a href="#a6c4af9ad587bdacff3f88ca5c9cc058b">More...</a><br /></td></tr>
+<tr class="separator:a6c4af9ad587bdacff3f88ca5c9cc058b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -305,6 +323,59 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a76dc7e143112e2e8eba61ea76631054f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76dc7e143112e2e8eba61ea76631054f">&#9670;&nbsp;</a></span>CreateFromExistingStoreAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Task&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a>&gt; Microsoft.Psi.Visualization.Datasets.DatasetViewModel.CreateFromExistingStoreAsync </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>storeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>storePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>partitionName</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Asynchronously creates a new dataset from an exising data store. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">storeName</td><td>The name of the data store.</td></tr>
+    <tr><td class="paramname">storePath</td><td>The path of the data store.</td></tr>
+    <tr><td class="paramname">partitionName</td><td>The partition name.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A task that represents the asynchronous operation. The value of the TResult parameter contains the newly created dataset view model. </dd></dl>
+
+</div>
+</div>
 <a id="a82567d267faccb2f396124305bf45105"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a82567d267faccb2f396124305bf45105">&#9670;&nbsp;</a></span>CreateSession()</h2>
 
@@ -356,7 +427,42 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The newly loaded dataset.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The newly loaded dataset view model.</dd></dl>
+
+</div>
+</div>
+<a id="afa300774b15d436e9a410aa61cc56754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa300774b15d436e9a410aa61cc56754">&#9670;&nbsp;</a></span>LoadAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Task&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a>&gt; Microsoft.Psi.Visualization.Datasets.DatasetViewModel.LoadAsync </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Asynchronously loads a dataset from the specified file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The name of the file that contains the dataset to be loaded.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A task that represents the asynchronous operation. The value of the TResult parameter contains the newly loaded dataset view model. </dd></dl>
 
 </div>
 </div>
@@ -412,6 +518,33 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a5f6e720235f00c962c6115bcca773f42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f6e720235f00c962c6115bcca773f42">&#9670;&nbsp;</a></span>SaveAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task Microsoft.Psi.Visualization.Datasets.DatasetViewModel.SaveAsync </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asynchronously saves this dataset to the specified file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The name of the file to save this dataset into.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A task that represents the asynchronous operation.</dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a064960c913b585404743bcc9c7a0c529"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a064960c913b585404743bcc9c7a0c529">&#9670;&nbsp;</a></span>OriginatingTimeInterval</h2>
@@ -446,6 +579,78 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a6c4af9ad587bdacff3f88ca5c9cc058b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c4af9ad587bdacff3f88ca5c9cc058b">&#9670;&nbsp;</a></span>CloseDatasetCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand Microsoft.Psi.Visualization.Datasets.DatasetViewModel.CloseDatasetCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the close dataset command. </p>
+
+</div>
+</div>
+<a id="aadcd711bea7f65ad4d827aa1437f9cc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadcd711bea7f65ad4d827aa1437f9cc9">&#9670;&nbsp;</a></span>CreateSessionCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand Microsoft.Psi.Visualization.Datasets.DatasetViewModel.CreateSessionCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the create session command. </p>
+
+</div>
+</div>
+<a id="a21e26df77dcde0e9c78f2f93582c6040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21e26df77dcde0e9c78f2f93582c6040">&#9670;&nbsp;</a></span>CreateSessionFromExistingStoreCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand Microsoft.Psi.Visualization.Datasets.DatasetViewModel.CreateSessionFromExistingStoreCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the create session command. </p>
+
+</div>
+</div>
 <a id="aa5bba626b62b17e556b5f26bc72a312c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5bba626b62b17e556b5f26bc72a312c">&#9670;&nbsp;</a></span>CurrentSessionViewModel</h2>
 

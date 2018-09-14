@@ -11,7 +11,6 @@ var searchData=
   ['timer',['Timer',['../class_microsoft_1_1_psi_1_1_components_1_1_timer.html',1,'Microsoft.Psi.Components.Timer'],['../class_microsoft_1_1_psi_1_1_components_1_1_timer.html',1,'Microsoft.Psi.Components.Timer&lt; TOut &gt;']]],
   ['timers',['Timers',['../class_microsoft_1_1_psi_1_1_timers.html',1,'Microsoft::Psi']]],
   ['tofloat',['ToFloat',['../class_microsoft_1_1_psi_1_1_audio_1_1_to_float.html',1,'Microsoft::Psi::Audio']]],
-  ['transformimagecomponent',['TransformImageComponent',['../class_microsoft_1_1_psi_1_1_imaging_1_1_transform_image_component.html',1,'Microsoft::Psi::Imaging']]],
   ['typememberschema',['TypeMemberSchema',['../class_microsoft_1_1_psi_1_1_serialization_1_1_type_member_schema.html',1,'Microsoft::Psi::Serialization']]],
   ['typeschema',['TypeSchema',['../class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html',1,'Microsoft::Psi::Serialization']]]
 ];

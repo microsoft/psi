@@ -1,7 +1,7 @@
 var searchData=
 [
   ['pair',['Pair',['../class_microsoft_1_1_psi_1_1_components_1_1_pair.html',1,'Microsoft::Psi::Components']]],
-  ['parallel',['Parallel',['../class_microsoft_1_1_psi_1_1_components_1_1_parallel.html',1,'Microsoft::Psi::Components']]],
+  ['parallelfixedlength',['ParallelFixedLength',['../class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html',1,'Microsoft::Psi::Components']]],
   ['parallelsparse',['ParallelSparse',['../class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html',1,'Microsoft::Psi::Components']]],
   ['parallelvariablelength',['ParallelVariableLength',['../class_microsoft_1_1_psi_1_1_components_1_1_parallel_variable_length.html',1,'Microsoft::Psi::Components']]],
   ['partialspeechresponseeventargs',['PartialSpeechResponseEventArgs',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_partial_speech_response_event_args.html',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],

@@ -29,6 +29,7 @@ var searchData=
   ['imageencoder',['ImageEncoder',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image_encoder.html',1,'Microsoft::Psi::Imaging']]],
   ['imageframe',['ImageFrame',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_internal_1_1_image_frame.html',1,'Microsoft::Psi::Media::MediaCaptureInternal']]],
   ['imagepool',['ImagePool',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html',1,'Microsoft::Psi::Imaging']]],
+  ['imagetransformer',['ImageTransformer',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html',1,'Microsoft::Psi::Imaging']]],
   ['imagevisualizationobject',['ImageVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_image_visualization_object.html',1,'Microsoft::Psi::Visualization::Client']]],
   ['imagevisualizationobjectbase',['ImageVisualizationObjectBase',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_image_visualization_object_base.html',1,'Microsoft::Psi::Visualization::VisualizationObjects']]],
   ['imagevisualizationobjectbaseconfiguration',['ImageVisualizationObjectBaseConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_image_visualization_object_base_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
@@ -94,6 +95,6 @@ var searchData=
   ['istreamsummary',['IStreamSummary',['../interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_summary.html',1,'Microsoft::Psi::Visualization::Data']]],
   ['istreamtreenode',['IStreamTreeNode',['../interface_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_i_stream_tree_node.html',1,'Microsoft::Psi::Visualization::Datasets']]],
   ['istreamvisualizationobject',['IStreamVisualizationObject',['../interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html',1,'Microsoft::Psi::Visualization::VisualizationObjects']]],
-  ['isummarizer',['ISummarizer',['../interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_summarizer.html',1,'Microsoft.Psi.Visualization.Data.ISummarizer'],['../interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_summarizer.html',1,'Microsoft.Psi.Visualization.Data.ISummarizer&lt; TSrc, TDest &gt;']]],
+  ['isummarizer',['ISummarizer',['../interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_summarizer.html',1,'Microsoft.Psi.Visualization.Data.ISummarizer&lt; TSrc, TDest &gt;'],['../interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_summarizer.html',1,'Microsoft.Psi.Visualization.Data.ISummarizer']]],
   ['isummarizer_3c_20tsrc_2c_20tdest_20_3e',['ISummarizer&lt; TSrc, TDest &gt;',['../interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_summarizer.html',1,'Microsoft::Psi::Visualization::Data']]]
 ];

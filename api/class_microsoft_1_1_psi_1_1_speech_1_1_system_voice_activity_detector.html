@@ -75,7 +75,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Component that implements a voice activity detector.  
+<p>Component that performs voice activity detection by using the desktop speech recognition engine from <code>System.Speech</code>.  
  <a href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html#details">More...</a></p>
 
 <p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; AudioBuffer, bool &gt;</a>, and IDisposable.</p>
@@ -83,10 +83,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af4a445fa1a21c0f5c1d32f0ad64abbe3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html#af4a445fa1a21c0f5c1d32f0ad64abbe3">SystemVoiceActivityDetector</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector_configuration.html">SystemVoiceActivityDetectorConfiguration</a> configuration)</td></tr>
-<tr class="memdesc:af4a445fa1a21c0f5c1d32f0ad64abbe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that implements a voice activity detector. ">SystemVoiceActivityDetector</a> class.  <a href="#af4a445fa1a21c0f5c1d32f0ad64abbe3">More...</a><br /></td></tr>
+<tr class="memdesc:af4a445fa1a21c0f5c1d32f0ad64abbe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that performs voice activity detection by using the desktop speech recognition engine from ...">SystemVoiceActivityDetector</a> class.  <a href="#af4a445fa1a21c0f5c1d32f0ad64abbe3">More...</a><br /></td></tr>
 <tr class="separator:af4a445fa1a21c0f5c1d32f0ad64abbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1183487c166c086ecdb2e0f47649576"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html#ae1183487c166c086ecdb2e0f47649576">SystemVoiceActivityDetector</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string configurationFilename=null)</td></tr>
-<tr class="memdesc:ae1183487c166c086ecdb2e0f47649576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that implements a voice activity detector. ">SystemVoiceActivityDetector</a> class.  <a href="#ae1183487c166c086ecdb2e0f47649576">More...</a><br /></td></tr>
+<tr class="memdesc:ae1183487c166c086ecdb2e0f47649576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that performs voice activity detection by using the desktop speech recognition engine from ...">SystemVoiceActivityDetector</a> class.  <a href="#ae1183487c166c086ecdb2e0f47649576">More...</a><br /></td></tr>
 <tr class="separator:ae1183487c166c086ecdb2e0f47649576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2a4cd5915e8f83a460bdbd756a8aead"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html#af2a4cd5915e8f83a460bdbd756a8aead">Dispose</a> ()</td></tr>
 <tr class="memdesc:af2a4cd5915e8f83a460bdbd756a8aead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disposes of managed resources.  <a href="#af2a4cd5915e8f83a460bdbd756a8aead">More...</a><br /></td></tr>
@@ -117,7 +117,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a51b311c38805f699e6f527dba1475837 inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Component that implements a voice activity detector. </p>
+<div class="textblock"><p>Component that performs voice activity detection by using the desktop speech recognition engine from <code>System.Speech</code>. </p>
 <p>This component monitors an input audio stream and outputs a boolean flag for each input message indicating whether or not voice activity was present in the corresponding AudioBuffer. It relies on the System.Speech.Recognition.SpeechRecognitionEngine in .NET and uses its AudioStateChanged event to estimate when speech activity begins and ends. It estimates the originating times of these events using the current audio position of the underlying speech recognition engine to obtain an estimate of the time the event occurred. These results may be further fine-tuned to potentially obtain better estimates with the VoiceActivityStartOffsetMs and VoiceActivityEndOffsetMs configuration parameters, which are added to the inferred times. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af4a445fa1a21c0f5c1d32f0ad64abbe3"></a>
@@ -146,7 +146,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that implements a voice activity detector. ">SystemVoiceActivityDetector</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that performs voice activity detection by using the desktop speech recognition engine from ...">SystemVoiceActivityDetector</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>The pipeline to add the component to.</td></tr>
@@ -183,7 +183,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that implements a voice activity detector. ">SystemVoiceActivityDetector</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_voice_activity_detector.html" title="Component that performs voice activity detection by using the desktop speech recognition engine from ...">SystemVoiceActivityDetector</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>The pipeline to add the component to.</td></tr>

@@ -70,6 +70,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Components.ParallelSparse&lt; TIn, TKey, TOut &gt; Class Template Reference</div>  </div>
@@ -83,9 +84,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af2ca531fc03994f468669dc24daac352"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#af2ca531fc03994f468669dc24daac352">ParallelSparse</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
-<tr class="memdesc:af2ca531fc03994f468669dc24daac352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#af2ca531fc03994f468669dc24daac352" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class.  <a href="#af2ca531fc03994f468669dc24daac352">More...</a><br /></td></tr>
-<tr class="separator:af2ca531fc03994f468669dc24daac352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cc76de00976775e51851dca5e449119"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a1cc76de00976775e51851dca5e449119">ParallelSparse</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Action&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; action, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a1cc76de00976775e51851dca5e449119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a1cc76de00976775e51851dca5e449119" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class.  <a href="#a1cc76de00976775e51851dca5e449119">More...</a><br /></td></tr>
+<tr class="separator:a1cc76de00976775e51851dca5e449119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5191e41c3626d90940bab3af3d955d10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a5191e41c3626d90940bab3af3d955d10">ParallelSparse</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transform, bool joinOrDefault, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a5191e41c3626d90940bab3af3d955d10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a1cc76de00976775e51851dca5e449119" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class.  <a href="#a5191e41c3626d90940bab3af3d955d10">More...</a><br /></td></tr>
+<tr class="separator:a5191e41c3626d90940bab3af3d955d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -95,10 +99,13 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a354271ad4d134c6bcb5c0cff3166bd7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a354271ad4d134c6bcb5c0cff3166bd7d">In</a> =&gt; this.input</td></tr>
-<tr class="separator:a354271ad4d134c6bcb5c0cff3166bd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a562705f26993417384f96af36dc4634c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a562705f26993417384f96af36dc4634c">Out</a> =&gt; this.join.Out</td></tr>
 <tr class="separator:a562705f26993417384f96af36dc4634c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:a354271ad4d134c6bcb5c0cff3166bd7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a354271ad4d134c6bcb5c0cff3166bd7d">In</a><code> [get]</code></td></tr>
+<tr class="separator:a354271ad4d134c6bcb5c0cff3166bd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Creates and applies a sub-pipeline to each element in the input collection. The sub-pipelines have key affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same key. </p>
@@ -111,8 +118,52 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af2ca531fc03994f468669dc24daac352"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2ca531fc03994f468669dc24daac352">&#9670;&nbsp;</a></span>ParallelSparse()</h2>
+<a id="a1cc76de00976775e51851dca5e449119"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cc76de00976775e51851dca5e449119">&#9670;&nbsp;</a></span>ParallelSparse() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html">Microsoft.Psi.Components.ParallelSparse</a>&lt; TIn, TKey, TOut &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html">ParallelSparse</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
+          <td class="paramname"><em>pipeline</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>action</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a1cc76de00976775e51851dca5e449119" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
+    <tr><td class="paramname">action</td><td>Action to perform in parallel.</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5191e41c3626d90940bab3af3d955d10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5191e41c3626d90940bab3af3d955d10">&#9670;&nbsp;</a></span>ParallelSparse() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +178,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
-          <td class="paramname"><em>transformSelector</em>, </td>
+          <td class="paramname"><em>transform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -149,11 +200,11 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#af2ca531fc03994f468669dc24daac352" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a1cc76de00976775e51851dca5e449119" title="Initializes a new instance of the ParallelSparse&lt;TIn, TKey, TOut&gt; class. ">ParallelSparse&lt;TIn, TKey, TOut&gt;</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
-    <tr><td class="paramname">transformSelector</td><td>Function mapping keyed input producers to output producers.</td></tr>
+    <tr><td class="paramname">transform</td><td>Function mapping keyed input producers to output producers.</td></tr>
     <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
     <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
   </table>
@@ -211,22 +262,6 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a354271ad4d134c6bcb5c0cff3166bd7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a354271ad4d134c6bcb5c0cff3166bd7d">&#9670;&nbsp;</a></span>In</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt;Dictionary&lt;TKey, TIn&gt; &gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html">Microsoft.Psi.Components.ParallelSparse</a>&lt; TIn, TKey, TOut &gt;.In =&gt; this.input</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p></p>
-
-</div>
-</div>
 <a id="a562705f26993417384f96af36dc4634c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a562705f26993417384f96af36dc4634c">&#9670;&nbsp;</a></span>Out</h2>
 
@@ -237,6 +272,31 @@ Public Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt;Dictionary&lt;TKey, TOut&gt; &gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html">Microsoft.Psi.Components.ParallelSparse</a>&lt; TIn, TKey, TOut &gt;.Out =&gt; this.join.Out</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a354271ad4d134c6bcb5c0cff3166bd7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a354271ad4d134c6bcb5c0cff3166bd7d">&#9670;&nbsp;</a></span>In</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt;Dictionary&lt;TKey, TIn&gt; &gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html">Microsoft.Psi.Components.ParallelSparse</a>&lt; TIn, TKey, TOut &gt;.In</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p></p>

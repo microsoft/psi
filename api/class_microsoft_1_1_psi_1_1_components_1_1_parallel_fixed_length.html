@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <meta name="generator" content="Doxygen 1.8.14" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Platform for Situated Intelligence: Microsoft.Psi.Components.Parallel&lt; TIn, TOut &gt; Class Template Reference</title>
+    <title>Platform for Situated Intelligence: Microsoft.Psi.Components.ParallelFixedLength&lt; TIn, TOut &gt; Class Template Reference</title>
     <link href="tabs.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="dynsections.js"></script>  <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -62,39 +62,43 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_microsoft.html">Microsoft</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi.html">Psi</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi_1_1_components.html">Components</a></li><li class="navelem"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html">Parallel</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_microsoft.html">Microsoft</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi.html">Psi</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi_1_1_components.html">Components</a></li><li class="navelem"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">ParallelFixedLength</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="class_microsoft_1_1_psi_1_1_components_1_1_parallel-members.html">List of all members</a>  </div>
+<a href="#properties">Properties</a> &#124;
+<a href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Microsoft.Psi.Components.Parallel&lt; TIn, TOut &gt; Class Template Reference</div>  </div>
+<div class="title">Microsoft.Psi.Components.ParallelFixedLength&lt; TIn, TOut &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Creates and applies a sub-pipeline to each element in the input array. The input array must have the same length across all messages. The sub-pipelines have index affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same index.  
- <a href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#details">More...</a></p>
+ <a href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#details">More...</a></p>
 
 <p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html">Microsoft.Psi.IConsumer&lt; TIn[]&gt;</a>, and <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; TOut[]&gt;</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af6fb328015e3693bc5ac265308407320"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#af6fb328015e3693bc5ac265308407320">Parallel</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transformSelector, bool joinOrDefault)</td></tr>
-<tr class="memdesc:af6fb328015e3693bc5ac265308407320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#af6fb328015e3693bc5ac265308407320" title="Initializes a new instance of the Parallel&lt;TIn, TOut&gt; class. ">Parallel&lt;TIn, TOut&gt;</a> class.  <a href="#af6fb328015e3693bc5ac265308407320">More...</a><br /></td></tr>
-<tr class="separator:af6fb328015e3693bc5ac265308407320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d3fbf2bb0d44f3773bfb9e1dffa29f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f">ParallelFixedLength</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; action)</td></tr>
+<tr class="memdesc:a09d3fbf2bb0d44f3773bfb9e1dffa29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class. ">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.  <a href="#a09d3fbf2bb0d44f3773bfb9e1dffa29f">More...</a><br /></td></tr>
+<tr class="separator:a09d3fbf2bb0d44f3773bfb9e1dffa29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17af7641f4262138afa8e818c50b17a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a17af7641f4262138afa8e818c50b17a7">ParallelFixedLength</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transform, bool joinOrDefault)</td></tr>
+<tr class="memdesc:a17af7641f4262138afa8e818c50b17a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class. ">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.  <a href="#a17af7641f4262138afa8e818c50b17a7">More...</a><br /></td></tr>
+<tr class="separator:a17af7641f4262138afa8e818c50b17a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:adbafbb61feb7caa0f5fe9f01c4cdf808"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#adbafbb61feb7caa0f5fe9f01c4cdf808">In</a> =&gt; this.input</td></tr>
-<tr class="separator:adbafbb61feb7caa0f5fe9f01c4cdf808"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd6d24f12354c55c7d3e2fec9d845ba9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#acd6d24f12354c55c7d3e2fec9d845ba9">Out</a> =&gt; this.join.Out</td></tr>
-<tr class="separator:acd6d24f12354c55c7d3e2fec9d845ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e2916d41c9866a42e35c138ecb8140"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TOut[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a14e2916d41c9866a42e35c138ecb8140">Out</a> =&gt; this.join.Out</td></tr>
+<tr class="separator:a14e2916d41c9866a42e35c138ecb8140"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:a83e2193b1af3f247cbc300298e38b73b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a83e2193b1af3f247cbc300298e38b73b">In</a><code> [get]</code></td></tr>
+<tr class="separator:a83e2193b1af3f247cbc300298e38b73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_i_consumer')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html">Microsoft.Psi.IConsumer&lt; TIn[]&gt;</a></td></tr>
 <tr class="memitem:a26f37c94d15ea17ed5baaf2e954a2920 inherit properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html#a26f37c94d15ea17ed5baaf2e954a2920">In</a><code> [get]</code></td></tr>
 <tr class="memdesc:a26f37c94d15ea17ed5baaf2e954a2920 inherit properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the input we receive messages on.  <a href="interface_microsoft_1_1_psi_1_1_i_consumer.html#a26f37c94d15ea17ed5baaf2e954a2920">More...</a><br /></td></tr>
@@ -114,14 +118,58 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af6fb328015e3693bc5ac265308407320"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6fb328015e3693bc5ac265308407320">&#9670;&nbsp;</a></span>Parallel()</h2>
+<a id="a09d3fbf2bb0d44f3773bfb9e1dffa29f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09d3fbf2bb0d44f3773bfb9e1dffa29f">&#9670;&nbsp;</a></span>ParallelFixedLength() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html">Microsoft.Psi.Components.Parallel</a>&lt; TIn, TOut &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html">Parallel</a> </td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">Microsoft.Psi.Components.ParallelFixedLength</a>&lt; TIn, TOut &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">ParallelFixedLength</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
+          <td class="paramname"><em>pipeline</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vectorSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>action</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class. ">ParallelFixedLength&lt;TIn, TOut&gt;</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
+    <tr><td class="paramname">vectorSize</td><td>Vector size.</td></tr>
+    <tr><td class="paramname">action</td><td>Action to apply to output producers.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a17af7641f4262138afa8e818c50b17a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17af7641f4262138afa8e818c50b17a7">&#9670;&nbsp;</a></span>ParallelFixedLength() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">Microsoft.Psi.Components.ParallelFixedLength</a>&lt; TIn, TOut &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">ParallelFixedLength</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
           <td class="paramname"><em>pipeline</em>, </td>
@@ -136,7 +184,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt;&#160;</td>
-          <td class="paramname"><em>transformSelector</em>, </td>
+          <td class="paramname"><em>transform</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -152,12 +200,12 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html#af6fb328015e3693bc5ac265308407320" title="Initializes a new instance of the Parallel&lt;TIn, TOut&gt; class. ">Parallel&lt;TIn, TOut&gt;</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class. ">ParallelFixedLength&lt;TIn, TOut&gt;</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
     <tr><td class="paramname">vectorSize</td><td>Vector size.</td></tr>
-    <tr><td class="paramname">transformSelector</td><td>Function mapping keyed input producers to output producers.</td></tr>
+    <tr><td class="paramname">transform</td><td>Function mapping keyed input producers to output producers.</td></tr>
     <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
   </table>
   </dd>
@@ -166,14 +214,14 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="adbafbb61feb7caa0f5fe9f01c4cdf808"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbafbb61feb7caa0f5fe9f01c4cdf808">&#9670;&nbsp;</a></span>In</h2>
+<a id="a14e2916d41c9866a42e35c138ecb8140"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e2916d41c9866a42e35c138ecb8140">&#9670;&nbsp;</a></span>Out</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt;TIn[]&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html">Microsoft.Psi.Components.Parallel</a>&lt; TIn, TOut &gt;.In =&gt; this.input</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt;TOut[]&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">Microsoft.Psi.Components.ParallelFixedLength</a>&lt; TIn, TOut &gt;.Out =&gt; this.join.Out</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -182,16 +230,25 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="acd6d24f12354c55c7d3e2fec9d845ba9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd6d24f12354c55c7d3e2fec9d845ba9">&#9670;&nbsp;</a></span>Out</h2>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a83e2193b1af3f247cbc300298e38b73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83e2193b1af3f247cbc300298e38b73b">&#9670;&nbsp;</a></span>In</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt;TOut[]&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel.html">Microsoft.Psi.Components.Parallel</a>&lt; TIn, TOut &gt;.Out =&gt; this.join.Out</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt;TIn[]&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">Microsoft.Psi.Components.ParallelFixedLength</a>&lt; TIn, TOut &gt;.In</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p></p>

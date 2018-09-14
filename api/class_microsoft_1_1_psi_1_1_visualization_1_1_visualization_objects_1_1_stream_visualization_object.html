@@ -137,6 +137,9 @@ Properties</h2></td></tr>
 <tr class="memitem:a2abaaaa9cb235d949b89efef5be43989"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TData &gt; &gt;.ObservableKeyedView&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a2abaaaa9cb235d949b89efef5be43989">Data</a><code> [get, protected set]</code></td></tr>
 <tr class="memdesc:a2abaaaa9cb235d949b89efef5be43989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the data view.  <a href="#a2abaaaa9cb235d949b89efef5be43989">More...</a><br /></td></tr>
 <tr class="separator:a2abaaaa9cb235d949b89efef5be43989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7251961fce84d8552535322aa11385d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973">InterpolationStyle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ab7251961fce84d8552535322aa11385d">InterpolationStyle</a><code> [get]</code></td></tr>
+<tr class="memdesc:ab7251961fce84d8552535322aa11385d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets how to interpolate values at times that are between messages  <a href="#ab7251961fce84d8552535322aa11385d">More...</a><br /></td></tr>
+<tr class="separator:ab7251961fce84d8552535322aa11385d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a stream visualization object. </p>
@@ -223,7 +226,7 @@ Properties</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">currentTime</td><td>Time to search for.</td></tr>
     <tr><td class="paramname">count</td><td>Number of entries to search within.</td></tr>
-    <tr><td class="paramname">timeAtIndex</td><td>Fucntion that returns and index given a time.</td></tr>
+    <tr><td class="paramname">timeAtIndex</td><td>Function that returns and index given a time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -669,6 +672,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets or sets the data view. </p>
+
+</div>
+</div>
+<a id="ab7251961fce84d8552535322aa11385d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7251961fce84d8552535322aa11385d">&#9670;&nbsp;</a></span>InterpolationStyle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973">InterpolationStyle</a> <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.<a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973">InterpolationStyle</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets how to interpolate values at times that are between messages </p>
 
 </div>
 </div>

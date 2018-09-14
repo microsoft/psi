@@ -6,8 +6,6 @@ var searchData=
   ['all',['All',['../struct_microsoft_1_1_psi_1_1_arrays_1_1_range.html#a4fb68a5c5810ea75b527a887d2d3dcb1',1,'Microsoft::Psi::Arrays::Range']]],
   ['alldevices',['AllDevices',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a0f2b4bb33dcd8063ce28d8b514b6d0c5',1,'Microsoft::Psi::Media_Interop::MediaCaptureDevice']]],
   ['annotations',['Annotations',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotated_event.html#aa0d900f9a70c293156b0362cfc7ae7b2',1,'Microsoft::Psi::Data::Annotations::AnnotatedEvent']]],
-  ['annotationschema',['AnnotationSchema',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store_common.html#aaf07ecb2d9887538eebe7b6320a05209',1,'Microsoft::Psi::Data::Annotations::AnnotationStoreCommon']]],
-  ['annotationschemauri',['AnnotationSchemaUri',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store_common.html#a03df0e6b1aa95436b2a368076dfb852d',1,'Microsoft::Psi::Data::Annotations::AnnotationStoreCommon']]],
   ['attributenotfound',['AttributeNotFound',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_resources.html#a38ad069ba53e0c040fbea04c13e4401b',1,'Microsoft::Psi::Media_Interop::Resources']]],
   ['audiobitspersample',['audioBitsPerSample',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#af1446044e0947aeb9b101e293f9c2771',1,'Microsoft::Psi::Media_Interop::MP4WriterUnmanagedData']]],
   ['audionumchannels',['audioNumChannels',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#ab8499cdaca96c465d2215365ded62d26',1,'Microsoft::Psi::Media_Interop::MP4WriterUnmanagedData']]],

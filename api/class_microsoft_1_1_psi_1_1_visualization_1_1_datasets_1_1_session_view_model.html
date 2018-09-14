@@ -107,6 +107,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a5a5edc858f03b5e267a4dee6e70382fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a5a5edc858f03b5e267a4dee6e70382fa">DatasetViewModel</a> =&gt; this.datasetViewModel</td></tr>
+<tr class="memdesc:a5a5edc858f03b5e267a4dee6e70382fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the dataset viewmodel.  <a href="#a5a5edc858f03b5e267a4dee6e70382fa">More...</a><br /></td></tr>
+<tr class="separator:a5a5edc858f03b5e267a4dee6e70382fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bc00f0083ca200dc6b41d87e751af7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a3bc00f0083ca200dc6b41d87e751af7f">OriginatingTimeInterval</a> =&gt; this.session.OriginatingTimeInterval</td></tr>
 <tr class="memdesc:a3bc00f0083ca200dc6b41d87e751af7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the orginating time interval (earliest to latest) of the messages in the underlying session.  <a href="#a3bc00f0083ca200dc6b41d87e751af7f">More...</a><br /></td></tr>
 <tr class="separator:a3bc00f0083ca200dc6b41d87e751af7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +122,15 @@ Properties</h2></td></tr>
 <tr class="memitem:a7e98686bcb6755d9734e7cb65eccaa01"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a7e98686bcb6755d9734e7cb65eccaa01">Name</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:a7e98686bcb6755d9734e7cb65eccaa01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the session name.  <a href="#a7e98686bcb6755d9734e7cb65eccaa01">More...</a><br /></td></tr>
 <tr class="separator:a7e98686bcb6755d9734e7cb65eccaa01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0aa0d86bdebe65f769566074ce1aa5ad"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a0aa0d86bdebe65f769566074ce1aa5ad">AddPartitionCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:a0aa0d86bdebe65f769566074ce1aa5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the add partition command.  <a href="#a0aa0d86bdebe65f769566074ce1aa5ad">More...</a><br /></td></tr>
+<tr class="separator:a0aa0d86bdebe65f769566074ce1aa5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a426acef2ac15a919ebe79b6c0412691d"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a426acef2ac15a919ebe79b6c0412691d">RemoveSessionCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:a426acef2ac15a919ebe79b6c0412691d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remove session command.  <a href="#a426acef2ac15a919ebe79b6c0412691d">More...</a><br /></td></tr>
+<tr class="separator:a426acef2ac15a919ebe79b6c0412691d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af61a4af73341b6718b425dce9f4cf6a6"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#af61a4af73341b6718b425dce9f4cf6a6">VisualizeSessionCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:af61a4af73341b6718b425dce9f4cf6a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the visualize session command.  <a href="#af61a4af73341b6718b425dce9f4cf6a6">More...</a><br /></td></tr>
+<tr class="separator:af61a4af73341b6718b425dce9f4cf6a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -412,6 +424,22 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a5a5edc858f03b5e267a4dee6e70382fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a5edc858f03b5e267a4dee6e70382fa">&#9670;&nbsp;</a></span>DatasetViewModel</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html">DatasetViewModel</a> Microsoft.Psi.Visualization.Datasets.SessionViewModel.DatasetViewModel =&gt; this.datasetViewModel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the dataset viewmodel. </p>
+
+</div>
+</div>
 <a id="a3bc00f0083ca200dc6b41d87e751af7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bc00f0083ca200dc6b41d87e751af7f">&#9670;&nbsp;</a></span>OriginatingTimeInterval</h2>
 
@@ -445,6 +473,30 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a0aa0d86bdebe65f769566074ce1aa5ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0aa0d86bdebe65f769566074ce1aa5ad">&#9670;&nbsp;</a></span>AddPartitionCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand Microsoft.Psi.Visualization.Datasets.SessionViewModel.AddPartitionCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the add partition command. </p>
+
+</div>
+</div>
 <a id="a7e98686bcb6755d9734e7cb65eccaa01"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e98686bcb6755d9734e7cb65eccaa01">&#9670;&nbsp;</a></span>Name</h2>
 
@@ -466,6 +518,54 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets or sets the session name. </p>
+
+</div>
+</div>
+<a id="a426acef2ac15a919ebe79b6c0412691d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a426acef2ac15a919ebe79b6c0412691d">&#9670;&nbsp;</a></span>RemoveSessionCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand Microsoft.Psi.Visualization.Datasets.SessionViewModel.RemoveSessionCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the remove session command. </p>
+
+</div>
+</div>
+<a id="af61a4af73341b6718b425dce9f4cf6a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af61a4af73341b6718b425dce9f4cf6a6">&#9670;&nbsp;</a></span>VisualizeSessionCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand Microsoft.Psi.Visualization.Datasets.SessionViewModel.VisualizeSessionCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the visualize session command. </p>
 
 </div>
 </div>

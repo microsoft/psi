@@ -19,5 +19,6 @@ var searchData=
   ['fromname',['FromName',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_video_format.html#a159a35c0e3d47f34e3ad2e5eb9ae4e89',1,'Microsoft::Psi::Media_Interop::VideoFormat']]],
   ['fromstream',['FromStream',['../class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html#ab6984af6b902adcc4cccdec0ad4fe88a',1,'Microsoft::Psi::Audio::WaveFormat']]],
   ['fromsystempixelformat',['FromSystemPixelFormat',['../class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html#ab005d934a154380ee31ba99e186d4b5b',1,'Microsoft::Psi::Imaging::PixelFormatHelper']]],
-  ['fromtype',['FromType',['../class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html#a1640af8f574f5b48a66dab67f20a1691',1,'Microsoft::Psi::Serialization::TypeSchema']]]
+  ['fromtype',['FromType',['../class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html#a1640af8f574f5b48a66dab67f20a1691',1,'Microsoft::Psi::Serialization::TypeSchema']]],
+  ['future',['Future',['../class_microsoft_1_1_psi_1_1_relative_time_interval.html#af4faaf8541744ae533211a0fb277ab73',1,'Microsoft.Psi.RelativeTimeInterval.Future()'],['../class_microsoft_1_1_psi_1_1_relative_time_interval.html#ab3369286aedeff809575641c0f8fd8d8',1,'Microsoft.Psi.RelativeTimeInterval.Future(TimeSpan duration, bool inclusive=true)']]]
 ];

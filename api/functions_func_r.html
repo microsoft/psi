@@ -226,7 +226,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_file_writer.html#a7e7809c50b9c4b18835ac42ebab0bd20">Microsoft.Psi.Audio.WaveFileWriter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_zero_crossing_rate.html#a660f60a68b9e1e60357c57db651d89b8">Microsoft.Psi.Audio.ZeroCrossingRate</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_aggregator.html#a7d1707a98d3ede9cda5d31a80ad842f5">Microsoft.Psi.Components.Aggregator&lt; TState, TIn, TOut &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_buffer_select.html#ab856013531fe60dcd24238ff68df1e22">Microsoft.Psi.Components.BufferSelect&lt; TInput, TOutput &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_buffer_process.html#a77c879c9ee0bc21cb95efaef48240b13">Microsoft.Psi.Components.BufferProcess&lt; TInput, TOutput &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#a355b0fd7a21fa6ed1a811789b38f823e">Microsoft.Psi.Components.ConsumerProducer&lt; TIn, TOut &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_deserializer_component.html#a6d87e19b6dacbd34d1d03986155349a2">Microsoft.Psi.Components.DeserializerComponent&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_processor.html#a9534aa24b1a00760f65e42555be71014">Microsoft.Psi.Components.Processor&lt; TIn, TOut &gt;</a>
@@ -235,7 +235,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html#a73d3339bafa8d9bcac1d311d468944c2">Microsoft.Psi.Components.SimpleConsumer&lt; TIn &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_decoder.html#aa6ab6cfbf4161ff38028b4edc316b49c">Microsoft.Psi.Imaging.ImageDecoder</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_encoder.html#a32e9958347147cf53377e598c3875c26">Microsoft.Psi.Imaging.ImageEncoder</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_transform_image_component.html#a7a10bc530c90d3e8fa9868b0d34eecf8">Microsoft.Psi.Imaging.TransformImageComponent</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html#accb8a52df7fa757ee60b635e91b10ee6">Microsoft.Psi.Imaging.ImageTransformer</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_depth_to_color_converter.html#a62bd2102b1605671e49acc53f1fdd8bd">Microsoft.Psi.Kinect.DepthToColorConverter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_project_to3_d.html#ab12f857a5d9951a6690675c237fb9426">Microsoft.Psi.Kinect.ProjectTo3D</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#a402fa7acec592997dc762eaf80979be2">Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizer</a>
@@ -283,6 +283,9 @@ $(function() {
 <li>RegisterGenericSerializer()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a2b3c686fa0fad9915c3d05eeb08558ac">Microsoft.Psi.Serialization.KnownSerializers</a>
 </li>
+<li>RegisterPipelineFinalHandler()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a85b18292d6a68c9cde57af976c9cb2bc">Microsoft.Psi.Pipeline</a>
+</li>
 <li>RegisterPipelineStartHandler()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a6454ae649dc187e6ae8f789810bdd251">Microsoft.Psi.Pipeline</a>
 </li>
@@ -297,10 +300,10 @@ $(function() {
 , <a class="el" href="class_real_sense_device_unmanaged.html#a9fc290416d2ea2452b5e07815dbfe036">RealSenseDeviceUnmanaged</a>
 </li>
 <li>RemoteExporter()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_remoting_1_1_remote_exporter.html#a9c4a6be39759c29bb5d0e0116dee1d5d">Microsoft.Psi.Remoting.RemoteExporter</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_remoting_1_1_remote_exporter.html#ab04e4a4a1708242aed2477f71d83b996">Microsoft.Psi.Remoting.RemoteExporter</a>
 </li>
 <li>RemoteImporter()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_remoting_1_1_remote_importer.html#afcb1465eec62cf797cab586cc506e09e">Microsoft.Psi.Remoting.RemoteImporter</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_remoting_1_1_remote_importer.html#a5f1397f61e875c14397423a8663b9907">Microsoft.Psi.Remoting.RemoteImporter</a>
 </li>
 <li>Remove()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache_1_1_observable_keyed_view.html#a52d3f4eedfdca20a1467b64a485038bc">Microsoft.Psi.Visualization.Collections.ObservableKeyedCache&lt; TKey, TItem &gt;.ObservableKeyedView</a>
@@ -315,7 +318,7 @@ $(function() {
 </li>
 <li>RemovePanel()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_container.html#a62802f1ed17974f46cb397eeb6805783">Microsoft.Psi.Visualization.Client.VisualizationContainer</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a3980d79dc2b955afac277e5e2927d72c">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a49dd24b6b7849305334aef51f070709c">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
 </li>
 <li>RemovePartition()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html#a9348fa8b497f9430a1e1f16c66df07af">Microsoft.Psi.Data.Session</a>
@@ -334,7 +337,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a96ed1f371ca752d1fdda839eeff2b49e">Microsoft.Psi.Visualization.Datasets.SessionViewModel</a>
 </li>
 <li>RemoveVisualizationObject()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#a934c751d6d4d862e0a648f510df80ce4">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#ae731fde2188057ca412b4629734e9e40">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
 </li>
 <li>RemoveVisualizationObject&lt; TObject, TConfig &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_panel.html#a0d3dad79f3df4e8e2af69f74aff5cfab">Microsoft.Psi.Visualization.Client.VisualizationPanel&lt; TConfig &gt;</a>
@@ -349,13 +352,13 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_repeater.html#a559eb5137bb678abfb6de3a6719cbdcc">Microsoft.Psi.Components.Repeater&lt; T, TClock &gt;</a>
 </li>
 <li>ReplayDescriptor()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html#a55dc84fa0e36a6f403bde52c5ab25e0c">Microsoft.Psi.ReplayDescriptor</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html#a2b234e96d9daee3a1dfac2e3dfb81ba1">Microsoft.Psi.ReplayDescriptor</a>
 </li>
 <li>Resample()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#af9bf51e68ae8352b445c85ffad3c53d3">Microsoft.Psi.Audio.Operators</a>
 </li>
 <li>Reset()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html#a8773a174be5c0a464e55497ac0b0632a">Microsoft.Psi.Common.BufferReader</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html#af16a75608fb99c9809c2403d58f846d0">Microsoft.Psi.Common.BufferReader</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_writer.html#a7660c059dd90afa1e1352a646d3610eb">Microsoft.Psi.Common.BufferWriter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_stream_metadata.html#a984b00c96742dac7d39218432a4e8de2">Microsoft.Psi.Data.Json.JsonStreamMetadata</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_context.html#a4f0b6555e63fdb514e1ec3162e374965">Microsoft.Psi.Serialization.SerializationContext</a>
@@ -375,20 +378,20 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_r_g_b_camera_enumerator.html#a971477c2cc3eb5222ee781d25a1db900">Microsoft.Psi::Media_Interop::RGBCameraEnumerator</a>
 </li>
 <li>RightBounded()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_int_interval.html#a4b01902eba91ce8aaa0e049b29cdee8f">Microsoft.Psi.IntInterval</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_int_interval.html#aba391530b25ef88573d21b0649962d14">Microsoft.Psi.IntInterval</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_real_interval.html#a18dc309baa6bd991c7bd141a3a4f3580">Microsoft.Psi.RealInterval</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#ab1c1912568a8cffa5e17694c23483a3e">Microsoft.Psi.RelativeTimeInterval</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#ac04a94fa7fafe14c2c29701b71882891">Microsoft.Psi.TimeInterval</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html#ae1ebe22c53704df57c7a68bbe780c5c4">Microsoft.Psi.RelativeTimeInterval</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#a73643179fd21a8e313e7c72803e8d4e3">Microsoft.Psi.TimeInterval</a>
 </li>
 <li>Rotate()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_operators.html#afe9214ea5eced271d9ac98e6a1f03b7e">Microsoft.Psi.Imaging.Operators</a>
 </li>
 <li>Run()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ad7261dc1c08fe194d1ab5a49fa6a684c">Microsoft.Psi.Pipeline</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#af0b25f50426092624ab237ca4aff80af">Microsoft.Psi.Pipeline</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_data_store_reader.html#abd96e0b5b994ad568c3a24366fadeb25">Microsoft.Psi.Visualization.Data.DataStoreReader</a>
 </li>
 <li>RunAsync()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a3653c569eccf86edaa3d152f6846d115">Microsoft.Psi.Pipeline</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#acf921f700e3fd34a1790ae7b950969b8">Microsoft.Psi.Pipeline</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#ac0821677d4738f0854b70691d9d0d126">Microsoft.Psi.Subpipeline</a>
 </li>
 </ul>

@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Component that implements a voice activity detector.  
+<p>Component that performs voice activity detection via a simple heuristic using the energy in the audio stream.  
  <a href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector.html#details">More...</a></p>
 
 <p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_consumer_producer.html">Microsoft.Psi.Components.IConsumerProducer&lt; AudioBuffer, bool &gt;</a>.</p>
@@ -84,7 +84,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa6429c7aefe2da4a9097eea647201f9c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector.html#aa6429c7aefe2da4a9097eea647201f9c">SimpleVoiceActivityDetector</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector_configuration.html">SimpleVoiceActivityDetectorConfiguration</a> configuration=null)</td></tr>
-<tr class="memdesc:aa6429c7aefe2da4a9097eea647201f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector.html" title="Component that implements a voice activity detector. ">SimpleVoiceActivityDetector</a> class.  <a href="#aa6429c7aefe2da4a9097eea647201f9c">More...</a><br /></td></tr>
+<tr class="memdesc:aa6429c7aefe2da4a9097eea647201f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector.html" title="Component that performs voice activity detection via a simple heuristic using the energy in the audio...">SimpleVoiceActivityDetector</a> class.  <a href="#aa6429c7aefe2da4a9097eea647201f9c">More...</a><br /></td></tr>
 <tr class="separator:aa6429c7aefe2da4a9097eea647201f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -98,7 +98,7 @@ Properties</h2></td></tr>
 <tr class="separator:a3b6435734742b335363228eb37be59e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Component that implements a voice activity detector. </p>
+<div class="textblock"><p>Component that performs voice activity detection via a simple heuristic using the energy in the audio stream. </p>
 <p>This component monitors an input audio stream and outputs a boolean flag for each input message indicating whether or not voice activity was present in the corresponding AudioBuffer. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa6429c7aefe2da4a9097eea647201f9c"></a>
@@ -127,7 +127,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector.html" title="Component that implements a voice activity detector. ">SimpleVoiceActivityDetector</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_simple_voice_activity_detector.html" title="Component that performs voice activity detection via a simple heuristic using the energy in the audio...">SimpleVoiceActivityDetector</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>The pipeline to add the component to.</td></tr>

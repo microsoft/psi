@@ -111,6 +111,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a46968330300b3394467e225de7841ed6 inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a46968330300b3394467e225de7841ed6">RegisterPipelineStopHandler</a> (object owner, Action onStop)</td></tr>
 <tr class="memdesc:a46968330300b3394467e225de7841ed6 inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline stop.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a46968330300b3394467e225de7841ed6">More...</a><br /></td></tr>
 <tr class="separator:a46968330300b3394467e225de7841ed6 inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85b18292d6a68c9cde57af976c9cb2bc inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a85b18292d6a68c9cde57af976c9cb2bc">RegisterPipelineFinalHandler</a> (object owner, Action onFinal)</td></tr>
+<tr class="memdesc:a85b18292d6a68c9cde57af976c9cb2bc inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline stop.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a85b18292d6a68c9cde57af976c9cb2bc">More...</a><br /></td></tr>
+<tr class="separator:a85b18292d6a68c9cde57af976c9cb2bc inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec30508a49d0b04a6f99bd1230bf59d inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aaec30508a49d0b04a6f99bd1230bf59d">CreateReceiver&lt; T &gt;</a> (object owner, Action&lt; T, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> &gt; action, string name, bool autoClone=false)</td></tr>
 <tr class="memdesc:aaec30508a49d0b04a6f99bd1230bf59d inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input receiver associated with the specified component object.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#aaec30508a49d0b04a6f99bd1230bf59d">More...</a><br /></td></tr>
 <tr class="separator:aaec30508a49d0b04a6f99bd1230bf59d inherit pub_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,9 +198,16 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:adf685ef1053a4abeda08852a3a9d4d46"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#adf685ef1053a4abeda08852a3a9d4d46">Stop</a> (bool abandonPendingWorkitems=false, bool stopScheduler=true)</td></tr>
-<tr class="memdesc:adf685ef1053a4abeda08852a3a9d4d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the pipeline by disabling message passing between the pipeline components. The pipeline configuration is not changed and the pipeline can be restarted later.  <a href="#adf685ef1053a4abeda08852a3a9d4d46">More...</a><br /></td></tr>
-<tr class="separator:adf685ef1053a4abeda08852a3a9d4d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae82e7110f56efe502e1eb2be48a3b199"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#ae82e7110f56efe502e1eb2be48a3b199">Stop</a> (bool abandonPendingWorkitems=false)</td></tr>
+<tr class="memdesc:ae82e7110f56efe502e1eb2be48a3b199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the pipeline by disabling message passing between the pipeline components. The pipeline configuration is not changed and the pipeline can be restarted later.  <a href="#ae82e7110f56efe502e1eb2be48a3b199">More...</a><br /></td></tr>
+<tr class="separator:ae82e7110f56efe502e1eb2be48a3b199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_microsoft_1_1_psi_1_1_pipeline')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Microsoft.Psi.Pipeline</a></td></tr>
+<tr class="memitem:a5e80a54cbf280d02a852cdd2d46072b3 inherit pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a5e80a54cbf280d02a852cdd2d46072b3">DeactivateComponents</a> ()</td></tr>
+<tr class="memdesc:a5e80a54cbf280d02a852cdd2d46072b3 inherit pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deactivate all active components.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a5e80a54cbf280d02a852cdd2d46072b3">More...</a><br /></td></tr>
+<tr class="separator:a5e80a54cbf280d02a852cdd2d46072b3 inherit pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a53d40944ac9519fd1d159a44c3026e inherit pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a3a53d40944ac9519fd1d159a44c3026e">StopComponents</a> ()</td></tr>
+<tr class="memdesc:a3a53d40944ac9519fd1d159a44c3026e inherit pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop child components.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a3a53d40944ac9519fd1d159a44c3026e">More...</a><br /></td></tr>
+<tr class="separator:a3a53d40944ac9519fd1d159a44c3026e inherit pro_methods_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -211,6 +221,10 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a48e9c836272b502ed4e41d9e241c814f inherit pub_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a48e9c836272b502ed4e41d9e241c814f">GlobalPolicy</a> =&gt; this.globalPolicy</td></tr>
 <tr class="memdesc:a48e9c836272b502ed4e41d9e241c814f inherit pub_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets global delivery policy.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a48e9c836272b502ed4e41d9e241c814f">More...</a><br /></td></tr>
 <tr class="separator:a48e9c836272b502ed4e41d9e241c814f inherit pub_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_microsoft_1_1_psi_1_1_pipeline')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Microsoft.Psi.Pipeline</a></td></tr>
+<tr class="memitem:a5b2d9a12d7cd8331c657dbeb041ceec0 inherit pro_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top">ManualResetEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a5b2d9a12d7cd8331c657dbeb041ceec0">Completed</a> =&gt; this.completed</td></tr>
+<tr class="memdesc:a5b2d9a12d7cd8331c657dbeb041ceec0 inherit pro_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets pipeline completion wait handle.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a5b2d9a12d7cd8331c657dbeb041ceec0">More...</a><br /></td></tr>
+<tr class="separator:a5b2d9a12d7cd8331c657dbeb041ceec0 inherit pro_attribs_class_microsoft_1_1_psi_1_1_pipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header events_class_microsoft_1_1_psi_1_1_pipeline"><td colspan="2" onclick="javascript:toggleInherit('events_class_microsoft_1_1_psi_1_1_pipeline')"><img src="closed.png" alt="-"/>&#160;Events inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Microsoft.Psi.Pipeline</a></td></tr>
 <tr class="memitem:a6c80c864b6fb71ed145d7311a48d8837 inherit events_class_microsoft_1_1_psi_1_1_pipeline"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline_completion_event_args.html">PipelineCompletionEventArgs</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a6c80c864b6fb71ed145d7311a48d8837">PipelineCompletionEvent</a></td></tr>
 <tr class="memdesc:a6c80c864b6fb71ed145d7311a48d8837 inherit events_class_microsoft_1_1_psi_1_1_pipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event fired upon pipeline completion.  <a href="class_microsoft_1_1_psi_1_1_pipeline.html#a6c80c864b6fb71ed145d7311a48d8837">More...</a><br /></td></tr>
@@ -387,8 +401,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="adf685ef1053a4abeda08852a3a9d4d46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf685ef1053a4abeda08852a3a9d4d46">&#9670;&nbsp;</a></span>Stop()</h2>
+<a id="ae82e7110f56efe502e1eb2be48a3b199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae82e7110f56efe502e1eb2be48a3b199">&#9670;&nbsp;</a></span>Stop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -400,18 +414,8 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">override void Microsoft.Psi.Subpipeline.Stop </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>abandonPendingWorkitems</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>abandonPendingWorkitems</em> = <code>false</code></td><td>)</td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>stopScheduler</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -425,12 +429,11 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">abandonPendingWorkitems</td><td>Abandons the pending work items</td></tr>
-    <tr><td class="paramname">stopScheduler</td><td>Stops the scheduler.</td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a98c7ebd93bbdf9a9954501ad6bd22b02">Microsoft.Psi.Pipeline</a>.</p>
+<p>Reimplemented from <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a2eefe2952421bd9cfd0378ff3eb77172">Microsoft.Psi.Pipeline</a>.</p>
 
 </div>
 </div>

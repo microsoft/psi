@@ -7,5 +7,6 @@ var searchData=
   ['wavefilewriter',['WaveFileWriter',['../class_microsoft_1_1_psi_1_1_audio_1_1_wave_file_writer.html',1,'Microsoft::Psi::Audio']]],
   ['waveformat',['WaveFormat',['../class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html',1,'Microsoft::Psi::Audio']]],
   ['waveformatex',['WaveFormatEx',['../class_microsoft_1_1_psi_1_1_audio_1_1_wave_format_ex.html',1,'Microsoft::Psi::Audio']]],
+  ['window',['Window',['../class_microsoft_1_1_psi_1_1_components_1_1_window.html',1,'Microsoft::Psi::Components']]],
   ['writestreamattribute',['WriteStreamAttribute',['../class_microsoft_1_1_psi_1_1_data_1_1_exporter_1_1_write_stream_attribute.html',1,'Microsoft::Psi::Data::Exporter']]]
 ];

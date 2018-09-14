@@ -5,7 +5,7 @@ var searchData=
   ['bookmarkreachedeventdata',['BookmarkReachedEventData',['../class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_synthesizer_1_1_bookmark_reached_event_data.html',1,'Microsoft::Psi::Speech::SystemSpeechSynthesizer']]],
   ['bufferedaudiostream',['BufferedAudioStream',['../class_microsoft_1_1_psi_1_1_audio_1_1_buffered_audio_stream.html',1,'Microsoft::Psi::Audio']]],
   ['bufferex',['BufferEx',['../class_microsoft_1_1_psi_1_1_common_1_1_buffer_ex.html',1,'Microsoft::Psi::Common']]],
+  ['bufferprocess',['BufferProcess',['../class_microsoft_1_1_psi_1_1_components_1_1_buffer_process.html',1,'Microsoft::Psi::Components']]],
   ['bufferreader',['BufferReader',['../class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html',1,'Microsoft::Psi::Common']]],
-  ['bufferselect',['BufferSelect',['../class_microsoft_1_1_psi_1_1_components_1_1_buffer_select.html',1,'Microsoft::Psi::Components']]],
   ['bufferwriter',['BufferWriter',['../class_microsoft_1_1_psi_1_1_common_1_1_buffer_writer.html',1,'Microsoft::Psi::Common']]]
 ];

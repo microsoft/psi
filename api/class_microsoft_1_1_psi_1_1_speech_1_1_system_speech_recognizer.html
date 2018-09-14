@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Component that implements a speech recognizer.  
+<p>Component that performs speech recognition using the desktop speech recognition engine from <code>System.Speech</code>.  
  <a href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#details">More...</a></p>
 
 <p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; AudioBuffer, IStreamingSpeechRecognitionResult &gt;</a>, and IDisposable.</p>
@@ -84,10 +84,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aab7bbd06b41de1e2f4c352268b09212d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#aab7bbd06b41de1e2f4c352268b09212d">SystemSpeechRecognizer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer_configuration.html">SystemSpeechRecognizerConfiguration</a> configuration)</td></tr>
-<tr class="memdesc:aab7bbd06b41de1e2f4c352268b09212d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that implements a speech recognizer. ">SystemSpeechRecognizer</a> class.  <a href="#aab7bbd06b41de1e2f4c352268b09212d">More...</a><br /></td></tr>
+<tr class="memdesc:aab7bbd06b41de1e2f4c352268b09212d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that performs speech recognition using the desktop speech recognition engine from System...">SystemSpeechRecognizer</a> class.  <a href="#aab7bbd06b41de1e2f4c352268b09212d">More...</a><br /></td></tr>
 <tr class="separator:aab7bbd06b41de1e2f4c352268b09212d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11de8d6db1d81c4d2b11b629ef533361"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#a11de8d6db1d81c4d2b11b629ef533361">SystemSpeechRecognizer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string configurationFilename=null)</td></tr>
-<tr class="memdesc:a11de8d6db1d81c4d2b11b629ef533361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that implements a speech recognizer. ">SystemSpeechRecognizer</a> class.  <a href="#a11de8d6db1d81c4d2b11b629ef533361">More...</a><br /></td></tr>
+<tr class="memdesc:a11de8d6db1d81c4d2b11b629ef533361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that performs speech recognition using the desktop speech recognition engine from System...">SystemSpeechRecognizer</a> class.  <a href="#a11de8d6db1d81c4d2b11b629ef533361">More...</a><br /></td></tr>
 <tr class="separator:a11de8d6db1d81c4d2b11b629ef533361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21b05912c3d47cfee3d5bbd55e8a69c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#a21b05912c3d47cfee3d5bbd55e8a69c1">OnPipelineStart</a> ()</td></tr>
 <tr class="memdesc:a21b05912c3d47cfee3d5bbd55e8a69c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called once all the subscriptions are established.  <a href="#a21b05912c3d47cfee3d5bbd55e8a69c1">More...</a><br /></td></tr>
@@ -118,6 +118,9 @@ Properties</h2></td></tr>
 <tr class="memitem:a10c3eb8bfe444c518fab6ed147a60dc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; IEnumerable&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#a10c3eb8bfe444c518fab6ed147a60dc2">ReceiveGrammars</a><code> [get]</code></td></tr>
 <tr class="memdesc:a10c3eb8bfe444c518fab6ed147a60dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the receiver for new grammars.  <a href="#a10c3eb8bfe444c518fab6ed147a60dc2">More...</a><br /></td></tr>
 <tr class="separator:a10c3eb8bfe444c518fab6ed147a60dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9253f17b918980e75534f98daa811c35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_speech_1_1_i_streaming_speech_recognition_result.html">IStreamingSpeechRecognitionResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#a9253f17b918980e75534f98daa811c35">PartialRecognitionResults</a><code> [get]</code></td></tr>
+<tr class="memdesc:a9253f17b918980e75534f98daa811c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the output stream of partial recognition results.  <a href="#a9253f17b918980e75534f98daa811c35">More...</a><br /></td></tr>
+<tr class="separator:a9253f17b918980e75534f98daa811c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7b547ca4793fccda9fd9c31fdb9a8de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_language_1_1_intent_data.html">IntentData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html#ae7b547ca4793fccda9fd9c31fdb9a8de">IntentData</a><code> [get]</code></td></tr>
 <tr class="memdesc:ae7b547ca4793fccda9fd9c31fdb9a8de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the output stream of intents and entities.  <a href="#ae7b547ca4793fccda9fd9c31fdb9a8de">More...</a><br /></td></tr>
 <tr class="separator:ae7b547ca4793fccda9fd9c31fdb9a8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,8 +166,8 @@ Properties</h2></td></tr>
 <tr class="separator:a51b311c38805f699e6f527dba1475837 inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Component that implements a speech recognizer. </p>
-<p>This component performs continuous recognition on an audio stream. Recognition results are posted as they are available on its Out stream. Recognition results are of type <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_streaming_speech_recognition_result.html" title="Represents an incremental, streaming speech recognition result which may be partial or final...">StreamingSpeechRecognitionResult</a> which implements the <a class="el" href="interface_microsoft_1_1_psi_1_1_speech_1_1_i_streaming_speech_recognition_result.html" title="Defines an incremental, streaming speech recognition result which may be partial or final...">IStreamingSpeechRecognitionResult</a> interface. This pattern allows for results from speech recognition components based on different underlying technologies to conform to a common interface for consumption by downstream components. Messages on the Out stream may contain partial or final results, distinguished by the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_streaming_speech_recognition_result.html#ad8cbeb9efa20524fe98cf0d4cedd2509" title="Gets a value indicating whether this result is final (true), or if it is a partial hypothesis (false)...">StreamingSpeechRecognitionResult.IsFinal</a> property. Partial results contain partial hypotheses while speech is in progress and are useful for displaying hypothesized text as feedback to the user. The final result is emitted once the recognizer has determined that speech has ended, and will contain the top hypothesis for the utterance.</p>
+<div class="textblock"><p>Component that performs speech recognition using the desktop speech recognition engine from <code>System.Speech</code>. </p>
+<p>This component performs continuous recognition on an audio stream. Recognition results are of type <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_streaming_speech_recognition_result.html" title="Represents an incremental, streaming speech recognition result which may be partial or final...">StreamingSpeechRecognitionResult</a> which implements the <a class="el" href="interface_microsoft_1_1_psi_1_1_speech_1_1_i_streaming_speech_recognition_result.html" title="Defines an incremental, streaming speech recognition result which may be partial or final...">IStreamingSpeechRecognitionResult</a> interface. This pattern allows for results from speech recognition components based on different underlying technologies to conform to a common interface for consumption by downstream components. Messages on the Out stream contain final results, while messages on the PartialRecognitionResults stream contain partial results. Partial results contain partial hypotheses while speech is in progress and are useful for displaying hypothesized text as feedback to the user. The final result is emitted once the recognizer has determined that speech has ended, and will contain the top hypothesis for the utterance.</p>
 <p>The originating times of speech recognition events emitted by this component are estimates. These are estimated in a couple of ways from the results that the underlying speech recognition engine returns. In the case of a final recognition result, we use the audio position offset of the recognized audio as reported by the recognition engine to compute an estimate of the originating time. For partial hypotheses, we use the engine's current offset into the audio stream to estimate the originating time. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aab7bbd06b41de1e2f4c352268b09212d"></a>
@@ -193,7 +196,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that implements a speech recognizer. ">SystemSpeechRecognizer</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that performs speech recognition using the desktop speech recognition engine from System...">SystemSpeechRecognizer</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>The pipeline to add the component to.</td></tr>
@@ -230,7 +233,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that implements a speech recognizer. ">SystemSpeechRecognizer</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer.html" title="Component that performs speech recognition using the desktop speech recognition engine from System...">SystemSpeechRecognizer</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>The pipeline to add the component to.</td></tr>
@@ -493,6 +496,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the output stream of load grammar completed events </p>
+
+</div>
+</div>
+<a id="a9253f17b918980e75534f98daa811c35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9253f17b918980e75534f98daa811c35">&#9670;&nbsp;</a></span>PartialRecognitionResults</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt;<a class="el" href="interface_microsoft_1_1_psi_1_1_speech_1_1_i_streaming_speech_recognition_result.html">IStreamingSpeechRecognitionResult</a>&gt; Microsoft.Psi.Speech.SystemSpeechRecognizer.PartialRecognitionResults</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the output stream of partial recognition results. </p>
 
 </div>
 </div>

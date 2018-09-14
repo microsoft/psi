@@ -133,7 +133,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a903bf2ff5994099b603bb36eea27204b"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a903bf2ff5994099b603bb36eea27204b">DefaultName</a> = &quot;Untitled <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html">Dataset</a>&quot;</td></tr>
 <tr class="memdesc:a903bf2ff5994099b603bb36eea27204b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default name of a dataset.  <a href="#a903bf2ff5994099b603bb36eea27204b">More...</a><br /></td></tr>
 <tr class="separator:a903bf2ff5994099b603bb36eea27204b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a18aea80bc5a342c4eaf71fb63e696cd9">OriginatingTimeInterval</a> =&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#ae345c68634cc90215ba8547bd9ada40a">TimeInterval.Coverage</a>(this.InternalSessions.Select(s =&gt; s.OriginatingTimeInterval))</td></tr>
+<tr class="memitem:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a18aea80bc5a342c4eaf71fb63e696cd9">OriginatingTimeInterval</a></td></tr>
 <tr class="memdesc:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the orginating time interval (earliest to latest) of the messages in this dataset.  <a href="#a18aea80bc5a342c4eaf71fb63e696cd9">More...</a><br /></td></tr>
 <tr class="separator:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3191f549342914794726159a5fc74ded"><td class="memItemLeft" align="right" valign="top">ReadOnlyCollection&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html">Session</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a3191f549342914794726159a5fc74ded">Sessions</a> =&gt; this.InternalSessions.AsReadOnly()</td></tr>
@@ -867,11 +867,11 @@ Properties</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> Microsoft.Psi.Data.Dataset.OriginatingTimeInterval =&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#ae345c68634cc90215ba8547bd9ada40a">TimeInterval.Coverage</a>(this.InternalSessions.Select(s =&gt; s.OriginatingTimeInterval))</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> Microsoft.Psi.Data.Dataset.OriginatingTimeInterval</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=&gt;</div><div class="line">            TimeInterval.Coverage(</div><div class="line">                this.InternalSessions</div><div class="line">                    .Where(s =&gt; s.OriginatingTimeInterval.Left &gt; DateTime.MinValue &amp;&amp; s.OriginatingTimeInterval.Right &lt; DateTime.MaxValue)</div><div class="line">                    .Select(s =&gt; s.OriginatingTimeInterval))</div></div><!-- fragment -->
 <p>Gets the orginating time interval (earliest to latest) of the messages in this dataset. </p>
 
 </div>
