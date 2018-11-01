@@ -127,7 +127,7 @@ using (var p = Pipeline.Create())
 }
 ```
 
-Writing \\psi application will often involve authoring a pipeline that connects various existing components and processes and transforms data via stream operators. In some cases, you may need to write your own components. The [Writing Components](/psi/topics/InDepth.WritingComponents) page has more in-depth information on this topic.
+Writing a \\psi application will often involve authoring a pipeline that connects various existing components and processes and transforms data via stream operators. In some cases, you may need to write your own components. The [Writing Components](/psi/topics/InDepth.WritingComponents) page has more in-depth information on this topic. In addition, to optimize the operation of your pipeline, you may need to specify delivery policies to control how messages may be dropped in case some of the components cannot keep up with the cadence of the incoming messages. The [Delivery Policies](/psi/topics/InDepth.DeliveryPolicies) page has more in-depth information on this topic.
 
 <a name="Synchronization"></a>
 

@@ -17,7 +17,7 @@ The links below provide additional information about various, more in-depth topi
 | [Datasets](/psi/topics/InDepth.Datasets) | Describes the infrastructure and APIs for working with datasets in \\psi. |
 | [Writing&nbsp;Components](/psi/topics/InDepth.WritingComponents) | Describes how to write new \\psi components. |
 | [Pipeline&nbsp;Execution](/psi/topics/InDepth.PipelineExecution) | Describes how to control the execution of the pipeline. |
-| Delivery&nbsp;Policies | Describes delivery policies and how to control message flow in the pipeline. |
+| [Delivery&nbsp;Policies](/psi/topics/InDepth.DeliveryPolicies) | Describes delivery policies and how to control message flow in the pipeline. |
 | [Remoting](/psi/topics/InDepth.Remoting) | Describes how remoting works and how to construct distributed \\psi applications. |
 | Cooperative&nbsp;Buffering | Describes to make use of the cooperative buffering facilities in the fabric to minimize memory allocations when using large data types. |
 | [Intervals](/psi/topics/InDepth.Intervals) | Explains the `Interval` data type and how to work with absolute and relative time intervals. |
