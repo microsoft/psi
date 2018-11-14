@@ -19,7 +19,8 @@ The links below provide additional information about various, more in-depth topi
 | [Pipeline&nbsp;Execution](/psi/topics/InDepth.PipelineExecution) | Describes how to control the execution of the pipeline. |
 | [Delivery&nbsp;Policies](/psi/topics/InDepth.DeliveryPolicies) | Describes delivery policies and how to control message flow in the pipeline. |
 | [Remoting](/psi/topics/InDepth.Remoting) | Describes how remoting works and how to construct distributed \\psi applications. |
-| Cooperative&nbsp;Buffering | Describes to make use of the cooperative buffering facilities in the fabric to minimize memory allocations when using large data types. |
+| [Interop](/psi/topics/InDepth.Interop) | Describes how to interoperate with systems outside of \\psi using standard data formats and transports. |
+| Cooperative&nbsp;Buffering | Describes how to make use of the cooperative buffering facilities in the fabric to minimize memory allocations when using large data types. |
 | [Intervals](/psi/topics/InDepth.Intervals) | Explains the `Interval` data type and how to work with absolute and relative time intervals. |
 | [Event&nbsp;Source](/psi/topics/InDepth.EventSource) | Explains how to create source streams based on Windows events. |
 | Debugging | Provides some tips and tricks on how to debug \\psi applications. |
@@ -35,8 +36,6 @@ The links below provide additional information about various, more in-depth topi
 | Visualizers | Provides an overview of the available stream visualizers. |
 
 ## Components and Toolkits
-
-The list of currently available components can be accessed [here](/psi/ComponentsList). The table below provides links with overviews for components in specific areas. 
 
 | Topic | Description |
 | :----------- | :---------- |
