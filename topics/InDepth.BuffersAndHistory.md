@@ -3,6 +3,8 @@ layout: default
 title:  Buffers and History
 ---
 
+__NOTE__: The operators described below take an optional `DeliveryPolicy` argument which allows the developer to control how the operators keep up with the incoming flow of messages when not enough computational resources are available to process them. More information is available in the [Delivery Policies](/psi/topics/InDepth.DeliveryPolicies) in-depth topic. Below, for improved readability, we simply omit this optional parameter from the operator descriptions.
+
 # Buffers and History
 
 `Buffer` and `History` operators produce streams of sliding windows over data:

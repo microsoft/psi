@@ -8,8 +8,7 @@ title:  Synchronization
 ## Join(...)
 
 The `Join` operators allows synchronizing (or fusing) two or more streams into a single stream.
-Other frameworks (e.g. Rx) have similar operators such as `Zip()`, but in \\psi these are not based on the wall-clock time or ordinal of message arrival.
-Instead, synchronization in \\psi is based on the message _originating time_, captured by the `OriginatingTime` field transported in the message envelope.
+Other frameworks (e.g. Rx) have similar operators such as `Zip()`, but in the Platform for Situated Intelligence framework these are not based on the wall-clock time or ordinal of message arrival. Instead, synchronization in \\psi is based on the message _originating time_, captured by the `OriginatingTime` field transported in the message envelope.
 
 The originating times are usually set by the sensor components or stream generators, at origin, and capture the originating time to which each message corresponds. For instance, a camera component will set the originating time for each frame, and as each frame goes through a pipeline of components that may process it in various ways (e.g. convert to grayscale, extract optical flow, etc.) the originating time is propagated with the resulting messages. The optical flow results may arrive at some downstream component at a later time, but they still carry the originating time (that corresponds to when the original video frame happened in the world) in the envelope. This originating time is what really matters for synchronization, because when we want to synchronize two streams (e.g. audio and video), we often care about when the events on those streams actually happened in the world. 
 

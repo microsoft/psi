@@ -187,7 +187,9 @@ public static class Operators
 }
 ```
 
-The extension methods extends `IProducer<double>`, which represents a stream of `double`. Inside, it instantiates a new component (note that we can get a hold of the pipeline required to construct the component from the source stream), and connects the source stream to it, and returns the result. This _stream operator_ `Sign()` now becomes available on any stream of doubles, for instance, we can now write:
+The extension methods extends `IProducer<double>`, which represents a stream of `double`. Inside, it instantiates a new component (note that we can get a hold of the pipeline required to construct the component from the source stream), and connects the source stream to it, and returns the result. Notice how the stream operator also takes a `deliveryPolicy` parameter, with a default `null` value and uses it when connecting the source stream to the underlying component. This `deliveryPolicy` enables developers to control how messages are delivered to the component when computational constraints prevent the component from being able to process all messages at the rate at which they arrive. The [Delivery Policies](/psi/topics/InDepth.DeliveryPolicies) in-depth topic contains more information about how delivery policies operate. 
+
+The constructed _stream operator_ `Sign()` now becomes available on any stream of doubles, for instance, we can now write:
 
 ```csharp
 var stream = Generators.Sequence(p, 1.0, x => x + 1, 10);

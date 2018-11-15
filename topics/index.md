@@ -16,7 +16,7 @@ The links below provide additional information about various, more in-depth topi
 | [Buffers&nbsp;and&nbsp;History](/psi/topics/InDepth.BuffersAndHistory) | Describes the `Buffer` and `History` operators that provide window views over streams. |
 | [Datasets](/psi/topics/InDepth.Datasets) | Describes the infrastructure and APIs for working with datasets in \\psi. |
 | [Writing&nbsp;Components](/psi/topics/InDepth.WritingComponents) | Describes how to write new \\psi components. |
-| [Pipeline&nbsp;Execution](/psi/topics/InDepth.PipelineExecution) | Describes how to control the execution of the pipeline. |
+| Pipeline&nbsp;Execution | Describes how to control the execution of the pipeline. |
 | [Delivery&nbsp;Policies](/psi/topics/InDepth.DeliveryPolicies) | Describes delivery policies and how to control message flow in the pipeline. |
 | [Remoting](/psi/topics/InDepth.Remoting) | Describes how remoting works and how to construct distributed \\psi applications. |
 | [Interop](/psi/topics/InDepth.Interop) | Describes how to interoperate with systems outside of \\psi using standard data formats and transports. |

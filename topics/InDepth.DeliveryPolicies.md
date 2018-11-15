@@ -115,9 +115,9 @@ source.Select(x => x * 2, DeliveryPolicy.LatestMessage)
 
 In the discussion above we have highlighted two specific delivery policies, implemented as static members on the `DeliveryPolicy` class:
 
-* `DeliveryPolicy.Unlimited`: queues all messages at the receiver (up to int.MaxValue messages).
-* `DeliveryPolicy.LatestMessage`: only delivers the most recent message to the receiver, and drop all other ones.
+* `DeliveryPolicy.Unlimited`: queues and delivers all messages at the receiver (up to int.MaxValue messages).
+* `DeliveryPolicy.LatestMessage`: only delivers the most recent message to the receiver, and discards all other ones.
 
 Besides these two predefined policies, additional policies may be created using two available static factory methods:
-* `DeliveryPolicy.LagConstrained(TimeSpan timeSpan)`: defines a lag-constrained delivery policy. Messages will be queued and are processed by the receiver as long as their latency is below the specified timespan. As time elapses, messages that exceed the lag will be dropped.
+* `DeliveryPolicy.LatencyConstrained(TimeSpan maximumLatency)`: defines a latency-constrained delivery policy. Messages will be queued and are delivered to the receiver if their latency is below the specified `maximumLatency`. As time elapses, messages that exceed that maximum latency will be discarded.
 * `DeliveryPolicy.QueueSizeConstrained(int maximumQueueSize)`: defines a queue-size constrained delivery policy. Only the most recent messages up to the `maximumQueueSize` will be delivered to the receiver.
