@@ -233,7 +233,7 @@ Once you run the application, you will see a window that looks similar to the im
 
 ![PsiStudio (when opening the demo recording)](/psi/tutorials/PsiStudio.Start.png)
 
-The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas on the left hand side. On the right hand side, you will find a Visualization and Datasets tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream, like below:
+The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas in the center. On the left hand side, you will find the Datasets tab at the top with the Visualizations tab below it.  On the right hand side is a Properties page that lets you view the properties of any object selected in either the Datasets or the Visualizations tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream.  Alternatively you can just drag the stream from the datasets tab onto the Visualization Canvas.  Psi Studio should now look like this:
 
 ![PsiStudio (visualizing a stream)](/psi/tutorials/PsiStudio.SinVisualization.png)
 
@@ -247,19 +247,32 @@ To display the legend that's visible in the image above, simply right click on t
 
 You will notice that as you move the cursor around over the timeline panel, the legend updates with the current values under the cursor. Navigation can be done via mouse: moving the mouse moves the cursor, and the scroll wheel zooms the timeline view in and out. As you zoom in, you will notice that the time navigator visuals change, to indicate where you are in the data (the blue region in the top-half).
 
-As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Start first by selecting the _Visualizations_ tab (on the left, next to _Datasets_). This will bring you to a hierarchical view of the panels and visualizations currently displayed. It shows that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, and it will show two stream visualizers underneath, for Sin and Cos, like below:
+As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Take a look at the Visualizations tab on the left,  notice that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, you will see two stream visualizers underneath, for Sin and Cos, like below:
 
 ![PsiStudio (Visualizers Tab)](/psi/tutorials/PsiStudio.VisualizersTab.png)
 
-Right-clicking on the Cos visualizer brings up a context-menu that currently allows you to remove this visualizer. Try it out. This should make the Cos stream disappear from the panel. Next, click on the _Insert Timeline Panel_ button in the toolbar, highlighted in the image above. This will add a new timeline panel. If you go back to _Datasets_, then right-click on Cos and click _Plot_ again, the Cos stream will appear in the second (current) panel.
+Right-clicking on the Cos visualizer brings up a context-menu that allows you to remove this visualizer. Try it out. This should make the Cos stream disappear from the panel. Next, click on the _Insert Timeline Panel_ button in the toolbar, highlighted in the image above. This will add a new timeline panel. Then, in the _Datasets_ tab, right-click on Cos and click _Plot_ again, the Cos stream will appear in the second (current) panel.  Alternatively, you can add a stream to a new panel by dragging it from the Datasets tab into any part of the Visualization Canvas that does not already contain a Visualization Panel.
 
-Come back to the _Visualizations_ tab and highlight the Cos visualizer. On the bottom-right side, the set of properties for this visualizer are available for inspection and modification. You can change various properties of the visualize, like the color of the line and the marker style to use. For instance, here we have changed the _LineColor_ and _MarkerColor_ properties to red, and the _MarkerStyle_ to Square:
+Come back to the _Visualizations_ tab and highlight the Cos visualizer. In the _Properties_ tab on the right the set of properties for this visualizer are available for inspection and modification. You can change various properties of the visualize, like the color of the line and the marker style to use. For instance, here we have changed the _LineColor_ and _MarkerColor_ properties to red, and the _MarkerStyle_ to Square:
 
 ![PsiStudio (two panels)](/psi/tutorials/PsiStudio.TwoPanels.png)
+
+On the toolbar are three _Timing Display_ buttons that can be used to display timing information above the _Time Navigator_.  The first button displays absolute times, the second displays times relative to the start of the session, and the third button displays times relative to the selection start marker.  The picture below shows what the Psi Studio application looks like with all three timing displays activated, but typically a user would only have a single display activated at any given time.  As the user moves the cursor within the navigation area, the timing display is updated to show the time at the cursor, the time relative to the selection start and selection end markers, and the time relative to the end of the session.
+
+![PsiStudio (timing info)](/psi/tutorials/PsiStudio.TimingButtons.png)
+
+You can also change how a stream is rendered.  In the picture below the Interpolation Style property of the Sin stream has been changed to _Step_ which renders the stream so that it maintains its current value until the next message is received.  For the Cos stream the Interpolation Style property has been changed to _None_ so that only the values of the messages are displayed and no connecting lines are drawn between them.  When using this valule for Interpolation Style the Marker Style property must be changed to something other than _None_ or nothing at all will be rendered.  Notice in the picture below that the Visualization Panel for the Sin stream has been resized by dragging its bottom edge in order to get a better view of the data.
+
+Notice also that _Snap to Stream_ has been enabled on the Sin stream so that the Cursor always snaps to the message nearest to the mouse.  If one or more of the timing displays is activated, then the user can find the exact time of any message in the stream by moving the cursor near it.  To enable _Snap to Stream_, right-click the stream you wish to snap to in the Visualizations tab and select _Snap to Stream_ in the context menu.  The stream that is currently being snapped to will display an additional magnet icon next to it in the Visualizations tab.  To cancel _Snap to Stream_, right-click the stream in the Visualizations tab and again select the _Snap to Stream_ menu item.
+
+![PsiStudio (Interpolation Style)](/psi/tutorials/PsiStudio.InterpolationStyle.png)
 
 <a name="LiveVisualization"></a>
 
 ## 5. Live Visualization
+
+<div style="color:red;font-weight:bold">NOTE:</div>
+<div style="color:red">We have  deprecated the functionality described in this section and will be replacing it in a future release with a new feature that will allow a Psi Studio user to open the store of a live, running Psi Application (while the store is being written), the same way a user would open a store for offline visualization, and then view the live streams as well as pause and resume them.</div>
 
 While so far we have discussed how to use PsiStudio to visualize previously collected data, the tool can also be used to visualize the streams persisted by an application _live_, while the application is running. The following example shows how to set this up.
 
