@@ -3,11 +3,13 @@ layout: default
 title:  Interop
 ---
 
-# \\psi Interop
+# Interop
 
-Here we describe the infrastructure provided in the `Microsoft.Psi.Interop` namespace to facilitate interoperation of \\psi with other languages and platforms. \\psi clearly supports .NET languages (C#/F#/...) on Linux/Mac/Windows. Within .NET we recommend the \\psi store format and using [\\psi remoting](https://microsoft.github.io/psi/topics/InDepth.Remoting) to convey data over process/machine boundaries. Outside of .NET, aside from the specialized [ROS Bridge](https://github.com/Microsoft/psi/tree/master/Sources/Integrations/ROS/Microsoft.Psi.ROS), we provide very general interop facilities. These may be useful to, for example, interop with Python for data science and external ML or with JavaScript for web "dashboards" and Node.js, among others.
+Below we describe the infrastructure provided in the `Microsoft.Psi.Interop` namespace to facilitate interoperation of Platform for Situated Intelligence with other languages and platforms. \\psi clearly supports .NET languages (C#/F#/...) on Linux/Mac/Windows. Within .NET we recommend the \\psi store format and using [\\psi remoting](https://microsoft.github.io/psi/topics/InDepth.Remoting) to convey data over process/machine boundaries. Outside of .NET, aside from the specialized [ROS Bridge](https://github.com/Microsoft/psi/tree/master/Sources/Integrations/ROS/Microsoft.Psi.ROS), we provide very general interop facilities. These may be useful to, for example, interop with Python for data science and external ML or with JavaScript for web "dashboards" and Node.js, among others.
 
-Interop is accomplished by translating \\psi data to standard (though less efficient) formats such as [JSON](http://www.json.org/) (text), [MessagePack](https://msgpack.org) (binary) and comma-separated values (flattened). Data may be persisted to flat files or conveyed over standard transports such as [ZeroMQ](http://zeromq.org). Additional custom formats and transports may be dovetailed into the system by way of the provided [serialization](https://github.com/Microsoft/psi/tree/master/Sources/Runtime/Microsoft.Psi.Interop/Serialization/Readme.md) and [transport](https://github.com/Microsoft/psi/tree/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/Readme.md) interfaces.
+Interop is accomplished by translating \\psi data into standard (though less efficient) formats such as [JSON](http://www.json.org/) (text), [MessagePack](https://msgpack.org) (binary) and comma-separated values (flattened). Data may be persisted to flat files or conveyed over standard transports such as [ZeroMQ](http://zeromq.org). Additional custom formats and transports may be dovetailed into the system by way of the provided [serialization](https://github.com/Microsoft/psi/tree/master/Sources/Runtime/Microsoft.Psi.Interop/Serialization/Readme.md) and [transport](https://github.com/Microsoft/psi/tree/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/Readme.md) interfaces.
+
+__NOTE__: The documentation below assumes familiarity with basic \\psi concepts, such as streams, operators, pipelines, etc., described in [A Brief Introduction to Platform for Situated Intelligence](/psi/tutorials/index).
 
 # Examples
 

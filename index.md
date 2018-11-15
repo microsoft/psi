@@ -26,7 +26,7 @@ __Brief Introduction__. To get started with using Platform for Situated Intellig
 
 __Samples__. After going through this first brief tutorial, it may be helpful to look through the set of [Samples](/psi/samples) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \\psi.
 
-__In-depth Topics__. Finally, additional information is provided in a set of [Topics](/psi/topics) that dive into more detail on various aspects of the framework including synchronization, persistence, remoting, visualization etc.
+__In-depth Topics__. Finally, additional information is provided in a set of [Topics](/psi/topics) that dive into more detail on various aspects of the framework including [basic stream operators](/psi/topics/InDepth.BasicStreamOperators), [synchronization](/psi/topics/InDepth.Synchronization),  [writing new components](/psi/topics/InDepth.WritingComponents), [delivery policies](/psi/topics/InDepth.DeliveryPolicies), [remoting](/psi/topics/InDepth.Remoting), etc.
 
 Additional useful information regarding available packages and components can be found in the [NuGet packages list](/psi/NuGetPackagesList) and in the [component list](/psi/ComponentsList) pages.
 
@@ -36,7 +36,7 @@ Like the rest of the codebase, the documentation is still under construction and
 
 The codebase is currently in beta and various aspects of the platform are at different levels of completion and robustness. There are probably still bugs in the code and we will likely be making breaking API changes. We plan to continuously improve the framework and we encourage the community to contribute.
 
-For additional information, we recommend you read the [Known Issues](/psi/ReleaseNotes#KnownIssues) section from the [Release Notes](/psi/ReleaseNotes) document, which provides more information about important issues that are known and which we plan to address in the near future. Also, the [Roadmap](/psi/Roadmap) document provides more information about our future plans.
+For additional information, we recommend you read the list of [Issues](https://github.com/Microsoft/psi/issues) reported in the repository. Also, the [Roadmap](/psi/Roadmap) document provides more information about our future plans.
 
 # Getting Help
 

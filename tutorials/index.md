@@ -379,4 +379,4 @@ We can control the speed of the execution of the pipeline, via a replay descript
 
 After going through this first brief tutorial, it may be helpful to look through the set of [Samples](/psi/samples) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.
 
-Finally, additional information is provided in a set of [In-Depth Topics](/psi/topics) that dive into more details in various aspects of the framework, like synchronization, persistence, remoting, visualization etc.
+Finally, additional information is provided in a set of [In-Depth Topics](/psi/topics) that dive into more details in various aspects of the framework, including [basic stream operators](/psi/topics/InDepth.BasicStreamOperators), [synchronization](/psi/topics/InDepth.Synchronization),  [writing new components](/psi/topics/InDepth.WritingComponents), [delivery policies](/psi/topics/InDepth.DeliveryPolicies), [remoting](/psi/topics/InDepth.Remoting), [interop](/psi/topics/InDepth.Interop) etc.
