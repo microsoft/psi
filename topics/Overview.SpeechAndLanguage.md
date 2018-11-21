@@ -57,6 +57,8 @@ using (var pipeline = Pipeline.Create())
 
 The speech recognizer components generate recognition results which are represented by a `SpeechRecognitionResult` object. Results may be either partial or final (as indicated by the `IsFinal` property). Each result object contains one or more `Alternates`, each representing a single hypothesis. The top hypothesis may be accessed directly via the `Text` property. In addition, the raw audio associated with the recognition result is stored in the `Audio` property.
 
+**NOTE:** Due to the fact that the partial and final recognition result event times are estimated from the audio stream position of the underlying recognition engine, the originating times of messages from the `SystemSpeechRecognizer` and `MicrosoftSpeechRecognizer` components may not reflect the exact times of the corresponding utterances in the input audio stream. See [this issue](https://github.com/Microsoft/psi/issues/20) for more details.
+
 <a name="Grammars"/>
 
 #### Grammars
