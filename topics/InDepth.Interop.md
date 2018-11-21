@@ -31,15 +31,15 @@ This produces a JSON file containing something like:
 ```json
 [
     {
-        "time": "2018-11-12T22:48:58.3770983Z",
+        "originatingTime": "2018-11-12T22:48:58.3770983Z",
         "message": 0.0
     },
     {
-        "time": "2018-11-12T22:48:58.3770984Z",
+        "originatingTime": "2018-11-12T22:48:58.3770984Z",
         "message": 0.0099998333341666645
     },
     {
-        "time": "2018-11-12T22:48:58.3770985Z",
+        "originatingTime": "2018-11-12T22:48:58.3770985Z",
         "message": 0.01999866669333308
     },
     ...
@@ -124,7 +124,7 @@ while True:
     [topic, message] = socket.recv_multipart()
     j = json.loads(message)
     print "Message: ", repr(j['message'])
-    print "Time: ", repr(j['time'])
+    print "Originating Time: ", repr(j['originatingTime'])
 ```
 
 \\psi may also consume message that have been produced from "outside." For example, the below Python code produces an infinite stream of random doubles:
@@ -139,11 +139,11 @@ socket.bind('tcp://127.0.0.1:12345')
 while True:
     payload = {}
     payload['message'] = random.uniform(0, 1)
-    payload['time'] = datetime.datetime.now().isoformat()
+    payload['originatingTime'] = datetime.datetime.now().isoformat()
     socket.send_multipart(['test-topic'.encode(), json.dumps(payload).encode('utf-8')])
 ```
 
-The schema of the `message` itself is arbitrary, but the fact that there is a root-level `"message"` and `"time"` is required and the time is expected to be ISO 8601 formated. Also, remember that the payload is not a string, but UTF-8 encoded bytes.
+The schema of the `message` itself is arbitrary, but the fact that there is a root-level `"message"` and `"originatingTime"` is required and the time is expected to be ISO 8601 formated. Also, remember that the payload is not a string, but UTF-8 encoded bytes.
 
 The stream of random doubles can then be easily consumed in \\psi:
 
@@ -165,7 +165,7 @@ while True:
     result = DoSomeWork(message)
     payload = {}
     payload['message'] = result
-    payload['time'] = j['time'] # use original time
+    payload['originatingTime'] = j['originatingTime'] # use original time
     socket.send_multipart(['test-topic'.encode(), json.dumps(payload).encode('utf-8')])
 ```
 
@@ -175,10 +175,10 @@ As mentioned in the examples above, alternative data formats to the \\psi store 
 
 ## JsonFormat
 
-A single `JsonFormat` class provides an implementation of all of the interfaces for JSON. Message records are of the following form where `<message>` is a JSON-serialized message and `<time>` is an ISO 8601 string representing the originating time:
+A single `JsonFormat` class provides an implementation of all of the interfaces for JSON. Message records are of the following form where `<message>` is a JSON-serialized message and `<originatingTime>` is an ISO 8601 string representing the originating time:
 
 ```json
-{ "time": <time>, "message": <message> }
+{ "originatingTime": <originatingTime>, "message": <message> }
 ```
 
 For example, messages of the form:
@@ -202,7 +202,7 @@ Would serialize as the following:
 
 ```json
 {
-    "time": "1971-11-03T00:00:00Z",
+    "originatingTime": "1971-11-03T00:00:00Z",
     "message": {
         "ID": 123,
         "Confidence": 0.92,
@@ -243,17 +243,17 @@ However, there are serialization libraries for MessagePack in 50+ languages, mak
 A single `CsvFormat` class provides implementations for comma-separated-values encoded according to [RFC 4180](https://tools.ietf.org/html/rfc4180). Records are of the form:
 
 ```csv
-<_Time_>,<header>,<header>,<header>, ...
-<time>,<field>,<field>,<field>, ...
+<_OriginatingTime_>,<header>,<header>,<header>, ...
+<originatingTime>,<field>,<field>,<field>, ...
 ...
 ```
 
-The first column is the originating time of the messages and is named `_Time_`.
+The first column is the originating time of the messages and is named `_OriginatingTime_`.
 
 There are several limitations to the CSV format. Much of the type information is lost and hierarchical values and collection properties are not (currently) allowed - such properties are merely skipped. For example a face tracker message type containing an `ID`, a `Confidence` and a `Face` property, each with a `Rect` having an `X` and `Y` location and `Width`/`Height`, would only serialize the root primitive properties; in this case only the `ID` and `Confidence` (along with originating time):
 
 ```csv
-_Time_,ID,Confidence
+_OriginatingTime_,ID,Confidence
 2018-09-06T00:39:19.0883965Z,123,0.92
 2018-09-06T00:39:19.0983965Z,123,0.89
 ...
@@ -273,23 +273,23 @@ var flattened = faces.Select(f => new { ID = f.ID,
 Serializing this would then produce a stream of messages in the form:
 
 ```csv
-_Time_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
+_OriginatingTime_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
 2018-09-06T00:39:19.0883965Z,123,0.92,213,107,42,61
 ```
 
 ```csv
-_Time_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
+_OriginatingTime_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
 2018-09-06T00:39:19.0983965Z,123,0.89,215,101,44,63
 ```
 
-Notice that each message includes the header row. Deserializing these will give messages represented as an `ExpandoObject` with named `dynamic` properties for each column (except `_Time_`).
+Notice that each message includes the header row. Deserializing these will give messages represented as an `ExpandoObject` with named `dynamic` properties for each column (except `_OriginatingTime_`).
 
 ### Simple Primitives
 
 In the case of a simple stream of primitive types (e.g. `double` with `faces.Select(f => f.Confidence)`), the persisted form looks like:
 
 ```csv
-_Time_,_Value_
+_OriginatingTime_,_Value_
 2018-09-06T00:39:19.0883965Z,0.92
 ```
 
@@ -300,7 +300,7 @@ Notice the special field name `_Value_` used to distinguish this case. This dese
 A very special case, which is commonly used in ML with \\psi, is a single collection of numeric types such as `IEnumerable<double>`. For example, `new double[] { 1, 2, 3, 4, 5 }` serializes to:
 
 ```csv
-_Time_,_Column0_,_Column1_,_Column2_,_Column3_,_Column4_
+_OriginatingTime_,_Column0_,_Column1_,_Column2_,_Column3_,_Column4_
 2018-09-06T12:12:25.7463172-07:00,1,2,3,4,5
 ```
 
@@ -311,7 +311,7 @@ Notice the `_Column0_`, `_Column1_`, ... headers. This deserializes back into a 
 CSV is generally used as a persisted format, but may also be used for transport (over a message queue, etc.). 
 
 ```csv
-_Time_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
+_OriginatingTime_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
 2018-09-06T00:39:19.0883965Z,123,0.92,213,107,42,61
 2018-09-06T00:39:19.0983761Z,123,0.89,215,101,44,63
 2018-09-06T00:39:19.1183762Z,123,0.90,212,104,43,62
