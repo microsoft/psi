@@ -268,9 +268,9 @@ Log(this IProducer<double> source, double newBase) -> IProducer<double>
 
 ## 5. Window computations
 
-While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Buffer` and `History` operators](/psi/topics/InDepth.BuffersAndHistory) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
+While `Aggregate` accumulates values over the _entire_ stream, it is much more common to do this over some sliding window. The [`Window` operators](/psi/topics/InDepth.Window) are very useful for producing these sliding windows (as `IEnumerable`) by count or `TimeSpan` over which to operate.
 
-As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Buffer` and `History`](/psi/topics/InDepth.BuffersAndHistory):
+As a convenience, some of the above operations are available over windows by `size` or `timeSpan`. Under the covers, all of these are implemented using [`Window`](/psi/topics/InDepth.Window):
 
 ```csharp
 Sum(this IProducer<_> source, int size) -> IProducer<_>
