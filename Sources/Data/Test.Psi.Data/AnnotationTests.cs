@@ -109,10 +109,10 @@ namespace Test.Psi.Data.Annotations
                 var sin = timer.Select(l => Math.Sin(l / 10000000d));
                 var annotations = sin
                     .Select((d, env) => Tuple.Create(d, env.OriginatingTime))
-                    .History(2)
+                    .Window(-1, 0)
                     .Select((p) => Tuple.Create(p.First(), p.Last(), this.ComputeTransition(p.First().Item1, p.Last().Item1)))
                     .Where((t) => t.Item3 != Transitions.None)
-                    .History(2)
+                    .Window(-1, 0)
                     .Process<IEnumerable<Tuple<Tuple<double, DateTime>, Tuple<double, DateTime>, Transitions>>, AnnotatedEvent>((t, env, s) =>
                     {
                         var first = t.First();

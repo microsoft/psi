@@ -17,180 +17,6 @@ namespace Test.Psi
     {
         private event EventHandler<int> EventSourceTestEvent;
 
-        /// <summary>
-        /// Creates a list of streams that output messages according to a stream specification.
-        /// </summary>
-        /// <param name="streamSpecs">
-        /// A collection of stream specifications from which to generate the derived streams.
-        /// </param>
-        /// <param name="startTime">
-        /// The time when the streams/pipeline will be started.
-        /// </param>
-        /// <param name="realIntervalMs">
-        /// The time of each base tick interval in the stream specification.
-        /// </param>
-        /// <param name="debugPrint">
-        /// A flag to indicate whether debug message information should be printed to the console.
-        /// </param>
-        /// <returns>
-        /// The list of streams corresponding to the list of stream specifications.
-        /// </returns>
-        public List<IProducer<T>> CreateStreams<T>(Pipeline pipeline, IEnumerable<string> streamSpecs, DateTime startTime, uint realIntervalMs = 10, bool debugPrint = false)
-        {
-            // Create the base timer used to derive all the streams
-            int tick = 0;
-            var timerSource = Timers.Timer(pipeline, TimeSpan.FromMilliseconds(realIntervalMs), (dt, ts) => tick++);
-
-            // List of derived output streams
-            List<IProducer<T>> streams = new List<IProducer<T>>();
-
-            // Temporary list of messages
-            List<MessageSpec<T>> list = new List<MessageSpec<T>>();
-
-            // Go through the list of stream specs and create a new derived stream for each
-            foreach (string streamSpec in streamSpecs)
-            {
-                // Split by base clock ticks
-                string[] messageDescriptions = streamSpec.Split('|');
-
-                // Each tick may contain an array of messages (to support generation of multiple messages at the same tick)
-                MessageSpec<T>[][] messages = new MessageSpec<T>[messageDescriptions.Length][];
-
-                // For each clock tick
-                for (int i = 0; i < messageDescriptions.Length; ++i)
-                {
-                    // Check for multiple messages at the same tick
-                    string[] messageGroup = messageDescriptions[i].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    // Only add if there are messages at this tick (otherwise leave entry as null)
-                    if (messageGroup.Length > 0)
-                    {
-                        // Create and add the generated messages at this tick
-                        foreach (string generatedMessage in messageGroup)
-                        {
-                            string[] messageSpec = generatedMessage.Split(':'); // value:originating_time
-                            if (messageSpec.Length > 1)
-                            {
-                                // Add the next message to the list
-                                list.Add(new MessageSpec<T>(
-                                    (T)Convert.ChangeType(messageSpec[0], typeof(T)), // message value (T is primitive type)
-                                    int.Parse(messageSpec[1]),   // originating time offset
-                                    (int)(i * realIntervalMs))); // generation time offset
-                            }
-                        }
-
-                        // Add the accumulated message list as an array. Clear the list and reuse it.
-                        messages[i] = list.ToArray();
-                        list.Clear();
-                    }
-                }
-
-                // Create a derived stream driven by the base timer according to the stream spec
-                var stream = timerSource
-                    .Where(t => (t < messages.Length) && (messages[t] != null)) // are there messages to output at this tick?
-                    .SelectMany(t => messages[t].Where(m => m != null).Select(m => Tuple.Create(m.Data, startTime.AddMilliseconds(m.OriginatingTimeOffsetMs)))) // for each message spec at this tick, create a Tuple of message value and originating time to push
-                    .Process<Tuple<T, DateTime>, T>((d, e, s) => s.Post(d.Item1, d.Item2));
-
-                // Add the stream to the list of streams, with console debug output if specified
-                streams.Add(debugPrint ?
-                    stream.Do((d, e) => Console.WriteLine(new MessageSpec<T>(
-                        d,
-                        (int)(e.OriginatingTime - startTime).TotalMilliseconds,
-                        (int)(e.Time - startTime).TotalMilliseconds))) :
-                    stream);
-            }
-
-            return streams;
-        }
-
-        /// <summary>
-        /// Create a verifier function given a stream and a specification of expected messages on the stream.
-        /// </summary>
-        /// <param name="stream">
-        /// The stream to be verified. This parameter is passed by ref and on return will refer to the
-        /// original stream with an operator applied to collect the observed messages which may then be
-        /// verified by a call to the verifier function that is returned by this method.
-        /// </param>
-        /// <param name="streamSpec">
-        /// The specification of expected messages on the stream.
-        /// </param>
-        /// <param name="startTime">
-        /// The time when the stream was or will be started.
-        /// </param>
-        /// <param name="realIntervalMs">
-        /// The time of each base tick interval in the stream specification.
-        /// </param>
-        /// <param name="debugPrint">
-        /// A flag to indicate whether debug message information should be printed to the console.
-        /// </param>
-        /// <returns>
-        /// A delegate for a function that when called will verify that observed messages on the stream
-        /// match the expected values. This delegate should only be called after the pipeline has completed.
-        /// </returns>
-        public Action CreateVerifier<T>(ref IProducer<T> stream, string streamSpec, DateTime startTime, uint realIntervalMs = 10, bool debugPrint = false)
-        {
-            // Split by base clock ticks
-            string[] messageDescriptions = streamSpec.Split('|');
-
-            // Store expected messages in a list
-            List<MessageSpec<T>> expectedMessages = new List<MessageSpec<T>>();
-
-            // For each clock tick
-            for (int i = 0; i < messageDescriptions.Length; ++i)
-            {
-                // Check for multiple messages at the same tick
-                string[] messageGroup = messageDescriptions[i].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-                // Create and add the expected messages at this tick
-                foreach (string expectedMessage in messageGroup)
-                {
-                    string[] messageSpec = expectedMessage.Split(':'); // value:originating_time
-                    if (messageSpec.Length > 1)
-                    {
-                        expectedMessages.Add(new MessageSpec<T>(
-                            (T)Convert.ChangeType(messageSpec[0], typeof(T)), // message value
-                            int.Parse(messageSpec[1]), // originating time offset
-                            (int)(i * realIntervalMs))); // generation time offset
-                    }
-                }
-            }
-
-            // Store observed messages on the stream in a list.
-            List<MessageSpec<T>> observedMessages = new List<MessageSpec<T>>();
-
-            // Capture the observed messages on the stream. stream (passed by ref) will
-            // be re-assigned so that it can be compiled into the pipeline.
-            stream = stream.Do((d, e) =>
-            {
-                var observedMessage = new MessageSpec<T>(
-                    d,
-                    (int)(e.OriginatingTime - startTime).TotalMilliseconds,
-                    (int)(e.Time - startTime).TotalMilliseconds);
-
-                // Add the observed message to the list
-                observedMessages.Add(observedMessage);
-                if (debugPrint)
-                {
-                    Console.WriteLine(observedMessage);
-                }
-            });
-
-            // Create the verifier function that compares each observed message with its expected value
-            return () =>
-            {
-                int i = 0;
-
-                // Check at least expectedMessage.Count messages were observed
-                Assert.IsTrue(observedMessages.Count >= expectedMessages.Count);
-
-                foreach (var expectedMessage in expectedMessages)
-                {
-                    // Check observed against expected
-                    Assert.AreEqual(expectedMessage, observedMessages[i++]);
-                }
-            };
-        }
-
         [TestMethod]
         [Timeout(60000)]
         public void DelayOperator()
@@ -226,66 +52,42 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void RepeatOperator()
+        public void RepeatTest()
         {
-            DateTime startTime = DateTime.UtcNow;
-            DateTime endTime = startTime.AddMilliseconds(300);
-            uint tickInterval = 10; // ms
-
-            // Each line below defines the messages to be output on a stream driven by the same timer that ticks at a defined tickInterval (in this case 10 ms). This
-            // allows us to test operators that join two or more streams in a deterministic way that isn't susceptible to differences that may arise from multiple
-            // timers. If one or more messages is to be generated at a given tick, the values are specified in the form y:t where y is the value to be generated on
-            // the stream and t is the originating time offset in milliseconds from the start time. Multiple messages may be generated at a given tick, in which case
-            // they should all be included in the same tick separated by a space (e.g. |y1:t1 y2:t2 y3:t3|).
-            string[] inputs = new string[]
+            using (var pipeline = Pipeline.Create(nameof(RepeatTest)))
             {
-                // Tick offset (ms):
-                // 0 10 20 30  40 50 60  70 80   90      100  110  120 130 140 150     160  170  180     190     200     210 220 230 240  250  260     270 280   290
-                " 0:0| | |30:30| | |60:60| | | 90:90  |       | |120:120| | |150:150|       | |180:180|       |       |210:210| | |240:240| |       |270:270| |       ",
-                " 0:0| | |     | | |     | | |        |100:100| |       | | |       |       | |       |       |200:200|       | | |       | |       |       | |       ",
-                "    | | |     | | | 0:0 | | |        |       | |       | | |       |100:100| |       |       |       |       | | |       | |200:200|       | |       ",
-                "    | | |     | | |     | | |  0:0   |       | |       | | |       |       | |       |100:100|       |       | | |       | |       |       | |200:200"
-            };
+                var startTime = DateTime.UtcNow;
 
-            // Each line below defines the messages that are expected to be observed for each of the output
-            // Tick (ms):          0 10 20 30  40 50 60  70 80   90      100  110  120 130 140 150     160  170  180     190     200     210 220 230 240  250  260     270 280 290
-            string expected_0 = "0:0| | | 0:30| | | 0:60| | |  0:90  |       | |100:120| | |100:150|       | |100:180|       |       |200:210| | |200:240| |       |200:270| |   ";
-            string expected_60 = "0:0| | | 0:30| | | 0:60| | |  0:90  |       | |  0:120| | |  0:150|       | |100:180|       |       |100:210| | |100:240| |       |200:270| |   ";
-            string expected_90 = "0:0| | | 0:30| | | 0:60| | |  0:90  |       | |  0:120| | |  0:150|       | |  0:180|       |       |100:210| | |100:240| |       |100:270| |   ";
+                // clock for repeater contains 3 values at 0, 500 and 1000 ms
+                var clock = Generators.Range(pipeline, 0, 3, TimeSpan.FromMilliseconds(500));
 
-            var replay = new ReplayDescriptor(startTime, endTime);
-            using (var p = Pipeline.Create("test"))
-            {
-                // Create synchronized streams as inputs to the operator
-                var inputStreams = this.CreateStreams<int>(p, inputs, startTime, tickInterval, true);
-                var input30 = inputStreams[0];
-                var input100_0 = inputStreams[1];
-                var input100_60 = inputStreams[2];
-                var input100_90 = inputStreams[3];
+                // input stream contains 2 values { 250, 750 } at 250 ms and 750 ms
+                var input1 = Generators.Sequence(pipeline, new[] { (250, startTime.AddMilliseconds(250)), (750, startTime.AddMilliseconds(750)) });
+                var output1 = clock.Pair(input1, -1).Item2().Select((x, e) => (x, e.OriginatingTime)).ToObservable().ToListObservable();
+                var output1_NoInitialValue = clock.Pair(input1).Item2().Select((x, e) => (x, e.OriginatingTime)).ToObservable().ToListObservable();
 
-                // Test the functionality of the RepeatLast operator to produce messages spaced
-                // 30 ms apart delayed from the original clock by at least 50 ms.
-                var repeated_0 = input100_0.Repeat(input30, true);
-                var repeated_60 = input100_60.Repeat(input30, true);
-                var repeated_90 = input100_90.Repeat(input30, true);
+                // input stream contains one value { 750 } at 750 ms
+                var input2 = Generators.Sequence(pipeline, new[] { (750, startTime.AddMilliseconds(750)) });
+                var output2 = clock.Pair(input2, -1).Item2().Select((x, e) => (x, e.OriginatingTime)).ToObservable().ToListObservable();
+                var output2_NoInitialValue = clock.Pair(input2).Item2().Select((x, e) => (x, e.OriginatingTime)).ToObservable().ToListObservable();
 
-                // verify without initial value
-                var numRepeatedWithoutInitialValue = 0;
-                input100_0.Repeat(input30, false).Do(_ => numRepeatedWithoutInitialValue++);
+                pipeline.Run(new ReplayDescriptor(startTime));
 
-                // Create delegates to verify the messages on each of the output streams.
-                var verify_0 = this.CreateVerifier(ref repeated_0, expected_0, startTime, 10, true);
-                var verify_60 = this.CreateVerifier(ref repeated_60, expected_60, startTime, 10, true);
-                var verify_90 = this.CreateVerifier(ref repeated_90, expected_90, startTime, 10, true);
+                // check initial value (-1) is output at 0 ms
+                CollectionAssert.AreEqual(new[] { -1, 250, 750 }, output1.Select(o => o.Item1).ToList());
+                CollectionAssert.AreEqual(new[] { startTime, startTime.AddMilliseconds(500), startTime.AddMilliseconds(1000) }, output1.Select(o => o.Item2).ToList());
 
-                // Execute the pipeline
-                p.Run(replay);
+                // check initial value is not used and the 2 input values are output with the last 2 originating times of the input stream
+                CollectionAssert.AreEqual(new[] { 250, 750 }, output1_NoInitialValue.Select(o => o.Item1).ToList());
+                CollectionAssert.AreEqual(new[] { startTime.AddMilliseconds(500), startTime.AddMilliseconds(1000) }, output1_NoInitialValue.Select(o => o.Item2).ToList());
 
-                // Verify the results
-                verify_0();
-                verify_60();
-                verify_90();
-                Assert.IsTrue(numRepeatedWithoutInitialValue > 0); // at least one message (non-deterministic, difficult to fully test)
+                // check initial value (-1) is output at 0 ms and 500 ms
+                CollectionAssert.AreEqual(new[] { -1, -1, 750 }, output2.Select(o => o.Item1).ToList());
+                CollectionAssert.AreEqual(new[] { startTime, startTime.AddMilliseconds(500), startTime.AddMilliseconds(1000) }, output2.Select(o => o.Item2).ToList());
+
+                // check initial value is not used and only one value is output with the last originating time of the input stream
+                CollectionAssert.AreEqual(new[] { 750 }, output2_NoInitialValue.Select(o => o.Item1).ToList());
+                CollectionAssert.AreEqual(new[] { startTime.AddMilliseconds(1000) }, output2_NoInitialValue.Select(o => o.Item2).ToList());
             }
         }
 
@@ -557,29 +359,29 @@ namespace Test.Psi
 
                 pipeline.Run();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2.5, 3.5, 4.5 }, intAverageHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2, 3, 4 }, intAverageHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3.5, 4, 5 }, nullableIntAverageHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 1.5, 2.5, 3.5, 4.5 }, intAverageHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2.5, 3.5, 4.5 }, intAverageHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, 3, 3.5, 4, 5 }, nullableIntAverageHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3.5, 4, 4.5 }, nullableIntAverageHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2.5, 3.5, 4.5 }, longAverageHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2, 3, 4 }, longAverageHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3.5, 4, 5 }, nullableLongAverageHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 1.5, 2.5, 3.5, 4.5 }, longAverageHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2.5, 3.5, 4.5 }, longAverageHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, 3, 3.5, 4, 5 }, nullableLongAverageHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3.5, 4, 4.5 }, nullableLongAverageHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0.5f, 1, 1.5f, 2.5f, 3.5f, 4.5f }, floatAverageHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0.5f, 1, 1.5f, 2, 3, 4 }, floatAverageHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, null, null, 3, 3.5f, 4, 5 }, nullableFloatAverageHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 1.5f, 2.5f, 3.5f, 4.5f }, floatAverageHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0.5f, 1, 1.5f, 2.5f, 3.5f, 4.5f }, floatAverageHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, 3, 3.5f, 4, 5 }, nullableFloatAverageHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, null, null, 3, 3.5f, 4, 4.5f }, nullableFloatAverageHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2.5, 3.5, 4.5 }, doubleAverageHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2, 3, 4 }, doubleAverageHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3.5, 4, 5 }, nullableDoubleAverageHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 1.5, 2.5, 3.5, 4.5 }, doubleAverageHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2.5, 3.5, 4.5 }, doubleAverageHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, 3, 3.5, 4, 5 }, nullableDoubleAverageHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3.5, 4, 4.5 }, nullableDoubleAverageHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0.5m, 1, 1.5m, 2.5m, 3.5m, 4.5m }, decimalAverageHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0.5m, 1, 1.5m, 2, 3, 4 }, decimalAverageHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 3.5m, 4, 5 }, nullableDecimalAverageHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 1.5m, 2.5m, 3.5m, 4.5m }, decimalAverageHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0.5m, 1, 1.5m, 2.5m, 3.5m, 4.5m }, decimalAverageHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, 3, 3.5m, 4, 5 }, nullableDecimalAverageHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 3.5m, 4, 4.5m }, nullableDecimalAverageHistByTime.AsEnumerable()));
             }
         }
@@ -632,29 +434,29 @@ namespace Test.Psi
 
                 pipeline.Run();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 3, 6, 10, 14, 18 }, intSumHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 3, 6, 10, 15, 20 }, intSumHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { 0, 0, 0, 3, 7, 12, 15 }, nullableIntSumHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 6, 10, 14, 18 }, intSumHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 3, 6, 10, 14, 18 }, intSumHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { 0, 3, 7, 12, 15 }, nullableIntSumHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { 0, 0, 0, 3, 7, 12, 18 }, nullableIntSumHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 3, 6, 10, 14, 18 }, longSumHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 3, 6, 10, 15, 20 }, longSumHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { 0, 0, 0, 3, 7, 12, 15 }, nullableLongSumHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 6, 10, 14, 18 }, longSumHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 3, 6, 10, 14, 18 }, longSumHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { 0, 3, 7, 12, 15 }, nullableLongSumHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { 0, 0, 0, 3, 7, 12, 18 }, nullableLongSumHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 3, 6, 10, 14, 18 }, floatSumHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 3, 6, 10, 15, 20 }, floatSumHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { 0, 0, 0, 3, 7, 12, 15 }, nullableFloatSumHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 6, 10, 14, 18 }, floatSumHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 3, 6, 10, 14, 18 }, floatSumHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { 0, 3, 7, 12, 15 }, nullableFloatSumHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { 0, 0, 0, 3, 7, 12, 18 }, nullableFloatSumHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 3, 6, 10, 14, 18 }, doubleSumHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 3, 6, 10, 15, 20 }, doubleSumHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { 0, 0, 0, 3, 7, 12, 15 }, nullableDoubleSumHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 6, 10, 14, 18 }, doubleSumHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 3, 6, 10, 14, 18 }, doubleSumHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { 0, 3, 7, 12, 15 }, nullableDoubleSumHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { 0, 0, 0, 3, 7, 12, 18 }, nullableDoubleSumHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 3, 6, 10, 14, 18 }, decimalSumHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 3, 6, 10, 15, 20 }, decimalSumHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { 0, 0, 0, 3, 7, 12, 15 }, nullableDecimalSumHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 6, 10, 14, 18 }, decimalSumHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 3, 6, 10, 14, 18 }, decimalSumHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { 0, 3, 7, 12, 15 }, nullableDecimalSumHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { 0, 0, 0, 3, 7, 12, 18 }, nullableDecimalSumHistByTime.AsEnumerable()));
             }
         }
@@ -707,29 +509,29 @@ namespace Test.Psi
 
                 pipeline.Run();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 0, 0, 0, 1, 2, 3 }, intMinHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 0, 0, 0, 0, 1, 2 }, intMinHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { null, null, null, 3, 3, 3, 4 }, nullableIntMinHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2, 3 }, intMinHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 0, 0, 0, 1, 2, 3 }, intMinHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { null, 3, 3, 3, 4 }, nullableIntMinHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { null, null, null, 3, 3, 3, 3 }, nullableIntMinHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 0, 0, 0, 1, 2, 3 }, longMinHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 0, 0, 0, 0, 1, 2 }, longMinHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { null, null, null, 3, 3, 3, 4 }, nullableLongMinHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 2, 3 }, longMinHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 0, 0, 0, 1, 2, 3 }, longMinHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { null, 3, 3, 3, 4 }, nullableLongMinHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { null, null, null, 3, 3, 3, 3 }, nullableLongMinHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0, 0, 0, 1, 2, 3 }, floatMinHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0, 0, 0, 0, 1, 2 }, floatMinHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, null, null, 3, 3, 3, 4 }, nullableFloatMinHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 2, 3 }, floatMinHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0, 0, 0, 1, 2, 3 }, floatMinHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, 3, 3, 3, 4 }, nullableFloatMinHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, null, null, 3, 3, 3, 3 }, nullableFloatMinHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0, 0, 0, 1, 2, 3 }, doubleMinHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0, 0, 0, 0, 1, 2 }, doubleMinHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3, 3, 4 }, nullableDoubleMinHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 2, 3 }, doubleMinHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0, 0, 0, 1, 2, 3 }, doubleMinHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, 3, 3, 3, 4 }, nullableDoubleMinHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 3, 3, 3 }, nullableDoubleMinHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0, 0, 0, 1, 2, 3 }, decimalMinHistoryBySize.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0, 0, 0, 0, 1, 2 }, decimalMinHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 3, 3, 4 }, nullableDecimalMinHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 2, 3 }, decimalMinHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0, 0, 0, 1, 2, 3 }, decimalMinHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, 3, 3, 3, 4 }, nullableDecimalMinHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 3, 3, 3 }, nullableDecimalMinHistByTime.AsEnumerable()));
             }
         }
@@ -803,29 +605,29 @@ namespace Test.Psi
                 var x18 = nullableDecimalMaxHistBySize.AsEnumerable().ToArray();
                 var x19 = nullableDecimalMaxHistByTime.AsEnumerable().ToArray();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2, 3, 4, 5, 6 }, intMaxHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 3, 4, 5, 6 }, intMaxHistoryBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2, 3, 4, 5, 6 }, intMaxHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { null, null, null, 3, 4, 5, 6 }, nullableIntMaxHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { null, 3, 4, 5, 6 }, nullableIntMaxHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { null, null, null, 3, 4, 5, 6 }, nullableIntMaxHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 2, 3, 4, 5, 6 }, longMaxHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 3, 4, 5, 6 }, longMaxHistoryBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 2, 3, 4, 5, 6 }, longMaxHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { null, null, null, 3, 4, 5, 6 }, nullableLongMaxHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { null, 3, 4, 5, 6 }, nullableLongMaxHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { null, null, null, 3, 4, 5, 6 }, nullableLongMaxHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 2, 3, 4, 5, 6 }, floatMaxHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 3, 4, 5, 6 }, floatMaxHistoryBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 2, 3, 4, 5, 6 }, floatMaxHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, null, null, 3, 4, 5, 6 }, nullableFloatMaxHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, 3, 4, 5, 6 }, nullableFloatMaxHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { null, null, null, 3, 4, 5, 6 }, nullableFloatMaxHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 2, 3, 4, 5, 6 }, doubleMaxHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 3, 4, 5, 6 }, doubleMaxHistoryBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 2, 3, 4, 5, 6 }, doubleMaxHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 4, 5, 6 }, nullableDoubleMaxHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, 3, 4, 5, 6 }, nullableDoubleMaxHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { null, null, null, 3, 4, 5, 6 }, nullableDoubleMaxHistByTime.AsEnumerable()));
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 2, 3, 4, 5, 6 }, decimalMaxHistoryBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 3, 4, 5, 6 }, decimalMaxHistoryBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 2, 3, 4, 5, 6 }, decimalMaxHistoryByTime.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 4, 5, 6 }, nullableDecimalMaxHistBySize.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, 3, 4, 5, 6 }, nullableDecimalMaxHistBySize.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 4, 5, 6 }, nullableDecimalMaxHistByTime.AsEnumerable()));
             }
         }
@@ -869,20 +671,18 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var buffers = Generators.Range(pipeline, 0, 5).Buffer(3).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).Buffer(3).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
+                var buffers = Generators.Range(pipeline, 0, 5).Window(0, 2).ToObservable().ToListObservable();
+                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).Window(0, 2).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var bufferResults = buffers.AsEnumerable().ToArray();
-                Assert.AreEqual(5, bufferResults.Length);
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0 }, bufferResults[0]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1 }, bufferResults[1]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2 }, bufferResults[2]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, bufferResults[3]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3, 4 }, bufferResults[4]));
+                Assert.AreEqual(3, bufferResults.Length);
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2 }, bufferResults[0]));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, bufferResults[1]));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3, 4 }, bufferResults[2]));
 
                 var timestampResults = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, timestampResults.Length);
+                Assert.AreEqual(3, timestampResults.Length);
                 foreach (var buf in timestamps)
                 {
                     // buffer timestamp matches _first_ message in buffer
@@ -893,65 +693,18 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void BufferBySizeWithSelector()
+        public void FutureWindowBySizeWithSelector()
         {
             using (var pipeline = Pipeline.Create())
             {
-                var sums = Generators.Range(pipeline, 0, 5).Buffer(3, ms => ValueTuple.Create(ms.Select(m => m.Data).Sum(), ms.First().Envelope.OriginatingTime)).ToObservable().ToListObservable();
+                var sums = Generators.Range(pipeline, 0, 5).Window(0, 2, ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = sums.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                Assert.AreEqual(0, results[0]);
-                Assert.AreEqual(1, results[1]);
-                Assert.AreEqual(3, results[2]);
-                Assert.AreEqual(6, results[3]);
-                Assert.AreEqual(9, results[4]);
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void BufferBySizeWithTimestampSelector()
-        {
-            using (var pipeline = Pipeline.Create())
-            {
-                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).Buffer(3, ms => ValueTuple.Create(ms.Select(m => m.Data), SelectMiddleTimestamp(ms.Select(m => m.OriginatingTime)))).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
-                pipeline.Run();
-
-                var results = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                foreach (var buf in timestamps)
-                {
-                    // buffer timestamp matches _middle_ message in buffer
-                    Assert.AreEqual(SelectMiddleTimestamp(buf.Item1).Ticks, buf.Item2.Ticks);
-                }
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void BufferHistoryByNegativeSize()
-        {
-            using (var pipeline = Pipeline.Create())
-            {
-                try
-                {
-                    Generators.Range(pipeline, 0, 5).Buffer(-3); // cannot be negative (use `History` instead)
-                    Assert.IsTrue(false); // should have thrown
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                }
-
-                try
-                {
-                    Generators.Range(pipeline, 0, 5).History(-3); // cannot be negative (use `Buffer` instead)
-                    Assert.IsTrue(false); // should have thrown
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                }
+                Assert.AreEqual(3, results.Length);
+                Assert.AreEqual(3, results[0]);
+                Assert.AreEqual(6, results[1]);
+                Assert.AreEqual(9, results[2]);
             }
         }
 
@@ -961,20 +714,18 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var buffers = Generators.Range(pipeline, 0, 5).History(3).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).History(3).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
+                var buffers = Generators.Range(pipeline, 0, 5).Window(-2, 0).ToObservable().ToListObservable();
+                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).Window(-2, 0).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var bufferResults = buffers.AsEnumerable().ToArray();
-                Assert.AreEqual(5, bufferResults.Length);
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0 }, bufferResults[0]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1 }, bufferResults[1]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2 }, bufferResults[2]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, bufferResults[3]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3, 4 }, bufferResults[4]));
+                Assert.AreEqual(3, bufferResults.Length);
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2 }, bufferResults[0]));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, bufferResults[1]));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3, 4 }, bufferResults[2]));
 
                 var timestampResults = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, timestampResults.Length);
+                Assert.AreEqual(3, timestampResults.Length);
                 foreach (var buf in timestamps)
                 {
                     // buffer timestamp matches _last_ message in buffer
@@ -989,35 +740,14 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var sums = Generators.Range(pipeline, 0, 5).History(3, ms => ValueTuple.Create(ms.Select(m => m.Data).Sum(), ms.First().Envelope.OriginatingTime)).ToObservable().ToListObservable();
+                var sums = Generators.Range(pipeline, 0, 5).Window(-2, 0, ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = sums.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                Assert.AreEqual(0, results[0]);
-                Assert.AreEqual(1, results[1]);
-                Assert.AreEqual(3, results[2]);
-                Assert.AreEqual(6, results[3]);
-                Assert.AreEqual(9, results[4]);
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void HistoryBySizeWithTimestampSelector()
-        {
-            using (var pipeline = Pipeline.Create())
-            {
-                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).History(3, ms => ValueTuple.Create(ms.Select(m => m.Data), SelectMiddleTimestamp(ms.Select(m => m.OriginatingTime)))).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
-                pipeline.Run();
-
-                var results = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                foreach (var buf in timestamps)
-                {
-                    // buffer timestamp matches _middle_ message in buffer
-                    Assert.AreEqual(SelectMiddleTimestamp(buf.Item1).Ticks, buf.Item2.Ticks);
-                }
+                Assert.AreEqual(3, results.Length);
+                Assert.AreEqual(3, results[0]);
+                Assert.AreEqual(6, results[1]);
+                Assert.AreEqual(9, results[2]);
             }
         }
 
@@ -1027,8 +757,8 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).History(TimeSpan.FromMilliseconds(2)).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Select((_, e) => e.OriginatingTime).History(TimeSpan.FromMilliseconds(2)).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
+                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Window(RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2))).ToObservable().ToListObservable();
+                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Select((_, e) => e.OriginatingTime).Window(RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2))).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = buffers.AsEnumerable().ToArray();
@@ -1051,11 +781,130 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void NonOriginSpanningPastWindowByTime()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                // window from -3 to -1 ms (not spanning origin)
+                var sums = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1))
+                                     .Window<int, int>(TimeSpan.FromMilliseconds(-3), TimeSpan.FromMilliseconds(-1), ms => ms.Select(m => m.Data).Sum())
+                                     .ToObservable()
+                                     .ToListObservable();
+                pipeline.Run();
+
+                var results = sums.AsEnumerable().ToArray();
+                Assert.AreEqual(5, results.Length);
+                Assert.AreEqual(0, results[0]); // empty
+                Assert.AreEqual(0, results[1]); // 0
+                Assert.AreEqual(1, results[2]); // 0 + 1
+                Assert.AreEqual(3, results[3]); // 1 + 2
+                Assert.AreEqual(5, results[4]); // 2 + 3
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void NonOriginSpanningFutureWindowByTime()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                // window from +1 to +3 ms (not spanning origin)
+                var sums = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1))
+                                     .Window<int, int>(TimeSpan.FromMilliseconds(1), TimeSpan.FromMilliseconds(3), ms => ms.Select(m => m.Data).Sum())
+                                     .ToObservable()
+                                     .ToListObservable();
+                pipeline.Run();
+
+                var results = sums.AsEnumerable().ToArray();
+                Assert.AreEqual(5, results.Length);
+                Assert.AreEqual(6, results[0]); // 1 + 2 + 3
+                Assert.AreEqual(9, results[1]); // 2 + 3 + 4
+                Assert.AreEqual(7, results[2]); // 3 + 4
+                Assert.AreEqual(4, results[3]); // 4
+                Assert.AreEqual(0, results[4]); // empty
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void BackwardAndForwardWindowByIndex()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var sums = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(1))
+                                     .Window<int, int>(2, -2, ms => ms.Select(m => m.Data).Sum()) // note negative interval form to incidentally test normalization
+                                     .ToObservable()
+                                     .ToListObservable();
+                pipeline.Run();
+
+                var results = sums.AsEnumerable().ToArray();
+                Assert.AreEqual(6, results.Length);
+                Assert.AreEqual(10, results[0]); // 0 + 1 + [2] + 3 + 4
+                Assert.AreEqual(15, results[1]); // 1 + 2 + [3] + 4 + 5
+                Assert.AreEqual(20, results[2]); // 2 + 3 + [4] + 5 + 6
+                Assert.AreEqual(25, results[3]); // 3 + 4 + [5] + 6 + 7
+                Assert.AreEqual(30, results[4]); // 4 + 5 + [6] + 7 + 8
+                Assert.AreEqual(35, results[5]); // 5 + 6 + [7] + 8 + 9
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void NonOriginSpanningPastWindowByIndex()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                // window from -3 to -1 (not spanning origin)
+                var sums = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(1))
+                                     .Window<int, int>(-3, -1, ms => ms.Select(m => m.Data).Sum())
+                                     .ToObservable()
+                                     .ToListObservable();
+                pipeline.Run();
+
+                var results = sums.AsEnumerable().ToArray();
+                Assert.AreEqual(7, results.Length);
+                Assert.AreEqual(3, results[0]); // 0 + 1 + 2 (origin 3)
+                Assert.AreEqual(6, results[1]); // 1 + 2 + 3 (origin 4)
+                Assert.AreEqual(9, results[2]); // 2 + 3 + 4 (origin 5)
+                Assert.AreEqual(12, results[3]); // 3 + 4 + 5 (origin 6)
+                Assert.AreEqual(15, results[4]); // 4 + 5 + 6 (origin 7)
+                Assert.AreEqual(18, results[5]); // 5 + 6 + 7 (origin 8)
+                Assert.AreEqual(21, results[6]); // 6 + 7 + 8 (origin 9)
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void NonOriginSpanningFutureWindowByIndex()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                // window from -3 to -1 (not spanning origin)
+                var sums = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(1))
+                                     .Window<int, int>(1, 3, ms => ms.Select(m => m.Data).Sum())
+                                     .ToObservable()
+                                     .ToListObservable();
+                pipeline.Run();
+
+                var results = sums.AsEnumerable().ToArray();
+                Assert.AreEqual(7, results.Length);
+                Assert.AreEqual(6, results[0]); // 1 + 2 + 3 (origin 0)
+                Assert.AreEqual(9, results[1]); // 2 + 3 + 4 (origin 1)
+                Assert.AreEqual(12, results[2]); // 3 + 4 + 5 (origin 2)
+                Assert.AreEqual(15, results[3]); // 4 + 5 + 6 (origin 3)
+                Assert.AreEqual(18, results[4]); // 5 + 6 + 7 (origin 4)
+                Assert.AreEqual(21, results[5]); // 6 + 7 + 8 (origin 5)
+                Assert.AreEqual(24, results[6]); // 7 + 8 + 9 (origin 6)
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void HistoryByTimeWithSelector()
         {
             using (var pipeline = Pipeline.Create())
             {
-                var sums = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).History(TimeSpan.FromMilliseconds(2), ms => ValueTuple.Create(ms.Select(m => m.Data).Sum(), ms.First().Envelope.OriginatingTime)).ToObservable().ToListObservable();
+                var sums = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Window<int, int>(RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2)), ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = sums.AsEnumerable().ToArray();
@@ -1070,32 +919,13 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void HistoryByTimeWithTimestampSelector()
-        {
-            using (var pipeline = Pipeline.Create())
-            {
-                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Select((_, e) => e.OriginatingTime).History(TimeSpan.FromMilliseconds(2), ms => ValueTuple.Create(ms.Select(m => m.Data), SelectMiddleTimestamp(ms.Select(m => m.OriginatingTime)))).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
-                pipeline.Run();
-
-                var results = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                foreach (var buf in timestamps)
-                {
-                    // buffer timestamp matches _middle_ message in buffer
-                    Assert.AreEqual(SelectMiddleTimestamp(buf.Item1).Ticks, buf.Item2.Ticks);
-                }
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
         public void Window()
         {
             using (var pipeline = Pipeline.Create())
             {
                 var intRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromMilliseconds(10));
-                var intWindowPlus35 = intRange.Window(new RelativeTimeInterval(TimeSpan.Zero, TimeSpan.FromMilliseconds(35))).Select(m => m.Select(v => v.Data)).Average().ToObservable().ToListObservable();
-                var intWindowMinus15Plus25 = intRange.Window(new RelativeTimeInterval(TimeSpan.FromMilliseconds(-15), TimeSpan.FromMilliseconds(25))).Select(m => m.Select(v => v.Data)).Average().ToObservable().ToListObservable();
+                var intWindowPlus35 = intRange.Window(new RelativeTimeInterval(TimeSpan.Zero, TimeSpan.FromMilliseconds(35))).Average().ToObservable().ToListObservable();
+                var intWindowMinus15Plus25 = intRange.Window(new RelativeTimeInterval(TimeSpan.FromMilliseconds(-15), TimeSpan.FromMilliseconds(25))).Average().ToObservable().ToListObservable();
 
                 pipeline.Run();
 

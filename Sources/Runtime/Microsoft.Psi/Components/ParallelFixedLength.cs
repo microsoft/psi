@@ -54,7 +54,7 @@ namespace Microsoft.Psi.Components
             }
 
             var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();
-            this.join = Operators.Join(branchResults, interpolator, pipeline);
+            this.join = Operators.Join(branchResults, interpolator, pipeline: pipeline);
         }
 
         /// <inheritdoc />

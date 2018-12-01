@@ -316,6 +316,17 @@ namespace Microsoft.Psi.Visualization.Client
         }
 
         /// <summary>
+        /// Shows a stream of latencies.
+        /// </summary>
+        /// <param name="stream">A stream of latencies, represented as tuple of originating time and time.</param>
+        /// <param name="vc">The visualization client.</param>
+        /// <returns>The newly created <see cref="StreamVisualizationObject{TData, TConfig}"/> used to show the stream.</returns>
+        public static TimeIntervalVisualizationObject Show(this IProducer<Tuple<DateTime, DateTime>> stream, VisualizationClient vc)
+        {
+            return vc.Show<TimeIntervalVisualizationObject, Tuple<DateTime, DateTime>, TimeIntervalVisualizationObjectConfiguration, TimelineVisualizationPanel>(stream);
+        }
+
+        /// <summary>
         /// Shows a stream of a list of coordinate systems.
         /// </summary>
         /// <param name="stream">A stream of a list of coordinate systems to show.</param>
@@ -392,6 +403,17 @@ namespace Microsoft.Psi.Visualization.Client
         {
             var latencyStream = stream.Select((data, env) => Tuple.Create(env.OriginatingTime, env.Time));
             return vc.Show<TimeIntervalVisualizationObject, Tuple<DateTime, DateTime>, TimeIntervalVisualizationObjectConfiguration, TimelineVisualizationPanel>(latencyStream);
+        }
+
+        /// <summary>
+        /// Shows a stream of time interval history visualization objects.
+        /// </summary>
+        /// <param name="stream">A stream of time interval history objects to show.</param>
+        /// <param name="vc">The visualization client.</param>
+        /// <returns>The newly created <see cref="TimeIntervalHistoryVisualizationObject"/> used to show the stream.</returns>
+        public static TimeIntervalHistoryVisualizationObject Show(this IProducer<Dictionary<string, List<(TimeInterval, string)>>> stream, VisualizationClient vc)
+        {
+            return vc.Show<TimeIntervalHistoryVisualizationObject, Dictionary<string, List<(TimeInterval, string)>>, TimeIntervalHistoryVisualizationObjectConfiguration, TimelineVisualizationPanel>(stream);
         }
     }
 }

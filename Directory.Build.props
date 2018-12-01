@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
+
   <PropertyGroup>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Company>Microsoft Corporation</Company>
     <Owners>microsoft,psi</Owners>
     <Authors>Microsoft</Authors>
-    <AssemblyVersion>0.5.48.2</AssemblyVersion>
+    <AssemblyVersion>0.6.48.2</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)-beta</Version>
     <SignAssembly>false</SignAssembly>
@@ -14,9 +15,22 @@
     <PackageProjectUrl>http://microsoft.github.io/psi/</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/psi/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageTags>Psi;Microsoft</PackageTags>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
+    <!-- Workaround for arbitrary value in AssemblyInformationalVersionAttribute until it is fixed in VS 16 https://github.com/Microsoft/visualfsharp/issues/4822 -->
+    <NoWarn>FS2003</NoWarn>
   </PropertyGroup>
+
+  <!-- Support for building in Visual Studio versions before 15.9 -->
+  <PropertyGroup Condition="'$(MSBuildVersion)' &lt; '15.9'">
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/psi/master/LICENSE.txt</PackageLicenseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Include LICENSE.txt file as licenseUrl has been deprecated in NuGet -->
+    <None Include="$(MSBuildThisFileDirectory)\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+  </ItemGroup>
+
 </Project>

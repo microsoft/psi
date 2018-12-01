@@ -70,8 +70,8 @@ namespace Microsoft.Psi.Data.Json
         /// <typeparam name="T">The type of messages in the stream</typeparam>
         /// <param name="source">The source stream to write</param>
         /// <param name="name">The name of the persisted stream.</param>
-        /// <param name="policy">An optional delivery policy</param>
-        public void Write<T>(Emitter<T> source, string name, DeliveryPolicy policy = null)
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        public void Write<T>(Emitter<T> source, string name, DeliveryPolicy deliveryPolicy = null)
         {
             // add another input to the merger to hook up the serializer to
             // and check for duplicate names in the process
@@ -88,8 +88,8 @@ namespace Microsoft.Psi.Data.Json
 
             // hook up the serializer
             var serializer = new JsonSerializerComponent<T>(this.pipeline);
-            serializer.PipeTo(mergeInput, DeliveryPolicy.Immediate);
-            source.PipeTo(serializer, policy ?? DeliveryPolicy.Unlimited);
+            serializer.PipeTo(mergeInput, DeliveryPolicy.Unlimited);
+            source.PipeTo(serializer, deliveryPolicy);
         }
 
         /// <summary>
@@ -97,12 +97,12 @@ namespace Microsoft.Psi.Data.Json
         /// </summary>
         /// <param name="source">The source stream to write</param>
         /// <param name="metadata">The stream metadata of the stream.</param>
-        /// <param name="policy">An optional delivery policy</param>
-        internal void Write(Emitter<Message<JToken>> source, JsonStreamMetadata metadata, DeliveryPolicy policy = null)
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        internal void Write(Emitter<Message<JToken>> source, JsonStreamMetadata metadata, DeliveryPolicy deliveryPolicy = null)
         {
             var mergeInput = this.merger.Add(metadata.Name); // this checks for duplicates
             this.writer.OpenStream(metadata);
-            Operators.PipeTo(source, mergeInput, policy);
+            Operators.PipeTo(source, mergeInput, deliveryPolicy);
         }
 
         private Message<JToken> ThrottledMessages(ValueTuple<string, Message<Message<JToken>>> messages)

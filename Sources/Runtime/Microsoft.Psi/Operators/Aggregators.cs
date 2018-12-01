@@ -19,9 +19,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="seed">Initial seed state.</param>
         /// <param name="func">Aggregation function.</param>
-        /// <param name="policy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<TOut> Aggregate<TIn, TOut>(this IProducer<TIn> source, TOut seed, Func<TOut, TIn, TOut> func, DeliveryPolicy policy = null)
+        public static IProducer<TOut> Aggregate<TIn, TOut>(this IProducer<TIn> source, TOut seed, Func<TOut, TIn, TOut> func, DeliveryPolicy deliveryPolicy = null)
         {
             return Aggregate<TOut, TIn, TOut>(
                 source.Out,
@@ -32,7 +32,7 @@ namespace Microsoft.Psi
                     s.Post(newState, e.OriginatingTime);
                     return newState;
                 },
-                policy);
+                deliveryPolicy);
         }
 
         /// <summary>
@@ -45,10 +45,11 @@ namespace Microsoft.Psi
         /// <param name="seed">Initial seed state.</param>
         /// <param name="func">Aggregation function.</param>
         /// <param name="selector">Selector function.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<TOut> Aggregate<TIn, TAcc, TOut>(this IProducer<TIn> source, TAcc seed, Func<TAcc, TIn, TAcc> func, Func<TAcc, TOut> selector)
+        public static IProducer<TOut> Aggregate<TIn, TAcc, TOut>(this IProducer<TIn> source, TAcc seed, Func<TAcc, TIn, TAcc> func, Func<TAcc, TOut> selector, DeliveryPolicy deliveryPolicy = null)
         {
-            return Aggregate(source, seed, func).Select(selector);
+            return Aggregate(source, seed, func, deliveryPolicy).Select(selector, DeliveryPolicy.Unlimited);
         }
 
         /// <summary>
@@ -57,9 +58,9 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source/output stream messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="func">Aggregation function.</param>
-        /// <param name="policy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Aggregate<T>(this IProducer<T> source, Func<T, T, T> func, DeliveryPolicy policy = null)
+        public static IProducer<T> Aggregate<T>(this IProducer<T> source, Func<T, T, T> func, DeliveryPolicy deliveryPolicy = null)
         {
             // `Aggregate` where `TIn` is same type as `TOut`, seed becomes first value
             return Aggregate(
@@ -71,7 +72,7 @@ namespace Microsoft.Psi
                     var val = s.Item2;
                     return Tuple.Create(false, first ? x : func(val, x));
                 },
-                policy).Select(x => x.Item2);
+                deliveryPolicy).Select(x => x.Item2, DeliveryPolicy.Unlimited);
         }
 
         /// <summary>
@@ -83,16 +84,16 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="seed">Initial seed value.</param>
         /// <param name="func">Aggregation function.</param>
-        /// <param name="policy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TOut> Aggregate<TAccumulate, TIn, TOut>(
             this IProducer<TIn> source,
             TAccumulate seed,
             Func<TAccumulate, TIn, Envelope, Emitter<TOut>, TAccumulate> func,
-            DeliveryPolicy policy = null)
+            DeliveryPolicy deliveryPolicy = null)
         {
             var aggregate = new Aggregator<TAccumulate, TIn, TOut>(source.Out.Pipeline, seed, func);
-            return PipeTo(source, aggregate, policy ?? DeliveryPolicy.Immediate);
+            return PipeTo(source, aggregate, deliveryPolicy);
         }
     }
 }

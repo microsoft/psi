@@ -484,9 +484,9 @@ namespace Microsoft.Psi.Speech
             this.lastPostedOriginatingTimes.TryGetValue(stream, out lastPostedOriginatingTime);
 
             // Enforce monotonically increasing originating time
-            if (originatingTime < lastPostedOriginatingTime)
+            if (originatingTime <= lastPostedOriginatingTime)
             {
-                originatingTime = lastPostedOriginatingTime;
+                originatingTime = lastPostedOriginatingTime.AddTicks(1);
             }
 
             // Post the message and update the originating time for this stream

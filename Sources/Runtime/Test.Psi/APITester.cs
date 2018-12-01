@@ -96,7 +96,7 @@ namespace Test.Psi
 
                 var some = generator.Where(x => x % 10 == 0);
 
-                var repeat = Operators.Repeat(some.Out, generator.Out);
+                var repeat = generator.Pair(some).Item2();
 
                 // var output = repeat.Do((x, e) => Console.WriteLine($"{x} [{e.SequenceId}]"));
                 // var check = repeat.Do((d, e) => Assert.AreEqual(d, e.SequenceId));

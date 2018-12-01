@@ -39,21 +39,16 @@ namespace Microsoft.Psi.Data
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to open a volatile data store</param>
         public Importer(Pipeline pipeline, string name, string path)
         {
+            this.reader = new StoreReader(name, path, this.LoadMetadata);
             pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
             pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
-            this.reader = new StoreReader(name, path, this.LoadMetadata);
-            if (this.reader.ActiveTimeInterval != null && !this.reader.ActiveTimeInterval.IsEmpty && this.reader.ActiveTimeInterval.IsFinite)
-            {
-                pipeline.ProposeReplayTime(this.reader.ActiveTimeInterval, this.reader.OriginatingTimeInterval);
-            }
-
             this.next = pipeline.CreateEmitter<bool>(this, nameof(this.next));
             this.loopBack = pipeline.CreateReceiver<bool>(this, this.Next, nameof(this.loopBack));
             this.next.PipeTo(this.loopBack, DeliveryPolicy.LatestMessage);
             this.splitter = new Splitter<Message<BufferReader>, int>(pipeline, (msg, e) => msg.Envelope.SourceId);
             this.output = pipeline.CreateEmitter<Message<BufferReader>>(this, nameof(this.output));
-            this.output.PipeTo(this.splitter.In, DeliveryPolicy.Immediate);
+            this.output.PipeTo(this.splitter.In, DeliveryPolicy.Unlimited);
         }
 
         /// <summary>
@@ -125,15 +120,15 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="streamName">The name of the storage stream to copy</param>
         /// <param name="writer">The store to copy to</param>
-        /// <param name="policy">An optional delivery policy</param>
-        public void CopyStream(string streamName, Exporter writer, DeliveryPolicy policy = null)
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        public void CopyStream(string streamName, Exporter writer, DeliveryPolicy deliveryPolicy = null)
         {
             var meta = this.reader.GetMetadata(streamName);
             this.reader.OpenStream(meta); // this checks for duplicates but bypasses type checks
 
             // create the copy pipeline
             var splitterOut = this.splitter.Add(meta.Id);
-            writer.Write(splitterOut, meta, policy);
+            writer.Write(splitterOut, meta, deliveryPolicy);
         }
 
         /// <summary>
@@ -180,6 +175,23 @@ namespace Microsoft.Psi.Data
         /// <returns>A stream that publishes the data read from the store.</returns>
         public IProducer<T> OpenStream<T>(string streamName, T reusableInstance = default(T))
         {
+            return this.OpenStream<T>(streamName, new DeserializerComponent<T>(this.pipeline, this.serializers, reusableInstance));
+        }
+
+        /// <summary>
+        /// Opens the specified storage stream as dynamic for reading and returns a stream instance that can be used to consume the messages.
+        /// The returned stream will publish data read from the store once the pipeline is running.
+        /// </summary>
+        /// <remarks>Messages are deserialized as dynamic primitives and/or ExpandoObject of dynamic.</remarks>
+        /// <param name="streamName">The name of the storage stream to open</param>
+        /// <returns>A stream of dynamic that publishes the data read from the store.</returns>
+        public IProducer<dynamic> OpenDynamicStream(string streamName)
+        {
+            return this.OpenStream<dynamic>(streamName, new DynamicDeserializerComponent(this.pipeline, this.reader.OpenStream(streamName).TypeName, this.serializers.Schemas));
+        }
+
+        private IProducer<T> OpenStream<T>(string streamName, ConsumerProducer<Message<BufferReader>, T> deserializer)
+        {
             if (this.streams.TryGetValue(streamName, out object stream))
             {
                 return (IProducer<T>)stream; // if the types don't match, invalid cast exception is the appropriate error
@@ -187,14 +199,19 @@ namespace Microsoft.Psi.Data
 
             var meta = this.reader.OpenStream(streamName);
 
+            if (meta.ActiveLifetime != null && !meta.ActiveLifetime.IsEmpty && meta.ActiveLifetime.IsFinite)
+            {
+                // propose a replay time that covers the stream lifetime
+                this.pipeline.ProposeReplayTime(meta.ActiveLifetime, meta.OriginatingLifetime);
+            }
+
             // register this stream with the store catalog
             this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, streamName, meta);
 
             // create the deserialization sub-pipeline (and validate that we can deserialize this stream)
             var splitterOut = this.splitter.Add(meta.Id);
-            var deserializer = new DeserializerComponent<T>(this.pipeline, this.serializers, reusableInstance);
             deserializer.Out.Name = streamName;
-            splitterOut.PipeTo(deserializer, DeliveryPolicy.Immediate);
+            splitterOut.PipeTo(deserializer, DeliveryPolicy.Unlimited);
             this.streams[streamName] = deserializer.Out;
             return deserializer.Out;
         }
@@ -241,7 +258,7 @@ namespace Microsoft.Psi.Data
                 // note that we are posting a message of a message, and once the outer message is stripped by the splitter, the inner message will still have the correct originating time
                 var nextTime = (env.OriginatingTime > e.Time) ? env.OriginatingTime : e.Time;
                 this.output.Post(Message.Create(bufferReader, e), nextTime);
-                this.next.Post(true, nextTime);
+                this.next.Post(true, nextTime.AddTicks(1));
             }
             else
             {
@@ -249,7 +266,7 @@ namespace Microsoft.Psi.Data
                 bool willHaveMoreData = this.reader.IsMoreDataExpected();
                 if (willHaveMoreData || moreDataPromised)
                 {
-                    this.next.Post(willHaveMoreData, env.OriginatingTime);
+                    this.next.Post(willHaveMoreData, env.OriginatingTime.AddTicks(1));
                 }
                 else
                 {

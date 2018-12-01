@@ -53,7 +53,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             if (resource != null)
             {
                 this.UpdateMesh(resource);
-                this.Transform = new MatrixTransform3D(this.visualizationObject.Configuration.LocalTransform.GetMatrix3D());
             }
         }
 
@@ -64,10 +63,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 var material = new DiffuseMaterial(new SolidColorBrush(this.visualizationObject.Configuration.Color));
                 (this.Content as GeometryModel3D).Material = material;
                 (this.Content as GeometryModel3D).BackMaterial = material;
-            }
-            else if (e.PropertyName == nameof(KinectDepth3DVisualizationObjectConfiguration.LocalTransform))
-            {
-                this.UpdateTransform();
             }
         }
 

@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Visualization.Data
         {
             using (ISimpleReader reader = this.simpleReader.OpenNew())
             {
-                return this.GetStreamReader<T>(streamBinding, true).Read<T>(reader, indexEntry);
+                return this.GetStreamReader<T>(streamBinding).Read<T>(reader, indexEntry);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>Observable view of indices.</returns>
         public ObservableKeyedCache<DateTime, IndexEntry>.ObservableKeyedView ReadIndex<T>(StreamBinding streamBinding, DateTime startTime, DateTime endTime)
         {
-            return this.GetStreamReader<T>(streamBinding, true).ReadIndex(startTime, endTime);
+            return this.GetStreamReader<T>(streamBinding).ReadIndex(startTime, endTime);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Psi.Visualization.Data
             uint tailCount,
             Func<DateTime, DateTime> tailRange)
         {
-            return this.GetStreamReader<T>(streamBinding, false).ReadStream<T>(viewMode, startTime, endTime, tailCount, tailRange);
+            return this.GetStreamReader<T>(streamBinding).ReadStream<T>(viewMode, startTime, endTime, tailCount, tailRange);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Microsoft.Psi.Visualization.Data
 
             lock (this.streamReaders)
             {
-                IEnumerable<IGrouping<Tuple<DateTime, DateTime>, Tuple<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>, IStreamReader>>> groups = null;
+                IEnumerable<IGrouping<Tuple<DateTime, DateTime>, Tuple<ReadRequest, IStreamReader>>> groups = null;
 
                 // NOTE: We might need to refactor this to avoid changing ReadRequests while we are enumerating over them.
                 //       One approach might be adding a back pointer from the ReadRequest to the StreamReader so that the ReadRequest can lock the StreamReader
@@ -142,7 +142,7 @@ namespace Microsoft.Psi.Visualization.Data
                 groups = this.streamReaders
                     .Select(sr => sr.ReadRequests.Select(rr => Tuple.Create(rr, sr)))
                     .SelectMany(rr2sr => rr2sr)
-                    .GroupBy(rr2sr => Tuple.Create(rr2sr.Item1.Item1, rr2sr.Item1.Item2));
+                    .GroupBy(rr2sr => Tuple.Create(rr2sr.Item1.StartTime, rr2sr.Item1.EndTime));
 
                 // walk groups of matching start and end time read requests
                 foreach (var group in groups)
@@ -156,8 +156,8 @@ namespace Microsoft.Psi.Visualization.Data
                     foreach (var rr2sr in group)
                     {
                         var streamReader = rr2sr.Item2;
-                        streamReader.OpenStream(executionContext.Reader);
-                        streamReader.CompleteReadRequest(rr2sr.Item1.Item1, rr2sr.Item1.Item2);
+                        streamReader.OpenStream(executionContext.Reader, rr2sr.Item1.ReadIndicesOnly);
+                        streamReader.CompleteReadRequest(rr2sr.Item1.StartTime, rr2sr.Item1.EndTime);
                     }
 
                     // create new task
@@ -220,12 +220,12 @@ namespace Microsoft.Psi.Visualization.Data
             this.simpleReader = null;
         }
 
-        private IStreamReader GetStreamReader<T>(StreamBinding streamBinding, bool useIndex)
+        private IStreamReader GetStreamReader<T>(StreamBinding streamBinding)
         {
             var streamReader = this.streamReaders.Find(sr => sr.StreamName == streamBinding.StreamName && sr.StreamAdapterType == streamBinding.StreamAdapterType);
             if (streamReader == null)
             {
-                streamReader = new StreamReader<T>(streamBinding, useIndex);
+                streamReader = new StreamReader<T>(streamBinding);
                 this.streamReaders.Add(streamReader);
             }
 

@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationPanels;
@@ -114,11 +115,11 @@ namespace Microsoft.Psi.Visualization.Views
                     this.currentDragOperation = DragOperation.PanelReorder;
 
                     DataObject data = new DataObject();
-                    data.SetData("DragOperation", "ReorderPanels");
-                    data.SetData("VisualizationPanel", this.VisualizationPanel);
-                    data.SetData("VisualizationPanelView", this);
-                    data.SetData("MouseOffsetFromTop", mousePosition.Y);
-                    data.SetData("PanelSize", new Size?(new Size(this.ActualWidth, this.ActualHeight)));
+                    data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.ReorderPanel);
+                    data.SetData(DragDropDataName.VisualizationPanel, this.VisualizationPanel);
+                    data.SetData(DragDropDataName.VisualizationPanelView, this);
+                    data.SetData(DragDropDataName.MouseOffsetFromTop, mousePosition.Y);
+                    data.SetData(DragDropDataName.PanelSize, new Size?(new Size(this.ActualWidth, this.ActualHeight)));
                     RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
                     renderTargetBitmap.Render(this);
                     data.SetImage(renderTargetBitmap);

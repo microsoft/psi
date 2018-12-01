@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected override void InitNew()
         {
             base.InitNew();
-            this.Configuration.LineColor = Colors.White;
+            this.Configuration.Color = Colors.White;
             this.Configuration.MarkerColor = Colors.White;
             this.Configuration.RangeColor = Colors.White;
         }
@@ -47,16 +47,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     var newBinding = new StreamBinding(this.Configuration.StreamBinding, typeof(AudioSummarizer), new object[] { this.Configuration.Channel });
                     this.OpenStream(newBinding);
                 }
-            }
-        }
-
-        /// <inheritdoc />
-        protected override void OnConnect()
-        {
-            base.OnConnect();
-            if (this.Configuration.StreamBinding != null)
-            {
-                this.OnConfigurationPropertyChanged(nameof(AudioVisualizationObjectConfiguration.Channel));
             }
         }
     }

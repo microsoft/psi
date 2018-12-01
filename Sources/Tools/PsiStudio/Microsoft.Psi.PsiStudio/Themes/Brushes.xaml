@@ -28,9 +28,9 @@
     <Color x:Key="MediumBorderColor">#2D2D30</Color>
     <Color x:Key="LightBorderColor">#3F3F46</Color>
 
-    <Color x:Key="CursorColor">Yellow</Color>
-    <Color x:Key="SelectionStartColor">Green</Color>
-    <Color x:Key="SelectionEndColor">Red</Color>
+    <Color x:Key="CursorColor">#B0B0B0</Color>
+    <Color x:Key="SelectionStartColor">#008000</Color>
+    <Color x:Key="SelectionEndColor">#DB1000</Color>
 
     <SolidColorBrush x:Key="MediumBackgroundColorBrush" Color="{StaticResource MediumBackgroundColor}"/>
     <SolidColorBrush x:Key="DarkBackgroundColorBrush" Color="{StaticResource DarkBackgroundColor}"/>

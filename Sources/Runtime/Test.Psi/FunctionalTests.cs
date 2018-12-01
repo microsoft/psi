@@ -79,31 +79,9 @@ namespace Test.Psi
         // uses types that don't need cloning
         [TestMethod]
         [Timeout(60000)]
-        public void SimpleValueTypePipelineSync()
-        {
-            this.SimpleValueTypePipeline(DeliveryPolicy.Immediate);
-        }
-
-        // uses types that don't need cloning
-        [TestMethod]
-        [Timeout(60000)]
-        public void SimpleValueTypePipelineAsync()
-        {
-            this.SimpleValueTypePipeline(DeliveryPolicy.Unlimited);
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void SimpleValueTypePipelineMessageLimit()
-        {
-            this.SimpleValueTypePipeline(DeliveryPolicy.LatestMessage);
-        }
-
-        // uses types that don't need cloning
-        public void SimpleValueTypePipeline(DeliveryPolicy policy)
+        public void SimpleValueTypePipeline()
         {
             this.RunPipeline<int>(
-                policy,
                 create: i => 0,
                 initialize: (_, i) => i,
                 increment: (_, i) => i + 1,
@@ -121,7 +99,6 @@ namespace Test.Psi
         public void SimpleValueTypePipelineDF()
         {
             this.RunDataFlowPipeline<int>(
-                DeliveryPolicy.Default,
                 create: i => 0,
                 initialize: (_, i) => i,
                 increment: (_, i) => i + 1,
@@ -134,32 +111,9 @@ namespace Test.Psi
         // uses types that need cloning
         [TestMethod]
         [Timeout(60000)]
-        public void ImmutablePipelineSync()
-        {
-            this.ImmutablePipeline(DeliveryPolicy.Immediate);
-        }
-
-        // uses types that need cloning
-        [TestMethod]
-        [Timeout(60000)]
-        public void ImmutablePipelineAsync()
-        {
-            this.ImmutablePipeline(DeliveryPolicy.Unlimited);
-        }
-
-        // uses types that need cloning
-        [TestMethod]
-        [Timeout(60000)]
-        public void ImmutablePipelineMessageLimit()
-        {
-            this.ImmutablePipeline(DeliveryPolicy.LatestMessage);
-        }
-
-        // uses types that need cloning
-        public void ImmutablePipeline(DeliveryPolicy policy)
+        public void ImmutablePipeline()
         {
             this.RunPipeline<Immutable<int[]>>(
-                policy,
                 create: i => new int[0],
                 initialize: (a, i) => Enumerable.Repeat(i, ArraySize).ToArray(),
                 increment: (_, a) => a.Value.Select(i => i + 1).ToArray(),
@@ -172,31 +126,9 @@ namespace Test.Psi
         // uses types that need cloning but ccan be reclaimed
         [TestMethod]
         [Timeout(60000)]
-        public void RefTypePipelineSync()
-        {
-            this.RefTypePipeline(DeliveryPolicy.Immediate);
-        }
-
-        // uses types that need cloning but ccan be reclaimed
-        [TestMethod]
-        [Timeout(60000)]
-        public void RefTypePipelineAsync()
-        {
-            this.RefTypePipeline(DeliveryPolicy.Unlimited);
-        }
-
-        // uses types that need cloning but ccan be reclaimed
-        [TestMethod]
-        [Timeout(60000)]
-        public void RefTypePipelineMessageLimit()
-        {
-            this.RefTypePipeline(DeliveryPolicy.LatestMessage);
-        }
-
-        public void RefTypePipeline(DeliveryPolicy policy)
+        public void RefTypePipeline()
         {
             this.RunPipeline<int[]>(
-                   policy,
                    create: i => new int[ArraySize],
                    initialize: Set,
                    increment: (tgt, a) => Inc(tgt, a, 1),
@@ -213,7 +145,6 @@ namespace Test.Psi
         public void RefTypePipelineDF()
         {
             this.RunPipeline<int[]>(
-                   DeliveryPolicy.Default,
                    create: i => new int[ArraySize],
                    initialize: Set,
                    increment: (tgt, a) => Inc(tgt, a, 1),
@@ -223,35 +154,12 @@ namespace Test.Psi
                    validateSync: false);
         }
 
-        // uses types that need ref counting
         [TestMethod]
         [Timeout(60000)]
-        public void RefCountedPipelineSync()
-        {
-            this.RefCountedPipeline(DeliveryPolicy.Immediate);
-        }
-
-        // uses types that need ref counting
-        [TestMethod]
-        [Timeout(60000)]
-        public void RefCountedPipelineAsync()
-        {
-            this.RefCountedPipeline(DeliveryPolicy.Unlimited);
-        }
-
-        // uses types that need ref counting
-        [TestMethod]
-        [Timeout(60000)]
-        public void RefCountedPipelineMessageLimit()
-        {
-            this.RefCountedPipeline(DeliveryPolicy.LatestMessage);
-        }
-
-        public void RefCountedPipeline(DeliveryPolicy policy)
+        public void RefCountedPipeline()
         {
             var recycler = new SharedPool<int[]>(ParallelBranchCount * TransformCount);
             this.RunPipeline<Shared<int[]>>(
-                   policy,
                    create: i => recycler.GetOrCreate(() => new int[ArraySize]),
                    initialize: (old, i) =>
                     {
@@ -279,7 +187,7 @@ namespace Test.Psi
                    validateSync: false);
         }
 
-        public void RunPipeline<T>(DeliveryPolicy policy, Func<int, T> create, Func<T, int, T> initialize, Func<T, T, T> increment, Func<T, T, T, T> add, Func<T, int> extract, bool validateNoLoss, bool validateSync)
+        public void RunPipeline<T>(Func<int, T> create, Func<T, int, T> initialize, Func<T, T, T> increment, Func<T, T, T, T> add, Func<T, int> extract, bool validateNoLoss, bool validateSync)
         {
             int resultCount = 0;
             var p = Pipeline.Create(nameof(FunctionalTests));
@@ -349,7 +257,7 @@ namespace Test.Psi
         }
 
         // DataFlow baseline. Similar CPU & throughput results, but memory keeps growing.
-        public void RunDataFlowPipeline<T>(DeliveryPolicy policy, Func<int, T> create, Func<int, T, T> initialize, Func<T, T, T> increment, Func<T, T, T, T> add, Func<T, int> extract, bool validateNoLoss, bool validateSync)
+        public void RunDataFlowPipeline<T>(Func<int, T> create, Func<int, T, T> initialize, Func<T, T, T> increment, Func<T, T, T, T> add, Func<T, int> extract, bool validateNoLoss, bool validateSync)
         {
             int resultCount = 0;
             var dfo = new DataflowLinkOptions();

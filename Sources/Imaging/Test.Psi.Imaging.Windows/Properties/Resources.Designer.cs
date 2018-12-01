@@ -99,5 +99,35 @@ namespace Test.Psi.Imaging.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_Scale_150_125 {
+            get {
+                object obj = ResourceManager.GetObject("TestImage_Scale_150_125", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_Scale_25_200 {
+            get {
+                object obj = ResourceManager.GetObject("TestImage_Scale_25_200", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_Scale_50_25 {
+            get {
+                object obj = ResourceManager.GetObject("TestImage_Scale_50_25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

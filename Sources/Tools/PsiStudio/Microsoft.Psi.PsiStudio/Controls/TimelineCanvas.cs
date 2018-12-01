@@ -43,6 +43,16 @@ namespace Microsoft.Psi.Visualization.Controls
                 new FrameworkPropertyMetadata(DateTime.MinValue));
 
         /// <summary>
+        /// Identifies the TrackNumber dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TrackNumberProperty =
+            DependencyProperty.RegisterAttached(
+                "TrackNumber",
+                typeof(int),
+                typeof(TimelineCanvas),
+                new FrameworkPropertyMetadata(0));
+
+        /// <summary>
         /// Identifies the ViewDuration dependency property.
         /// </summary>
         public static readonly DependencyProperty ViewDurationProperty =
@@ -61,6 +71,16 @@ namespace Microsoft.Psi.Visualization.Controls
                 typeof(DateTime),
                 typeof(TimelineCanvas),
                 new FrameworkPropertyMetadata(DateTime.MinValue, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, OnViewRangeChanged));
+
+        /// <summary>
+        /// Identifies the TrackCount dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TrackCountProperty =
+            DependencyProperty.Register(
+                "TrackCount",
+                typeof(int),
+                typeof(TimelineCanvas),
+                new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets or sets the minimum item width.
@@ -83,6 +103,15 @@ namespace Microsoft.Psi.Visualization.Controls
         {
             get { return (DateTime)this.GetValue(TimelineCanvas.ViewStartTimeProperty); }
             set { this.SetValue(TimelineCanvas.ViewStartTimeProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the track count.
+        /// </summary>
+        public int TrackCount
+        {
+            get { return (int)this.GetValue(TimelineCanvas.TrackCountProperty); }
+            set { this.SetValue(TimelineCanvas.TrackCountProperty, value); }
         }
 
         /// <summary>
@@ -177,9 +206,30 @@ namespace Microsoft.Psi.Visualization.Controls
             element.SetValue(StartTimeProperty, value);
         }
 
+        /// <summary>
+        /// Gets the value of the TrackNumber dependency property from the specified element.
+        /// </summary>
+        /// <param name="element">Element to get TrackNumber property from.</param>
+        /// <returns>The value of the TrackNumber property.</returns>
+        public static int GetTrackNumber(UIElement element)
+        {
+            return (int)element.GetValue(TrackNumberProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the TrackNumber dependency property on the specified element.
+        /// </summary>
+        /// <param name="element">Element to set TrackNumber property on.</param>
+        /// <param name="value">Value to set TrackNumber property to.</param>
+        public static void SetTrackNumber(UIElement element, int value)
+        {
+            element.SetValue(TrackNumberProperty, value);
+        }
+
         /// <inheritdoc />
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
+            double trackHeight = arrangeBounds.Height / this.TrackCount;
             double scale = arrangeBounds.Width / this.ViewDuration.Ticks;
             double offset = this.ViewStartTime.Ticks;
             UIElementCollection children = this.InternalChildren;
@@ -190,7 +240,7 @@ namespace Microsoft.Psi.Visualization.Controls
                 long start = TimelineCanvas.GetStartTime(child).Ticks;
                 double width = Math.Max(duration * scale, this.MinItemWidth);
                 double left = (start - offset) * scale;
-                child.Arrange(new Rect(left, 0, width, arrangeBounds.Height));
+                child.Arrange(new Rect(left, trackHeight * TimelineCanvas.GetTrackNumber(child), width, trackHeight));
             }
 
             return arrangeBounds;
@@ -199,6 +249,7 @@ namespace Microsoft.Psi.Visualization.Controls
         /// <inheritdoc />
         protected override Size MeasureOverride(Size constraint)
         {
+            double trackHeight = constraint.Height / this.TrackCount;
             double scale = constraint.Width / this.ViewDuration.Ticks;
             double offset = this.ViewStartTime.Ticks;
             UIElementCollection children = this.InternalChildren;
@@ -209,7 +260,7 @@ namespace Microsoft.Psi.Visualization.Controls
                 long start = TimelineCanvas.GetStartTime(child).Ticks;
                 double width = Math.Max(duration * scale, this.MinItemWidth);
                 double left = (start - offset) * scale;
-                child.Measure(new Size(width, constraint.Height));
+                child.Measure(new Size(width, trackHeight));
             }
 
             return constraint;

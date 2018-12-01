@@ -9,11 +9,16 @@ namespace Microsoft.Psi.Scheduling
     /// <summary>
     /// Implements a simple lock. Unlike Monitor, this class doesn't enforce thread ownership.
     /// </summary>
-    internal sealed class SynchronizationLock
+    public sealed class SynchronizationLock
     {
         private int counter;
         private object owner;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SynchronizationLock"/> class.
+        /// </summary>
+        /// <param name="owner">Owner object</param>
+        /// <param name="locked">Locked flag</param>
         public SynchronizationLock(object owner, bool locked = false)
         {
             this.owner = owner;

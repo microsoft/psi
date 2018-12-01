@@ -9,11 +9,10 @@ namespace Microsoft.Psi.Scheduling
     /// <summary>
     /// Maintains a queue of workitems and schedules worker threads to empty them.
     /// </summary>
-    internal sealed class Scheduler
+    public sealed class Scheduler
     {
         private readonly SimpleSemaphore threadSemaphore;
         private readonly Func<Exception, bool> errorHandler;
-        private readonly DeliveryPolicy globalPolicy;
         private readonly bool allowSchedulingOnExternalThreads;
         private readonly int threadCount;
         private readonly ManualResetEvent stopped = new ManualResetEvent(true);
@@ -31,9 +30,16 @@ namespace Microsoft.Psi.Scheduling
         private Clock clock;
         private bool delayFutureWorkitemsUntilDue;
 
-        public Scheduler(DeliveryPolicy globalPolicy, Func<Exception, bool> errorHandler, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, string name = "default")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Scheduler"/> class.
+        /// </summary>
+        /// <param name="errorHandler">Error handler function.</param>
+        /// <param name="threadCount">Scheduler thread count.</param>
+        /// <param name="allowSchedulingOnExternalThreads">Allow scheduling on external threads.</param>
+        /// <param name="name">Scheduler name.</param>
+        /// <param name="clock">Optional clock to use (defaults to virtual time offset of DateTime.MinValue and dilation factor of 0).</param>
+        public Scheduler(Func<Exception, bool> errorHandler, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, string name = "default", Clock clock = null)
         {
-            this.globalPolicy = globalPolicy;
             this.errorHandler = errorHandler;
             this.threadSemaphore = new SimpleSemaphore((threadCount == 0) ? Environment.ProcessorCount * 2 : threadCount);
             this.allowSchedulingOnExternalThreads = allowSchedulingOnExternalThreads;
@@ -43,19 +49,14 @@ namespace Microsoft.Psi.Scheduling
 
             // set virtual time such that any scheduled item appears to be in the future and gets queued in the future workitem queue
             // the time will change when the scheduler is started, and the future workitem queue will be drained then as appropriate
-            this.clock = new Clock(DateTime.MinValue, 0);
+            this.clock = clock ?? new Clock(DateTime.MinValue, 0);
             this.delayFutureWorkitemsUntilDue = true;
         }
 
-        public DeliveryPolicy GlobalPolicy => this.globalPolicy;
-
-        public WaitHandle WorkitemQueueEmpty => this.globalWorkitems.Empty;
-
+        /// <summary>
+        /// Gets the scheduler clock.
+        /// </summary>
         public Clock Clock => this.clock;
-
-        internal bool AllowSchedulingOnExternalThreads => this.allowSchedulingOnExternalThreads;
-
-        internal int ThreadCount => this.threadCount;
 
         internal bool IsStarted
         {
@@ -65,7 +66,15 @@ namespace Microsoft.Psi.Scheduling
             }
         }
 
-        // executes the delegate immediately, on the calling thread, without scheduling
+        /// <summary>
+        /// Attempts to execute the delegate immediately, on the calling thread, without scheduling.
+        /// </summary>
+        /// <typeparam name="T">Action argument type</typeparam>
+        /// <param name="synchronizationObject">Synchronization object</param>
+        /// <param name="action">Action to execute</param>
+        /// <param name="argument">Action argument</param>
+        /// <param name="startTime">Scheduled start time</param>
+        /// <returns>Success flag</returns>
         public bool TryExecute<T>(SynchronizationLock synchronizationObject, Action<T> action, T argument, DateTime startTime)
         {
             if (this.forcedShutdownRequested)
@@ -108,7 +117,13 @@ namespace Microsoft.Psi.Scheduling
             return true;
         }
 
-        // executes the delegate immediately, on the calling thread, without scheduling
+        /// <summary>
+        /// Attempts to execute the delegate immediately, on the calling thread, without scheduling.
+        /// </summary>
+        /// <param name="synchronizationObject">Synchronization object</param>
+        /// <param name="action">Action to execute</param>
+        /// <param name="startTime">Scheduled start time</param>
+        /// <returns>Success flag</returns>
         public bool TryExecute(SynchronizationLock synchronizationObject, Action action, DateTime startTime)
         {
             if (this.forcedShutdownRequested)
@@ -139,7 +154,13 @@ namespace Microsoft.Psi.Scheduling
             return true;
         }
 
-        // enqueues a workitem and, if possible, kicks off a worker thread to pick it up
+        /// <summary>
+        /// Enqueues a workitem and, if possible, kicks off a worker thread to pick it up
+        /// </summary>
+        /// <param name="synchronizationObject">Synchronization object</param>
+        /// <param name="action">Action to execute</param>
+        /// <param name="startTime">Scheduled start time</param>
+        /// <param name="asContinuation">Flag whether to execute once current operation completes</param>
         public void Schedule(SynchronizationLock synchronizationObject, Action action, DateTime startTime, bool asContinuation = true)
         {
             if (this.forcedShutdownRequested)
@@ -204,16 +225,29 @@ namespace Microsoft.Psi.Scheduling
             }
         }
 
+        /// <summary>
+        /// Prevent further scheduling.
+        /// </summary>
+        /// <param name="synchronizationObject">Synchronization object</param>
         public void Freeze(SynchronizationLock synchronizationObject)
         {
             synchronizationObject.Hold();
         }
 
+        /// <summary>
+        /// Allow further scheduling.
+        /// </summary>
+        /// <param name="synchronizationObject">Synchronization object</param>
         public void Thaw(SynchronizationLock synchronizationObject)
         {
             synchronizationObject.Release();
         }
 
+        /// <summary>
+        /// Start scheduler.
+        /// </summary>
+        /// <param name="clock">Scheduler clock.</param>
+        /// <param name="delayFutureWorkitemsUntilDue">Delay future workitems until scheduled time.</param>
         public void Start(Clock clock, bool delayFutureWorkitemsUntilDue)
         {
             if (!this.stopped.WaitOne(0))
@@ -228,6 +262,9 @@ namespace Microsoft.Psi.Scheduling
             this.StartFuturesThread();
         }
 
+        /// <summary>
+        /// Pause scheduler until all queues have drained.
+        /// </summary>
         public void PauseForQuiescence()
         {
             if (this.stopped.WaitOne(0))
@@ -244,8 +281,11 @@ namespace Microsoft.Psi.Scheduling
             this.StartFuturesThread();
         }
 
-        // sets a flag to reject any new scheduling and blocks until running threads finish their current work
-        // assumes source components have been shut down
+        /// <summary>
+        /// Reject any new scheduling and block until running threads finish their current work.
+        /// </summary>
+        /// <remarks>Assumes source components have been shut down.</remarks>
+        /// <param name="abandonPendingWorkitems">Whether to abandon queued/future workitems</param>
         public void Stop(bool abandonPendingWorkitems = false)
         {
             if (this.stopped.WaitOne(0))

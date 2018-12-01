@@ -153,13 +153,15 @@ namespace Microsoft.Psi
 
         /// <summary>
         /// Gets the interval between the creation times of the first and last messages written to this stream.
+        /// If the stream contains no messages, an empty interval is returned.
         /// </summary>
-        public TimeInterval ActiveLifetime => new TimeInterval(this.FirstMessageTime, this.LastMessageTime);
+        public TimeInterval ActiveLifetime => this.MessageCount == 0 ? TimeInterval.Empty : new TimeInterval(this.FirstMessageTime, this.LastMessageTime);
 
         /// <summary>
         /// Gets the interval between the originating times of the first and last messages written to this stream.
+        /// If the stream contains no messages, an empty interval is returned.
         /// </summary>
-        public TimeInterval OriginatingLifetime => new TimeInterval(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime);
+        public TimeInterval OriginatingLifetime => this.MessageCount == 0 ? TimeInterval.Empty : new TimeInterval(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime);
 
         /// <inheritdoc />
         public void Update(Envelope envelope, int size)

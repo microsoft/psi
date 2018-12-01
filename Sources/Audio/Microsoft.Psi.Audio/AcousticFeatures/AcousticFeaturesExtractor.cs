@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Audio
         public AcousticFeaturesExtractor(Pipeline pipeline, AcousticFeaturesExtractorConfiguration configuration)
         {
             // Create the Audio passthrough emitter and hook it up to the receiver
-            this.inAudio = pipeline.CreateConnector<AudioBuffer>(this, nameof(this.inAudio));
+            this.inAudio = pipeline.CreateConnector<AudioBuffer>(nameof(this.inAudio));
             this.In = this.inAudio.In;
 
             float frameRate = configuration.FrameRateInHz;

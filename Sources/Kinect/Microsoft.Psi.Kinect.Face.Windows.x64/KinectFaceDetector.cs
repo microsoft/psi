@@ -33,11 +33,11 @@ namespace Microsoft.Psi.Kinect.Face
         /// <param name="pipeline">Pipeline this sensor is a part of</param>
         /// <param name="kinectSensor">Psi Kinect device from which we get our associated bodies</param>
         /// <param name="configuration">Configuration to use</param>
-        public KinectFaceDetector(Pipeline pipeline, Kinect.KinectSensor kinectSensor, KinectFaceDetectorConfiguration configuration)
+        public KinectFaceDetector(Pipeline pipeline, Kinect.KinectSensor kinectSensor, KinectFaceDetectorConfiguration configuration = null)
         {
             pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
             this.pipeline = pipeline;
-            this.configuration = configuration;
+            this.configuration = configuration ?? new KinectFaceDetectorConfiguration();
             this.kinectSensor = kinectSensor;
             this.Faces = pipeline.CreateEmitter<List<KinectFace>>(this, nameof(this.Faces));
             this.bodyReceiver = new KinectBodyReceiver(pipeline, this);

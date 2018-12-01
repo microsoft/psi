@@ -341,6 +341,53 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Sets a pixel in the image
+        /// </summary>
+        /// <param name="x">Pixel's X coordinate</param>
+        /// <param name="y">Pixel's Y coordinate</param>
+        /// <param name="r">Red channel's value</param>
+        /// <param name="g">Green channel's value</param>
+        /// <param name="b">Blue channel's value</param>
+        /// <param name="a">Alpha channel's value</param>
+        public void SetPixel(int x, int y, int r, int g, int b, int a)
+        {
+            if (x < 0 || y < 0 || x >= (int)this.width || y >= (int)this.height)
+            {
+                return;
+            }
+
+            unsafe
+            {
+                byte* src = (byte*)this.image.Data.ToPointer();
+                int pixelOffset = x * this.BitsPerPixel / 8 + y * this.Stride;
+                switch (this.pixelFormat)
+                {
+                    case PixelFormat.BGRA_32bpp:
+                        src[pixelOffset + 0] = (byte)r;
+                        src[pixelOffset + 1] = (byte)g;
+                        src[pixelOffset + 2] = (byte)b;
+                        src[pixelOffset + 3] = (byte)a;
+                        break;
+                    case PixelFormat.BGR_24bpp:
+                    case PixelFormat.BGRX_32bpp:
+                        src[pixelOffset + 0] = (byte)r;
+                        src[pixelOffset + 1] = (byte)g;
+                        src[pixelOffset + 2] = (byte)b;
+                        break;
+                    case PixelFormat.Gray_16bpp:
+                        src[pixelOffset + 0] = (byte)((r >> 8) & 0xff);
+                        src[pixelOffset + 1] = (byte)(r & 0xff);
+                        break;
+                    case PixelFormat.Gray_8bpp:
+                        src[pixelOffset] = (byte)r;
+                        break;
+                    default:
+                        throw new Exception("Unsupported type");
+                }
+            }
+        }
+
+        /// <summary>
         /// Copies the psi image to an unmanaged buffer.
         /// </summary>
         /// <param name="destination">The destination buffer</param>

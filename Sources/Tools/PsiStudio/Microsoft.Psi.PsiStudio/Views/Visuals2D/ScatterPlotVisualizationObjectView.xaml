@@ -18,6 +18,7 @@
         <conv:ColorConverter x:Key="ColorConverter" />
         <conv:PlacementConverter x:Key="XPlacementConverter" />
         <conv:PlacementConverter x:Key="YPlacementConverter" />
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <SolidColorBrush x:Key="FillBrush" Color="{Binding Configuration.FillColor, Converter={StaticResource ColorConverter}}" />
         <EllipseGeometry
             x:Key="PlotGeometry"
@@ -51,7 +52,11 @@
                             </Grid.ColumnDefinitions>
 
                             <Path Grid.Column="0" Fill="{StaticResource FillBrush}" Data="{StaticResource PlotGeometry}" />
-                            <Label Grid.Column="1" Content="{Binding Path=Item2}" />
+                            <TextBlock 
+                                Grid.Column="1"
+                                Text="{Binding Path=Item2}"
+                                Foreground="{Binding Path=ScatterPlotVisualizationObject.Configuration.LabelColor, Converter={StaticResource ColorConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ScatterPlotVisualizationObjectView}}}"
+                                Visibility="{Binding Path=ScatterPlotVisualizationObject.Configuration.ShowLabels, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ScatterPlotVisualizationObjectView}}}"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

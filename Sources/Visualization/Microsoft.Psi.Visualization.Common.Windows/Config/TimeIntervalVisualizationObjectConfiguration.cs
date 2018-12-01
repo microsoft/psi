@@ -3,8 +3,8 @@
 
 namespace Microsoft.Psi.Visualization.Config
 {
-    using System.Drawing;
     using System.Runtime.Serialization;
+    using System.Windows.Media;
 
     /// <summary>
     /// Represents a time interval visualization object configuration.
@@ -15,7 +15,12 @@ namespace Microsoft.Psi.Visualization.Config
         /// <summary>
         /// The color of the marker to draw
         /// </summary>
-        private Color color = Color.Black;
+        private Color color = Colors.Gray;
+
+        /// <summary>
+        /// The color of the marker to draw
+        /// </summary>
+        private Color thresholdColor = Colors.Orange;
 
         /// <summary>
         /// The size of the marker to draw
@@ -44,7 +49,17 @@ namespace Microsoft.Psi.Visualization.Config
         public Color Color
         {
             get { return this.color; }
-            set { this.Set(nameof(this.color), ref this.color, value); }
+            set { this.Set(nameof(this.Color), ref this.color, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the threshold color.
+        /// </summary>
+        [DataMember]
+        public Color ThresholdColor
+        {
+            get { return this.thresholdColor; }
+            set { this.Set(nameof(this.ThresholdColor), ref this.thresholdColor, value); }
         }
 
         /// <summary>

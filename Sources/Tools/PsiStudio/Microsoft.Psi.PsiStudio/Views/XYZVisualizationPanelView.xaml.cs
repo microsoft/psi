@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using System.Windows.Media.Media3D;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Server;
     using Microsoft.Psi.Visualization.Views.Visuals3D;
@@ -144,11 +145,11 @@ namespace Microsoft.Psi.Visualization.Views
             Point mousePosition = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed && !DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
             {
-                    DataObject data = new DataObject();
-                data.SetData("DragOperation", "ReorderPanels");
-                data.SetData("VisualizationPanel", this.VisualizationPanel);
-                data.SetData("MouseOffsetFromTop", e.GetPosition(this).Y);
-                data.SetData("PanelSize", new Size?(new Size(this.ActualWidth, this.ActualHeight)));
+                DataObject data = new DataObject();
+                data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.ReorderPanel);
+                data.SetData(DragDropDataName.VisualizationPanel, this.VisualizationPanel);
+                data.SetData(DragDropDataName.MouseOffsetFromTop, e.GetPosition(this).Y);
+                data.SetData(DragDropDataName.PanelSize, new Size?(new Size(this.ActualWidth, this.ActualHeight)));
                 RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
                 renderTargetBitmap.Render(this);
                 data.SetImage(renderTargetBitmap);

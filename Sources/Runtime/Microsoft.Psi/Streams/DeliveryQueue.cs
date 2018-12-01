@@ -23,14 +23,14 @@ namespace Microsoft.Psi.Streams
         public bool ToNotEmpty;
 
         /// <summary>
-        /// Queue state transition to full.
+        /// Queue state transition to start throttling.
         /// </summary>
-        public bool ToFull;
+        public bool ToStartThrottling;
 
         /// <summary>
-        /// Queue state transition to no longer full.
+        /// Queue state transition to stop throttling.
         /// </summary>
-        public bool ToNotFull;
+        public bool ToStopThrottling;
     }
 #pragma warning restore SA1649 // File name must match first type name
 
@@ -44,7 +44,7 @@ namespace Microsoft.Psi.Streams
         private readonly IRecyclingPool<T> cloner;
         private DeliveryPolicy policy;
         private bool isEmpty = true;
-        private bool isFull;
+        private bool isThrottling;
         private DateTime nextMessageTime;
         private IPerfCounterCollection<ReceiverCounters> counters;
         private int maxQueueSize;
@@ -58,12 +58,12 @@ namespace Microsoft.Psi.Streams
         {
             this.policy = policy;
             this.cloner = cloner;
-            this.queue = new Queue<Message<T>>(policy.QueueSize);
+            this.queue = new Queue<Message<T>>(policy.InitialQueueSize);
         }
 
         public bool IsEmpty => this.isEmpty;
 
-        public bool IsFull => this.isFull;
+        public bool IsThrottling => this.isThrottling;
 
         public DateTime NextMessageTime => this.nextMessageTime;
 
@@ -78,7 +78,8 @@ namespace Microsoft.Psi.Streams
                 {
                     var oldest = this.queue.Dequeue();
 
-                    if (this.IsExpired(oldest.OriginatingTime, currentTime))
+                    // check if we have a maximum-latency policy and a message that exceeds that latency
+                    if (this.policy.MaximumLatency.HasValue && (currentTime - oldest.OriginatingTime) > this.policy.MaximumLatency.Value)
                     {
                         this.cloner.Recycle(oldest.Data);
                         this.counters?.Increment(ReceiverCounters.Dropped);
@@ -130,36 +131,21 @@ namespace Microsoft.Psi.Streams
             this.counters = counters;
         }
 
-        private bool IsExpired(DateTime messageTime, DateTime currentTime)
-        {
-            if (this.policy.LagEnforcement == LagConstraints.None)
-            {
-                return false;
-            }
-
-            if (this.policy.LagEnforcement == LagConstraints.BestEffort && this.queue.Count == 0)
-            {
-                return false;
-            }
-
-            return (currentTime - messageTime) > this.policy.MaximumLag;
-        }
-
         private QueueTransition UpdateState()
         {
             int count = this.queue.Count;
             bool wasEmpty = this.isEmpty;
-            bool wasFull = this.isFull;
+            bool wasThrottling = this.isThrottling;
             this.isEmpty = count == 0;
-            this.isFull = count > this.policy.MaximumQueueSize && this.policy.ThrottleWhenFull;
+            this.isThrottling = this.policy.ThrottleWhenFull && count > this.policy.MaximumQueueSize;
             this.nextMessageTime = (count == 0) ? DateTime.MinValue : this.queue.Peek().Envelope.OriginatingTime;
 
             return new QueueTransition()
             {
                 ToEmpty = !wasEmpty && this.isEmpty,
                 ToNotEmpty = wasEmpty && !this.IsEmpty,
-                ToFull = !wasFull && this.isFull,
-                ToNotFull = wasFull && !this.isFull
+                ToStartThrottling = !wasThrottling && this.isThrottling,
+                ToStopThrottling = wasThrottling && !this.isThrottling
             };
         }
     }

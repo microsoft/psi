@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// The size of a catalog file extent.
         /// </summary>
-        public const int CatalogExtentSize = 256 * 1024;
+        public const int CatalogExtentSize = 512 * 1024;
 
         /// <summary>
         /// The size of the index file extent.

@@ -184,6 +184,13 @@ namespace Microsoft.Psi.Imaging
                 throw new System.Exception("Unexpected scale factors");
             }
 
+            if (image.PixelFormat == PixelFormat.Gray_16bpp)
+            {
+                throw new System.NotSupportedException(
+                    "Scaling 16bpp images is not currently supported. " +
+                    "Convert to a supported format such as color or 8bpp grayscale first.");
+            }
+
             int dstWidth = (int)(image.Width * xScale);
             int dstHeight = (int)(image.Height * yScale);
             var bitmap = new Bitmap(dstWidth, dstHeight);
@@ -394,6 +401,23 @@ namespace Microsoft.Psi.Imaging
             var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawEllipse(pen, p0.X - radius, p0.Y - radius, 2 * radius, 2 * radius);
+        }
+
+        /// <summary>
+        /// Renders text on the image at the specified pixel (p0)
+        /// </summary>
+        /// <param name="image">Image to draw on</param>
+        /// <param name="str">Text to render</param>
+        /// <param name="p0">Pixel coordinates for center of circle</param>
+        public static void DrawText(this Image image, string str, Point p0)
+        {
+            Bitmap bm = image.ToManagedImage(false);
+            var graphics = Graphics.FromImage(bm);
+            Font drawFont = new Font("Arial", 24);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+            StringFormat drawFormat = new StringFormat();
+            drawFormat.FormatFlags = 0;
+            graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
         }
     }
 

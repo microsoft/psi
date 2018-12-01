@@ -13,20 +13,34 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="LoadingDatasetWindow"/> class.
         /// </summary>
-        /// <param name="filename">The filename of the dataset being loaded.</param>
         /// <param name="owner">The owner of this window.</param>
-        public LoadingDatasetWindow(string filename, Window owner)
+        /// <param name="filename">The filename of the dataset.</param>
+        /// <param name="status">The initial status message to display.</param>
+        public LoadingDatasetWindow(Window owner, string filename, string status = null)
         {
             this.InitializeComponent();
 
             this.Owner = owner;
-            this.DataContext = this;
             this.Filename = filename;
+            this.Status = status;
         }
 
         /// <summary>
-        /// Gets the filename of the dataset being loaded.
+        /// Gets or sets the filename of the dataset.
         /// </summary>
-        public string Filename { get; }
+        public string Filename
+        {
+            get { return (string)this.FilenameLabel.Content; }
+            set { this.FilenameLabel.Content = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the current status message to display.
+        /// </summary>
+        public string Status
+        {
+            get { return (string)this.FilenameLabel.Content; }
+            set { this.StatusLabel.Content = value; }
+        }
     }
 }

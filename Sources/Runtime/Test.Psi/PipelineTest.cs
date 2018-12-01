@@ -92,8 +92,8 @@ namespace Test.Psi
             public TestReactiveCompositeComponent(Pipeline parent)
                 : base(parent, "TestReactiveCompositeComponent")
             {
-                var input = parent.CreateInputConnector<int>(this, this, "Input");
-                var output = this.CreateOutputConnector<int>(parent, this, "Output");
+                var input = parent.CreateInputConnector<int>(this, "Input");
+                var output = this.CreateOutputConnector<int>(parent, "Output");
                 this.In = input.In;
                 this.Out = output.Out;
                 input.Select(i => i * 2).PipeTo(output);
@@ -124,7 +124,7 @@ namespace Test.Psi
             public TestFiniteSourceCompositeComponent(Pipeline parent)
                 : base(parent, "TestFiniteSourceCompositeComponent")
             {
-                var output = this.CreateOutputConnector<int>(parent, this, "Output");
+                var output = this.CreateOutputConnector<int>(parent, "Output");
                 this.Out = output.Out;
                 Generators.Range(this, 0, 10).Out.PipeTo(output);
             }
@@ -152,7 +152,7 @@ namespace Test.Psi
             public TestInfiniteSourceCompositeComponent(Pipeline parent)
                 : base(parent, "TestInfiniteSourceCompositeComponent")
             {
-                var output = this.CreateOutputConnector<int>(parent, this, "Output");
+                var output = this.CreateOutputConnector<int>(parent, "Output");
                 this.Out = output.Out;
                 var timer = Timers.Timer(this, TimeSpan.FromMilliseconds(10));
                 timer.Aggregate(0, (i, _) => i + 1).PipeTo(output);

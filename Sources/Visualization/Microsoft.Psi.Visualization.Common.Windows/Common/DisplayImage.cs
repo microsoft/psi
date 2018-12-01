@@ -57,16 +57,6 @@ namespace Microsoft.Psi.Visualization.Common
         /// Update the underlying image with the specified image.
         /// </summary>
         /// <param name="image">New image.</param>
-        public void UpdateImage(Image image)
-        {
-            Shared<Image> sharedImage = (image == null) ? null : new Shared<Image>(image, null);
-            this.UpdateImage((Shared<Image>)sharedImage);
-        }
-
-        /// <summary>
-        /// Update the underlying image with the specified image.
-        /// </summary>
-        /// <param name="image">New image.</param>
         public void UpdateImage(Shared<Image> image)
         {
             lock (this.imageLock)

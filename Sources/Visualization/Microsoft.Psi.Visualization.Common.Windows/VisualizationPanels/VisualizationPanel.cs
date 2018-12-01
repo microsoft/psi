@@ -13,6 +13,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Data;
+    using GalaSoft.MvvmLight.Command;
+    using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Server;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -28,6 +30,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     {
         private Dictionary<uint, INotifyRemoteConfigurationChanged> advises;
         private uint nextAdviseCookie;
+        private RelayCommand<VisualizationObject> deleteVisualizationCommand;
 
         /// <summary>
         /// The current visualization object
@@ -115,6 +118,28 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [DataMember]
         public ObservableCollection<VisualizationObject> VisualizationObjects { get; internal set; }
+
+        /// <summary>
+        /// Gets the delete visualization command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<VisualizationObject> DeleteVisualizationCommand
+        {
+            get
+            {
+                if (this.deleteVisualizationCommand == null)
+                {
+                    this.deleteVisualizationCommand = new RelayCommand<VisualizationObject>(
+                        o =>
+                        {
+                            this.RemoveVisualizationObject(o);
+                        });
+                }
+
+                return this.deleteVisualizationCommand;
+            }
+        }
 
         /// <summary>
         /// Gets the width of the panel
@@ -226,6 +251,12 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             if (this.currentVisualizationObject == visualizationObject)
             {
                 this.currentVisualizationObject = null;
+            }
+
+            // If the visualization object being deleted is the stream being snapped to, then reset the snap to stream object
+            if (visualizationObject == this.Container.SnapToVisualizationObject)
+            {
+                this.Container.SnapToVisualizationObject = null;
             }
 
             visualizationObject.SetParentPanel(null);

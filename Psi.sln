@@ -189,6 +189,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.RealSense.Win
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Psi.RealSense_Interop.Windows.x64", "Sources\RealSense\Microsoft.Psi.RealSense_Interop.Windows.x64\Microsoft.Psi.RealSense_Interop.Windows.x64.vcxproj", "{DAB8847B-DE0A-45E2-A7DA-30432A36525B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Interop", "Sources\Runtime\Microsoft.Psi.Interop\Microsoft.Psi.Interop.csproj", "{825B11E7-9BF3-43B7-9BCE-4309EE404AEE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PsiStoreTool", "Sources\Tools\PsiStoreTool\PsiStoreTool.csproj", "{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Sources\Visualization\Microsoft.Psi.Visualization.Shared.Windows\Microsoft.Psi.Visualization.Shared.Windows.projitems*{3910840f-a619-41a3-9e26-c26d94533176}*SharedItemsImports = 4
@@ -245,7 +249,9 @@ Global
 		{7D481D0D-75C2-4E9F-9FE3-43EB63403F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D481D0D-75C2-4E9F-9FE3-43EB63403F2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{191DF615-3D8F-45A3-B763-DD4A604A712A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191DF615-3D8F-45A3-B763-DD4A604A712A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191DF615-3D8F-45A3-B763-DD4A604A712A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191DF615-3D8F-45A3-B763-DD4A604A712A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57B57050-5044-4EA9-AC08-030F49E69D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57B57050-5044-4EA9-AC08-030F49E69D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57B57050-5044-4EA9-AC08-030F49E69D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -414,6 +420,14 @@ Global
 		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Debug|Any CPU.Build.0 = Debug|x64
 		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Release|Any CPU.ActiveCfg = Release|x64
 		{DAB8847B-DE0A-45E2-A7DA-30432A36525B}.Release|Any CPU.Build.0 = Release|x64
+		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -495,6 +509,8 @@ Global
 		{64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC} = {A0856299-D28A-4513-B964-3FA5290FF160}
 		{7B73D864-9997-4637-8765-44C17FD09CE1} = {64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC}
 		{DAB8847B-DE0A-45E2-A7DA-30432A36525B} = {64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC}
+		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE} = {3F77CC04-2E58-452B-8107-0C93E7944D4E}
+		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E} = {8FEFAB80-0A89-4109-9104-5E937315C913}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

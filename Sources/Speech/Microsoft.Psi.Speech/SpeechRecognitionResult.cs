@@ -73,7 +73,7 @@ namespace Microsoft.Psi.Speech
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0} ({1})", this.Text, this.Confidence);
 
-            if (this.Alternates != null)
+            if (this.Alternates != null && this.Alternates.Length > 0)
             {
                 sb.AppendLine();
                 sb.AppendLine("********* Alternates *********");

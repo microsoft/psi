@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="source">Source image to encode</param>
         /// <param name="encoderFn">Method to perform encoding</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the encoded images</returns>
         public static IProducer<Shared<EncodedImage>> Encode(this IProducer<Shared<Image>> source, Func<BitmapEncoder> encoderFn, DeliveryPolicy deliveryPolicy = null)
         {
@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="source">Source image to compress</param>
         /// <param name="quality">JPEG quality to use</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the JPEG images</returns>
         public static IProducer<Shared<EncodedImage>> EncodeJpeg(this IProducer<Shared<Image>> source, int quality = 90, DeliveryPolicy deliveryPolicy = null)
         {
@@ -39,7 +39,7 @@ namespace Microsoft.Psi.Imaging
         /// Converts from an Image to a compressed PNG image
         /// </summary>
         /// <param name="source">Source image to compress</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the PNG images</returns>
         public static IProducer<Shared<EncodedImage>> EncodePng(this IProducer<Shared<Image>> source, DeliveryPolicy deliveryPolicy = null)
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Imaging
         /// Decodes an image that was previously encoded
         /// </summary>
         /// <param name="source">Source image to compress</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the decoded images</returns>
         public static IProducer<Shared<Image>> Decode(this IProducer<Shared<EncodedImage>> source, DeliveryPolicy deliveryPolicy = null)
         {

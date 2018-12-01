@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
-    using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -76,16 +75,25 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     {
                         var bitmap = psiImage.ToManagedImage(true);
                         bitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
-                        this.DisplayImage.UpdateImage(Imaging.Image.FromManagedImage(bitmap));
+
+                        // we dispose the new Shared object here because UpdateImage increments its ref count
+                        using (var sharedImage = new Shared<Imaging.Image>(Imaging.Image.FromManagedImage(bitmap), null))
+                        {
+                            this.DisplayImage.UpdateImage(sharedImage);
+                        }
                     }
                     else
                     {
-                        this.DisplayImage.UpdateImage((Imaging.Image)null);
+                        this.DisplayImage.UpdateImage(null);
                     }
                 }
                 else
                 {
-                    this.DisplayImage.UpdateImage(psiImage);
+                    // we dispose the new Shared object here because UpdateImage increments its ref count
+                    using (var sharedImage = new Shared<Imaging.Image>(psiImage, null))
+                    {
+                        this.DisplayImage.UpdateImage(sharedImage);
+                    }
                 }
             }
         }

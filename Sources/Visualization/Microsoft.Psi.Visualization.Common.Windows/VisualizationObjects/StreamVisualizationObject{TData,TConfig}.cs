@@ -68,7 +68,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
                     if (this.isShared)
                     {
-                        value.DeepClone(ref this.currentValue);
+                        if (value != null)
+                        {
+                            value.DeepClone(ref this.currentValue);
+                        }
+                        else
+                        {
+                            // If the new value is null, we need to ensure that the current value is properly
+                            // disposed so that the shared object is released and potentially recycled.
+                            ((IDisposable)this.currentValue.Value.Data).Dispose();
+                            this.currentValue = null;
+                        }
                     }
                     else
                     {
@@ -173,97 +183,34 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Returns the timestamp of the Message that's closest to currentTime.  Used by the "Snap To Stream" functionality.
+        /// </summary>
+        /// <param name="currentTime">The time underneath the mouse cursor</param>
+        /// <param name="count">Number of entries to search within.</param>
+        /// <param name="timeAtIndex">Function that returns an index given a time.</param>
+        /// <returns>The timestamp of the message that's temporally closest to currentTime</returns>
+        public DateTime? GetTimeOfNearestMessage(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
+        {
+            int index = this.GetIndexForTime(currentTime, count, timeAtIndex, InterpolationStyle.Direct);
+            if (index >= 0)
+            {
+                return timeAtIndex(index);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Finds the index that is either exactly at currentTime, or closest to currentTime +- the CursorEpsilon.
         /// Uses binary search to find exact match or location where match should be.
         /// </summary>
         /// <param name="currentTime">Time to search for.</param>
         /// <param name="count">Number of entries to search within.</param>
-        /// <param name="timeAtIndex">Function that returns and index given a time.</param>
+        /// <param name="timeAtIndex">Function that returns an index given a time.</param>
         /// <returns>Best matching index or -1 if no qualifying match was found.</returns>
         protected int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
         {
-            if (count == 0)
-            {
-                return -1;
-            }
-
-            // do a binary search and return if exact match
-            int lo = 0;
-            int hi = count - 1;
-            while ((lo != hi - 1) && (lo != hi))
-            {
-                var val = (lo + hi) / 2;
-                if (timeAtIndex(val) < currentTime)
-                {
-                    lo = val;
-                }
-                else if (timeAtIndex(val) > currentTime)
-                {
-                    hi = val;
-                }
-                else
-                {
-                    return val;
-                }
-            }
-
-            // if no exact match, lo and hi indicate ticks that
-            // are right before and right after the time we're looking for.
-            // If we're using Step interpolation, then we should return
-            // lo, otherwise we should return whichever value is closest
-            if (this.InterpolationStyle == InterpolationStyle.Step)
-            {
-                return lo;
-            }
-
-            var interval = currentTime + this.CursorEpsilon;
-            if (lo == hi - 1)
-            {
-                // if the "hi" tick is closer
-                if ((timeAtIndex(hi) - currentTime) < (currentTime - timeAtIndex(lo)))
-                {
-                    if (interval.PointIsWithin(timeAtIndex(hi)))
-                    {
-                        return hi;
-                    }
-                    else if (interval.PointIsWithin(timeAtIndex(lo)))
-                    {
-                        return lo;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
-                }
-
-                // if the lo tick is closer
-                else
-                {
-                    if (interval.PointIsWithin(timeAtIndex(lo)))
-                    {
-                        return lo;
-                    }
-                    else if (interval.PointIsWithin(timeAtIndex(hi)))
-                    {
-                        return hi;
-                    }
-                    else
-                    {
-                        return -1;
-                    }
-                }
-            }
-            else
-            {
-                if (interval.PointIsWithin(timeAtIndex(lo)))
-                {
-                    return lo;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
+            return this.GetIndexForTime(currentTime, count, timeAtIndex, this.InterpolationStyle);
         }
 
         /// <inheritdoc />
@@ -371,6 +318,92 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected virtual void SetCurrentValue(DateTime currentTime)
         {
             this.CurrentValue = null;
+        }
+
+        private int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, InterpolationStyle interpolationStyle)
+        {
+            if (count == 0)
+            {
+                return -1;
+            }
+
+            // do a binary search and return if exact match
+            int lo = 0;
+            int hi = count - 1;
+            while ((lo != hi - 1) && (lo != hi))
+            {
+                var val = (lo + hi) / 2;
+                if (timeAtIndex(val) < currentTime)
+                {
+                    lo = val;
+                }
+                else if (timeAtIndex(val) > currentTime)
+                {
+                    hi = val;
+                }
+                else
+                {
+                    return val;
+                }
+            }
+
+            // if no exact match, lo and hi indicate ticks that
+            // are right before and right after the time we're looking for.
+            // If we're using Step interpolation, then we should return
+            // lo, otherwise we should return whichever value is closest
+            if (interpolationStyle == InterpolationStyle.Step)
+            {
+                return lo;
+            }
+
+            var interval = currentTime + this.CursorEpsilon;
+            if (lo == hi - 1)
+            {
+                // if the "hi" tick is closer
+                if ((timeAtIndex(hi) - currentTime) < (currentTime - timeAtIndex(lo)))
+                {
+                    if (interval.PointIsWithin(timeAtIndex(hi)))
+                    {
+                        return hi;
+                    }
+                    else if (interval.PointIsWithin(timeAtIndex(lo)))
+                    {
+                        return lo;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+
+                // if the lo tick is closer
+                else
+                {
+                    if (interval.PointIsWithin(timeAtIndex(lo)))
+                    {
+                        return lo;
+                    }
+                    else if (interval.PointIsWithin(timeAtIndex(hi)))
+                    {
+                        return hi;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+            else
+            {
+                if (interval.PointIsWithin(timeAtIndex(lo)))
+                {
+                    return lo;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
         }
 
         private void OnDataDetailedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

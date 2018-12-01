@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Visualization.Config
         /// <summary>
         /// The color of the line to draw
         /// </summary>
-        private Color lineColor;
+        private Color color;
 
         /// <summary>
         /// Stroke thickness to draw data stream with.
@@ -76,10 +76,10 @@ namespace Microsoft.Psi.Visualization.Config
         /// Gets or sets the line color.
         /// </summary>
         [DataMember]
-        public Color LineColor
+        public Color Color
         {
-            get { return this.lineColor; }
-            set { this.Set(nameof(this.LineColor), ref this.lineColor, value); }
+            get { return this.color; }
+            set { this.Set(nameof(this.Color), ref this.color, value); }
         }
 
         /// <summary>

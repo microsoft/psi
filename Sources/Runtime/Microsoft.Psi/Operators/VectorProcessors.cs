@@ -25,7 +25,7 @@ namespace Microsoft.Psi
         /// <param name="vectorSize">Vector arity.</param>
         /// <param name="streamTransform">Function mapping from an index and stream of input element to a stream of output element.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TOut[]> Parallel<TIn, TOut>(
             this IProducer<TIn[]> source,
@@ -34,10 +34,8 @@ namespace Microsoft.Psi
             bool joinOrDefault = false,
             DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
             var p = new ParallelFixedLength<TIn, TOut>(source.Out.Pipeline, vectorSize, streamTransform, joinOrDefault);
-            source.PipeTo(p, deliveryPolicy);
-            return p;
+            return PipeTo(source, p, deliveryPolicy);
         }
 
         /// <summary>
@@ -48,7 +46,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="vectorSize">Vector arity.</param>
         /// <param name="streamAction">Action to apply to the individual element streams.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TIn[]> Parallel<TIn>(
             this IProducer<TIn[]> source,
@@ -56,7 +54,6 @@ namespace Microsoft.Psi
             Action<int, IProducer<TIn>> streamAction,
             DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
             var p = new ParallelFixedLength<TIn, TIn>(source.Out.Pipeline, vectorSize, streamAction);
             source.PipeTo(p, deliveryPolicy);
             return source;
@@ -73,7 +70,7 @@ namespace Microsoft.Psi
         /// <param name="vectorSize">Vector arity.</param>
         /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TOut[]> Parallel<TIn, TOut>(
             this IProducer<TIn[]> source,
@@ -93,7 +90,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="vectorSize">Vector arity.</param>
         /// <param name="streamAction">Action to apply to the individual element streams.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TIn[]> Parallel<TIn>(
             this IProducer<TIn[]> source,
@@ -118,7 +115,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TOut[]> Parallel<TIn, TOut>(
             this IProducer<TIn[]> source,
@@ -126,10 +123,8 @@ namespace Microsoft.Psi
             bool joinOrDefault = false,
             DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
             var p = new ParallelVariableLength<TIn, TOut>(source.Out.Pipeline, streamTransform, joinOrDefault);
-            source.PipeTo(p, deliveryPolicy);
-            return p;
+            return PipeTo(source, p, deliveryPolicy);
         }
 
         /// <summary>
@@ -139,14 +134,13 @@ namespace Microsoft.Psi
         /// <typeparam name="TIn">Type of input array element.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="streamAction">Action to apply to the individual element streams.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TIn[]> Parallel<TIn>(
             this IProducer<TIn[]> source,
             Action<int, IProducer<TIn>> streamAction,
             DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
             var p = new ParallelVariableLength<TIn, TIn>(source.Out.Pipeline, streamAction);
             source.PipeTo(p, deliveryPolicy);
             return source;
@@ -162,7 +156,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TOut[]> Parallel<TIn, TOut>(
             this IProducer<TIn[]> source,
@@ -180,7 +174,7 @@ namespace Microsoft.Psi
         /// <typeparam name="TIn">Type of input array element.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="streamAction">Action to apply to the individual element streams.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of output arrays.</returns>
         public static IProducer<TIn[]> Parallel<TIn>(
             this IProducer<TIn[]> source,
@@ -205,7 +199,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
@@ -215,10 +209,8 @@ namespace Microsoft.Psi
             DeliveryPolicy deliveryPolicy = null,
             Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
             var p = new ParallelSparse<TIn, TKey, TOut>(source.Out.Pipeline, streamTransform, joinOrDefault, branchTerminationPolicy);
-            source.PipeTo(p, deliveryPolicy);
-            return p;
+            return PipeTo(source, p, deliveryPolicy);
         }
 
         /// <summary>
@@ -229,7 +221,7 @@ namespace Microsoft.Psi
         /// <typeparam name="TKey">Type of input dictionary keys.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="streamAction">The action to apply to each element stream.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TIn>> Parallel<TIn, TKey>(
@@ -238,7 +230,6 @@ namespace Microsoft.Psi
             DeliveryPolicy deliveryPolicy = null,
             Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Immediate;
             var p = new ParallelSparse<TIn, TKey, TIn>(source.Out.Pipeline, streamAction, branchTerminationPolicy);
             source.PipeTo(p, deliveryPolicy);
             return source;
@@ -255,7 +246,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="streamTransform">Function mapping from an input element stream to an output output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
@@ -276,7 +267,7 @@ namespace Microsoft.Psi
         /// <typeparam name="TKey">Type of input dictionary keys.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="streamAction">The action to apply to each element stream.</param>
-        /// <param name="deliveryPolicy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TIn>> Parallel<TIn, TKey>(

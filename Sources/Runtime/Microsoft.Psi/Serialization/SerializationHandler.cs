@@ -14,6 +14,36 @@ namespace Microsoft.Psi.Serialization
     /// </summary>
     public abstract class SerializationHandler
     {
+        /// <summary>
+        /// Reference type prefix indicating null.
+        /// </summary>
+        public const uint RefPrefixNull = 0x00000000;
+
+        /// <summary>
+        /// Reference type prefix flag indicating new type.
+        /// </summary>
+        public const uint RefPrefixNew = 0x80000000;
+
+        /// <summary>
+        /// Reference type prefix flag indicating existing type.
+        /// </summary>
+        public const uint RefPrefixExisting = 0x40000000;
+
+        /// <summary>
+        /// Reference type prefix flag indicating typed.
+        /// </summary>
+        public const uint RefPrefixTyped = 0xC0000000;
+
+        /// <summary>
+        /// Reference type prefix mask.
+        /// </summary>
+        public const uint RefPrefixMask = 0xC0000000;
+
+        /// <summary>
+        /// Reference type prefix value mask.
+        /// </summary>
+        public const uint RefPrefixValueMask = 0x3FFFFFFF;
+
         private int id;
         private string name;
         private Type type;

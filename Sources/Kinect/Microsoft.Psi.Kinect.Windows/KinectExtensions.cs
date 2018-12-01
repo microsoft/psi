@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Kinect
         /// </summary>
         /// <param name="source">The stream of kinect body</param>
         /// <param name="jointType">The type of joint</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The joint position as a camera space point</returns>
         public static IProducer<Point3D> GetJointPosition(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy deliveryPolicy = null)
         {
@@ -33,27 +33,14 @@ namespace Microsoft.Psi.Kinect
         /// Projects set of points into 3D
         /// </summary>
         /// <param name="source">Tuple of image, list of points to project, and calibration</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates a list of transformed points</returns>
         public static IProducer<List<Point3D>> ProjectTo3D(
             this IProducer<(Shared<Image>, List<Point2D>, IKinectCalibration)> source, DeliveryPolicy deliveryPolicy = null)
         {
             var projectTo3D = new ProjectTo3D(source.Out.Pipeline);
-            source.PipeTo(projectTo3D.In, deliveryPolicy);
-            return projectTo3D.Out;
-        }
-
-        /// <summary>
-        /// Projects set of points into 3D
-        /// </summary>
-        /// <param name="source">Producer of image and list of points</param>
-        /// <param name="calibration">Producer of IKinectCalibration</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
-        /// <returns>Returns a producer that generates a list of transformed points</returns>
-        public static IProducer<List<Point3D>> ProjectTo3D(
-            this IProducer<(Shared<Image>, List<Point2D>)> source, IProducer<IKinectCalibration> calibration, DeliveryPolicy deliveryPolicy = null)
-        {
-            return source.Join(calibration, Match.AnyOrDefault<IKinectCalibration>(RelativeTimeInterval.RightBounded(TimeSpan.Zero))).ProjectTo3D(deliveryPolicy);
+            source.PipeTo(projectTo3D, deliveryPolicy);
+            return projectTo3D;
         }
 
         /// <summary>
@@ -113,45 +100,32 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Transforms the specified point by the specified calibration.
-        /// NOTE: This method has been deprecated. Use version that takes a tuple instead.
-        /// </summary>
-        /// <param name="point">Point/Calibration to transform</param>
-        /// <param name="calibration">Kinect calibration object</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
-        /// <returns>A producer that generates transformed points</returns>
-        public static IProducer<Point2D> ToColorSpace(this IProducer<Point3D> point, IProducer<IKinectCalibration> calibration, DeliveryPolicy deliveryPolicy = null)
-        {
-            return point.Join(calibration, Match.AnyOrDefault<IKinectCalibration>(RelativeTimeInterval.RightBounded(TimeSpan.Zero))).ToColorSpace(deliveryPolicy);
-        }
-
-        /// <summary>
         /// Transforms the specified point by the specified calibration
         /// </summary>
-        /// <param name="point">Point/Calibration to transform</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="source">Point/Calibration to transform</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates transformed points</returns>
-        public static IProducer<Point2D> ToColorSpace(this IProducer<(Point3D, IKinectCalibration)> point, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Point2D> ToColorSpace(this IProducer<(Point3D, IKinectCalibration)> source, DeliveryPolicy deliveryPolicy = null)
         {
-            return point.Select(m =>
+            return source.Select(m =>
             {
-                var (pointMessage, calibrationMessage) = m;
-                Point2D? colorSpacePoint = null;
-                if (calibrationMessage != default(IKinectCalibration))
+                var (point3D, calibration) = m;
+                if (calibration != default(IKinectCalibration))
                 {
-                    Point3D pt = new Point3D(pointMessage.X, pointMessage.Y, pointMessage.Z);
-                    Point2D pixelPt = calibrationMessage.ColorIntrinsics.ToPixelSpace(pt, true);
-                    return pixelPt;
+                    return calibration.ToColorSpace(point3D);
                 }
-                return colorSpacePoint;
-            }).Where(p => p.HasValue, deliveryPolicy).Select(p => p.Value, deliveryPolicy);
+                else
+                {
+                    return default(Point2D?);
+                }
+            }, deliveryPolicy).Where(p => p.HasValue, deliveryPolicy).Select(p => p.Value);
         }
 
         /// <summary>
         /// Converts points in color space into pixel coordinates
         /// </summary>
         /// <param name="source">Source of color space points</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates transformed points</returns>
         public static IProducer<Point2D?> ToPoint2D(this IProducer<ColorSpacePoint?> source, DeliveryPolicy deliveryPolicy = null)
         {
@@ -162,7 +136,7 @@ namespace Microsoft.Psi.Kinect
         /// Converts points in color space into pixel coordinates
         /// </summary>
         /// <param name="source">Source of color space points</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates transformed points</returns>
         public static IProducer<Point2D> ToPoint2D(this IProducer<ColorSpacePoint> source, DeliveryPolicy deliveryPolicy = null)
         {
@@ -173,7 +147,7 @@ namespace Microsoft.Psi.Kinect
         /// Converts points in color space into 3D coordinates
         /// </summary>
         /// <param name="source">Source of color space points</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates transformed points</returns>
         public static IProducer<Point3D> ToPoint3D(this IProducer<CameraSpacePoint> source, DeliveryPolicy deliveryPolicy = null)
         {
@@ -185,11 +159,11 @@ namespace Microsoft.Psi.Kinect
         /// </summary>
         /// <param name="source">Source of Kinect Bodies</param>
         /// <param name="jointType">Which joint to track</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the transformed joint's coordinate system</returns>
         public static IProducer<CoordinateSystem> GetTrackedJointPosition(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy deliveryPolicy = null)
         {
-            return source.GetTrackedJointPositionOrDefault(jointType).Where(cs => cs != null, deliveryPolicy);
+            return source.GetTrackedJointPositionOrDefault(jointType, deliveryPolicy).Where(cs => cs != null, DeliveryPolicy.Unlimited);
         }
 
         /// <summary>
@@ -197,27 +171,27 @@ namespace Microsoft.Psi.Kinect
         /// </summary>
         /// <param name="source">Source of Kinect Bodies</param>
         /// <param name="jointType">Which joint to track</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the coordiante system for the tracked joint</returns>
         public static IProducer<CoordinateSystem> GetTrackedJointPositionOrDefault(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy deliveryPolicy = null)
         {
             return source.Select(
                 body =>
-            {
-                var joint = body.Joints.Values.FirstOrDefault(j => j.JointType == jointType && j.TrackingState == TrackingState.Tracked);
-                if (joint == default(Joint))
                 {
-                    return null;
-                }
-                else
-                {
-                    var jointOrientation = body.JointOrientations.Values.FirstOrDefault(j => j.JointType == jointType);
-                    var quaternion = new Quaternion(jointOrientation.Orientation.W, jointOrientation.Orientation.X, jointOrientation.Orientation.Y, jointOrientation.Orientation.Z);
-                    var euler = quaternion.ToEulerAngles();
-                    var cs = CoordinateSystem.Rotation(euler.Gamma, euler.Beta, euler.Alpha);
-                    return cs.TransformBy(CoordinateSystem.Translation(new Vector3D(joint.Position.X, joint.Position.Y, joint.Position.Z)));
-                }
-            }, deliveryPolicy);
+                    var joint = body.Joints.Values.FirstOrDefault(j => j.JointType == jointType && j.TrackingState == TrackingState.Tracked);
+                    if (joint == default(Joint))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        var jointOrientation = body.JointOrientations.Values.FirstOrDefault(j => j.JointType == jointType);
+                        var quaternion = new Quaternion(jointOrientation.Orientation.W, jointOrientation.Orientation.X, jointOrientation.Orientation.Y, jointOrientation.Orientation.Z);
+                        var euler = quaternion.ToEulerAngles();
+                        var cs = CoordinateSystem.Rotation(euler.Gamma, euler.Beta, euler.Alpha);
+                        return cs.TransformBy(CoordinateSystem.Translation(new Vector3D(joint.Position.X, joint.Position.Y, joint.Position.Z)));
+                    }
+                }, deliveryPolicy);
         }
 
         /// <summary>
@@ -248,7 +222,7 @@ namespace Microsoft.Psi.Kinect
         /// Given a producer of generic 3D points this method returns the point as a camera space point
         /// </summary>
         /// <param name="point">Point to convert</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates of camera space points</returns>
         public static IProducer<CameraSpacePoint> ToCameraSpacePoint(this IProducer<Point3D> point, DeliveryPolicy deliveryPolicy = null)
         {
@@ -259,11 +233,10 @@ namespace Microsoft.Psi.Kinect
         /// Compresses a list of camera space points
         /// </summary>
         /// <param name="cameraSpacePoints">List of points in camera space</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates a compressed byte array of the camera space points</returns>
         public static IProducer<byte[]> GZipCompressImageProjection(this IProducer<CameraSpacePoint[]> cameraSpacePoints, DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
             var memoryStream = new MemoryStream();
             var memoryStreamLo = new MemoryStream();
             var memoryStreamHi = new MemoryStream();
@@ -302,11 +275,10 @@ namespace Microsoft.Psi.Kinect
         /// the uncompressed points
         /// </summary>
         /// <param name="compressedBytes">Producer that generates compressed image projection points</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a generator that returns a list of points</returns>
         public static IProducer<List<Point3D>> GZipUncompressImageProjection(this IProducer<byte[]> compressedBytes, DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
             var buffer = new byte[1920 * 1080 * 12];
             return compressedBytes.Select(
                 bytes =>

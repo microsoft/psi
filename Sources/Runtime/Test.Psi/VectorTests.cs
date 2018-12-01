@@ -62,14 +62,25 @@ namespace Test.Psi
 
                 // Runs a parallel over the vector, but specifying only size 2. This should throw an exception.
                 Generators.Return(p, x).Parallel(2, s => s.Select(d => d * 10), true);
+                var caughtException = false;
                 try
                 {
                     p.Run(enableExceptionHandling: true);
                 }
                 catch (AggregateException exception)
                 {
-                    Assert.IsInstanceOfType(exception.InnerException, typeof(InvalidOperationException), "Unexpected exception type: {0}", exception.InnerException.GetType().ToString());
+                    caughtException = true;
+                    if (exception.InnerException == null)
+                    {
+                        Assert.Fail("AggregateException contains no inner exception");
+                    }
+                    else
+                    {
+                        Assert.IsInstanceOfType(exception.InnerException, typeof(InvalidOperationException), "Unexpected inner exception type: {0}", exception.InnerException.GetType().ToString());
+                    }
                 }
+
+                Assert.IsTrue(caughtException);
             }
         }
 
@@ -189,7 +200,7 @@ namespace Test.Psi
             {
                 Generators.Range(p, 0, 15, TimeSpan.FromMilliseconds(10))
                     .Select(i => frames[i])
-                    .Parallel((_, stream) => stream.Window(new RelativeTimeInterval(-TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(20))))
+                    .Parallel((_, stream) => stream.Window(-TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(20)))
                     .Do(x =>
                     {
                         var sb = new StringBuilder();
@@ -198,7 +209,7 @@ namespace Test.Psi
                             sb.Append($" {k}->");
                             foreach (var v in x[k])
                             {
-                                sb.Append($"{v.Data},");
+                                sb.Append($"{v},");
                             }
                             sb.Remove(sb.Length - 1, 1);
                         }

@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Config
 {
     using System.Runtime.Serialization;
+    using System.Windows.Media;
 
     /// <summary>
     /// Represents a scatter rectangle visualization object configuration.
@@ -19,7 +20,7 @@ namespace Microsoft.Psi.Visualization.Config
         /// <summary>
         /// The color of the line to draw.
         /// </summary>
-        private System.Windows.Media.Color lineColor;
+        private Color color;
 
         /// <summary>
         /// Stroke thickness to draw data stream with.
@@ -45,10 +46,10 @@ namespace Microsoft.Psi.Visualization.Config
         /// Gets or sets the line color.
         /// </summary>
         [DataMember]
-        public System.Windows.Media.Color LineColor
+        public Color Color
         {
-            get { return this.lineColor; }
-            set { this.Set(nameof(this.LineColor), ref this.lineColor, value); }
+            get { return this.color; }
+            set { this.Set(nameof(this.Color), ref this.color, value); }
         }
 
         /// <summary>

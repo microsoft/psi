@@ -9,6 +9,7 @@
 (cd ./Sources/Integrations/ROS/Microsoft.ROS/                               && . ./build.sh)
 (cd ./Sources/Media/Microsoft.Psi.Media.Linux/                              && . ./build.sh)
 (cd ./Sources/Runtime/Microsoft.Psi/                                        && . ./build.sh)
+(cd ./Sources/Runtime/Microsoft.Psi.Interop/                                && . ./build.sh)
 (cd ./Sources/Runtime/Test.Psi/                                             && . ./build.sh)
 (cd ./Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/ && . ./build.sh)
 (cd ./Samples/PsiRosTurtleSample/                                           && . ./build.sh)

@@ -50,21 +50,22 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (e.PropertyName == nameof(this.ImageVisualizationObject.CurrentValue))
             {
-                var image = this.ImageVisualizationObject.CurrentValue.GetValueOrDefault().Data?.Resource;
+                var image = this.ImageVisualizationObject.CurrentValue.GetValueOrDefault().Data;
                 if (this.ImageVisualizationObject.Configuration.HorizontalFlip)
                 {
-                    if (image != null)
+                    if (image != null && image.Resource != null)
                     {
-                        var bitmap = image.ToManagedImage(true);
+                        var bitmap = image.Resource.ToManagedImage(true);
                         bitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
-                        this.DisplayImage.UpdateImage(Imaging.Image.FromManagedImage(bitmap));
+                        var sh = new Shared<Microsoft.Psi.Imaging.Image>(Imaging.Image.FromManagedImage(bitmap), null);
+                        this.DisplayImage.UpdateImage(sh);
                     }
                     else
                     {
                         this.DisplayImage.UpdateImage(image);
                     }
                 }
-                else
+                else if (image != null)
                 {
                     this.DisplayImage.UpdateImage(image);
                 }

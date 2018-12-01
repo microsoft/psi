@@ -101,6 +101,10 @@ namespace Microsoft.Psi.Components
             {
                 this.lastMessageTime = nextMessageTime;
             }
+            else
+            {
+                this.lastMessageTime = this.lastMessageTime.AddTicks(1); // ensure strictly increasing
+            }
 
             this.loopBackOut.Post(last + 1, this.lastMessageTime);
         }

@@ -34,9 +34,6 @@ namespace Microsoft.Psi
         private DeliveryQueue<T> awaitingDelivery;
         private IPerfCounterCollection<ReceiverCounters> counters;
         private DeliveryPolicy policy;
-#if DEBUG
-        private StackTrace debugTrace;
-#endif
 
         internal Receiver(object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = false)
         {
@@ -46,9 +43,6 @@ namespace Microsoft.Psi
             this.syncContext = context;
             this.enforceIsolation = enforceIsolation;
             this.cloner = RecyclingPool.Create<T>();
-#if DEBUG
-            this.debugTrace = new StackTrace(true);
-#endif
         }
 
         /// <inheritdoc />
@@ -145,8 +139,7 @@ namespace Microsoft.Psi
             this.source = source;
             this.policy = policy;
 
-            var combinedPolicy = this.policy.Merge(this.scheduler.GlobalPolicy);
-            this.awaitingDelivery = new DeliveryQueue<T>(combinedPolicy, this.cloner);
+            this.awaitingDelivery = new DeliveryQueue<T>(policy, this.cloner);
         }
 
         internal void OnUnsubscribe()
@@ -174,7 +167,7 @@ namespace Microsoft.Psi
                 message.Data = message.Data.DeepClone(this.cloner);
             }
 
-            if (this.policy.IsSynchronous && this.awaitingDelivery.IsEmpty)
+            if (this.policy.AttemptSynchronous && this.awaitingDelivery.IsEmpty)
             {
                 // fast path - try to deliver synchronously for as long as we can
                 // however, if this thread already has a lock on the owner it means some other receiver is in our call stack (we have a delivery loop),
@@ -204,7 +197,7 @@ namespace Microsoft.Psi
             }
 
             // if queue is full (as decided between local policy and global policy), lock the emitter.syncContext (which we might already own) until we make more room
-            if (stateTransition.ToFull)
+            if (stateTransition.ToStartThrottling)
             {
                 this.counters?.Increment(ReceiverCounters.ThrottlingRequests);
                 this.source.Pipeline.Scheduler.Freeze(this.source.SyncContext);
@@ -217,7 +210,7 @@ namespace Microsoft.Psi
             QueueTransition stateTransition;
             if (this.awaitingDelivery.TryDequeue(out message, out stateTransition, this.scheduler.Clock.GetCurrentTime()))
             {
-                if (stateTransition.ToNotFull)
+                if (stateTransition.ToStopThrottling)
                 {
                     this.source.Pipeline.Scheduler.Thaw(this.source.SyncContext);
                 }

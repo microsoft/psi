@@ -21,10 +21,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(TimeIntervalVisualizationObjectView));
 
         /// <inheritdoc />
+        [IgnoreDataMember]
+        public override string LegendValue => this.CurrentValue.HasValue ? (this.CurrentValue.Value.Data.Item2 - this.CurrentValue.Value.Data.Item1).ToString() : string.Empty;
+
+        /// <inheritdoc />
         protected override void InitNew()
         {
             base.InitNew();
-            this.Configuration.Color = System.Drawing.Color.Black;
             this.Configuration.MarkerSize = 3;
             this.Configuration.Threshold = 50;
             this.Configuration.TrackCount = 1;

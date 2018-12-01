@@ -12,14 +12,15 @@ namespace Microsoft.Psi
     public static partial class Operators
     {
         /// <summary>
-        /// Psi stream as an `IObservable`.
+        /// Convert a stream to an <see cref="IObservable{T}"/>.
         /// </summary>
-        /// <typeparam name="T">Type of Psi stream values</typeparam>
-        /// <param name="stream">Psi stream</param>
-        /// <returns>Observable Psi stream</returns>
-        public static IObservable<T> ToObservable<T>(this IProducer<T> stream)
+        /// <typeparam name="T">Type of messages for the source stream.</typeparam>
+        /// <param name="stream">The source stream.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>Observable with elements from the source stream.</returns>
+        public static IObservable<T> ToObservable<T>(this IProducer<T> stream, DeliveryPolicy deliveryPolicy = null)
         {
-            return new StreamObservable<T>(stream);
+            return new StreamObservable<T>(stream, deliveryPolicy);
         }
 
         /// <summary>
@@ -33,8 +34,9 @@ namespace Microsoft.Psi
             /// <summary>
             /// Initializes a new instance of the <see cref="StreamObservable{T}"/> class.
             /// </summary>
-            /// <param name="stream">Stream to observe.</param>
-            public StreamObservable(IProducer<T> stream)
+            /// <param name="stream">The source stream to observe.</param>
+            /// <param name="deliveryPolicy">An optional delivery policy.</param>
+            public StreamObservable(IProducer<T> stream, DeliveryPolicy deliveryPolicy = null)
             {
                 stream.Out.Pipeline.PipelineCompletionEvent += (_, args) =>
                 {
@@ -49,13 +51,15 @@ namespace Microsoft.Psi
                     }
                 };
 
-                stream.Do(x =>
-                {
-                    foreach (var obs in this.observers)
+                stream.Do(
+                    x =>
                     {
-                        obs.Value.OnNext(x.DeepClone());
-                    }
-                });
+                        foreach (var obs in this.observers)
+                        {
+                            obs.Value.OnNext(x.DeepClone());
+                        }
+                    },
+                    deliveryPolicy);
             }
 
             /// <summary>

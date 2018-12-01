@@ -256,28 +256,27 @@ namespace Test.Psi
         [Timeout(60000)]
         public void ReadWhilePersistingToDisk()
         {
-            this.ReadWhilePersisting(this.path);
+            this.ReadWhilePersisting(nameof(ReadWhilePersistingToDisk), this.path);
         }
 
         [TestMethod]
         [Timeout(60000)]
         public void ReadWhilePersistingInMemory()
         {
-            this.ReadWhilePersisting(null);
+            this.ReadWhilePersisting(nameof(ReadWhilePersistingInMemory), null);
         }
 
         // with a null path, the file is only in memory (system file). With a non-null path, the file is also written to disk
-        public void ReadWhilePersisting(string path)
+        public void ReadWhilePersisting(string name, string path)
         {
             var count = 100;
-            var name = nameof(this.ReadWhilePersisting);
 
             double sum = 0;
 
             var p = Pipeline.Create("write");
             {
                 var writeStore = Store.Create(p, name, path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromMilliseconds(1));
                 seq.Select(i => i * i).Write("sqr", writeStore);
                 seq.Write("seq", writeStore);
 
@@ -343,7 +342,7 @@ namespace Test.Psi
             var p = Pipeline.Create("write");
             {
                 var writeStore = Store.Create(p, "test", null);
-                var source = Generators.Sequence(p, 1, i => i, count);
+                var source = Generators.Sequence(p, 1, i => i, count, TimeSpan.FromMilliseconds(1));
                 var largeBlockGenerator = source.Select(t => b);
                 largeBlockGenerator.Write("lbg", writeStore);
 
@@ -394,6 +393,74 @@ namespace Test.Psi
                 Assert.AreEqual(sourceInfo.ActiveLifetime.Left, range.Left);
                 Assert.AreEqual(sourceInfo.ActiveLifetime.Right, range.Right);
                 Assert.AreNotEqual(range.Left, range.Right);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void EstimateStreamRange()
+        {
+            // test setup
+            string appName = nameof(this.EstimateStreamRange);
+
+            string source0Name = "source0";
+            string source1Name = "source1";
+
+            // Step1: run a pipeline and persist some data
+            using (var p = Pipeline.Create("test"))
+            {
+                var writeStore = Store.Create(p, appName, this.path);
+
+                // source0 - a stream of messages covering a longer time span
+                var source0 = Generators.Sequence(p, 0, i => i, 50, TimeSpan.FromMilliseconds(10));
+
+                // source1 - a stream of messages covering a shorter time span than source0,
+                // and which has a lifetime that begins after and ends before source0 ends.
+                var source1 = Generators.Sequence(p, 1, i => i, 10, TimeSpan.FromMilliseconds(10)).Delay(TimeSpan.FromMilliseconds(100));
+
+                source0.Write(source0Name, writeStore);
+                source1.Write(source1Name, writeStore);
+                p.Run();
+            }
+
+            // Step2: now open the store and check the ranges
+            using (var p = Pipeline.Create("test"))
+            {
+                var output = new List<Envelope>();
+
+                // open the store, but only open the shorter stream (source1)
+                var readStore = Store.Open(p, appName, this.path);
+                var source1 = readStore.OpenStream<int>(source1Name).Do((m, e) => output.Add(e));
+
+                // get the metadata for both streams
+                var sourceInfo0 = readStore.GetMetadata(source0Name);
+                var sourceInfo1 = readStore.GetMetadata(source1Name);
+
+                // get the active time range for the entire store
+                var range = readStore.ActiveTimeInterval;
+
+                // verify that the longer stream defines the store's range
+                Assert.AreEqual(sourceInfo0.ActiveLifetime.Left, range.Left);
+                Assert.AreEqual(sourceInfo0.ActiveLifetime.Right, range.Right);
+
+                // verify that the shorter stream is a sub-range of the store's range
+                Assert.IsTrue(sourceInfo1.ActiveLifetime.Left > range.Left);
+                Assert.IsTrue(sourceInfo1.ActiveLifetime.Right < range.Right);
+
+                // run the pipeline to read from source1
+                p.Run();
+
+                // verify that the replay descriptor corresponds only to the range of the opened stream
+                var replayDesc = p.ReplayDescriptor;
+                Assert.AreEqual(sourceInfo1.ActiveLifetime.Left, replayDesc.Start);
+                Assert.AreEqual(sourceInfo1.ActiveLifetime.Right, replayDesc.End);
+
+                // verify that all the messages on the stream were read
+                Assert.AreEqual(sourceInfo1.MessageCount, output.Count);
+
+                // verify the times of the first and last messages
+                Assert.AreEqual(sourceInfo1.ActiveLifetime.Left, output[0].Time);
+                Assert.AreEqual(sourceInfo1.ActiveLifetime.Right, output[output.Count - 1].Time);
             }
         }
 
@@ -565,6 +632,237 @@ namespace Test.Psi
 
             Assert.IsTrue(intStreamCorrect);
             Assert.IsTrue(stringStreamCorrect);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void CropStore()
+        {
+            var count = 100;
+            var before = new Envelope[count + 1];
+            var after = new Envelope[count + 1];
+            var name = nameof(this.CropStore);
+
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                seq.Write("seq", writeStore);
+                seq.Select(i => i.ToString()).Write("seqString", writeStore);
+                seq.Do((m, e) => before[m] = e);
+                p.Run(new ReplayDescriptor(new DateTime(1), true, false));
+            }
+
+            // crop a range to a second store
+            Store.Crop(name, this.path, name, this.path, new TimeInterval(new DateTime(5), new DateTime(count - 5)));
+
+            // now read the cropped store
+            bool intStreamCorrect = true;
+            bool stringStreamCorrect = true;
+            using (var p2 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p2, name, this.path);
+                readStore.OpenStream<int>("seq").Do((s, e) =>
+                {
+                    after[s] = e;
+                    intStreamCorrect &= e.SequenceId == s;
+                });
+                readStore.OpenStream<string>("seqString").Do((s, e) => { stringStreamCorrect &= e.SequenceId.ToString() == s; });
+                p2.Run(ReplayDescriptor.ReplayAll);
+            }
+
+            // verify the results in the interval before the cropped range
+            for (int i = 0; i < 5; i++)
+            {
+                Assert.AreEqual(0, after[i].SequenceId);
+                Assert.AreEqual(0, after[i].OriginatingTime.Ticks);
+            }
+
+            // verify the results in the cropped range
+            for (int i = 5; i < (count - 4); i++)
+            {
+                Assert.AreEqual(before[i].SequenceId, after[i].SequenceId);
+                Assert.AreEqual(before[i].OriginatingTime, after[i].OriginatingTime);
+            }
+
+            // verify the results in the interval after the cropped range
+            for (int i = (count - 4); i <= count; i++)
+            {
+                Assert.AreEqual(0, after[i].SequenceId);
+                Assert.AreEqual(0, after[i].OriginatingTime.Ticks);
+            }
+
+            Assert.IsTrue(intStreamCorrect);
+            Assert.IsTrue(stringStreamCorrect);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void RepairInvalidStore()
+        {
+            var count = 100;
+            var valid = new Envelope[count + 1];
+            var invalid = new Envelope[count + 1];
+            var name = nameof(this.RepairInvalidStore);
+
+            // generate a valid store
+            using (var p = Pipeline.Create("write"))
+            {
+                var validStore = Store.Create(p, name, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                seq.Write("seq", validStore);
+                seq.Select(i => i.ToString()).Write("seqString", validStore);
+                seq.Do((m, e) => valid[m] = e);
+                p.Run(new ReplayDescriptor(new DateTime(1), true, false));
+            }
+
+            // pipeline terminated normally so store should be valid
+            Assert.IsTrue(Store.IsValid(name, this.path));
+
+            // now generate an invalid store 
+            var p2 = Pipeline.Create("write2");
+            var invalidStore = Store.Create(p2, name, this.path);
+            string tempFolder = Path.Combine(this.path, Guid.NewGuid().ToString());
+
+            try
+            {
+                var seq2 = Generators.Sequence(p2, 1, i => i + 1, count);
+                seq2.Do((m, e) =>
+                {
+                    if (e.OriginatingTime.Ticks >= count / 2)
+                    {
+                        // Throw an exception in the middle of the stream to abruptly
+                        // terminate the pipeline, leaving the store in an invalid state.
+                        throw new Exception();
+                    }
+                }).Write("seq", invalidStore);
+                seq2.Select(i => i.ToString()).Write("seqString", invalidStore);
+
+                // run the pipeline with exception handling enabled
+                p2.Run(new ReplayDescriptor(new DateTime(1), true, false), true);
+            }
+            catch
+            {
+                // pipeline terminated abruptly so store should be in an invalid state now
+                Assert.IsFalse(Store.IsValid(name, this.path));
+
+                // We need to temporarily save the invalid store before disposing the pipeline,
+                // since the store will be rendered valid when the pipeline is disposed.
+                Directory.CreateDirectory(tempFolder);
+
+                // copy the invalid store files to the temp folder - we will restore them later
+                foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
+                {
+                    var fileInfo = new FileInfo(file);
+                    File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
+                }
+            }
+            finally
+            {
+                p2.Dispose();
+
+                // after disposing the pipeline, the store becomes valid
+                Assert.IsTrue(Store.IsValid(name, this.path));
+
+                // delete the (now valid) store files
+                foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
+                {
+                    TestRunner.SafeFileDelete(file);
+                }
+
+                // restore the invalid store files from the temp folder
+                foreach (var file in Directory.EnumerateFiles(tempFolder))
+                {
+                    var fileInfo = new FileInfo(file);
+                    File.Move(file, Path.Combine(invalidStore.Path, fileInfo.Name));
+                }
+            }
+
+            // the generated store should be invalid prior to repairing
+            Assert.IsFalse(Store.IsValid(name, this.path));
+
+            Store.Repair(name, this.path);
+
+            // now read from the repaired store
+            bool intStreamCorrect = true;
+            bool stringStreamCorrect = true;
+            using (var p3 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p3, name, this.path);
+                readStore.OpenStream<int>("seq").Do((s, e) =>
+                {
+                    invalid[s] = e;
+                    intStreamCorrect &= e.SequenceId == s;
+                });
+                readStore.OpenStream<string>("seqString").Do((s, e) => { stringStreamCorrect &= e.SequenceId.ToString() == s; });
+                p3.Run(ReplayDescriptor.ReplayAll);
+            }
+
+            // verify the results in the repaired store prior to the exception
+            for (int i = 0; i < count / 2; i++)
+            {
+                Assert.AreEqual(valid[i].SequenceId, invalid[i].SequenceId);
+                Assert.AreEqual(valid[i].OriginatingTime, invalid[i].OriginatingTime);
+            }
+
+            // verify there are no results after the exception
+            for (int j = count / 2; j <= count; j++)
+            {
+                Assert.AreEqual(0, invalid[j].SequenceId);
+                Assert.AreEqual(0, invalid[j].OriginatingTime.Ticks);
+            }
+
+            Assert.IsTrue(intStreamCorrect);
+            Assert.IsTrue(stringStreamCorrect);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StoreWriteReadSpeedTest()
+        {
+            // here we write large messages to a store. This will quickly overflow the extents, causing
+            // MemoryMappedViews to be disposed. This is a potentially blocking call which we now do on a
+            // separate thread. Prior to this fix, it would block writing/reading the store with a human-noticable
+            // delay of several seconds.
+
+            var payload = new byte[1024 * 1024 * 10];
+            const int numMessages = 100;
+            var largestDelay = TimeSpan.Zero;
+            using (var p = Pipeline.Create())
+            using (var q = Pipeline.Create())
+            {
+                // write to store and times
+                var lastWrite = DateTime.MinValue;
+                var g = Generators.Repeat(p, payload, numMessages, TimeSpan.FromMilliseconds(10));
+                g.Do(_ => lastWrite = DateTime.Now);
+                var s = Store.Create(p, "store", this.path);
+                g.Write("g", s);
+                p.RunAsync();
+
+                // read back from store (*while* writing) and check wall-clock delay
+                var lastRead = DateTime.MaxValue;
+                var count = 0;
+                var t = Store.Open(q, "store", this.path);
+                var h = t.OpenStream<byte[]>("g");
+                h.Do(_ =>
+                {
+                    Console.Write('.');
+                    var delay = DateTime.Now - lastRead;
+                    if (delay > largestDelay)
+                    {
+                        largestDelay = delay;
+                    }
+
+                    lastRead = DateTime.Now;
+                    if (++count == numMessages)
+                    {
+                        p.Dispose(); // close store; allowing this pipeline to complete reading
+                    }
+                });
+                q.Run();
+
+                Assert.IsTrue(largestDelay < TimeSpan.FromSeconds(1));
+            }
         }
     }
 }

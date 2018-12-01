@@ -45,10 +45,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             {
                 this.LoadModel();
             }
-            else if (e.PropertyName == nameof(AnimatedModel3DVisualizationObjectConfiguration.LocalTransform))
-            {
-                this.root.Transform = new MatrixTransform3D(this.visualizationObject.Configuration.LocalTransform.GetMatrix3D());
-            }
         }
 
         private void VisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)

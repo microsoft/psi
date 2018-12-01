@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using Microsoft.Psi.Visualization.Controls;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views;
+    using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Represents a visualization panel that time based visualizers can be rendered in.
@@ -170,7 +171,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 double percent = point.X / root.ActualWidth;
                 var viewRange = this.Navigator.ViewRange;
                 DateTime time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
-                return time;
+
+                // If we're currently snapping to some Visualization Object, adjust the time to the timestamp of the nearest message
+                DateTime? snappedTime = null;
+                PlotVisualizationObject snapToVisualizationObject = this.Container.SnapToVisualizationObject as PlotVisualizationObject;
+                if (snapToVisualizationObject != null)
+                {
+                    snappedTime = snapToVisualizationObject.GetTimeOfNearestMessage(time, snapToVisualizationObject.SummaryData?.Count ?? 0, (idx) => snapToVisualizationObject.SummaryData[idx].OriginatingTime);
+                }
+
+                return snappedTime ?? time;
             }
 
             Console.WriteLine("TimelineVisualizationPanel.GetTimeAtMousePointer() - Could not find the TimelineScroller in the tree");

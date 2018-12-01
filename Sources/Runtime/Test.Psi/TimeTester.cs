@@ -250,5 +250,55 @@ namespace Test.Psi
             cal.AddCalibrationData(ticks + 90, ft + 180);
             cal.AddCalibrationData(ticks + 100, ft + 200);
         }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Time_GetCurrentTime()
+        {
+            long qpcFrequency = Platform.Specific.TimeFrequency();
+            long oneTick = (long)Math.Ceiling(qpcFrequency / 10000000.0); // qpc ticks per hns tick
+
+            var clock = new Clock();
+            for (long i = 0; i < 10000000; i++) // 10000000 iterations ~ 1 second
+            {
+                var t0 = clock.GetCurrentTime();
+
+                var qpc0 = Platform.Specific.TimeStamp();
+                while ((Platform.Specific.TimeStamp() - qpc0) < oneTick)
+                {
+                    // wait for at least one tick to have elapsed
+                }
+
+                var t1 = clock.GetCurrentTime();
+                if (t1 <= t0)
+                {
+                    Console.WriteLine($"LAST: {t0.TimeOfDay}, CURRENT: {t1.TimeOfDay}");
+                }
+
+                // verify that current time reported by the clock has advanced
+                Assert.IsTrue(t1 > t0);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Time_TimerTest()
+        {
+            using (var p = Pipeline.Create())
+            {
+                // create a timer with the smallest possible increment
+                var timer = Timers.Timer(p, TimeSpan.FromMilliseconds(1));
+
+                var elapsed = TimeSpan.Zero;
+                timer.Do(t =>
+                {
+                    // verify that the timer ticks forward
+                    Assert.IsTrue(t > elapsed);
+                    elapsed = t;
+                });
+
+                p.Run(TimeSpan.FromSeconds(1));
+            }
+        }
     }
 }

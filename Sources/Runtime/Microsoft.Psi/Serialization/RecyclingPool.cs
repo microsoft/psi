@@ -40,14 +40,14 @@ namespace Microsoft.Psi
             private readonly SerializationContext serializationContext = new SerializationContext();
             private readonly Stack<T> free = new Stack<T>(); // not ConcurrentStack because ConcurrentStack performs an allocation for each Push. We want to be allocation free.
             private int outstandingAllocationCount;
-#if DEBUG
+#if TRACKLEAKS
             private StackTrace debugTrace;
             private bool recycledOnce;
 #endif
 
             public Cloner(StackTrace debugTrace = null)
             {
-#if DEBUG
+#if TRACKLEAKS
                 this.debugTrace = debugTrace ?? new StackTrace(true);
 #endif
             }
@@ -82,7 +82,7 @@ namespace Microsoft.Psi
 
                     this.outstandingAllocationCount++;
                 }
-#if DEBUG
+#if TRACKLEAKS
                 // alert if the component is not recycling messages
                 if (!this.recycledOnce && this.outstandingAllocationCount == MaxAllocationsWithoutRecycling && this.debugTrace != null)
                 {
@@ -90,7 +90,7 @@ namespace Microsoft.Psi
                     sb.AppendLine($"This component is not recycling messages {this.GetType()}. Constructor stack trace below:");
                     foreach (var frame in this.debugTrace.GetFrames())
                     {
-                        sb.AppendLine($"{frame.GetFileName()}({frame.GetFileLineNumber()}): {frame.GetMethod().Name}");
+                        sb.AppendLine($"{frame.GetFileName()}({frame.GetFileLineNumber()}): {frame.GetMethod().DeclaringType}.{frame.GetMethod().Name}");
                     }
 
                     sb.AppendLine("**********************************************************");
@@ -114,7 +114,7 @@ namespace Microsoft.Psi
 
                     this.free.Push(freeInstance);
                     this.outstandingAllocationCount--;
-#if DEBUG
+#if TRACKLEAKS
                     this.recycledOnce = true;
 #endif
                 }

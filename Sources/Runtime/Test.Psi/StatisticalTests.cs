@@ -946,7 +946,7 @@ namespace Test.Psi
         /// <param name="operator">The operator to apply to the input stream.</param>
         /// <param name="testInputOutput">A parameter list of the input sequence/expected output pairs.</param>
         private void RunTest<TInput, TOutput>(
-            Func<IProducer<TInput>, IProducer<TOutput>> @operator,
+            Func<IProducer<TInput>, DeliveryPolicy, IProducer<TOutput>> @operator,
             params (TInput[] input, TOutput[] output)[] testInputOutput)
         {
             // lists for capturing test output
@@ -959,7 +959,7 @@ namespace Test.Psi
                 {
                     var output = new List<TOutput>();
                     outputs.Add(output);
-                    @operator(Generators.Sequence(p, inputSequence)).Do(x => output.Add(x));
+                    @operator(Generators.Sequence(p, inputSequence), null).Do(x => output.Add(x));
                 }
 
                 p.Run(null, true);

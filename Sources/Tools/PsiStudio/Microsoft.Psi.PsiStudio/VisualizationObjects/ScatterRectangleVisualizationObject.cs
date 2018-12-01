@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.InitNew();
             this.Configuration.Height = 1080;
-            this.Configuration.LineColor = System.Windows.Media.Color.FromArgb(255, 70, 85, 198);
+            this.Configuration.Color = System.Windows.Media.Color.FromArgb(255, 70, 85, 198);
             this.Configuration.LineWidth = 1;
             this.Configuration.Width = 1920;
         }

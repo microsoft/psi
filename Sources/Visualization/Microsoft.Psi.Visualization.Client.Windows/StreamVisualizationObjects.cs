@@ -164,4 +164,13 @@ namespace Microsoft.Psi.Visualization.Client
         /// <inheritdoc/>
         public override string TypeName => "Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalVisualizationObject";
     }
+
+    /// <summary>
+    /// Class implements a client proxy for Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalVisualizationObject />.
+    /// </summary>
+    public sealed class TimeIntervalHistoryVisualizationObject : StreamVisualizationObject<Dictionary<string, List<(TimeInterval, string)>>, TimeIntervalHistoryVisualizationObjectConfiguration>
+    {
+        /// <inheritdoc/>
+        public override string TypeName => "Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalHistoryVisualizationObject";
+    }
 }

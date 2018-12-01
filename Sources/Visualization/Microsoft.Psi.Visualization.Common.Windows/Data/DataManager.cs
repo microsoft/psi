@@ -56,24 +56,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>The simple reader.</returns>
         public ISimpleReader GetReader(StreamBinding streamBinding)
         {
-            if (streamBinding == null)
-            {
-                throw new ArgumentNullException(nameof(streamBinding));
-            }
-
-            var key = Tuple.Create(streamBinding.StoreName, streamBinding.StorePath);
-            if (this.dataStoreReaders.Contains(key))
-            {
-                return this.dataStoreReaders[key].GetReader();
-            }
-
-            key = Tuple.Create(streamBinding.StoreName, StoreCommon.GetPathToLatestVersion(streamBinding.StoreName, streamBinding.StorePath));
-            if (this.dataStoreReaders.Contains(key))
-            {
-                return this.dataStoreReaders[key].GetReader();
-            }
-
-            return null;
+            return this.FindDataStoreReader(streamBinding, false)?.GetReader();
         }
 
         /// <summary>
@@ -278,6 +261,8 @@ namespace Microsoft.Psi.Visualization.Data
 
                 if (this.dataStoreReaders.Contains(key))
                 {
+                    // dispose existing dataStoreReader before re-assignment
+                    dataStoreReader.Dispose();
                     dataStoreReader = this.dataStoreReaders[key];
                 }
                 else if (createDataStoreReader)
@@ -286,7 +271,9 @@ namespace Microsoft.Psi.Visualization.Data
                 }
                 else
                 {
-                    dataStoreReader = default(DataStoreReader);
+                    // dispose existing dataStoreReader before re-assignment
+                    dataStoreReader.Dispose();
+                    dataStoreReader = null;
                 }
 
                 return dataStoreReader;

@@ -22,13 +22,5 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(ScatterPlotVisualizationObjectView));
-
-        /// <inheritdoc />
-        protected override void InitNew()
-        {
-            base.InitNew();
-            this.Configuration.FillColor = System.Drawing.Color.Red;
-            this.Configuration.Radius = 5;
-        }
     }
 }

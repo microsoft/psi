@@ -30,6 +30,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private ObservableKeyedCache<DateTime, IntervalData<TData>>.ObservableKeyedView summaryData;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TimelineVisualizationObject{TData, TConfig}"/> class.
+        /// </summary>
+        public TimelineVisualizationObject()
+        {
+            this.PropertyChanging += this.TimelineVisualizationObject_PropertyChanging;
+            this.PropertyChanged += this.TimelineVisualizationObject_PropertyChanged;
+        }
+
+        /// <summary>
         /// Gets or sets the summary data view.
         /// </summary>
         [Browsable(false)]
@@ -47,6 +56,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the value to display in the legend.  By default the current value is returned
+        /// </summary>
+        [IgnoreDataMember]
+        public virtual string LegendValue => this.CurrentValue.HasValue ? this.CurrentValue.Value.Data.ToString() : string.Empty;
 
         /// <inheritdoc />
         protected override void OnCloseStream()
@@ -77,6 +92,32 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.OnViewRangeChanged(
                 this.Navigator.ViewRange,
                 new NavigatorTimeRangeChangedEventArgs(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime, this.Navigator.ViewRange.EndTime));
+        }
+
+        /// <summary>
+        /// Invoked when a <see cref="TimelineVisualizationObject{TData, TConfig}"/> property is changing.
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The PropertyChangingEventArgs</param>
+        protected void TimelineVisualizationObject_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.CurrentValue))
+            {
+                this.RaisePropertyChanging(nameof(this.LegendValue));
+            }
+        }
+
+        /// <summary>
+        /// Invoked when a <see cref="TimelineVisualizationObject{TData, TConfig}"/> property changes.
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The PropertyChangingEventArgs</param>
+        protected void TimelineVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.CurrentValue))
+            {
+                this.RaisePropertyChanged(nameof(this.LegendValue));
+            }
         }
 
         /// <summary>
@@ -218,11 +259,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
             else
             {
-                TimeSpan extra = TimeSpan.FromMilliseconds(100);
+                var startTime = this.Navigator.ViewRange.StartTime;
+                var endTime = this.Navigator.ViewRange.EndTime;
+
+                // Attempt to read a little extra data outside the view range so that the end
+                // points appear to connect to the next/previous values. This is flawed as we
+                // are just guessing how much to extend the time interval by. What we really
+                // need is for the DataManager to give us everything in the requested time
+                // interval plus the next/previous data point just outside the interval.
+                var extra = TimeSpan.FromMilliseconds(100);
+
                 this.SummaryData = DataManager.Instance.ReadSummary<TData>(
                     this.Configuration.StreamBinding,
-                    this.Navigator.ViewRange.StartTime - extra,
-                    this.Navigator.ViewRange.EndTime + extra,
+                    startTime > DateTime.MinValue + extra ? startTime - extra : startTime,
+                    endTime < DateTime.MaxValue - extra ? endTime + extra : endTime,
                     TimeSpan.FromTicks(this.Configuration.SamplingTicks));
             }
         }

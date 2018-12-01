@@ -16,11 +16,11 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source/output messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="condition">Predicate function by which to filter messages.</param>
-        /// <param name="policy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Where<T>(this IProducer<T> source, Func<T, Envelope, bool> condition, DeliveryPolicy policy = null)
+        public static IProducer<T> Where<T>(this IProducer<T> source, Func<T, Envelope, bool> condition, DeliveryPolicy deliveryPolicy = null)
         {
-            var p = Process<T, T>(
+            return Process<T, T>(
                 source,
                 (d, e, s) =>
                 {
@@ -29,9 +29,7 @@ namespace Microsoft.Psi
                         s.Post(d, e.OriginatingTime);
                     }
                 },
-                policy);
-
-            return p;
+                deliveryPolicy);
         }
 
         /// <summary>
@@ -40,11 +38,11 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source/output messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="condition">Predicate function by which to filter messages.</param>
-        /// <param name="policy">Delivery policy.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Where<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy policy = null)
+        public static IProducer<T> Where<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy deliveryPolicy = null)
         {
-            return Where(source, (d, e) => condition(d), policy);
+            return Where(source, (d, e) => condition(d), deliveryPolicy);
         }
 
         /// <summary>
@@ -52,22 +50,25 @@ namespace Microsoft.Psi
         /// </summary>
         /// <typeparam name="T">Type of source/output messages.</typeparam>
         /// <param name="source">Source stream.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> First<T>(this IProducer<T> source)
+        public static IProducer<T> First<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
         {
             bool first = true;
-            return source.Where(v =>
-            {
-                if (first)
+            return source.Where(
+                v =>
                 {
-                    first = false;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            });
+                    if (first)
+                    {
+                        first = false;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                },
+                deliveryPolicy);
         }
     }
 }

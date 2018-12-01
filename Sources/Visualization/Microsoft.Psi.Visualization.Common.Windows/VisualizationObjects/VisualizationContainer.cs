@@ -12,6 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using System.Windows.Data;
+    using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Serialization;
@@ -28,6 +29,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [ComVisible(false)]
     public class VisualizationContainer : ReferenceCountedObject, IRemoteVisualizationContainer
     {
+        private RelayCommand<VisualizationPanel> deleteVisualizationPanelCommand;
+
         /// <summary>
         /// The name of the container
         /// </summary>
@@ -52,6 +55,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The current visualization panel
         /// </summary>
         private VisualizationPanel currentPanel;
+
+        /// <summary>
+        /// The current visualization object (if any) currently being snapped to
+        /// </summary>
+        private VisualizationObject snapToVisualizationObject;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VisualizationContainer"/> class.
@@ -101,6 +109,43 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             get { return this.panels; }
             private set { this.Set(nameof(this.Panels), ref this.panels, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the visualization object that the mouse pointer currently snaps to.
+        /// </summary>
+        [IgnoreDataMember]
+        public VisualizationObject SnapToVisualizationObject
+        {
+            get { return this.snapToVisualizationObject; }
+
+            set
+            {
+                this.RaisePropertyChanging(nameof(this.SnapToVisualizationObject));
+                this.snapToVisualizationObject = value;
+                this.RaisePropertyChanged(nameof(this.SnapToVisualizationObject));
+            }
+        }
+
+        /// <summary>
+        /// Gets the delete visualization panel command.
+        /// </summary>
+        [IgnoreDataMember]
+        public RelayCommand<VisualizationPanel> DeleteVisualizationPanelCommand
+        {
+            get
+            {
+                if (this.deleteVisualizationPanelCommand == null)
+                {
+                    this.deleteVisualizationPanelCommand = new RelayCommand<VisualizationPanel>(
+                        o =>
+                        {
+                            this.RemovePanel(o);
+                        });
+                }
+
+                return this.deleteVisualizationPanelCommand;
+            }
         }
 
         /// <inheritdoc />
@@ -243,6 +288,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (this.CurrentPanel == panel)
             {
                 this.CurrentPanel = null;
+            }
+
+            // If the panel being deleted contains the stream currently being snapped to, then reset the snap to stream object
+            if ((this.snapToVisualizationObject != null) && panel.VisualizationObjects.Contains(this.snapToVisualizationObject))
+            {
+                this.SnapToVisualizationObject = null;
             }
 
             panel.Clear();

@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#if DEBUG
-#define TRACKLEAKS
-#endif
-
 namespace Microsoft.Psi
 {
     using System;

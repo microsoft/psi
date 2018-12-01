@@ -510,7 +510,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 this.RangePath = new Path() { StrokeThickness = 1, Data = this.rangeGeometry };
 
                 // Create bindings for lines
-                var binding = new Binding(nameof(parent.PlotVisualizationObject.Configuration) + "." + nameof(PlotVisualizationObjectConfiguration.LineColor))
+                var binding = new Binding(nameof(parent.PlotVisualizationObject.Configuration) + "." + nameof(PlotVisualizationObjectConfiguration.Color))
                 {
                     Source = parent.PlotVisualizationObject,
                     Converter = new Converters.ColorConverter()

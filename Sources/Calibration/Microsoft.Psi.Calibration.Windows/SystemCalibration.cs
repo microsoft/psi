@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Calibration
 {
     using System.Collections.Generic;
     using System.Xml.Serialization;
+    using MathNet.Numerics.LinearAlgebra;
 
     /// <summary>
     /// Used for serializing out the results of our multi-camera calibration
@@ -48,24 +49,6 @@ namespace Microsoft.Psi.Calibration
         public double CheckerBoardSquareSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the width of each captured image
-        /// </summary>
-        [XmlElement]
-        public double ImageWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the height of each captured image
-        /// </summary>
-        [XmlElement]
-        public double ImageHeight { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of frames captured
-        /// </summary>
-        [XmlElement]
-        public double NumberOfFrames { get; set; }
-
-        /// <summary>
         /// Gets or sets the camera calibration for each camera
         /// </summary>
         [XmlArray("CameraPoses")]
@@ -98,6 +81,12 @@ namespace Microsoft.Psi.Calibration
             public string MachineName { get; set; }
 
             /// <summary>
+            /// Gets or sets the path to the video store (for this camera) used for this calibration
+            /// </summary>
+            [XmlElement]
+            public string SourceVideo { get; set; }
+
+            /// <summary>
             /// Gets or sets the camera intrinsics
             /// </summary>
             [XmlArray]
@@ -105,6 +94,10 @@ namespace Microsoft.Psi.Calibration
 
             /// <summary>
             /// Gets or sets the camera distortion coefficients
+            /// These coefficients are in the same order as openCV, i.e.
+            /// k1,k2,p1,p2,[k3,[k4,k5,k6]]
+            /// where k are the radial distortion coefficients and p are
+            /// the tangential distortion coefficients.
             /// </summary>
             [XmlArray]
             public double[] DistortionCoefficients { get; set; }
@@ -126,6 +119,73 @@ namespace Microsoft.Psi.Calibration
             /// </summary>
             [XmlElement]
             public double ExtrinsicsReprojectionError { get; set; }
+
+            /// <summary>
+            /// Gets or sets the width of each captured image
+            /// </summary>
+            [XmlElement]
+            public double ImageWidth { get; set; }
+
+            /// <summary>
+            /// Gets or sets the height of each captured image
+            /// </summary>
+            [XmlElement]
+            public double ImageHeight { get; set; }
+
+            /// <summary>
+            /// Gets or sets the number of frames captured
+            /// </summary>
+            [XmlElement]
+            public double NumberOfFrames { get; set; }
+
+            /// <summary>
+            /// Gets the camera's intrinsics
+            /// </summary>
+            public Microsoft.Psi.Calibration.CameraIntrinsics CameraIntrinsics
+            {
+                get
+                {
+                    CameraIntrinsics intrinsics = new CameraIntrinsics();
+                    intrinsics.RadialDistortion = MathNet.Numerics.LinearAlgebra.Vector<double>.Build.Dense(2);
+                    intrinsics.RadialDistortion[0] = this.DistortionCoefficients[0];
+                    intrinsics.RadialDistortion[1] = this.DistortionCoefficients[1];
+                    intrinsics.TangentialDistortion = MathNet.Numerics.LinearAlgebra.Vector<double>.Build.Dense(2);
+                    intrinsics.TangentialDistortion[0] = this.DistortionCoefficients[2];
+                    intrinsics.TangentialDistortion[1] = this.DistortionCoefficients[3];
+                    var invMtx = MathNet.Numerics.LinearAlgebra.Matrix<double>.Build.Dense(3, 3);
+                    for (int i = 0; i < 9; i++)
+                    {
+                        invMtx[i % 3, i / 3] = this.Intrinsics[i];
+                    }
+
+                    intrinsics.Transform = invMtx;
+
+                    intrinsics.FocalLengthXY = new MathNet.Spatial.Euclidean.Point2D(intrinsics.Transform[0, 0], intrinsics.Transform[1, 1]);
+                    intrinsics.FocalLength = 0.5 * (intrinsics.FocalLengthXY.X + intrinsics.FocalLengthXY.Y);
+                    intrinsics.PrincipalPoint = new MathNet.Spatial.Euclidean.Point2D(intrinsics.Transform[0, 2], intrinsics.Transform[1, 2]);
+                    intrinsics.ImageWidth = (int)this.ImageWidth;
+                    intrinsics.ImageHeight = (int)this.ImageHeight;
+                    return intrinsics;
+                }
+            }
+
+            /// <summary>
+            /// Gets the camera's extrinsics
+            /// </summary>
+            public MathNet.Spatial.Euclidean.CoordinateSystem CoordinateSystem
+            {
+                get
+                {
+                    var mtx = MathNet.Numerics.LinearAlgebra.Matrix<double>.Build.Dense(4, 4);
+                    for (int i = 0; i < 16; i++)
+                    {
+                        mtx[i % 4, i / 4] = this.Extrinsics[i];
+                    }
+
+                    var cs = new MathNet.Spatial.Euclidean.CoordinateSystem(mtx);
+                    return cs;
+                }
+            }
         }
 
         /// <summary>

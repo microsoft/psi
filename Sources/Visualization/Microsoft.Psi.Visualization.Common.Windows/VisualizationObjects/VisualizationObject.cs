@@ -91,6 +91,29 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [IgnoreDataMember]
         IRemoteVisualizationPanel IRemoteVisualizationObject.Panel => this.Panel;
 
+        /// <summary>
+        /// Gets a value indicating whether this visualization object can use the snap to stream functionality
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual bool CanSnapToStream => false;
+
+        /// <summary>
+        /// Gets a value indicating whether this visualization object is currently the one being snapped to
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual bool IsSnappedToStream => false;
+
+        /// <summary>
+        /// Snaps or unsnaps the parent container to this stream
+        /// </summary>
+        /// <param name="snapToStream">TRUE if this object should be snapped, otherwise FALSE</param>
+        [Browsable(false)]
+        public virtual void SnapToStream(bool snapToStream)
+        {
+        }
+
         /// <inheritdoc />
         public uint Advise(INotifyRemoteConfigurationChanged notifyVisualizationObjectChanged)
         {

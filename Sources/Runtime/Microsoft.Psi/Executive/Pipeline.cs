@@ -34,7 +34,7 @@ namespace Microsoft.Psi
 
         private readonly KeyValueStore configStore = new KeyValueStore();
 
-        private readonly DeliveryPolicy globalPolicy;
+        private readonly DeliveryPolicy deliveryPolicy;
 
         /// <summary>
         /// If set, indicates that the pipeline is in replay mode
@@ -46,14 +46,14 @@ namespace Microsoft.Psi
         private TimeInterval proposedOriginatingTimeInterval;
 
         /// <summary>
-        /// The wiring of components
+        /// The list of components
         /// </summary>
         private ConcurrentQueue<PipelineElement> components = new ConcurrentQueue<PipelineElement>();
 
         /// <summary>
-        /// The source wiring components
+        /// The list of source components
         /// </summary>
-        private List<PipelineElement> sourceComponents = new List<PipelineElement>();
+        private List<PipelineElement> finiteSourceComponents = new List<PipelineElement>();
 
         private Scheduler scheduler;
 
@@ -71,23 +71,23 @@ namespace Microsoft.Psi
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
-        public Pipeline(string name, DeliveryPolicy globalPolicy, int threadCount, bool allowSchedulingOnExternalThreads)
-            : this(name, globalPolicy)
+        public Pipeline(string name, DeliveryPolicy deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads)
+            : this(name, deliveryPolicy)
         {
-            this.scheduler = new Scheduler(this.globalPolicy, this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
+            this.scheduler = new Scheduler(this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="scheduler">Scheduler to be used.</param>
-        internal Pipeline(string name, DeliveryPolicy globalPolicy, Scheduler scheduler)
-            : this(name, globalPolicy)
+        public Pipeline(string name, DeliveryPolicy deliveryPolicy, Scheduler scheduler)
+            : this(name, deliveryPolicy)
         {
             this.scheduler = scheduler;
         }
@@ -96,11 +96,11 @@ namespace Microsoft.Psi
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="globalPolicy">Global delivery policy.</param>
-        private Pipeline(string name, DeliveryPolicy globalPolicy)
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
+        private Pipeline(string name, DeliveryPolicy deliveryPolicy)
         {
             this.name = name ?? "default";
-            this.globalPolicy = globalPolicy ?? DeliveryPolicy.Unlimited;
+            this.deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
             this.enableExceptionHandling = false;
         }
 
@@ -125,9 +125,9 @@ namespace Microsoft.Psi
         public ReplayDescriptor ReplayDescriptor => this.replayDescriptor;
 
         /// <summary>
-        /// Gets global delivery policy.
+        /// Gets the pipeline-level delivery policy.
         /// </summary>
-        public DeliveryPolicy GlobalPolicy => this.globalPolicy;
+        public DeliveryPolicy DeliveryPolicy => this.deliveryPolicy;
 
         internal Scheduler Scheduler => this.scheduler;
 
@@ -146,13 +146,13 @@ namespace Microsoft.Psi
         /// Create pipeline.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(string name = null, DeliveryPolicy globalPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false)
+        public static Pipeline Create(string name = null, DeliveryPolicy deliveryPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false)
         {
-            return new Pipeline(name, globalPolicy, threadCount, allowSchedulingOnExternalThreads);
+            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads);
         }
 
         /// <summary>
@@ -194,7 +194,12 @@ namespace Microsoft.Psi
         public void RegisterPipelineStartHandler(object owner, Action onStart)
         {
             var node = this.GetOrCreateNode(owner);
-            node.OnStartHandler = onStart;
+            if (node.OnStartHandlers == null)
+            {
+                node.OnStartHandlers = new List<Action>();
+            }
+
+            node.OnStartHandlers.Add(onStart);
             if (this.started && !(owner is Subpipeline))
             {
                 throw new InvalidOperationException($"Register pipeline start handler called when pipeline already running. Consider using Subpipeline.");
@@ -202,25 +207,35 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Registers handler to be called upon pipeline stop.
+        /// Registers handler to be called when the pipeline is shutting down. Messages might still be flowing, but source components should cease.
         /// </summary>
         /// <param name="owner">The component that owns the handler. This is usually the state object that the receiver operates on.</param>
         /// <param name="onStop">The action to be called upon pipeline stopping.</param>
-        /// <remarks>This means the pipeline is shutting down. Messages may still be flowing, but source components should cease.</remarks>
         public void RegisterPipelineStopHandler(object owner, Action onStop)
         {
-            this.GetOrCreateNode(owner).OnStopHandler = onStop;
+            var node = this.GetOrCreateNode(owner);
+            if (node.OnStopHandlers == null)
+            {
+                node.OnStopHandlers = new List<Action>();
+            }
+
+            node.OnStopHandlers.Add(onStop);
         }
 
         /// <summary>
-        /// Registers handler to be called upon pipeline stop.
+        /// Registers handler to be called in the final stages of pipeline shutdown, once all source components have been deactivated and shutdown is imminent. This is the last chance to post final messages.
         /// </summary>
         /// <param name="owner">The component that owns the handler. This is usually the state object that the receiver operates on.</param>
         /// <param name="onFinal">The action to be called upon pipeline final call after quiescence.</param>
-        /// <remarks>This means that the pipeline has deactivated all source components and shutdown is eminent. This is a last chance to post final messages.</remarks>
         public void RegisterPipelineFinalHandler(object owner, Action onFinal)
         {
-            this.GetOrCreateNode(owner).OnFinalHandler = onFinal;
+            var node = this.GetOrCreateNode(owner);
+            if (node.OnFinalHandlers == null)
+            {
+                node.OnFinalHandlers = new List<Action>();
+            }
+
+            node.OnFinalHandlers.Add(onFinal);
         }
 
         /// <summary>
@@ -580,16 +595,16 @@ namespace Microsoft.Psi
             if (component.IsSource)
             {
                 bool lastRemainingCompletable = false;
-                lock (this.sourceComponents)
+                lock (this.finiteSourceComponents)
                 {
-                    if (!this.sourceComponents.Contains(component))
+                    if (!this.finiteSourceComponents.Contains(component))
                     {
                         // the component was already removed (e.g. because the pipeline is stopping)
                         return;
                     }
 
-                    this.sourceComponents.Remove(component);
-                    lastRemainingCompletable = this.sourceComponents.Count == 0;
+                    this.finiteSourceComponents.Remove(component);
+                    lastRemainingCompletable = this.finiteSourceComponents.Count == 0;
                 }
 
                 this.anyCompleted.Set();
@@ -625,14 +640,14 @@ namespace Microsoft.Psi
                 this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);
             }
 
-            // keep track of source components
+            // keep track of finite source components
             foreach (var component in this.components)
             {
-                if (component.IsSource)
+                if (component.IsFiniteSource)
                 {
-                    lock (this.sourceComponents)
+                    lock (this.finiteSourceComponents)
                     {
-                        this.sourceComponents.Add(component);
+                        this.finiteSourceComponents.Add(component);
                     }
                 }
             }
@@ -651,15 +666,9 @@ namespace Microsoft.Psi
         /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
         internal void Complete(bool abandonPendingWorkitems)
         {
-            if (this.PipelineCompletionEvent != null)
+            if (this.PipelineCompletionEvent != null && this.Scheduler != null)
             {
-                // this.scheduler might be null if RunAsync was never called.
-                if (this.Scheduler != null)
-                {
-                    this.PipelineCompletionEvent(this, new PipelineCompletionEventArgs(this.Clock.GetCurrentTime(), abandonPendingWorkitems, this.errors));
-                }
-
-                this.errors.Clear();
+                this.PipelineCompletionEvent(this, new PipelineCompletionEventArgs(this.Clock.GetCurrentTime(), abandonPendingWorkitems, this.errors));
             }
         }
 
@@ -779,6 +788,12 @@ namespace Microsoft.Psi
 
         private void ThrowIfError()
         {
+            if (this.PipelineCompletionEvent != null && !this.enableExceptionHandling)
+            {
+                // if completion event is hooked, only throw if exception handling is explicitly enabled
+                return;
+            }
+
             lock (this.errors)
             {
                 if (this.errors.Count > 0)

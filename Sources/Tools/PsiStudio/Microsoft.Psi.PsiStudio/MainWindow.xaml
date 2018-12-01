@@ -10,10 +10,12 @@
     xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     xmlns:local="clr-namespace:Microsoft.Psi.PsiStudio"
     xmlns:conv="clr-namespace:Microsoft.Psi.PsiStudio.Converters"
+    xmlns:visconv="clr-namespace:Microsoft.Psi.Visualization.Converters"
     xmlns:views="clr-namespace:Microsoft.Psi.Visualization.Views"
     xmlns:cvo="clr-namespace:Microsoft.Psi.Visualization.VisualizationObjects;assembly=Microsoft.Psi.Visualization.Common.Windows"
     xmlns:vp="clr-namespace:Microsoft.Psi.Visualization.VisualizationPanels"
     xmlns:cvp="clr-namespace:Microsoft.Psi.Visualization.VisualizationPanels;assembly=Microsoft.Psi.Visualization.Common.Windows"
+    xmlns:datasets="clr-namespace:Microsoft.Psi.Visualization.Datasets;assembly=Microsoft.Psi.Visualization.Common.Windows"
     xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit.PropertyGrid;assembly=Xceed.Wpf.Toolkit"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
@@ -33,11 +35,18 @@
     <Window.Resources>
         <conv:StreamTreeNodeToCommandsConverter x:Key="StreamTreeNodeToCommandsConverter" />
         <conv:StreamTreeNodeToVisibilityConverter x:Key="StreamTreeNodeToVisibilityConverter" />
+        <visconv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <local:PsiStudioTemplateSelector x:Key="PsiStudioTemplateSelector" />
     </Window.Resources>
 
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Store" Command="{Binding OpenStoreCommand}" Height="25">
                     <MenuItem.Icon>
@@ -71,7 +80,7 @@
             </MenuItem>
         </Menu>
 
-        <ToolBarTray DockPanel.Dock="Top" Background="{StaticResource MediumBackgroundColorBrush}">
+        <ToolBarTray Grid.Row="1" Background="{StaticResource MediumBackgroundColorBrush}">
             <ToolBar Background="{StaticResource MediumBackgroundColorBrush}" Loaded="ToolBar_Loaded" >
                 <Button Command="{Binding OpenStoreCommand}" ToolTip="Open Store">
                     <Image Source="Icons\open-store_x4.png"/>
@@ -103,13 +112,13 @@
                     <Image Source="Icons\add-annotations_x4.png"/>
                 </Button>
                 <Separator />-->
-                <ToggleButton Command="{Binding AbsoluteTimingCommand}" IsChecked="{Binding Path=VisualizationContiner.Navigator.ShowAbsoluteTiming, Mode=TwoWay}" ToolTip="Absolute Timing">
+                <ToggleButton Command="{Binding AbsoluteTimingCommand}" ToolTip="Absolute Timing">
                     <Image Source="Icons\timing-absolute_x4.png"/>
                 </ToggleButton>
-                <ToggleButton Command="{Binding TimingRelativeToSessionStartCommand}" IsChecked="{Binding Path=VisualizationContiner.Navigator.ShowTimingRelativeToSessionStart, Mode=TwoWay}" ToolTip="Timing relative to Session Start">
+                <ToggleButton Command="{Binding TimingRelativeToSessionStartCommand}" ToolTip="Timing relative to Session Start">
                     <Image Source="Icons\timing-relative-session_x4.png"/>
                 </ToggleButton>
-                <ToggleButton Command="{Binding TimingRelativeToSelectionStartCommand}" IsChecked="{Binding Path=VisualizationContiner.Navigator.ShowTimingRelativeToSelectionStart, Mode=TwoWay}" ToolTip="Timing relative to Selection Start">
+                <ToggleButton Command="{Binding TimingRelativeToSelectionStartCommand}" ToolTip="Timing relative to Selection Start">
                     <Image Source="Icons\timing-relative-selection_x4.png"/>
                 </ToggleButton>
                 <Separator />
@@ -132,213 +141,245 @@
             </ToolBar>
         </ToolBarTray>
 
-        <Grid >
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*" MinWidth="100"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Background="{StaticResource MediumBackgroundColorBrush}">
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TabControl Grid.Row="0" Name="DatasetsTabControl" SelectedIndex="0" Margin="4,4,0,4">
+                    <TabItem Name="Datasets" Header="Datasets">
+
+                        <TreeView Grid.Row="0" Name="DatasetsTreeView" ItemsSource="{Binding DatasetViewModels}" ItemTemplateSelector="{StaticResource ResourceKey=PsiStudioTemplateSelector}">
+                            <TreeView.Resources>
+                                <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding SessionViewModels}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Icons\data_x4.png"/>
+                                        <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Name="CreateSession" Header="Create Session" Command="{Binding CreateSessionCommand}" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\create-session_x4.png" Height="16" Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Name="CreateSessionFromExistingStore" Header="Create Session from Existing Store ..." Command="{Binding CreateSessionFromExistingStoreCommand}" Height="25"/>
+                                                    <Separator />
+                                                    <MenuItem Name="CloseDataset" Header="Close Dataset" Command="{Binding CloseDatasetCommand}" IsEnabled="False" />
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding PartitionViewModels}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Icons\session_x4.png"/>
+                                        <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Name="AddPartition" Header="Add Partition ..." Click="AddPartition_Click" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\add-partition_x4.png" Height="16" Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <Separator />
+                                                    <MenuItem Name="RemoveSession" Header="Remove Session" Command="{Binding RemoveSessionCommand}" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\remove-session_x4.png" Height="16" Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Name="VisualizeSession" Header="Visualize Session" Click="VisualizeSession_Click" Height="25"/>
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding StreamTreeRoot.Children}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Icons\partition_x4.png"/>
+                                        <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Name="RemovePartition" Header="Remove Partition" Command="{Binding RemovePartitionCommand}" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\remove-partition_x4.png" Height="16"  Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Name="VisualizePartition" Header="Visualize Partition" Click="VisualizePartition_Click" Height="25"/>
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate x:Key="StreamTreeNodeTemplate" ItemsSource="{Binding Children}">
+                                    <StackPanel Orientation="Horizontal" MouseMove="StreamTreeNode_MouseMove">
+                                        <Image Source="Icons\stream_x4.png" Visibility="{Binding ., Converter={StaticResource StreamTreeNodeToVisibilityConverter}}"/>
+                                        <TextBlock Text="{Binding Name}" Margin="3,0,0,0">
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu ItemsSource="{Binding Path=., Converter={StaticResource StreamTreeNodeToCommandsConverter}}" Visibility="{Binding ., Converter={StaticResource StreamTreeNodeToVisibilityConverter}}">
+                                                    <ContextMenu.ItemContainerStyle>
+                                                        <Style TargetType="MenuItem">
+                                                            <Setter Property="Height" Value="25"/>
+                                                            <Setter Property="HeaderTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"></TextBlock>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Setter Property="Command" Value="{Binding .}" />
+                                                            <!--The stream metadata is passed as the command parameter... and this can be obtained from the DataContext of one of the parents-->
+                                                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext}" />
+                                                        </Style>
+                                                    </ContextMenu.ItemContainerStyle>
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                            </TextBlock>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeView.Resources>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedItemChanged">
+                                    <cmd:EventToCommand Command="{Binding Path=SelectedDatasetChangedCommand}" PassEventArgsToCommand="True" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <cmd:EventToCommand Command="{Binding Path=TreeSelectedCommand}" CommandParameter="DatasetsTreeView" PassEventArgsToCommand="False" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TreeView>
+                    </TabItem>
+                </TabControl>
+
+                <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="{StaticResource MediumBackgroundColorBrush}"/>
+
+                <TabControl Grid.Row="2" Name="VisualizationsTabControl" SelectedIndex="0" Margin="4,0,0,4">
+                    <TabItem Name="Visualizations" Header="Visualizations">
+
+                        <TreeView Grid.Row="2" Name="VisualizationTreeView" ItemsSource="{Binding VisualizationContainer.Panels}">
+                            <TreeView.Resources>
+                                <HierarchicalDataTemplate DataType="{x:Type cvp:VisualizationPanel}" ItemsSource="{Binding VisualizationObjects}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ContentPresenter Content="{Binding Path=.}">
+                                            <ContentPresenter.Resources>
+                                                <DataTemplate DataType="{x:Type vp:TimelineVisualizationPanel}">
+                                                    <Image Source="Icons\timeline-panel_x4.png"/>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type vp:XYVisualizationPanel}">
+                                                    <Image Source="Icons\2d-panel_x4.png"/>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type vp:XYZVisualizationPanel}">
+                                                    <Image Source="Icons\3d-panel_x4.png"/>
+                                                </DataTemplate>
+                                            </ContentPresenter.Resources>
+                                        </ContentPresenter>
+                                        <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0">
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Delete" Command="{Binding Container.DeleteVisualizationPanelCommand}" CommandParameter="{Binding .}" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate DataType="{x:Type cvo:VisualizationObject}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Icons\stream_x4.png"/>
+                                        <Image Source="Icons\snap-to-stream_x4.png" Margin="4,0,0,0" Visibility="{Binding IsSnappedToStream, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0">
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Snap to Stream" Command="{Binding SnapToStreamCommand}" Visibility="{Binding CanSnapToStream, Converter={StaticResource BoolToVisibilityConverter}}" IsChecked="{Binding IsSnappedToStream, Mode=OneWay}" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\snap-to-stream_x4.png" Height="16" Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="Delete" Command="{Binding Panel.DeleteVisualizationCommand}" CommandParameter="{Binding .}" Height="25">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeView.Resources>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedItemChanged">
+                                    <cmd:EventToCommand Command="{Binding Path=SelectedVisualizationChangedCommand}" PassEventArgsToCommand="True" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <cmd:EventToCommand Command="{Binding Path=TreeSelectedCommand}" CommandParameter="VisualizationTreeView" PassEventArgsToCommand="False" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TreeView>
+                    </TabItem>
+                </TabControl>
+                
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="{StaticResource MediumBackgroundColorBrush}" />
+
+            <Grid Grid.Column="2" Background="{StaticResource MediumBackgroundColorBrush}" Margin="0,4,0,4">
                 <Border Background="{StaticResource DarkBackgroundColorBrush}" BorderBrush="{StaticResource LightBackgroundBrush}" BorderThickness="2"  Margin="0,0,0,0">
                     <views:VisualizationContainerView DataContext="{Binding VisualizationContainer}" Margin="0,3,3,3"/>
                 </Border>
             </Grid>
 
-            <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="{StaticResource MediumBackgroundColorBrush}" />
-            
-            <Grid Grid.Column="2">
-                <TabControl Name="TabControl" SelectedIndex="{Binding Path=TabControlIndex, Mode=TwoWay}">
-                    <TabItem Name="Visualizations" Header="Visualizations">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            
-                            <Grid Grid.Row="0">
-                                <TreeView Name="VisualizationTreeView" ItemsSource="{Binding VisualizationContainer.Panels}">
-                                    <TreeView.Resources>
-                                        <HierarchicalDataTemplate DataType="{x:Type cvp:VisualizationPanel}" ItemsSource="{Binding VisualizationObjects}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <ContentPresenter Content="{Binding Path=.}">
-                                                    <ContentPresenter.Resources>
-                                                        <DataTemplate DataType="{x:Type vp:TimelineVisualizationPanel}">
-                                                            <Image Source="Icons\timeline-panel_x4.png"/>
-                                                        </DataTemplate>
-                                                        <DataTemplate DataType="{x:Type vp:XYVisualizationPanel}">
-                                                            <Image Source="Icons\2d-panel_x4.png"/>
-                                                        </DataTemplate>
-                                                        <DataTemplate DataType="{x:Type vp:XYZVisualizationPanel}">
-                                                            <Image Source="Icons\3d-panel_x4.png"/>
-                                                        </DataTemplate>
-                                                    </ContentPresenter.Resources>
-                                                </ContentPresenter>
-                                                <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0"/>
-                                            </StackPanel>
-                                        </HierarchicalDataTemplate>
-                                        
-                                        <HierarchicalDataTemplate DataType="{x:Type cvo:VisualizationObject}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="Icons\stream_x4.png"/>
-                                                <TextBlock Text="{Binding Configuration.Name}" Margin="10,0,0,0" />
-                                            </StackPanel>
-                                        </HierarchicalDataTemplate>
-                                    </TreeView.Resources>
-                                    
-                                    <TreeView.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Delete" Command="{Binding DeleteVisualizationCommand}" Height="25">
-                                                <MenuItem.Icon>
-                                                    <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </TreeView.ContextMenu>
+            <GridSplitter Grid.Column="3" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="{StaticResource MediumBackgroundColorBrush}" />
 
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectedItemChanged">
-                                            <cmd:EventToCommand Command="{Binding Path=SelectedVisualizationChangedCommand}" PassEventArgsToCommand="True" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TreeView>
-                            </Grid>
+            <TabControl Grid.Column="4" Name="PropertiesTabControl" SelectedIndex="0" Margin="0,4,4,4" Background="{StaticResource DarkBackgroundColorBrush}" >
+                <TabItem Name="Properties" Header="Properties">
+                    <ContentPresenter Content="{Binding SelectedPropertiesObject}" >
+                        <ContentPresenter.Resources>
+                            <DataTemplate DataType="{x:Type cvo:VisualizationObject}">
+                                <xctk:PropertyGrid SelectedObject="{Binding Configuration}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type cvp:VisualizationPanel}">
+                                <xctk:PropertyGrid SelectedObject="{Binding Configuration}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type datasets:DatasetViewModel}">
+                                <xctk:PropertyGrid SelectedObject="{Binding .}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type datasets:SessionViewModel}">
+                                <xctk:PropertyGrid SelectedObject="{Binding .}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type datasets:PartitionViewModel}">
+                                <xctk:PropertyGrid SelectedObject="{Binding .}" />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type datasets:StreamTreeNode}">
+                                <xctk:PropertyGrid SelectedObject="{Binding .}" />
+                            </DataTemplate>
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
+                </TabItem>
+            </TabControl>
 
-                            <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="{StaticResource MediumBackgroundColorBrush}"/>
-                            
-                            <Grid Grid.Row="2">
-                                <ContentPresenter Content="{Binding SelectedItem, ElementName=VisualizationTreeView}">
-                                    <ContentPresenter.Resources>
-                                        <DataTemplate DataType="{x:Type cvo:VisualizationObject}">
-                                            <xctk:PropertyGrid SelectedObject="{Binding Configuration}" />
-                                        </DataTemplate>
-
-                                        <DataTemplate DataType="{x:Type cvp:VisualizationPanel}">
-                                            <xctk:PropertyGrid SelectedObject="{Binding Configuration}" />
-                                        </DataTemplate>
-                                    </ContentPresenter.Resources>
-                                </ContentPresenter>
-                            </Grid>
-                        </Grid>
-                    </TabItem>
-                    
-                    <TabItem Name="Datasets" Header="Datasets">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            
-                            <Grid Grid.Row="0">
-                                <TreeView Name="DatasetsTreeView" ItemsSource="{Binding DatasetViewModels}" ItemTemplateSelector="{StaticResource ResourceKey=PsiStudioTemplateSelector}">
-                                    <TreeView.Resources>
-                                        <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding SessionViewModels}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="Icons\data_x4.png"/>
-                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
-                                                    <TextBlock.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem Name="CreateSession" Header="Create Session" Command="{Binding CreateSessionCommand}" Height="25">
-                                                                <MenuItem.Icon>
-                                                                    <Image Source="Icons\create-session_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                                </MenuItem.Icon>
-                                                            </MenuItem>
-                                                            <MenuItem Name="CreateSessionFromExistingStore" Header="Create Session from Existing Store ..." Command="{Binding CreateSessionFromExistingStoreCommand}" Height="25"/>
-                                                            <Separator />
-                                                            <MenuItem Name="CloseDataset" Header="Close Dataset" Command="{Binding CloseDatasetCommand}" IsEnabled="False" />-->
-                                                        </ContextMenu>
-                                                    </TextBlock.ContextMenu>
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </HierarchicalDataTemplate>
-                                        
-                                        <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding PartitionViewModels}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="Icons\session_x4.png"/>
-                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
-                                                    <TextBlock.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem Name="AddPartition" Header="Add Partition ..." Click="AddPartition_Click" Height="25">
-                                                                <MenuItem.Icon>
-                                                                    <Image Source="Icons\add-partition_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                                </MenuItem.Icon>
-                                                            </MenuItem>
-                                                            <Separator />
-                                                            <MenuItem Name="RemoveSession" Header="Remove Session" Command="{Binding RemoveSessionCommand}" Height="25">
-                                                                <MenuItem.Icon>
-                                                                    <Image Source="Icons\remove-session_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                                </MenuItem.Icon>
-                                                            </MenuItem>
-                                                            <MenuItem Name="VisualizeSession" Header="Visualize Session" Click="VisualizeSession_Click" Height="25"/>
-                                                        </ContextMenu>
-                                                    </TextBlock.ContextMenu>
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </HierarchicalDataTemplate>
-                                        
-                                        <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding StreamTreeRoot.Children}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="Icons\partition_x4.png"/>
-                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
-                                                    <TextBlock.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem Name="RemovePartition" Header="Remove Partition" Command="{Binding RemovePartitionCommand}" Height="25">
-                                                                <MenuItem.Icon>
-                                                                    <Image Source="Icons\remove-partition_x4.png" Height="16"  Margin="4,0,0,0"/>
-                                                                </MenuItem.Icon>
-                                                            </MenuItem>
-                                                            <MenuItem Name="VisualizePartition" Header="Visualize Partition" Click="VisualizePartition_Click" Height="25"/>
-                                                        </ContextMenu>
-                                                    </TextBlock.ContextMenu>
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </HierarchicalDataTemplate>
-                                        
-                                        <HierarchicalDataTemplate x:Key="StreamTreeNodeTemplate" ItemsSource="{Binding Children}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="Icons\stream_x4.png" Visibility="{Binding ., Converter={StaticResource StreamTreeNodeToVisibilityConverter}}"/>
-                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
-                                                    <TextBlock.ContextMenu>
-                                                        <ContextMenu ItemsSource="{Binding Path=., Converter={StaticResource StreamTreeNodeToCommandsConverter}}" Visibility="{Binding ., Converter={StaticResource StreamTreeNodeToVisibilityConverter}}">
-                                                            <ContextMenu.ItemContainerStyle>
-                                                                <Style TargetType="MenuItem">
-                                                                    <Setter Property="Height" Value="25"/>
-                                                                    <Setter Property="HeaderTemplate">
-                                                                        <Setter.Value>
-                                                                            <DataTemplate>
-                                                                                <StackPanel Orientation="Horizontal">
-                                                                                    <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"></TextBlock>
-                                                                                </StackPanel>
-                                                                            </DataTemplate>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                    <Setter Property="Command" Value="{Binding .}" />
-                                                                    <!--The stream metadata is passed as the command parameter... and this can be obtained from the DataContext of one of the parents-->
-                                                                    <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext}" />
-                                                                </Style>
-                                                            </ContextMenu.ItemContainerStyle>
-                                                        </ContextMenu>
-                                                    </TextBlock.ContextMenu>
-                                                </TextBlock>
-                                            </StackPanel>
-                                        </HierarchicalDataTemplate>
-                                    </TreeView.Resources>
-                                </TreeView>
-                            </Grid>
-
-                            <GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="{StaticResource MediumBackgroundColorBrush}"/>
-                            
-                            <Grid Grid.Row="2">
-                                <xctk:PropertyGrid SelectedObject="{Binding SelectedItem, ElementName=DatasetsTreeView}" />
-                            </Grid>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-            </Grid>
         </Grid>
-    </DockPanel>
+
+    </Grid>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">

@@ -17,10 +17,10 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of image requested</param>
         /// <param name="height">Height of image requested</param>
         /// <param name="pixelFormat">Pixel format for requested image</param>
-        /// <returns>Returns an image frmo the pool</returns>
+        /// <returns>Returns an image from the pool</returns>
         public static Shared<Image> GetOrCreate(int width, int height, PixelFormat pixelFormat)
         {
-            return KeyedSharedPool<Image, ValueTuple<long, PixelFormat>>.GetOrCreate(ValueTuple.Create((long)(width * height), pixelFormat), () => Image.Create(width, height, pixelFormat));
+            return KeyedSharedPool<Image, (int, int, PixelFormat)>.GetOrCreate((width, height, pixelFormat), () => Image.Create(width, height, pixelFormat));
         }
 
         /// <summary>

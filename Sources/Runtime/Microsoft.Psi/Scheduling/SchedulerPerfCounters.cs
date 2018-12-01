@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Scheduling
     /// <summary>
     /// The counters we support
     /// </summary>
-    internal enum SchedulerCounters
+    public enum SchedulerCounters
     {
         /// <summary>
         /// The rate of workitems that had to be promoted to the global queue

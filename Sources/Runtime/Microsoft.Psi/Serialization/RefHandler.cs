@@ -17,14 +17,6 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type of objects the handler understands</typeparam>
     internal sealed class RefHandler<T> : SerializationHandler<T>
     {
-        // the object prefix flags
-        private const uint RefPrefixNull = 0x00000000;
-        private const uint RefPrefixNew = 0x80000000;
-        private const uint RefPrefixExisting = 0x40000000;
-        private const uint RefPrefixTyped = 0xC0000000;
-        private const uint RefPrefixMask = 0xC0000000;
-        private const uint RefPrefixValueMask = 0x3FFFFFFF;
-
         // the inner serializer and serializerEx
         private readonly ISerializer<T> innerSerializer;
 

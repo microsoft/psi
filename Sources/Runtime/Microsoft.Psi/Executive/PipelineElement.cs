@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Executive
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Scheduling;
@@ -13,7 +14,8 @@ namespace Microsoft.Psi.Executive
     /// </summary>
     internal class PipelineElement
     {
-        private readonly bool isFiniteSource;
+        private static readonly ConcurrentDictionary<object, SynchronizationLock> Locks = new ConcurrentDictionary<object, SynchronizationLock>();
+
         private object stateObject;
         private Dictionary<string, IEmitter> outputs = new Dictionary<string, IEmitter>();
         private Dictionary<string, IReceiver> inputs = new Dictionary<string, IReceiver>();
@@ -31,9 +33,10 @@ namespace Microsoft.Psi.Executive
         {
             this.name = name;
             this.stateObject = stateObject;
-            this.isFiniteSource = stateObject is IFiniteSourceComponent;
-            this.IsSource = this.isFiniteSource || this.stateObject is ISourceComponent;
-            this.syncContext = new SynchronizationLock(this.stateObject);
+            this.IsFiniteSource = stateObject is IFiniteSourceComponent;
+            this.IsSource = this.IsFiniteSource || stateObject is ISourceComponent;
+
+            this.syncContext = Locks.GetOrAdd(stateObject, state => new SynchronizationLock(state));
         }
 
         private enum State
@@ -67,6 +70,12 @@ namespace Microsoft.Psi.Executive
         /// </summary>
         internal bool IsSource { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the entity is a finite source component
+        /// Generally this means it produces messages on its own thread rather than in response to other messages and it will complete.
+        /// </summary>
+        internal bool IsFiniteSource { get; private set; }
+
         internal bool IsInitialized { get; private set; }
 
         internal object StateObject => this.stateObject;
@@ -77,11 +86,11 @@ namespace Microsoft.Psi.Executive
 
         internal IEnumerable<string> InputNames => this.inputs.Keys;
 
-        internal Action OnStartHandler { get; set; }
+        internal List<Action> OnStartHandlers { get; set; }
 
-        internal Action OnStopHandler { get; set; }
+        internal List<Action> OnStopHandlers { get; set; }
 
-        internal Action OnFinalHandler { get; set; }
+        internal List<Action> OnFinalHandlers { get; set; }
 
         /// <summary>
         /// Delayed initialization of the state object. Note that we don't have a Scheduler yet.
@@ -112,6 +121,7 @@ namespace Microsoft.Psi.Executive
                 ((IDisposable)this.stateObject).Dispose();
             }
 
+            Locks.TryRemove(this.stateObject, out var _);
             this.stateObject = null;
         }
 
@@ -128,19 +138,19 @@ namespace Microsoft.Psi.Executive
 
             this.state = State.Active;
 
-            if (this.isFiniteSource)
+            if (this.IsFiniteSource)
             {
                 ((IFiniteSourceComponent)this.stateObject).Initialize(this.OnCompleted);
             }
 
             // tell the component it's being activated
-            if (this.OnStartHandler != null)
+            if (this.OnStartHandlers != null)
             {
-                // start through the Scheduler to ensure exclusive execution of Start with respect to any receivers.
-                this.pipeline.Scheduler.Schedule(
-                    this.syncContext,
-                    this.OnStartHandler,
-                    replayContext.Start);
+                foreach (var handler in this.OnStartHandlers)
+                {
+                    // start through the Scheduler to ensure exclusive execution of Start with respect to any receivers.
+                    this.pipeline.Scheduler.Schedule(this.syncContext, handler, replayContext.Start);
+                }
             }
         }
 
@@ -153,11 +163,14 @@ namespace Microsoft.Psi.Executive
             {
                 this.state = State.Deactivated;
 
-                if (this.OnStopHandler != null)
+                if (this.OnStopHandlers != null)
                 {
-                    // tell the component it is being deactivated, let any exception bubble up
-                    // stop through the Scheduler to ensure exclusive execution of Stop with respect to any receivers.
-                    this.pipeline.Scheduler.Schedule(this.syncContext, this.OnStopHandler, this.pipeline.GetCurrentTime());
+                    foreach (var handler in this.OnStopHandlers)
+                    {
+                        // tell the component it is being deactivated, let any exception bubble up
+                        // stop through the Scheduler to ensure exclusive execution of Stop with respect to any receivers.
+                        this.pipeline.Scheduler.Schedule(this.syncContext, handler, this.pipeline.GetCurrentTime());
+                    }
                 }
             }
             else
@@ -174,11 +187,14 @@ namespace Microsoft.Psi.Executive
         {
             this.state = State.Stopped;
 
-            if (this.OnFinalHandler != null)
+            if (this.OnFinalHandlers != null)
             {
-                // tell the component it is being deactivated, let any exception bubble up
-                // stop through the Scheduler to ensure exclusive execution of Stop with respect to any receivers.
-                this.pipeline.Scheduler.Schedule(this.syncContext, this.OnFinalHandler, this.pipeline.GetCurrentTime());
+                foreach (var handler in this.OnFinalHandlers)
+                {
+                    // tell the component it is being deactivated, let any exception bubble up
+                    // stop through the Scheduler to ensure exclusive execution of Stop with respect to any receivers.
+                    this.pipeline.Scheduler.Schedule(this.syncContext, handler, this.pipeline.GetCurrentTime());
+                }
             }
         }
 

@@ -7,7 +7,11 @@ namespace Microsoft.Psi.Visualization.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using Microsoft.Psi.PsiStudio;
+    using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Navigation;
+    using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
     /// Represents an element that scrolls time based on a timeline.
@@ -35,11 +39,28 @@ namespace Microsoft.Psi.Visualization.Controls
         /// <inheritdoc />
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            // Only move the cursor in playback mode - this avoids having the a battle between the live cursor and the mouse
-            if (this.Navigator.NavigationMode == NavigationMode.Playback)
+            // Only move the cursor if in playback mode and not currently playing - this avoids having the a battle between the live cursor and the mouse
+            if (this.Navigator.NavigationMode == NavigationMode.Playback && !this.Navigator.IsPlaying)
             {
                 DateTime time = this.GetTimeAtMousePointer(e);
-                this.Navigator.Cursor = time;
+                DateTime? snappedTime = null;
+
+                // If we're currently to snapping the cursor to some Visualization Object's messages, then
+                // find the timestamp of the message that's temporally closest to the mouse pointer.
+                PlotVisualizationObject snapToVisualizationObject = PsiStudioContext.Instance.VisualizationContainer.SnapToVisualizationObject as PlotVisualizationObject;
+                if (snapToVisualizationObject != null)
+                {
+                    snappedTime = snapToVisualizationObject.GetTimeOfNearestMessage(time, snapToVisualizationObject.SummaryData?.Count ?? 0, (idx) => snapToVisualizationObject.SummaryData[idx].OriginatingTime);
+                }
+
+                if (snappedTime.HasValue)
+                {
+                    this.Navigator.Cursor = snappedTime.Value;
+                }
+                else
+                {
+                    this.Navigator.Cursor = time;
+                }
             }
 
             base.OnMouseMove(e);

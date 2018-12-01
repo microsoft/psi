@@ -13,6 +13,7 @@ namespace Microsoft.Psi.PsiStudio
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
     using GalaSoft.MvvmLight.CommandWpf;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Audio;
@@ -20,6 +21,7 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Kinect;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Serialization;
     using Microsoft.Psi.Speech;
     using Microsoft.Psi.Visualization.Adapters;
@@ -66,11 +68,27 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand playbackStartCommand;
         private RelayCommand playbackStopCommand;
 
-        private RelayCommand deleteVisualizationCommand;
         private RelayCommand<RoutedPropertyChangedEventArgs<object>> selectedVisualizationChangedCommand;
+        private RelayCommand<RoutedPropertyChangedEventArgs<object>> selectedDatasetChangedCommand;
+        private RelayCommand<string> treeSelectedCommand;
 
         private List<TypeKeyedActionCommand> typeVisualizerActions = new List<TypeKeyedActionCommand>();
+
+        /// <summary>
+        /// The currently selected node in the Datasets tree view
+        /// </summary>
+        private object selectedDatasetObject;
+
+        /// <summary>
+        /// The currently selected node in the Visualizations tree view
+        /// </summary>
         private object selectedVisualization;
+
+        /// <summary>
+        /// The object whose properties are currently being displayed int he Properties view.
+        /// This is always either the selectedDatasetObject or the selectedVisualization
+        /// </summary>
+        private object selectedPropertiesObject;
 
         static PsiStudioContext()
         {
@@ -562,38 +580,6 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the delete visualization command.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelayCommand DeleteVisualizationCommand
-        {
-            get
-            {
-                if (this.deleteVisualizationCommand == null)
-                {
-                    this.deleteVisualizationCommand = new RelayCommand(
-                        () =>
-                        {
-                            if (this.selectedVisualization is VisualizationPanel)
-                            {
-                                var visualizationPanel = this.selectedVisualization as VisualizationPanel;
-                                visualizationPanel.Container.RemovePanel(visualizationPanel);
-                            }
-                            else if (this.selectedVisualization is VisualizationObject)
-                            {
-                                var visualizationObject = this.selectedVisualization as VisualizationObject;
-                                visualizationObject.Panel.RemoveVisualizationObject(visualizationObject);
-                            }
-                        },
-                        () => this.selectedVisualization is VisualizationPanel || this.selectedVisualization is VisualizationObject);
-                }
-
-                return this.deleteVisualizationCommand;
-            }
-        }
-
-        /// <summary>
         /// Gets the selected visualzation changed command.
         /// </summary>
         [Browsable(false)]
@@ -619,12 +605,77 @@ namespace Microsoft.Psi.PsiStudio
                             }
 
                             this.selectedVisualization = e.NewValue;
+                            this.SelectedPropertiesObject = e.NewValue;
                             e.Handled = true;
                         });
                 }
 
                 return this.selectedVisualizationChangedCommand;
             }
+        }
+
+        /// <summary>
+        /// Gets the selected dataset changed command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<RoutedPropertyChangedEventArgs<object>> SelectedDatasetChangedCommand
+        {
+            get
+            {
+                if (this.selectedDatasetChangedCommand == null)
+                {
+                    this.selectedDatasetChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
+                        e =>
+                        {
+                            this.selectedDatasetObject = e.NewValue;
+                            this.SelectedPropertiesObject = e.NewValue;
+                            e.Handled = true;
+                        });
+                }
+
+                return this.selectedDatasetChangedCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the command that executes after the user clicks on either the datasets or the visualizations tree views
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<string> TreeSelectedCommand
+        {
+            get
+            {
+                if (this.treeSelectedCommand == null)
+                {
+                    this.treeSelectedCommand = new RelayCommand<string>(
+                        e =>
+                        {
+                            // Update the properties view to show the properties
+                            // of the selected item in the appropriate tree view
+                            if (e == "VisualizationTreeView")
+                            {
+                                this.SelectedPropertiesObject = this.selectedVisualization;
+                            }
+                            else
+                            {
+                                this.SelectedPropertiesObject = this.selectedDatasetObject;
+                            }
+                        });
+                }
+
+                return this.treeSelectedCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the current object shown in the properties window
+        /// </summary>
+        public object SelectedPropertiesObject
+        {
+            get => this.selectedPropertiesObject;
+            set => this.Set(nameof(this.SelectedPropertiesObject), ref this.selectedPropertiesObject, value);
         }
 
         /// <summary>
@@ -756,53 +807,26 @@ namespace Microsoft.Psi.PsiStudio
         internal async Task OpenDatasetAsync(string filename)
         {
             // Window that will be used to indicate that an open operation is in progress.
-            // Progress notification and cancellation are not yet supported.
-            var statusWindow = new LoadingDatasetWindow(filename, App.Current.MainWindow);
+            // Progress notification and cancellation are not yet fully supported.
+            var statusWindow = new LoadingDatasetWindow(App.Current.MainWindow, filename);
 
-            // Wrap the open dataset operation in a task that will close the modal status
-            // window once the open dataset operation has completed.
-            async Task openDatasetTask()
+            // progress reporter for the load dataset task
+            var progress = new Progress<(string s, double p)>(t =>
             {
-                try
+                statusWindow.Status = t.s;
+                if (t.p == 1.0)
                 {
-                    var fileInfo = new FileInfo(filename);
-                    if (fileInfo.Extension == ".psi")
-                    {
-                        var name = fileInfo.Name.Substring(0, Path.GetFileNameWithoutExtension(filename).LastIndexOf('.'));
-                        this.DatasetViewModel = await DatasetViewModel.CreateFromExistingStoreAsync(name, fileInfo.DirectoryName);
-                    }
-                    else
-                    {
-                        this.DatasetViewModel = await DatasetViewModel.LoadAsync(filename);
-                    }
-
-                    this.DatasetViewModels.Clear();
-                    this.DatasetViewModels.Add(this.DatasetViewModel);
-
-                    // We may have previously been in Live mode, so explicitly switch to Playback mode
-                    this.VisualizationContainer.Navigator.NavigationMode = NavigationMode.Playback;
-
-                    // set the data range to the dataset
-                    this.VisualizationContainer.Navigator.DataRange.SetRange(this.DatasetViewModel.OriginatingTimeInterval);
-
-                    // zoom into the current session
-                    var timeInterval = this.DatasetViewModel.CurrentSessionViewModel?.OriginatingTimeInterval;
-                    timeInterval = timeInterval ?? new TimeInterval(DateTime.MinValue, DateTime.MaxValue);
-                    this.VisualizationContainer.ZoomToRange(timeInterval);
-                }
-                finally
-                {
-                    // closes the modal status window
+                    // close the status window when the task reports completion
                     statusWindow.Close();
                 }
-            }
+            });
 
-            // start the open dataset task
-            var task = openDatasetTask();
+            // start the load dataset task
+            var loadDatasetTask = this.LoadDatasetOrStoreAsync(filename, progress);
 
             try
             {
-                // show the modal status window, which will be closed once the open dataset operation completes
+                // show the modal status window, which will be closed once the load dataset operation completes
                 statusWindow.ShowDialog();
             }
             catch (InvalidOperationException)
@@ -814,7 +838,21 @@ namespace Microsoft.Psi.PsiStudio
             try
             {
                 // await completion of the open dataset task
-                await task;
+                await loadDatasetTask;
+
+                this.DatasetViewModels.Clear();
+                this.DatasetViewModels.Add(this.DatasetViewModel);
+
+                // We may have previously been in Live mode, so explicitly switch to Playback mode
+                this.VisualizationContainer.Navigator.NavigationMode = NavigationMode.Playback;
+
+                // set the data range to the dataset
+                this.VisualizationContainer.Navigator.DataRange.SetRange(this.DatasetViewModel.OriginatingTimeInterval);
+
+                // zoom into the current session
+                var timeInterval = this.DatasetViewModel.CurrentSessionViewModel?.OriginatingTimeInterval;
+                timeInterval = timeInterval ?? new TimeInterval(DateTime.MinValue, DateTime.MaxValue);
+                this.VisualizationContainer.ZoomToRange(timeInterval);
 
                 // show the new dataset UI
                 this.TabControlIndex = (int)TabControlInicies.Datasets;
@@ -844,59 +882,100 @@ namespace Microsoft.Psi.PsiStudio
                     // Get the list of commands
                     result.AddRange(this.typeVisualizerActions.Where(a => a.TypeKey.AssemblyQualifiedName == streamType.AssemblyQualifiedName));
 
-                    // generate generic Plot Latency
-                    var genericPlotLatency = typeof(PsiStudioContext).GetMethod("PlotLatency", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
-                    var plotLatencyAction = new Action<IStreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, false }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { "Plot Latency", plotLatencyAction }) as TypeKeyedActionCommand);
+                    // generate generic Visulize Latency
+                    var genericPlotLatency = typeof(PsiStudioContext).GetMethod(nameof(this.VisualizeLatency), BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
+                    var visualizeLatencyAction = new Action<IStreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, false }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeLatency, visualizeLatencyAction }) as TypeKeyedActionCommand);
 
-                    // generate generic View Messages
-                    var genericPlotMessages = typeof(PsiStudioContext).GetMethod("PlotMessages", BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
-                    var plotMessagesAction = new Action<IStreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { "Visualize Messages", plotMessagesAction }) as TypeKeyedActionCommand);
+                    // generate generic Visulize Latency in New Panel
+                    var visualizeLatencyInNewPanelAction = new Action<IStreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, true }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeLatencyInNewPanel, visualizeLatencyInNewPanelAction }) as TypeKeyedActionCommand);
+
+                    // generate generic Visualize Messages
+                    var genericPlotMessages = typeof(PsiStudioContext).GetMethod(nameof(this.VisualizeMessages), BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
+                    var visualizeMessagesAction = new Action<IStreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s, false }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeMessages, visualizeMessagesAction }) as TypeKeyedActionCommand);
+
+                    // generate generic Visualize Messages in New Panel
+                    var visualizeMessagesInNewPanelAction = new Action<IStreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s, true }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeMessagesInNewPanel, visualizeMessagesInNewPanelAction }) as TypeKeyedActionCommand);
 
                     var zoomToStreamExtents = typeof(PsiStudioContext).GetMethod("ZoomToStreamExtents", BindingFlags.NonPublic | BindingFlags.Instance);
                     var zoomToStreamExtentsAction = new Action<IStreamTreeNode>(s => zoomToStreamExtents.Invoke(this, new object[] { s }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { "Zoom to Stream Extents", zoomToStreamExtentsAction }) as TypeKeyedActionCommand);
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.ZoomToStreamExtents, zoomToStreamExtentsAction }) as TypeKeyedActionCommand);
                 }
             }
 
             return result;
         }
 
+        private async Task LoadDatasetOrStoreAsync(string filename, IProgress<(string, double)> progress = null)
+        {
+            try
+            {
+                var fileInfo = new FileInfo(filename);
+                if (fileInfo.Extension == ".psi")
+                {
+                    var name = fileInfo.Name.Substring(0, Path.GetFileNameWithoutExtension(filename).LastIndexOf('.'));
+
+                    progress?.Report(("Opening store...", 0));
+                    if (!Store.IsValid(name, fileInfo.DirectoryName))
+                    {
+                        progress?.Report(("Repairing store...", 0.5));
+                        await Task.Run(() => Store.Repair(name, fileInfo.DirectoryName));
+                    }
+
+                    progress?.Report(("Loading store...", 0.5));
+                    this.DatasetViewModel = await DatasetViewModel.CreateFromExistingStoreAsync(name, fileInfo.DirectoryName);
+                }
+                else
+                {
+                    progress?.Report(("Loading dataset...", 0.5));
+                    this.DatasetViewModel = await DatasetViewModel.LoadAsync(filename);
+                }
+            }
+            finally
+            {
+                // report completion
+                progress?.Report(("Done", 1.0));
+            }
+        }
+
         private void InitVisualizeStreamCommands()
         {
             KnownSerializers.Default.Register<MathNet.Numerics.LinearAlgebra.Storage.DenseColumnMajorMatrixStorage<double>>(null);
 
-            this.AddVisualizeStreamCommand<AnnotatedEvent>("Visualize", (s) => this.ShowAnnotations(s, false));
-            this.AddVisualizeStreamCommand<double>("Plot", (s) => this.PlotDouble(s, false));
-            this.AddVisualizeStreamCommand<double>("Plot in New Panel", (s) => this.PlotDouble(s, true));
-            this.AddVisualizeStreamCommand<float>("Plot", (s) => this.PlotFloat(s, false));
-            this.AddVisualizeStreamCommand<float>("Plot in New Panel", (s) => this.PlotFloat(s, true));
-            this.AddVisualizeStreamCommand<TimeSpan>("Plot (as ms)", (s) => this.PlotTimeSpan(s, false));
-            this.AddVisualizeStreamCommand<TimeSpan>("Plot (as ms) in New Panel", (s) => this.PlotTimeSpan(s, true));
-            this.AddVisualizeStreamCommand<int>("Plot", (s) => this.PlotInt(s, false));
-            this.AddVisualizeStreamCommand<int>("Plot in New Panel", (s) => this.PlotInt(s, true));
-            this.AddVisualizeStreamCommand<bool>("Plot", (s) => this.PlotBool(s, false));
-            this.AddVisualizeStreamCommand<bool>("Plot in New Panel", (s) => this.PlotBool(s, true));
-            this.AddVisualizeStreamCommand<Shared<Image>>("Visualize", (s) => this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(s, true));
-            this.AddVisualizeStreamCommand<Shared<EncodedImage>>("Visualize", (s) => this.Show2D<EncodedImageVisualizationObject, Shared<EncodedImage>, ImageVisualizationObjectBaseConfiguration>(s, true));
-            this.AddVisualizeStreamCommand<IStreamingSpeechRecognitionResult>("Visualize", (s) => this.Show<SpeechRecognitionVisualizationObject, IStreamingSpeechRecognitionResult, SpeechRecognitionVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<KinectBody>>("Visualize", (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<CoordinateSystem>>("Visualize ", (s) => this.Show3D<ScatterCoordinateSystemsVisualizationObject, List<CoordinateSystem>, ScatterCoordinateSystemsVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<CoordinateSystem>>("Visualize as Planar Direction", (s) => this.Show3D<ScatterPlanarDirectionVisualizationObject, List<CoordinateSystem>, ScatterPlanarDirectionVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<CoordinateSystem>("Visualize", (s) => this.Show3D<ScatterCoordinateSystemsVisualizationObject, List<CoordinateSystem>, ScatterCoordinateSystemsVisualizationObjectConfiguration>(s, false, typeof(CoordinateSystemAdapter)));
-            this.AddVisualizeStreamCommand<Point[]>("Visualize", (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(PointArrayToScatterPlotAdapter)));
-            this.AddVisualizeStreamCommand<List<Tuple<Point, string>>>("Visualize", (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<Point2D?>("Visualize", (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(NullablePoint2DToScatterPlotAdapter)));
-            this.AddVisualizeStreamCommand<Point3D?>("Visualize", (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(NullablePoint3DAdapter)));
-            this.AddVisualizeStreamCommand<List<Point3D>>("Visualize", (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(ListPoint3DAdapter)));
-            this.AddVisualizeStreamCommand<byte[]>("Visualize as 3D Depth", this.ShowDepth3D);
-            this.AddVisualizeStreamCommand<byte[]>("Visualize as 2D Depth", this.ShowDepth2D);
-            this.AddVisualizeStreamCommand<AudioBuffer>("Visualize", this.PlotAudio);
-            this.AddVisualizeStreamCommand<List<Tuple<System.Drawing.Rectangle, string>>>("Visualize", (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<System.Drawing.Rectangle>>("Visualize", (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false, typeof(ListRectangleAdapter)));
-            this.AddVisualizeStreamCommand<List<KinectBody>>("Visualize", (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>>("Visualize", (s) => this.Show3D<ScatterRect3DVisualizationObject, List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>, ScatterRect3DVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<AnnotatedEvent>(ContextMenuName.Visualize, (s) => this.ShowAnnotations(s, false));
+            this.AddVisualizeStreamCommand<double>(ContextMenuName.Plot, (s) => this.PlotDouble(s, false));
+            this.AddVisualizeStreamCommand<double>(ContextMenuName.PlotInNewPanel, (s) => this.PlotDouble(s, true));
+            this.AddVisualizeStreamCommand<float>(ContextMenuName.Plot, (s) => this.PlotFloat(s, false));
+            this.AddVisualizeStreamCommand<float>(ContextMenuName.PlotInNewPanel, (s) => this.PlotFloat(s, true));
+            this.AddVisualizeStreamCommand<TimeSpan>(ContextMenuName.PlotAsMilliseconds, (s) => this.PlotTimeSpan(s, false));
+            this.AddVisualizeStreamCommand<TimeSpan>(ContextMenuName.PlotAsMillisecondsInNewPanel, (s) => this.PlotTimeSpan(s, true));
+            this.AddVisualizeStreamCommand<int>(ContextMenuName.Plot, (s) => this.PlotInt(s, false));
+            this.AddVisualizeStreamCommand<int>(ContextMenuName.PlotInNewPanel, (s) => this.PlotInt(s, true));
+            this.AddVisualizeStreamCommand<bool>(ContextMenuName.Plot, (s) => this.PlotBool(s, false));
+            this.AddVisualizeStreamCommand<bool>(ContextMenuName.PlotInNewPanel, (s) => this.PlotBool(s, true));
+            this.AddVisualizeStreamCommand<Shared<Image>>(ContextMenuName.Visualize, (s) => this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(s, true));
+            this.AddVisualizeStreamCommand<Shared<EncodedImage>>(ContextMenuName.Visualize, (s) => this.Show2D<EncodedImageVisualizationObject, Shared<EncodedImage>, ImageVisualizationObjectBaseConfiguration>(s, true));
+            this.AddVisualizeStreamCommand<IStreamingSpeechRecognitionResult>(ContextMenuName.Visualize, (s) => this.Show<SpeechRecognitionVisualizationObject, IStreamingSpeechRecognitionResult, SpeechRecognitionVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<List<KinectBody>>(ContextMenuName.Visualize, (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<List<CoordinateSystem>>(ContextMenuName.Visualize, (s) => this.Show3D<ScatterCoordinateSystemsVisualizationObject, List<CoordinateSystem>, ScatterCoordinateSystemsVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<List<CoordinateSystem>>(ContextMenuName.VisualizeAsPlanarDirection, (s) => this.Show3D<ScatterPlanarDirectionVisualizationObject, List<CoordinateSystem>, ScatterPlanarDirectionVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<CoordinateSystem>(ContextMenuName.Visualize, (s) => this.Show3D<ScatterCoordinateSystemsVisualizationObject, List<CoordinateSystem>, ScatterCoordinateSystemsVisualizationObjectConfiguration>(s, false, typeof(CoordinateSystemAdapter)));
+            this.AddVisualizeStreamCommand<Point[]>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(PointArrayToScatterPlotAdapter)));
+            this.AddVisualizeStreamCommand<List<Tuple<Point, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<Point2D?>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(NullablePoint2DToScatterPlotAdapter)));
+            this.AddVisualizeStreamCommand<Point3D?>(ContextMenuName.Visualize, (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(NullablePoint3DAdapter)));
+            this.AddVisualizeStreamCommand<List<Point3D>>(ContextMenuName.Visualize, (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(ListPoint3DAdapter)));
+            this.AddVisualizeStreamCommand<byte[]>(ContextMenuName.VisualizeAs3DDepth, this.ShowDepth3D);
+            this.AddVisualizeStreamCommand<byte[]>(ContextMenuName.VisualizeAs2DDepth, this.ShowDepth2D);
+            this.AddVisualizeStreamCommand<AudioBuffer>(ContextMenuName.Visualize, this.PlotAudio);
+            this.AddVisualizeStreamCommand<List<Tuple<System.Drawing.Rectangle, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<List<System.Drawing.Rectangle>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false, typeof(ListRectangleAdapter)));
+            this.AddVisualizeStreamCommand<List<KinectBody>>(ContextMenuName.Visualize, (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>>(ContextMenuName.Visualize, (s) => this.Show3D<ScatterRect3DVisualizationObject, List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>, ScatterRect3DVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<Dictionary<string, List<(TimeInterval, string)>>>(ContextMenuName.Visualize, (s) => this.Show<TimeIntervalHistoryVisualizationObject, Dictionary<string, List<(TimeInterval, string)>>, TimeIntervalHistoryVisualizationObjectConfiguration>(s, false));
         }
 
         private void AddVisualizeStreamCommand<TKey>(string displayName, Action<IStreamTreeNode> action)
@@ -1026,20 +1105,20 @@ namespace Microsoft.Psi.PsiStudio
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, newPanel, typeof(IntAdapter), typeof(RangeSummarizer));
         }
 
-        private void PlotLatency<TData>(IStreamTreeNode streamTreeNode, bool newPanel = false)
+        private void VisualizeLatency<TData>(IStreamTreeNode streamTreeNode, bool newPanel = false)
         {
             var visObj = this.Show<TimelineVisualizationPanel, TimeIntervalVisualizationObject, Tuple<DateTime, DateTime>, TimeIntervalVisualizationObjectConfiguration>(
                 streamTreeNode, newPanel, typeof(LatencyAdapter<TData>), typeof(TimeIntervalSummarizer));
-            visObj.Configuration.Color = System.Drawing.Color.Red;
-            visObj.Configuration.Name = streamTreeNode.StreamName;
+            visObj.Configuration.Name = streamTreeNode.StreamName + " (Latency)";
         }
 
-        private void PlotMessages<TData>(IStreamTreeNode streamTreeNode)
+        private void VisualizeMessages<TData>(IStreamTreeNode streamTreeNode, bool newPanel = false)
         {
-            var visObj = this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, false, typeof(MessageAdapter<TData>), typeof(RangeSummarizer));
+            var visObj = this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(
+                streamTreeNode, newPanel, typeof(MessageAdapter<TData>), typeof(RangeSummarizer));
             visObj.Configuration.MarkerSize = 4;
             visObj.Configuration.MarkerStyle = Visualization.Common.MarkerStyle.Circle;
-            visObj.Configuration.Name = streamTreeNode.StreamName;
+            visObj.Configuration.Name = streamTreeNode.StreamName + " (Messages)";
         }
 
         private void PlotTimeSpan(IStreamTreeNode streamTreeNode, bool newPanel)

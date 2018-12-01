@@ -82,7 +82,7 @@ namespace MultiModalSpeechDetection
                 convertedAudio.PipeTo(speechDetector);
 
                 // Use the Kinect's face track to determine if the mouth is opened
-                var mouthOpenAsFloat = kinectFaceDetector.Faces.Select((List<Microsoft.Psi.Kinect.Face.KinectFace> list) =>
+                var mouthOpenAsFloat = kinectFaceDetector.Faces.Where(faces => faces.Count > 0).Select((List<Microsoft.Psi.Kinect.Face.KinectFace> list) =>
                 {
                     if (!detected)
                     {
@@ -113,7 +113,7 @@ namespace MultiModalSpeechDetection
 
                 // Create a stream of landmarks (points) from the face detector
                 var facePoints = new List<Tuple<System.Windows.Point, string>>();
-                var landmarks = kinectFaceDetector.Faces.Select((List<Microsoft.Psi.Kinect.Face.KinectFace> list) =>
+                var landmarks = kinectFaceDetector.Faces.Where(faces => faces.Count > 0).Select((List<Microsoft.Psi.Kinect.Face.KinectFace> list) =>
                 {
                     facePoints.Clear();
                     System.Windows.Point pt1 = new System.Windows.Point(
@@ -173,7 +173,12 @@ namespace MultiModalSpeechDetection
                 ptsVis.Configuration.Radius = 3;
                 ptsVis.Configuration.XMax = Width;
                 ptsVis.Configuration.YMax = Height;
-                pipeline.Run();
+
+                // Run the pipeline
+                pipeline.RunAsync();
+
+                Console.WriteLine("Press any key to finish recording");
+                Console.ReadKey();
             }
         }
     }

@@ -25,9 +25,9 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="parent">Parent pipeline.</param>
         /// <param name="name">Subpipeline name (inherits "Sub<Parent>" name if unspecified)</Parent>.</param>
-        /// <param name="globalPolicy">Delivery policy (inherits from parent if unspecified).</param>
-        public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy globalPolicy = null)
-            : base(name ?? $"Sub{parent.Name}", globalPolicy ?? parent.GlobalPolicy, parent.Scheduler)
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy (inherits from parent if unspecified).</param>
+        public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
+            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, parent.Scheduler)
         {
             parent.RegisterPipelineStartHandler(this, () => this.Start(parent));
             parent.RegisterPipelineStopHandler(this, this.Suspend);
@@ -35,8 +35,8 @@ namespace Microsoft.Psi
             {
                 this.parentStopping = true;
                 this.Stop(false);
+                this.Complete(true);
             });
-            parent.PipelineCompletionEvent += (_, e) => this.Complete(true);
         }
 
         /// <summary>
@@ -44,11 +44,11 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="parent">Parent pipeline.</param>
         /// <param name="name">Subpipeline name.</param>
-        /// <param name="globalPolicy">Global delivery policy.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <returns>Created subpipeline.</returns>
-        public static Subpipeline Create(Pipeline parent, string name = null, DeliveryPolicy globalPolicy = null)
+        public static Subpipeline Create(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
         {
-            return new Subpipeline(parent, name, globalPolicy);
+            return new Subpipeline(parent, name, deliveryPolicy);
         }
 
         /// <summary>

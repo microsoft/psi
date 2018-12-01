@@ -81,12 +81,17 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 }
             }
 
-            for (int i = (coordinateSystems == null) ? 0 : coordinateSystems.Count; i < this.axes.Count; i++)
+            int removeIndex = (coordinateSystems == null) ? 0 : coordinateSystems.Count;
+            int removeCount = 0;
+            for (int i = removeIndex; i < this.axes.Count; i++)
             {
-                this.axes[i].Item1.Visible = false;
-                this.axes[i].Item2.Visible = false;
-                this.axes[i].Item3.Visible = false;
+                this.Children.Remove(this.axes[i].Item1);
+                this.Children.Remove(this.axes[i].Item2);
+                this.Children.Remove(this.axes[i].Item3);
+                removeCount++;
             }
+
+            this.axes.RemoveRange(removeIndex, removeCount);
         }
     }
 }

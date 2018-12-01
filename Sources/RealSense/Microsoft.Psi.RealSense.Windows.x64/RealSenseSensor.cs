@@ -115,8 +115,11 @@ namespace Microsoft.Psi.RealSense.Windows
         /// </summary>
         public void Dispose()
         {
-            this.device?.Dispose();
-            this.device = null;
+            if (this.device != null)
+            {
+                this.device.Dispose();
+                this.device = null;
+            }
         }
     }
 }

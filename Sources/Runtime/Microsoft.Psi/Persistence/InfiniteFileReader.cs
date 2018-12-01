@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Persistence
     using System.IO;
     using System.IO.MemoryMappedFiles;
     using System.Threading;
+    using System.Threading.Tasks;
 
     internal unsafe sealed class InfiniteFileReader : IDisposable
     {
@@ -252,7 +253,14 @@ namespace Microsoft.Psi.Persistence
             if (this.mappedFile != null)
             {
                 this.view.SafeMemoryMappedViewHandle.ReleasePointer();
-                this.view.Dispose();
+
+                // Calling `view.Dispose()` flushes the underlying MemoryMappedView, in turn making
+                // blocking system calls and with retry logic and `Thread.Sleep()`s.
+                // To avoid taking this hit on our thread here (which blocks writing to the infinite file for
+                // human-noticeable time when crossing extents), we queue this work to the thread pool.
+                // See: https://referencesource.microsoft.com/#System.Core/System/IO/MemoryMappedFiles/MemoryMappedView.cs,176
+                var temp = this.view;
+                Task.Run(() => temp.Dispose());
                 this.view = null;
                 this.mappedFile.Dispose();
                 this.mappedFile = null;

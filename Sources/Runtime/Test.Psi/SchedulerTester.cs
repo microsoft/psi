@@ -18,7 +18,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void StartStopTest()
         {
-            var scheduler = new Scheduler(DeliveryPolicy.Unlimited, error => { throw new AggregateException(error); });
+            var scheduler = new Scheduler(error => { throw new AggregateException(error); });
             scheduler.Start(new Clock(), false);
             scheduler.PauseForQuiescence();
             scheduler.Stop();
@@ -102,8 +102,40 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 p.PipelineCompletionEvent += (o, e) => Console.WriteLine("Error handled");
-                Generators.Return(p, 1).Select(i => i / 0);
+                Generators.Return(p, 1).Select(i => i / 0); // shouldn't throw because of completion event handler
                 p.RunAsync();
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ErrorHandlingWithSubpipelineTest()
+        {
+            using (var p = Pipeline.Create("root"))
+            {
+                using (var s = Subpipeline.Create(p, "sub"))
+                {
+                    var caughtException = false;
+                    try
+                    {
+                        Generators.Return(p, 1).Select(i => i / 0);
+                        p.Run(enableExceptionHandling: true);
+                    }
+                    catch (AggregateException exception)
+                    {
+                        caughtException = true;
+                        if (exception.InnerException == null)
+                        {
+                            Assert.Fail("AggregateException contains no inner exception");
+                        }
+                        else
+                        {
+                            Assert.IsInstanceOfType(exception.InnerException, typeof(DivideByZeroException), "Unexpected inner exception type: {0}", exception.InnerException.GetType().ToString());
+                        }
+                    }
+
+                    Assert.IsTrue(caughtException);
+                }
             }
         }
 

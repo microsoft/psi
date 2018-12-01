@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.InitNew();
             var color = colorChoice[nextColorChoice % colorChoice.Length];
-            this.Configuration.LineColor = color;
+            this.Configuration.Color = color;
             this.Configuration.LineWidth = 1;
             this.Configuration.InterpolationStyle = InterpolationStyle.Direct;
             this.Configuration.MarkerColor = color;

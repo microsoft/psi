@@ -34,7 +34,6 @@ namespace Microsoft.Psi.Serialization
     /// and can only instantiate the correct deserializer if one of the following is true:
     /// - a serializer has been explicitly registered for the object type or contract using <see cref="Register{T, TSerializer}()"/>
     /// - a type has been explicitly registered with an explicit contract name <see cref="Register{T}(string)"/> or <see cref="Register{T, TSerializer}(string)"/>/>
-    /// - the assembly containing the object type has been registered using <see cref="RegisterAssembly(AssemblyName)"/>
     /// </remarks>
     public class KnownSerializers
     {
@@ -89,9 +88,6 @@ namespace Microsoft.Psi.Serialization
 
         // the custom serializers, such as ManagedBufferSerializer, which have been registered explicitly rather than with class annotations
         private Dictionary<Type, Type> serializers;
-
-        // user-provided assemblies from which we are allowed to instantiate types when deserializing an unknown type
-        private HashSet<AssemblyName> knownAssemblies;
 
         // used to find a type for a given schema (when creating a handler from a polymorphic field: id -> schema -> type)
         private ConcurrentDictionary<string, Type> knownTypes;
@@ -160,7 +156,6 @@ namespace Microsoft.Psi.Serialization
                 this.knownNames = new ConcurrentDictionary<Type, string>();
                 this.schemas = new ConcurrentDictionary<string, TypeSchema>();
                 this.schemasById = new ConcurrentDictionary<int, TypeSchema>();
-                this.knownAssemblies = new HashSet<AssemblyName>();
 
                 // register non-generic, custom serializers
                 this.Register<string, StringSerializer>();
@@ -174,7 +169,6 @@ namespace Microsoft.Psi.Serialization
                 // all other instances start off with the Default rules
                 this.templates = new Dictionary<Type, Type>(Default.templates);
                 this.serializers = new Dictionary<Type, Type>(Default.serializers);
-                this.knownAssemblies = new HashSet<AssemblyName>(Default.knownAssemblies);
                 this.knownTypes = new ConcurrentDictionary<string, Type>(Default.knownTypes);
                 this.knownNames = new ConcurrentDictionary<Type, string>(Default.knownNames);
                 this.schemas = new ConcurrentDictionary<string, TypeSchema>(Default.schemas);
@@ -195,7 +189,7 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Gets the set of schemas in use
         /// </summary>
-        public IEnumerable<TypeSchema> Schemas => this.schemas.Values;
+        public IDictionary<string, TypeSchema> Schemas => this.schemas;
 
         /// <summary>
         /// Registers type T with the specified contract name.
@@ -276,18 +270,6 @@ namespace Microsoft.Psi.Serialization
             serializableType = Type.GetType(serializableType.Namespace + "." + serializableType.Name); // FullName doesn't work here
             this.templates[serializableType] = genericSerializer;
         }
-
-        /// <summary>
-        /// Registers an assembly as a known source of types that the serialization system would otherwise not be able find or resolve.
-        /// Use this overload when one or more types from the assembly are required in a polymorphic context.
-        /// </summary>
-        /// <param name="assemblyName">The assembly to register</param>
-        /// <remarks>
-        /// When deserializing a polymorphic field, the field's object value might have a different type than the declared (static)
-        /// type of the field (e.g the field is declared as IEnumerable{int} and is assigned an int[]).
-        /// Registering an assembly allows the runtime to load and search it when trying to resolve a polymorphic type.
-        /// </remarks>
-        public void RegisterAssembly(AssemblyName assemblyName) => this.knownAssemblies.Add(assemblyName);
 
         /// <summary>
         /// Captures the schema provided by a persisted store.
@@ -385,10 +367,13 @@ namespace Microsoft.Psi.Serialization
         // called to find the correct handler for a polymorphic field
         internal SerializationHandler GetUntypedHandler(int handlerId, Type baseType)
         {
-            SerializationHandler handler;
-            if (this.handlersById.TryGetValue(handlerId, out handler))
+            // important: all code paths that could lead to the creation of a new handler need to lock.
+            lock (this.syncRoot)
             {
-                return handler;
+                if (this.handlersById.TryGetValue(handlerId, out SerializationHandler handler))
+                {
+                    return handler;
+                }
             }
 
             if (this.schemasById.TryGetValue(handlerId, out TypeSchema schema))
@@ -407,7 +392,7 @@ namespace Microsoft.Psi.Serialization
                     this.Register(type, schema.Name);
                 }
 
-                // this will create the handler is needed
+                // this will create the handler if needed
                 return this.GetUntypedHandler(type);
             }
 
@@ -589,23 +574,10 @@ namespace Microsoft.Psi.Serialization
 
         private Assembly AssemblyResolver(AssemblyName name)
         {
-            // exact match by full name, either registered or already loaded in the appdomain
-            if (this.knownAssemblies.Contains(name))
-            {
-                return Assembly.Load(name);
-            }
-
             var asm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().FullName == name.FullName);
             if (asm != null)
             {
                 return asm;
-            }
-
-            // find a partial match, by simple name without version or key
-            var candidate = this.knownAssemblies.FirstOrDefault(a => AssemblyName.ReferenceMatchesDefinition(a, name));
-            if (candidate != null)
-            {
-                return Assembly.Load(candidate);
             }
 
             asm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => AssemblyName.ReferenceMatchesDefinition(a.GetName(), name));

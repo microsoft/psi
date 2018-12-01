@@ -69,6 +69,11 @@ namespace Microsoft.Psi.Imaging
                 encodedImage.Resource.DecodeTo(image.Resource);
                 target = image.Resource.DeepClone();
             }
+
+            if (encodedImage != null)
+            {
+                encodedImage.Dispose();
+            }
         }
     }
 }

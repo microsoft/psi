@@ -71,17 +71,18 @@ namespace Microsoft.Psi.Calibration
         Point3D ToCameraSpace(Point2D pt, double depth, bool undistort);
 
         /// <summary>
-        /// Applies distortion to the point in pixel space
+        /// Applies distortion to the point in the camera's post-projective space
         /// </summary>
-        /// <param name="undistortedPt">Point in pixel space to distort</param>
-        /// <returns>Distorted point in pixel space</returns>
-        Point2D DistortPoint(Point2D undistortedPt);
+        /// <param name="undistortedPt">Point in camera's post-projective space to distort</param>
+        /// <param name="distortedPt">Returns the distorted point in camera's post-projective space</param>
+        /// <returns>true if 'distortedPt' contains valid result. False if it didn't converge</returns>
+        bool DistortPoint(Point2D undistortedPt, out Point2D distortedPt);
 
         /// <summary>
-        /// Applies undistortion to the point in pixel space
+        /// Applies undistortion to the point in camera's post-projective space
         /// </summary>
-        /// <param name="distortedPt">Distorted point in pixel space to undistort</param>
-        /// <returns>Undistorted point in pixel space</returns>
+        /// <param name="distortedPt">Distorted point in camera's post-projective space to undistort</param>
+        /// <returns>Undistorted point in camera's post-projective space</returns>
         Point2D UndistortPoint(Point2D distortedPt);
     }
 }

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Datasets
     /// <summary>
     /// Defines a base class for nodes in a tree that hold information about data streams.
     /// </summary>
-    internal class StreamTreeNode : IStreamTreeNode
+    public class StreamTreeNode : IStreamTreeNode
     {
         private ObservableCollection<IStreamTreeNode> internalChildren;
         private ReadOnlyObservableCollection<IStreamTreeNode> children;

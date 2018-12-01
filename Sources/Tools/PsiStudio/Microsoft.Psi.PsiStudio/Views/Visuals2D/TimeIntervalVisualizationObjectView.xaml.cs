@@ -25,11 +25,12 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private PathGeometry lineGeometry;
         private PathFigure lineFigure;
 
-        private Path redLinePath;
-        private PathGeometry redLineGeometry;
-        private PathFigure redLineFigure;
+        private Path thresholdPath;
+        private PathGeometry thresholdGeometry;
+        private PathFigure thresholdFigure;
 
-        private Brush brush;
+        private Brush brush = null;
+        private Brush thresholdBrush = null;
         private ScaleTransform scaleTransform = new ScaleTransform();
         private TranslateTransform translateTransform = new TranslateTransform();
         private TransformGroup transformGroup = new TransformGroup();
@@ -47,7 +48,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.InitializeComponent();
             this.transformGroup.Children.Add(this.translateTransform);
             this.transformGroup.Children.Add(this.scaleTransform);
-            this.brush = Brushes.DarkGray;
 
             this.DataContextChanged += this.TimeIntervalVisualizationObject_DataContextChanged;
             this.Unloaded += this.TimeIntervalVisualizationObjectView_Unloaded;
@@ -75,10 +75,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
             if ((timeInterval.Item2 - timeInterval.Item1).TotalMilliseconds > this.TimeIntervalVisualizationObject.Configuration.Threshold)
             {
-                this.redLineFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.1 * trackWidth))), false));
-                this.redLineFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.35 * trackWidth))), true));
-                this.redLineFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.65 * trackWidth))), true));
-                this.redLineFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.9 * trackWidth))), true));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.1 * trackWidth))), false));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.35 * trackWidth))), true));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.65 * trackWidth))), true));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.9 * trackWidth))), true));
             }
             else
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private void UpdateThreshold()
         {
             this.lineFigure.Segments.Clear();
-            this.redLineFigure.Segments.Clear();
+            this.thresholdFigure.Segments.Clear();
             foreach (var timeInterval in this.datapoints)
             {
                 this.AddPoint(timeInterval);
@@ -127,6 +127,20 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (e.PropertyName == nameof(TimeIntervalVisualizationObjectConfiguration.Threshold))
             {
+                this.UpdateThreshold();
+            }
+
+            if (e.PropertyName == nameof(TimeIntervalVisualizationObjectConfiguration.Color))
+            {
+                this.brush = null;
+                this.ResetPath();
+                this.UpdateThreshold();
+            }
+
+            if (e.PropertyName == nameof(TimeIntervalVisualizationObjectConfiguration.ThresholdColor))
+            {
+                this.thresholdBrush = null;
+                this.ResetPath();
                 this.UpdateThreshold();
             }
         }
@@ -200,6 +214,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             // Remove previous paths
             this.DynamicCanvas.Children.Clear();
 
+            if (this.brush == null)
+            {
+                this.brush = new SolidColorBrush(this.TimeIntervalVisualizationObject.Configuration.Color);
+            }
+
+            if (this.thresholdBrush == null)
+            {
+                this.thresholdBrush = new SolidColorBrush(this.TimeIntervalVisualizationObject.Configuration.ThresholdColor);
+            }
+
             this.linePath = new Path() { Stroke = this.brush, StrokeThickness = 1 };
             this.lineGeometry = new PathGeometry();
             this.lineFigure = new PathFigure();
@@ -208,13 +232,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.lineGeometry.Transform = this.transformGroup;
             this.DynamicCanvas.Children.Add(this.linePath);
 
-            this.redLinePath = new Path() { Stroke = Brushes.Orange, StrokeThickness = 1 };
-            this.redLineGeometry = new PathGeometry();
-            this.redLineFigure = new PathFigure();
-            this.redLineGeometry.Figures.Add(this.redLineFigure);
-            this.redLinePath.Data = this.redLineGeometry;
-            this.redLineGeometry.Transform = this.transformGroup;
-            this.DynamicCanvas.Children.Add(this.redLinePath);
+            this.thresholdPath = new Path() { Stroke = this.thresholdBrush, StrokeThickness = 1 };
+            this.thresholdGeometry = new PathGeometry();
+            this.thresholdFigure = new PathFigure();
+            this.thresholdGeometry.Figures.Add(this.thresholdFigure);
+            this.thresholdPath.Data = this.thresholdGeometry;
+            this.thresholdGeometry.Transform = this.transformGroup;
+            this.DynamicCanvas.Children.Add(this.thresholdPath);
 
             this.CalculateScaleTransform();
         }

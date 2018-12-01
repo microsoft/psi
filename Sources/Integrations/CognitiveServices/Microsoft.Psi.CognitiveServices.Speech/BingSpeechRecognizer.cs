@@ -5,6 +5,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -60,9 +61,9 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         private DateTime lastAudioOriginatingTime;
 
         /// <summary>
-        /// The originating time of the last result posted on the Out stream
+        /// The last originating time that was recorded for each output stream.
         /// </summary>
-        private DateTime lastOutputPostTime = DateTime.MinValue;
+        private Dictionary<int, DateTime> lastPostedOriginatingTimes;
 
         /// <summary>
         /// A flag indicating whether the last audio packet received contained speech.
@@ -89,9 +90,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// </summary>
         private bool fatalError;
 
-        // Synchronizes access to the output stream when posting messages.
-        private object outputLock = new object();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BingSpeechRecognizer"/> class.
         /// </summary>
@@ -107,6 +105,9 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             this.PartialSpeechResponseEvent = pipeline.CreateEmitter<PartialSpeechResponseEventArgs>(this, nameof(PartialSpeechResponseEventArgs));
             this.SpeechErrorEvent = pipeline.CreateEmitter<SpeechErrorEventArgs>(this, nameof(SpeechErrorEventArgs));
             this.SpeechResponseEvent = pipeline.CreateEmitter<SpeechResponseEventArgs>(this, nameof(SpeechResponseEventArgs));
+
+            // create table of last stream originating times
+            this.lastPostedOriginatingTimes = new Dictionary<int, DateTime>();
 
             // Create the Cognitive Services DataRecognitionClient
             this.speechRecognitionClient = this.CreateSpeechRecognitionClient();
@@ -237,25 +238,26 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
                 // Also post a null partial recognition result
                 this.lastPartialResult = string.Empty;
-                this.PartialRecognitionResults.Post(this.BuildPartialSpeechRecognitionResult(this.lastPartialResult), e.OriginatingTime);
+                this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, this.BuildPartialSpeechRecognitionResult(this.lastPartialResult), e.OriginatingTime);
             }
 
             // Remember last audio state.
             this.lastAudioContainedSpeech = hasSpeech;
         }
 
-        private void OutputResult(StreamingSpeechRecognitionResult result, DateTime originatingTime)
+        private void PostWithOriginatingTimeConsistencyCheck<T>(Emitter<T> stream, T message, DateTime originatingTime)
         {
-            lock (this.outputLock)
-            {
-                if (originatingTime < this.lastOutputPostTime)
-                {
-                    originatingTime = this.lastOutputPostTime;
-                }
+            // Get the last posted originating time on this stream
+            this.lastPostedOriginatingTimes.TryGetValue(stream.Id, out DateTime lastPostedOriginatingTime);
 
-                this.Out.Post(result, originatingTime);
-                this.lastOutputPostTime = originatingTime;
+            // Enforce monotonically increasing originating time
+            if (originatingTime <= lastPostedOriginatingTime)
+            {
+                originatingTime = lastPostedOriginatingTime.AddTicks(1);
             }
+
+            stream.Post(message, originatingTime);
+            this.lastPostedOriginatingTimes[stream.Id] = originatingTime;
         }
 
         /// <summary>
@@ -296,19 +298,19 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
             if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.Success)
             {
-                this.OutputResult(this.BuildSpeechRecognitionResult(e.PhraseResponse), originatingTime);
+                this.PostWithOriginatingTimeConsistencyCheck(this.Out, this.BuildSpeechRecognitionResult(e.PhraseResponse), originatingTime);
             }
             else if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.InitialSilenceTimeout)
             {
-                this.OutputResult(this.BuildSpeechRecognitionResult(string.Empty), originatingTime);
+                this.PostWithOriginatingTimeConsistencyCheck(this.Out, this.BuildSpeechRecognitionResult(string.Empty), originatingTime);
             }
             else if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.NoMatch)
             {
-                this.OutputResult(this.BuildSpeechRecognitionResult(this.lastPartialResult), originatingTime);
+                this.PostWithOriginatingTimeConsistencyCheck(this.Out, this.BuildSpeechRecognitionResult(this.lastPartialResult), originatingTime);
             }
 
             // Post the raw result from the underlying recognition engine
-            this.SpeechResponseEvent.Post(e, originatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.SpeechResponseEvent, e, originatingTime);
         }
 
         /// <summary>
@@ -323,10 +325,10 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
             // Since this is a partial response, VAD may not yet have signalled the end of speech
             // so just use the last audio packet time (which will probably be ahead).
-            this.PartialRecognitionResults.Post(result, this.lastAudioOriginatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, result, this.lastAudioOriginatingTime);
 
             // Post the raw result from the underlying recognition engine
-            this.PartialSpeechResponseEvent.Post(e, this.lastAudioOriginatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.PartialSpeechResponseEvent, e, this.lastAudioOriginatingTime);
         }
 
         /// <summary>
@@ -377,7 +379,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             // Do not post further errors if a fatal error condition exists - the pipeline may be shutting down
             if (!this.fatalError)
             {
-                this.SpeechErrorEvent.Post(e, this.lastAudioOriginatingTime);
+                this.PostWithOriginatingTimeConsistencyCheck(this.SpeechErrorEvent, e, this.lastAudioOriginatingTime);
             }
         }
 

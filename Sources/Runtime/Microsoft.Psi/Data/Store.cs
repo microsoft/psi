@@ -3,6 +3,9 @@
 
 namespace Microsoft.Psi
 {
+    using System;
+    using System.IO;
+    using System.Linq;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Data;
@@ -84,11 +87,11 @@ namespace Microsoft.Psi
         /// <param name="name">The name of the persisted stream.</param>
         /// <param name="writer">The store writer, created by e.g. <see cref="Store.Create(Pipeline, string, string, bool, KnownSerializers)"/></param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
-        /// <param name="policy">An optional delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The input stream</returns>
-        public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, Exporter writer, bool largeMessages = false, DeliveryPolicy policy = null)
+        public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, Exporter writer, bool largeMessages = false, DeliveryPolicy deliveryPolicy = null)
         {
-            writer.Write(source.Out, name, largeMessages, policy);
+            writer.Write(source.Out, name, largeMessages, deliveryPolicy);
             return source;
         }
 
@@ -101,6 +104,101 @@ namespace Microsoft.Psi
         public static bool Exists(string name, string path)
         {
             return (path == null) ? InfiniteFileReader.IsActive(StoreCommon.GetCatalogFileName(name), path) : StoreCommon.TryGetPathToLatestVersion(name, path, out string fullPath);
+        }
+
+        /// <summary>
+        /// Indicates whether the specified store is valid.
+        /// </summary>
+        /// <param name="name">The name of the store to check.</param>
+        /// <param name="path">The path of the store to check.</param>
+        /// <returns>Returns true if the store is valid.</returns>
+        public static bool IsValid(string name, string path)
+        {
+            bool allStreamsClosed = false;
+            using (var p = Pipeline.Create())
+            {
+                var importer = Store.Open(p, name, path);
+                allStreamsClosed = importer.AvailableStreams.All(meta => meta.IsClosed);
+            }
+
+            return allStreamsClosed;
+        }
+
+        /// <summary>
+        /// Repairs an invalid store.
+        /// </summary>
+        /// <param name="name">The name of the store to check.</param>
+        /// <param name="path">The path of the store to check.</param>
+        /// <param name="deleteOldStore">Indicates whether the original store should be deleted.</param>
+        public static void Repair(string name, string path, bool deleteOldStore = true)
+        {
+            string storePath = StoreCommon.GetPathToLatestVersion(name, path);
+            string tempFolderPath = Path.Combine(path, $"Repair-{Guid.NewGuid()}");
+
+            // call Crop over the entire store interval to regenerate and repair the streams in the store
+            Store.Crop(name, storePath, name, tempFolderPath, TimeInterval.Infinite);
+
+            // create a _BeforeRepair folder in which to save the original store files
+            var beforeRepairPath = Path.Combine(storePath, $"BeforeRepair-{Guid.NewGuid()}");
+            Directory.CreateDirectory(beforeRepairPath);
+
+            // Move the original store files to the BeforeRepair folder. Do this even if the deleteOldStore
+            // flag is true, as deleting the original store files immediately may occasionally fail. This can
+            // happen because the InfiniteFileReader disposes of its MemoryMappedView in a background
+            // thread, which may still be in progress. If deleteOldStore is true, we will delete the
+            // BeforeRepair folder at the very end (by which time any open MemoryMappedViews will likely
+            // have finished disposing).
+            foreach (var file in Directory.EnumerateFiles(storePath))
+            {
+                var fileInfo = new FileInfo(file);
+                File.Move(file, Path.Combine(beforeRepairPath, fileInfo.Name));
+            }
+
+            // move the repaired store files to the original folder
+            foreach (var file in Directory.EnumerateFiles(Path.Combine(tempFolderPath, $"{name}.0000")))
+            {
+                var fileInfo = new FileInfo(file);
+                File.Move(file, Path.Combine(storePath, fileInfo.Name));
+            }
+
+            // cleanup temporary folder
+            Directory.Delete(tempFolderPath, true);
+
+            if (deleteOldStore)
+            {
+                // delete the old store files
+                Directory.Delete(beforeRepairPath, true);
+            }
+        }
+
+        /// <summary>
+        /// Crops a store between the extents of a specified interval, generating a new store.
+        /// </summary>
+        /// <param name="inputName">The name of the store to crop.</param>
+        /// <param name="inputPath">The path of the store to crop.</param>
+        /// <param name="outputName">The name of the cropped store.</param>
+        /// <param name="outputPath">The path of the cropped store.</param>
+        /// <param name="cropInterval">The time interval to which to crop the store.</param>
+        /// <param name="createSubdirectory">
+        /// Indicates whether to create a numbered subdirectory for each cropped store
+        /// generated by multiple calls to this method.
+        /// </param>
+        public static void Crop(string inputName, string inputPath, string outputName, string outputPath, TimeInterval cropInterval, bool createSubdirectory = true)
+        {
+            using (var pipeline = Pipeline.Create("CropStore"))
+            {
+                Importer inputStore = Store.Open(pipeline, inputName, inputPath);
+                Exporter outputStore = Store.Create(pipeline, outputName, outputPath, createSubdirectory, inputStore.Serializers);
+
+                // copy all streams from inputStore to outputStore
+                foreach (var streamInfo in inputStore.AvailableStreams)
+                {
+                    inputStore.CopyStream(streamInfo.Name, outputStore);
+                }
+
+                // run the pipeline to copy over the specified cropInterval
+                pipeline.Run(cropInterval, true, false);
+            }
         }
 
         /// <summary>
@@ -139,11 +237,12 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of data to serialize</typeparam>
         /// <param name="source">The source stream generating the data to serialize</param>
         /// <param name="serializers">An optional collection of known types to use</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of Message{Message{BufferReader}}, where the inner Message object preserves the original envelope of the message received by this operator.</returns>
-        public static IProducer<Message<BufferReader>> Serialize<T>(this IProducer<T> source, KnownSerializers serializers = null)
+        public static IProducer<Message<BufferReader>> Serialize<T>(this IProducer<T> source, KnownSerializers serializers = null, DeliveryPolicy deliveryPolicy = null)
         {
             var serializer = new SerializerComponent<T>(source.Out.Pipeline, serializers ?? KnownSerializers.Default);
-            source.PipeTo(serializer.In);
+            source.PipeTo(serializer.In, deliveryPolicy);
             return serializer.Out;
         }
 
@@ -154,12 +253,13 @@ namespace Microsoft.Psi
         /// <param name="source">The stream containing the serialized data</param>
         /// <param name="serializers">An optional collection of known types to use</param>
         /// <param name="reusableInstance">An optional preallocated instance ot use as a buffer. This parameter is required when deserializing <see cref="Shared{T}"/> instances if the deserializer is expected to use a <see cref="SharedPool{T}"/></param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of messages of type T, with their original envelope</returns>
-        public static IProducer<T> Deserialize<T>(this IProducer<Message<BufferReader>> source, KnownSerializers serializers = null, T reusableInstance = default(T))
+        public static IProducer<T> Deserialize<T>(this IProducer<Message<BufferReader>> source, KnownSerializers serializers = null, T reusableInstance = default(T), DeliveryPolicy deliveryPolicy = null)
         {
-            var serializer = new DeserializerComponent<T>(source.Out.Pipeline, serializers ?? KnownSerializers.Default, reusableInstance);
-            source.PipeTo(serializer);
-            return serializer.Out;
+            var deserializer = new DeserializerComponent<T>(source.Out.Pipeline, serializers ?? KnownSerializers.Default, reusableInstance);
+            source.PipeTo(deserializer, deliveryPolicy);
+            return deserializer.Out;
         }
     }
 }

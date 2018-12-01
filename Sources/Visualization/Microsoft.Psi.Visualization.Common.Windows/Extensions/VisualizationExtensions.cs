@@ -20,11 +20,12 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// <typeparam name="T">The type of enumerable elements.</typeparam>
         /// <typeparam name="EnumerableT">The type of enumerable.</typeparam>
         /// <param name="source">The stream of enumerables of T.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted array of T.</returns>
-        public static IProducer<T[]> ToArray<T, EnumerableT>(this IProducer<EnumerableT> source)
+        public static IProducer<T[]> ToArray<T, EnumerableT>(this IProducer<EnumerableT> source, DeliveryPolicy deliveryPolicy = null)
             where EnumerableT : IEnumerable<T>
         {
-            return source.Select(s => s.ToArray());
+            return source.Select(s => s.ToArray(), deliveryPolicy);
         }
 
         /// <summary>
@@ -33,10 +34,11 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <typeparam name="TValue">The type of dictionary values.</typeparam>
         /// <param name="source">The stream of dictionarys of TKey and TValue.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted collections of TValue.</returns>
-        public static IProducer<Dictionary<TKey, TValue>.ValueCollection> Values<TKey, TValue>(this IProducer<Dictionary<TKey, TValue>> source)
+        public static IProducer<Dictionary<TKey, TValue>.ValueCollection> Values<TKey, TValue>(this IProducer<Dictionary<TKey, TValue>> source, DeliveryPolicy deliveryPolicy = null)
         {
-            return source.Select(s => s.Values);
+            return source.Select(s => s.Values, deliveryPolicy);
         }
 
         /// <summary>
@@ -44,10 +46,11 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <param name="source">The stream of dictionarys of 2d points.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted list of named points.</returns>
-        public static IProducer<List<Tuple<Point, string>>> ToScatterPoints2D<TKey>(this IProducer<Dictionary<TKey, Point2D>> source)
+        public static IProducer<List<Tuple<Point, string>>> ToScatterPoints2D<TKey>(this IProducer<Dictionary<TKey, Point2D>> source, DeliveryPolicy deliveryPolicy = null)
         {
-            return source.Select(d => d.Select(kvp => Tuple.Create(new Point(kvp.Value.X, kvp.Value.Y), kvp.Key.ToString())).ToList());
+            return source.Select(d => d.Select(kvp => Tuple.Create(new Point(kvp.Value.X, kvp.Value.Y), kvp.Key.ToString())).ToList(), deliveryPolicy);
         }
 
         /// <summary>
@@ -55,10 +58,11 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <param name="source">The stream of dictionarys of rectangles.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted list of named rectangles.</returns>
-        public static IProducer<List<Tuple<System.Drawing.Rectangle, string>>> ToScatterRectangle<TKey>(this IProducer<Dictionary<TKey, System.Drawing.Rectangle>> source)
+        public static IProducer<List<Tuple<System.Drawing.Rectangle, string>>> ToScatterRectangle<TKey>(this IProducer<Dictionary<TKey, System.Drawing.Rectangle>> source, DeliveryPolicy deliveryPolicy = null)
         {
-            return source.Select(d => d.Select(kvp => Tuple.Create(kvp.Value, kvp.Key.ToString())).ToList());
+            return source.Select(d => d.Select(kvp => Tuple.Create(kvp.Value, kvp.Key.ToString())).ToList(), deliveryPolicy);
         }
     }
 }

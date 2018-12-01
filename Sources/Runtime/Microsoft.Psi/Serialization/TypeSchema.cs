@@ -76,6 +76,11 @@ namespace Microsoft.Psi.Serialization
         }
 
         /// <summary>
+        /// Gets the type flags.
+        /// </summary>
+        public TypeFlags Flags => this.flags;
+
+        /// <summary>
         /// Gets a value indicating whether type is partial.
         /// </summary>
         public bool IsPartial => this.Members == null;

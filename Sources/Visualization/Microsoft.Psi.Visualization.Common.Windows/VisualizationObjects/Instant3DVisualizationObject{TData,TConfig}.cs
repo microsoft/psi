@@ -30,69 +30,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         public virtual Visual3D Visual3D { get; protected set; }
 
-        /// <summary>
-        /// Gets or sets the local offset string.
-        /// </summary>
-        public string LocalOffsetString
-        {
-            get => string.Format($"{this.Configuration.LocalOffset.X}, {this.Configuration.LocalOffset.Y}, {this.Configuration.LocalOffset.Z}");
-            set
-            {
-                double x = 0;
-                double y = 0;
-                double z = 0;
-                string[] values = value.Split(',');
-                if (values.Length == 3 && double.TryParse(values[0], out x) && double.TryParse(values[1], out y) && double.TryParse(values[2], out z))
-                {
-                    this.RaisePropertyChanging(nameof(this.LocalOffsetString));
-                    this.Configuration.LocalOffset = new MathNet.Spatial.Euclidean.Vector3D(x, y, z);
-                    this.RaisePropertyChanged(nameof(this.LocalOffsetString));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the local scale string.
-        /// </summary>
-        public string LocalScaleString
-        {
-            get => string.Format($"{this.Configuration.LocalScale.X}, {this.Configuration.LocalScale.Y}, {this.Configuration.LocalScale.Z}");
-            set
-            {
-                double x = 1;
-                double y = 1;
-                double z = 1;
-                string[] values = value.Split(',');
-                if (values.Length == 3 && double.TryParse(values[0], out x) && double.TryParse(values[1], out y) && double.TryParse(values[2], out z))
-                {
-                    this.RaisePropertyChanging(nameof(this.LocalScaleString));
-                    this.Configuration.LocalScale = new MathNet.Spatial.Euclidean.Vector3D(x, y, z);
-                    this.RaisePropertyChanged(nameof(this.LocalScaleString));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the local rotation string.
-        /// </summary>
-        public string LocalRotationString
-        {
-            get => string.Format($"{this.Configuration.LocalRotation.X}, {this.Configuration.LocalRotation.Y}, {this.Configuration.LocalRotation.Z}");
-            set
-            {
-                double x = 0;
-                double y = 0;
-                double z = 0;
-                string[] values = value.Split(',');
-                if (values.Length == 3 && double.TryParse(values[0], out x) && double.TryParse(values[1], out y) && double.TryParse(values[2], out z))
-                {
-                    this.RaisePropertyChanging(nameof(this.LocalRotationString));
-                    this.Configuration.LocalRotation = new MathNet.Spatial.Euclidean.Vector3D(x, y, z);
-                    this.RaisePropertyChanged(nameof(this.LocalRotationString));
-                }
-            }
-        }
-
         /// <inheritdoc />
         protected override IContractResolver ContractResolver => this.contractResolver;
     }

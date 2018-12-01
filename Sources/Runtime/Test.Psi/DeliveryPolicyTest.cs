@@ -15,19 +15,19 @@ namespace Test.Psi
         [Timeout(60000)]
         public void Throttled()
         {
-            // this test may exposes a pipeline shutdown bug with startable / external threads.
-            var dp = DeliveryPolicy.Throttled;
+            // this test may expose a pipeline shutdown bug with startable / external threads.
+            var throttlePolicy = new DeliveryPolicy(1, 1, null, true, false);
             using (var p = Pipeline.Create())
             {
                 int countA = 0, countB = 0, countC = 0;
                 Timers.Timer(p, TimeSpan.FromMilliseconds(1), (dt, ts) => countA++)
-                    .Do(_ => countB++, dp)
+                    .Do(_ => countB++, throttlePolicy)
                     .Do(
                         _ =>
                         {
                             Thread.Sleep(5);
                             countC++;
-                        }, dp);
+                        }, throttlePolicy);
 
                 p.Run(TimeSpan.FromMilliseconds(100));
 

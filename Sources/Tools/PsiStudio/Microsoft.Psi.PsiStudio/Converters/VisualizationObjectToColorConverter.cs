@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.Converters
                 throw new ArgumentException("Unexpected value for control's DataContext.");
             }
 
-            return new SolidColorBrush(visualizationObject.Configuration.LineColor);
+            return new SolidColorBrush(visualizationObject.Configuration.Color);
         }
 
         /// <inheritdoc />

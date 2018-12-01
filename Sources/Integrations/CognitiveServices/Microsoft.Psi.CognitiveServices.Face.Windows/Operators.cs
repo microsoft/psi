@@ -15,7 +15,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// </summary>
         /// <param name="source">The source stream of images.</param>
         /// <param name="configuration">The face recognizer configuration.</param>
-        /// <param name="deliveryPolicy">The delivery policy. If not specified, the default delivery policy used is <see cref="DeliveryPolicy.LatestMessage"/></param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of messages containing a dictionary that represents the set of identity alternates and their corresponding scores.</returns>
         /// <remarks>
         /// A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
@@ -25,7 +25,6 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// </remarks>
         public static IProducer<Dictionary<string, double>> RecognizeFace(this IProducer<Shared<Imaging.Image>> source, FaceRecognizerConfiguration configuration, DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.LatestMessage;
             var faceRecognizer = new FaceRecognizer(source.Out.Pipeline, configuration);
             source.PipeTo(faceRecognizer, deliveryPolicy);
             return faceRecognizer.Out;

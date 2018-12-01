@@ -15,18 +15,19 @@ namespace Microsoft.Psi
     public static partial class Operators
     {
         /// <summary>
-        /// Psi stream as an `IEnumerable`.
+        /// Convert a stream to an <see cref="IEnumerable{T}"/>.
         /// </summary>
         /// <remarks>
         /// This may be traversed while the pipeline runs async, or may collect values to be consumed after pipeline disposal.
         /// </remarks>
-        /// <typeparam name="T">Type of Psi stream values</typeparam>
-        /// <param name="stream">Psi stream</param>
+        /// <typeparam name="T">Type of messages for the source stream.</typeparam>
+        /// <param name="source">The source stream.</param>
         /// <param name="condition">Predicate condition while which values will be enumerated (otherwise infinite).</param>
-        /// <returns>Enumerable of Psi stream</returns>
-        public static IEnumerable<T> ToEnumerable<T>(this IProducer<T> stream, Func<T, bool> condition = null)
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>Enumerable with elements from the source stream.</returns>
+        public static IEnumerable<T> ToEnumerable<T>(this IProducer<T> source, Func<T, bool> condition = null, DeliveryPolicy deliveryPolicy = null)
         {
-            return new StreamEnumerable<T>(stream, condition);
+            return new StreamEnumerable<T>(source, condition, deliveryPolicy);
         }
 
         /// <summary>
@@ -40,16 +41,19 @@ namespace Microsoft.Psi
             /// <summary>
             /// Initializes a new instance of the <see cref="StreamEnumerable{T}"/> class.
             /// </summary>
-            /// <param name="stream">Stream to enumerate.</param>
+            /// <param name="source">The source stream to enumerate.</param>
             /// <param name="predicate">Predicate (filter) function.</param>
-            public StreamEnumerable(IProducer<T> stream, Func<T, bool> predicate = null)
+            /// <param name="deliveryPolicy">An optional delivery policy.</param>
+            public StreamEnumerable(IProducer<T> source, Func<T, bool> predicate = null, DeliveryPolicy deliveryPolicy = null)
             {
                 this.enumerator = new StreamEnumerator(predicate ?? (_ => true));
-                stream.Do(x =>
-                {
-                    this.enumerator.Queue.Enqueue(x);
-                    this.enumerator.Enqueued.Set();
-                });
+                source.Do(
+                    x =>
+                    {
+                        this.enumerator.Queue.Enqueue(x);
+                        this.enumerator.Enqueued.Set();
+                    },
+                    deliveryPolicy);
             }
 
             /// <inheritdoc />

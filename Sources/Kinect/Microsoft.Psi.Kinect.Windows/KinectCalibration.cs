@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Kinect
 {
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi.Calibration;
 
     /// <summary>
     /// KinectCalibration holds the intrinsics and extrinsics for a Kinect camera
@@ -21,29 +22,34 @@ namespace Microsoft.Psi.Kinect
         /// </summary>
         public KinectCalibration()
         {
-            this.ColorIntrinsics = new Microsoft.Psi.Calibration.CameraIntrinsics();
-            this.ColorIntrinsics.ImageWidth = 1920;
-            this.ColorIntrinsics.ImageHeight = 1280;
-            this.ColorIntrinsics.Transform = Matrix<double>.Build.DenseOfArray(new double[,]
+            this.ColorIntrinsics = new CameraIntrinsics
+            {
+                ImageWidth = 1920,
+                ImageHeight = 1280,
+                Transform = Matrix<double>.Build.DenseOfArray(new double[,]
                 {
                     { 1064.8, 0, 960.384 },
                     { 0, 1064.72, 540.902 },
                     { 0, 0, 1 }
-                });
-            this.ColorIntrinsics.RadialDistortion = Vector<double>.Build.DenseOfArray(new double[]
-                { 0.0148094, -0.00237727 });
+                }),
+                RadialDistortion = Vector<double>.Build.DenseOfArray(new double[]
+                { 0.0148094, -0.00237727 })
+            };
 
-            this.DepthIntrinsics = new Microsoft.Psi.Calibration.CameraIntrinsics();
-            this.DepthIntrinsics.ImageWidth = 512;
-            this.DepthIntrinsics.ImageHeight = 424;
-            this.DepthIntrinsics.Transform = Matrix<double>.Build.DenseOfArray(new double[,]
+            this.DepthIntrinsics = new CameraIntrinsics
+            {
+                ImageWidth = 512,
+                ImageHeight = 424,
+                Transform = Matrix<double>.Build.DenseOfArray(new double[,]
                 {
                     { 366.615, 0, 262.899 },
                     { 0, 366.641, 212.625 },
                     { 0, 0, 1 }
-                });
-            this.DepthIntrinsics.RadialDistortion = Vector<double>.Build.DenseOfArray(new double[]
-                { 0.0599477, -0.165643 });
+                }),
+                RadialDistortion = Vector<double>.Build.DenseOfArray(new double[]
+                { 0.0599477, -0.165643 })
+            };
+
             this.DepthToColorTransform = Matrix<double>.Build.DenseOfArray(new double[,]
                 {
                     { 1, 0.00056841, 0.000158119, 0.0523835 },
@@ -117,7 +123,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Gets or sets the color camera's intrinsics
         /// </summary>
-        public Microsoft.Psi.Calibration.ICameraIntrinsics ColorIntrinsics { get; set; }
+        public ICameraIntrinsics ColorIntrinsics { get; set; }
 
         /// <summary>
         /// Gets or sets the depth camera's extrinsics
@@ -127,11 +133,18 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Gets or sets the depth camera's intrinsics
         /// </summary>
-        public Microsoft.Psi.Calibration.ICameraIntrinsics DepthIntrinsics { get; set; }
+        public ICameraIntrinsics DepthIntrinsics { get; set; }
 
         /// <summary>
         /// Gets or sets the transform to go from the depth camera to the color camera
         /// </summary>
         public Matrix<double> DepthToColorTransform { get; set; }
+
+        /// <inheritdoc/>
+        public Point2D ToColorSpace(Point3D point3D)
+        {
+            var point3DInColorCamera = this.ColorExtrinsics.Transform(point3D);
+            return this.ColorIntrinsics.ToPixelSpace(point3DInColorCamera, true);
+        }
     }
 }

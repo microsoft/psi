@@ -60,9 +60,9 @@ namespace Microsoft.Psi.Audio
                     // Fixup potential out of order timestamps where successive audio buffer timestamps
                     // drastically overlap. This could be indicative of a system time adjustment having
                     // occurred between captured audio buffers.
-                    if (originatingTime < this.lastOriginatingTime)
+                    if (originatingTime <= this.lastOriginatingTime)
                     {
-                        originatingTime = this.lastOriginatingTime;
+                        originatingTime = this.lastOriginatingTime.AddTicks(1); // add tick to avoid time collision
                     }
 
                     this.lastOriginatingTime = originatingTime;

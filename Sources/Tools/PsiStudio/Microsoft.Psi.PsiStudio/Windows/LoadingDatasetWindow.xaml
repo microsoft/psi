@@ -19,8 +19,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" >Loading dataset...</Label>
-        <Label Grid.Row="1" Content="{Binding Filename, FallbackValue='Dataset filename'}" />
+        <Label Grid.Row="0" Name="StatusLabel" Content="Loading dataset..." />
+        <Label Grid.Row="1" Name="FilenameLabel" Content="Dataset filename" />
         <ProgressBar Grid.Row="2" Height ="12" IsIndeterminate="True" Margin="6,10" />
     </Grid>
 </Window>

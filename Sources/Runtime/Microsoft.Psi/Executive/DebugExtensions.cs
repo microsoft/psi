@@ -61,8 +61,9 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of data in the stream</typeparam>
         /// <param name="source">The stream to visualize</param>
         /// <param name="name">The name to use when visualizing the stream</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The debug name of the stream, either as provided or the generated one if one was not specified</returns>
-        public static string DebugView<T>(this IProducer<T> source, string name = null)
+        public static string DebugView<T>(this IProducer<T> source, string name = null, DeliveryPolicy deliveryPolicy = null)
         {
             var debugName = name ?? source.Out.Name ?? source.Out.Id.ToString();
 
@@ -72,7 +73,7 @@ namespace Microsoft.Psi
                 {
                     if (!Store.TryGetMetadata(debugPipeline, debugName, out PsiStreamMetadata meta))
                     {
-                        source.Write(debugName, debugStore);
+                        source.Write(debugName, debugStore, deliveryPolicy: deliveryPolicy);
                     }
                 }
             }

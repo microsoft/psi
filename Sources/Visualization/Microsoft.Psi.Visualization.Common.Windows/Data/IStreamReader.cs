@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Gets a list of outstanding read requests.
         /// </summary>
-        IReadOnlyList<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> ReadRequests { get; }
+        IReadOnlyList<ReadRequest> ReadRequests { get; }
 
         /// <summary>
         /// Gets the stream adapter type.
@@ -70,7 +70,8 @@ namespace Microsoft.Psi.Visualization.Data
         /// Open stream given a reader.
         /// </summary>
         /// <param name="reader">Reader to open stream with.</param>
-        void OpenStream(ISimpleReader reader);
+        /// <param name="useIndex">Indicates reader should read the stream index.</param>
+        void OpenStream(ISimpleReader reader, bool useIndex);
 
         /// <summary>
         /// Reads a single message from a stream identified by a reader and an index entry.

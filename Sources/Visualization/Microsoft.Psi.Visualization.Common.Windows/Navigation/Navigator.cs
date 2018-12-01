@@ -113,6 +113,11 @@ namespace Microsoft.Psi.Visualization.Navigation
         public bool HasFiniteRange => this.selectionRange.IsFinite && this.viewRange.IsFinite && this.dataRange.IsFinite;
 
         /// <summary>
+        /// Gets a value indicating whether we're currently playing back data
+        /// </summary>
+        public bool IsPlaying => this.playTimer != null;
+
+        /// <summary>
         /// Gets or sets the navigation mode.
         /// </summary>
         [DataMember]
@@ -256,7 +261,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                     {
                         newCursor = startTime + TimeSpan.FromTicks((long)((DateTime.Now - playStartTime).Ticks * speed));
                         this.Cursor = newCursor;
-                        if (newCursor > this.viewRange.EndTime)
+                        if (newCursor > this.viewRange.EndTime && newCursor < this.dataRange.EndTime)
                         {
                             this.viewRange.SetRange(newCursor, this.viewRange.Duration);
                         }

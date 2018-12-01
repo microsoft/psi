@@ -41,10 +41,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             {
                 this.SetVertexPositions();
             }
-            else if (e.PropertyName == nameof(Sprite3DVisualizationObjectConfiguration.LocalTransform))
-            {
-                this.SetTransform();
-            }
         }
 
         private void VisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -70,7 +66,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             var globalTransform = this.visualizationObject.CurrentValue.GetValueOrDefault().Data;
             if (globalTransform != null)
             {
-                globalTransform = globalTransform.Transform(this.visualizationObject.Configuration.LocalTransform);
                 this.Transform = new MatrixTransform3D(globalTransform.GetMatrix3D());
             }
         }

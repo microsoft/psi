@@ -218,5 +218,30 @@ namespace Test.Psi.Common
 
             throw new ApplicationException(string.Format("Unable to delete directory \"{0}\" after multiple attempts", path));
         }
+
+        /// <summary>
+        /// Due to the asynchronous behavior when disposing file readers and writers in the
+        /// runtime, we may try to delete our test files before they have finished closing.
+        /// This method will keep trying to delete the file for a limited number of attempts.
+        /// </summary>
+        /// <param name="path">The path to the file to be deleted</param>
+        public static void SafeFileDelete(string path)
+        {
+            for (int iteration = 0; iteration < 10; iteration++)
+            {
+                try
+                {
+                    File.Delete(path);
+                    return;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // The file has probably not finished closing, so try again shortly.
+                    Thread.Sleep(200);
+                }
+            }
+
+            throw new ApplicationException(string.Format("Unable to delete file \"{0}\" after multiple attempts", path));
+        }
     }
 }

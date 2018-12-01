@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Kinect
         /// Simple producer for converting from depth map to colored version of depth map
         /// </summary>
         /// <param name="depthImage">Depth image to convert</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns colored representation of the depth map</returns>
         public static IProducer<Shared<Image>> ToColor(this IProducer<Shared<Image>> depthImage, DeliveryPolicy deliveryPolicy = null)
         {
@@ -29,11 +29,10 @@ namespace Microsoft.Psi.Kinect
         /// Creates a gzipped byte array of the depth image
         /// </summary>
         /// <param name="depthImage">Depth image to compress</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Byte array containing the compressed depth map</returns>
         public static IProducer<byte[]> GZipCompressDepthImage(this IProducer<Shared<Image>> depthImage, DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
             var memoryStream = new MemoryStream();
             var memoryStreamLo = new MemoryStream();
             var memoryStreamHi = new MemoryStream();
@@ -63,11 +62,10 @@ namespace Microsoft.Psi.Kinect
         /// Uncompressed a depth map that was previously compressed with GZip
         /// </summary>
         /// <param name="compressedDepthBytes">Byte array of compressed depth values</param>
-        /// <param name="deliveryPolicy">Delivery policy</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Uncompressed depth map as an image</returns>
         public static IProducer<Shared<Image>> GZipUncompressDepthImage(this IProducer<byte[]> compressedDepthBytes, DeliveryPolicy deliveryPolicy = null)
         {
-            deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
             var buffer = new byte[424 * 512 * 2];
             return compressedDepthBytes.Select(
                 bytes =>

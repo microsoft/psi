@@ -15,9 +15,10 @@ namespace Microsoft.Psi
     public class SharedPool<T> : IDisposable
         where T : class
     {
+        private readonly List<T> keepAlive;
+        private readonly KnownSerializers serializers;
+        private readonly object availableLock = new object();
         private Queue<T> available;
-        private List<T> keepAlive;
-        private KnownSerializers serializers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SharedPool{T}"/> class.
@@ -38,7 +39,7 @@ namespace Microsoft.Psi
         {
             get
             {
-                lock (this.available)
+                lock (this.availableLock)
                 {
                     return this.available.Count;
                 }
@@ -66,7 +67,7 @@ namespace Microsoft.Psi
         /// <returns>True if an unused object was available, false otherwise</returns>
         public bool TryGet(out T recyclable)
         {
-            lock (this.available)
+            lock (this.availableLock)
             {
                 if (this.available.Count > 0)
                 {
@@ -86,9 +87,8 @@ namespace Microsoft.Psi
         /// <returns>True if an unused object was available, false otherwise</returns>
         public bool TryGet(out Shared<T> recyclable)
         {
-            T recycled = null;
             recyclable = null;
-            bool success = this.TryGet(out recycled);
+            bool success = this.TryGet(out T recycled);
             if (success)
             {
                 recyclable = new Shared<T>(recycled, this);
@@ -104,8 +104,7 @@ namespace Microsoft.Psi
         /// <returns>An unused object, wrapped in a ref-counted <see cref="Shared{T}"/> instance.</returns>
         public Shared<T> GetOrCreate(Func<T> constructor)
         {
-            T recycled;
-            if (!this.TryGet(out recycled))
+            if (!this.TryGet(out T recycled))
             {
                 recycled = constructor();
                 lock (this.keepAlive)
@@ -124,7 +123,7 @@ namespace Microsoft.Psi
         {
             if (typeof(IDisposable).IsAssignableFrom(typeof(T)))
             {
-                lock (this.available)
+                lock (this.availableLock)
                 {
                     foreach (var entry in this.available)
                     {
@@ -145,9 +144,20 @@ namespace Microsoft.Psi
         {
             var context = new SerializationContext(this.serializers);
             Serializer.Clear(ref recyclable, context);
-            lock (this.available)
+            lock (this.availableLock)
             {
-                this.available.Enqueue(recyclable);
+                if (this.available != null)
+                {
+                    this.available.Enqueue(recyclable);
+                }
+                else
+                {
+                    // dispose the recycled object if it is disposable
+                    if (recyclable is IDisposable)
+                    {
+                        ((IDisposable)recyclable).Dispose();
+                    }
+                }
             }
         }
     }

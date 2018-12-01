@@ -19,10 +19,8 @@ namespace Microsoft.Psi.Visualization.Data
     /// <typeparam name="T">The type of messages in stream.</typeparam>
     public class StreamReader<T> : IStreamReader
     {
-        private readonly StreamBinding streamBinding;
-        private readonly bool useIndex;
-        private readonly List<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> readRequestsInternal;
-        private readonly ReadOnlyCollection<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> readRequests;
+        private readonly List<ReadRequest> readRequestsInternal;
+        private readonly ReadOnlyCollection<ReadRequest> readRequests;
 
         /// <summary>
         /// Flag indicating whether underlying type needs disposing when removed.
@@ -41,15 +39,13 @@ namespace Microsoft.Psi.Visualization.Data
         /// Initializes a new instance of the <see cref="StreamReader{T}"/> class.
         /// </summary>
         /// <param name="streamBinding">Stream binding used to indentify stream.</param>
-        /// <param name="useIndex">Indicates stream reader should use index for access.</param>
-        public StreamReader(StreamBinding streamBinding, bool useIndex)
+        public StreamReader(StreamBinding streamBinding)
         {
-            this.streamBinding = streamBinding;
-            this.useIndex = useIndex;
+            this.StreamBinding = streamBinding;
             this.pool = PoolManager.Instance.GetPool<T>();
 
-            this.readRequestsInternal = new List<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>>();
-            this.readRequests = new ReadOnlyCollection<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>>(this.readRequestsInternal);
+            this.readRequestsInternal = new List<ReadRequest>();
+            this.readRequests = new ReadOnlyCollection<ReadRequest>(this.readRequestsInternal);
 
             this.bufferLock = new object();
             this.dataBuffer = new List<Message<T>>(1000);
@@ -89,13 +85,13 @@ namespace Microsoft.Psi.Visualization.Data
         public bool IsCanceled => this.isCanceled;
 
         /// <inheritdoc />
-        public IReadOnlyList<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> ReadRequests => this.readRequests;
+        public IReadOnlyList<ReadRequest> ReadRequests => this.readRequests;
 
         /// <inheritdoc />
-        public Type StreamAdapterType => this.streamBinding.StreamAdapterType;
+        public Type StreamAdapterType => this.StreamBinding.StreamAdapterType;
 
         /// <inheritdoc />
-        public StreamBinding StreamBinding => this.streamBinding;
+        public StreamBinding StreamBinding { get; }
 
         /// <inheritdoc />
         public string StreamName => this.StreamBinding.StreamName;
@@ -117,7 +113,7 @@ namespace Microsoft.Psi.Visualization.Data
         {
             lock (this.readRequestsInternal)
             {
-                this.readRequestsInternal.Remove(Tuple.Create(startTime, endTime, (uint)0, (Func<DateTime, DateTime>)null));
+                this.readRequestsInternal.RemoveAll(rr => rr.StartTime == startTime && rr.EndTime == endTime);
             }
         }
 
@@ -174,19 +170,19 @@ namespace Microsoft.Psi.Visualization.Data
                 this.pool?.Dispose();
                 this.pool = null;
 
-                this.streamBinding.StreamAdapter?.Dispose();
+                this.StreamBinding.StreamAdapter?.Dispose();
             }
         }
 
         /// <inheritdoc />
-        public void OpenStream(ISimpleReader reader)
+        public void OpenStream(ISimpleReader reader, bool readIndicesOnly)
         {
             if (reader == null)
             {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            if (this.useIndex)
+            if (readIndicesOnly)
             {
                 if (this.StreamBinding.StreamAdapter == null)
                 {
@@ -264,38 +260,40 @@ namespace Microsoft.Psi.Visualization.Data
             return (this.data as ObservableKeyedCache<DateTime, Message<TItem>>).GetView(viewMode, startTime, endTime, tailCount, tailRange);
         }
 
-        private IList<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> ComputeReadRequests(DateTime startTime, DateTime endTime, bool useIndex)
+        private IList<ReadRequest> ComputeReadRequests(DateTime startTime, DateTime endTime, bool readIndicesOnly)
         {
-            List<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> newReadRequests = new List<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>>();
+            List<ReadRequest> newReadRequests = new List<ReadRequest>();
 
             // adjust read request to account for existing read requests
             IEnumerable<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> matches = null;
             lock (this.readRequestsInternal)
             {
-                matches = this.readRequestsInternal.Where(rr => rr.Item1 <= endTime && rr.Item2 >= startTime);
+                matches = this.readRequestsInternal
+                    .Where(rr => rr.ReadIndicesOnly == readIndicesOnly && rr.StartTime <= endTime && rr.EndTime >= startTime)
+                    .Select(rr => Tuple.Create(rr.StartTime, rr.EndTime, rr.TailCount, rr.TailRange));
 
-                this.ComputeReadRequests(newReadRequests, matches, ref startTime, ref endTime, useIndex);
+                this.ComputeReadRequests(newReadRequests, matches, ref startTime, ref endTime, readIndicesOnly);
 
                 // adjust read request to account for existing views
-                var views = useIndex ? this.index.ViewExtents.Where(rr => rr.Item1 <= endTime && rr.Item2 >= startTime) : this.data.ViewExtents.Where(rr => rr.Item1 <= endTime && rr.Item2 >= startTime);
-                this.ComputeReadRequests(newReadRequests, views, ref startTime, ref endTime, useIndex);
+                var views = readIndicesOnly ? this.index.ViewExtents.Where(rr => rr.Item1 <= endTime && rr.Item2 >= startTime) : this.data.ViewExtents.Where(rr => rr.Item1 <= endTime && rr.Item2 >= startTime);
+                this.ComputeReadRequests(newReadRequests, views, ref startTime, ref endTime, readIndicesOnly);
 
                 // finally add remaining range (if any) to read requests
                 if (startTime < endTime)
                 {
-                    newReadRequests.Add(Tuple.Create(startTime, endTime, (uint)0, (Func<DateTime, DateTime>)null));
+                    newReadRequests.Add(new ReadRequest(startTime, endTime, 0, null, readIndicesOnly));
                 }
             }
 
             return newReadRequests;
         }
 
-        private IEnumerable<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> ComputeReadRequests(
-            List<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> newReadRequests,
+        private IEnumerable<ReadRequest> ComputeReadRequests(
+            List<ReadRequest> newReadRequests,
             IEnumerable<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>> ranges,
             ref DateTime startTime,
             ref DateTime endTime,
-            bool useIndex)
+            bool readIndicesOnly)
         {
             foreach (var range in ranges)
             {
@@ -322,7 +320,7 @@ namespace Microsoft.Psi.Visualization.Data
                 else if (range.Item2 > range.Item1)
                 {
                     // compute read requests for first new range
-                    newReadRequests.AddRange(this.ComputeReadRequests(startTime, range.Item1, useIndex));
+                    newReadRequests.AddRange(this.ComputeReadRequests(startTime, range.Item1, readIndicesOnly));
 
                     // continue comptuing for second new range
                     startTime = range.Item2;

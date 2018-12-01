@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Data
 
             // copy the schemas present so far and also make sure the catalog captures schemas added in the future
             this.serializers.SchemaAdded += (o, e) => this.writer.WriteToCatalog(e);
-            foreach (var schema in this.serializers.Schemas)
+            foreach (var schema in this.serializers.Schemas.Values)
             {
                 this.writer.WriteToCatalog(schema);
             }
@@ -120,8 +120,8 @@ namespace Microsoft.Psi.Data
         /// <param name="source">The source stream to write</param>
         /// <param name="name">The name of the storage stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
-        /// <param name="policy">An optional delivery policy</param>
-        public void Write<T>(Emitter<T> source, string name, bool largeMessages = false, DeliveryPolicy policy = null)
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        public void Write<T>(Emitter<T> source, string name, bool largeMessages = false, DeliveryPolicy deliveryPolicy = null)
         {
             // make sure we can serialize this type
             var handler = this.serializers.GetHandler<T>();
@@ -141,8 +141,8 @@ namespace Microsoft.Psi.Data
 
             // hook up the serializer
             var serializer = new SerializerComponent<T>(this.pipeline, this.serializers);
-            serializer.PipeTo(mergeInput, DeliveryPolicy.Immediate);
-            source.PipeTo(serializer, policy ?? DeliveryPolicy.Unlimited);
+            serializer.PipeTo(mergeInput, DeliveryPolicy.Unlimited);
+            source.PipeTo(serializer, deliveryPolicy);
         }
 
         /// <summary>
@@ -230,11 +230,11 @@ namespace Microsoft.Psi.Data
             }
         }
 
-        internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata meta, DeliveryPolicy policy = null)
+        internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata meta, DeliveryPolicy deliveryPolicy = null)
         {
             var mergeInput = this.merger.Add(meta.Name); // this checks for duplicates
             this.writer.OpenStream(meta);
-            Operators.PipeTo(source, mergeInput, policy);
+            Operators.PipeTo(source, mergeInput, deliveryPolicy);
         }
 
         private Message<BufferReader> ThrottledMessages(ValueTuple<string, Message<Message<BufferReader>>> messages)

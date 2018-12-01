@@ -13,7 +13,7 @@ namespace Test.Psi
     public class EmitterTester
     {
         // make out local version of immediate, to make sure it's synchronous even in debug builds
-        private static DeliveryPolicy immediate = new DeliveryPolicy() { ThrottleWhenFull = true, LagEnforcement = LagConstraints.None, QueueSize = 1, IsSynchronous = true };
+        private static readonly DeliveryPolicy immediate = new DeliveryPolicy(1, int.MaxValue, null, true, true);
 
         [TestMethod]
         [Timeout(60000)]

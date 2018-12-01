@@ -9,6 +9,8 @@ namespace Microsoft.Psi.PsiStudio
     using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Win32;
@@ -192,6 +194,30 @@ namespace Microsoft.Psi.PsiStudio
             if (mainPanelBorder != null)
             {
                 mainPanelBorder.Margin = default(Thickness);
+            }
+        }
+
+        private void StreamTreeNode_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            // If the left button is also pressed, then the user is probably wanting to
+            // initiate a drag operation of the stream into the Visualization Container
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                // Get the Tree Item that sent the event
+                StackPanel treeNode = sender as StackPanel;
+                if (treeNode != null)
+                {
+                    IStreamTreeNode streamTreeNode = treeNode.DataContext as IStreamTreeNode;
+                    if (streamTreeNode != null)
+                    {
+                        // Begin the Drag & Drop operation
+                        DataObject data = new DataObject();
+                        data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.DragDropStream);
+                        data.SetData(DragDropDataName.StreamTreeNode, streamTreeNode);
+
+                        DragDrop.DoDragDrop(treeNode, data, DragDropEffects.Move);
+                    }
+                }
             }
         }
     }

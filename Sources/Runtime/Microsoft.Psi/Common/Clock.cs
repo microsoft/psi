@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma warning disable SA1600 // ElementsMustBeDocumented, reason: class in this file is internal
-
 namespace Microsoft.Psi
 {
     using System;
@@ -10,12 +8,12 @@ namespace Microsoft.Psi
     /// <summary>
     /// Represents virtual time.
     /// </summary>
-    internal class Clock
+    public class Clock
     {
         private readonly TimeSpan offsetInRealTime;
         private readonly DateTime originInRealTime;
-        private readonly float virtualTimeDilateFactor;
-        private readonly float virtualTimeDilateFactorInverse;
+        private readonly double virtualTimeDilateFactor;
+        private readonly double virtualTimeDilateFactorInverse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Clock"/> class.
@@ -27,7 +25,7 @@ namespace Microsoft.Psi
             this.offsetInRealTime = virtualTimeOffset;
             this.originInRealTime = Time.GetCurrentTime();
             this.virtualTimeDilateFactorInverse = timeDilationFactor;
-            this.virtualTimeDilateFactor = (timeDilationFactor == 0) ? 0 : 1 / timeDilationFactor;
+            this.virtualTimeDilateFactor = (timeDilationFactor == 0) ? 0 : 1.0 / timeDilationFactor;
         }
 
         /// <summary>
@@ -41,11 +39,17 @@ namespace Microsoft.Psi
             this.offsetInRealTime = virtualNow - now;
             this.originInRealTime = now;
             this.virtualTimeDilateFactorInverse = replaySpeedFactor;
-            this.virtualTimeDilateFactor = (replaySpeedFactor == 0) ? 0 : 1 / replaySpeedFactor;
+            this.virtualTimeDilateFactor = (replaySpeedFactor == 0) ? 0 : 1.0 / replaySpeedFactor;
         }
 
+        /// <summary>
+        /// Gets the origin in real time.
+        /// </summary>
         public DateTime RealTimeOrigin => this.originInRealTime;
 
+        /// <summary>
+        /// Gets the offset origin in real time.
+        /// </summary>
         public DateTime Origin => this.originInRealTime + this.offsetInRealTime;
 
         /// <summary>
@@ -78,6 +82,11 @@ namespace Microsoft.Psi
             return this.originInRealTime + this.ToVirtualTime(realTime - this.originInRealTime) + this.offsetInRealTime;
         }
 
+        /// <summary>
+        /// Returns the virtual time span, given a real time span.
+        /// </summary>
+        /// <param name="realTimeInterval">Real time span</param>
+        /// <returns>Virtual time span</returns>
         public TimeSpan ToVirtualTime(TimeSpan realTimeInterval)
         {
             return new TimeSpan((long)(realTimeInterval.Ticks * this.virtualTimeDilateFactor));
@@ -93,10 +102,14 @@ namespace Microsoft.Psi
             return this.originInRealTime + this.ToRealTime(virtualTime - this.originInRealTime - this.offsetInRealTime);
         }
 
+        /// <summary>
+        /// Returns the real time span, given a virtual time span.
+        /// </summary>
+        /// <param name="virtualTimeInterval">Virtual time span</param>
+        /// <returns>Real time span</returns>
         public TimeSpan ToRealTime(TimeSpan virtualTimeInterval)
         {
             return new TimeSpan((long)(virtualTimeInterval.Ticks * this.virtualTimeDilateFactorInverse));
         }
     }
 }
-#pragma warning restore SA1600 // ElementsMustBeDocumented
