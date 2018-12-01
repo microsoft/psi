@@ -103,18 +103,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2b3c686fa0fad9915c3d05eeb08558ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a2b3c686fa0fad9915c3d05eeb08558ac">RegisterGenericSerializer</a> (Type genericSerializer)</td></tr>
 <tr class="memdesc:a2b3c686fa0fad9915c3d05eeb08558ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a generic serializer, that is, a serializer defined for a generic type. The generic serializer must implement ISerializer&lt;T&gt;.  <a href="#a2b3c686fa0fad9915c3d05eeb08558ac">More...</a><br /></td></tr>
 <tr class="separator:a2b3c686fa0fad9915c3d05eeb08558ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cb97654df217d612c6d2e688583cf15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a1cb97654df217d612c6d2e688583cf15">RegisterAssembly</a> (AssemblyName assemblyName)</td></tr>
-<tr class="memdesc:a1cb97654df217d612c6d2e688583cf15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers an assembly as a known source of types that the serialization system would otherwise not be able find or resolve. Use this overload when one or more types from the assembly are required in a polymorphic context.  <a href="#a1cb97654df217d612c6d2e688583cf15">More...</a><br /></td></tr>
-<tr class="separator:a1cb97654df217d612c6d2e688583cf15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a96ee2f7233dbb1530e61a1aaa4006ec8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html">RuntimeInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a96ee2f7233dbb1530e61a1aaa4006ec8">RuntimeVersion</a> =&gt; this.runtimeVersion</td></tr>
 <tr class="memdesc:a96ee2f7233dbb1530e61a1aaa4006ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the version of the serialization subsystem this serializer set is compatible with.  <a href="#a96ee2f7233dbb1530e61a1aaa4006ec8">More...</a><br /></td></tr>
 <tr class="separator:a96ee2f7233dbb1530e61a1aaa4006ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6af014664d9fd773f2bcb0907e7b93b5"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a6af014664d9fd773f2bcb0907e7b93b5">Schemas</a> =&gt; this.schemas.Values</td></tr>
-<tr class="memdesc:a6af014664d9fd773f2bcb0907e7b93b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the set of schemas in use  <a href="#a6af014664d9fd773f2bcb0907e7b93b5">More...</a><br /></td></tr>
-<tr class="separator:a6af014664d9fd773f2bcb0907e7b93b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a150cb72e482f2825837bc3f5558d7e9b"><td class="memItemLeft" align="right" valign="top">IDictionary&lt; string, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a150cb72e482f2825837bc3f5558d7e9b">Schemas</a> =&gt; this.schemas</td></tr>
+<tr class="memdesc:a150cb72e482f2825837bc3f5558d7e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the set of schemas in use  <a href="#a150cb72e482f2825837bc3f5558d7e9b">More...</a><br /></td></tr>
+<tr class="separator:a150cb72e482f2825837bc3f5558d7e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -139,8 +136,7 @@ Events</h2></td></tr>
 </ul>
 <p>When deserializing a polymorphic field, the field's object value might have a different type than the declared (static) type of the field (e.g the field is declared as IEnumerable{int} and is assigned an int[]). In such cases the runtime might not be able to find the correct type to use, and can only instantiate the correct deserializer if one of the following is true:</p><ul>
 <li>a serializer has been explicitly registered for the object type or contract using <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#aa44a7c69b17311d098c277c013602506" title="Registers a serializer based on type. Use this overload to register a custom implementation of ISeria...">Register&lt;T, TSerializer&gt;()</a></li>
-<li>a type has been explicitly registered with an explicit contract name <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a39d1f435ff7000a7dd465de98d319496" title="Registers type T with the specified contract name. Use this overload to deserialize data persisted be...">Register&lt;T&gt;(string)</a> or <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#aea018805740dcfb813c5ea3f2aa7fc95" title="Registers a type and serializer for the specified contract type. Use this overload to deserialize dat...">Register&lt;T, TSerializer&gt;(string)</a>/&gt;</li>
-<li>the assembly containing the object type has been registered using <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a1cb97654df217d612c6d2e688583cf15" title="Registers an assembly as a known source of types that the serialization system would otherwise not be...">RegisterAssembly(AssemblyName)</a> </li>
+<li>a type has been explicitly registered with an explicit contract name <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#a39d1f435ff7000a7dd465de98d319496" title="Registers type T with the specified contract name. Use this overload to deserialize data persisted be...">Register&lt;T&gt;(string)</a> or <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html#aea018805740dcfb813c5ea3f2aa7fc95" title="Registers a type and serializer for the specified contract type. Use this overload to deserialize dat...">Register&lt;T, TSerializer&gt;(string)</a>/&gt; </li>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a825a3d794aff7d30fb365bf42e226a03"></a>
@@ -346,33 +342,6 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="a1cb97654df217d612c6d2e688583cf15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cb97654df217d612c6d2e688583cf15">&#9670;&nbsp;</a></span>RegisterAssembly()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Serialization.KnownSerializers.RegisterAssembly </td>
-          <td>(</td>
-          <td class="paramtype">AssemblyName&#160;</td>
-          <td class="paramname"><em>assemblyName</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Registers an assembly as a known source of types that the serialization system would otherwise not be able find or resolve. Use this overload when one or more types from the assembly are required in a polymorphic context. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">assemblyName</td><td>The assembly to register</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>When deserializing a polymorphic field, the field's object value might have a different type than the declared (static) type of the field (e.g the field is declared as IEnumerable{int} and is assigned an int[]). Registering an assembly allows the runtime to load and search it when trying to resolve a polymorphic type. </p>
-
-</div>
-</div>
 <a id="a2b3c686fa0fad9915c3d05eeb08558ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b3c686fa0fad9915c3d05eeb08558ac">&#9670;&nbsp;</a></span>RegisterGenericSerializer()</h2>
 
@@ -440,14 +409,14 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="a6af014664d9fd773f2bcb0907e7b93b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6af014664d9fd773f2bcb0907e7b93b5">&#9670;&nbsp;</a></span>Schemas</h2>
+<a id="a150cb72e482f2825837bc3f5558d7e9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a150cb72e482f2825837bc3f5558d7e9b">&#9670;&nbsp;</a></span>Schemas</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">IEnumerable&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a>&gt; Microsoft.Psi.Serialization.KnownSerializers.Schemas =&gt; this.schemas.Values</td>
+          <td class="memname">IDictionary&lt;string, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a>&gt; Microsoft.Psi.Serialization.KnownSerializers.Schemas =&gt; this.schemas</td>
         </tr>
       </table>
 </div><div class="memdoc">

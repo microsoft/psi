@@ -97,6 +97,8 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_microsoft_1_1_psi_1_1_imaging"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html">Imaging</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespace_microsoft_1_1_psi_1_1_interop"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_interop.html">Interop</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_microsoft_1_1_psi_1_1_kinect"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_kinect.html">Kinect</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_microsoft_1_1_psi_1_1_language"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_language.html">Language</a></td></tr>
@@ -126,6 +128,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_clock.html">Clock</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents virtual time.  <a href="class_microsoft_1_1_psi_1_1_clock.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_configuration_helper.html">ConfigurationHelper</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A component helper for managing component configuration.  <a href="class_microsoft_1_1_psi_1_1_configuration_helper.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,9 +266,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ae90159cf7825cde832442d8c960db75d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">LagConstraints</a> : byte </td></tr>
-<tr class="memdesc:ae90159cf7825cde832442d8c960db75d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the possible ways in which maximum lag can be enforced  <a href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">More...</a><br /></td></tr>
-<tr class="separator:ae90159cf7825cde832442d8c960db75d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dd37e9fa073f5790bc39086dfe07581"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581">MatchResultType</a> </td></tr>
 <tr class="memdesc:a9dd37e9fa073f5790bc39086dfe07581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of match result.  <a href="namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581">More...</a><br /></td></tr>
 <tr class="separator:a9dd37e9fa073f5790bc39086dfe07581"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -309,38 +311,6 @@ Enumerations</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="abf9f7febd7b38f67e163b38e328a111baf66ae126720689f8a0d0061f7573b5d9"></a>MessageCount&#160;</td><td class="fielddoc"><p>The rate of received messages </p>
 </td></tr>
 <tr><td class="fieldname"><a id="abf9f7febd7b38f67e163b38e328a111ba89785865515bd6d75367711c697aff24"></a>MessageLatency&#160;</td><td class="fielddoc"><p>Total latency, from beginning of the pipeline </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ae90159cf7825cde832442d8c960db75d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae90159cf7825cde832442d8c960db75d">&#9670;&nbsp;</a></span>LagConstraints</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">Microsoft.Psi.LagConstraints</a> : byte</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Defines the possible ways in which maximum lag can be enforced </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae90159cf7825cde832442d8c960db75da6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Don't enforce lag constraints </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ae90159cf7825cde832442d8c960db75dab4ee632ee2b420e4c4954189eafa9230"></a>BestEffort&#160;</td><td class="fielddoc"><p>Process all the items that satisfy the constraints. If no items satisfy the constraint, process the latest item. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ae90159cf7825cde832442d8c960db75da2e979835dd62324f5bfe217449ba4974"></a>Strict&#160;</td><td class="fielddoc"><p>Do not process any items that don't satisfy the constraints </p>
 </td></tr>
 </table>
 

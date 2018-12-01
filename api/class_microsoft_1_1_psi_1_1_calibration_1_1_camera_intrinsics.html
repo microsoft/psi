@@ -92,12 +92,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7ec906995d092730d559c0c724c9298"><td class="memItemLeft" align="right" valign="top">Point3D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ab7ec906995d092730d559c0c724c9298">ToCameraSpace</a> (Point2D pt, double depth, bool undistort)</td></tr>
 <tr class="memdesc:ab7ec906995d092730d559c0c724c9298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a pixel coordinate back into a camera space coordinate  <a href="#ab7ec906995d092730d559c0c724c9298">More...</a><br /></td></tr>
 <tr class="separator:ab7ec906995d092730d559c0c724c9298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a935980c9a41363c68508650e68814af5"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a935980c9a41363c68508650e68814af5">DistortPoint</a> (Point2D undistortedPt)</td></tr>
-<tr class="memdesc:a935980c9a41363c68508650e68814af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">DistortPoint applies the camera's radial and tangential distortion to the specified (undistorted) point. Point is in NDC space (-1..+1).  <a href="#a935980c9a41363c68508650e68814af5">More...</a><br /></td></tr>
-<tr class="separator:a935980c9a41363c68508650e68814af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a106556dabed6ec6beab5a5bf444b3761"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a106556dabed6ec6beab5a5bf444b3761">UndistortPoint</a> (Point2D distortedPt)</td></tr>
-<tr class="memdesc:a106556dabed6ec6beab5a5bf444b3761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Undistort takes a pixel coordinate that has had distortion applied to it and computes an undistorted pixel coordinate.  <a href="#a106556dabed6ec6beab5a5bf444b3761">More...</a><br /></td></tr>
+<tr class="memdesc:a106556dabed6ec6beab5a5bf444b3761"><td class="mdescLeft">&#160;</td><td class="mdescRight">UndistortPoint applies the camera's radial and tangential undistortion to the specified (distorted) point. Point is camera space after projection (camera post-projection space).  <a href="#a106556dabed6ec6beab5a5bf444b3761">More...</a><br /></td></tr>
 <tr class="separator:a106556dabed6ec6beab5a5bf444b3761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a597ba3669ad42b617370f582c54f07fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a597ba3669ad42b617370f582c54f07fc">DistortPoint</a> (Point2D undistortedPt, out Point2D distortedPt)</td></tr>
+<tr class="memdesc:a597ba3669ad42b617370f582c54f07fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distort takes a camera post-projection coordinate and applies the distortion model to it.  <a href="#a597ba3669ad42b617370f582c54f07fc">More...</a><br /></td></tr>
+<tr class="separator:a597ba3669ad42b617370f582c54f07fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -120,10 +120,13 @@ Properties</h2></td></tr>
 <tr class="memdesc:ac2ecadc3c3364b8721b0117d0eae80fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the camera's inverse intrinsic transform.  <a href="#ac2ecadc3c3364b8721b0117d0eae80fe">More...</a><br /></td></tr>
 <tr class="separator:ac2ecadc3c3364b8721b0117d0eae80fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ae70f89dbf7883b2bc8ff47a84d5862e2">FocalLength</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the Focal length  <a href="#ae70f89dbf7883b2bc8ff47a84d5862e2">More...</a><br /></td></tr>
+<tr class="memdesc:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the Focal length (in pixels)  <a href="#ae70f89dbf7883b2bc8ff47a84d5862e2">More...</a><br /></td></tr>
 <tr class="separator:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba6679c54778bb08ed99ca37708692e2"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#aba6679c54778bb08ed99ca37708692e2">FocalLengthXY</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aba6679c54778bb08ed99ca37708692e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the Focal length separated in X and Y (in pixels)  <a href="#aba6679c54778bb08ed99ca37708692e2">More...</a><br /></td></tr>
+<tr class="separator:aba6679c54778bb08ed99ca37708692e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cf4790972f95454c139b00948ddde2c"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a3cf4790972f95454c139b00948ddde2c">PrincipalPoint</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a3cf4790972f95454c139b00948ddde2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the principal point  <a href="#a3cf4790972f95454c139b00948ddde2c">More...</a><br /></td></tr>
+<tr class="memdesc:a3cf4790972f95454c139b00948ddde2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the principal point (in pixels)  <a href="#a3cf4790972f95454c139b00948ddde2c">More...</a><br /></td></tr>
 <tr class="separator:a3cf4790972f95454c139b00948ddde2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace491dbd3e73dfa1bb3a08f6c5aecb9d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ace491dbd3e73dfa1bb3a08f6c5aecb9d">ImageWidth</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:ace491dbd3e73dfa1bb3a08f6c5aecb9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the width of the image plane in pixels  <a href="#ace491dbd3e73dfa1bb3a08f6c5aecb9d">More...</a><br /></td></tr>
@@ -252,8 +255,8 @@ Properties</h2></td></tr>
     <tr><td class="paramname">imageHeight</td><td>Height in pixels of image plane</td></tr>
     <tr><td class="paramname">focalLength</td><td>focal length of the camera in mm</td></tr>
     <tr><td class="paramname">skew</td><td>Skew factor to account for non-perpendicular image plane axis</td></tr>
-    <tr><td class="paramname">xscale</td><td>Scale factor to apply to X axis</td></tr>
-    <tr><td class="paramname">yscale</td><td>Scale factor to apply to Y axis</td></tr>
+    <tr><td class="paramname">xscale</td><td>Scale factor to apply to X axis (pixels per mm)</td></tr>
+    <tr><td class="paramname">yscale</td><td>Scale factor to apply to Y axis (pixels per mm)</td></tr>
   </table>
   </dd>
 </dl>
@@ -261,33 +264,45 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a935980c9a41363c68508650e68814af5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a935980c9a41363c68508650e68814af5">&#9670;&nbsp;</a></span>DistortPoint()</h2>
+<a id="a597ba3669ad42b617370f582c54f07fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a597ba3669ad42b617370f582c54f07fc">&#9670;&nbsp;</a></span>DistortPoint()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Point2D Microsoft.Psi.Calibration.CameraIntrinsics.DistortPoint </td>
+          <td class="memname">bool Microsoft.Psi.Calibration.CameraIntrinsics.DistortPoint </td>
           <td>(</td>
           <td class="paramtype">Point2D&#160;</td>
-          <td class="paramname"><em>undistortedPt</em></td><td>)</td>
+          <td class="paramname"><em>undistortedPt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">out Point2D&#160;</td>
+          <td class="paramname"><em>distortedPt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>DistortPoint applies the camera's radial and tangential distortion to the specified (undistorted) point. Point is in NDC space (-1..+1). </p>
-<p>The distortion is defined by the following equations: Xd = Xu (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xu^2) + T0 * 2 * XuYu Yd = Yu (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yu^2) + T1 * 2 * XuYu where: Xu,Yu - undistorted point's coordinates Xd,Yd - distorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients</p>
+<p>Distort takes a camera post-projection coordinate and applies the distortion model to it. </p>
+<p>The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients r - sqrt(Xd*Xd+Yd*Yd)</p>
+<p>We use Newton's method for finding the inverse of this. That is Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">undistortedPt</td><td>Undistorted point in NDC coordinates</td></tr>
+    <tr><td class="paramname">undistortedPt</td><td>Defines our distorted point in camera post-projection coordinates</td></tr>
+    <tr><td class="paramname">distortedPt</td><td>Returns the distorted point</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Distorted pixel coordinates in NDC</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if 'distortedPt' contains the distorted point. false if it didn't converge</dd></dl>
 
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a83090a1df52174e8c7d7bdef772b4acc">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a9c4760ebc15a960385f3585a074ef279">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
 
 </div>
 </div>
@@ -394,16 +409,15 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Undistort takes a pixel coordinate that has had distortion applied to it and computes an undistorted pixel coordinate. </p>
-<p>The distortion is defined by the following equations: Xd = Xu (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xu^2) + T0 * 2 * XuYu Yd = Yu (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yu^2) + T1 * 2 * XuYu where: Xu,Yu - undistorted point's coordinates Xd,Yd - distorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients r - sqrt(Xu*Xu+Yu*Yu)</p>
-<p>We use Newton's method for finding the inverse of this. That is Xu(n+1) = Xu(n) + J^-1 * F(Xd,Yd) </p>
+<p>UndistortPoint applies the camera's radial and tangential undistortion to the specified (distorted) point. Point is camera space after projection (camera post-projection space). </p>
+<p>The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">distortedPt</td><td>Defines our distorted pixel coordinate</td></tr>
+    <tr><td class="paramname">distortedPt</td><td>Distorted point in camera post-projection coordinates</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The undistorted point in NDC coordinates</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Undistorted coordinates in camera post-projection coordinates</dd></dl>
 
 <p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a68cf0f04c0b5f108e83a22a002b8585b">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
 
@@ -430,7 +444,31 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the Focal length </p>
+<p>Gets or sets the Focal length (in pixels) </p>
+
+</div>
+</div>
+<a id="aba6679c54778bb08ed99ca37708692e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba6679c54778bb08ed99ca37708692e2">&#9670;&nbsp;</a></span>FocalLengthXY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Point2D Microsoft.Psi.Calibration.CameraIntrinsics.FocalLengthXY</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or sets the Focal length separated in X and Y (in pixels) </p>
 
 </div>
 </div>
@@ -526,7 +564,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the principal point </p>
+<p>Gets or sets the principal point (in pixels) </p>
 
 </div>
 </div>

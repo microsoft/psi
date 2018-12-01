@@ -94,15 +94,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af59e7b9a6de4afa3eb011af6a10acf18"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#af59e7b9a6de4afa3eb011af6a10acf18">Contains</a> (string streamName)</td></tr>
 <tr class="memdesc:af59e7b9a6de4afa3eb011af6a10acf18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the store contains the specified storage stream.  <a href="#af59e7b9a6de4afa3eb011af6a10acf18">More...</a><br /></td></tr>
 <tr class="separator:af59e7b9a6de4afa3eb011af6a10acf18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af13363f5fe02b524344e0a318892cc76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#af13363f5fe02b524344e0a318892cc76">CopyStream</a> (string streamName, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:af13363f5fe02b524344e0a318892cc76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the specified storage stream to an exporter without deserializing the data.  <a href="#af13363f5fe02b524344e0a318892cc76">More...</a><br /></td></tr>
-<tr class="separator:af13363f5fe02b524344e0a318892cc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a777f49b04c99bd86db4cf715d72234aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a777f49b04c99bd86db4cf715d72234aa">CopyStream</a> (string streamName, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a777f49b04c99bd86db4cf715d72234aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the specified storage stream to an exporter without deserializing the data.  <a href="#a777f49b04c99bd86db4cf715d72234aa">More...</a><br /></td></tr>
+<tr class="separator:a777f49b04c99bd86db4cf715d72234aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15e1c5e891db8d2ad5196e880c4a1e71"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a15e1c5e891db8d2ad5196e880c4a1e71">OpenAs&lt; T &gt;</a> ()</td></tr>
 <tr class="memdesc:a15e1c5e891db8d2ad5196e880c4a1e71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a store by creating a dummy object of type T that exposes emitters that match to each stream in the store. This is useful for reading back stores that were previously created via Exporter.Write(T sensor, WhichStreams streamsToEmit, string[] streamNames) which is useful for saving streams from a sensor and then calling this method to play them back as if they were an attached device.  <a href="#a15e1c5e891db8d2ad5196e880c4a1e71">More...</a><br /></td></tr>
 <tr class="separator:a15e1c5e891db8d2ad5196e880c4a1e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab422cf7e0fb0afb2f90b35ee7976cb7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#ab422cf7e0fb0afb2f90b35ee7976cb7c">OpenStream&lt; T &gt;</a> (string streamName, T reusableInstance=default(T))</td></tr>
 <tr class="memdesc:ab422cf7e0fb0afb2f90b35ee7976cb7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified storage stream for reading and returns a stream instance that can be used to consume the messages. The returned stream will publish data read from the store once the pipeline is running.  <a href="#ab422cf7e0fb0afb2f90b35ee7976cb7c">More...</a><br /></td></tr>
 <tr class="separator:ab422cf7e0fb0afb2f90b35ee7976cb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d38458f0d47d2ff40c4c89a571a07a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; dynamic &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a72d38458f0d47d2ff40c4c89a571a07a">OpenDynamicStream</a> (string streamName)</td></tr>
+<tr class="memdesc:a72d38458f0d47d2ff40c4c89a571a07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified storage stream as dynamic for reading and returns a stream instance that can be used to consume the messages. The returned stream will publish data read from the store once the pipeline is running.  <a href="#a72d38458f0d47d2ff40c4c89a571a07a">More...</a><br /></td></tr>
+<tr class="separator:a72d38458f0d47d2ff40c4c89a571a07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -203,8 +206,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af13363f5fe02b524344e0a318892cc76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af13363f5fe02b524344e0a318892cc76">&#9670;&nbsp;</a></span>CopyStream()</h2>
+<a id="a777f49b04c99bd86db4cf715d72234aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a777f49b04c99bd86db4cf715d72234aa">&#9670;&nbsp;</a></span>CopyStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +228,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -240,7 +243,7 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">streamName</td><td>The name of the storage stream to copy</td></tr>
     <tr><td class="paramname">writer</td><td>The store to copy to</td></tr>
-    <tr><td class="paramname">policy</td><td>An optional delivery policy</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -316,6 +319,34 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Newly constructed object of type T</dd></dl>
+
+</div>
+</div>
+<a id="a72d38458f0d47d2ff40c4c89a571a07a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72d38458f0d47d2ff40c4c89a571a07a">&#9670;&nbsp;</a></span>OpenDynamicStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;dynamic&gt; Microsoft.Psi.Data.Importer.OpenDynamicStream </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>streamName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens the specified storage stream as dynamic for reading and returns a stream instance that can be used to consume the messages. The returned stream will publish data read from the store once the pipeline is running. </p>
+<p>Messages are deserialized as dynamic primitives and/or ExpandoObject of dynamic.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">streamName</td><td>The name of the storage stream to open</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A stream of dynamic that publishes the data read from the store.</dd></dl>
 
 </div>
 </div>

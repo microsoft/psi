@@ -82,9 +82,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac9facbcfa7df74e51d8bd0d5eec12e1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#ac9facbcfa7df74e51d8bd0d5eec12e1d">StreamEnumerable</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; stream, Func&lt; T, bool &gt; predicate=null)</td></tr>
-<tr class="memdesc:ac9facbcfa7df74e51d8bd0d5eec12e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#ac9facbcfa7df74e51d8bd0d5eec12e1d" title="Initializes a new instance of the StreamEnumerable&lt;T&gt; class. ">StreamEnumerable&lt;T&gt;</a> class.  <a href="#ac9facbcfa7df74e51d8bd0d5eec12e1d">More...</a><br /></td></tr>
-<tr class="separator:ac9facbcfa7df74e51d8bd0d5eec12e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0685619eb859aabdd4abc0e8385622f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a0685619eb859aabdd4abc0e8385622f5">StreamEnumerable</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, Func&lt; T, bool &gt; predicate=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a0685619eb859aabdd4abc0e8385622f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a0685619eb859aabdd4abc0e8385622f5" title="Initializes a new instance of the StreamEnumerable&lt;T&gt; class. ">StreamEnumerable&lt;T&gt;</a> class.  <a href="#a0685619eb859aabdd4abc0e8385622f5">More...</a><br /></td></tr>
+<tr class="separator:a0685619eb859aabdd4abc0e8385622f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b29e6f09bbc163f24cf1757708f24ff"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a6b29e6f09bbc163f24cf1757708f24ff">GetEnumerator</a> ()</td></tr>
 <tr class="separator:a6b29e6f09bbc163f24cf1757708f24ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -97,8 +97,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac9facbcfa7df74e51d8bd0d5eec12e1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9facbcfa7df74e51d8bd0d5eec12e1d">&#9670;&nbsp;</a></span>StreamEnumerable()</h2>
+<a id="a0685619eb859aabdd4abc0e8385622f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0685619eb859aabdd4abc0e8385622f5">&#9670;&nbsp;</a></span>StreamEnumerable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -107,13 +107,19 @@ Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html">Microsoft.Psi.Operators.StreamEnumerable</a>&lt; T &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html">StreamEnumerable</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td>
-          <td class="paramname"><em>stream</em>, </td>
+          <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; T, bool &gt;&#160;</td>
-          <td class="paramname"><em>predicate</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>predicate</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -123,11 +129,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#ac9facbcfa7df74e51d8bd0d5eec12e1d" title="Initializes a new instance of the StreamEnumerable&lt;T&gt; class. ">StreamEnumerable&lt;T&gt;</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a0685619eb859aabdd4abc0e8385622f5" title="Initializes a new instance of the StreamEnumerable&lt;T&gt; class. ">StreamEnumerable&lt;T&gt;</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream to enumerate.</td></tr>
+    <tr><td class="paramname">source</td><td>The source stream to enumerate.</td></tr>
     <tr><td class="paramname">predicate</td><td>Predicate (filter) function.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

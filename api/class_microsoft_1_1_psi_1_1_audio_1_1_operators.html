@@ -79,48 +79,48 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:afbf7b6ef65657054e61ffaa15eabb95f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#afbf7b6ef65657054e61ffaa15eabb95f">ToByteArray</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; source)</td></tr>
-<tr class="memdesc:afbf7b6ef65657054e61ffaa15eabb95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms an <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html" title="Represents a buffer of audio and its associated format information. ">AudioBuffer</a> stream to a stream of byte arrays containing the raw audio.  <a href="#afbf7b6ef65657054e61ffaa15eabb95f">More...</a><br /></td></tr>
-<tr class="separator:afbf7b6ef65657054e61ffaa15eabb95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13f822c97dd9b8b51b057eb9fecada1f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a13f822c97dd9b8b51b057eb9fecada1f">ToAudioBuffer</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> audioFormat)</td></tr>
-<tr class="memdesc:a13f822c97dd9b8b51b057eb9fecada1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of byte arrays containing raw audio to an <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html" title="Represents a buffer of audio and its associated format information. ">AudioBuffer</a> stream.  <a href="#a13f822c97dd9b8b51b057eb9fecada1f">More...</a><br /></td></tr>
-<tr class="separator:a13f822c97dd9b8b51b057eb9fecada1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae27bffdc354e73b3f28dcfb34834d682"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#ae27bffdc354e73b3f28dcfb34834d682">FrameShift</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec)</td></tr>
-<tr class="memdesc:ae27bffdc354e73b3f28dcfb34834d682"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame shift operator.  <a href="#ae27bffdc354e73b3f28dcfb34834d682">More...</a><br /></td></tr>
-<tr class="separator:ae27bffdc354e73b3f28dcfb34834d682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecb5e59d269f97bf046d2e15dd00d88e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#aecb5e59d269f97bf046d2e15dd00d88e">ToFloat</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> format)</td></tr>
-<tr class="memdesc:aecb5e59d269f97bf046d2e15dd00d88e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a stream of audio data to a stream of floating point values.  <a href="#aecb5e59d269f97bf046d2e15dd00d88e">More...</a><br /></td></tr>
-<tr class="separator:aecb5e59d269f97bf046d2e15dd00d88e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fcc274415d6e432e8d54138194e9fa6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a1fcc274415d6e432e8d54138194e9fa6">Dither</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, float scaleFactor, int randomSeed=0)</td></tr>
-<tr class="memdesc:a1fcc274415d6e432e8d54138194e9fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies dithering to input sample values.  <a href="#a1fcc274415d6e432e8d54138194e9fa6">More...</a><br /></td></tr>
-<tr class="separator:a1fcc274415d6e432e8d54138194e9fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb42b1728bf56ab961f261167768cc68"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#aeb42b1728bf56ab961f261167768cc68">HanningWindow</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int kernelLength)</td></tr>
-<tr class="memdesc:aeb42b1728bf56ab961f261167768cc68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a Hanning window to input sample values.  <a href="#aeb42b1728bf56ab961f261167768cc68">More...</a><br /></td></tr>
-<tr class="separator:aeb42b1728bf56ab961f261167768cc68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc3d40105578c0c7fbafd7232bd23032"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#adc3d40105578c0c7fbafd7232bd23032">FFT</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int fftSize, int inputSize)</td></tr>
-<tr class="memdesc:adc3d40105578c0c7fbafd7232bd23032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a Fast Fourier Transform on input sample buffers.  <a href="#adc3d40105578c0c7fbafd7232bd23032">More...</a><br /></td></tr>
-<tr class="separator:adc3d40105578c0c7fbafd7232bd23032"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac49ed68cd4f4819fda3dee4e84967b3f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#ac49ed68cd4f4819fda3dee4e84967b3f">FFTPower</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source)</td></tr>
-<tr class="memdesc:ac49ed68cd4f4819fda3dee4e84967b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a stream of FFTs to FFT power spectra.  <a href="#ac49ed68cd4f4819fda3dee4e84967b3f">More...</a><br /></td></tr>
-<tr class="separator:ac49ed68cd4f4819fda3dee4e84967b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8af67c8395ad2edf9af590fe144c3418"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a8af67c8395ad2edf9af590fe144c3418">LogEnergy</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source)</td></tr>
-<tr class="memdesc:a8af67c8395ad2edf9af590fe144c3418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the log energy of a stream of input samples in the time domain.  <a href="#a8af67c8395ad2edf9af590fe144c3418">More...</a><br /></td></tr>
-<tr class="separator:a8af67c8395ad2edf9af590fe144c3418"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b42e084ced8bfa0c969e943cbd1d383"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a1b42e084ced8bfa0c969e943cbd1d383">ZeroCrossingRate</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source)</td></tr>
-<tr class="memdesc:a1b42e084ced8bfa0c969e943cbd1d383"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the zero-crossing rate of input samples.  <a href="#a1b42e084ced8bfa0c969e943cbd1d383">More...</a><br /></td></tr>
-<tr class="separator:a1b42e084ced8bfa0c969e943cbd1d383"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6007656cc1b346c8cf7d5e147e5aeca2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a6007656cc1b346c8cf7d5e147e5aeca2">FrequencyDomainEnergy</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int start, int end)</td></tr>
-<tr class="memdesc:a6007656cc1b346c8cf7d5e147e5aeca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the frequency domain energy from the FFT power spectra.  <a href="#a6007656cc1b346c8cf7d5e147e5aeca2">More...</a><br /></td></tr>
-<tr class="separator:a6007656cc1b346c8cf7d5e147e5aeca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc1bb7c975df94d1fa41a87ffd62e987"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#adc1bb7c975df94d1fa41a87ffd62e987">SpectralEntropy</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int start, int end)</td></tr>
-<tr class="memdesc:adc1bb7c975df94d1fa41a87ffd62e987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the spectral entropy within a frequency band.  <a href="#adc1bb7c975df94d1fa41a87ffd62e987">More...</a><br /></td></tr>
-<tr class="separator:adc1bb7c975df94d1fa41a87ffd62e987"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9bf51e68ae8352b445c85ffad3c53d3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#af9bf51e68ae8352b445c85ffad3c53d3">Resample</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler_configuration.html">AudioResamplerConfiguration</a> configuration)</td></tr>
-<tr class="memdesc:af9bf51e68ae8352b445c85ffad3c53d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resamples an audio stream.  <a href="#af9bf51e68ae8352b445c85ffad3c53d3">More...</a><br /></td></tr>
-<tr class="separator:af9bf51e68ae8352b445c85ffad3c53d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad48777a81ed1158f7dc8c838691d51cc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#ad48777a81ed1158f7dc8c838691d51cc">Resample</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> outputFormat)</td></tr>
-<tr class="memdesc:ad48777a81ed1158f7dc8c838691d51cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resamples an audio stream.  <a href="#ad48777a81ed1158f7dc8c838691d51cc">More...</a><br /></td></tr>
-<tr class="separator:ad48777a81ed1158f7dc8c838691d51cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62590de065f40d90d4690fd515a5d255"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a62590de065f40d90d4690fd515a5d255">ToByteArray</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a62590de065f40d90d4690fd515a5d255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms an <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html" title="Represents a buffer of audio and its associated format information. ">AudioBuffer</a> stream to a stream of byte arrays containing the raw audio.  <a href="#a62590de065f40d90d4690fd515a5d255">More...</a><br /></td></tr>
+<tr class="separator:a62590de065f40d90d4690fd515a5d255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a535f269bce4ebae23c2656b94e00954f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a535f269bce4ebae23c2656b94e00954f">ToAudioBuffer</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> audioFormat, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a535f269bce4ebae23c2656b94e00954f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of byte arrays containing raw audio to an <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html" title="Represents a buffer of audio and its associated format information. ">AudioBuffer</a> stream.  <a href="#a535f269bce4ebae23c2656b94e00954f">More...</a><br /></td></tr>
+<tr class="separator:a535f269bce4ebae23c2656b94e00954f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d0224351c2d03e3aa0648faaea68372"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a1d0224351c2d03e3aa0648faaea68372">FrameShift</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a1d0224351c2d03e3aa0648faaea68372"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame shift operator.  <a href="#a1d0224351c2d03e3aa0648faaea68372">More...</a><br /></td></tr>
+<tr class="separator:a1d0224351c2d03e3aa0648faaea68372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5721f2ceb4b70881c10f059fb1ec656b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a5721f2ceb4b70881c10f059fb1ec656b">ToFloat</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> format, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a5721f2ceb4b70881c10f059fb1ec656b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a stream of audio data to a stream of floating point values.  <a href="#a5721f2ceb4b70881c10f059fb1ec656b">More...</a><br /></td></tr>
+<tr class="separator:a5721f2ceb4b70881c10f059fb1ec656b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05633fec52727e71674e997937ba4d5e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a05633fec52727e71674e997937ba4d5e">Dither</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, float scaleFactor, int randomSeed=0, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a05633fec52727e71674e997937ba4d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies dithering to input sample values.  <a href="#a05633fec52727e71674e997937ba4d5e">More...</a><br /></td></tr>
+<tr class="separator:a05633fec52727e71674e997937ba4d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80d21ae0026f9729431ff60242da2477"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a80d21ae0026f9729431ff60242da2477">HanningWindow</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int kernelLength, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a80d21ae0026f9729431ff60242da2477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a Hanning window to input sample values.  <a href="#a80d21ae0026f9729431ff60242da2477">More...</a><br /></td></tr>
+<tr class="separator:a80d21ae0026f9729431ff60242da2477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7483e1f0e22675d9489f5531242ca343"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a7483e1f0e22675d9489f5531242ca343">FFT</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int fftSize, int inputSize, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a7483e1f0e22675d9489f5531242ca343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a Fast Fourier Transform on input sample buffers.  <a href="#a7483e1f0e22675d9489f5531242ca343">More...</a><br /></td></tr>
+<tr class="separator:a7483e1f0e22675d9489f5531242ca343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6564961c99d8f838074e8a5939141ea"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#ae6564961c99d8f838074e8a5939141ea">FFTPower</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ae6564961c99d8f838074e8a5939141ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a stream of FFTs to FFT power spectra.  <a href="#ae6564961c99d8f838074e8a5939141ea">More...</a><br /></td></tr>
+<tr class="separator:ae6564961c99d8f838074e8a5939141ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a7d6f466d2d66a039e9e8ab7319f804"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a6a7d6f466d2d66a039e9e8ab7319f804">LogEnergy</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a6a7d6f466d2d66a039e9e8ab7319f804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the log energy of a stream of input samples in the time domain.  <a href="#a6a7d6f466d2d66a039e9e8ab7319f804">More...</a><br /></td></tr>
+<tr class="separator:a6a7d6f466d2d66a039e9e8ab7319f804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ccea40b079165ece34382db08720c18"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a3ccea40b079165ece34382db08720c18">ZeroCrossingRate</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a3ccea40b079165ece34382db08720c18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the zero-crossing rate of input samples.  <a href="#a3ccea40b079165ece34382db08720c18">More...</a><br /></td></tr>
+<tr class="separator:a3ccea40b079165ece34382db08720c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697cac221ed84501566b665ff481434b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a697cac221ed84501566b665ff481434b">FrequencyDomainEnergy</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int start, int end, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a697cac221ed84501566b665ff481434b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the frequency domain energy from the FFT power spectra.  <a href="#a697cac221ed84501566b665ff481434b">More...</a><br /></td></tr>
+<tr class="separator:a697cac221ed84501566b665ff481434b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa29ccee52d75cc147ee63adbd763c021"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#aa29ccee52d75cc147ee63adbd763c021">SpectralEntropy</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt; source, int start, int end, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:aa29ccee52d75cc147ee63adbd763c021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the spectral entropy within a frequency band.  <a href="#aa29ccee52d75cc147ee63adbd763c021">More...</a><br /></td></tr>
+<tr class="separator:aa29ccee52d75cc147ee63adbd763c021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af66a469e84f6cc9f8387edc5d2e9ed8a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#af66a469e84f6cc9f8387edc5d2e9ed8a">Resample</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler_configuration.html">AudioResamplerConfiguration</a> configuration, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:af66a469e84f6cc9f8387edc5d2e9ed8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resamples an audio stream.  <a href="#af66a469e84f6cc9f8387edc5d2e9ed8a">More...</a><br /></td></tr>
+<tr class="separator:af66a469e84f6cc9f8387edc5d2e9ed8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9192cf0281bf1c9552752e0e1406dfcd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_operators.html#a9192cf0281bf1c9552752e0e1406dfcd">Resample</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> outputFormat, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a9192cf0281bf1c9552752e0e1406dfcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resamples an audio stream.  <a href="#a9192cf0281bf1c9552752e0e1406dfcd">More...</a><br /></td></tr>
+<tr class="separator:a9192cf0281bf1c9552752e0e1406dfcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stream operators and extension methods for Microsoft.Psi.Audio. </p>
@@ -128,8 +128,8 @@ Static Public Member Functions</h2></td></tr>
 <p>These are a collection of extension methods defining various audio and acoustic operators on <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html" title="Represents a buffer of audio and its associated format information. ">AudioBuffer</a> streams, streams of raw audio bytes, streams of floating-point audio samples as well as audio frequency-domain data streams. </p>
 <p>These are a collection of extension methods defining various audio operators on <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html" title="Represents a buffer of audio and its associated format information. ">AudioBuffer</a> streams. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1fcc274415d6e432e8d54138194e9fa6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fcc274415d6e432e8d54138194e9fa6">&#9670;&nbsp;</a></span>Dither()</h2>
+<a id="a05633fec52727e71674e997937ba4d5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05633fec52727e71674e997937ba4d5e">&#9670;&nbsp;</a></span>Dither()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +153,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>randomSeed</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>randomSeed</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -174,6 +180,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>A stream of floating point input sample values.</td></tr>
     <tr><td class="paramname">scaleFactor</td><td>The scale factor of the dither.</td></tr>
     <tr><td class="paramname">randomSeed</td><td>An initial random seed value.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -181,8 +188,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="adc3d40105578c0c7fbafd7232bd23032"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc3d40105578c0c7fbafd7232bd23032">&#9670;&nbsp;</a></span>FFT()</h2>
+<a id="a7483e1f0e22675d9489f5531242ca343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7483e1f0e22675d9489f5531242ca343">&#9670;&nbsp;</a></span>FFT()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -206,7 +213,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>inputSize</em>&#160;</td>
+          <td class="paramname"><em>inputSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -227,6 +240,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>A stream of floating point input sample values.</td></tr>
     <tr><td class="paramname">fftSize</td><td>The FFT size.</td></tr>
     <tr><td class="paramname">inputSize</td><td>The window size.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -234,8 +248,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac49ed68cd4f4819fda3dee4e84967b3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac49ed68cd4f4819fda3dee4e84967b3f">&#9670;&nbsp;</a></span>FFTPower()</h2>
+<a id="ae6564961c99d8f838074e8a5939141ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6564961c99d8f838074e8a5939141ea">&#9670;&nbsp;</a></span>FFTPower()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -247,8 +261,18 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;float[]&gt; Microsoft.Psi.Audio.Operators.FFTPower </td>
           <td>(</td>
           <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td>
-          <td class="paramname"><em>source</em></td><td>)</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -262,6 +286,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream of FFTs.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -269,8 +294,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae27bffdc354e73b3f28dcfb34834d682"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae27bffdc354e73b3f28dcfb34834d682">&#9670;&nbsp;</a></span>FrameShift()</h2>
+<a id="a1d0224351c2d03e3aa0648faaea68372"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d0224351c2d03e3aa0648faaea68372">&#9670;&nbsp;</a></span>FrameShift()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,7 +325,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>bytesPerSec</em>&#160;</td>
+          <td class="paramname"><em>bytesPerSec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -322,6 +353,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">frameSizeInBytes</td><td>The frame size in bytes.</td></tr>
     <tr><td class="paramname">frameShiftInBytes</td><td>The number of bytes by which to shift the data.</td></tr>
     <tr><td class="paramname">bytesPerSec</td><td>The sampling frequency in bytes per second.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -329,8 +361,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6007656cc1b346c8cf7d5e147e5aeca2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6007656cc1b346c8cf7d5e147e5aeca2">&#9670;&nbsp;</a></span>FrequencyDomainEnergy()</h2>
+<a id="a697cac221ed84501566b665ff481434b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a697cac221ed84501566b665ff481434b">&#9670;&nbsp;</a></span>FrequencyDomainEnergy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -354,7 +386,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
+          <td class="paramname"><em>end</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -375,6 +413,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>A stream of FFT power spectra.</td></tr>
     <tr><td class="paramname">start</td><td>The index of the starting frequency of the band.</td></tr>
     <tr><td class="paramname">end</td><td>The index of the ending frequency of the band.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -382,8 +421,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aeb42b1728bf56ab961f261167768cc68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb42b1728bf56ab961f261167768cc68">&#9670;&nbsp;</a></span>HanningWindow()</h2>
+<a id="a80d21ae0026f9729431ff60242da2477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80d21ae0026f9729431ff60242da2477">&#9670;&nbsp;</a></span>HanningWindow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -401,7 +440,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>kernelLength</em>&#160;</td>
+          <td class="paramname"><em>kernelLength</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -421,6 +466,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream of floating point input sample values.</td></tr>
     <tr><td class="paramname">kernelLength</td><td>The Hanning window length.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -428,8 +474,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8af67c8395ad2edf9af590fe144c3418"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8af67c8395ad2edf9af590fe144c3418">&#9670;&nbsp;</a></span>LogEnergy()</h2>
+<a id="a6a7d6f466d2d66a039e9e8ab7319f804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a7d6f466d2d66a039e9e8ab7319f804">&#9670;&nbsp;</a></span>LogEnergy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,8 +487,18 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;float&gt; Microsoft.Psi.Audio.Operators.LogEnergy </td>
           <td>(</td>
           <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td>
-          <td class="paramname"><em>source</em></td><td>)</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -456,6 +512,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream of floating point input sample values.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -463,8 +520,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af9bf51e68ae8352b445c85ffad3c53d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9bf51e68ae8352b445c85ffad3c53d3">&#9670;&nbsp;</a></span>Resample() <span class="overload">[1/2]</span></h2>
+<a id="af66a469e84f6cc9f8387edc5d2e9ed8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af66a469e84f6cc9f8387edc5d2e9ed8a">&#9670;&nbsp;</a></span>Resample() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -482,7 +539,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler_configuration.html">AudioResamplerConfiguration</a>&#160;</td>
-          <td class="paramname"><em>configuration</em>&#160;</td>
+          <td class="paramname"><em>configuration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -502,6 +565,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream of audio to be resampled.</td></tr>
     <tr><td class="paramname">configuration</td><td>The resampler configuration.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -509,8 +573,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad48777a81ed1158f7dc8c838691d51cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad48777a81ed1158f7dc8c838691d51cc">&#9670;&nbsp;</a></span>Resample() <span class="overload">[2/2]</span></h2>
+<a id="a9192cf0281bf1c9552752e0e1406dfcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9192cf0281bf1c9552752e0e1406dfcd">&#9670;&nbsp;</a></span>Resample() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -528,7 +592,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a>&#160;</td>
-          <td class="paramname"><em>outputFormat</em>&#160;</td>
+          <td class="paramname"><em>outputFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -548,6 +618,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream audio to be resampled.</td></tr>
     <tr><td class="paramname">outputFormat</td><td>The desired audio output format for the resampled stream.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -555,8 +626,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="adc1bb7c975df94d1fa41a87ffd62e987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc1bb7c975df94d1fa41a87ffd62e987">&#9670;&nbsp;</a></span>SpectralEntropy()</h2>
+<a id="aa29ccee52d75cc147ee63adbd763c021"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa29ccee52d75cc147ee63adbd763c021">&#9670;&nbsp;</a></span>SpectralEntropy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -580,7 +651,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
+          <td class="paramname"><em>end</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -601,6 +678,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>A stream of FFT power spectra.</td></tr>
     <tr><td class="paramname">start</td><td>The starting frequency of the band.</td></tr>
     <tr><td class="paramname">end</td><td>The ending frequency of the band.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -608,8 +686,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a13f822c97dd9b8b51b057eb9fecada1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13f822c97dd9b8b51b057eb9fecada1f">&#9670;&nbsp;</a></span>ToAudioBuffer()</h2>
+<a id="a535f269bce4ebae23c2656b94e00954f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a535f269bce4ebae23c2656b94e00954f">&#9670;&nbsp;</a></span>ToAudioBuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -627,7 +705,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a>&#160;</td>
-          <td class="paramname"><em>audioFormat</em>&#160;</td>
+          <td class="paramname"><em>audioFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -650,12 +734,18 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<p>/// </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A stream of audio buffers.</dd></dl>
 
 </div>
 </div>
-<a id="afbf7b6ef65657054e61ffaa15eabb95f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbf7b6ef65657054e61ffaa15eabb95f">&#9670;&nbsp;</a></span>ToByteArray()</h2>
+<a id="a62590de065f40d90d4690fd515a5d255"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62590de065f40d90d4690fd515a5d255">&#9670;&nbsp;</a></span>ToByteArray()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -667,8 +757,18 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;byte[]&gt; Microsoft.Psi.Audio.Operators.ToByteArray </td>
           <td>(</td>
           <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt;&#160;</td>
-          <td class="paramname"><em>source</em></td><td>)</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -682,6 +782,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream of audio buffers.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -689,8 +790,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aecb5e59d269f97bf046d2e15dd00d88e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecb5e59d269f97bf046d2e15dd00d88e">&#9670;&nbsp;</a></span>ToFloat()</h2>
+<a id="a5721f2ceb4b70881c10f059fb1ec656b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5721f2ceb4b70881c10f059fb1ec656b">&#9670;&nbsp;</a></span>ToFloat()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -708,7 +809,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a>&#160;</td>
-          <td class="paramname"><em>format</em>&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -728,6 +835,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream containing the input audio data.</td></tr>
     <tr><td class="paramname">format</td><td>The audio format of the input audio.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -735,8 +843,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1b42e084ced8bfa0c969e943cbd1d383"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b42e084ced8bfa0c969e943cbd1d383">&#9670;&nbsp;</a></span>ZeroCrossingRate()</h2>
+<a id="a3ccea40b079165ece34382db08720c18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ccea40b079165ece34382db08720c18">&#9670;&nbsp;</a></span>ZeroCrossingRate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -748,8 +856,18 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;float&gt; Microsoft.Psi.Audio.Operators.ZeroCrossingRate </td>
           <td>(</td>
           <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; float[]&gt;&#160;</td>
-          <td class="paramname"><em>source</em></td><td>)</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -763,6 +881,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>A stream of floating point input sample values.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

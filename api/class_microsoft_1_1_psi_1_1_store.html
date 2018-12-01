@@ -85,24 +85,33 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a33a73e2fb58f468e2c2252f815c15cd2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Importer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a33a73e2fb58f468e2c2252f815c15cd2">Open</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string name, string rootPath)</td></tr>
 <tr class="memdesc:a33a73e2fb58f468e2c2252f815c15cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a multi-stream store for read and returns an Importer instance which can be used to inspect the store and open the streams. The store metadata is available immediately after this call (before the pipeline is running) via the <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a29ffcec9197319088b9609e7ab363059" title="Gets the metadata of all the storage streams in this store. ">Importer.AvailableStreams</a> property.  <a href="#a33a73e2fb58f468e2c2252f815c15cd2">More...</a><br /></td></tr>
 <tr class="separator:a33a73e2fb58f468e2c2252f815c15cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d76e8820de3b5b1b1cbc53788ddd5d5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a5d76e8820de3b5b1b1cbc53788ddd5d5">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a5d76e8820de3b5b1b1cbc53788ddd5d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream store.  <a href="#a5d76e8820de3b5b1b1cbc53788ddd5d5">More...</a><br /></td></tr>
-<tr class="separator:a5d76e8820de3b5b1b1cbc53788ddd5d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c77a86a17bea3bc2cb2913c2b92708"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#ab5c77a86a17bea3bc2cb2913c2b92708">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ab5c77a86a17bea3bc2cb2913c2b92708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream store.  <a href="#ab5c77a86a17bea3bc2cb2913c2b92708">More...</a><br /></td></tr>
+<tr class="separator:ab5c77a86a17bea3bc2cb2913c2b92708"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65e07abb092e5148b7c6b46100be3220"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a65e07abb092e5148b7c6b46100be3220">Exists</a> (string name, string path)</td></tr>
 <tr class="memdesc:a65e07abb092e5148b7c6b46100be3220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the specified store file exists.  <a href="#a65e07abb092e5148b7c6b46100be3220">More...</a><br /></td></tr>
 <tr class="separator:a65e07abb092e5148b7c6b46100be3220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf136e1ec07f97d2c2f0f9390e9d1080"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#abf136e1ec07f97d2c2f0f9390e9d1080">IsValid</a> (string name, string path)</td></tr>
+<tr class="memdesc:abf136e1ec07f97d2c2f0f9390e9d1080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the specified store is valid.  <a href="#abf136e1ec07f97d2c2f0f9390e9d1080">More...</a><br /></td></tr>
+<tr class="separator:abf136e1ec07f97d2c2f0f9390e9d1080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7ea58fa8e610120d363e23c3eb9b812"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#ab7ea58fa8e610120d363e23c3eb9b812">Repair</a> (string name, string path, bool deleteOldStore=true)</td></tr>
+<tr class="memdesc:ab7ea58fa8e610120d363e23c3eb9b812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repairs an invalid store.  <a href="#ab7ea58fa8e610120d363e23c3eb9b812">More...</a><br /></td></tr>
+<tr class="separator:ab7ea58fa8e610120d363e23c3eb9b812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e4d865f8e1432ec7232f4cca471b9f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af0e4d865f8e1432ec7232f4cca471b9f">Crop</a> (string inputName, string inputPath, string outputName, string outputPath, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> cropInterval, bool createSubdirectory=true)</td></tr>
+<tr class="memdesc:af0e4d865f8e1432ec7232f4cca471b9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crops a store between the extents of a specified interval, generating a new store.  <a href="#af0e4d865f8e1432ec7232f4cca471b9f">More...</a><br /></td></tr>
+<tr class="separator:af0e4d865f8e1432ec7232f4cca471b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4250a120fb9f739002762a0c2d24f67d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a4250a120fb9f739002762a0c2d24f67d">TryGetMetadata&lt; T &gt;</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, out <a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html">PsiStreamMetadata</a> metadata)</td></tr>
 <tr class="memdesc:a4250a120fb9f739002762a0c2d24f67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the metadata associated with the specified stream, if the stream is persisted to a store.  <a href="#a4250a120fb9f739002762a0c2d24f67d">More...</a><br /></td></tr>
 <tr class="separator:a4250a120fb9f739002762a0c2d24f67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c3ab2e317d659ec395ee2e362827cf5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a5c3ab2e317d659ec395ee2e362827cf5">TryGetMetadata</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string streamName, out <a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html">PsiStreamMetadata</a> metadata)</td></tr>
 <tr class="memdesc:a5c3ab2e317d659ec395ee2e362827cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the metadata associated with the specified stream, if the stream is persisted to a store.  <a href="#a5c3ab2e317d659ec395ee2e362827cf5">More...</a><br /></td></tr>
 <tr class="separator:a5c3ab2e317d659ec395ee2e362827cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c9177b3d77764b24b8946fbb8c2ec37"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html">BufferReader</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a7c9177b3d77764b24b8946fbb8c2ec37">Serialize&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html">KnownSerializers</a> serializers=null)</td></tr>
-<tr class="memdesc:a7c9177b3d77764b24b8946fbb8c2ec37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializes the source stream, preserving the envelope.  <a href="#a7c9177b3d77764b24b8946fbb8c2ec37">More...</a><br /></td></tr>
-<tr class="separator:a7c9177b3d77764b24b8946fbb8c2ec37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab794eae09a481d12f6defebe7977d685"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#ab794eae09a481d12f6defebe7977d685">Deserialize&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html">BufferReader</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html">KnownSerializers</a> serializers=null, T reusableInstance=default(T))</td></tr>
-<tr class="memdesc:ab794eae09a481d12f6defebe7977d685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserializes data from a stream of Message{BufferReader}.  <a href="#ab794eae09a481d12f6defebe7977d685">More...</a><br /></td></tr>
-<tr class="separator:ab794eae09a481d12f6defebe7977d685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1af6ff02603c757abebc0f42e0808537"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html">BufferReader</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a1af6ff02603c757abebc0f42e0808537">Serialize&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html">KnownSerializers</a> serializers=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a1af6ff02603c757abebc0f42e0808537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializes the source stream, preserving the envelope.  <a href="#a1af6ff02603c757abebc0f42e0808537">More...</a><br /></td></tr>
+<tr class="separator:a1af6ff02603c757abebc0f42e0808537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9402a2fecdc49d250b5fe0cfda05baba"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a9402a2fecdc49d250b5fe0cfda05baba">Deserialize&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_reader.html">BufferReader</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html">KnownSerializers</a> serializers=null, T reusableInstance=default(T), <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a9402a2fecdc49d250b5fe0cfda05baba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserializes data from a stream of Message{BufferReader}.  <a href="#a9402a2fecdc49d250b5fe0cfda05baba">More...</a><br /></td></tr>
+<tr class="separator:a9402a2fecdc49d250b5fe0cfda05baba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides static methods to access multi-stream stores. </p>
@@ -171,12 +180,85 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An Exporter instance that can be used to write streams.</dd></dl>
-<p>The Exporter maintains a collection of serializers it knows about, which it uses to serialize the data it writes to the store. By default, the Exporter derives the correct serializers from the type argument passed to <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ace27a54b2ff96054cee469364c3a998c" title="Writes the messages from the specified stream to the matching storage stream in this store...">Exporter.Write&lt;T&gt;(Emitter&lt;T&gt;, string, bool, DeliveryPolicy)</a>. In other words, for the most part simply knowing the stream type is sufficient to determine all the types needed to serialize the messages in the stream. Use the KnownSerializers parameter to override the default behavior and provide a custom set of serializers. </p>
+<p>The Exporter maintains a collection of serializers it knows about, which it uses to serialize the data it writes to the store. By default, the Exporter derives the correct serializers from the type argument passed to <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a59ad75e122df211eb09dbcaaf168720a" title="Writes the messages from the specified stream to the matching storage stream in this store...">Exporter.Write&lt;T&gt;(Emitter&lt;T&gt;, string, bool, DeliveryPolicy)</a>. In other words, for the most part simply knowing the stream type is sufficient to determine all the types needed to serialize the messages in the stream. Use the KnownSerializers parameter to override the default behavior and provide a custom set of serializers. </p>
 
 </div>
 </div>
-<a id="ab794eae09a481d12f6defebe7977d685"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab794eae09a481d12f6defebe7977d685">&#9670;&nbsp;</a></span>Deserialize&lt; T &gt;()</h2>
+<a id="af0e4d865f8e1432ec7232f4cca471b9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0e4d865f8e1432ec7232f4cca471b9f">&#9670;&nbsp;</a></span>Crop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Microsoft.Psi.Store.Crop </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>inputName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>inputPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>outputName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>outputPath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td>
+          <td class="paramname"><em>cropInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>createSubdirectory</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Crops a store between the extents of a specified interval, generating a new store. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inputName</td><td>The name of the store to crop.</td></tr>
+    <tr><td class="paramname">inputPath</td><td>The path of the store to crop.</td></tr>
+    <tr><td class="paramname">outputName</td><td>The name of the cropped store.</td></tr>
+    <tr><td class="paramname">outputPath</td><td>The path of the cropped store.</td></tr>
+    <tr><td class="paramname">cropInterval</td><td>The time interval to which to crop the store.</td></tr>
+    <tr><td class="paramname">createSubdirectory</td><td>Indicates whether to create a numbered subdirectory for each cropped store generated by multiple calls to this method. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9402a2fecdc49d250b5fe0cfda05baba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9402a2fecdc49d250b5fe0cfda05baba">&#9670;&nbsp;</a></span>Deserialize&lt; T &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -200,7 +282,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>reusableInstance</em> = <code>default(T)</code>&#160;</td>
+          <td class="paramname"><em>reusableInstance</em> = <code>default(T)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -227,6 +315,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>The stream containing the serialized data</td></tr>
     <tr><td class="paramname">serializers</td><td>An optional collection of known types to use</td></tr>
     <tr><td class="paramname">reusableInstance</td><td>An optional preallocated instance ot use as a buffer. This parameter is required when deserializing Shared&lt;T&gt; instances if the deserializer is expected to use a SharedPool&lt;T&gt;</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -277,6 +366,52 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns true if the store exists.</dd></dl>
+
+</div>
+</div>
+<a id="abf136e1ec07f97d2c2f0f9390e9d1080"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf136e1ec07f97d2c2f0f9390e9d1080">&#9670;&nbsp;</a></span>IsValid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool Microsoft.Psi.Store.IsValid </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Indicates whether the specified store is valid. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the store to check.</td></tr>
+    <tr><td class="paramname">path</td><td>The path of the store to check.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns true if the store is valid.</dd></dl>
 
 </div>
 </div>
@@ -342,8 +477,60 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7c9177b3d77764b24b8946fbb8c2ec37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c9177b3d77764b24b8946fbb8c2ec37">&#9670;&nbsp;</a></span>Serialize&lt; T &gt;()</h2>
+<a id="ab7ea58fa8e610120d363e23c3eb9b812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7ea58fa8e610120d363e23c3eb9b812">&#9670;&nbsp;</a></span>Repair()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Microsoft.Psi.Store.Repair </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>deleteOldStore</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Repairs an invalid store. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the store to check.</td></tr>
+    <tr><td class="paramname">path</td><td>The path of the store to check.</td></tr>
+    <tr><td class="paramname">deleteOldStore</td><td>Indicates whether the original store should be deleted.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1af6ff02603c757abebc0f42e0808537"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1af6ff02603c757abebc0f42e0808537">&#9670;&nbsp;</a></span>Serialize&lt; T &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -361,7 +548,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html">KnownSerializers</a>&#160;</td>
-          <td class="paramname"><em>serializers</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>serializers</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -387,6 +580,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>The source stream generating the data to serialize</td></tr>
     <tr><td class="paramname">serializers</td><td>An optional collection of known types to use</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
@@ -499,8 +693,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5d76e8820de3b5b1b1cbc53788ddd5d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d76e8820de3b5b1b1cbc53788ddd5d5">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
+<a id="ab5c77a86a17bea3bc2cb2913c2b92708"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5c77a86a17bea3bc2cb2913c2b92708">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -536,7 +730,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -564,7 +758,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">name</td><td>The name of the persisted stream.</td></tr>
     <tr><td class="paramname">writer</td><td>The store writer, created by e.g. <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af445066b425d592506950f389474acf6" title="Creates a new multi-stream store and returns an Exporter instance which can be used to write streams ...">Store.Create(Pipeline, string, string, bool, KnownSerializers)</a></td></tr>
     <tr><td class="paramname">largeMessages</td><td>Indicates whether the stream contains large messages (typically &gt;4k). If true, the messages will be written to the large message file.</td></tr>
-    <tr><td class="paramname">policy</td><td>An optional delivery policy</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

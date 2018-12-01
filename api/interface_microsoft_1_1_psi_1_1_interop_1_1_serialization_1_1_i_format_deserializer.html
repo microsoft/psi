@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <meta name="generator" content="Doxygen 1.8.14" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Platform for Situated Intelligence: Microsoft.Psi.Components.Window&lt; T &gt; Class Template Reference</title>
+    <title>Platform for Situated Intelligence: Microsoft.Psi.Interop.Serialization.IFormatDeserializer Interface Reference</title>
     <link href="tabs.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="dynsections.js"></script>  <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -62,61 +62,61 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_microsoft.html">Microsoft</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi.html">Psi</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi_1_1_components.html">Components</a></li><li class="navelem"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html">Window</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_microsoft.html">Microsoft</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi.html">Psi</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi_1_1_interop.html">Interop</a></li><li class="navelem"><a class="el" href="namespace_microsoft_1_1_psi_1_1_interop_1_1_serialization.html">Serialization</a></li><li class="navelem"><a class="el" href="interface_microsoft_1_1_psi_1_1_interop_1_1_serialization_1_1_i_format_deserializer.html">IFormatDeserializer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="class_microsoft_1_1_psi_1_1_components_1_1_window-members.html">List of all members</a>  </div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="interface_microsoft_1_1_psi_1_1_interop_1_1_serialization_1_1_i_format_deserializer-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Microsoft.Psi.Components.Window&lt; T &gt; Class Template Reference</div>  </div>
+<div class="title">Microsoft.Psi.Interop.Serialization.IFormatDeserializer Interface Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Implements a buffering component. The component adds each incoming message to the buffer and trims the buffer by evaluating a remove condition.  
- <a href="class_microsoft_1_1_psi_1_1_components_1_1_window.html#details">More...</a></p>
+<p>Format deserializer interface.  
+ <a href="interface_microsoft_1_1_psi_1_1_interop_1_1_serialization_1_1_i_format_deserializer.html#details">More...</a></p>
 
-<p>Inherits BufferProcess&lt; T, IEnumerable&lt; Message&lt; T &gt;&gt;&gt;.</p>
+<p>Inherited by <a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_format_1_1_csv_format.html">Microsoft.Psi.Interop.Format.CsvFormat</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_format_1_1_json_format.html">Microsoft.Psi.Interop.Format.JsonFormat</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_format_1_1_message_pack_format.html">Microsoft.Psi.Interop.Format.MessagePackFormat</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5fc06823abe2c7a47846195a093e973d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html#a5fc06823abe2c7a47846195a093e973d">Window</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> relativeTimeInterval, int maxSize=int.MaxValue)</td></tr>
-<tr class="memdesc:a5fc06823abe2c7a47846195a093e973d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html#a5fc06823abe2c7a47846195a093e973d" title="Initializes a new instance of the Window&lt;T&gt; class. ">Window&lt;T&gt;</a> class.  <a href="#a5fc06823abe2c7a47846195a093e973d">More...</a><br /></td></tr>
-<tr class="separator:a5fc06823abe2c7a47846195a093e973d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a841eaac9265cd5c7cda7cda10ee71c9f"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_interop_1_1_serialization_1_1_i_format_deserializer.html#a841eaac9265cd5c7cda7cda10ee71c9f">DeserializeMessage</a> (byte[] payload, int index, int count)</td></tr>
+<tr class="separator:a841eaac9265cd5c7cda7cda10ee71c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a13b086a867a869d9e0a99496228b6d85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_interop_1_1_serialization_1_1_i_format_deserializer.html#a13b086a867a869d9e0a99496228b6d85">dynamic</a></td></tr>
+<tr class="memdesc:a13b086a867a869d9e0a99496228b6d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize single message and originating time stamp payload.  <a href="#a13b086a867a869d9e0a99496228b6d85">More...</a><br /></td></tr>
+<tr class="separator:a13b086a867a869d9e0a99496228b6d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements a buffering component. The component adds each incoming message to the buffer and trims the buffer by evaluating a remove condition. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of messages</td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5fc06823abe2c7a47846195a093e973d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5fc06823abe2c7a47846195a093e973d">&#9670;&nbsp;</a></span>Window()</h2>
+<div class="textblock"><p>Format deserializer interface. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a841eaac9265cd5c7cda7cda10ee71c9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a841eaac9265cd5c7cda7cda10ee71c9f">&#9670;&nbsp;</a></span>DeserializeMessage()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html">Microsoft.Psi.Components.Window</a>&lt; T &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html">Window</a> </td>
+          <td class="memname">DateTime Microsoft.Psi.Interop.Serialization.IFormatDeserializer.DeserializeMessage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
-          <td class="paramname"><em>pipeline</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a>&#160;</td>
-          <td class="paramname"><em>relativeTimeInterval</em>, </td>
+          <td class="paramtype">byte []&#160;</td>
+          <td class="paramname"><em>payload</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxSize</em> = <code>int.MaxValue</code>&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -126,15 +126,31 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html#a5fc06823abe2c7a47846195a093e973d" title="Initializes a new instance of the Window&lt;T&gt; class. ">Window&lt;T&gt;</a> class. </p>
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a13b086a867a869d9e0a99496228b6d85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13b086a867a869d9e0a99496228b6d85">&#9670;&nbsp;</a></span>dynamic</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Microsoft.Psi.Interop.Serialization.IFormatDeserializer.dynamic</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deserialize single message and originating time stamp payload. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
-    <tr><td class="paramname">relativeTimeInterval</td><td>The relative time interval over which to gather messages.</td></tr>
-    <tr><td class="paramname">maxSize</td><td>Maximum buffer size.</td></tr>
+    <tr><td class="paramname">payload</td><td>Payload bytes</td></tr>
+    <tr><td class="paramname">index</td><td>Starting index of message data</td></tr>
+    <tr><td class="paramname">count</td><td>Number of bytes constituting message data</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Dynamic of primitive or IEnumerable/ExpandoObject of primitive as well as originating time stamp</dd></dl>
 
 </div>
 </div>

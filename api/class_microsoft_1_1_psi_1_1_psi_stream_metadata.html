@@ -95,11 +95,11 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:abacf617261f962897acdb86da569e36a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#abacf617261f962897acdb86da569e36a">Lifetime</a> =&gt; new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.Opened, <a class="el" href="namespace_microsoft_1_1_psi.html#a8192f981f9fde5c384321d307ce627f5a03f4a47830f97377a35321051685071e">this.Closed</a>)</td></tr>
 <tr class="memdesc:abacf617261f962897acdb86da569e36a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the time interval this stream was opened (from open to close).  <a href="#abacf617261f962897acdb86da569e36a">More...</a><br /></td></tr>
 <tr class="separator:abacf617261f962897acdb86da569e36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a442dccc98425809b3afcde5a68dfaca7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#a442dccc98425809b3afcde5a68dfaca7">ActiveLifetime</a> =&gt; new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageTime, this.LastMessageTime)</td></tr>
-<tr class="memdesc:a442dccc98425809b3afcde5a68dfaca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interval between the creation times of the first and last messages written to this stream.  <a href="#a442dccc98425809b3afcde5a68dfaca7">More...</a><br /></td></tr>
+<tr class="memitem:a442dccc98425809b3afcde5a68dfaca7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#a442dccc98425809b3afcde5a68dfaca7">ActiveLifetime</a> =&gt; <a class="el" href="namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111baf66ae126720689f8a0d0061f7573b5d9">this.MessageCount</a> == 0 ? <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#a3b78254605844bbd399ee91c81290a90">TimeInterval.Empty</a> : new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageTime, this.LastMessageTime)</td></tr>
+<tr class="memdesc:a442dccc98425809b3afcde5a68dfaca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interval between the creation times of the first and last messages written to this stream. If the stream contains no messages, an empty interval is returned.  <a href="#a442dccc98425809b3afcde5a68dfaca7">More...</a><br /></td></tr>
 <tr class="separator:a442dccc98425809b3afcde5a68dfaca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28081738c318288e305af7c636c7c980"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#a28081738c318288e305af7c636c7c980">OriginatingLifetime</a> =&gt; new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime)</td></tr>
-<tr class="memdesc:a28081738c318288e305af7c636c7c980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interval between the originating times of the first and last messages written to this stream.  <a href="#a28081738c318288e305af7c636c7c980">More...</a><br /></td></tr>
+<tr class="memitem:a28081738c318288e305af7c636c7c980"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#a28081738c318288e305af7c636c7c980">OriginatingLifetime</a> =&gt; <a class="el" href="namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111baf66ae126720689f8a0d0061f7573b5d9">this.MessageCount</a> == 0 ? <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#a3b78254605844bbd399ee91c81290a90">TimeInterval.Empty</a> : new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime)</td></tr>
+<tr class="memdesc:a28081738c318288e305af7c636c7c980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interval between the originating times of the first and last messages written to this stream. If the stream contains no messages, an empty interval is returned.  <a href="#a28081738c318288e305af7c636c7c980">More...</a><br /></td></tr>
 <tr class="separator:a28081738c318288e305af7c636c7c980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -249,12 +249,12 @@ Properties</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> Microsoft.Psi.PsiStreamMetadata.ActiveLifetime =&gt; new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageTime, this.LastMessageTime)</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> Microsoft.Psi.PsiStreamMetadata.ActiveLifetime =&gt; <a class="el" href="namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111baf66ae126720689f8a0d0061f7573b5d9">this.MessageCount</a> == 0 ? <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#a3b78254605844bbd399ee91c81290a90">TimeInterval.Empty</a> : new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageTime, this.LastMessageTime)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the interval between the creation times of the first and last messages written to this stream. </p>
+<p>Gets the interval between the creation times of the first and last messages written to this stream. If the stream contains no messages, an empty interval is returned. </p>
 
 </div>
 </div>
@@ -297,12 +297,12 @@ Properties</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> Microsoft.Psi.PsiStreamMetadata.OriginatingLifetime =&gt; new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime)</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> Microsoft.Psi.PsiStreamMetadata.OriginatingLifetime =&gt; <a class="el" href="namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111baf66ae126720689f8a0d0061f7573b5d9">this.MessageCount</a> == 0 ? <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html#a3b78254605844bbd399ee91c81290a90">TimeInterval.Empty</a> : new <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the interval between the originating times of the first and last messages written to this stream. </p>
+<p>Gets the interval between the originating times of the first and last messages written to this stream. If the stream contains no messages, an empty interval is returned. </p>
 
 </div>
 </div>

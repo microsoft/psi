@@ -1,7 +1,10 @@
 var searchData=
 [
+  ['cansnaptostream',['CanSnapToStream',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#a8871df69b2c4029e0bf810fc18821849',1,'Microsoft::Psi::Visualization::VisualizationObjects::VisualizationObject']]],
   ['catalogextentsize',['CatalogExtentSize',['../class_microsoft_1_1_psi_1_1_persistence_1_1_store_writer.html#a21cb28d76b28d3f955a5ac8dfe19bb57',1,'Microsoft::Psi::Persistence::StoreWriter']]],
+  ['children',['Children',['../class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_stream_tree_node.html#a9bab44debae61c873eec3ea1475254b9',1,'Microsoft::Psi::Visualization::Datasets::StreamTreeNode']]],
   ['class_5fe_5fnoaggregation',['CLASS_E_NOAGGREGATION',['../class_microsoft_1_1_psi_1_1_visualization_1_1_server_1_1_com_native.html#a25851ca334ee6106a9be86caa5abbac0',1,'Microsoft::Psi::Visualization::Server::ComNative']]],
+  ['clock',['Clock',['../class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#af045e10d067b4170509bcbd89d95bf69',1,'Microsoft::Psi::Scheduling::Scheduler']]],
   ['closed',['closed',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#a628c006edbed4a13073574ef391466e0',1,'Microsoft::Psi::Media_Interop::MP4WriterUnmanagedData']]],
   ['cmdline',['CmdLine',['../class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#ad61a7ef8dfd54aa0aa6685ab011d3fcc',1,'Microsoft::Psi::Common::RuntimeInfo']]],
   ['colorspace',['ColorSpace',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_internal_1_1_video_format.html#a8f9a38fb62fc41608a2f0e1be69a983b',1,'Microsoft::Psi::Media::MediaCaptureInternal::VideoFormat']]],

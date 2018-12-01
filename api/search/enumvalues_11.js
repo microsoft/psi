@@ -12,7 +12,6 @@ var searchData=
   ['srgb',['SRGB',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba1f3f09bca5728eb7af4ea263ae84b9f1',1,'Microsoft::Psi::Media']]],
   ['step',['Step',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973a48c7c41b72e1d678923ce3571aa65b2d',1,'Microsoft::Psi::Visualization::Common']]],
   ['streammetadata',['StreamMetadata',['../namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41cad41aa02dcf5298202e860bef68835ad3',1,'Microsoft::Psi']]],
-  ['strict',['Strict',['../namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75da2e979835dd62324f5bfe217449ba4974',1,'Microsoft::Psi']]],
   ['success',['Success',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106a505a83f220c02df2f85c3810cd9ceb38',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
   ['surrogate',['SURROGATE',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_server.html#ad3c42cc72e00ec0749ef6bd036155ca3ac8b1c91d6d338f0d4315bf3e44c0dec7',1,'Microsoft::Psi::Visualization::Server']]],
   ['suspended',['SUSPENDED',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_server.html#ad3c42cc72e00ec0749ef6bd036155ca3a0cb707127aebaa0023eb38363993843a',1,'Microsoft::Psi::Visualization::Server']]],

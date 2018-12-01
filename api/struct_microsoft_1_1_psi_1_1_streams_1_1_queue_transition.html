@@ -85,12 +85,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a19384961fdaef8b528589cadf41a8bf0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_streams_1_1_queue_transition.html#a19384961fdaef8b528589cadf41a8bf0">ToNotEmpty</a></td></tr>
 <tr class="memdesc:a19384961fdaef8b528589cadf41a8bf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue state transition to no longer empty.  <a href="#a19384961fdaef8b528589cadf41a8bf0">More...</a><br /></td></tr>
 <tr class="separator:a19384961fdaef8b528589cadf41a8bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea44fd2e98ca91ff65502dcb48d5eb14"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_streams_1_1_queue_transition.html#aea44fd2e98ca91ff65502dcb48d5eb14">ToFull</a></td></tr>
-<tr class="memdesc:aea44fd2e98ca91ff65502dcb48d5eb14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue state transition to full.  <a href="#aea44fd2e98ca91ff65502dcb48d5eb14">More...</a><br /></td></tr>
-<tr class="separator:aea44fd2e98ca91ff65502dcb48d5eb14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17831f966e980db0873f582e6d118b44"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_streams_1_1_queue_transition.html#a17831f966e980db0873f582e6d118b44">ToNotFull</a></td></tr>
-<tr class="memdesc:a17831f966e980db0873f582e6d118b44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue state transition to no longer full.  <a href="#a17831f966e980db0873f582e6d118b44">More...</a><br /></td></tr>
-<tr class="separator:a17831f966e980db0873f582e6d118b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5351a57d960dd48c89a555d98669f65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_streams_1_1_queue_transition.html#ad5351a57d960dd48c89a555d98669f65">ToStartThrottling</a></td></tr>
+<tr class="memdesc:ad5351a57d960dd48c89a555d98669f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue state transition to start throttling.  <a href="#ad5351a57d960dd48c89a555d98669f65">More...</a><br /></td></tr>
+<tr class="separator:ad5351a57d960dd48c89a555d98669f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a848770e39602551ff6ce9241e57ec459"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_streams_1_1_queue_transition.html#a848770e39602551ff6ce9241e57ec459">ToStopThrottling</a></td></tr>
+<tr class="memdesc:a848770e39602551ff6ce9241e57ec459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue state transition to stop throttling.  <a href="#a848770e39602551ff6ce9241e57ec459">More...</a><br /></td></tr>
+<tr class="separator:a848770e39602551ff6ce9241e57ec459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Queue state transition. </p>
@@ -111,22 +111,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aea44fd2e98ca91ff65502dcb48d5eb14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea44fd2e98ca91ff65502dcb48d5eb14">&#9670;&nbsp;</a></span>ToFull</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Microsoft.Psi.Streams.QueueTransition.ToFull</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Queue state transition to full. </p>
-
-</div>
-</div>
 <a id="a19384961fdaef8b528589cadf41a8bf0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a19384961fdaef8b528589cadf41a8bf0">&#9670;&nbsp;</a></span>ToNotEmpty</h2>
 
@@ -143,19 +127,35 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a17831f966e980db0873f582e6d118b44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17831f966e980db0873f582e6d118b44">&#9670;&nbsp;</a></span>ToNotFull</h2>
+<a id="ad5351a57d960dd48c89a555d98669f65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5351a57d960dd48c89a555d98669f65">&#9670;&nbsp;</a></span>ToStartThrottling</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Microsoft.Psi.Streams.QueueTransition.ToNotFull</td>
+          <td class="memname">bool Microsoft.Psi.Streams.QueueTransition.ToStartThrottling</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Queue state transition to no longer full. </p>
+<p>Queue state transition to start throttling. </p>
+
+</div>
+</div>
+<a id="a848770e39602551ff6ce9241e57ec459"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a848770e39602551ff6ce9241e57ec459">&#9670;&nbsp;</a></span>ToStopThrottling</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Microsoft.Psi.Streams.QueueTransition.ToStopThrottling</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Queue state transition to stop throttling. </p>
 
 </div>
 </div>

@@ -13,7 +13,7 @@ The links below provide additional information about various, more in-depth topi
 | :----------- | :---------- |
 | [Basic&nbsp;Stream&nbsp;Operators](/psi/topics/InDepth.BasicStreamOperators) | Describes a core set of stream operators like `Select`, `Do`, `Where`, etc. |
 | [Synchronization](/psi/topics/InDepth.Synchronization) | Describes synchronization primitives and the `Join` mechanism for fusing multiple streams in more detail. |
-| [Window&nbspOperators](/psi/topics/InDepth.Window) | Describes operators that provide window views over streams. |
+| [Window&nbsp;Operators](/psi/topics/InDepth.Window) | Describes operators that provide window views over streams. |
 | [Datasets](/psi/topics/InDepth.Datasets) | Describes the infrastructure and APIs for working with datasets in \\psi. |
 | [Writing&nbsp;Components](/psi/topics/InDepth.WritingComponents) | Describes how to write new \\psi components. |
 | Pipeline&nbsp;Execution | Describes how to control the execution of the pipeline. |

@@ -18,6 +18,7 @@ var searchData=
   ['merger_3c_20microsoft_3a_3apsi_3a_3amessage_3c_20microsoft_3a_3apsi_3a_3acommon_3a_3abufferreader_20_3e_2c_20string_20_3e',['Merger&lt; Microsoft::Psi::Message&lt; Microsoft::Psi::Common::BufferReader &gt;, string &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_merger.html',1,'Microsoft::Psi::Components']]],
   ['message',['Message',['../class_microsoft_1_1_psi_1_1_message.html',1,'Microsoft.Psi.Message'],['../struct_microsoft_1_1_psi_1_1_message.html',1,'Microsoft.Psi.Message&lt; T &gt;']]],
   ['message_3c_20tdata_20_3e',['Message&lt; TData &gt;',['../class_microsoft_1_1_psi_1_1_message.html',1,'Microsoft::Psi']]],
+  ['messagepackformat',['MessagePackFormat',['../class_microsoft_1_1_psi_1_1_interop_1_1_format_1_1_message_pack_format.html',1,'Microsoft::Psi::Interop::Format']]],
   ['metadata',['Metadata',['../class_microsoft_1_1_psi_1_1_metadata.html',1,'Microsoft::Psi']]],
   ['microsoftspeechrecognizer',['MicrosoftSpeechRecognizer',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html',1,'Microsoft::Psi::MicrosoftSpeech']]],
   ['microsoftspeechrecognizerconfiguration',['MicrosoftSpeechRecognizerConfiguration',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer_configuration.html',1,'Microsoft::Psi::MicrosoftSpeech']]],

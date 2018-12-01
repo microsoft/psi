@@ -85,9 +85,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aea4698f80baba976a6eeee76703a139d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_debug_extensions.html#aea4698f80baba976a6eeee76703a139d">DisableDebugViews</a> ()</td></tr>
 <tr class="memdesc:aea4698f80baba976a6eeee76703a139d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this to disable DebugView calls. Usually wrapped in ifdef DEBUG conditional statements.  <a href="#aea4698f80baba976a6eeee76703a139d">More...</a><br /></td></tr>
 <tr class="separator:aea4698f80baba976a6eeee76703a139d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86a5d8688a10cf333b2765d7c9aaf95f"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_debug_extensions.html#a86a5d8688a10cf333b2765d7c9aaf95f">DebugView&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, string name=null)</td></tr>
-<tr class="memdesc:a86a5d8688a10cf333b2765d7c9aaf95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes the specified stream to the debug partition, allowing debugging visualizers to display the data.  <a href="#a86a5d8688a10cf333b2765d7c9aaf95f">More...</a><br /></td></tr>
-<tr class="separator:a86a5d8688a10cf333b2765d7c9aaf95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3bb275e5c1c97ee07da234d68485b2b"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_debug_extensions.html#ad3bb275e5c1c97ee07da234d68485b2b">DebugView&lt; T &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, string name=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ad3bb275e5c1c97ee07da234d68485b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publishes the specified stream to the debug partition, allowing debugging visualizers to display the data.  <a href="#ad3bb275e5c1c97ee07da234d68485b2b">More...</a><br /></td></tr>
+<tr class="separator:ad3bb275e5c1c97ee07da234d68485b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8214024a4e3c9a7f5717be8794b524ea"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_debug_extensions.html#a8214024a4e3c9a7f5717be8794b524ea">DumpStructure</a> (this <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string fileName)</td></tr>
 <tr class="memdesc:a8214024a4e3c9a7f5717be8794b524ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a .dgml file that can be opened in Visual Studio to visualize the pipeline structure. See <a href="https://msdn.microsoft.com/en-us/library/ee842619.aspx">https://msdn.microsoft.com/en-us/library/ee842619.aspx</a>  <a href="#a8214024a4e3c9a7f5717be8794b524ea">More...</a><br /></td></tr>
 <tr class="separator:a8214024a4e3c9a7f5717be8794b524ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -95,8 +95,8 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class containing debug extensions for the executive subsystem. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a86a5d8688a10cf333b2765d7c9aaf95f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86a5d8688a10cf333b2765d7c9aaf95f">&#9670;&nbsp;</a></span>DebugView&lt; T &gt;()</h2>
+<a id="ad3bb275e5c1c97ee07da234d68485b2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3bb275e5c1c97ee07da234d68485b2b">&#9670;&nbsp;</a></span>DebugView&lt; T &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -114,7 +114,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>name</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>name</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -140,6 +146,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">source</td><td>The stream to visualize</td></tr>
     <tr><td class="paramname">name</td><td>The name to use when visualizing the stream</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

@@ -12,5 +12,6 @@ var searchData=
   ['depthextensions',['DepthExtensions',['../class_microsoft_1_1_psi_1_1_kinect_1_1_depth_extensions.html',1,'Microsoft::Psi::Kinect']]],
   ['depthtocolorconverter',['DepthToColorConverter',['../class_microsoft_1_1_psi_1_1_kinect_1_1_depth_to_color_converter.html',1,'Microsoft::Psi::Kinect']]],
   ['deserializercomponent',['DeserializerComponent',['../class_microsoft_1_1_psi_1_1_components_1_1_deserializer_component.html',1,'Microsoft::Psi::Components']]],
-  ['displayimage',['DisplayImage',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_display_image.html',1,'Microsoft::Psi::Visualization::Common']]]
+  ['displayimage',['DisplayImage',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_display_image.html',1,'Microsoft::Psi::Visualization::Common']]],
+  ['dynamicdeserializercomponent',['DynamicDeserializerComponent',['../class_microsoft_1_1_psi_1_1_components_1_1_dynamic_deserializer_component.html',1,'Microsoft::Psi::Components']]]
 ];

@@ -67,8 +67,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_delivery_policy-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -79,65 +79,47 @@ $(function() {
 <p>Encapsulates the options for message delivery behavior.  
  <a href="class_microsoft_1_1_psi_1_1_delivery_policy.html#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a860a2c67d88a5bcf5dd0bed9ab737d28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a860a2c67d88a5bcf5dd0bed9ab737d28">Merge</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> other)</td></tr>
-<tr class="memdesc:a860a2c67d88a5bcf5dd0bed9ab737d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines two delivery policies. Each setting in the resulting policy is set to the stricter of the two parent policies.  <a href="#a860a2c67d88a5bcf5dd0bed9ab737d28">More...</a><br /></td></tr>
-<tr class="separator:a860a2c67d88a5bcf5dd0bed9ab737d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a2736d3ab39388a346e8099872331acd0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a2736d3ab39388a346e8099872331acd0">LagConstrained</a> (TimeSpan maximumLag, <a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">LagConstraints</a> lagConstraint=<a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75dab4ee632ee2b420e4c4954189eafa9230">LagConstraints.BestEffort</a>)</td></tr>
-<tr class="memdesc:a2736d3ab39388a346e8099872331acd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a lag-limiting delivery policy. Messages older than the specified maximum lag are dropped.  <a href="#a2736d3ab39388a346e8099872331acd0">More...</a><br /></td></tr>
-<tr class="separator:a2736d3ab39388a346e8099872331acd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf7b78e6f71bbc3038891c5d2278192f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#acf7b78e6f71bbc3038891c5d2278192f">TryParse</a> (string value, out <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> result)</td></tr>
-<tr class="memdesc:acf7b78e6f71bbc3038891c5d2278192f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the string representation of the name to a static delivery policy instance.  <a href="#acf7b78e6f71bbc3038891c5d2278192f">More...</a><br /></td></tr>
-<tr class="separator:acf7b78e6f71bbc3038891c5d2278192f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fc3c3430cbdfc663627f218f67b9098"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a8fc3c3430cbdfc663627f218f67b9098">LatencyConstrained</a> (TimeSpan maximumLatency)</td></tr>
+<tr class="memdesc:a8fc3c3430cbdfc663627f218f67b9098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a latency-constrained delivery policy. Messages older than the specified maximum latency are discarded.  <a href="#a8fc3c3430cbdfc663627f218f67b9098">More...</a><br /></td></tr>
+<tr class="separator:a8fc3c3430cbdfc663627f218f67b9098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae74dae6275ee3f46c0c9661b6b7523f1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#ae74dae6275ee3f46c0c9661b6b7523f1">QueueSizeConstrained</a> (int maximumQueueSize)</td></tr>
+<tr class="memdesc:ae74dae6275ee3f46c0c9661b6b7523f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a queue-size constrained delivery policy. Messages will accumulate only up to the specified maximum queue size, after which they will be discarded.  <a href="#ae74dae6275ee3f46c0c9661b6b7523f1">More...</a><br /></td></tr>
+<tr class="separator:ae74dae6275ee3f46c0c9661b6b7523f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:aa2720952a93c510993cc55ac5d655f0f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#aa2720952a93c510993cc55ac5d655f0f">Unlimited</a> =&gt; DeliveryPolicy.unlimitedPolicy</td></tr>
+<tr class="memdesc:aa2720952a93c510993cc55ac5d655f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossless, unlimited delivery policy which lets the receiver queue grow as much as needed, with no latency constraints.  <a href="#aa2720952a93c510993cc55ac5d655f0f">More...</a><br /></td></tr>
+<tr class="separator:aa2720952a93c510993cc55ac5d655f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aff986eb6bf8913af48c79eb2a82ca2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a7aff986eb6bf8913af48c79eb2a82ca2">LatestMessage</a> =&gt; DeliveryPolicy.latestMessage</td></tr>
+<tr class="memdesc:a7aff986eb6bf8913af48c79eb2a82ca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossy delivery policy which limits the receiver queue to one message, with no latency constraints.  <a href="#a7aff986eb6bf8913af48c79eb2a82ca2">More...</a><br /></td></tr>
+<tr class="separator:a7aff986eb6bf8913af48c79eb2a82ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:ae8154918d12b25a4f925a6fde396c0e5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#ae8154918d12b25a4f925a6fde396c0e5">Default</a><code> [get]</code></td></tr>
-<tr class="memdesc:ae8154918d12b25a4f925a6fde396c0e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossy default policy, which is to drop messages once they are too old (older than 100ms), using a shallow queue to amortize CPU spikes  <a href="#ae8154918d12b25a4f925a6fde396c0e5">More...</a><br /></td></tr>
-<tr class="separator:ae8154918d12b25a4f925a6fde396c0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3be05439c53b935d9e2aef798f55aab9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a3be05439c53b935d9e2aef798f55aab9">Throttled</a><code> [get]</code></td></tr>
-<tr class="memdesc:a3be05439c53b935d9e2aef798f55aab9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossless throttled delivery policy, which queues everything but throttles callers once the queue becomes too big  <a href="#a3be05439c53b935d9e2aef798f55aab9">More...</a><br /></td></tr>
-<tr class="separator:a3be05439c53b935d9e2aef798f55aab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2720952a93c510993cc55ac5d655f0f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#aa2720952a93c510993cc55ac5d655f0f">Unlimited</a><code> [get]</code></td></tr>
-<tr class="memdesc:aa2720952a93c510993cc55ac5d655f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossless unbounded delivery policy which lets the queue grow as much as needed, with no lag constraints  <a href="#aa2720952a93c510993cc55ac5d655f0f">More...</a><br /></td></tr>
-<tr class="separator:aa2720952a93c510993cc55ac5d655f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aff986eb6bf8913af48c79eb2a82ca2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a7aff986eb6bf8913af48c79eb2a82ca2">LatestMessage</a><code> [get]</code></td></tr>
-<tr class="memdesc:a7aff986eb6bf8913af48c79eb2a82ca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossy delivery policy which limits the queue to one message, with no lag constraints  <a href="#a7aff986eb6bf8913af48c79eb2a82ca2">More...</a><br /></td></tr>
-<tr class="separator:a7aff986eb6bf8913af48c79eb2a82ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6af6d9f3564f6339fb10ae45bfd28069"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a6af6d9f3564f6339fb10ae45bfd28069">Immediate</a><code> [get]</code></td></tr>
-<tr class="memdesc:a6af6d9f3564f6339fb10ae45bfd28069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossless delivery policy which enforces synchronous message delivery  <a href="#a6af6d9f3564f6339fb10ae45bfd28069">More...</a><br /></td></tr>
-<tr class="separator:a6af6d9f3564f6339fb10ae45bfd28069"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38a6b536b3b24bb7ee9dd27ff7d241af"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a38a6b536b3b24bb7ee9dd27ff7d241af">ImmediateOrThrottle16</a><code> [get]</code></td></tr>
-<tr class="memdesc:a38a6b536b3b24bb7ee9dd27ff7d241af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a lossless delivery policy which enforces synchronous message delivery with throttling once queue size (16) is exceeded  <a href="#a38a6b536b3b24bb7ee9dd27ff7d241af">More...</a><br /></td></tr>
-<tr class="separator:a38a6b536b3b24bb7ee9dd27ff7d241af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad51109e5bbdeff58e48a9502a2df4555"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#ad51109e5bbdeff58e48a9502a2df4555">ThrottleWhenFull</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:ad51109e5bbdeff58e48a9502a2df4555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether to block the publisher if the receiver queue is full. The default is to not block, and drop the oldest message instead. Use with care, as it affects all other subscribers to the same publisher and can introduce deadlocks (a blocked publisher cannot process control messages anymore).  <a href="#ad51109e5bbdeff58e48a9502a2df4555">More...</a><br /></td></tr>
+<tr class="memitem:ad51109e5bbdeff58e48a9502a2df4555"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#ad51109e5bbdeff58e48a9502a2df4555">ThrottleWhenFull</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad51109e5bbdeff58e48a9502a2df4555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether to block the upstream producer if the receiver queue is full.  <a href="#ad51109e5bbdeff58e48a9502a2df4555">More...</a><br /></td></tr>
 <tr class="separator:ad51109e5bbdeff58e48a9502a2df4555"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadef2ffcdf665a73efc1227114227562"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#aadef2ffcdf665a73efc1227114227562">QueueSize</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aadef2ffcdf665a73efc1227114227562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the initial size of the queue that holds the messages pending delivery. 0 means used default value.  <a href="#aadef2ffcdf665a73efc1227114227562">More...</a><br /></td></tr>
-<tr class="separator:aadef2ffcdf665a73efc1227114227562"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc4d61dcf72c3e18129f019d3ca3f74a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#acc4d61dcf72c3e18129f019d3ca3f74a">MaximumQueueSize</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:acc4d61dcf72c3e18129f019d3ca3f74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the maximum size of the queue that holds the messages pending delivery. 0 means used default value.  <a href="#acc4d61dcf72c3e18129f019d3ca3f74a">More...</a><br /></td></tr>
+<tr class="memitem:ad645a72440fe95ce7b248567696de822"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#ad645a72440fe95ce7b248567696de822">InitialQueueSize</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad645a72440fe95ce7b248567696de822"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the initial size of the receiver queue that holds the messages pending delivery.  <a href="#ad645a72440fe95ce7b248567696de822">More...</a><br /></td></tr>
+<tr class="separator:ad645a72440fe95ce7b248567696de822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc4d61dcf72c3e18129f019d3ca3f74a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#acc4d61dcf72c3e18129f019d3ca3f74a">MaximumQueueSize</a><code> [get]</code></td></tr>
+<tr class="memdesc:acc4d61dcf72c3e18129f019d3ca3f74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum size of the receiver queue that holds the messages pending delivery.  <a href="#acc4d61dcf72c3e18129f019d3ca3f74a">More...</a><br /></td></tr>
 <tr class="separator:acc4d61dcf72c3e18129f019d3ca3f74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57f8ff69a5052f752211db940ffeeb48"><td class="memItemLeft" align="right" valign="top">TimeSpan&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a57f8ff69a5052f752211db940ffeeb48">MaximumLag</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a57f8ff69a5052f752211db940ffeeb48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the maximum age of items waiting to be delivered. Items older than this are discarded.  <a href="#a57f8ff69a5052f752211db940ffeeb48">More...</a><br /></td></tr>
-<tr class="separator:a57f8ff69a5052f752211db940ffeeb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82e8a35827d8519042e024eee27a87fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">LagConstraints</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a82e8a35827d8519042e024eee27a87fe">LagEnforcement</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a82e8a35827d8519042e024eee27a87fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether lag matters or not.  <a href="#a82e8a35827d8519042e024eee27a87fe">More...</a><br /></td></tr>
-<tr class="separator:a82e8a35827d8519042e024eee27a87fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9797f06e2abfb2f6de5480f04b27e510"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a9797f06e2abfb2f6de5480f04b27e510">IsSynchronous</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a9797f06e2abfb2f6de5480f04b27e510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether the delivery should by synchronous.  <a href="#a9797f06e2abfb2f6de5480f04b27e510">More...</a><br /></td></tr>
-<tr class="separator:a9797f06e2abfb2f6de5480f04b27e510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89bb4bf284c45ae72a527f3070157b82"><td class="memItemLeft" align="right" valign="top">TimeSpan&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#a89bb4bf284c45ae72a527f3070157b82">MaximumLatency</a><code> [get]</code></td></tr>
+<tr class="memdesc:a89bb4bf284c45ae72a527f3070157b82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum latency of items to be delivered. Items with a latency larger than this are discarded.  <a href="#a89bb4bf284c45ae72a527f3070157b82">More...</a><br /></td></tr>
+<tr class="separator:a89bb4bf284c45ae72a527f3070157b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9f13e22edecc1d20da0f9811b1f8965"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html#ad9f13e22edecc1d20da0f9811b1f8965">AttemptSynchronous</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad9f13e22edecc1d20da0f9811b1f8965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether the runtime should attempt synchronous delivery when possible.  <a href="#ad9f13e22edecc1d20da0f9811b1f8965">More...</a><br /></td></tr>
+<tr class="separator:ad9f13e22edecc1d20da0f9811b1f8965"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Encapsulates the options for message delivery behavior. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2736d3ab39388a346e8099872331acd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2736d3ab39388a346e8099872331acd0">&#9670;&nbsp;</a></span>LagConstrained()</h2>
+<a id="a8fc3c3430cbdfc663627f218f67b9098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fc3c3430cbdfc663627f218f67b9098">&#9670;&nbsp;</a></span>LatencyConstrained()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,21 +128,11 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.LagConstrained </td>
+          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.LatencyConstrained </td>
           <td>(</td>
           <td class="paramtype">TimeSpan&#160;</td>
-          <td class="paramname"><em>maximumLag</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>maximumLatency</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">LagConstraints</a>&#160;</td>
-          <td class="paramname"><em>lagConstraint</em> = <code><a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75dab4ee632ee2b420e4c4954189eafa9230">LagConstraints.BestEffort</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -170,47 +142,19 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a lag-limiting delivery policy. Messages older than the specified maximum lag are dropped. </p>
+<p>Creates a latency-constrained delivery policy. Messages older than the specified maximum latency are discarded. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">maximumLag</td><td>The maximum tolerable lag</td></tr>
-    <tr><td class="paramname">lagConstraint</td><td>One of the LagConstraints options</td></tr>
+    <tr><td class="paramname">maximumLatency</td><td>The maximum latency for messages to be delivered.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A lag-limited policy</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A latency-constrained delivery policy.</dd></dl>
 
 </div>
 </div>
-<a id="a860a2c67d88a5bcf5dd0bed9ab737d28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a860a2c67d88a5bcf5dd0bed9ab737d28">&#9670;&nbsp;</a></span>Merge()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.Merge </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>other</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Combines two delivery policies. Each setting in the resulting policy is set to the stricter of the two parent policies. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td>The policy to combine with</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The new policy</dd></dl>
-
-</div>
-</div>
-<a id="acf7b78e6f71bbc3038891c5d2278192f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf7b78e6f71bbc3038891c5d2278192f">&#9670;&nbsp;</a></span>TryParse()</h2>
+<a id="ae74dae6275ee3f46c0c9661b6b7523f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae74dae6275ee3f46c0c9661b6b7523f1">&#9670;&nbsp;</a></span>QueueSizeConstrained()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -219,21 +163,11 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool Microsoft.Psi.DeliveryPolicy.TryParse </td>
+          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.QueueSizeConstrained </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maximumQueueSize</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">out <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>result</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -243,139 +177,18 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts the string representation of the name to a static delivery policy instance. </p>
+<p>Creates a queue-size constrained delivery policy. Messages will accumulate only up to the specified maximum queue size, after which they will be discarded. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>The string representation of the delivery policy.</td></tr>
-    <tr><td class="paramname">result</td><td>If method succeeds, result contains the corresponding delivery policy. If it fails, the value is null.</td></tr>
+    <tr><td class="paramname">maximumQueueSize</td><td>The maximum queue size.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the conversion succeeded.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A queue-size constrained delivery policy.</dd></dl>
 
 </div>
 </div>
-<h2 class="groupheader">Property Documentation</h2>
-<a id="ae8154918d12b25a4f925a6fde396c0e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8154918d12b25a4f925a6fde396c0e5">&#9670;&nbsp;</a></span>Default</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.Default</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a lossy default policy, which is to drop messages once they are too old (older than 100ms), using a shallow queue to amortize CPU spikes </p>
-
-</div>
-</div>
-<a id="a6af6d9f3564f6339fb10ae45bfd28069"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6af6d9f3564f6339fb10ae45bfd28069">&#9670;&nbsp;</a></span>Immediate</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.Immediate</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a lossless delivery policy which enforces synchronous message delivery </p>
-
-</div>
-</div>
-<a id="a38a6b536b3b24bb7ee9dd27ff7d241af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38a6b536b3b24bb7ee9dd27ff7d241af">&#9670;&nbsp;</a></span>ImmediateOrThrottle16</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.ImmediateOrThrottle16</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a lossless delivery policy which enforces synchronous message delivery with throttling once queue size (16) is exceeded </p>
-
-</div>
-</div>
-<a id="a9797f06e2abfb2f6de5480f04b27e510"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9797f06e2abfb2f6de5480f04b27e510">&#9670;&nbsp;</a></span>IsSynchronous</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Microsoft.Psi.DeliveryPolicy.IsSynchronous</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets or sets a value indicating whether the delivery should by synchronous. </p>
-
-</div>
-</div>
-<a id="a82e8a35827d8519042e024eee27a87fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82e8a35827d8519042e024eee27a87fe">&#9670;&nbsp;</a></span>LagEnforcement</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75d">LagConstraints</a> Microsoft.Psi.DeliveryPolicy.LagEnforcement</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets or sets a value indicating whether lag matters or not. </p>
-
-</div>
-</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a7aff986eb6bf8913af48c79eb2a82ca2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7aff986eb6bf8913af48c79eb2a82ca2">&#9670;&nbsp;</a></span>LatestMessage</h2>
 
@@ -386,22 +199,22 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.LatestMessage</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.LatestMessage =&gt; DeliveryPolicy.latestMessage</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets a lossy delivery policy which limits the queue to one message, with no lag constraints </p>
+<p>Gets a lossy delivery policy which limits the receiver queue to one message, with no latency constraints. </p>
 
 </div>
 </div>
-<a id="a57f8ff69a5052f752211db940ffeeb48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57f8ff69a5052f752211db940ffeeb48">&#9670;&nbsp;</a></span>MaximumLag</h2>
+<a id="aa2720952a93c510993cc55ac5d655f0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2720952a93c510993cc55ac5d655f0f">&#9670;&nbsp;</a></span>Unlimited</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -410,17 +223,90 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TimeSpan Microsoft.Psi.DeliveryPolicy.MaximumLag</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.Unlimited =&gt; DeliveryPolicy.unlimitedPolicy</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the maximum age of items waiting to be delivered. Items older than this are discarded. </p>
+<p>Gets a lossless, unlimited delivery policy which lets the receiver queue grow as much as needed, with no latency constraints. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="ad9f13e22edecc1d20da0f9811b1f8965"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9f13e22edecc1d20da0f9811b1f8965">&#9670;&nbsp;</a></span>AttemptSynchronous</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Microsoft.Psi.DeliveryPolicy.AttemptSynchronous</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a value indicating whether the runtime should attempt synchronous delivery when possible. </p>
+
+</div>
+</div>
+<a id="ad645a72440fe95ce7b248567696de822"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad645a72440fe95ce7b248567696de822">&#9670;&nbsp;</a></span>InitialQueueSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Microsoft.Psi.DeliveryPolicy.InitialQueueSize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the initial size of the receiver queue that holds the messages pending delivery. </p>
+
+</div>
+</div>
+<a id="a89bb4bf284c45ae72a527f3070157b82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89bb4bf284c45ae72a527f3070157b82">&#9670;&nbsp;</a></span>MaximumLatency</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TimeSpan Microsoft.Psi.DeliveryPolicy.MaximumLatency</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the maximum latency of items to be delivered. Items with a latency larger than this are discarded. </p>
 
 </div>
 </div>
@@ -439,60 +325,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the maximum size of the queue that holds the messages pending delivery. 0 means used default value. </p>
-
-</div>
-</div>
-<a id="aadef2ffcdf665a73efc1227114227562"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadef2ffcdf665a73efc1227114227562">&#9670;&nbsp;</a></span>QueueSize</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.DeliveryPolicy.QueueSize</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets or sets the initial size of the queue that holds the messages pending delivery. 0 means used default value. </p>
-
-</div>
-</div>
-<a id="a3be05439c53b935d9e2aef798f55aab9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3be05439c53b935d9e2aef798f55aab9">&#9670;&nbsp;</a></span>Throttled</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.Throttled</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a lossless throttled delivery policy, which queues everything but throttles callers once the queue becomes too big </p>
+<p>Gets the maximum size of the receiver queue that holds the messages pending delivery. </p>
 
 </div>
 </div>
@@ -511,36 +349,13 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets a value indicating whether to block the publisher if the receiver queue is full. The default is to not block, and drop the oldest message instead. Use with care, as it affects all other subscribers to the same publisher and can introduce deadlocks (a blocked publisher cannot process control messages anymore). </p>
-
-</div>
-</div>
-<a id="aa2720952a93c510993cc55ac5d655f0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2720952a93c510993cc55ac5d655f0f">&#9670;&nbsp;</a></span>Unlimited</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.DeliveryPolicy.Unlimited</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a lossless unbounded delivery policy which lets the queue grow as much as needed, with no lag constraints </p>
+<p>Gets a value indicating whether to block the upstream producer if the receiver queue is full. </p>
+<p>Use with care, as it affects all other subscribers to the same producer and can introduce deadlocks (a blocked producer cannot process control messages anymore).</p>
 
 </div>
 </div>

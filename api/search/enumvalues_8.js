@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['immediateworkitemspersecond',['ImmediateWorkitemsPerSecond',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86a5d9421630886d34d9ed72aed1444c835',1,'Microsoft::Psi::Scheduling']]],
   ['indexed',['Indexed',['../namespace_microsoft_1_1_psi.html#a8192f981f9fde5c384321d307ce627f5acccd5fd8c8f59fe9373c56b1b951780c',1,'Microsoft::Psi']]],
   ['ingesttime',['IngestTime',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a301fc80426828d04b457269a99a828bb',1,'Microsoft::Psi']]],
   ['initialsilencetimeout',['InitialSilenceTimeout',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106a1acf53ca9f895a8ac8b93258d1072d01',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],

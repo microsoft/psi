@@ -5,6 +5,80 @@ title:  Release Notes
 
 # Release Notes
 
+**2018/11/30**: Beta-release, version 0.6.48.2
+
+BREAKING CHANGES:
+
+* It is now a requirement that messages posted on an `Emitter` have strictly increasing originating times. Attempting to post multiple messages with the same originating time on the same stream will cause an exception to be thrown.
+* The `Buffer`, `History` and `Window` operators have been unified as a single set of `Window` operators which take either an index-based or a relative time-based interval. The index-based variants emit the initial buffer only after the total count of messages within the specified index interval have been accumulated, whereas the time-based variants emit the initial buffer as soon as messages within the specified relative time interval are available.
+* The following operators have been removed:
+    * `SelectMany`.
+    * `Mirror`.
+    * `Repeat` - use `Pair` instead.
+    * `Buffer` - use `Window` instead.
+    * `History` - use `Window` instead.
+    * `Previous`
+* [Delivery Policies](/topics/InDepth.DeliveryPolicies.md) have been simplified and renamed:
+    * The `Throttled` policy has been removed. It will be re-introduced in a later release once issues around throttling have been resolved.
+    * The `Default`, `Immediate` and `ImmediateOrThrottle16` policies have been removed.
+    * The `QueueSize` property has been renamed `InitialQueueSize`.
+    * The `MaximumLag` property has been renamed `MaximumLatency`.
+    * The `IsSynchronous` property has been renamed `AttemptSynchronous`.
+* As a result of the above changes, many stream operators have been amended to take an optional `DeliveryPolicy` parameter.
+* The constructors for the `Connector` component and associated `CreateConnector` extension methods no longer take an `owner` parameter.
+* The serialization format for `SystemCalibration` has changed:
+    * The `ImageWidth` and `ImageHeight` properties have been removed.
+    * The `NumberOfFrames` property has been moved to the `CameraCalibration` class.
+* The `ICameraIntrinsics` interface has changed:
+    * The signature of the `DistortPoint` method has changed.
+
+
+New Features in Platform for Situated Intelligence Studio:
+
+* Updated the layout of the main Psi Studio screen. The Datasets tree view and the Visualizations tree view have been moved to the left hand side of the application. Furthermore they are no longer on separate tabs, they appear one above the other so that users no longer have to switch back and forth between tabs while laying out the visualizations. Datasets and Visualizations previously each had their own Properties pages, but now there is a single Properties page on the right hand side of the application that is able to display the properties of either type of object. Both the Datasets and Visualizations tree views and the Properties page can be resized or hidden completely to give more screen real estate to the main Visualization view.
+* Added multi track event visualizer `TimeIntervalHistoryVisualizationObject` which is useful for visualizing multiple tracks of events having some finite timespan such as multiple speech-to-text streams. This visualizer will be loaded when visualizing streams containing messages of type `Dictionary<string, List<(TimeInterval, string)>>`. The `Dictionary` keys represent unique track IDs, each element in the `List` represents an event to display in the track and contains a tuple of the `TimeInterval` representing the start and end times of the event and a string representing the text that will be displayed inside the time interval. Note that since this is a history visualizer, each message should contain ALL events that have occurred up until the time of the message. This implies that the last message in the stream contains all of the data required to display the visualization.
+* Users can now visualize streams by dragging them from the Datasets tree view directly into the main Visualization panel.
+* Added 'Snap to Stream' functionality on certain visualizers to snap the cursor to the messages of the snapped stream.
+* Added 'Visualize Messages in New Panel' and 'Visualize Latency in New Panel' commands to the stream context menu.
+* Psi Studio now automatically attempts to repair corrupted stores when opening them.
+
+
+New Features in Platform for Situated Intelligence Runtime/Core:
+
+* Initial version of data interop with the introduction of `Microsoft.Psi.Interop`, with support for MessagePack, JSON and CSV data formats and ZeroMQ transport. See the [Interop topic](/topics/InDepth.Interop.md) for more details.
+* New `dynamic` store reader allows reading any stream from any store to `dynamic` primitives or to `ExpandoObject` of `dynamic` without requiring a reference to the .NET type of the stream messages.
+* New `PsiStoreTool` command-line tool which allows exploration of available streams in a store, conversion to other formats using interop, and saving to disk or sending over a message queue for consumption by other platforms and/or languages.
+* Exposed `Scheduler` as a parameter to `Pipeline` and `Clock` as a parameter to `Scheduler`.
+* Multiple handlers may now be registered on start, stop and final pipeline events.
+* Improved `#TRACKLEAKS` debug information in `RecyclingPool`.
+
+
+New Features in Imaging:
+
+* Added `SetPixel` method to `Image`.
+* Added `DrawText` extension method for `Image`.
+* Added support for `CameraIntrinsics` and `CoordinateSystem` to `SystemCalibration`.
+* The `IKinectCalibration` interface and `KinectCalibration` class have been extended to support conversion from depth coordinates to color space coordinates using the new `ToColorSpace` operator.
+
+Bug Fixes:
+ 
+* Fixed several issues where visualization objects were not being displayed in the correct color in Psi Studio.
+* Fixed a bug which would sometimes cause Psi Studio to crash when visualizing image streams.
+* Fixed a bug which caused the mouse to move the cursor position during playback in Psi Studio.
+* Fixed an issue causing streams to disappear at the end of playback in Psi Studio.
+* Fixed a crash in Psi Studio when opening a layout created from a store which has since been deleted.
+* Fixed a bug which sometimes caused timeline plots to be truncated when loading a layout in Psi Studio.
+* Fixed an exception when closing Psi Studio after a live visualization session.
+* Fixed a performance issue reading from Psi stores which occurred at the transition between consecutive data files.
+* Fixed a bug where the `ImageCompressor` was not properly disposing of an encoded image after decoding it.
+* Fixed a bug where `ImagePool` would sometimes return a recycled image with incorrect dimensions.
+* Fixed a bug where the pipeline replay interval would sometimes extend beyond the lifetime of a stream being read from a store.
+* Fixed a bug which caused `KinectSample` to crash when it detected no faces.
+* Fixed the `Scale` image extension method to throw an exception when attempting to call it on an `Image` with an unsupported format.
+* Fixed a few intermittently failing unit tests.
+* Fixed a bug which sometimes caused a loss of precision when computing the current pipeline time.
+
+
 **2018/09/13**: Beta-release, version 0.5.48.2
 
 <div style="color:red;font-weight:bold">IMPORTANT NOTE:</div>

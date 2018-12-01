@@ -79,8 +79,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_priority_queue.html">PriorityQueue</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A generic ordered queue that sorts items based on the specified Comparer  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_priority_queue.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html">Scheduler</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maintains a queue of workitems and schedules worker threads to empty them.  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_simple_semaphore.html">SimpleSemaphore</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a semaphore class that limits the number of threads entering a resource and provides an event when all threads finished.  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_simple_semaphore.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html">SynchronizationLock</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a simple lock. Unlike Monitor, this class doesn't enforce thread ownership.  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -88,6 +94,9 @@ Enumerations</h2></td></tr>
 <tr class="memitem:abcc6c769d8d8674943c9d428b7067283"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_scheduling.html#abcc6c769d8d8674943c9d428b7067283">PriorityQueueCounters</a> </td></tr>
 <tr class="memdesc:abcc6c769d8d8674943c9d428b7067283"><td class="mdescLeft">&#160;</td><td class="mdescRight">The counters we support  <a href="namespace_microsoft_1_1_psi_1_1_scheduling.html#abcc6c769d8d8674943c9d428b7067283">More...</a><br /></td></tr>
 <tr class="separator:abcc6c769d8d8674943c9d428b7067283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4948517908924b5363d05397b6d61f86"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86">SchedulerCounters</a> </td></tr>
+<tr class="memdesc:a4948517908924b5363d05397b6d61f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">The counters we support  <a href="namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86">More...</a><br /></td></tr>
+<tr class="separator:a4948517908924b5363d05397b6d61f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="abcc6c769d8d8674943c9d428b7067283"></a>
@@ -125,6 +134,46 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="abcc6c769d8d8674943c9d428b7067283a1ac5c07e5230f9fb9e0d1a0ab838c4c0"></a>DequeuingRetries&#160;</td><td class="fielddoc"><p>The ratio of retries per dequeue operation </p>
 </td></tr>
 <tr><td class="fieldname"><a id="abcc6c769d8d8674943c9d428b7067283afb548caa9f61d5615a0565e73f00ca1f"></a>DequeueingCount&#160;</td><td class="fielddoc"><p>The base counter for computing the dequeuing retry count. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a4948517908924b5363d05397b6d61f86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4948517908924b5363d05397b6d61f86">&#9670;&nbsp;</a></span>SchedulerCounters</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86">Microsoft.Psi.Scheduling.SchedulerCounters</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The counters we support </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86a6af8046885ddfbb41c87f5d6e0393557"></a>LocalToGlobalPromotions&#160;</td><td class="fielddoc"><p>The rate of workitems that had to be promoted to the global queue </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86a3c7e4ac61ef76426fe6aed5364dc9a36"></a>LocalQueueCount&#160;</td><td class="fielddoc"><p>The number of messages in the thread-local queues. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86aa9e78e5f50a76c72af007890480b7812"></a>WorkitemsPerSecond&#160;</td><td class="fielddoc"><p>The rate of executed workitems </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86a1b70c7040010de363daa4c4c5d697629"></a>GlobalWorkitemsPerSecond&#160;</td><td class="fielddoc"><p>The rate of executed workitems from the global workitem queue </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86a5173f85b9f03147da58ff871d23fc621"></a>LocalWorkitemsPerSecond&#160;</td><td class="fielddoc"><p>The rate of executed workitems from the thread-local workitem queues </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86a5d9421630886d34d9ed72aed1444c835"></a>ImmediateWorkitemsPerSecond&#160;</td><td class="fielddoc"><p>The rate of executed workitems executed synchronously, without queuing </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4948517908924b5363d05397b6d61f86a0410f836a3418efe8bf254582a4480c6"></a>ActiveThreads&#160;</td><td class="fielddoc"><p>The count of active threads </p>
 </td></tr>
 </table>
 

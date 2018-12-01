@@ -271,5 +271,6 @@ var searchData=
   ['websocketservererror',['WebSocketServerError',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a5a5e5a8b662724e1ee9d315a43a9fad4a8b930af57f2ea6f7fca4f5a397bc341b',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
   ['whitebalance',['WhiteBalance',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13a68a1cd4232bccbb91973004902e7393a',1,'Microsoft::Psi::Media_Interop']]],
   ['wnva',['WNVA',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a815ec9ef330c7a43fb616013e2dee88a',1,'Microsoft::Psi::Media']]],
-  ['workitemcount',['WorkitemCount',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#abcc6c769d8d8674943c9d428b7067283a6899ab0220e813c96dbf317eb8231068',1,'Microsoft::Psi::Scheduling']]]
+  ['workitemcount',['WorkitemCount',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#abcc6c769d8d8674943c9d428b7067283a6899ab0220e813c96dbf317eb8231068',1,'Microsoft::Psi::Scheduling']]],
+  ['workitemspersecond',['WorkitemsPerSecond',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86aa9e78e5f50a76c72af007890480b7812',1,'Microsoft::Psi::Scheduling']]]
 ];

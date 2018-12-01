@@ -117,6 +117,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa141320a24c633637a703bbe9d1234e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aa141320a24c633637a703bbe9d1234e7">CopyTo</a> (byte[] destinationBuffer)</td></tr>
 <tr class="memdesc:aa141320a24c633637a703bbe9d1234e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the psi image to a byte array buffer.  <a href="#aa141320a24c633637a703bbe9d1234e7">More...</a><br /></td></tr>
 <tr class="separator:aa141320a24c633637a703bbe9d1234e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1310cff901b731528447a631e30c3e03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a1310cff901b731528447a631e30c3e03">SetPixel</a> (int x, int y, int r, int g, int b, int a)</td></tr>
+<tr class="memdesc:a1310cff901b731528447a631e30c3e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a pixel in the image  <a href="#a1310cff901b731528447a631e30c3e03">More...</a><br /></td></tr>
+<tr class="separator:a1310cff901b731528447a631e30c3e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94cae5f7f03864a8dbfe5baf2fa5efe3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a94cae5f7f03864a8dbfe5baf2fa5efe3">CopyTo</a> (IntPtr destination, int width, int height, int dstStride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> destinationFormat)</td></tr>
 <tr class="memdesc:a94cae5f7f03864a8dbfe5baf2fa5efe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the psi image to an unmanaged buffer.  <a href="#a94cae5f7f03864a8dbfe5baf2fa5efe3">More...</a><br /></td></tr>
 <tr class="separator:a94cae5f7f03864a8dbfe5baf2fa5efe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1000,6 +1003,71 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <p>The method initializes palette of <a class="el" href="">Format8bppIndexed</a> image with 256 gradients of gray color.</p>
+
+</div>
+</div>
+<a id="a1310cff901b731528447a631e30c3e03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1310cff901b731528447a631e30c3e03">&#9670;&nbsp;</a></span>SetPixel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Imaging.Image.SetPixel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a pixel in the image </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Pixel's X coordinate</td></tr>
+    <tr><td class="paramname">y</td><td>Pixel's Y coordinate</td></tr>
+    <tr><td class="paramname">r</td><td>Red channel's value</td></tr>
+    <tr><td class="paramname">g</td><td>Green channel's value</td></tr>
+    <tr><td class="paramname">b</td><td>Blue channel's value</td></tr>
+    <tr><td class="paramname">a</td><td>Alpha channel's value</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

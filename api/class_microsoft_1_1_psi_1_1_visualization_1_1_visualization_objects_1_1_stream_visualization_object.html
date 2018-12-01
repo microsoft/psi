@@ -94,6 +94,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a25e6b040ae91eede5f37ec08a2fb2855"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a25e6b040ae91eede5f37ec08a2fb2855">UpdateStoreBindings</a> (IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_partition_view_model.html">PartitionViewModel</a> &gt; partitions)</td></tr>
 <tr class="memdesc:a25e6b040ae91eede5f37ec08a2fb2855"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the store bindings for given enumeration of partitions.   <a href="#a25e6b040ae91eede5f37ec08a2fb2855">More...</a><br /></td></tr>
 <tr class="separator:a25e6b040ae91eede5f37ec08a2fb2855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada6ac9773f584241e7d6059259042b79"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ada6ac9773f584241e7d6059259042b79">GetTimeOfNearestMessage</a> (DateTime currentTime, int count, Func&lt; int, DateTime &gt; timeAtIndex)</td></tr>
+<tr class="memdesc:ada6ac9773f584241e7d6059259042b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the timestamp of the Message that's closest to currentTime. Used by the "Snap To Stream" functionality.  <a href="#ada6ac9773f584241e7d6059259042b79">More...</a><br /></td></tr>
+<tr class="separator:ada6ac9773f584241e7d6059259042b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -226,11 +229,56 @@ Properties</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">currentTime</td><td>Time to search for.</td></tr>
     <tr><td class="paramname">count</td><td>Number of entries to search within.</td></tr>
-    <tr><td class="paramname">timeAtIndex</td><td>Function that returns and index given a time.</td></tr>
+    <tr><td class="paramname">timeAtIndex</td><td>Function that returns an index given a time.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Best matching index or -1 if no qualifying match was found.</dd></dl>
+
+</div>
+</div>
+<a id="ada6ac9773f584241e7d6059259042b79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada6ac9773f584241e7d6059259042b79">&#9670;&nbsp;</a></span>GetTimeOfNearestMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DateTime <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.GetTimeOfNearestMessage </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>currentTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; int, DateTime &gt;&#160;</td>
+          <td class="paramname"><em>timeAtIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the timestamp of the Message that's closest to currentTime. Used by the "Snap To Stream" functionality. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentTime</td><td>The time underneath the mouse cursor</td></tr>
+    <tr><td class="paramname">count</td><td>Number of entries to search within.</td></tr>
+    <tr><td class="paramname">timeAtIndex</td><td>Function that returns an index given a time.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The timestamp of the message that's temporally closest to currentTime</dd></dl>
 
 </div>
 </div>

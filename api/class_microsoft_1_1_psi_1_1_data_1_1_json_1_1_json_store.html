@@ -85,9 +85,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a47cf0013cf16dc5e224f982c706c6aee"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_generator.html">JsonGenerator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store.html#a47cf0013cf16dc5e224f982c706c6aee">Open</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string name, string path)</td></tr>
 <tr class="memdesc:a47cf0013cf16dc5e224f982c706c6aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a multi-stream JSON store for read and returns an <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_generator.html" title="Defines a component that plays back data from a JSON store. ">JsonGenerator</a> instance which can be used to inspect the store and open the streams.  <a href="#a47cf0013cf16dc5e224f982c706c6aee">More...</a><br /></td></tr>
 <tr class="separator:a47cf0013cf16dc5e224f982c706c6aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46e4e4283ca17f8f8d292dd9d93ad59d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store.html#a46e4e4283ca17f8f8d292dd9d93ad59d">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_exporter.html">JsonExporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:a46e4e4283ca17f8f8d292dd9d93ad59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream JSON store.  <a href="#a46e4e4283ca17f8f8d292dd9d93ad59d">More...</a><br /></td></tr>
-<tr class="separator:a46e4e4283ca17f8f8d292dd9d93ad59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81af5702e740199abbf3daaf61b12265"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store.html#a81af5702e740199abbf3daaf61b12265">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_exporter.html">JsonExporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a81af5702e740199abbf3daaf61b12265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream JSON store.  <a href="#a81af5702e740199abbf3daaf61b12265">More...</a><br /></td></tr>
+<tr class="separator:a81af5702e740199abbf3daaf61b12265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides static methods to access multi-stream JSON stores. </p>
@@ -205,8 +205,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a46e4e4283ca17f8f8d292dd9d93ad59d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46e4e4283ca17f8f8d292dd9d93ad59d">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
+<a id="a81af5702e740199abbf3daaf61b12265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81af5702e740199abbf3daaf61b12265">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,7 +236,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -263,7 +263,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>The source stream to write</td></tr>
     <tr><td class="paramname">name</td><td>The name of the persisted stream.</td></tr>
     <tr><td class="paramname">writer</td><td>The store writer, created by e.g. <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store.html#a3e58ed615bd6fea9dc043fc6dde61d19" title="Creates a new multi-stream JSON store and returns an JsonExporter instance which can be used to write...">Create(Pipeline, string, string, bool)</a></td></tr>
-    <tr><td class="paramname">policy</td><td>An optional delivery policy</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

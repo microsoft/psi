@@ -88,11 +88,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9f838d8d27246aa779625de7bcf042e6"><td class="memItemLeft" align="right" valign="top">Point3D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a9f838d8d27246aa779625de7bcf042e6">ToCameraSpace</a> (Point2D pt, double depth, bool undistort)</td></tr>
 <tr class="memdesc:a9f838d8d27246aa779625de7bcf042e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprojects a point from pixel space into 3D camera space  <a href="#a9f838d8d27246aa779625de7bcf042e6">More...</a><br /></td></tr>
 <tr class="separator:a9f838d8d27246aa779625de7bcf042e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83090a1df52174e8c7d7bdef772b4acc"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a83090a1df52174e8c7d7bdef772b4acc">DistortPoint</a> (Point2D undistortedPt)</td></tr>
-<tr class="memdesc:a83090a1df52174e8c7d7bdef772b4acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies distortion to the point in pixel space  <a href="#a83090a1df52174e8c7d7bdef772b4acc">More...</a><br /></td></tr>
-<tr class="separator:a83090a1df52174e8c7d7bdef772b4acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4760ebc15a960385f3585a074ef279"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a9c4760ebc15a960385f3585a074ef279">DistortPoint</a> (Point2D undistortedPt, out Point2D distortedPt)</td></tr>
+<tr class="memdesc:a9c4760ebc15a960385f3585a074ef279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies distortion to the point in the camera's post-projective space  <a href="#a9c4760ebc15a960385f3585a074ef279">More...</a><br /></td></tr>
+<tr class="separator:a9c4760ebc15a960385f3585a074ef279"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68cf0f04c0b5f108e83a22a002b8585b"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a68cf0f04c0b5f108e83a22a002b8585b">UndistortPoint</a> (Point2D distortedPt)</td></tr>
-<tr class="memdesc:a68cf0f04c0b5f108e83a22a002b8585b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies undistortion to the point in pixel space  <a href="#a68cf0f04c0b5f108e83a22a002b8585b">More...</a><br /></td></tr>
+<tr class="memdesc:a68cf0f04c0b5f108e83a22a002b8585b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies undistortion to the point in camera's post-projective space  <a href="#a68cf0f04c0b5f108e83a22a002b8585b">More...</a><br /></td></tr>
 <tr class="separator:a68cf0f04c0b5f108e83a22a002b8585b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -125,32 +125,43 @@ Properties</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>ICameraIntrinsics defines our interface for specifying the intrinsics for a camera (i.e. converting from camera space coordinates into pixel coordinates). </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a83090a1df52174e8c7d7bdef772b4acc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83090a1df52174e8c7d7bdef772b4acc">&#9670;&nbsp;</a></span>DistortPoint()</h2>
+<a id="a9c4760ebc15a960385f3585a074ef279"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c4760ebc15a960385f3585a074ef279">&#9670;&nbsp;</a></span>DistortPoint()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Point2D Microsoft.Psi.Calibration.ICameraIntrinsics.DistortPoint </td>
+          <td class="memname">bool Microsoft.Psi.Calibration.ICameraIntrinsics.DistortPoint </td>
           <td>(</td>
           <td class="paramtype">Point2D&#160;</td>
-          <td class="paramname"><em>undistortedPt</em></td><td>)</td>
+          <td class="paramname"><em>undistortedPt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">out Point2D&#160;</td>
+          <td class="paramname"><em>distortedPt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Applies distortion to the point in pixel space </p>
+<p>Applies distortion to the point in the camera's post-projective space </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">undistortedPt</td><td>Point in pixel space to distort</td></tr>
+    <tr><td class="paramname">undistortedPt</td><td>Point in camera's post-projective space to distort</td></tr>
+    <tr><td class="paramname">distortedPt</td><td>Returns the distorted point in camera's post-projective space</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Distorted point in pixel space</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if 'distortedPt' contains valid result. False if it didn't converge</dd></dl>
 
-<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a935980c9a41363c68508650e68814af5">Microsoft.Psi.Calibration.CameraIntrinsics</a>.</p>
+<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a597ba3669ad42b617370f582c54f07fc">Microsoft.Psi.Calibration.CameraIntrinsics</a>.</p>
 
 </div>
 </div>
@@ -257,14 +268,14 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Applies undistortion to the point in pixel space </p>
+<p>Applies undistortion to the point in camera's post-projective space </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">distortedPt</td><td>Distorted point in pixel space to undistort</td></tr>
+    <tr><td class="paramname">distortedPt</td><td>Distorted point in camera's post-projective space to undistort</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Undistorted point in pixel space</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Undistorted point in camera's post-projective space</dd></dl>
 
 <p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a106556dabed6ec6beab5a5bf444b3761">Microsoft.Psi.Calibration.CameraIntrinsics</a>.</p>
 

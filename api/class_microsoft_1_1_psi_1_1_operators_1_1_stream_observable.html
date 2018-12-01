@@ -83,9 +83,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af218f2ea0fd126ce87dbf1717de18fb9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#af218f2ea0fd126ce87dbf1717de18fb9">StreamObservable</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; stream)</td></tr>
-<tr class="memdesc:af218f2ea0fd126ce87dbf1717de18fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#af218f2ea0fd126ce87dbf1717de18fb9" title="Initializes a new instance of the StreamObservable&lt;T&gt; class. ">StreamObservable&lt;T&gt;</a> class.  <a href="#af218f2ea0fd126ce87dbf1717de18fb9">More...</a><br /></td></tr>
-<tr class="separator:af218f2ea0fd126ce87dbf1717de18fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26428e027cede672957b0deae20aa9c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#a26428e027cede672957b0deae20aa9c5">StreamObservable</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; stream, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a26428e027cede672957b0deae20aa9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#a26428e027cede672957b0deae20aa9c5" title="Initializes a new instance of the StreamObservable&lt;T&gt; class. ">StreamObservable&lt;T&gt;</a> class.  <a href="#a26428e027cede672957b0deae20aa9c5">More...</a><br /></td></tr>
+<tr class="separator:a26428e027cede672957b0deae20aa9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a514028ae0cd753b5b51c694f83309357"><td class="memItemLeft" align="right" valign="top">IDisposable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#a514028ae0cd753b5b51c694f83309357">Subscribe</a> (IObserver&lt; T &gt; observer)</td></tr>
 <tr class="separator:a514028ae0cd753b5b51c694f83309357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -104,8 +104,8 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af218f2ea0fd126ce87dbf1717de18fb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af218f2ea0fd126ce87dbf1717de18fb9">&#9670;&nbsp;</a></span>StreamObservable()</h2>
+<a id="a26428e027cede672957b0deae20aa9c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26428e027cede672957b0deae20aa9c5">&#9670;&nbsp;</a></span>StreamObservable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -114,16 +114,27 @@ Public Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html">Microsoft.Psi.Operators.StreamObservable</a>&lt; T &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html">StreamObservable</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt;&#160;</td>
-          <td class="paramname"><em>stream</em></td><td>)</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#af218f2ea0fd126ce87dbf1717de18fb9" title="Initializes a new instance of the StreamObservable&lt;T&gt; class. ">StreamObservable&lt;T&gt;</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_observable.html#a26428e027cede672957b0deae20aa9c5" title="Initializes a new instance of the StreamObservable&lt;T&gt; class. ">StreamObservable&lt;T&gt;</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">stream</td><td>Stream to observe.</td></tr>
+    <tr><td class="paramname">stream</td><td>The source stream to observe.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

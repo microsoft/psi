@@ -88,9 +88,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9dfb232b23b4754b7a34831ed13ce2d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a9dfb232b23b4754b7a34831ed13ce2d0">Pipeline</a> (string name, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> globalPolicy, int threadCount, bool allowSchedulingOnExternalThreads)</td></tr>
-<tr class="memdesc:a9dfb232b23b4754b7a34831ed13ce2d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a> class.  <a href="#a9dfb232b23b4754b7a34831ed13ce2d0">More...</a><br /></td></tr>
-<tr class="separator:a9dfb232b23b4754b7a34831ed13ce2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74acedaf48b840504b83206889899e05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a74acedaf48b840504b83206889899e05">Pipeline</a> (string name, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads)</td></tr>
+<tr class="memdesc:a74acedaf48b840504b83206889899e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a> class.  <a href="#a74acedaf48b840504b83206889899e05">More...</a><br /></td></tr>
+<tr class="separator:a74acedaf48b840504b83206889899e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add2726f70cdab8356e2b92fa5274bb4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#add2726f70cdab8356e2b92fa5274bb4a">Pipeline</a> (string name, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy, <a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html">Scheduler</a> scheduler)</td></tr>
+<tr class="memdesc:add2726f70cdab8356e2b92fa5274bb4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a> class.  <a href="#add2726f70cdab8356e2b92fa5274bb4a">More...</a><br /></td></tr>
+<tr class="separator:add2726f70cdab8356e2b92fa5274bb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a3fdb1bba22c0ef03f238336fefe30c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a1a3fdb1bba22c0ef03f238336fefe30c">AddComponent</a> (string name, object stateObject)</td></tr>
 <tr class="memdesc:a1a3fdb1bba22c0ef03f238336fefe30c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add component to pipeline.  <a href="#a1a3fdb1bba22c0ef03f238336fefe30c">More...</a><br /></td></tr>
 <tr class="separator:a1a3fdb1bba22c0ef03f238336fefe30c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,10 +104,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6454ae649dc187e6ae8f789810bdd251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline start.  <a href="#a6454ae649dc187e6ae8f789810bdd251">More...</a><br /></td></tr>
 <tr class="separator:a6454ae649dc187e6ae8f789810bdd251"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46968330300b3394467e225de7841ed6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a46968330300b3394467e225de7841ed6">RegisterPipelineStopHandler</a> (object owner, Action onStop)</td></tr>
-<tr class="memdesc:a46968330300b3394467e225de7841ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline stop.  <a href="#a46968330300b3394467e225de7841ed6">More...</a><br /></td></tr>
+<tr class="memdesc:a46968330300b3394467e225de7841ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called when the pipeline is shutting down. Messages might still be flowing, but source components should cease.  <a href="#a46968330300b3394467e225de7841ed6">More...</a><br /></td></tr>
 <tr class="separator:a46968330300b3394467e225de7841ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b18292d6a68c9cde57af976c9cb2bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a85b18292d6a68c9cde57af976c9cb2bc">RegisterPipelineFinalHandler</a> (object owner, Action onFinal)</td></tr>
-<tr class="memdesc:a85b18292d6a68c9cde57af976c9cb2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called upon pipeline stop.  <a href="#a85b18292d6a68c9cde57af976c9cb2bc">More...</a><br /></td></tr>
+<tr class="memdesc:a85b18292d6a68c9cde57af976c9cb2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers handler to be called in the final stages of pipeline shutdown, once all source components have been deactivated and shutdown is imminent. This is the last chance to post final messages.  <a href="#a85b18292d6a68c9cde57af976c9cb2bc">More...</a><br /></td></tr>
 <tr class="separator:a85b18292d6a68c9cde57af976c9cb2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec30508a49d0b04a6f99bd1230bf59d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aaec30508a49d0b04a6f99bd1230bf59d">CreateReceiver&lt; T &gt;</a> (object owner, Action&lt; T, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> &gt; action, string name, bool autoClone=false)</td></tr>
 <tr class="memdesc:aaec30508a49d0b04a6f99bd1230bf59d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an input receiver associated with the specified component object.  <a href="#aaec30508a49d0b04a6f99bd1230bf59d">More...</a><br /></td></tr>
@@ -183,9 +186,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ad7c65d5988b2680dbd0a31c6800c60bd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#ad7c65d5988b2680dbd0a31c6800c60bd">Create</a> (string name=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> globalPolicy=null, int threadCount=0, bool allowSchedulingOnExternalThreads=false)</td></tr>
-<tr class="memdesc:ad7c65d5988b2680dbd0a31c6800c60bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create pipeline.  <a href="#ad7c65d5988b2680dbd0a31c6800c60bd">More...</a><br /></td></tr>
-<tr class="separator:ad7c65d5988b2680dbd0a31c6800c60bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a733a08fb7a153b838fa1917acd05ef8e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a733a08fb7a153b838fa1917acd05ef8e">Create</a> (string name=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, int threadCount=0, bool allowSchedulingOnExternalThreads=false)</td></tr>
+<tr class="memdesc:a733a08fb7a153b838fa1917acd05ef8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create pipeline.  <a href="#a733a08fb7a153b838fa1917acd05ef8e">More...</a><br /></td></tr>
+<tr class="separator:a733a08fb7a153b838fa1917acd05ef8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -195,9 +198,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a5ef31d6552936b491c097fda69b64fe8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a5ef31d6552936b491c097fda69b64fe8">ReplayDescriptor</a> =&gt; this.replayDescriptor</td></tr>
 <tr class="memdesc:a5ef31d6552936b491c097fda69b64fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets replay descriptor.  <a href="#a5ef31d6552936b491c097fda69b64fe8">More...</a><br /></td></tr>
 <tr class="separator:a5ef31d6552936b491c097fda69b64fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48e9c836272b502ed4e41d9e241c814f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a48e9c836272b502ed4e41d9e241c814f">GlobalPolicy</a> =&gt; this.globalPolicy</td></tr>
-<tr class="memdesc:a48e9c836272b502ed4e41d9e241c814f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets global delivery policy.  <a href="#a48e9c836272b502ed4e41d9e241c814f">More...</a><br /></td></tr>
-<tr class="separator:a48e9c836272b502ed4e41d9e241c814f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f74780273ab1f54ccd4e90a4ed89dfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a0f74780273ab1f54ccd4e90a4ed89dfc">DeliveryPolicy</a> =&gt; this.deliveryPolicy</td></tr>
+<tr class="memdesc:a0f74780273ab1f54ccd4e90a4ed89dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pipeline-level delivery policy.  <a href="#a0f74780273ab1f54ccd4e90a4ed89dfc">More...</a><br /></td></tr>
+<tr class="separator:a0f74780273ab1f54ccd4e90a4ed89dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -229,8 +232,8 @@ Events</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a graph of components and controls scheduling and message passing. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9dfb232b23b4754b7a34831ed13ce2d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9dfb232b23b4754b7a34831ed13ce2d0">&#9670;&nbsp;</a></span>Pipeline()</h2>
+<a id="a74acedaf48b840504b83206889899e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74acedaf48b840504b83206889899e05">&#9670;&nbsp;</a></span>Pipeline() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -245,7 +248,7 @@ Events</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>globalPolicy</em>, </td>
+          <td class="paramname"><em>deliveryPolicy</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -271,9 +274,53 @@ Events</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Pipeline name.</td></tr>
-    <tr><td class="paramname">globalPolicy</td><td>Global delivery policy.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Pipeline-level delivery policy.</td></tr>
     <tr><td class="paramname">threadCount</td><td>Number of threads.</td></tr>
     <tr><td class="paramname">allowSchedulingOnExternalThreads</td><td>Whether to allow scheduling on external threads.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="add2726f70cdab8356e2b92fa5274bb4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add2726f70cdab8356e2b92fa5274bb4a">&#9670;&nbsp;</a></span>Pipeline() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Microsoft.Psi.Pipeline.Pipeline </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html">Scheduler</a>&#160;</td>
+          <td class="paramname"><em>scheduler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Pipeline name.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Pipeline-level delivery policy.</td></tr>
+    <tr><td class="paramname">scheduler</td><td>Scheduler to be used.</td></tr>
   </table>
   </dd>
 </dl>
@@ -426,8 +473,8 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="ad7c65d5988b2680dbd0a31c6800c60bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7c65d5988b2680dbd0a31c6800c60bd">&#9670;&nbsp;</a></span>Create()</h2>
+<a id="a733a08fb7a153b838fa1917acd05ef8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a733a08fb7a153b838fa1917acd05ef8e">&#9670;&nbsp;</a></span>Create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -445,7 +492,7 @@ Events</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>globalPolicy</em> = <code>null</code>, </td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -476,7 +523,7 @@ Events</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Pipeline name.</td></tr>
-    <tr><td class="paramname">globalPolicy</td><td>Global delivery policy.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>Pipeline-level delivery policy.</td></tr>
     <tr><td class="paramname">threadCount</td><td>Number of threads.</td></tr>
     <tr><td class="paramname">allowSchedulingOnExternalThreads</td><td>Whether to allow scheduling on external threads.</td></tr>
   </table>
@@ -1038,7 +1085,7 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Registers handler to be called upon pipeline stop. </p>
+<p>Registers handler to be called in the final stages of pipeline shutdown, once all source components have been deactivated and shutdown is imminent. This is the last chance to post final messages. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">owner</td><td>The component that owns the handler. This is usually the state object that the receiver operates on.</td></tr>
@@ -1046,7 +1093,6 @@ Events</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>This means that the pipeline has deactivated all source components and shutdown is eminent. This is a last chance to post final messages.</p>
 
 </div>
 </div>
@@ -1113,7 +1159,7 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Registers handler to be called upon pipeline stop. </p>
+<p>Registers handler to be called when the pipeline is shutting down. Messages might still be flowing, but source components should cease. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">owner</td><td>The component that owns the handler. This is usually the state object that the receiver operates on.</td></tr>
@@ -1121,7 +1167,6 @@ Events</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>This means the pipeline is shutting down. Messages may still be flowing, but source components should cease.</p>
 
 </div>
 </div>
@@ -1722,19 +1767,19 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="a48e9c836272b502ed4e41d9e241c814f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48e9c836272b502ed4e41d9e241c814f">&#9670;&nbsp;</a></span>GlobalPolicy</h2>
+<a id="a0f74780273ab1f54ccd4e90a4ed89dfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f74780273ab1f54ccd4e90a4ed89dfc">&#9670;&nbsp;</a></span>DeliveryPolicy</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.Pipeline.GlobalPolicy =&gt; this.globalPolicy</td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> Microsoft.Psi.Pipeline.DeliveryPolicy =&gt; this.deliveryPolicy</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets global delivery policy. </p>
+<p>Gets the pipeline-level delivery policy. </p>
 
 </div>
 </div>

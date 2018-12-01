@@ -81,9 +81,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html">AsyncConsumerProducer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple transform component.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_buffer_process.html">BufferProcess</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a buffering component. The component adds each incoming message to the buffer and trims the buffer by evaluating a remove condition.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_buffer_process.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_connector.html">Connector</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pass-through component, to be used when writing meta-components. The encapsulating component (the meta-component) can use this class instead of a receiver. This allows the code within the meta-component to attach operators to the output of the connector, while exposing the input property of the connector as a public receiver.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_connector.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -92,6 +89,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_deserializer_component.html">DeserializerComponent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserializer optimized for streaming scenarios, where buffers and instances can be cached.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_deserializer_component.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_dynamic_deserializer_component.html">DynamicDeserializerComponent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic deserializer optimized for streaming scenarios, where buffers and instances can be cached.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_dynamic_deserializer_component.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html">EventSource</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A generator component that publishes messages of a specified type whenever an event is raised.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#details">More...</a><br /></td></tr>
@@ -129,8 +129,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_processor.html">Processor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that wraps a transform delegate which processes input messages and optionally publishes results. There is no assumption regarding the number of input messages needed to produce a result, or the number of output messages resulting from one input message. If the transform is stateful, special care needs to be taken when storing input message data. The input message payload is only valid for the duration of the transform call. If the data needs to be stored beyond the scope of this method, use the extension method Serializer.DeepClone&lt;T&gt;(T, ref T) to create a private copy.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_processor.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_repeater.html">Repeater</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs the last input message on every clock tick.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_repeater.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_relative_index_window.html">RelativeIndexWindow</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements an index-based windowing component.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_relative_index_window.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_relative_time_window.html">RelativeTimeWindow</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a time-based windowing component.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_relative_time_window.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html">Sampler</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">I  <a href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#details">More...</a><br /></td></tr>
@@ -146,9 +149,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_timer.html">Timer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple producer component that wakes up on a predefined interval and publishes a simple message. This is useful for components that need to poll some resource. Such components can simply subscribe to this clock component rather than registering a timer on their own.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_timer.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_window.html">Window</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a buffering component. The component adds each incoming message to the buffer and trims the buffer by evaluating a remove condition.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_window.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

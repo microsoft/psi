@@ -99,9 +99,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac6c92ad1f4ff8ad1785f1a0944c25e0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ac6c92ad1f4ff8ad1785f1a0944c25e0b">Dispose</a> ()</td></tr>
 <tr class="memdesc:ac6c92ad1f4ff8ad1785f1a0944c25e0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the store.  <a href="#ac6c92ad1f4ff8ad1785f1a0944c25e0b">More...</a><br /></td></tr>
 <tr class="separator:ac6c92ad1f4ff8ad1785f1a0944c25e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace27a54b2ff96054cee469364c3a998c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ace27a54b2ff96054cee469364c3a998c">Write&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt; source, string name, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:ace27a54b2ff96054cee469364c3a998c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the messages from the specified stream to the matching storage stream in this store.  <a href="#ace27a54b2ff96054cee469364c3a998c">More...</a><br /></td></tr>
-<tr class="separator:ace27a54b2ff96054cee469364c3a998c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ad75e122df211eb09dbcaaf168720a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a59ad75e122df211eb09dbcaaf168720a">Write&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt; source, string name, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a59ad75e122df211eb09dbcaaf168720a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the messages from the specified stream to the matching storage stream in this store.  <a href="#a59ad75e122df211eb09dbcaaf168720a">More...</a><br /></td></tr>
+<tr class="separator:a59ad75e122df211eb09dbcaaf168720a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae64164e92fdcbbb8ffe56dc794c890b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ae64164e92fdcbbb8ffe56dc794c890b2">WriteEmitters&lt; T &gt;</a> (T sensor, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6e">WriteWhichEmitters</a> streamsToEmit=<a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6ea2ec0d16e4ca169baedb9b2d50ec5c6d7">WriteWhichEmitters.Connected</a>, string[] streamNames=null)</td></tr>
 <tr class="memdesc:ae64164e92fdcbbb8ffe56dc794c890b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a pipeline source object (such as KinectSensor) this method will write all emitters that match the requested properties to the current store. This is useful for writing streams from a sensor to a store for later playback via Importer.OpenAs().  <a href="#ae64164e92fdcbbb8ffe56dc794c890b2">More...</a><br /></td></tr>
 <tr class="separator:ae64164e92fdcbbb8ffe56dc794c890b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,8 +175,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ace27a54b2ff96054cee469364c3a998c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace27a54b2ff96054cee469364c3a998c">&#9670;&nbsp;</a></span>Write&lt; T &gt;()</h2>
+<a id="a59ad75e122df211eb09dbcaaf168720a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59ad75e122df211eb09dbcaaf168720a">&#9670;&nbsp;</a></span>Write&lt; T &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -225,7 +225,7 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">source</td><td>The source stream to write</td></tr>
     <tr><td class="paramname">name</td><td>The name of the storage stream.</td></tr>
     <tr><td class="paramname">largeMessages</td><td>Indicates whether the stream contains large messages (typically &gt;4k). If true, the messages will be written to the large message file.</td></tr>
-    <tr><td class="paramname">policy</td><td>An optional delivery policy</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

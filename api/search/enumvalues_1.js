@@ -2,7 +2,6 @@ var searchData=
 [
   ['babbletimeout',['BabbleTimeout',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106aaae91c19a7f6fc75f66012a28f73d631',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
   ['backlightcompensation',['BacklightCompensation',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13afa19c0028cdb5f9619f48d1addcd2164',1,'Microsoft::Psi::Media_Interop']]],
-  ['besteffort',['BestEffort',['../namespace_microsoft_1_1_psi.html#ae90159cf7825cde832442d8c960db75dab4ee632ee2b420e4c4954189eafa9230',1,'Microsoft::Psi']]],
   ['bgr24',['BGR24',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7af88319329ed07cc7b5b1e4926f375849',1,'Microsoft::Psi::Media']]],
   ['bgr32',['BGR32',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a165b9e5d6cbe9f87fd9400c8f0a9d5d2',1,'Microsoft::Psi::Media']]],
   ['bgr_5f24bpp',['BGR_24bpp',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafba3935aa14c8bcdf8e826af5ba404cf5cc',1,'Microsoft::Psi::Imaging']]],

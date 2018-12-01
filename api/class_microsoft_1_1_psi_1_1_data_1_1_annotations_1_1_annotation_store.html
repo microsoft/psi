@@ -85,9 +85,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a3fffb2f10eb39616b9e2468d03597237"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_generator.html">AnnotationGenerator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store.html#a3fffb2f10eb39616b9e2468d03597237">Open</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string name, string path)</td></tr>
 <tr class="memdesc:a3fffb2f10eb39616b9e2468d03597237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a Annotation store for read and returns an <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_generator.html" title="Defines a component that plays back data from a JSON store. ">AnnotationGenerator</a> instance which can be used to inspect the store and open the streams.  <a href="#a3fffb2f10eb39616b9e2468d03597237">More...</a><br /></td></tr>
 <tr class="separator:a3fffb2f10eb39616b9e2468d03597237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add72f1a6e8f291188830c77828363d0f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store.html#add72f1a6e8f291188830c77828363d0f">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_exporter.html">AnnotationExporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> policy=null)</td></tr>
-<tr class="memdesc:add72f1a6e8f291188830c77828363d0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a Annotation store.  <a href="#add72f1a6e8f291188830c77828363d0f">More...</a><br /></td></tr>
-<tr class="separator:add72f1a6e8f291188830c77828363d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2e4fa953fe001bd96dcc1df8193517b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store.html#ab2e4fa953fe001bd96dcc1df8193517b">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_exporter.html">AnnotationExporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ab2e4fa953fe001bd96dcc1df8193517b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a Annotation store.  <a href="#ab2e4fa953fe001bd96dcc1df8193517b">More...</a><br /></td></tr>
+<tr class="separator:ab2e4fa953fe001bd96dcc1df8193517b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides static methods to access Annotation stores. </p>
@@ -212,8 +212,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="add72f1a6e8f291188830c77828363d0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add72f1a6e8f291188830c77828363d0f">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
+<a id="ab2e4fa953fe001bd96dcc1df8193517b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2e4fa953fe001bd96dcc1df8193517b">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -243,7 +243,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&#160;</td>
-          <td class="paramname"><em>policy</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -270,7 +270,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>The source stream to write</td></tr>
     <tr><td class="paramname">name</td><td>The name of the persisted stream.</td></tr>
     <tr><td class="paramname">writer</td><td>The store writer, created by e.g. <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store.html#aab12f9ff82761831f4c31266217427c7" title="Creates a new Annotation store and returns an AnnotationExporter instance which can be used to write ...">Create(Pipeline, string, string, AnnotatedEventDefinition, bool)</a></td></tr>
-    <tr><td class="paramname">policy</td><td>An optional delivery policy</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

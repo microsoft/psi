@@ -93,9 +93,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c7592bd6f28e7c09985548a0f152ccc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a6c7592bd6f28e7c09985548a0f152ccc">DispatchData</a> ()</td></tr>
 <tr class="memdesc:a6c7592bd6f28e7c09985548a0f152ccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatches read data to clients of this reader. Called by <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_data_store_reader.html" title="Represents an object used to read data stores. Reads data stores by reading their underlying streams...">DataStoreReader</a> on the UI thread to populate data cache.  <a href="#a6c7592bd6f28e7c09985548a0f152ccc">More...</a><br /></td></tr>
 <tr class="separator:a6c7592bd6f28e7c09985548a0f152ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4a7330e320ada17282761434f26e88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#acd4a7330e320ada17282761434f26e88">OpenStream</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html">ISimpleReader</a> reader)</td></tr>
-<tr class="memdesc:acd4a7330e320ada17282761434f26e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open stream given a reader.  <a href="#acd4a7330e320ada17282761434f26e88">More...</a><br /></td></tr>
-<tr class="separator:acd4a7330e320ada17282761434f26e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1460f3d892148bdc9294fcfc64adcaf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a1460f3d892148bdc9294fcfc64adcaf3">OpenStream</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html">ISimpleReader</a> reader, bool useIndex)</td></tr>
+<tr class="memdesc:a1460f3d892148bdc9294fcfc64adcaf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open stream given a reader.  <a href="#a1460f3d892148bdc9294fcfc64adcaf3">More...</a><br /></td></tr>
+<tr class="separator:a1460f3d892148bdc9294fcfc64adcaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5506a28e9525136faab9f0646f8385f"><td class="memItemLeft" align="right" valign="top">TItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#ad5506a28e9525136faab9f0646f8385f">Read&lt; TItem &gt;</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html">ISimpleReader</a> reader, <a class="el" href="struct_microsoft_1_1_psi_1_1_persistence_1_1_index_entry.html">IndexEntry</a> indexEntry)</td></tr>
 <tr class="memdesc:ad5506a28e9525136faab9f0646f8385f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a single message from a stream identified by a reader and an index entry.  <a href="#ad5506a28e9525136faab9f0646f8385f">More...</a><br /></td></tr>
 <tr class="separator:ad5506a28e9525136faab9f0646f8385f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,9 +111,9 @@ Properties</h2></td></tr>
 <tr class="memitem:af3137053cd16b345cf435500a1241335"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#af3137053cd16b345cf435500a1241335">IsCanceled</a><code> [get]</code></td></tr>
 <tr class="memdesc:af3137053cd16b345cf435500a1241335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether this reader has been canceled.  <a href="#af3137053cd16b345cf435500a1241335">More...</a><br /></td></tr>
 <tr class="separator:af3137053cd16b345cf435500a1241335"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af06ee85dbf36822f656dadea0c89b437"><td class="memItemLeft" align="right" valign="top">IReadOnlyList&lt; Tuple&lt; DateTime, DateTime, uint, Func&lt; DateTime, DateTime &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#af06ee85dbf36822f656dadea0c89b437">ReadRequests</a><code> [get]</code></td></tr>
-<tr class="memdesc:af06ee85dbf36822f656dadea0c89b437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of outstanding read requests.  <a href="#af06ee85dbf36822f656dadea0c89b437">More...</a><br /></td></tr>
-<tr class="separator:af06ee85dbf36822f656dadea0c89b437"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4de35a0d832cca1baf7db8f621fca380"><td class="memItemLeft" align="right" valign="top">IReadOnlyList&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_read_request.html">ReadRequest</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a4de35a0d832cca1baf7db8f621fca380">ReadRequests</a><code> [get]</code></td></tr>
+<tr class="memdesc:a4de35a0d832cca1baf7db8f621fca380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of outstanding read requests.  <a href="#a4de35a0d832cca1baf7db8f621fca380">More...</a><br /></td></tr>
+<tr class="separator:a4de35a0d832cca1baf7db8f621fca380"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7d565011e0f1997e4c03bd70b07cd2e"><td class="memItemLeft" align="right" valign="top">Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#ad7d565011e0f1997e4c03bd70b07cd2e">StreamAdapterType</a><code> [get]</code></td></tr>
 <tr class="memdesc:ad7d565011e0f1997e4c03bd70b07cd2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the stream adapter type.  <a href="#ad7d565011e0f1997e4c03bd70b07cd2e">More...</a><br /></td></tr>
 <tr class="separator:ad7d565011e0f1997e4c03bd70b07cd2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,8 +214,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="acd4a7330e320ada17282761434f26e88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd4a7330e320ada17282761434f26e88">&#9670;&nbsp;</a></span>OpenStream()</h2>
+<a id="a1460f3d892148bdc9294fcfc64adcaf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1460f3d892148bdc9294fcfc64adcaf3">&#9670;&nbsp;</a></span>OpenStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,8 +224,18 @@ Properties</h2></td></tr>
           <td class="memname">void Microsoft.Psi.Visualization.Data.IStreamReader.OpenStream </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html">ISimpleReader</a>&#160;</td>
-          <td class="paramname"><em>reader</em></td><td>)</td>
+          <td class="paramname"><em>reader</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>useIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -234,11 +244,12 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">reader</td><td>Reader to open stream with.</td></tr>
+    <tr><td class="paramname">useIndex</td><td>Indicates reader should read the stream index.</td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a1a6ba178a38c5a11108678f02cf8652e">Microsoft.Psi.Visualization.Data.StreamReader&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#aadf64785ecf1eb8e44ac7a5e3f77274f">Microsoft.Psi.Visualization.Data.StreamReader&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -418,8 +429,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="af06ee85dbf36822f656dadea0c89b437"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af06ee85dbf36822f656dadea0c89b437">&#9670;&nbsp;</a></span>ReadRequests</h2>
+<a id="a4de35a0d832cca1baf7db8f621fca380"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4de35a0d832cca1baf7db8f621fca380">&#9670;&nbsp;</a></span>ReadRequests</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -428,7 +439,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">IReadOnlyList&lt;Tuple&lt;DateTime, DateTime, uint, Func&lt;DateTime, DateTime&gt; &gt; &gt; Microsoft.Psi.Visualization.Data.IStreamReader.ReadRequests</td>
+          <td class="memname">IReadOnlyList&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_read_request.html">ReadRequest</a>&gt; Microsoft.Psi.Visualization.Data.IStreamReader.ReadRequests</td>
         </tr>
       </table>
   </td>
