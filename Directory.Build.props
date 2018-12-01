@@ -15,7 +15,6 @@
     <PackageProjectUrl>http://microsoft.github.io/psi/</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageTags>Psi;Microsoft</PackageTags>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
@@ -23,9 +22,16 @@
     <NoWarn>FS2003</NoWarn>
   </PropertyGroup>
 
+  <!-- Support for building in Visual Studio versions 15.9 and up -->
+  <PropertyGroup Condition="'$(MSBuildVersion)' >= '15.9'">
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+
   <!-- Support for building in Visual Studio versions before 15.9 -->
   <PropertyGroup Condition="'$(MSBuildVersion)' &lt; '15.9'">
     <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/psi/master/LICENSE.txt</PackageLicenseUrl>
+    <!-- Disable licenseUrl deprecation warning in later versions of VS -->
+    <NoWarn>NU5125</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
