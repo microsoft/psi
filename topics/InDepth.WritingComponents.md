@@ -337,11 +337,12 @@ Source components must be declared as such for the pipeline to behave correctly.
 
 ### 6.1. Completion
 
-Some source components have a notion of "completion." These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `IFiniteSourceComponent` interface is itself an `ISourceComponent` and is used in this case. The single `Initialize(Action onCompleted)` method provides a means to later notify the pipeline of completion by way of an `onCompleted` action to call at the appropriate time:
+Some source components have a notion of "completion." These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `IFiniteSourceComponent` interface is itself an `ISourceComponent` and is used in this case. The single `Initialize(Action<DateTime> onCompleted)` method provides a means to later notify the pipeline of completion by way of an `onCompleted` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`):
 
 ```csharp
-// Implementors should advise the pipeline when they are done posting 
-void IFiniteSourceComponent.Initialize(Action onCompleted);
+// Implementors should advise the pipeline when they are done posting as well as
+// the originating time of completion; on or after the final message originating time
+void IFiniteSourceComponent.Initialize(Action<DateTime> onCompleted);
 ```
 
 `Initialize(...)` is called after the graph of components has been constructed, but before messages have began to flow; just before pipeline startup.
