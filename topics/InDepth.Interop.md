@@ -228,13 +228,15 @@ The persisted format is an array of such records:
 
 ## MessagePack Format
 
-A single `MessagePackFormat` class provides implementations for [MessagePack](https://msgpack.org) binary records. The persisted form contains an `int32` length prefix (little endian) to each record and is terminated by a zero-length record. That is:
+A single `MessagePackFormat` class provides implementations for [MessagePack](https://msgpack.org) binary records. Message records are similar to JSON with root `'message'` and `'originatingTime'` properties. The originating time is encoded as a `long` representing the ticks since epoch (100-nanosecond intervals that have elapsed since 12:00:00 midnight, January 1, 0001).
+
+The persisted form contains an `int32` length prefix (little endian) to each record and is terminated by a zero-length record. That is:
 
 ```text
 <length><record bytes><length><record bytes>...0
 ```
 
-The format is very compact and is recommended when data transfer bandwidth or persisted file size is a concern. The expressiveness of the format is very similar to JSON. It's difficult to give examples of the serialized form, given that it is a byte-level encoding, roughly type-tagged fields with various encoding strategies. The whole payload is then LZ4 compressed, making it quite opaque to humans.
+The format is very compact and is recommended when data transfer bandwidth or persisted file size is a concern. The expressiveness of the format is very similar to JSON. It's difficult to give examples of the serialized form, given that it is a byte-level encoding, roughly type-tagged fields with various encoding strategies.
 
 However, there are serialization libraries for MessagePack in 50+ languages, making it *very* portable; a recommended format for streams of structured data.
 
