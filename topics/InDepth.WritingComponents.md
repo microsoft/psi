@@ -345,6 +345,8 @@ Some source components have a notion of "completion." These represent finite str
 void IFiniteSourceComponent.Initialize(Action<DateTime> onCompleted);
 ```
 
+Normally components should declare themselves as `ISourceComponent` rather than `IFiniteSourceComponent` when they produce an _infinite_ stream of messages. In the rare circumstance when this cannot be known until runtime, a component may declare itself `IFiniteSourceComponent` but may then call `onCompleted(DateTime.MaxValue)`. The `DateTime.MaxValue` as the final originating time tells the runtime to expect an infinite stream and the component is treated exactly as if it had been declared as `ISourceComponent`.
+
 `Initialize(...)` is called after the graph of components has been constructed, but before messages have began to flow; just before pipeline startup.
 
 Once all source components have completed, downstream reactive components no longer having anything to which to react and the pipeline is free to shut down. Any cycles in the graph where reactive components are "down stream" from themselves do not prevent pipeline shut down.
