@@ -35,7 +35,9 @@ The table below contains the list of Platform for Situated Intelligence componen
 | | `SystemVoiceActivityDetector` | Component that performs voice activity detection by using the desktop speech recognition engine from `System.Speech` | AnyCPU | No | Microsoft.Psi.Speech |
 | | `SimpleVoiceActivityDetector` | Component that performs voice activity detection via a simple heuristic using the energy in the audio stream | AnyCPU | Yes | Microsoft.Psi.Speech |
 | | `SystemSpeechRecognizer` | Component that performs speech recognition using the desktop speech recognition engine from `System.Speech`. | AnyCPU | No | Microsoft.Psi.Speech |
+| | `SystemSpeechIntentDetector` | Component that performs grammar-based intent detection using the desktop speech recognition engine from `System.Speech`. | AnyCPU | No | Microsoft.Psi.Speech |
 | | `MicrosoftSpeechRecognizer` | Component that performs speech recognition using the Microsoft Speech Platform SDK. | AnyCPU | No | Microsoft.Psi.MicrosoftSpeech |
+| | `MicrosoftSpeechIntentDetector` | Component that performs grammar-based intent detection using the speech recognition engine from the Microsoft Speech Platform SDK. | AnyCPU | No | Microsoft.Psi.MicrosoftSpeech |
 | | `BingSpeechRecognizer` | Component that performs speech recognition using the [Microsoft Cognitive Services Bing Speech API](https://azure.microsoft.com/en-us/services/cognitive-services/speech/). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Speech |
 | | `LUISIntentDetector` | Component that performs intent detection and entity extraction using the [Microsoft Cognitive Services LUIS API](https://www.luis.ai/). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Language | 
 | __Output__ | | | | | |
