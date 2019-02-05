@@ -38,8 +38,9 @@ The table below contains the list of Platform for Situated Intelligence componen
 | | `SystemSpeechIntentDetector` | Component that performs grammar-based intent detection using the desktop speech recognition engine from `System.Speech`. | AnyCPU | No | Microsoft.Psi.Speech |
 | | `MicrosoftSpeechRecognizer` | Component that performs speech recognition using the Microsoft Speech Platform SDK. | AnyCPU | No | Microsoft.Psi.MicrosoftSpeech |
 | | `MicrosoftSpeechIntentDetector` | Component that performs grammar-based intent detection using the speech recognition engine from the Microsoft Speech Platform SDK. | AnyCPU | No | Microsoft.Psi.MicrosoftSpeech |
-| | `BingSpeechRecognizer` | Component that performs speech recognition using the [Microsoft Cognitive Services Bing Speech API](https://azure.microsoft.com/en-us/services/cognitive-services/speech/). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Speech |
+| | `AzureSpeechRecognizer` | Component that performs speech recognition using the [Microsoft Cognitive Services Speech to Text Service](https://azure.microsoft.com/en-us/services/cognitive-services/speech/). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Speech |
 | | `LUISIntentDetector` | Component that performs intent detection and entity extraction using the [Microsoft Cognitive Services LUIS API](https://www.luis.ai/). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Language | 
+| | <div style="color:red;font-weight:bold">[DEPRECATED]</div> `BingSpeechRecognizer` | Component that performs speech recognition using the [Microsoft Cognitive Services Bing Speech API](https://docs.microsoft.com/en-us/azure/cognitive-services/Speech). | AnyCPU | Yes | Microsoft.Psi.CognitiveServices.Speech |
 | __Output__ | | | | | |
 | | `AudioPlayer` | Component that plays back an audio stream to an output device such as the speakers. | AnyCPU | Yes | Microsoft.Psi.Audio |
 | | `SystemSpeechSynthesizer` | Component that performs speech synthesis via the desktop speech synthesis engine from `System.Speech`. | AnyCPU | No | Microsoft.Psi.Speech

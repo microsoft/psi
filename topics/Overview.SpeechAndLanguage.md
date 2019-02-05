@@ -13,7 +13,7 @@ Situated interactive applications often need to deal with speech when communicat
 
 - [SystemSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#SystemSpeechRecognizer) (Windows only) - Uses the [System.Speech.Recognition.SpeechRecognitionEngine](https://msdn.microsoft.com/en-us/library/system.speech.recognition.speechrecognitionengine.aspx) that is based on Desktop Speech technology that comes with the .NET Framework on Windows.
 - [MicrosoftSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#MicrosoftSpeechRecognizer) (Windows only) - Uses the [Microsoft.Speech.Recognition.SpeechRecognitionEngine](https://msdn.microsoft.com/en-us/library/microsoft.speech.recognition.speechrecognitionengine.aspx) that is based on the [Microsoft Speech Platform](https://msdn.microsoft.com/en-us/library/hh361572.aspx) (requires a separate download and installation).
-- [BingSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#BingSpeechRecognizer) - Uses the [Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api) that is part of Microsoft Cognitive Services.
+- [AzureSpeechRecognizer](/psi/topics/Overview.SpeechAndLanguage#AzureSpeechRecognizer) - Uses the [Azure Speech Service](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services) that is part of Microsoft Cognitive Services.
 
 <a name="SystemSpeechRecognizer"/>
 
@@ -147,21 +147,22 @@ With the above grammar configured, a recognized phrase of "remind me in a minute
 ### The MicrosoftSpeechRecognizer component
 The `MicrosoftSpeechRecognizer` component, like the `SystemSpeechRecognizer` component, performs speech recognition on a stream of audio. However, it is implemented using the [Microsoft Server Speech Platform SDK](https://msdn.microsoft.com/en-us/library/hh361572.aspx). The usage of this component and its API are almost identical to that of the `SystemSpeechRecognizer` component. However, the `MicrosoftSpeechRecognizer` currently only supports [grammar-based](/psi/topics/Overview.SpeechAndLanguage#Grammars) speech recognition.
 
-<a name="BingSpeechRecognizer"/>
+<a name="AzureSpeechRecognizer"/>
 
-### The BingSpeechRecognizer component
+### The AzureSpeechRecognizer component
 
-The `BingSpeechRecognizer` component uses the [Cognitive Services Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api). In contrast to the `SystemSpeechRecognizer`, it requires as input a joint audio and voice activity signal, represented as a `ValueTuple<AudioBuffer, bool>`. The second item is a flag that indicates whether the `AudioBuffer` contains speech (or more specifically, voice activity). To construct such an input signal from a stream of raw audio, the [SimpleVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage#SimpleVoiceActivityDetector) or [SystemVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage#SystemVoiceActivityDetector) (Windows only) components may be used in conjunction with the `Join` operator, as in the following example.
+The `AzureSpeechRecognizer` component uses the [Cognitive Services Speech to Text API](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text). In contrast to the `SystemSpeechRecognizer`, it requires as input a joint audio and voice activity signal, represented as a `ValueTuple<AudioBuffer, bool>`. The second item is a flag that indicates whether the `AudioBuffer` contains speech (or more specifically, voice activity). To construct such an input signal from a stream of raw audio, the [SimpleVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage#SimpleVoiceActivityDetector) or [SystemVoiceActivityDetector](/psi/topics/Overview.SpeechAndLanguage#SystemVoiceActivityDetector) (Windows only) components may be used in conjunction with the `Join` operator, as in the following example.
 
 ```csharp
 using (var pipeline = Pipeline.Create())
 {
     // Create recognizer component. SubscriptionKey is required.
-    var recognizer = new BingSpeechRecognizer(
+    var recognizer = new AzureSpeechRecognizer(
         pipeline,
-        new BingSpeechRecognizerConfiguration()
+        new AzureSpeechRecognizerConfiguration()
         {
-            SubscriptionKey = "..." // replace with your own subscription key
+            SubscriptionKey = "...", // replace with your own subscription key
+            Region = "..." // replace with your service region (e.g. "WestUS")
         });
 
     var audio = new AudioCapture(
@@ -171,7 +172,7 @@ using (var pipeline = Pipeline.Create())
             OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm()
         });
 
-    // BingSpeechRecognizer requires VAD signal as input
+    // AzureSpeechRecognizer requires VAD signal as input
     var vad = new SystemVoiceActivityDetector(pipeline);
 
     // Send the audio to the VAD to detect voice activity
@@ -193,17 +194,7 @@ using (var pipeline = Pipeline.Create())
 
 The component posts final and partial recognition results represented by the `SpeechRecognitionResult` object on the `Out` and `PartialRecognitionResults` streams respectively.
 
-Note that the `BingSpeechRecognizerConfiguration.SubscriptionKey` configuration parameter is required in order to use the Bing speech recognition service. A subscription may be obtained [by registering here](https://www.microsoft.com/cognitive-services/en-us/speech-api).
-
-#### Recognition modes
-
-The `BingSpeechRecognizer` component supports one of 3 recognition modes which may be specified in the `BingSpeechRecognizerConfiguration.Mode` configuration parameter. If unspecified, the default mode is `Interactive`.
-
-- **Interactive** - Supports short requests or commands to the system, typically 2 to 3 seconds long.
-- **Dictation** - Supports longer utterances recited to the system, for example for speech-to-text applications.
-- **Conversation** - In this mode, users are engaged in human-to-human conversation.
-
-In dictation and conversation modes, the Bing Speech Service does not return partial results. Instead, the service returns stable phrase results after silence boundaries in the audio stream. Microsoft might enhance the speech protocol to improve the user experience in these continuous recognition modes.
+Note that the `SubscriptionKey` and `Region` configuration parameters are required in order to use the speech recognition service. A subscription may be obtained [by registering here](https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services).
 
 ## Voice activity detection
 
@@ -275,6 +266,6 @@ Language understanding is the process of inferring semantic intent from the reco
 The output of the `LUISIntentDetector` component is a stream of `IntentData` which wraps a list of Intents and a list of Entities that were understood in the input phrase, as determined by the LUIS service. The LUIS service returns a JSON object that is then deserialized into an `IntentData` object that is posted on the `Out` stream.
 
 ## References
-- [Bing Speech API](https://www.microsoft.com/cognitive-services/en-us/speech-api)
+- [Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service)
 - [Language Understanding Intelligent Service (LUIS)](https://www.microsoft.com/cognitive-services/en-us/language-understanding-intelligent-service-luis)
 - [Microsoft Speech Platform](https://msdn.microsoft.com/en-us/library/hh361572.aspx)
