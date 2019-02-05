@@ -12,10 +12,9 @@ The tutorial is structured in the following easy steps:
 1. [**A simple \\psi application**](/psi/tutorials#SimpleApplication) - describes first steps in creating a very simple \\psi application.
 2. [**Synchronization**](/psi/tutorials#Synchronization) - describes how to fuse and synchronize multiple streams.
 3. [**Saving Data**](/psi/tutorials#SavingData) - explains how to persists streams to disk.
-4. [**Offline Visualization**](/psi/tutorials#OfflineVisualization) - explains how to use PsiStudio to visualize persisted data.
-5. [**Live Visualization**](/psi/tutorials#LiveVisualization) - explains how to visualize data live, from a running application.
-6. [**Replaying Data**](/psi/tutorials#ReplayingData) - explains how to replay data from a persisted store.
-7. [**Further Reading**](/psi/tutorials#FurtherReading) - provides pointers to further in-depth topics.
+4. [**Replaying Data**](/psi/tutorials#ReplayingData) - explains how to replay data from a persisted store.
+5. [**Visualization**](/psi/tutorials#Visualization) - explains how to use Platform for Situated Intelligence Studio (PsiStudio) to visualize persisted streams, or live streams from a running \\psi application.
+6. [**Further Reading**](/psi/tutorials#FurtherReading) - provides pointers to further in-depth topics.
 
 <a name="SimpleApplication"></a>
 
@@ -215,139 +214,13 @@ using (var p = Pipeline.Create())
 
 The example creates and saves the _sequence_ and _sin_ and _cos_ streams of double values. This is done by creating a store component with a given name and folder path via the `Store.Create` factory method, and then using it with the `Write` stream operator. The store component knows how to serialize and write to disk virtually any .Net data type (including user-provided types) in an efficient way.
 
-The data is written to disk in the specified location (in this case `c:\\recordings`, in a folder called `demo.0000`. The `Store.Create` API creates this folder and increases the counter to `demo.0001`, `demo.0002` etc. if you run the application repeatedly. Inside the `demo.0000` folder you will find Catalog, Data and Index files. Together, these files constitute the store.
-
-<a name="OfflineVisualization"></a>
-
-## 4. Offline Visualization
-
-Visualization of multimodal streaming data plays a central role in developing multimodal, integrative-AI applications. Visualization scenarios in \\psi are enabled by the __Platform for Situated Intelligence Studio__ (which we will refer to in short as PsiStudio)
-
-__Notes__:
-* Kinect for Windows SDK is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44561).
-* Currently, PsiStudio runs only on Windows (although a future cross-platform version is planned - see more in our [Roadmap](/psi/Roadmap) document.) The tool is not currently shipped as an executable, so if you want to use it you will need to build the codebase; instructions for building the code are available [here](/psi/BuildingPsi). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it. To enable live visualization scenarios (more on that in a second), Platform for Situated Intelligence Studio is a COM server and registers itself as such with the Windows Registry the first time it is launched. You may receive a prompt to allow access for the tool to register itself on first launch.
-
-PsiStudio enables compositing multiple visualizers of different types (from simple streams of doubles to images, depth maps, etc.). In this section we will give a very brief introduction to this tool.
-
-Once you run the application, you will see a window that looks similar to the image below. To open a store, go to the _File_ -> _Open Store_ and navigate to the location you have specified in the example above, e.g. `C:\\recordings\demo.####` (the last folder corresponds to the last run) and open the Catalog file, e.g. `C:\\recordings\demo.####\demo.Catalog_000000.psi`. The PsiStudio window should now look like this:
-
-![PsiStudio (when opening the demo recording)](/psi/tutorials/PsiStudio.Start.png)
-
-The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas in the center. On the left hand side, you will find the Datasets tab at the top with the Visualizations tab below it.  On the right hand side is a Properties page that lets you view the properties of any object selected in either the Datasets or the Visualizations tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin and Cos. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream.  Alternatively you can just drag the stream from the datasets tab onto the Visualization Canvas.  Psi Studio should now look like this:
-
-![PsiStudio (visualizing a stream)](/psi/tutorials/PsiStudio.SinVisualization.png)
-
-The plot command has created a timeline visualization panel and inside it a visualizer for the Sin stream. Moving the mouse over the panel moves the data cursor (which is synchronized across all panels).
-
-If we repeat the operation on the Cos stream, a visualizer for this stream will be overlaid on the current timeline panel, resulting in a visualization like this :
-
-![PsiStudio (two streams and legend)](/psi/tutorials/PsiStudio.SinCosLegendVisualization.png)
-
-To display the legend that's visible in the image above, simply right click on the timeline panel and select _Show/Hide Legend_.
-
-You will notice that as you move the cursor around over the timeline panel, the legend updates with the current values under the cursor. Navigation can be done via mouse: moving the mouse moves the cursor, and the scroll wheel zooms the timeline view in and out. As you zoom in, you will notice that the time navigator visuals change, to indicate where you are in the data (the blue region in the top-half).
-
-As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Take a look at the Visualizations tab on the left,  notice that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, you will see two stream visualizers underneath, for Sin and Cos, like below:
-
-![PsiStudio (Visualizers Tab)](/psi/tutorials/PsiStudio.VisualizersTab.png)
-
-Right-clicking on the Cos visualizer brings up a context-menu that allows you to remove this visualizer. Try it out. This should make the Cos stream disappear from the panel. Next, click on the _Insert Timeline Panel_ button in the toolbar, highlighted in the image above. This will add a new timeline panel. Then, in the _Datasets_ tab, right-click on Cos and click _Plot_ again, the Cos stream will appear in the second (current) panel.  Alternatively, you can add a stream to a new panel by dragging it from the Datasets tab into any part of the Visualization Canvas that does not already contain a Visualization Panel.
-
-Come back to the _Visualizations_ tab and highlight the Cos visualizer. In the _Properties_ tab on the right the set of properties for this visualizer are available for inspection and modification. You can change various properties of the visualize, like the color of the line and the marker style to use. For instance, here we have changed the _LineColor_ and _MarkerColor_ properties to red, and the _MarkerStyle_ to Square:
-
-![PsiStudio (two panels)](/psi/tutorials/PsiStudio.TwoPanels.png)
-
-On the toolbar are three _Timing Display_ buttons that can be used to display timing information above the _Time Navigator_.  The first button displays absolute times, the second displays times relative to the start of the session, and the third button displays times relative to the selection start marker.  The picture below shows what the Psi Studio application looks like with all three timing displays activated, but typically a user would only have a single display activated at any given time.  As the user moves the cursor within the navigation area, the timing display is updated to show the time at the cursor, the time relative to the selection start and selection end markers, and the time relative to the end of the session.
-
-![PsiStudio (timing info)](/psi/tutorials/PsiStudio.TimingButtons.png)
-
-You can also change how a stream is rendered.  In the picture below the Interpolation Style property of the Sin stream has been changed to _Step_ which renders the stream so that it maintains its current value until the next message is received.  For the Cos stream the Interpolation Style property has been changed to _None_ so that only the values of the messages are displayed and no connecting lines are drawn between them.  When using this valule for Interpolation Style the Marker Style property must be changed to something other than _None_ or nothing at all will be rendered.  Notice in the picture below that the Visualization Panel for the Sin stream has been resized by dragging its bottom edge in order to get a better view of the data.
-
-Notice also that _Snap to Stream_ has been enabled on the Sin stream so that the Cursor always snaps to the message nearest to the mouse.  If one or more of the timing displays is activated, then the user can find the exact time of any message in the stream by moving the cursor near it.  To enable _Snap to Stream_, right-click the stream you wish to snap to in the Visualizations tab and select _Snap to Stream_ in the context menu.  The stream that is currently being snapped to will display an additional magnet icon next to it in the Visualizations tab.  To cancel _Snap to Stream_, right-click the stream in the Visualizations tab and again select the _Snap to Stream_ menu item.
-
-![PsiStudio (Interpolation Style)](/psi/tutorials/PsiStudio.InterpolationStyle.png)
-
-<a name="LiveVisualization"></a>
-
-## 5. Live Visualization
-
-<div style="color:red;font-weight:bold">NOTE:</div>
-<div style="color:red">We have  deprecated the functionality described in this section and will be replacing it in a future release with a new feature that will allow a Psi Studio user to open the store of a live, running Psi Application (while the store is being written), the same way a user would open a store for offline visualization, and then view the live streams as well as pause and resume them.</div>
-
-While so far we have discussed how to use PsiStudio to visualize previously collected data, the tool can also be used to visualize the streams persisted by an application _live_, while the application is running. The following example shows how to set this up.
-
-__Notes__: 
-* To run this example, PsiStudio must have been compiled and must have ran at least once beforehand, as this will ensure the tool is registered as a COM server. (see note at the beginning of the [Offline Visualization](/psi/tutorials#OfflineVisualization) section above).
-* For now, your app should target x64 platform and have a direct dependency on Newtonsoft.Json (>= 11.0.0) until this [issue](https://github.com/Microsoft/psi/issues/7) is resolved.
-
-First, we will have to setup a new console application that this time is .NET Framework 4.7 (as previously mentioned the visualization system is not yet cross-platform). Follow the steps below:
-
-* Create the app by going to _File -> New Project -> Visual C# -> Console App (.NET Framework)_
-* In _Project Properties_ -> _Application_ -> _Target framework_, set the target to _.NET Framework 4.7_
-* Go to _Project_ -> _Manage NuGet Packages..._ and add `Microsoft.Psi.Visualization.Windows` (See [here](https://microsoft.github.io/psi/UsingWithNuget).)
-
-Finally, add the following using clauses at the top of your file:
-
-```csharp
-using System.Windows.Media;
-using Microsoft.Psi.Visualization.Client;
-using Microsoft.Psi.Visualization.Common;
-```
-
-The `Microsoft.Psi.Visualization.Client` and `Microsoft.Psi.Visualization.Common` namespace provides access to visualization APIs. The `System.Windows.Media` namespace will be used for `Color` type (we will be configuring plot colors)
-
-We are now setup to use live visualization. The example code is below:
-
-```csharp
-using (var p = Pipeline.Create())
-{
-    // Create a store to write data to (change this path as you wish - the data will be stored there)
-    var store = Store.Create(p, "demo", "c:\\recordings");
-    var sequence = Generators.Sequence(p, 0d, x => x + 0.1, 100000, TimeSpan.FromMilliseconds(100)).Write("Sequence", store);
-
-    var sin = sequence.Select(t => Math.Sin(t)).Write("Sin", store);
-    var cos = sequence.Select(t => Math.Cos(t)).Write("Cos", store);
-
-    // Instantiate the visualizer, clear it and set it to live mode
-    var visualizer = new VisualizationClient();
-    visualizer.ClearAll();
-    visualizer.SetLiveMode();
-
-    // Plot the sin stream
-    sin.Show(visualizer);
-
-    // Add a new timeline panel
-    visualizer.AddTimelinePanel();
-
-    // Plot the cos stream and adjust some properties
-    var plotCos = cos.Show(visualizer);
-    plotCos.Configuration.YMin = -1;
-    plotCos.Configuration.YMax = +1;
-    plotCos.Configuration.LineColor = Colors.Red;
-    plotCos.Configuration.MarkerStyle = MarkerStyle.Diamond;
-    plotCos.Configuration.MarkerColor = Colors.Red;
-
-    // Run the pipeline
-    p.Run();
-}
-```
-
-Note that we have changed the number of messages to generate on the source stream to a much larger number, just to let the application run for longer than 10 seconds.
-
-The code snippet shows how to initialize the visualization client, and set it up in live mode. Next, the line `sin.Show(visualizer)` will plot the `sin` stream. The \\psi visualization system currently knows how to visualize a number of stream types, like video, audio, etc.
-
-The next line, `visualizer.AddTimelinePanel()` create a new timeline panel where we will plot the _cos_ stream. Finally, the block plots the cos stream. Note that the call to `Show` returns a visualization object that can be used to configure various properties of the visualization. These are the same properties that are accessible and configurable via the UI from the PsiStudio properties panel. For instance, in the code above:
-
-* we configure the Y-axis bounds of the visualization manually (by default this is automatically adjusted to the range of visible points unless manually specified)
-* we configure the color of the plot to `Red` (by default the plot will iterate through a set of colors)
-* we configure the plot markers to `Diamond` style (by default the plot marker style is `None`, i.e. markers are not shown)
-* we configure the plot markers color to `Red`.
+The data is written to disk in the specified location (in this case `c:\recordings`, in a folder called `demo.0000`. The `Store.Create` API creates this folder and increases the counter to `demo.0001`, `demo.0002` etc. if you run the application repeatedly. Inside the `demo.0000` folder you will find Catalog, Data and Index files. Together, these files constitute the store.
 
 <a name="ReplayingData"></a>
 
-## 6. Replaying Data
+## 4. Replaying Data
 
-Data written to disk in the manner described above can be played back with similar ease. Assuming that the  example described in the [Saving Data section](/psi/tutorials/#SavingData) was executed at least once, the following code will read and replay the data, computing and displaying the sin function.
+Data written to disk in the manner described above can be played back with similar ease and used as input data for another \\psi application. Assuming that the  example described in the [Saving Data](/psi/tutorials/#SavingData) section was executed at least once, the following code will read and replay the data, computing and displaying the sin function.
 
 ```csharp
 using (var p = Pipeline.Create())
@@ -367,15 +240,180 @@ using (var p = Pipeline.Create())
 }
 ```
 
-An existing store is open with the `Store.Open` factory method, and streams within the store can be retrieved by name using the `OpenStream` method (you will have to know the name and type of the stream you want to access). The streams can then be processed as if they were just generated from a source.
+An existing store is opened with the `Store.Open` factory method, and streams within the store can be retrieved by name using the `OpenStream` method (you will have to know the name and type of the stream you want to access). The streams can then be processed as if they were just generated from a source.
 
 This method of replaying data preserves the relative timing and order of the messages, and by default plays back data at the same speed as it was produced. When you run the program, you will see the Sin values being displayed by the `Do` operator.
 
 We can control the speed of the execution of the pipeline, via a replay descriptor parameter passed to the `Run()` method. If noparameter is specified the pipeline uses the `ReplayDescriptor.ReplayAllRealTime`, which plays back the data at the same speed as it was produced. Try replacing the call to `p.Run()` with `p.Run(ReplayDescriptor.ReplayAll)`. In this case, the data will play backfrom the store at maximum speed, regardless of the speed at which it was generated. Running the program will display the Sin values much faster now. Note that the originating times are nevertheless preserved on the messages being replayed from the store.
 
+<a name="Visualization"></a>
+
+## 5. Visualization
+
+Visualization of multimodal streaming data plays a central role in developing multimodal, integrative-AI applications. Visualization scenarios in \\psi are enabled by the __Platform for Situated Intelligence Studio__ (which we will refer to in short as PsiStudio)
+
+__Notes__:
+* Kinect for Windows SDK is required to run PsiStudio which can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=44561).
+* Currently, PsiStudio runs only on Windows, although it can visualize data stores created by \\psi applications running on any platform supported by .NET Core.
+* The tool is not currently shipped as an executable, so to use it you will need to build the codebase; instructions for building the code are available [here](/psi/BuildingPsi). The tool is implemented by the `Microsoft.Psi.PsiStudio` project in the `Psi.sln` solution tree under `Sources\Tools\PsiStudio`. To run it, simply run this project after building it.
+
+PsiStudio enables compositing multiple visualizers of different types (from simple streams of doubles to images, depth maps, etc.). In this section we will give a very brief introduction to this tool.
+
+<a name="OfflineVisualization"></a>
+
+### 5.1 Offline Visualization
+
+For the rest of the samples in this tutorial we're going to add several more realistic streams to our project, for video, audio, and voice activity detection. To get the best out of this sample you'll need a webcam, but if you don't have one you can comment out the code below that references the MediaCapture, AudioCapture, and SystemVoiceActivityDetector components.
+
+In your Visual Studio project, add the following NuGet references in the same way you did in the first section of this tutorial:
+
+1. `Microsoft.Psi.Media.Windows.x64`
+2. `Microsoft.Psi.Imaging.Windows`
+3. `Microsoft.Psi.Speech.Windows`
+
+Now add the following `using` statements to the top of your class:
+
+```csharp
+using Microsoft.Psi;
+using Microsoft.Psi.Audio;
+using Microsoft.Psi.Imaging;
+using Microsoft.Psi.Media;
+using Microsoft.Psi.Speech;
+```
+
+And finally, replace the body of your `Main()` method with the following:
+
+```csharp
+// Create the pipeline object.
+using (var p = Pipeline.Create())
+{
+    // Create the store
+    var store = Store.Create(p, "demo", "c:\\recordings");
+
+    var sequence = Generators.Sequence(p, 0d, x => x + 0.1, 10000, TimeSpan.FromMilliseconds(100));
+
+    var sin = sequence.Select(t => Math.Sin(t));
+    var cos = sequence.Select(t => Math.Cos(t));
+
+    // Write the sin and cos streams to the store
+    sequence.Write("Sequence", store);
+    sin.Write("Sin", store);
+    cos.Write("Cos", store);
+
+    // Create the webcam and write its output to the store as compressed JPEGs
+    var webcam = new MediaCapture(p, 1920, 1080, 30);
+    webcam.Out.EncodeJpeg(90, DeliveryPolicy.LatestMessage).Write("Image", store);
+
+    // Create the AudioCapture component and write the output to the store
+    var audio = new AudioCapture(p, new AudioCaptureConfiguration() { OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm() });
+    audio.Write("Audio", store);
+
+    // Pipe the audio to a voice activity detector and write its output to the store
+    var voiceActivityDetector = new SystemVoiceActivityDetector(p);
+    audio.Out.PipeTo(voiceActivityDetector);
+    voiceActivityDetector.Out.Write("Voice Activity", store);
+
+    // Run the pipeline
+    p.RunAsync();
+
+    Console.WriteLine("Press any key to finish recording");
+    Console.ReadKey();
+}
+```
+
+As you can see from the code, in addition to generating our sine and cosine streams, we create a MediaCapture component whose output stream is encoded as JPEG images and then persisted to the store.  We also create an AudioCapture component whose output is similarly persisted to the store, and we pipe the output of the audio stream into a voice activity detector whose output is persisted to the store as yet another stream.
+
+Now start your application, let it run for thirty seconds or so while standing in front of the camera and talking, then press any key to stop recording and exit.
+
+Now start up PsiStudio. You will see a window that looks similar to the image below. To open a store, go to the _File_ -> _Open Store_ and navigate to the location you have specified in the example above, e.g. `C:\recordings\demo.####` (the last folder corresponds to the last run) and open the Catalog file, e.g. `C:\recordings\demo.####\demo.Catalog_000000.psi`. The PsiStudio window should now look like this:
+
+![PsiStudio (when opening the demo recording)](/psi/tutorials/PsiStudio.Start.png)
+
+The PsiStudio application has a toolbar, a time-navigator (more on that in a second) and a visualization canvas in the center. On the left hand side, you will find the Datasets tab at the top with the Visualizations tab below it.  On the right hand side is a Properties page that lets you view the properties of any object selected in either the Datasets or the Visualizations tab. When opening a store, PsiStudio automatically wraps a __*dataset*__ around it (more information on datasets is available in the [Datasets](/psi/topics/InDepth.Datasets) page), with the name _Untitled Dataset_. Double-clicking on _Untitled Dataset_ will open up the underlying demo session and demo partition will reveal the set of streams available in the store, in this case Sequence, Sin, Cos, Image, Audio, and Voice Activity. Right-clicking on the Sin stream will bring up a popup-menu, and selecting _Plot_ will allow you to visualize the Sin stream.  Alternatively you can just drag the stream from the datasets tab onto the Visualization Canvas.  PsiStudio should now look like this:
+
+![PsiStudio (visualizing a stream)](/psi/tutorials/PsiStudio.SinVisualization.png)
+
+The plot command has created a timeline visualization panel and inside it a visualizer for the Sin stream. Moving the mouse over the panel moves the data cursor (which is synchronized across all panels).
+
+If we repeat the operation on the Cos stream, a visualizer for this stream will be overlaid on the current timeline panel, resulting in a visualization like this :
+
+![PsiStudio (two streams and legend)](/psi/tutorials/PsiStudio.SinCosLegendVisualization.png)
+
+To display the legend that's visible in the image above, simply right click on the timeline panel and select _Show/Hide Legend_.
+
+You will notice that as you move the cursor around over the timeline panel, the legend updates with the current values under the cursor. Navigation can be done via mouse: moving the mouse moves the cursor, and the scroll wheel zooms the timeline view in and out. As you zoom in, you will notice that the time navigator visuals change, to indicate where you are in the data (the blue region in the top-half).  You can also drag the timeline to the left or right to view earlier or later data in the stream.
+
+As we have seen before, new visualizations will by default be overlaid in the same panel. Suppose however that we wanted to visualize the Cos stream in a different panel. Take a look at the Visualizations tab on the left,  notice that currently there is one timeline panel in the canvas. If you expand the _Timeline Panel_ item at the top of the hierarchy, you will see two stream visualizers underneath, for Sin and Cos, like below:
+
+![PsiStudio (Visualizers Tab)](/psi/tutorials/PsiStudio.VisualizersTab.png)
+
+Right-clicking on the Cos visualizer brings up a context-menu that allows you to remove this visualizer. Try it out. This should make the Cos stream disappear from the panel. Next, click on the _Insert Timeline Panel_ button in the toolbar, highlighted in the image above. This will add a new timeline panel. Then, in the _Datasets_ tab, right-click on Cos and click _Plot_ again, the Cos stream will appear in the second (current) panel.  Alternatively, you can add a stream to a new panel by dragging it from the Datasets tab into any part of the Visualization Canvas that does not already contain a Visualization Panel.
+
+You can use the mouse to drag the bottom edge of any visualization panel to change its height, and you can change the ordering of the panels by clicking inside any visualization panel and dragging it up or down.
+
+Come back to the _Visualizations_ tab and highlight the Cos visualizer. In the _Properties_ tab on the right the set of properties for this visualizer are available for inspection and modification. You can change various properties of the visualizer, like the color of the line and the marker style to use. For instance, here we have changed the _LineColor_ and _MarkerColor_ properties to red, and the _MarkerStyle_ to Square:
+
+![PsiStudio (two panels)](/psi/tutorials/PsiStudio.TwoPanels.png)
+
+On the toolbar are three _Timing Display_ buttons that can be used to display timing information above the _Time Navigator_.  The first button displays absolute times, the second displays times relative to the start of the session, and the third button displays times relative to the selection start marker (selection markers are described in the [Data Playback](/psi/tutorials/#DataPlayback) section below).  The picture below shows what the PsiStudio application looks like with all three timing displays activated, but typically a user would only have a single display activated at any given time.  As the user moves the cursor within the navigation area, the timing display is updated to show the time at the cursor, the time relative to the selection start and selection end markers, and the time relative to the end of the session.
+
+![PsiStudio (timing info)](/psi/tutorials/PsiStudio.TimingButtons.png)
+
+You can also change how a stream is rendered.  In the picture below the Interpolation Style property of the Sin stream has been changed to _Step_ which renders the stream so that it maintains its current value until the next message is received.  For the Cos stream the Interpolation Style property has been changed to _None_ so that only the values of the messages are displayed and no connecting lines are drawn between them.  When using this valule for Interpolation Style the Marker Style property must be changed to something other than _None_ or nothing at all will be rendered.  Notice in the picture below that the Visualization Panel for the Sin stream has been resized by dragging its bottom edge in order to get a better view of the data.
+
+Notice also that _Snap to Stream_ has been enabled on the Sin stream so that the Cursor always snaps to the message nearest to the mouse.  If one or more of the timing displays is activated, then the user can find the exact time of any message in the stream by moving the cursor near it.  To enable _Snap to Stream_, right-click the stream you wish to snap to in the Visualizations tab and select _Snap to Stream_ in the context menu.  The stream that is currently being snapped to will display an additional magnet icon next to it in the Visualizations tab.  To cancel _Snap to Stream_, right-click the stream in the Visualizations tab and again select the _Snap to Stream_ menu item.
+
+![PsiStudio (Interpolation Style)](/psi/tutorials/PsiStudio.InterpolationStyle.png)
+
+<a name="DataPlayback"></a>
+
+### 5.2 Data Playback
+
+In PsiStudio you can not only view data streams, you can also play them back at whatever speed you choose. This can be useful for viewing output that contains video streams.
+
+Create a new visualization panel by clicking the _Insert Timeline Panel_ button and add the _Audio_ stream and also the _Voice Acitvity_ stream to it.  Notice that having two related streams in the same visualization panel makes it easy to see how they relate to each other; overlaying the voice activity detection stream over the audio, we can see at a glance that the VAD is correctly identifying speech regions.
+
+In the _Datasets_ tab, right-click on the _Image_ stream and select _Visualize_ from the context menu to display the video stream.  You PsiStudio window should now look like the picture below.  Notice that the image visualizer is synchronized to the timeline, as you move the cursor within any of the timeline visualization windows, the video stream shows the image that was captured at that point in time.
+
+There are three _Cursor Modes_ in PsiStudio, and up until now we have been using the _Manual_ cursor mode, where the cursor follows the user's mouse pointer and will display images and data values at whatever point in time the user places his mouse.  Now we'll demonstrate the second cursor mode, known as _Playback Mode_, and it is engaged whenever we play back our data within some time interval.
+
+Use your mouse wheel to zoom into an interesting part of the audio timeline, and ensure that Legends are switched on (right-click on a visualization panel and select _Show/Hide legend_).
+
+Now hold down the _Shift_ key and click somewhere near the left of the visualization window.  A green _Selection Start_ marker will be placed at the mouse's position.  Still holding down the _Shift_ key, right-click somewhere near the right of the visualization window and a red _Selection End_ marker will be placed.
+
+Now click the _Play/Pause_ button in the toolbar and the data will be played back from the _Selection Start_ marker to the _Selection End_ marker.  You can vary the playback speed by clicking on the _Increase Playback Speed_ and _Decrease Playback Speed_ buttons.  The video image stream will be synchronized to the cursor's position in the audio stream, and the legend will display the data values at the cursor as the streams are played back.
+
+![PsiStudio (Data Playback)](/psi/tutorials/PsiStudio.DataPlayback.png)
+
+<a name="LiveVisualization"></a>
+
+### 5.3 Live Visualization
+
+While so far we have discussed how to use PsiStudio to visualize previously collected data, the tool can also be used to connect to a store that is currently being written to by a running \\psi application and visualize the streams in real time.
+
+For this example we'll be using exactly the same code we wrote in the previous section, so start the application running again, and let it continue to run in the background collecting data.
+
+Since you just restarted your \\psi application, it's generating a new dataset in a new subdirectory, and if you still have PsiStudio open from the last tutorial section you'll have the _previous_ dataset loaded.  To open the new store that's being written to, from the _File_ menu select _Open Store_, then in the File Open dialog go up one level to `C:\recordings` and then into the _latest_ `demo.####` subdirectory.  Since this is a live store, you can tell that you're in the correct subdirectory because all of the files' _Date modified_ attributes will be the current date and time.  If you've opened the store of the currently running \\psi application, then PsiStudio should look like this:
+
+![PsiStudio (Live Store)](/psi/tutorials/PsiStudio.OpenLiveStore.png)
+
+Notice that PsiStudio detected that the store that we opened was live, and it pressed the _LIVE_ Button on your behalf to set the cursor mode to _Live_. Also notice that the timeline is automatically scrolling to keep up with new messages being written to the store.
+
+If you expand the _Datasets_ tree view you will see a _Live_ icon next to the partition and also next to each of the streams to indicate that this partition is live.  PsiStudio will monitor this partition so that any new streams that the app writes will be automatically added to the _Datasets_ tree view. PsiStudio will also detect when your \\psi application stops writing to the store and will switch the cursor mode from _Live_ mode back to _Manual_ mode, and the _Live_ icons next to the streams will disappear.
+
+If you now visualize the `Sin`, `Cos`, `Audio`, `Voice Activity`, and `Image` streams you'll see something like the following window:
+
+![PsiStudio (Live Streams)](/psi/tutorials/PsiStudio.LiveStreams.png)
+
+Now we can see the third cursor mode, called _Live_ mode in action.  When in this mode the cursor will stay in a fixed position in the visualizations window while the streaming data scrolls past.  You can still use the mouse wheel to zoom in or out of the data while in _Live_ mode.  Notice that the trace for the Voice Activity Detector lags the other streams by a couple of hundred milliseconds, since that's how long it took that componemt to process its messages.
+
+Even as the application continues to run you can switch back at any time to _Manual_ cursor mode by unclicking the _LIVE_ button in the toolbar.  When you do this, the visualization window will stop scrolling even as new data continues to be written to the store and you regain control of the cursor with the mouse.  You can now drag and zoom the timeline with the mouse and position the cursor anywhere you'd like on the timeline in order to examine older messages.  You can also set the _Selection Start_ and _Selection End_ markers and use the _Play/Pause_ button to replay a portion of the timeline.
+
+Clicking the _Live_ button once more will switch the cursor mode back into _Live_ mode; the cursor will catch up with the latest live messages being written to the store, and the timeline will begin automatically scrolling again as new messages are received.
+
 <a name="FurtherReading"></a>
 
-## 7. Next steps
+## 6. Next steps
 
 After going through this first brief tutorial, it may be helpful to look through the set of [Samples](/psi/samples) provided. While some of the samples address specialized topics like how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insights into programming with Platform for Situated Intelligence.
 
