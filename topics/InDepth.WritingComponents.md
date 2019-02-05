@@ -331,27 +331,31 @@ The `onStop` is called when the pipeline is shutting down. Once this completes, 
 
 ## 6. Source Component Interfaces
 
-In contrast to _reactive components_, which are those that produce output _only_ in response to incoming message, _source components_ are the "headwaters" of the system; the source from which messages flow. These are components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc. 
+In contrast to _reactive components_, which are those that produce output _only_ in response to incoming message, _source components_ are the "headwaters" of the system; the source from which messages flow. These are components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc., but may also represent hybrid components which both react to, as well as produce, streams of data.
 
-Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` marker interface serves this purpose. Being a "marker" interface, there are no methods to implement. Merely declaring a component to be an `ISourceComponent` clearly identifies it as such to the pipeline.
+Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` and `IInfiniteSourceComponent` interfaces serve this purpose.
 
 ### 6.1. Completion
 
-Some source components have a notion of "completion." These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `IFiniteSourceComponent` interface is itself an `ISourceComponent` and is used in this case. The single `Initialize(Action<DateTime> onCompleted)` method provides a means to later notify the pipeline of completion by way of an `onCompleted` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`):
+Some source components have a notion of "completion". These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The single `Initialize(Action<DateTime> onCompleted)` method provides a means for the component to later notify the pipeline of completion by way of an `onCompleted` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`):
 
 ```csharp
 // Implementors should advise the pipeline when they are done posting as well as
 // the originating time of completion; on or after the final message originating time
-void IFiniteSourceComponent.Initialize(Action<DateTime> onCompleted);
+void ISourceComponent.Initialize(Action<DateTime> onCompleted);
 ```
 
-Normally components should declare themselves as `ISourceComponent` rather than `IFiniteSourceComponent` when they produce an _infinite_ stream of messages. In the rare circumstance when this cannot be known until runtime, a component may declare itself `IFiniteSourceComponent` but may then call `onCompleted(DateTime.MaxValue)`. The `DateTime.MaxValue` as the final originating time tells the runtime to expect an infinite stream and the component is treated exactly as if it had been declared as `ISourceComponent`.
+`Initialize(...)` is called after the graph of components has been constructed, but before messages have begun to flow; just before pipeline startup.
 
-`Initialize(...)` is called after the graph of components has been constructed, but before messages have began to flow; just before pipeline startup.
+Once all source components have completed, downstream reactive components no longer have anything to which to react and the pipeline is free to shut down. Any cycles in the graph where reactive components are "down stream" from themselves do not prevent pipeline shut down.
 
-Once all source components have completed, downstream reactive components no longer having anything to which to react and the pipeline is free to shut down. Any cycles in the graph where reactive components are "down stream" from themselves do not prevent pipeline shut down.
+### 6.2. Infinite Sources
 
-### 6.2. Generator Pattern
+Some source components are "infinte sources". They produce _perpetual_ streams of data which do not have a notion of completion, such as an "always-on" sensor. The `IInfiniteSourceComponent` marker interface is used to denote such components. Being a "marker" interface, there are no methods to implement. Merely declaring a component to be an `IInfiniteSourceComponent` clearly identifies it as such to the pipeline.
+
+Components should declare themselves as `IInfiniteSourceComponent` rather than `ISourceComponent` when they produce an _infinite_ stream of messages. In the rare circumstance when this cannot be known until runtime, a component may declare itself `ISourceComponent` but may then call `onCompleted(DateTime.MaxValue)`. The `DateTime.MaxValue` as the final originating time tells the runtime to expect an infinite stream and the component is treated exactly as if it had been declared as `IInfiniteSourceComponent`.
+
+### 6.3. Generator Pattern
 
 In the discussion above, we have assumed that the source component obtains data via a thread that it starts or obtains, but that cannot be controlled by the runtime scheduler. However, this also means that the runtime cannot throttle these components, i.e. it cannot slow down the production of the source messages if it needs to (for instance if resource constraints prevent the full pipeline to run at the speed of the source).
 
