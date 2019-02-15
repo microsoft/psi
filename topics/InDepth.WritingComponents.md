@@ -142,6 +142,8 @@ __Note__: In the example above, in the `ReceiveString` receiver method, it would
 
 Finally, with respect to output streams, it is important to note that a component can post a value to the output stream (via a `Post` call) and is free to immediately change the value. All the receivers that are connected to this emitter will receive the value that was provided during the call to `Post`. This is again accomplished by the runtime via automated cloning.
 
+The [Cooperative Buffering](/psi/topics/InDepth.Shared) in-depth topic contains more information about message cloning.
+
 <a name="StreamOperators"></a>
 
 ## 2. Stream Operators
