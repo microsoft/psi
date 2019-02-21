@@ -3,9 +3,15 @@ layout: default
 title:  Components
 ---
 
-# List of Components
+# Components
 
-The table below contains the list of Platform for Situated Intelligence components that are available in the current release, together with the namespace in which the component can be found (in general, the NuGet packages in which you can find the component follow the same naming convention, potentially with additional platform suffixes)
+This document contains a [**list of components**](/psi/ComponentsList#ListOfComponents) available in the Platform for Situated Intelligence repository, as well as [**pointers to other third-party repositories**](/psi/ComponentsList#ThirdParty) containing other Platform for Situated Intelligence components.
+
+<a name="ListOfComponents"></a>
+
+## 1. Components in the \psi Repository
+
+The table below contains the list of \psi components that are available in the current release, together with the namespace in which the component can be found (in general, the NuGet packages in which you can find the component follow the same naming convention, potentially with additional platform suffixes)
 
 | | Name | Description | Windows | Linux | Namespace / NuGet Package |
 | :--- | :---- | :------------------------ | :----: |:----: |:--------- |
@@ -44,3 +50,14 @@ The table below contains the list of Platform for Situated Intelligence componen
 | __Output__ | | | | | |
 | | `AudioPlayer` | Component that plays back an audio stream to an output device such as the speakers. | AnyCPU | Yes | Microsoft.Psi.Audio |
 | | `SystemSpeechSynthesizer` | Component that performs speech synthesis via the desktop speech synthesis engine from `System.Speech`. | AnyCPU | No | Microsoft.Psi.Speech
+
+
+<a name="ThirdParty"></a>
+
+## 2. Repositories with Components by Third Parties
+
+You might also be interested in exploring the repositories below containing components for the Platform for Situated Intelligence ecosystem written by third parties, not affiliated with Microsoft. Microsoft makes NO WARRANTIES about these components, including about their usability or reliability.
+
+| Repo | Description |
+| :-- | :-- |
+| https://github.com/bsu-slim/psi-components | Components developed by the [SLIM research group](https://coen.boisestate.edu/slim/) at Boise State University. |

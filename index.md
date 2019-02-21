@@ -9,7 +9,17 @@ title:  Platform for Situated Intelligence
 
 In recent years, we have seen significant progress with machine learning techniques on various perceptual and control problems. At the same time, building end-to-end, multimodal, integrative-AI systems that leverage multiple technologies and act autonomously or interact with people in the open world remains a challenging, error-prone and time-consuming engineering task. Numerous challenges stem from the sheer complexity of these systems and are amplified by the lack of appropriate infrastructure and development tools.
 
-The Platform for Situated Intelligence project aims to address these issues and provide a basis for developing, fielding and studying integrative-AI systems. The platform consists of three layers. The **Runtime** layer provides a parallel programming model centered around temporal streams of data, and enables easy development of components and applications using .NET, while retaining the performance properties of natively written, carefully tuned systems. A set of **Tools** enable multimodal data visualization, annotations, analytics, tuning and machine learning scenarios. Finally, an open ecosystem of **Components** encapsulate various AI technologies and allow for quick compositing of integrative-AI applications. For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](/psi/PlatformOverview).
+The Platform for Situated Intelligence project aims to address these issues and provide a basis for developing, fielding and studying integrative-AI systems. The platform consists of three layers. 
+
+The **Runtime** layer provides a parallel programming model centered around temporal streams of data, and enables easy development of components and applications using .NET, while retaining the performance properties of natively written, carefully tuned systems.
+
+A set of **Tools and APIs** enable multimodal data visualization, processing and analytics. The image below shows Platform for Situated Intelligence studio, i.e., the multimodal data visualization tool.
+
+![Platform for Situated Intelligence Studio](/psi/PsiStudio.jpg)
+
+Finally, an open ecosystem of **Components** encapsulate various AI technologies and allow for quick compositing of integrative-AI applications. 
+
+For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](/psi/PlatformOverview).
 
 # Using and Building
 
@@ -26,15 +36,17 @@ __Brief Introduction__. To get started with using Platform for Situated Intellig
 
 __Samples__. After going through this first brief tutorial, it may be helpful to look through the set of [Samples](/psi/samples) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \\psi.
 
-__In-depth Topics__. Finally, additional information is provided in a set of [Topics](/psi/topics) that dive into more detail on various aspects of the framework including [basic stream operators](/psi/topics/InDepth.BasicStreamOperators), [synchronization](/psi/topics/InDepth.Synchronization),  [writing new components](/psi/topics/InDepth.WritingComponents), [delivery policies](/psi/topics/InDepth.DeliveryPolicies), [remoting](/psi/topics/InDepth.Remoting), etc.
+__In-depth Topics__. Additional, in-depth information is provided in a set of [Topics](/psi/topics) that dive into more detail on various aspects of the framework including [basic stream operators](/psi/topics/InDepth.BasicStreamOperators), [synchronization](/psi/topics/InDepth.Synchronization),  [writing new components](/psi/topics/InDepth.WritingComponents), [delivery policies](/psi/topics/InDepth.DeliveryPolicies), [remoting](/psi/topics/InDepth.Remoting), [interop](/psi/topics/InDepth.Interop) etc.
 
-Additional useful information regarding available packages and components can be found in the [NuGet packages list](/psi/NuGetPackagesList) and in the [component list](/psi/ComponentsList) pages.
+
+__Components__. Additional useful information regarding available packages and components can be found in the [NuGet packages list](/psi/NuGetPackagesList) and in the [component list](/psi/ComponentsList) pages.
+The latter page also has pointers to [other repositories by third parties containing other \psi components](/psi/ComponentsList#ThirdParty).
 
 Like the rest of the codebase, the documentation is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it [`documentation`](https://github.com/Microsoft/psi/labels/documentation), as this will help us target our documentation development efforts to the highest priority needs.
 
 # Disclaimer
 
-The codebase is currently in beta and various aspects of the platform are at different levels of completion and robustness. There are probably still bugs in the code and we will likely be making breaking API changes. We plan to continuously improve the framework and we encourage the community to contribute.
+Platform for Situated Intelligence is currently in beta and various aspects of the platform are at different levels of completion and robustness. There are probably still bugs in the code and we will likely be making breaking API changes. We plan to continuously improve the framework and we encourage the community to contribute.
 
 For additional information, we recommend you read the list of [Issues](https://github.com/Microsoft/psi/issues) reported in the repository. Also, the [Roadmap](/psi/Roadmap) document provides more information about our future plans.
 
