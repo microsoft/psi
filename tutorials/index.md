@@ -393,15 +393,19 @@ While so far we have discussed how to use PsiStudio to visualize previously coll
 
 For this example we'll be using exactly the same code we wrote in the previous section, so start the application running again, and let it continue to run in the background collecting data.
 
-Since you just restarted your \\psi application, it's generating a new dataset in a new subdirectory, and if you still have PsiStudio open from the last tutorial section you'll have the _previous_ dataset loaded.  To open the new store that's being written to, from the _File_ menu select _Open Store_, then in the File Open dialog go up one level to `C:\recordings` and then into the _latest_ `demo.####` subdirectory.  Since this is a live store, you can tell that you're in the correct subdirectory because all of the files' _Date modified_ attributes will be the current date and time.  If you've opened the store of the currently running \\psi application, then PsiStudio should look like this:
+Since you just restarted your \\psi application, it's generating a new dataset in a new subdirectory, and if you still have PsiStudio open from the last tutorial section you'll still be viewing the _previous_ session.  To view the new session being created, right-click on the top-level node called _Untitled Dataset_ in the _Datasets_ tab and from the context menu select _Create Session from Existing Store..._, then in the File Open dialog go up one level to `C:\recordings` and then into the _latest_ `demo.####` subdirectory.  Since this is a live store, you can tell that you're in the correct subdirectory because all of the files' _Date modified_ attributes will be the current date and time.  If you've opened the store of the currently running \\psi application, then PsiStudio should look like this:
 
 ![PsiStudio (Live Store)](/psi/tutorials/PsiStudio.OpenLiveStore.png)
 
-Notice that PsiStudio detected that the store that we opened was live, and it pressed the _LIVE_ Button on your behalf to set the cursor mode to _Live_. Also notice that the timeline is automatically scrolling to keep up with new messages being written to the store.
+We now have two sessions loaded, the previous session (which we can tell is the session being displayed in the Visualizations area because all of the tree nodes under it are white), and the new Live session. Notice that PsiStudio detected that the store that we opened was live, and it added a _Live_ icon next to the partition name and all of the streams in that parition.  Notice also that it generated a new name for the session _demo_1_ to ensure that all sessions in our dataset have unique names.
 
-If you expand the _Datasets_ tree view you will see a _Live_ icon next to the partition and also next to each of the streams to indicate that this partition is live.  PsiStudio will monitor this partition so that any new streams that the app writes will be automatically added to the _Datasets_ tree view. PsiStudio will also detect when your \\psi application stops writing to the store and will switch the cursor mode from _Live_ mode back to _Manual_ mode, and the _Live_ icons next to the streams will disappear.
+To switch to visualizing the live session, right-click on the _demo_1_ session and from the context menu select _Visualize Session_.
 
-If you now visualize the `Sin`, `Cos`, `Audio`, `Voice Activity`, and `Image` streams you'll see something like the following window:
+After PsiStudio switched to the new session it automatically rebound all of the visualizers in the Visualizations area to the streams in the new session.
+
+Because we've switched to visualizing a live session, PsiStudio pressed the _LIVE_ Button on your behalf to set the cursor mode to _Live_. Also notice that in this mode the timeline is automatically scrolling to keep up with new messages being written to the store.
+
+PsiStudio will monitor this partition so that any new streams that the app writes will be automatically added to the _Datasets_ tree view. PsiStudio will also detect when your \\psi application stops writing to the store and will switch the cursor mode from _Live_ mode back to _Manual_ mode, and the _Live_ icons next to the streams will disappear.
 
 ![PsiStudio (Live Streams)](/psi/tutorials/PsiStudio.LiveStreams.png)
 
