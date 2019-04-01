@@ -218,13 +218,13 @@ because the `Sign` component implements `IConsumer` and `PipeTo` knows how to ro
 
 ## 3. Subpipelines
 
-Subpipelines are a construct that enable hierarchical organization in the computation graph. They enable developing composite components, or dynamic computation graphs that can a lifetime separate from their parent `Pipeline`.
+Subpipelines are a construct that enable hierarchical organization in the computation graph. They enable developing composite components, or dynamic computation graphs that can have a lifetime separate from their parent `Pipeline`.
 
 The `Subpipeline` class is essentially a `Pipeline` (it derives from it), but is also a component that can be added to a parent pipeline. This allows for a means of abstraction and for hierarchically organizing computation graphs via [composite components](/psi/topics/InDepth.WritingComponents#CompositeComponents), which we describe in more detail in the next section. Additionally, subpipelines may have a lifetime that is independent of that of their parent. Finally, subpipelines enable initializing and starting or stopping child components independently from the parent to which they belong, and hence dynamically constructing computation graphs. As an example, subpipelines are used internally by the [`Parallel` operator](/psi/topics/InDepth.BasicStreamOperators#Parallel) to dynamically create and run parallel computation graphs for multiple instances, while respecting source component initialization, start and stop events, etc.
 
-Subpipelines are defined as a [finite source component](/psi/topics/InDepth.WritingComponents#SourceComponents) and complete when all of their child source components have completed. If a `Subpipeline` contains _no_ source components then it completes (calls `onCompleted`) at startup, and therefore behaves as a purely reactive component.
+Because they may include source components, subpipelines implement the [`ISourceComponent` interface](/psi/topics/InDepth.WritingComponents#SourceComponents) and complete when all of their child source components have completed. If a `Subpipeline` contains _no_ source components then it completes (calls `notifyCompletionTime`) at startup, and therefore behaves as a purely reactive component.
 
-Subpipelines share the parent's `Scheduler`, the parent's `PipelineCompletionEvent` and, if not specified, the parent's global `DeliveryPolicy`. 
+Subpipelines have their own `Scheduler`, but unless otherwise specified, share the parent's global `DeliveryPolicy`. 
 
 If not explicitly started via `Run()` or `RunAsync()`, subpipelines start when the parent pipeline starts - just as a normal component. They may also be created and started dynamically at runtime. 
 
@@ -311,51 +311,52 @@ On the output side, the composite-component emitters can be assigned directly fr
 
 <a name="PipelineStartStop"></a>
 
-## 5. Registering for Notification of Pipeline Start/Stop
+## 5. Pipeline Events
 
-Components may need to do setup and teardown work when the pipeline starts and/or stops. For this, the `Pipeline` has methods to register callbacks; generally called in the component's constructor:
+Applications or components may need to do setup and teardown work just before the pipeline runs and/or after it completes. For this, the `Pipeline` provides events which may be subscribed to and handled as appropriate:
 
 ```csharp
-// Registers handler to be called upon pipeline start.
-void Pipeline.RegisterPipelineStartHandler(object owner, Action onStart);
+// Event that is raised when the pipeline starts running.
+event EventHandler<PipelineRunEventArgs> PipelineRun;
 
-// Registers handler to be called upon pipeline stop.
-void Pipeline.RegisterPipelineStopHandler(object owner, Action onStop);
+// Event that is raised upon pipeline completion.
+event EventHandler<PipelineCompletedEventArgs> PipelineCompleted;
 ```
 
-The `owner` object is the state object protecting concurrent calls to the component. Typically the component itself (`this`) is used. The `Action` is called upon pipeline start/stop.
-
-The `onStart` callback is invoked when the pipeline is about to start. All components have been constructed but messages have not started to flow. Additionally, the `Pipeline.ReplayDescriptor` has been established by this point in time.
-
-The `onStop` is called when the pipeline is shutting down. Once this completes, the component should stop generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages.
+The `PipelineRun` event is raised when the pipeline starts running, but before any messages begin to flow. The `PipelineCompleted` is raised upon pipeline completion, when all components have been stopped and messages are no longer being produced. As the pipeline is not in a running state, no messages should be posted in the handlers for either of these events.
 
 <a name="SourceComponents"></a>
 
-## 6. Source Component Interfaces
+## 6. Source Component Interface
 
 In contrast to _reactive components_, which are those that produce output _only_ in response to incoming message, _source components_ are the "headwaters" of the system; the source from which messages flow. These are components that originate streams of data. Typically these components encapsulate sensors, such as cameras, microphones, accelerometers, etc., but may also represent hybrid components which both react to, as well as produce, streams of data.
 
-Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` and `IInfiniteSourceComponent` interfaces serve this purpose.
+Source components must be declared as such for the pipeline to behave correctly. The `ISourceComponent` interface serves this purpose.
 
 ### 6.1. Completion
 
-Some source components have a notion of "completion". These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The single `Initialize(Action<DateTime> onCompleted)` method provides a means for the component to later notify the pipeline of completion by way of an `onCompleted` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`):
+Some source components have a notion of "completion". These represent finite streams of data. These are commonly "importers" of some kind; producing messages from a data source. The data is finite and so is the source component. The `Start(Action<DateTime> notifyCompletionTime)` method provides a means for the component to later notify the pipeline of completion by way of an `notifyCompletionTime` action to call once no more messages are forthcoming and indicating the originating time of the final message (or else `pipeline.GetCurrentTime()`):
 
 ```csharp
 // Implementors should advise the pipeline when they are done posting as well as
 // the originating time of completion; on or after the final message originating time
-void ISourceComponent.Initialize(Action<DateTime> onCompleted);
+void ISourceComponent.Start(Action<DateTime> notifyCompletionTime);
 ```
 
-`Initialize(...)` is called after the graph of components has been constructed, but before messages have begun to flow; just before pipeline startup.
+`Start(...)` is called during pipeline startup, after the graph of components has been constructed. Once a source component's `Start()` method has been called, it may begin posting messages at any point thereafter. Component receivers need to handle the possibilty of receiving and reacting to messages during startup.
 
 Once all source components have completed, downstream reactive components no longer have anything to which to react and the pipeline is free to shut down. Any cycles in the graph where reactive components are "down stream" from themselves do not prevent pipeline shut down.
 
+```csharp
+// Called by the pipeline when shutting down.
+void ISourceComponent.Stop();
+```
+
+`Stop()` is called when the pipeline is shutting down. Once this completes, the component should stop generating new messages. However, if the component does have inputs, it is expected to continue to handle incoming messages, which may include posting messages from inside their receivers.
+
 ### 6.2. Infinite Sources
 
-Some source components are "infinte sources". They produce _perpetual_ streams of data which do not have a notion of completion, such as an "always-on" sensor. The `IInfiniteSourceComponent` marker interface is used to denote such components. Being a "marker" interface, there are no methods to implement. Merely declaring a component to be an `IInfiniteSourceComponent` clearly identifies it as such to the pipeline.
-
-Components should declare themselves as `IInfiniteSourceComponent` rather than `ISourceComponent` when they produce an _infinite_ stream of messages. In the rare circumstance when this cannot be known until runtime, a component may declare itself `ISourceComponent` but may then call `onCompleted(DateTime.MaxValue)`. The `DateTime.MaxValue` as the final originating time tells the runtime to expect an infinite stream and the component is treated exactly as if it had been declared as `IInfiniteSourceComponent`.
+Some source components are "infinite sources". They produce _perpetual_ streams of data which do not have a notion of completion, such as an "always-on" sensor. Such components should implement `ISourceComponent` and call `notifyCompletionTime(DateTime.MaxValue)` in their `Start(Action<DateTime> notifyCompletionTime)` method. The `DateTime.MaxValue` as the final originating time tells the runtime to expect an infinite stream from the component.
 
 ### 6.3. Generator Pattern
 
@@ -434,6 +435,8 @@ In general, follow the guidelines we have already provided above when writing co
 If you are writing a single-input, single-output component, use the `ConsumerProducer<TIn, TOut>` base class and write a corresponding stream operator as an extension method as this will simplify authoring. Make sure the stream operator takes a `DeliveryPolicy` parameter, and uses it when creating the connection to the receiver of the consumer-producer class.
 
 If your component has a single input, but multiple outputs, name the input `In` and implement the `IConsumer<T>` interface. Similarly, if your component has multiple inputs but a single output, name the output `Out` and implement the `IProducer<T>` interface.
+
+If your component posts messages from outside its receiver(s) that are not generated in response to messages received (e.g. from its own threads or event handlers), then it is a source component and should implement the `ISourceComponent` interface. Such messages must not be posted before the interface's `Start` method is called or after the `Stop` method returns. However, purely reactive messages (i.e. those that are produced in response to a received message) may continue to be posted from within a receiver method.
 
 If your component has multiple inputs and multiple outputs, we recommend you name the inputs using a pattern FooIn, e.g. AudioIn, ImageIn, etc. and the outputs using the pattern FooOut, e.g. AudioOut, ImageOut, etc. This way, developers can use the auto-completion features in Intellisense to quickly discover the inputs and outputs a component might have by just typing "In" or "Out" after component and ".".
 
