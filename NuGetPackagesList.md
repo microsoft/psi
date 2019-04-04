@@ -15,6 +15,7 @@ The table below contains the list of Platform for Situated Intelligence NuGet pa
 | Microsoft.Psi.Calibration.Windows      | Provides data structures for camera calibration. | - | Yes | AnyCPU |
 | Microsoft.Psi.CognitiveServices.Face.Windows      | Provides components for using Microsoft's Cognitive Services Face API. | - | Yes | AnyCPU |
 | Microsoft.Psi.CognitiveServices.Language      | Provides components for using Microsoft's Cognitive Services Language Understanding Service (LUIS). | Yes | Yes | AnyCPU |
+| Microsoft.Psi.CognitiveServices.Language.Windows | Provides components for using Microsoft's Personality Chat Service. | - | Yes | AnyCPU |
 | Microsoft.Psi.CognitiveServices.Speech      | Provides components for using Microsoft's Cognitive Services Speech API. | Yes | Yes | AnyCPU |
 | Microsoft.Psi.CognitiveServices.Vision.Windows      | Provides components for using Microsoft's Cognitive Services Vision API. | - | Yes | AnyCPU |
 | Microsoft.Psi.Imaging      | Provides APIs and components for representing and manipulating images. | Yes | Yes | AnyCPU |
