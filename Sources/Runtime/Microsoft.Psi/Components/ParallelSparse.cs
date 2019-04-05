@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Components
         private readonly Func<TKey, IProducer<TIn>, IProducer<TOut>> parallelTransform;
         private readonly Action<TKey, IProducer<TIn>> parallelAction;
         private readonly Pipeline pipeline;
-        private readonly Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy;
+        private readonly Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy;
 
         // buffers
         private readonly Dictionary<TKey, int> activeBranches = new Dictionary<TKey, int>();
@@ -35,12 +35,12 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="action">Action to perform in parallel.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
-        public ParallelSparse(Pipeline pipeline, Action<TKey, IProducer<TIn>> action, Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
+        public ParallelSparse(Pipeline pipeline, Action<TKey, IProducer<TIn>> action, Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
         {
             this.pipeline = pipeline;
             this.parallelAction = action;
-            this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminateWhenKeyNotPresent;
+            this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminationPolicy<TKey, TIn>.WhenKeyNotPresent();
             this.In = pipeline.CreateReceiver<Dictionary<TKey, TIn>>(this, this.Receive, nameof(this.In));
         }
 
@@ -50,17 +50,15 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
         /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
-        public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault, Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
+        public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault, Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
         {
             this.pipeline = pipeline;
             this.parallelTransform = transform;
-            this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminateWhenKeyNotPresent;
+            this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminationPolicy<TKey, TIn>.WhenKeyNotPresent();
             this.In = pipeline.CreateReceiver<Dictionary<TKey, TIn>>(this, this.Receive, nameof(this.In));
             this.activeBranchesEmitter = pipeline.CreateEmitter<Dictionary<TKey, int>>(this, nameof(this.activeBranchesEmitter));
-            var interpolator = joinOrDefault ?
-                Match.BestOrDefault<TOut>(new RelativeTimeInterval(-default(TimeSpan), default(TimeSpan))) :
-                Match.Exact<TOut>();
+            var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();
             this.join = Operators.Join(this.activeBranchesEmitter, Enumerable.Empty<IProducer<TOut>>(), interpolator);
         }
 
@@ -70,52 +68,52 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public Emitter<Dictionary<TKey, TOut>> Out => this.join.Out;
 
-        /// <summary>
-        /// Branch termination policy to terminate when corresponding key is not longer present.
-        /// </summary>
-        /// <remarks>This is the default policy.</remarks>
-        /// <param name="key">Branch key.</param>
-        /// <param name="message">Message containing current key/value pairs.</param>
-        /// <returns>Indication of whether to terminate the given branch.</returns>
-        public static bool BranchTerminateWhenKeyNotPresent(TKey key, Dictionary<TKey, TIn> message)
-        {
-            return !message.ContainsKey(key);
-        }
-
         private void Receive(Dictionary<TKey, TIn> message, Envelope e)
         {
-            this.activeBranches.Clear();
             foreach (var pair in message)
             {
                 if (!this.branches.ContainsKey(pair.Key))
                 {
                     this.keyToBranchMapping[pair.Key] = this.branchKey++;
                     var subpipeline = Subpipeline.Create(this.pipeline, $"subpipeline{pair.Key}");
-                    var branch = this.branches[pair.Key] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{pair.Key}");
+                    var connectorIn = new Connector<TIn>(this.pipeline, subpipeline, $"connectorIn{pair.Key}");
+                    var branch = this.pipeline.CreateEmitter<TIn>(this, $"branch{pair.Key}-{Guid.NewGuid()}");
+                    this.branches[pair.Key] = branch;
+                    branch.PipeTo(connectorIn, true); // allows connections in running pipelines
+                    connectorIn.In.Unsubscribed += subpipeline.Stop;
                     if (this.parallelTransform != null)
                     {
-                        var branchResult = this.parallelTransform(pair.Key, branch);
-                        branchResult.PipeTo(this.join.AddInput());
+                        var branchResult = this.parallelTransform(pair.Key, connectorIn.Out);
+                        var connectorOut = new Connector<TOut>(subpipeline, this.pipeline, $"connectorOut{pair.Key}");
+                        branchResult.PipeTo(connectorOut.In, true);
+                        connectorOut.In.Unsubscribed += closeOriginatingTime => connectorOut.Out.Close(closeOriginatingTime);
+                        connectorOut.Out.PipeTo(this.join.AddInput(), true);
                     }
                     else
                     {
-                        this.parallelAction(pair.Key, branch);
+                        this.parallelAction(pair.Key, connectorIn.Out);
                     }
 
                     subpipeline.RunAsync(this.pipeline.ReplayDescriptor);
                 }
 
                 this.branches[pair.Key].Post(pair.Value, e.OriginatingTime);
-                this.activeBranches[pair.Key] = this.keyToBranchMapping[pair.Key];
             }
 
             foreach (var branch in this.branches.ToArray())
             {
-                if (this.branchTerminationPolicy(branch.Key, message))
+                var (terminate, originatingTime) = this.branchTerminationPolicy(branch.Key, message, e.OriginatingTime);
+                if (terminate)
                 {
-                    (branch.Value.Pipeline as Subpipeline).Suspend();
+                    branch.Value.Close(originatingTime);
                     this.branches.Remove(branch.Key);
                 }
+            }
+
+            this.activeBranches.Clear();
+            foreach (var key in this.branches.Keys)
+            {
+                this.activeBranches.Add(key, this.keyToBranchMapping[key]);
             }
 
             this.activeBranchesEmitter?.Post(this.activeBranches, e.OriginatingTime);

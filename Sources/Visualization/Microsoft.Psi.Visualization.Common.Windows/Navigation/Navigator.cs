@@ -4,25 +4,39 @@
 namespace Microsoft.Psi.Visualization.Navigation
 {
     using System;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using System.Windows.Threading;
-    using Microsoft.Psi.Visualization.Server;
+
+    using Microsoft.Psi.Audio;
+    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
     /// Class implements the time Navigator view model
     /// </summary>
-    [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [Guid(Guids.RemoteNavigatorCLSIDString)]
-    [ComVisible(false)]
-    public partial class Navigator : ReferenceCountedObject, IRemoteNavigator
+    public partial class Navigator : ObservableObject
     {
+        private const int DefaultLiveModeViewportWidthSeconds = 30;
+
+        // The position of the cursor in the timeline window when the timeline
+        // is playing, expressed as a percentage of the viewport width
+        private double liveCursorViewportPosition = 0.8d;
+
         private DateTime cursor;
         private NavigatorRange dataRange;
-        private NavigationMode navigationMode;
         private NavigatorRange selectionRange;
         private NavigatorRange viewRange;
+        private CursorMode cursorMode;
+
+        private Pipeline audioPlaybackPipeline = null;
+
+        /// <summary>
+        /// The current stream providing audio playback (if any)
+        /// </summary>
+        private StreamBinding audioPlaybackStream = null;
+
+        // The time offset of the Cursor when in Live mode from the left hand edge of the view window
+        private TimeSpan liveCursorOffsetFromViewRangeStart;
 
         /// <summary>
         /// The padding (in percentage) when performing a zoom to selection. The resulting view
@@ -35,36 +49,76 @@ namespace Microsoft.Psi.Visualization.Navigation
         private bool showTimingRelativeToSessionStart = false;
         private bool showTimingRelativeToSelectionStart = false;
 
-        private DispatcherTimer playTimer;
+        // The playback speed
+        private double playSpeed = 1.0d;
+
+        private DispatcherTimer playTimer = null;
+        private int playTimerTickIntervalMs = 10;
+
+        // The current clock time (in ticks) of the last time the play timer fired
+        private DateTime lastPlayTimerTickTime;
+
+        // Repeats playback in a loop if true, otherwise stops playback at the selection end marker
+        private bool repeatPlayback = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
         /// </summary>
         public Navigator()
         {
-            this.selectionRange = new NavigatorRange();
-            this.dataRange = new NavigatorRange();
-            this.viewRange = new NavigatorRange();
-            this.cursor = DateTime.MinValue;
-            this.navigationMode = NavigationMode.Playback;
+            DateTime now = DateTime.UtcNow;
+
+            this.selectionRange = new NavigatorRange(now.AddSeconds(-60), now);
+            this.dataRange = new NavigatorRange(now.AddSeconds(-60), now);
+            this.viewRange = new NavigatorRange(now.AddSeconds(-60), now);
+            this.cursor = now.AddSeconds(-60);
             this.zoomToSelectionPadding = 0.1;
 
-            this.dataRange.SetRange(DateTime.MinValue, TimeSpan.FromSeconds(60));
-
             this.SelectionRange.RangeChanged += this.SelectionRange_RangeChanged;
+            this.viewRange.PropertyChanged += this.ViewRange_PropertyChanged;
         }
 
         /// <summary>
-        /// Occurs when the navigation mode changes.
+        /// Occurs when the cursor mode changes
         /// </summary>
-        public event NavigatorModeChangedHandler NavigationModeChanged;
+        public event CursorModeChangedHandler CursorModeChanged;
 
         /// <summary>
         /// Occurs when the cursor changes.
         /// </summary>
         public event NavigatorTimeChangedHandler CursorChanged;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or the cursor mode
+        /// </summary>
+        public CursorMode CursorMode
+        {
+            get => this.cursorMode;
+
+            private set
+            {
+                if (this.cursorMode != value)
+                {
+                    CursorMode oldCursorMode = this.cursorMode;
+
+                    this.RaisePropertyChanging(nameof(this.CursorMode));
+                    this.RaisePropertyChanging(nameof(this.IsCursorModePlayback));
+                    this.RaisePropertyChanging(nameof(this.IsCursorModeLive));
+                    this.RaisePropertyChanging(nameof(this.DisplaySelectionMarkers));
+                    this.cursorMode = value;
+                    this.RaisePropertyChanged(nameof(this.CursorMode));
+                    this.RaisePropertyChanged(nameof(this.IsCursorModePlayback));
+                    this.RaisePropertyChanged(nameof(this.IsCursorModeLive));
+                    this.RaisePropertyChanged(nameof(this.DisplaySelectionMarkers));
+
+                    this.CursorModeChanged?.Invoke(this, new CursorModeChangedEventArgs(oldCursorMode, this.cursorMode));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the cursor position
+        /// </summary>
         [DataMember]
         public DateTime Cursor
         {
@@ -82,6 +136,25 @@ namespace Microsoft.Psi.Visualization.Navigation
                     this.RaisePropertyChanged(nameof(this.Cursor));
                     this.RaisePropertyChanged(nameof(this.CursorRelativeToSessionStartFormatted));
                     this.RaisePropertyChanged(nameof(this.CursorRelativeToSelectionStartFormatted));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the play speed
+        /// </summary>
+        public double PlaySpeed
+        {
+            get => this.playSpeed;
+
+            set
+            {
+                if ((value >= 1) && (value <= 11))
+                {
+                    this.RaisePropertyChanging(nameof(this.PlaySpeed));
+                    this.playSpeed = value;
+                    this.RaisePropertyChanged(nameof(this.PlaySpeed));
+                    this.UpdateAudioPlayback();
                 }
             }
         }
@@ -115,27 +188,17 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Gets a value indicating whether we're currently playing back data
         /// </summary>
-        public bool IsPlaying => this.playTimer != null;
+        public bool IsCursorModePlayback => this.CursorMode == CursorMode.Playback;
 
         /// <summary>
-        /// Gets or sets the navigation mode.
+        /// Gets a value indicating whether the navigator is currently tracking a live partition
         /// </summary>
-        [DataMember]
-        public NavigationMode NavigationMode
-        {
-            get => this.navigationMode;
-            set
-            {
-                if (this.navigationMode != value)
-                {
-                    this.RaisePropertyChanging(nameof(this.NavigationMode));
-                    var original = this.navigationMode;
-                    this.navigationMode = value;
-                    this.NavigationModeChanged?.Invoke(this, new NavigatorModeChangedEventArgs(original, value));
-                    this.RaisePropertyChanged(nameof(this.NavigationMode));
-                }
-            }
-        }
+        public bool IsCursorModeLive => this.CursorMode == CursorMode.Live;
+
+        /// <summary>
+        /// Gets a value indicating whether the start and end selection markers should be displayed in the timeline view
+        /// </summary>
+        public bool DisplaySelectionMarkers => this.CursorMode != CursorMode.Live;
 
         /// <summary>
         /// Gets the selection range.
@@ -159,28 +222,14 @@ namespace Microsoft.Psi.Visualization.Navigation
         [DataMember]
         public NavigatorRange ViewRange => this.viewRange;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the zoom range selection padding.
+        /// </summary>
         [DataMember]
         public double ZoomToSelectionPadding
         {
             get => this.zoomToSelectionPadding;
             set => this.Set(nameof(this.ZoomToSelectionPadding), ref this.zoomToSelectionPadding, value);
-        }
-
-        /// <inheritdoc />
-        IRemoteNavigatorRange IRemoteNavigator.DataRange => this.DataRange;
-
-        /// <inheritdoc />
-        IRemoteNavigatorRange IRemoteNavigator.SelectionRange => this.SelectionRange;
-
-        /// <inheritdoc />
-        IRemoteNavigatorRange IRemoteNavigator.ViewRange => this.ViewRange;
-
-        /// <inheritdoc />
-        RemoteNavigationMode IRemoteNavigator.NavigationMode
-        {
-            get => (this.NavigationMode == NavigationMode.Live) ? RemoteNavigationMode.Live : RemoteNavigationMode.Playback;
-            set => this.NavigationMode = (value == RemoteNavigationMode.Live) ? NavigationMode.Live : NavigationMode.Playback;
         }
 
         /// <summary>
@@ -234,56 +283,130 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Animates the navigator curor based on indicated speed.
+        /// Gets or sets the audio stream to be played during playback
         /// </summary>
-        /// <param name="speed">The speed to animate the cursor. Default is 1.0.</param>
-        public void Play(double speed = 1.0)
+        public StreamBinding AudioPlaybackStream
         {
-            if (this.NavigationMode != NavigationMode.Playback)
-            {
-                throw new NotSupportedException("Play is only supported in Playback mode.");
-            }
+            get => this.audioPlaybackStream;
 
-            if (this.playTimer != null)
+            set
             {
-                return;
+                this.audioPlaybackStream = value;
+                this.UpdateAudioPlayback();
+                this.RaisePropertyChanged(nameof(this.AudioPlaybackStream));
             }
-
-            var startTime = this.selectionRange.StartTime;
-            var playStartTime = DateTime.Now;
-            var newCursor = this.selectionRange.StartTime;
-            this.playTimer = new DispatcherTimer(
-                TimeSpan.FromMilliseconds(10),
-                DispatcherPriority.Background,
-                (s, e) =>
-                {
-                    if (newCursor < this.selectionRange.EndTime)
-                    {
-                        newCursor = startTime + TimeSpan.FromTicks((long)((DateTime.Now - playStartTime).Ticks * speed));
-                        this.Cursor = newCursor;
-                        if (newCursor > this.viewRange.EndTime && newCursor < this.dataRange.EndTime)
-                        {
-                            this.viewRange.SetRange(newCursor, this.viewRange.Duration);
-                        }
-                    }
-                    else
-                    {
-                        this.StopPlaying();
-                    }
-                },
-                Dispatcher.CurrentDispatcher);
-            this.playTimer.Start();
         }
 
         /// <summary>
-        /// Stop annimating the navigator cursor.
+        /// Gets or sets a value indicating whether playback repeats
         /// </summary>
-        public void StopPlaying()
+        public bool RepeatPlayback
         {
-            if (this.playTimer != null)
+            get => this.repeatPlayback;
+
+            set
             {
-                this.playTimer.Stop();
-                this.playTimer = null;
+                this.Set(nameof(this.RepeatPlayback), ref this.repeatPlayback, value);
+            }
+        }
+
+        /// <summary>
+        /// Moves the cursor to the start of the selection
+        /// </summary>
+        public void MoveToSelectionStart()
+        {
+            if (this.CursorMode != CursorMode.Live)
+            {
+                this.Cursor = this.SelectionRange.StartTime;
+                this.EnsureCursorVisible();
+            }
+        }
+
+        /// <summary>
+        /// Moves the cursor to the end of the selection
+        /// </summary>
+        public void MoveToSelectionEnd()
+        {
+            if (this.CursorMode != CursorMode.Live)
+            {
+                this.Cursor = this.SelectionRange.EndTime;
+                this.EnsureCursorVisible();
+            }
+        }
+
+        /// <summary>
+        /// Sets the cursor mode
+        /// </summary>
+        /// <param name="cursorMode">The cursor mode to set</param>
+        public void SetCursorMode(CursorMode cursorMode)
+        {
+            switch (cursorMode)
+            {
+                // Switch into Manual mode
+                case CursorMode.Manual:
+                    switch (this.CursorMode)
+                    {
+                        case CursorMode.Playback:
+                        case CursorMode.Live:
+                            this.StopPlayback();
+                            break;
+                    }
+
+                    break;
+
+                // Switch into Playback mode
+                case CursorMode.Playback:
+                    switch (this.CursorMode)
+                    {
+                        case CursorMode.Manual:
+                        case CursorMode.Live:
+                            this.StartPlayback();
+                            break;
+                    }
+
+                    break;
+
+                // Switch into Live mode
+                case CursorMode.Live:
+                    switch (this.CursorMode)
+                    {
+                        case CursorMode.Manual:
+                            this.EnterLiveMode();
+                            break;
+
+                        case CursorMode.Playback:
+                            this.StopPlayback();
+                            this.EnterLiveMode();
+                            break;
+                    }
+
+                    break;
+
+                default:
+                    throw new ApplicationException(string.Format("Navigator.SetCursorMode() - Don't know how to handle CursorMode.{0}", cursorMode));
+            }
+        }
+
+        /// <summary>
+        /// Updates the viewport in response to live messages
+        /// </summary>
+        /// <param name="datetime">The new message time to set the cursor at</param>
+        public void NotifyLiveMessageReceived(DateTime datetime)
+        {
+            // Check if the new event is newer than the current data range
+            if (datetime > this.DataRange.EndTime)
+            {
+                // Update the data range
+                this.DataRange.SetRange(this.DataRange.StartTime, datetime);
+
+                // If we're in Live mode, scrub the viewport
+                if (this.CursorMode == CursorMode.Live)
+                {
+                    this.ViewRange.SetRange(this.DataRange.EndTime - this.liveCursorOffsetFromViewRangeStart, this.ViewRange.Duration);
+
+                    // Set the cursor
+                    this.Cursor = datetime;
+                }
             }
         }
 
@@ -374,31 +497,133 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Updates the live mode extents based on the current time.
+        /// Animates the navigator curor based on indicated speed.
         /// </summary>
-        /// <param name="currentTime">The current time.</param>
-        internal void UpdateLiveExtents(DateTime currentTime)
+        private void StartPlayback()
         {
-            if (this.NavigationMode != NavigationMode.Live)
+            // Create the play timer if it doesn't exist yet
+            if (this.playTimer == null)
             {
-                return;
+                this.playTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(this.playTimerTickIntervalMs), DispatcherPriority.Background, new EventHandler(this.OnPlaytimerTick), Dispatcher.CurrentDispatcher);
             }
 
-            if (currentTime > this.Cursor)
+            // Move the cursor to the start of the selection
+            this.Cursor = this.SelectionRange.StartTime;
+
+            // Make sure that the cursor is visible
+            this.EnsureCursorVisible();
+
+            // Update the cursor mode
+            this.CursorMode = CursorMode.Playback;
+
+            // Start the play timer running
+            this.lastPlayTimerTickTime = DateTime.UtcNow;
+            this.playTimer.Start();
+
+            // Start audio playback
+            this.UpdateAudioPlayback();
+        }
+
+        /// <summary>
+        /// Stop animating the navigator cursor.
+        /// </summary>
+        private void StopPlayback()
+        {
+            // Pause the play timer
+            if (this.playTimer != null)
             {
-                this.Cursor = currentTime;
+                this.playTimer.Stop();
             }
 
-            // check if we need to scroll
-            if (currentTime > this.viewRange.EndTime)
+            // Update the cursor mode
+            this.CursorMode = CursorMode.Manual;
+
+            // Stop audio playback
+            this.UpdateAudioPlayback();
+        }
+
+        private void UpdateAudioPlayback()
+        {
+            if (this.audioPlaybackPipeline != null)
             {
-                this.viewRange.SetRange(currentTime - this.viewRange.Duration, currentTime);
+                this.audioPlaybackPipeline.Dispose();
+                this.audioPlaybackPipeline = null;
             }
 
-            // check if we need to move the data range
-            if (currentTime > this.dataRange.EndTime)
+            // If we're in playback mode, and the playback speed is 1x, and we have a bound audio stream to play back, then create the audio player
+            if ((this.CursorMode == CursorMode.Playback) && (this.audioPlaybackStream != null) && this.audioPlaybackStream.IsBound && (this.playSpeed == 1.0d))
             {
-                this.dataRange.SetRange(this.dataRange.StartTime, currentTime);
+                // Create the playback pipeline
+                this.audioPlaybackPipeline = Pipeline.Create("AudioPlayer");
+
+                // Get the audio stream to play
+                var importer = Store.Open(this.audioPlaybackPipeline, this.audioPlaybackStream.StoreName, this.audioPlaybackStream.StorePath);
+                var stream = importer.OpenStream<AudioBuffer>(this.audioPlaybackStream.StreamName);
+
+                // Create the audio player
+                var audioPlayer = new AudioPlayer(this.audioPlaybackPipeline, new AudioPlayerConfiguration());
+                stream.PipeTo(audioPlayer.In);
+
+                // Start playing back the audio
+                this.audioPlaybackPipeline.RunAsync(new ReplayDescriptor(this.Cursor, this.SelectionRange.EndTime));
+            }
+        }
+
+        /// <summary>
+        /// Sets the cursor mode to live
+        /// </summary>
+        private void EnterLiveMode()
+        {
+            // Update the cursor mode
+            this.CursorMode = CursorMode.Live;
+
+            // Set the view range to just the last 30 seconds of data
+            if (this.DataRange.IsFinite)
+            {
+                this.ViewRange.SetRange(this.DataRange.EndTime.AddSeconds(-DefaultLiveModeViewportWidthSeconds) - this.liveCursorOffsetFromViewRangeStart, new TimeSpan(0, 0, DefaultLiveModeViewportWidthSeconds));
+            }
+        }
+
+        private void OnPlaytimerTick(object sender, EventArgs e)
+        {
+            // Calculate the new cursor position
+            DateTime now = DateTime.UtcNow;
+            this.Cursor = this.Cursor.AddTicks((long)((now - this.lastPlayTimerTickTime).Ticks * this.playSpeed));
+
+            // Check if we've hit the end of the selection
+            if (this.Cursor >= this.SelectionRange.EndTime)
+            {
+                // If Repeat is enabled, then move the cursor back to the
+                // selection start marker, otherwise stop the play timer
+                if (this.RepeatPlayback)
+                {
+                    this.Cursor = this.SelectionRange.StartTime;
+                    this.UpdateAudioPlayback();
+                }
+                else
+                {
+                    this.Cursor = this.SelectionRange.EndTime;
+                    this.playTimer.Stop();
+                    this.CursorMode = CursorMode.Manual;
+                }
+            }
+
+            // Make sure the cursor is visible in the view window
+            if (this.Cursor > this.ViewRange.EndTime)
+            {
+                this.ViewRange.SetRange(this.Cursor, this.ViewRange.Duration);
+            }
+
+            this.lastPlayTimerTickTime = now;
+        }
+
+        private void EnsureCursorVisible()
+        {
+            // Make sure the cursor is visible in the view window.  If it isn't, scrub the timeline
+            // so that the cursor is at the 20th percentile position in the view window.
+            if ((this.Cursor < this.ViewRange.StartTime) || (this.Cursor > this.ViewRange.EndTime))
+            {
+                this.ViewRange.SetRange(this.Cursor.AddTicks((long)(this.ViewRange.Duration.Ticks * -0.2d)), this.ViewRange.Duration);
             }
         }
 
@@ -412,6 +637,16 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.RaisePropertyChanged(nameof(this.SelectionStartRelativeToSessionStartFormatted));
             this.RaisePropertyChanged(nameof(this.SelectionEndRelativeToSessionStartFormatted));
             this.RaisePropertyChanged(nameof(this.SessionEndRelativeToSelectionStartFormatted));
+        }
+
+        private void ViewRange_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // If the duration of the View Range has changed, then we need to recalculate
+            // the time offset of the cursor from the start time of the view range
+            if (e.PropertyName == nameof(NavigatorRange.Duration))
+            {
+                this.liveCursorOffsetFromViewRangeStart = new TimeSpan((long)(this.viewRange.Duration.Ticks * this.liveCursorViewportPosition));
+            }
         }
     }
 }

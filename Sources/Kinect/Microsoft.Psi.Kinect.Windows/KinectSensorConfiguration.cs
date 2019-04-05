@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Default returns a default configuration for the Kinect
         /// </summary>
-        public static readonly KinectSensorConfiguration Default = new KinectSensorConfiguration() { OutputColor = true, OutputColorToCameraMapping = false };
+        public static readonly KinectSensorConfiguration Default = new KinectSensorConfiguration() { OutputColor = true, OutputDepth = true, OutputBodies = true };
 
         /// <summary>
         /// Gets or sets a value indicating whether the depth stream is emitted from the Kinect

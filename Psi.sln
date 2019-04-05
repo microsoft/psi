@@ -75,7 +75,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Kinect.Windows.x64
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Calibration", "Calibration", "{DF620739-6A2F-49F0-A732-6575879F1D86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Calibration.Windows", "Sources\Calibration\Microsoft.Psi.Calibration.Windows\Microsoft.Psi.Calibration.Windows.csproj", "{84CE1FE5-8141-4C2A-AC30-21BDC87F5D0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Calibration", "Sources\Calibration\Microsoft.Psi.Calibration\Microsoft.Psi.Calibration.csproj", "{84CE1FE5-8141-4C2A-AC30-21BDC87F5D0A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Psi.Media_Interop.Windows.x64", "Sources\Media\Microsoft.Psi.Media_Interop.Windows.x64\Microsoft.Psi.Media_Interop.Windows.x64.vcxproj", "{5348A94F-7B3A-4B42-8555-2A1491971090}"
 EndProject
@@ -117,10 +117,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.CognitiveServices.Language", "Sources\Integrations\CognitiveServices\Test.Psi.CognitiveServices.Language\Test.Psi.CognitiveServices.Language.csproj", "{C52E282C-FA0A-4847-8D28-E9C4FDD8B729}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visualization", "Visualization", "{2CA9B0AD-E127-47A6-AF23-D567C64FBA79}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.Psi.Visualization.Shared.Windows", "Sources\Visualization\Microsoft.Psi.Visualization.Shared.Windows\Microsoft.Psi.Visualization.Shared.Windows.shproj", "{F4CDE42F-0A7A-4ABA-B581-6A52C2B3DF2C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Visualization.Client.Windows", "Sources\Visualization\Microsoft.Psi.Visualization.Client.Windows\Microsoft.Psi.Visualization.Client.Windows.csproj", "{3910840F-A619-41A3-9E26-C26D94533176}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{8FEFAB80-0A89-4109-9104-5E937315C913}"
 EndProject
@@ -193,12 +189,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Interop", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PsiStoreTool", "Sources\Tools\PsiStoreTool\PsiStoreTool.csproj", "{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.CognitiveServices.Language.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language.Windows\Microsoft.Psi.CognitiveServices.Language.Windows.csproj", "{FE571017-BC81-4B70-A876-58A52CAB40B4}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Sources\Visualization\Microsoft.Psi.Visualization.Shared.Windows\Microsoft.Psi.Visualization.Shared.Windows.projitems*{3910840f-a619-41a3-9e26-c26d94533176}*SharedItemsImports = 4
-		Sources\Visualization\Microsoft.Psi.Visualization.Shared.Windows\Microsoft.Psi.Visualization.Shared.Windows.projitems*{d69636ba-cce9-4a85-845e-a378a2b03d62}*SharedItemsImports = 4
-		Sources\Visualization\Microsoft.Psi.Visualization.Shared.Windows\Microsoft.Psi.Visualization.Shared.Windows.projitems*{f4cde42f-0a7a-4aba-b581-6a52c2b3df2c}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -328,10 +321,6 @@ Global
 		{C52E282C-FA0A-4847-8D28-E9C4FDD8B729}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C52E282C-FA0A-4847-8D28-E9C4FDD8B729}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C52E282C-FA0A-4847-8D28-E9C4FDD8B729}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3910840F-A619-41A3-9E26-C26D94533176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3910840F-A619-41A3-9E26-C26D94533176}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3910840F-A619-41A3-9E26-C26D94533176}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3910840F-A619-41A3-9E26-C26D94533176}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C72AED47-F5FF-4B7B-BD11-62149542FB22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C72AED47-F5FF-4B7B-BD11-62149542FB22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C72AED47-F5FF-4B7B-BD11-62149542FB22}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -428,6 +417,10 @@ Global
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -481,8 +474,6 @@ Global
 		{C8E18D2B-A445-42C4-B6C6-D6CAC51065DC} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{C52E282C-FA0A-4847-8D28-E9C4FDD8B729} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{2CA9B0AD-E127-47A6-AF23-D567C64FBA79} = {A0856299-D28A-4513-B964-3FA5290FF160}
-		{F4CDE42F-0A7A-4ABA-B581-6A52C2B3DF2C} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
-		{3910840F-A619-41A3-9E26-C26D94533176} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
 		{8FEFAB80-0A89-4109-9104-5E937315C913} = {A0856299-D28A-4513-B964-3FA5290FF160}
 		{0E72598E-2A93-4439-B732-8763CD99F2C3} = {8FEFAB80-0A89-4109-9104-5E937315C913}
 		{C72AED47-F5FF-4B7B-BD11-62149542FB22} = {0E72598E-2A93-4439-B732-8763CD99F2C3}
@@ -511,6 +502,7 @@ Global
 		{DAB8847B-DE0A-45E2-A7DA-30432A36525B} = {64BBFFEA-7CFB-49F9-AC74-3AD1D13245FC}
 		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE} = {3F77CC04-2E58-452B-8107-0C93E7944D4E}
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E} = {8FEFAB80-0A89-4109-9104-5E937315C913}
+		{FE571017-BC81-4B70-A876-58A52CAB40B4} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

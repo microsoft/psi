@@ -16,14 +16,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     public class XYVisualizationPanel : VisualizationPanel<XYVisualizationPanelConfiguration>
     {
         /// <inheritdoc />
-        [IgnoreDataMember]
-        public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(XYVisualizationPanelView));
-
-        /// <inheritdoc />
         protected override void InitNew()
         {
             base.InitNew();
             this.Configuration.Name = "2D Panel";
+        }
+
+        /// <inheritdoc />
+        protected override DataTemplate CreateDefaultViewTemplate()
+        {
+            return XamlHelper.CreateTemplate(this.GetType(), typeof(XYVisualizationPanelView));
         }
     }
 }

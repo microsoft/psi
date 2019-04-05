@@ -10,6 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Data.Json;
@@ -44,6 +45,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private AnnotatedEventDefinition definition;
         private bool isDirty;
         private Message<AnnotatedEvent> currentContinuousAnnotatedEvent = default(Message<AnnotatedEvent>);
+
+        /// <inheritdoc/>
+        [IgnoreDataMember]
+        public override Color LegendColor => this.Configuration.TextColor;
 
         /// <summary>
         /// Gets the annotated event definition.
@@ -451,8 +456,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        protected override void OnOpenStream()
+        protected override void OnStreamBound()
         {
+            base.OnStreamBound();
+
             this.Data = DataManager.Instance.ReadStream<AnnotatedEvent>(this.Configuration.StreamBinding, DateTime.MinValue, DateTime.MaxValue);
             using (var reader = DataManager.Instance.GetReader(this.Configuration.StreamBinding))
             {

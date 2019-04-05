@@ -35,7 +35,6 @@ namespace Microsoft.Psi.Kinect.Face
         /// <param name="configuration">Configuration to use</param>
         public KinectFaceDetector(Pipeline pipeline, Kinect.KinectSensor kinectSensor, KinectFaceDetectorConfiguration configuration = null)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
             this.pipeline = pipeline;
             this.configuration = configuration ?? new KinectFaceDetectorConfiguration();
             this.kinectSensor = kinectSensor;
@@ -121,6 +120,23 @@ namespace Microsoft.Psi.Kinect.Face
             }
         }
 
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(nameof(KinectFaceDetector));
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+        }
+
         /// <summary>
         /// Defines callback for handling when a face frame arrives from the kinect sensor
         /// </summary>
@@ -163,17 +179,6 @@ namespace Microsoft.Psi.Kinect.Face
             }
         }
 
-        /// <summary>
-        /// Called by the pipeline when KinectSensor is activated in the pipeline
-        /// </summary>
-        private void OnPipelineStart()
-        {
-            if (this.disposed)
-            {
-                throw new ObjectDisposedException(nameof(KinectFaceDetector));
-            }
-        }
-
         private Dictionary<TKey, TVal> CloneDictionary<TKey, TVal>(IReadOnlyDictionary<TKey, TVal> dictionaryIn)
         {
             Dictionary<TKey, TVal> dictionary = new Dictionary<TKey, TVal>();
@@ -202,7 +207,7 @@ namespace Microsoft.Psi.Kinect.Face
             public KinectBodyReceiver(Pipeline pipeline, KinectFaceDetector faceDetector)
             {
                 this.faceDetector = faceDetector;
-                this.In = pipeline.CreateReceiver<List<KinectBody>>(this, this.ReceiveInput, nameof(this.In));
+                this.In = pipeline.CreateReceiver<List<KinectBody>>(faceDetector, this.ReceiveInput, nameof(this.In));
             }
 
             /// <summary>

@@ -17,12 +17,11 @@ namespace Microsoft.Psi.Data
     /// or can be a network protocol for cross-machine communication.
     /// Instances of this component can be created using <see cref="Store.Create(Pipeline, string, string, bool, Serialization.KnownSerializers)"/>.
     /// </summary>
-    public sealed class Exporter : IDisposable
+    public sealed class Exporter : Subpipeline, IDisposable
     {
         private readonly StoreWriter writer;
         private readonly Merger<Message<BufferReader>, string> merger;
         private readonly Pipeline pipeline;
-        private readonly Receiver<Message<BufferReader>> writerInput;
         private readonly ManualResetEvent throttle = new ManualResetEvent(true);
         private KnownSerializers serializers;
 
@@ -38,6 +37,7 @@ namespace Microsoft.Psi.Data
         /// The known serializer set can be accessed and modified afterwards via the <see cref="Serializers"/> property.
         /// </param>
         internal Exporter(Pipeline pipeline, string name, string path, bool createSubdirectory = true, KnownSerializers serializers = null)
+            : base(pipeline)
         {
             this.pipeline = pipeline;
             this.serializers = serializers ?? new KnownSerializers();
@@ -53,9 +53,11 @@ namespace Microsoft.Psi.Data
                 this.writer.WriteToCatalog(schema);
             }
 
-            this.merger = new Merger<Message<BufferReader>, string>(pipeline);
-            this.writerInput = pipeline.CreateReceiver<Message<BufferReader>>(this, (m, e) => this.writer.Write(m.Data, m.Envelope), nameof(this.writerInput));
-            this.merger.Select(this.ThrottledMessages).PipeTo(this.writerInput, DeliveryPolicy.Unlimited);
+            this.merger = new Merger<Message<BufferReader>, string>(pipeline, (_, m) =>
+            {
+                this.Throttle.WaitOne();
+                this.writer.Write(m.Data.Data, m.Data.Envelope);
+            });
         }
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Gets the name of the store being written to
         /// </summary>
-        public string Name => this.writer.Name;
+        public new string Name => this.writer.Name;
 
         /// <summary>
         /// Gets the path to the store being written to if the store is persisted to disk, or null if the store is volatile.
@@ -108,9 +110,13 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Closes the store.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
-            this.writer.Dispose();
+            base.Dispose();
+            if (this.writer != null)
+            {
+                this.writer.Dispose();
+            }
         }
 
         /// <summary>
@@ -141,8 +147,8 @@ namespace Microsoft.Psi.Data
 
             // hook up the serializer
             var serializer = new SerializerComponent<T>(this.pipeline, this.serializers);
-            serializer.PipeTo(mergeInput, DeliveryPolicy.Unlimited);
-            source.PipeTo(serializer, deliveryPolicy);
+            serializer.PipeTo(mergeInput, true, DeliveryPolicy.Unlimited); // allows connections in running pipelines
+            source.PipeTo(serializer, true, deliveryPolicy);
         }
 
         /// <summary>
@@ -234,13 +240,7 @@ namespace Microsoft.Psi.Data
         {
             var mergeInput = this.merger.Add(meta.Name); // this checks for duplicates
             this.writer.OpenStream(meta);
-            Operators.PipeTo(source, mergeInput, deliveryPolicy);
-        }
-
-        private Message<BufferReader> ThrottledMessages(ValueTuple<string, Message<Message<BufferReader>>> messages)
-        {
-            this.Throttle.WaitOne();
-            return messages.Item2.Data;
+            Operators.PipeTo(source, mergeInput, true, deliveryPolicy);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Media.Imaging;
     using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.PsiStudio.Common;
-    using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 

@@ -4,26 +4,31 @@
 namespace Microsoft.Psi.Visualization.Navigation
 {
     using System;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
-    using Microsoft.Psi.Visualization.Server;
+    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Represents a time range used by the navigator.
     /// </summary>
-    [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [Guid(Guids.RemoteNavigatorRangeCLSIDString)]
-    [ComVisible(false)]
-    public class NavigatorRange : ReferenceCountedObject, IRemoteNavigatorRange
+    public class NavigatorRange : ObservableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigatorRange"/> class.
         /// </summary>
         public NavigatorRange()
+            : this(DateTime.MinValue, DateTime.MaxValue)
         {
-            this.StartTime = DateTime.MinValue;
-            this.EndTime = DateTime.MaxValue;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NavigatorRange"/> class.
+        /// </summary>
+        /// <param name="startTime">The range's start time</param>
+        /// <param name="endTime">The range's end time</param>
+        public NavigatorRange(DateTime startTime, DateTime endTime)
+        {
+            this.StartTime = startTime;
+            this.EndTime = endTime;
         }
 
         /// <summary>
@@ -31,10 +36,14 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         public event NavigatorTimeRangeChangedHandler RangeChanged;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the range duration.
+        /// </summary>
         public TimeSpan Duration => this.EndTime - this.StartTime;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the range end time.
+        /// </summary>
         [DataMember]
         public DateTime EndTime { get; private set; }
 
@@ -43,7 +52,9 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         public bool IsFinite => (this.StartTime != DateTime.MinValue) && (this.EndTime != DateTime.MinValue);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the range start time.
+        /// </summary>
         [DataMember]
         public DateTime StartTime { get; private set; }
 
@@ -56,7 +67,11 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.SetRange(this.StartTime + timespan, this.EndTime + timespan);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Sets the range.
+        /// </summary>
+        /// <param name="startTime">Start time of the range.</param>
+        /// <param name="endTime">End time of the range.</param>
         public void SetRange(DateTime startTime, DateTime endTime)
         {
             // Clamp the parameters if start >= endTime. Choose to set endTime to startTime + 1 tick.
@@ -78,7 +93,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                 this.RaisePropertyChanging(nameof(this.EndTime));
             }
 
-            if (this.Duration != originalEndTime - originalStartTime)
+            if (this.Duration != endTime - startTime)
             {
                 this.RaisePropertyChanging(nameof(this.Duration));
             }

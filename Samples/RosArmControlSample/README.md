@@ -515,25 +515,33 @@ private void OnPositionChanged(object sender, Tuple<float, float, float> positio
 }
 ```
 
-Finally, we'll make our component `IStartable` and `Connect()`/`Disconnect()` the arm as well as register/unregister the event handler upon `Start()`/`Stop()`:
-In fact, it is _very_ important to ensure that nothing is `Post`ed when a component is not running (before `Start` or after `Stop`).
+Finally, we'll make our component an `ISourceComponent` and `Connect()`/`Disconnect()` the arm in the interface's `Start()`/`Stop()` methods.
+
+Note the call to `notifyCompletionTime` at the beginning of `Start` which informs the pipeline that this component is an infinite source, in the sense that it does not have the notion of a pre-determined completion time.
+
+`Start` is called by the pipeline to start the component while `Stop` is called when the pipeline is shutting down. It is _very_ important to ensure that nothing is `Post`ed when a component is not running (before `Start` or after `Stop`).
 
 ```C#
-class UArmComponent : IStartable
+public class UArmComponent : ISourceComponent
 {
     ...
 
-    public void Start(Action onCompleted, ReplayDescriptor descriptor)
+    public void Start(Action<DateTime> notifyCompletionTime)
     {
+        // notify that this is an infinite source component
+        notifyCompletionTime(DateTime.MaxValue);
+
         this.arm.Connect();
-        this.arm.PositionChanged += OnPositionChanged;
+        this.arm.PositionChanged += this.OnPositionChanged;
     }
 
     public void Stop()
     {
         this.arm.Disconnect();
-        this.arm.PositionChanged -= OnPositionChanged;
+        this.arm.PositionChanged -= this.OnPositionChanged;
     }
+
+    ...
 }
 ```
 

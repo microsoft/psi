@@ -107,12 +107,12 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Indicates whether the specified store is valid.
+        /// Indicates whether all streams in a store have been marked as "closed".
         /// </summary>
         /// <param name="name">The name of the store to check.</param>
         /// <param name="path">The path of the store to check.</param>
-        /// <returns>Returns true if the store is valid.</returns>
-        public static bool IsValid(string name, string path)
+        /// <returns>Returns true if all streams in the store are marked as closed.</returns>
+        public static bool IsClosed(string name, string path)
         {
             bool allStreamsClosed = false;
             using (var p = Pipeline.Create())

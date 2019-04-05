@@ -180,6 +180,16 @@ namespace Microsoft.Psi
             this.AverageMessageSize = (int)((((long)this.AverageMessageSize * (this.MessageCount - 1)) + size) / this.MessageCount);
         }
 
+        /// <inheritdoc />
+        public void Update(TimeInterval messagesTimeInterval, TimeInterval messagesOriginatingTimeInterval)
+        {
+            this.FirstMessageTime = messagesTimeInterval.Left;
+            this.LastMessageTime = messagesTimeInterval.Right;
+
+            this.FirstMessageOriginatingTime = messagesOriginatingTimeInterval.Left;
+            this.LastMessageOriginatingTime = messagesOriginatingTimeInterval.Right;
+        }
+
         // custom deserializer with no dependency on the Serializer subsystem
         // order of fields is important for backwards compat and must be the same as the order in Serialize, don't change!
         internal new void Deserialize(BufferReader metadataBuffer)

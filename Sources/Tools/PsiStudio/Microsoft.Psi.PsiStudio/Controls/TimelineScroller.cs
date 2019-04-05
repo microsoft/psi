@@ -39,18 +39,17 @@ namespace Microsoft.Psi.Visualization.Controls
         /// <inheritdoc />
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            // Only move the cursor if in playback mode and not currently playing - this avoids having the a battle between the live cursor and the mouse
-            if (this.Navigator.NavigationMode == NavigationMode.Playback && !this.Navigator.IsPlaying)
+            // Only move the cursor if we're currently paused
+            if (this.Navigator.CursorMode == CursorMode.Manual)
             {
                 DateTime time = this.GetTimeAtMousePointer(e);
                 DateTime? snappedTime = null;
 
                 // If we're currently to snapping the cursor to some Visualization Object's messages, then
                 // find the timestamp of the message that's temporally closest to the mouse pointer.
-                PlotVisualizationObject snapToVisualizationObject = PsiStudioContext.Instance.VisualizationContainer.SnapToVisualizationObject as PlotVisualizationObject;
-                if (snapToVisualizationObject != null)
+                if (PsiStudioContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject streamVisualizationObject)
                 {
-                    snappedTime = snapToVisualizationObject.GetTimeOfNearestMessage(time, snapToVisualizationObject.SummaryData?.Count ?? 0, (idx) => snapToVisualizationObject.SummaryData[idx].OriginatingTime);
+                    snappedTime = streamVisualizationObject.GetSnappedTime(time);
                 }
 
                 if (snappedTime.HasValue)

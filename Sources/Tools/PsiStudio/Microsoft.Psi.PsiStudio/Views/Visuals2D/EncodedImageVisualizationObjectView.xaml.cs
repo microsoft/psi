@@ -77,7 +77,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                         bitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
 
                         // we dispose the new Shared object here because UpdateImage increments its ref count
-                        using (var sharedImage = new Shared<Imaging.Image>(Imaging.Image.FromManagedImage(bitmap), null))
+                        using (var sharedImage = Shared.Create(Imaging.Image.FromManagedImage(bitmap)))
                         {
                             this.DisplayImage.UpdateImage(sharedImage);
                         }
@@ -90,7 +90,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 else
                 {
                     // we dispose the new Shared object here because UpdateImage increments its ref count
-                    using (var sharedImage = new Shared<Imaging.Image>(psiImage, null))
+                    using (var sharedImage = Shared.Create(psiImage))
                     {
                         this.DisplayImage.UpdateImage(sharedImage);
                     }

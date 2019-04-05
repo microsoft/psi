@@ -13,17 +13,18 @@ namespace MultiModalSpeechDetection
     {
         // This field is required to run the sample and must be a valid key which may
         // be obtained by signing up at https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-api.
-        private static string bingSubscriptionKey = string.Empty;
+        private static string azureSubscriptionKey = string.Empty;
+        private static string azureRegion = string.Empty; // the region to which the subscription is associated (e.g. "westus")
 
         /// <summary>
-        /// Define an operator that uses the Bing Speech Recognizer to translate from audio to text
+        /// Define an operator that uses the Azure Speech Recognizer to translate from audio to text
         /// </summary>
         /// <param name="audio">Our audio stream</param>
         /// <param name="speechDetector">A stream that indicates whether the user is speaking</param>
         /// <returns>A new producer with the translated speech and time stamp</returns>
         public static IProducer<(string, TimeSpan)> SpeechToText(this IProducer<AudioBuffer> audio, IProducer<bool> speechDetector)
         {
-            var speechRecognizer = new BingSpeechRecognizer(audio.Out.Pipeline, new BingSpeechRecognizerConfiguration() { SubscriptionKey = bingSubscriptionKey });
+            var speechRecognizer = new AzureSpeechRecognizer(audio.Out.Pipeline, new AzureSpeechRecognizerConfiguration() { SubscriptionKey = azureSubscriptionKey, Region = azureRegion });
             audio.Join(speechDetector).PipeTo(speechRecognizer);
             return speechRecognizer.Where(r => r.IsFinal).Select(r => (r.Text, r.Duration.Value));
         }

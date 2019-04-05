@@ -134,6 +134,12 @@ namespace Microsoft.Psi.Data.Json
             {
                 this.reader.Read(out JToken data);
                 this.emitters[env.SourceId].Item2(data, env.OriginatingTime);
+
+                if (env.OriginatingTime <= previous)
+                {
+                    return previous + TimeSpan.FromTicks(1);
+                }
+
                 return env.OriginatingTime;
             }
 

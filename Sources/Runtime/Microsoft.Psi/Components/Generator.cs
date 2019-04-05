@@ -22,91 +22,99 @@ namespace Microsoft.Psi.Components
     /// The following example shows how to implement a multi-stream generator:
     /// /include ..\..\Test.Psi\GeneratorSample.cs
     /// </remarks>
-    public abstract class Generator : IFiniteSourceComponent
+    public abstract class Generator : ISourceComponent
     {
         private readonly Receiver<int> loopBackIn;
         private readonly Emitter<int> loopBackOut;
         private readonly Pipeline pipeline;
+        private readonly bool isInfiniteSource;
         private bool stopped;
-        private Action onCompleted;
-        private DateTime lastMessageTime = default(DateTime);
+        private Action<DateTime> notifyCompletionTime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
-        public Generator(Pipeline pipeline)
+        /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
+        /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
+        public Generator(Pipeline pipeline, bool isInfiniteSource = false)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.loopBackOut = pipeline.CreateEmitter<int>(this, nameof(this.loopBackOut));
             this.loopBackIn = pipeline.CreateReceiver<int>(this, this.Next, nameof(this.loopBackIn));
             this.loopBackOut.PipeTo(this.loopBackIn);
             this.pipeline = pipeline;
+            this.isInfiniteSource = isInfiniteSource;
         }
 
         /// <inheritdoc />
-        public void Initialize(Action onCompleted)
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.onCompleted = onCompleted;
+            this.notifyCompletionTime = notifyCompletionTime;
+            if (this.isInfiniteSource)
+            {
+                this.notifyCompletionTime(DateTime.MaxValue);
+            }
+
+            var firstEnvelope = default(Envelope);
+
+            if (this.pipeline.ReplayDescriptor.Start == DateTime.MinValue)
+            {
+                firstEnvelope.OriginatingTime = this.pipeline.GetCurrentTime();
+            }
+            else
+            {
+                firstEnvelope.OriginatingTime = this.pipeline.ReplayDescriptor.Start;
+            }
+
+            this.Next(0, firstEnvelope);
+        }
+
+        /// <summary>
+        /// Stop this component.
+        /// </summary>
+        public void Stop()
+        {
+            this.stopped = true;
         }
 
         /// <summary>
         /// Function that gets called to produce more data once the pipeline is ready to consume it.
         /// Override to post data to the appropriate stream.
         /// </summary>
-        /// <param name="previous">The timestamp provided by the last invocation. Provided for reference.</param>
+        /// <param name="previous">The previously returned time, which is also the originating time of the message
+        /// that triggered the current call to GenerateNext.</param>
         /// <returns>
-        /// The timestamp (originating time) of the last message posted.
+        /// The timestamp (originating time) of the next message to be posted back to LoopBackIn.
         /// The next call will occur only after this time (based on the pipeline clock).
-        /// If the data being published doesn't come with a timestamp, use pipeline.GetCurrentTime().
         /// </returns>
         protected abstract DateTime GenerateNext(DateTime previous);
 
-        /// <summary>
-        /// Stop this component.
-        /// </summary>
-        protected void Stop()
-        {
-            this.stopped = true;
-        }
-
-        private void OnPipelineStop()
-        {
-            this.Stop();
-        }
-
-        private void OnPipelineStart()
-        {
-            this.Next(0, default(Envelope));
-        }
-
-        private void Next(int last, Envelope envelope)
+        private void Next(int counter, Envelope envelope)
         {
             if (this.stopped)
             {
-                this.onCompleted();
+                this.notifyCompletionTime(envelope.OriginatingTime);
                 return;
             }
 
             var nextMessageTime = this.GenerateNext(envelope.OriginatingTime);
+
+            // Getting MaxValue for the next message is a signal to stop
             if (nextMessageTime == DateTime.MaxValue)
             {
                 this.stopped = true;
-                this.onCompleted();
+                this.notifyCompletionTime(envelope.OriginatingTime);
                 return;
             }
 
-            if (nextMessageTime > this.lastMessageTime)
+            // Check if the times coming out of GenerateNext are not strictly increasing
+            // (but only check once we've gone through this method at least once)
+            if ((counter > 0) && (nextMessageTime <= envelope.OriginatingTime))
             {
-                this.lastMessageTime = nextMessageTime;
-            }
-            else
-            {
-                this.lastMessageTime = this.lastMessageTime.AddTicks(1); // ensure strictly increasing
+                throw new InvalidOperationException("Generator is creating timestamps out of order. The times returned by GenerateNext are required to be strictly increasing.");
             }
 
-            this.loopBackOut.Post(last + 1, this.lastMessageTime);
+            this.loopBackOut.Post(counter + 1, nextMessageTime);
         }
     }
 }

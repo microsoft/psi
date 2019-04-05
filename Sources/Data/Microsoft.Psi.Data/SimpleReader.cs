@@ -21,6 +21,7 @@ namespace Microsoft.Psi.Data
     public class SimpleReader : ISimpleReader, IDisposable
     {
         private static readonly HashSet<int> OpenedStreamIds = new HashSet<int>();
+        private readonly Dictionary<int, List<Delegate>> targets = new Dictionary<int, List<Delegate>>();
         private readonly Dictionary<int, Action<BufferReader, Envelope>> outputs = new Dictionary<int, Action<BufferReader, Envelope>>();
         private readonly Dictionary<int, Action<IndexEntry, Envelope>> indexOutputs = new Dictionary<int, Action<IndexEntry, Envelope>>();
         private StoreReader reader;
@@ -175,6 +176,7 @@ namespace Microsoft.Psi.Data
         {
             this.indexOutputs.Clear();
             this.outputs.Clear();
+            this.targets.Clear();
             this.reader.CloseAllStreams();
         }
 
@@ -229,8 +231,31 @@ namespace Microsoft.Psi.Data
         private void OpenStream<T>(PsiStreamMetadata meta, Action<T, Envelope> target, Func<T> allocator = null)
         {
             OpenedStreamIds.Add(meta.Id);
+
+            // Get the deserialization handler for this stream type
             var handler = this.serializers.GetHandler<T>();
-            this.outputs[meta.Id] = (br, e) => target(this.Deserialize<T>(handler, br, (allocator == null) ? default(T) : allocator()), e);
+
+            // If there's no list of targets for this stream, create it now
+            if (!this.targets.ContainsKey(meta.Id))
+            {
+                this.targets[meta.Id] = new List<Delegate>();
+            }
+
+            // Add the target to the list to call when this stream has new data
+            this.targets[meta.Id].Add(target);
+
+            // Update the code to execute when this stream receives new data
+            this.outputs[meta.Id] = (br, e) =>
+            {
+                // Deserialize the data
+                var data = this.Deserialize<T>(handler, br, (allocator == null) ? default(T) : allocator());
+
+                // Call each of the targets
+                foreach (Delegate action in this.targets[meta.Id])
+                {
+                    (action as Action<T, Envelope>)(data, e);
+                }
+            };
         }
 
         private T Deserialize<T>(SerializationHandler<T> handler, BufferReader br, T objectToReuse)

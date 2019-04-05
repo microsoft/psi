@@ -47,6 +47,21 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <inheritdoc />
+        protected override void OnCursorModeChanged(object sender, CursorModeChangedEventArgs cursorModeChangedEventArgs)
+        {
+            // If we changed from or to live mode, and we're currently bound to a datasource, then reopen the stream in the correct mode
+            if (this.IsBound && cursorModeChangedEventArgs.OriginalValue != cursorModeChangedEventArgs.NewValue)
+            {
+                if ((cursorModeChangedEventArgs.OriginalValue == CursorMode.Live) || (cursorModeChangedEventArgs.NewValue == CursorMode.Live))
+                {
+                    this.RefreshData();
+                }
+            }
+
+            base.OnCursorModeChanged(sender, cursorModeChangedEventArgs);
+        }
+
         /// <summary>
         /// Invoked when the <see cref="InstantVisualizationObject{TData, TConfig}.Indices"/> property changes.
         /// </summary>
@@ -73,11 +88,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="e">Data for the event.</param>
         protected virtual void OnIndiciesCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (this.Navigator.NavigationMode == NavigationMode.Live)
-            {
-                throw new NotSupportedException("Live mode should not be using indicies.");
-            }
-
             // see if we are still active
             if (this.Container == null)
             {
@@ -102,62 +112,72 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        protected override void OnCloseStream()
+        protected override void OnStreamBound()
         {
-            base.OnCloseStream();
-            this.Indices = null;
+            base.OnStreamBound();
+            this.RefreshData();
         }
 
         /// <inheritdoc />
-        protected override void OnOpenStream()
+        protected override void OnStreamUnbound()
         {
-            if (this.Navigator.NavigationMode == NavigationMode.Live)
+            this.Indices = null;
+            base.OnStreamUnbound();
+        }
+
+        /// <inheritdoc />
+        protected override void SetCurrentValue(DateTime currentTime)
+        {
+            // Check that we're actually bound to a store
+            if (this.Configuration.StreamBinding.IsBound)
+            {
+                if (this.Navigator.CursorMode == CursorMode.Live)
+                {
+                    TimeInterval interval;
+                    if (this.Navigator.Cursor == DateTime.MinValue)
+                    {
+                        interval = new TimeInterval(DateTime.MinValue, DateTime.MinValue + TimeSpan.FromSeconds(1));
+                    }
+                    else
+                    {
+                        interval = this.Navigator.Cursor + this.CursorEpsilon;
+                    }
+
+                    if (this.CurrentValue.HasValue && !interval.PointIsWithin(this.CurrentValue.Value.OriginatingTime))
+                    {
+                        this.CurrentValue = null;
+                    }
+                }
+                else
+                {
+                    int index = this.GetIndexForTime(currentTime, this.Indices?.Count ?? 0, (idx) => this.Indices[idx].OriginatingTime);
+                    if (index != -1)
+                    {
+                        var indexEntry = this.Indices[index];
+                        TData data = DataManager.Instance.Read<TData>(this.Configuration.StreamBinding, indexEntry);
+                        this.CurrentValue = new Message<TData>(data, indexEntry.OriginatingTime, indexEntry.Time, 0, 0);
+                        if (data is IDisposable)
+                        {
+                            (data as IDisposable).Dispose();
+                        }
+                    }
+                    else
+                    {
+                        base.SetCurrentValue(currentTime);
+                    }
+                }
+            }
+        }
+
+        private void RefreshData()
+        {
+            if (this.Navigator.CursorMode == CursorMode.Live)
             {
                 this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, 1);
             }
             else
             {
                 this.Indices = DataManager.Instance.ReadIndex<TData>(this.Configuration.StreamBinding, this.Navigator.DataRange.StartTime, this.Navigator.DataRange.EndTime);
-            }
-        }
-
-        /// <inheritdoc />
-        protected override void SetCurrentValue(DateTime currentTime)
-        {
-            if (this.Navigator.NavigationMode == NavigationMode.Playback)
-            {
-                int index = this.GetIndexForTime(currentTime, this.Indices?.Count ?? 0, (idx) => this.Indices[idx].OriginatingTime);
-                if (index != -1)
-                {
-                    var indexEntry = this.Indices[index];
-                    TData data = DataManager.Instance.Read<TData>(this.Configuration.StreamBinding, indexEntry);
-                    this.CurrentValue = new Message<TData>(data, indexEntry.OriginatingTime, indexEntry.Time, 0, 0);
-                    if (data is IDisposable)
-                    {
-                        (data as IDisposable).Dispose();
-                    }
-                }
-                else
-                {
-                    base.SetCurrentValue(currentTime);
-                }
-            }
-            else if (this.Navigator.NavigationMode == NavigationMode.Live)
-            {
-                TimeInterval interval;
-                if (this.Navigator.Cursor == DateTime.MinValue)
-                {
-                    interval = new TimeInterval(DateTime.MinValue, DateTime.MinValue + TimeSpan.FromSeconds(1));
-                }
-                else
-                {
-                    interval = this.Navigator.Cursor + this.CursorEpsilon;
-                }
-
-                if (this.CurrentValue.HasValue && !interval.PointIsWithin(this.CurrentValue.Value.OriginatingTime))
-                {
-                    this.CurrentValue = null;
-                }
             }
         }
 

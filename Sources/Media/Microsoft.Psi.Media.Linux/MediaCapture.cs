@@ -16,8 +16,6 @@ namespace Microsoft.Psi.Media
     /// </summary>
     public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable
     {
-        private static readonly SharedPool<byte[]> RawPool = new SharedPool<byte[]>(0);
-
         private readonly Pipeline pipeline;
         private readonly MediaCaptureConfiguration configuration;
 
@@ -73,8 +71,6 @@ namespace Microsoft.Psi.Media
 
         private MediaCapture(Pipeline pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Out));
             this.Raw = pipeline.CreateEmitter<Shared<byte[]>>(this, nameof(this.Raw));
@@ -107,11 +103,12 @@ namespace Microsoft.Psi.Media
             }
         }
 
-        /// <summary>
-        /// Called once all the subscriptions are established.
-        /// </summary>
-        private unsafe void OnPipelineStart()
+        /// <inheritdoc/>
+        public unsafe void Start(Action<DateTime> notifyCompletionTime)
         {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
             this.camera = new MediaCaptureInternal(this.configuration.DeviceId);
             this.camera.Open();
             var isFormatSupported = false;
@@ -142,11 +139,10 @@ namespace Microsoft.Psi.Media
                 if (this.Raw.HasSubscribers)
                 {
                     var len = frame.Length;
-                    using (Shared<byte[]> shared = RawPool.GetOrCreate(() => new byte[len]))
+                    using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
                     {
-                        var buffer = shared.Resource.Length >= len ? shared : new Shared<byte[]>(new byte[len], shared.Recycler);
-                        Marshal.Copy(frame.Start, buffer.Resource, 0, len);
-                        this.Raw.Post(buffer, originatingTime);
+                        Marshal.Copy(frame.Start, shared.Resource, 0, len);
+                        this.Raw.Post(shared, originatingTime);
                     }
                 }
 
@@ -163,30 +159,42 @@ namespace Microsoft.Psi.Media
                         {
                             // convert YUYV -> BGR24 (see https://msdn.microsoft.com/en-us/library/ms893078.aspx)
                             var len = (int)(frame.Length * 1.5);
-                            using (Shared<byte[]> shared = RawPool.GetOrCreate(() => new byte[len]))
+                            using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
                             {
-                                var buffer = shared.Resource.Length >= len ? shared : new Shared<byte[]>(new byte[len], shared.Recycler);
-                                var bytes = buffer.Resource;
+                                var bytes = shared.Resource;
                                 var pY = (byte*)frame.Start.ToPointer();
                                 var pU = pY + 1;
-                                var pV = pY + 2;
+                                var pV = pY + 3;
                                 for (var i = 0; i < len;)
                                 {
-                                    var y = (*pY - 16) * 298;
-                                    var u = *pU - 128;
-                                    var v = *pV - 128;
-                                    var b = (y + (516 * u) + 128) >> 8;
-                                    var g = (y - (100 * u) - (208 * v) + 128) >> 8;
-                                    var r = (y + (409 * v) + 128) >> 8;
-                                    bytes[i++] = (byte)(b < 0 ? 0 : b > 255 ? 255 : b);
-                                    bytes[i++] = (byte)(g < 0 ? 0 : g > 255 ? 255 : g);
-                                    bytes[i++] = (byte)(r < 0 ? 0 : r > 255 ? 255 : r);
+                                    int y = (*pY - 16) * 298;
+                                    int u = *pU - 128;
+                                    int v = *pV - 128;
+                                    int r = (y + (409 * v) + 128) >> 8;
+                                    int g = (y - (100 * u) - (208 * v) + 128) >> 8;
+                                    int b = (y + (516 * u) + 128) >> 8;
+
+                                    bytes[i++] = (byte)((r < 0) ? 0 : ((r > 255) ? 255 : r));
+                                    bytes[i++] = (byte)((g < 0) ? 0 : ((g > 255) ? 255 : g));
+                                    bytes[i++] = (byte)((b < 0) ? 0 : ((b > 255) ? 255 : b));
+
+                                    pY += 2;
+
+                                    y = (*pY - 16) * 298;
+                                    r = (y + (409 * v) + 128) >> 8;
+                                    g = (y - (100 * u) - (208 * v) + 128) >> 8;
+                                    b = (y + (516 * u) + 128) >> 8;
+                                    bytes[i++] = (byte)((r < 0) ? 0 : ((r > 255) ? 255 : r));
+                                    bytes[i++] = (byte)((g < 0) ? 0 : ((g > 255) ? 255 : g));
+                                    bytes[i++] = (byte)((b < 0) ? 0 : ((b > 255) ? 255 : b));
+
                                     pY += 2;
                                     pU += 4;
                                     pV += 4;
                                 }
 
-                                this.Raw.Post(buffer, originatingTime);
+                                sharedImage.Resource.CopyFrom(bytes);
+                                this.Out.Post(sharedImage, originatingTime);
                             }
                         }
                     }
@@ -202,10 +210,8 @@ namespace Microsoft.Psi.Media
             this.camera.StreamBuffers();
         }
 
-        /// <summary>
-        /// Called by the pipeline when media capture should be stopped
-        /// </summary>
-        private void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             if (this.camera != null)
             {

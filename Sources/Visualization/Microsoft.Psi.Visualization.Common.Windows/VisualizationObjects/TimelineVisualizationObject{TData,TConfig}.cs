@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Windows.Media;
     using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
@@ -58,40 +59,79 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets the value to display in the legend.  By default the current value is returned
+        /// Gets the value of the color to use when displaying in the legend. By default, white.
+        /// </summary>
+        public virtual Color LegendColor => Colors.White;
+
+        /// <summary>
+        /// Gets the value to display in the legend. By default the current value is returned
         /// </summary>
         [IgnoreDataMember]
         public virtual string LegendValue => this.CurrentValue.HasValue ? this.CurrentValue.Value.Data.ToString() : string.Empty;
 
-        /// <inheritdoc />
-        protected override void OnCloseStream()
+        /// <summary>
+        /// Gets a value indicating whether the visualization object is using summarization.
+        /// </summary>
+        protected bool IsUsingSummarization => this.Configuration.StreamBinding.SummarizerType != null;
+
+        /// <inheritdoc/>
+        public override DateTime? GetSnappedTime(DateTime time)
         {
-            ((NavigatorRange)this.Navigator.ViewRange).RangeChanged -= this.OnViewRangeChanged;
-            base.OnCloseStream();
+            if (this.IsUsingSummarization)
+            {
+                return this.GetTimeOfNearestMessage(time, this.SummaryData?.Count ?? 0, (idx) => this.SummaryData[idx].OriginatingTime);
+            }
+            else
+            {
+                return base.GetSnappedTime(time);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnCursorModeChanged(object sender, CursorModeChangedEventArgs cursorModeChangedEventArgs)
+        {
+            // If we changed from or to live mode, and we're currently bound to a datasource, then refresh the data or summaries
+            if (this.IsBound && cursorModeChangedEventArgs.OriginalValue != cursorModeChangedEventArgs.NewValue)
+            {
+                if ((cursorModeChangedEventArgs.OriginalValue == CursorMode.Live) || (cursorModeChangedEventArgs.NewValue == CursorMode.Live))
+                {
+                    this.RefreshData();
+                }
+            }
+
+            base.OnCursorModeChanged(sender, cursorModeChangedEventArgs);
         }
 
         /// <inheritdoc />
         protected override void OnConnect()
         {
             base.OnConnect();
-            this.Panel.PropertyChanged += this.ParentPanel_PropertyChanged;
+            this.Panel.PropertyChanged += this.OnPanelPropertyChanged;
         }
 
         /// <inheritdoc />
         protected override void OnDisconnect()
         {
             base.OnDisconnect();
-            this.Panel.PropertyChanged -= this.ParentPanel_PropertyChanged;
-            this.Navigator.ViewRange.RangeChanged -= this.OnViewRangeChanged;
+            this.Panel.PropertyChanged -= this.OnPanelPropertyChanged;
         }
 
         /// <inheritdoc />
-        protected override void OnOpenStream()
+        protected override void OnStreamBound()
         {
+            base.OnStreamBound();
             this.Navigator.ViewRange.RangeChanged += this.OnViewRangeChanged;
             this.OnViewRangeChanged(
                 this.Navigator.ViewRange,
                 new NavigatorTimeRangeChangedEventArgs(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime, this.Navigator.ViewRange.EndTime));
+        }
+
+        /// <inheritdoc />
+        protected override void OnStreamUnbound()
+        {
+            base.OnStreamUnbound();
+            this.Navigator.ViewRange.RangeChanged -= this.OnViewRangeChanged;
+            this.SummaryData = null;
         }
 
         /// <summary>
@@ -154,13 +194,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return;
             }
 
-            if (this.Navigator.NavigationMode == NavigationMode.Live)
+            if (this.Navigator.IsCursorModePlayback)
             {
-                var last = this.SummaryData.LastOrDefault();
+                IntervalData<TData> last = this.SummaryData.LastOrDefault();
                 if (last != default(IntervalData<TData>))
                 {
                     this.CurrentValue = Message.Create(last.Value, last.OriginatingTime, last.EndTime, 0, 0);
-                    this.Navigator.UpdateLiveExtents(last.OriginatingTime);
                 }
             }
         }
@@ -197,13 +236,39 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void OnViewRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
         {
-            if (this.Navigator.NavigationMode == NavigationMode.Live)
+            this.RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            // Check that we're actually bound to a store
+            if (this.Configuration.StreamBinding.IsBound)
             {
-                if (this.viewDuration != this.Navigator.ViewRange.Duration)
+                if (this.Navigator.CursorMode == CursorMode.Live)
+                {
+                    if (this.viewDuration != this.Navigator.ViewRange.Duration)
+                    {
+                        this.viewDuration = this.Navigator.ViewRange.Duration;
+
+                        if (this.IsUsingSummarization)
+                        {
+                            // If performing summarization, recompute the sampling tick interval (i.e. summarization interval)
+                            // whenever the view range duration has changed.
+                            this.Configuration.SamplingTicks = (long)(this.viewDuration.Ticks / this.Panel.Width);
+                            this.RefreshSummaryData();
+                        }
+                        else
+                        {
+                            // Not summarizing, so read data directly from the stream
+                            this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, last => last - this.viewDuration);
+                        }
+                    }
+                }
+                else
                 {
                     this.viewDuration = this.Navigator.ViewRange.Duration;
 
-                    if (this.Configuration.StreamBinding.SummarizerType != null)
+                    if (this.IsUsingSummarization)
                     {
                         // If performing summarization, recompute the sampling tick interval (i.e. summarization interval)
                         // whenever the view range duration has changed.
@@ -212,31 +277,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     }
                     else
                     {
-                        // Not summarizing, so read data directly from the stream
-                        this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, last => last - this.viewDuration);
+                        // Not summarizing, so read data directly from the stream - note that end time is exclusive, so adding one tick to ensure any message at EndTime is included
+                        this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, this.Navigator.DataRange.StartTime, this.Navigator.DataRange.EndTime.AddTicks(1));
                     }
                 }
             }
             else
             {
-                this.viewDuration = this.Navigator.ViewRange.Duration;
-
-                if (this.Configuration.StreamBinding.SummarizerType != null)
-                {
-                    // If performing summarization, recompute the sampling tick interval (i.e. summarization interval)
-                    // whenever the view range duration has changed.
-                    this.Configuration.SamplingTicks = (long)(this.viewDuration.Ticks / this.Panel.Width);
-                    this.RefreshSummaryData();
-                }
-                else
-                {
-                    // Not summarizing, so read data directly from the stream - note that end time is exclusive, so adding one tick to ensure any message at EndTime is included
-                    this.Data = DataManager.Instance.ReadStream<TData>(this.Configuration.StreamBinding, this.Navigator.DataRange.StartTime, this.Navigator.DataRange.EndTime.AddTicks(1));
-                }
+                this.Data = null;
+                this.SummaryData = null;
+                this.RefreshSummaryData();
             }
         }
 
-        private void ParentPanel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.Panel.Width))
             {
@@ -250,30 +304,38 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void RefreshSummaryData()
         {
-            if (this.Navigator.NavigationMode == NavigationMode.Live)
+            // Check that we're actually bound to a store
+            if (this.Configuration.StreamBinding.IsBound)
             {
-                this.SummaryData = DataManager.Instance.ReadSummary<TData>(
-                   this.Configuration.StreamBinding,
-                   TimeSpan.FromTicks(this.Configuration.SamplingTicks),
-                   last => last - this.viewDuration);
+                if (this.Navigator.CursorMode == CursorMode.Live)
+                {
+                    this.SummaryData = DataManager.Instance.ReadSummary<TData>(
+                        this.Configuration.StreamBinding,
+                        TimeSpan.FromTicks(this.Configuration.SamplingTicks),
+                        last => last - this.viewDuration);
+                }
+                else
+                {
+                    var startTime = this.Navigator.ViewRange.StartTime;
+                    var endTime = this.Navigator.ViewRange.EndTime;
+
+                    // Attempt to read a little extra data outside the view range so that the end
+                    // points appear to connect to the next/previous values. This is flawed as we
+                    // are just guessing how much to extend the time interval by. What we really
+                    // need is for the DataManager to give us everything in the requested time
+                    // interval plus the next/previous data point just outside the interval.
+                    var extra = TimeSpan.FromMilliseconds(100);
+
+                    this.SummaryData = DataManager.Instance.ReadSummary<TData>(
+                        this.Configuration.StreamBinding,
+                        startTime > DateTime.MinValue + extra ? startTime - extra : startTime,
+                        endTime < DateTime.MaxValue - extra ? endTime + extra : endTime,
+                        TimeSpan.FromTicks(this.Configuration.SamplingTicks));
+                }
             }
             else
             {
-                var startTime = this.Navigator.ViewRange.StartTime;
-                var endTime = this.Navigator.ViewRange.EndTime;
-
-                // Attempt to read a little extra data outside the view range so that the end
-                // points appear to connect to the next/previous values. This is flawed as we
-                // are just guessing how much to extend the time interval by. What we really
-                // need is for the DataManager to give us everything in the requested time
-                // interval plus the next/previous data point just outside the interval.
-                var extra = TimeSpan.FromMilliseconds(100);
-
-                this.SummaryData = DataManager.Instance.ReadSummary<TData>(
-                    this.Configuration.StreamBinding,
-                    startTime > DateTime.MinValue + extra ? startTime - extra : startTime,
-                    endTime < DateTime.MaxValue - extra ? endTime + extra : endTime,
-                    TimeSpan.FromTicks(this.Configuration.SamplingTicks));
+                this.SummaryData = null;
             }
         }
 

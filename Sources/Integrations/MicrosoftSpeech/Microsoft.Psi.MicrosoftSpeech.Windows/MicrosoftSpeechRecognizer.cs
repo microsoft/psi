@@ -32,27 +32,27 @@ namespace Microsoft.Psi.MicrosoftSpeech
     /// position offset of the recognized audio as reported by the recognition engine to compute an estimate of the originating time. For
     /// partial hypotheses, we use the engine's current offset into the audio stream to estimate the originating time.
     /// </remarks>
-    public sealed class MicrosoftSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, IDisposable
+    public sealed class MicrosoftSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
     {
+        /// <summary>
+        /// Stream for buffering audio samples to send to the speech recognition engine.
+        /// </summary>
+        private readonly BufferedAudioStream inputAudioStream;
+
+        /// <summary>
+        /// The last originating time that was recorded for each output stream.
+        /// </summary>
+        private readonly Dictionary<IEmitter, DateTime> lastPostedOriginatingTimes;
+
         /// <summary>
         /// The Microsoft.Speech speech recognition engine.
         /// </summary>
         private SpeechRecognitionEngine speechRecognitionEngine;
 
         /// <summary>
-        /// Stream for buffering audio samples to send to the speech recognition engine.
-        /// </summary>
-        private BufferedAudioStream inputAudioStream;
-
-        /// <summary>
         /// The implied stream start time.
         /// </summary>
         private DateTime streamStartTime;
-
-        /// <summary>
-        /// The last originating time that was recorded for each output stream.
-        /// </summary>
-        private Dictionary<IEmitter, DateTime> lastPostedOriginatingTimes;
 
         /// <summary>
         /// Event to signal that the recognizer has been stopped.
@@ -67,8 +67,6 @@ namespace Microsoft.Psi.MicrosoftSpeech
         public MicrosoftSpeechRecognizer(Pipeline pipeline, MicrosoftSpeechRecognizerConfiguration configuration)
             : base(pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-
             this.Configuration = configuration;
 
             // create receiver of grammar updates
@@ -201,15 +199,6 @@ namespace Microsoft.Psi.MicrosoftSpeech
         private MicrosoftSpeechRecognizerConfiguration Configuration { get; }
 
         /// <summary>
-        /// Called once all the subscriptions are established.
-        /// </summary>
-        public void OnPipelineStart()
-        {
-            // start the speech recognition engine
-            this.speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-        }
-
-        /// <summary>
         /// Replace grammars with given.
         /// </summary>
         /// <param name="srgsXmlGrammars">A collection of XML-format speech grammars that conform to the SRGS 1.0 specification.</param>
@@ -252,28 +241,6 @@ namespace Microsoft.Psi.MicrosoftSpeech
         {
             if (this.speechRecognitionEngine != null)
             {
-                // Unregister handlers so they won't fire while disposing.
-                this.speechRecognitionEngine.SpeechDetected -= this.OnSpeechDetected;
-                this.speechRecognitionEngine.SpeechHypothesized -= this.OnSpeechHypothesized;
-                this.speechRecognitionEngine.SpeechRecognized -= this.OnSpeechRecognized;
-                this.speechRecognitionEngine.SpeechRecognitionRejected -= this.OnSpeechRecognitionRejected;
-                this.speechRecognitionEngine.AudioSignalProblemOccurred -= this.OnAudioSignalProblemOccurred;
-                this.speechRecognitionEngine.AudioStateChanged -= this.OnAudioStateChanged;
-                this.speechRecognitionEngine.RecognizeCompleted -= this.OnRecognizeCompleted;
-                this.speechRecognitionEngine.RecognizerUpdateReached -= this.OnRecognizerUpdateReached;
-                this.speechRecognitionEngine.AudioLevelUpdated -= this.OnAudioLevelUpdated;
-                this.speechRecognitionEngine.EmulateRecognizeCompleted -= this.OnEmulateRecognizeCompleted;
-                this.speechRecognitionEngine.LoadGrammarCompleted -= this.OnLoadGrammarCompleted;
-
-                // Close the audio stream first so that RecognizeAyncCancel
-                // will finalize the current recognition operation.
-                this.inputAudioStream.Close();
-
-                // Cancel any in-progress recognition and wait for completion
-                // (OnRecognizeCompleted) before disposing of recognition engine.
-                this.speechRecognitionEngine.RecognizeAsyncCancel();
-                this.recognizeCompleteManualReset.WaitOne(333);
-
                 // NOTE: The following Dispose() method will block execution of disposing the SpeechRecognitionEngine object until
                 // either all pending event handlers have returned or until 30 seconds have elapsed, whichever occurs first.
                 // Be aware that if you call Dispose() in an event handler, that this will create a circular wait for the full 30 seconds,
@@ -286,6 +253,42 @@ namespace Microsoft.Psi.MicrosoftSpeech
             // Free any other managed objects here.
             this.recognizeCompleteManualReset.Dispose();
             this.recognizeCompleteManualReset = null;
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
+            // start the speech recognition engine
+            this.speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+            // Unregister handlers so they won't fire while disposing.
+            this.speechRecognitionEngine.SpeechDetected -= this.OnSpeechDetected;
+            this.speechRecognitionEngine.SpeechHypothesized -= this.OnSpeechHypothesized;
+            this.speechRecognitionEngine.SpeechRecognized -= this.OnSpeechRecognized;
+            this.speechRecognitionEngine.SpeechRecognitionRejected -= this.OnSpeechRecognitionRejected;
+            this.speechRecognitionEngine.AudioSignalProblemOccurred -= this.OnAudioSignalProblemOccurred;
+            this.speechRecognitionEngine.AudioStateChanged -= this.OnAudioStateChanged;
+            this.speechRecognitionEngine.RecognizeCompleted -= this.OnRecognizeCompleted;
+            this.speechRecognitionEngine.RecognizerUpdateReached -= this.OnRecognizerUpdateReached;
+            this.speechRecognitionEngine.AudioLevelUpdated -= this.OnAudioLevelUpdated;
+            this.speechRecognitionEngine.EmulateRecognizeCompleted -= this.OnEmulateRecognizeCompleted;
+            this.speechRecognitionEngine.LoadGrammarCompleted -= this.OnLoadGrammarCompleted;
+
+            // Close the audio stream first so that RecognizeAyncCancel
+            // will finalize the current recognition operation.
+            this.inputAudioStream.Close();
+
+            // Cancel any in-progress recognition and wait for completion
+            // (OnRecognizeCompleted) before disposing of recognition engine.
+            this.speechRecognitionEngine.RecognizeAsyncCancel();
+            this.recognizeCompleteManualReset.WaitOne(333);
         }
 
         /// <summary>
@@ -312,15 +315,10 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// <returns>A new speech recognition engine object.</returns>
         private SpeechRecognitionEngine CreateSpeechRecognitionEngine()
         {
-            SpeechRecognitionEngine recognizer = new SpeechRecognitionEngine(new CultureInfo(this.Configuration.Language));
-            foreach (Psi.Speech.GrammarInfo grammarInfo in this.Configuration.Grammars)
-            {
-                Grammar grammar = new Grammar(grammarInfo.FileName);
-                grammar.Name = grammarInfo.Name;
-                recognizer.LoadGrammar(grammar);
-            }
+            // Create the speech recognition engine
+            var recognizer = MicrosoftSpeech.CreateSpeechRecognitionEngine(this.Configuration.Language, this.Configuration.Grammars);
 
-            // Event handlers for speech recognition events
+            // Attach the event handlers for speech recognition events
             recognizer.SpeechDetected += this.OnSpeechDetected;
             recognizer.SpeechHypothesized += this.OnSpeechHypothesized;
             recognizer.SpeechRecognized += this.OnSpeechRecognized;
@@ -397,7 +395,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
 
                 if (e.Result.Semantics != null)
                 {
-                    IntentData intents = this.BuildIntentData(e.Result.Semantics);
+                    var intents = MicrosoftSpeech.BuildIntentData(e.Result.Semantics);
                     this.PostWithOriginatingTimeConsistencyCheck(this.IntentData, intents, originatingTime);
                 }
             }
@@ -443,8 +441,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// <param name="e">Event args (`UserToken` expected to contain grammars)</param>
         private void OnRecognizerUpdateReached(object sender, RecognizerUpdateReachedEventArgs e)
         {
-            var grammars = e.UserToken as IEnumerable<Grammar>;
-            if (grammars != null)
+            if (e.UserToken is IEnumerable<Grammar> grammars)
             {
                 this.speechRecognitionEngine.UnloadAllGrammars();
                 foreach (var g in grammars)
@@ -503,13 +500,12 @@ namespace Microsoft.Psi.MicrosoftSpeech
         private void PostWithOriginatingTimeConsistencyCheck<T>(Emitter<T> stream, T data, DateTime originatingTime)
         {
             // Get the last posted originating time on this stream
-            DateTime lastPostedOriginatingTime;
-            this.lastPostedOriginatingTimes.TryGetValue(stream, out lastPostedOriginatingTime);
+            this.lastPostedOriginatingTimes.TryGetValue(stream, out DateTime lastPostedOriginatingTime);
 
             // Enforce monotonically increasing originating time
-            if (originatingTime < lastPostedOriginatingTime)
+            if (originatingTime <= lastPostedOriginatingTime)
             {
-                originatingTime = lastPostedOriginatingTime;
+                originatingTime = lastPostedOriginatingTime.AddTicks(1);
             }
 
             // Post the message and update the originating time for this stream
@@ -550,67 +546,6 @@ namespace Microsoft.Psi.MicrosoftSpeech
         private StreamingSpeechRecognitionResult BuildPartialSpeechRecognitionResult(RecognitionResult result)
         {
             return new StreamingSpeechRecognitionResult(false, result.Text, result.Confidence, null, null, result.Audio?.Duration);
-        }
-
-        /// <summary>
-        /// Method to construct the IntentData (intents and entities) from
-        /// a SemanticValue.
-        /// </summary>
-        /// <param name="semanticValue">The SemanticValue object.</param>
-        /// <returns>An IntentData object containing the intents and entities.</returns>
-        private IntentData BuildIntentData(SemanticValue semanticValue)
-        {
-            List<Intent> intentList = new List<Intent>();
-
-            // Consider top-level semantics to be intents.
-            foreach (var entry in semanticValue)
-            {
-                intentList.Add(new Intent()
-                {
-                    Value = entry.Key,
-                    Score = entry.Value.Confidence
-                });
-            }
-
-            List<Entity> entityList = this.ExtractEntities(semanticValue);
-
-            return new IntentData()
-            {
-                Intents = intentList.ToArray(),
-                Entities = entityList.ToArray()
-            };
-        }
-
-        /// <summary>
-        /// Method to extract all entities contained within a SemanticValue.
-        /// </summary>
-        /// <param name="semanticValue">The SemanticValue object.</param>
-        /// <returns>The list of extracted entities.</returns>
-        private List<Entity> ExtractEntities(SemanticValue semanticValue)
-        {
-            List<Entity> entityList = new List<Entity>();
-            foreach (var entry in semanticValue)
-            {
-                // We currently only consider leaf nodes (whose underlying
-                // value is of type string) as entities.
-                if (entry.Value.Value is string)
-                {
-                    // Extract the entity's type (key), value and confidence score.
-                    entityList.Add(new Entity()
-                    {
-                        Type = entry.Key,
-                        Value = (string)entry.Value.Value,
-                        Score = entry.Value.Confidence
-                    });
-                }
-                else
-                {
-                    // Keep looking for leaf nodes.
-                    entityList.AddRange(this.ExtractEntities(entry.Value));
-                }
-            }
-
-            return entityList;
         }
     }
 }

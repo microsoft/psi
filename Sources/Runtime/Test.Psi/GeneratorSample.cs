@@ -57,6 +57,11 @@ namespace Test.Psi
                 this.OutString.Post(parts[1], originatingTime);
             }
 
+            if (originatingTime <= previous)
+            {
+                return previous + TimeSpan.FromTicks(1);
+            }
+
             return originatingTime;
         }
     }

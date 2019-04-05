@@ -108,7 +108,12 @@ namespace Microsoft.Psi.Media
 
             if (flags == SourceReaderFlags.Endofstream)
             {
-                originatingTime = DateTime.MaxValue; // Used to indicated there is no more data
+                return DateTime.MaxValue; // Used to indicated there is no more data
+            }
+
+            if (originatingTime <= previous)
+            {
+                return previous + TimeSpan.FromTicks(1); // To enforce strictly increasing times for the generator
             }
 
             return originatingTime;

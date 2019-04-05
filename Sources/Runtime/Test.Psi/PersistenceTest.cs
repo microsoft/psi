@@ -71,6 +71,27 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void InfiniteFileTruncation()
+        {
+            const int extentSize = 10 * 1024;
+            using (var infFile = new InfiniteFileWriter(this.path, nameof(this.InfiniteFileTest), extentSize))
+            {
+                // write less data than would fill an extent
+                byte[] bytes = new byte[1024];
+                infFile.ReserveBlock(bytes.Length);
+                infFile.WriteToBlock(bytes);
+                infFile.CommitBlock();
+            }
+
+            // get the full pathname of the first (and only) extent file
+            string extentPath = Path.Combine(this.path, string.Format("{0}_{1:000000}.psi", nameof(this.InfiniteFileTest), 0));
+
+            // verify that the extent file has been truncated (to the nearest 4096 byte block)
+            Assert.AreEqual(4096, new FileInfo(extentPath).Length);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void InfiniteFileInMemory()
         {
             using (var infFile = new InfiniteFileWriter(nameof(this.InfiniteFileInMemory), 128, 0))
@@ -498,8 +519,8 @@ namespace Test.Psi
             }
         }
 
-        [TestMethod]
-        [TestCategory("Stress")]
+        //[TestMethod]
+        //[TestCategory("Stress")]
         public void SimultaneousWriteReadWithRelativePathStress()
         {
             for (int i = 0; i < 1000; i++)
@@ -717,7 +738,7 @@ namespace Test.Psi
             }
 
             // pipeline terminated normally so store should be valid
-            Assert.IsTrue(Store.IsValid(name, this.path));
+            Assert.IsTrue(Store.IsClosed(name, this.path));
 
             // now generate an invalid store 
             var p2 = Pipeline.Create("write2");
@@ -744,7 +765,7 @@ namespace Test.Psi
             catch
             {
                 // pipeline terminated abruptly so store should be in an invalid state now
-                Assert.IsFalse(Store.IsValid(name, this.path));
+                Assert.IsFalse(Store.IsClosed(name, this.path));
 
                 // We need to temporarily save the invalid store before disposing the pipeline,
                 // since the store will be rendered valid when the pipeline is disposed.
@@ -762,7 +783,7 @@ namespace Test.Psi
                 p2.Dispose();
 
                 // after disposing the pipeline, the store becomes valid
-                Assert.IsTrue(Store.IsValid(name, this.path));
+                Assert.IsTrue(Store.IsClosed(name, this.path));
 
                 // delete the (now valid) store files
                 foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
@@ -779,7 +800,7 @@ namespace Test.Psi
             }
 
             // the generated store should be invalid prior to repairing
-            Assert.IsFalse(Store.IsValid(name, this.path));
+            Assert.IsFalse(Store.IsClosed(name, this.path));
 
             Store.Repair(name, this.path);
 
@@ -833,7 +854,7 @@ namespace Test.Psi
             {
                 // write to store and times
                 var lastWrite = DateTime.MinValue;
-                var g = Generators.Repeat(p, payload, numMessages, TimeSpan.FromMilliseconds(10));
+                var g = Generators.Repeat(p, payload, numMessages, TimeSpan.FromMilliseconds(50));
                 g.Do(_ => lastWrite = DateTime.Now);
                 var s = Store.Create(p, "store", this.path);
                 g.Write("g", s);
@@ -861,8 +882,77 @@ namespace Test.Psi
                 });
                 q.Run();
 
-                Assert.IsTrue(largestDelay < TimeSpan.FromSeconds(1));
+                Assert.IsTrue(largestDelay < TimeSpan.FromSeconds(1), $"Largest read delay: {largestDelay.TotalSeconds} seconds");
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ReadFromMultipleSubpipelines()
+        {
+            // This test ensures that stores in subpipelines correctly propose their replay intervals,
+            // and that this is properly accounted for in the parent pipeline at runtime.
+
+            // first, create multiple test stores to read from
+            var count = 100;
+            var name0 = nameof(this.ReadFromMultipleSubpipelines) + "_0";
+            var name1 = nameof(this.ReadFromMultipleSubpipelines) + "_1";
+            var name2 = nameof(this.ReadFromMultipleSubpipelines) + "_2";
+
+            using (var p = Pipeline.Create("write0"))
+            {
+                var writeStore = Store.Create(p, name0, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                seq.Write("seq0", writeStore);
+                p.Run();
+            }
+
+            using (var p = Pipeline.Create("write1"))
+            {
+                var writeStore = Store.Create(p, name1, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                seq.Write("seq1", writeStore);
+                p.Run();
+            }
+
+            using (var p = Pipeline.Create("write2"))
+            {
+                var writeStore = Store.Create(p, name2, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                seq.Write("seq2", writeStore);
+                p.Run();
+            }
+
+            double sum0 = 0;
+            double sum1 = 0;
+            double sum2 = 0;
+
+            // now open and replay the streams in parent/sub-pipelines and verify
+            using (var p = Pipeline.Create("parent"))
+            {
+                // read store0 in parent pipeline
+                var store0 = Store.Open(p, name0, this.path);
+                var seq0 = store0.OpenStream<int>("seq0");
+                seq0.Do(s => sum0 = sum0 + s);
+
+                // read store1 in sub-pipeline
+                var sub1 = Subpipeline.Create(p, "sub1");
+                var store1 = Store.Open(sub1, name1, this.path);
+                var seq1 = store1.OpenStream<int>("seq1");
+                seq1.Do(s => sum1 = sum1 + s);
+
+                // read store2 in sub-pipeline
+                var sub2 = Subpipeline.Create(p, "sub2");
+                var store2 = Store.Open(sub2, name2, this.path);
+                var seq2 = store2.OpenStream<int>("seq2");
+                seq1.Do(s => sum2 = sum2 + s);
+
+                p.Run();
+            }
+
+            Assert.AreEqual(count * (count + 1) / 2, sum0);
+            Assert.AreEqual(count * (count + 1) / 2, sum1);
+            Assert.AreEqual(count * (count + 1) / 2, sum2);
         }
     }
 }

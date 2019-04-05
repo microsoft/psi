@@ -4,8 +4,11 @@
 namespace Microsoft.Psi.Visualization.Data
 {
     using System;
+    using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
+    using Microsoft.Psi.Data;
+    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Represents information needed to uniquely identify and open a stream.
@@ -25,8 +28,6 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         /// <param name="streamName">The stream name.</param>
         /// <param name="partitionName">The partition name.</param>
-        /// <param name="storeName">The store name.</param>
-        /// <param name="storePath">The store path.</param>
         /// <param name="simpleReaderType">The simple reader type for the underlying store.</param>
         /// <param name="streamAdapterType">The type of the stream adapter, null if there is none.</param>
         /// <param name="summarizerType">The type of the stream summarizer, null if there is none.</param>
@@ -34,8 +35,6 @@ namespace Microsoft.Psi.Visualization.Data
         public StreamBinding(
             string streamName,
             string partitionName,
-            string storeName,
-            string storePath,
             Type simpleReaderType,
             Type streamAdapterType = null,
             Type summarizerType = null,
@@ -51,84 +50,17 @@ namespace Microsoft.Psi.Visualization.Data
                 throw new ArgumentNullException(nameof(partitionName));
             }
 
-            if (string.IsNullOrWhiteSpace(storeName))
-            {
-                throw new ArgumentNullException(nameof(storeName));
-            }
-
-            // storePath can be null, but not empty - this is to support volatile data stores
-            if (storePath == string.Empty)
-            {
-                throw new ArgumentException("storePath must either be null (volatile data store) or contain a path", nameof(storeName));
-            }
-
             this.StreamName = streamName;
             this.PartitionName = partitionName;
-            this.StoreName = storeName;
-            this.StorePath = storePath;
             this.SimpleReaderType = simpleReaderType;
             this.StreamAdapterType = streamAdapterType;
             this.SummarizerType = summarizerType;
             this.SummarizerArgs = summarizerArgs;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StreamBinding"/> class.
-        /// </summary>
-        /// <param name="streamName">The stream name.</param>
-        /// <param name="partitionName">The partition name.</param>
-        /// <param name="storeName">The store name.</param>
-        /// <param name="storePath">The store path.</param>
-        /// <param name="simpleReaderType">The simple reader type for the underlying store.</param>
-        /// <param name="streamAdapterTypeName">The type name of the stream adapter, null if there is none.</param>
-        /// <param name="summarizerTypeName">The type name of the stream summarizer, null if there is none.</param>
-        /// <param name="summarizerArgs">The arguments used when constructing the stream summarizer, null if ther is none.</param>
-        public StreamBinding(
-            string streamName,
-            string partitionName,
-            string storeName,
-            string storePath,
-            Type simpleReaderType,
-            string streamAdapterTypeName,
-            string summarizerTypeName = null,
-            object[] summarizerArgs = null)
-            : this(streamName, partitionName, storeName, storePath, simpleReaderType)
-        {
-            this.StreamAdapterTypeName = streamAdapterTypeName;
-            this.SummarizerTypeName = summarizerTypeName;
-            this.SummarizerArgs = summarizerArgs;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StreamBinding"/> class.
-        /// </summary>
-        /// <param name="source">An existing stream binding to clone.</param>
-        /// <param name="storeName">The store name.</param>
-        /// <param name="storePath">The store path.</param>
-        public StreamBinding(StreamBinding source, string storeName, string storePath)
-            : this(source.StreamName, source.PartitionName, storeName, storePath, source.SimpleReaderType, source.StreamAdapterType, source.SummarizerType, source.SummarizerArgs)
-        {
-            this.streamAdapter = source.streamAdapter;
-            this.summarizer = source.summarizer;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StreamBinding"/> class.
-        /// </summary>
-        /// <param name="source">An existing stream binding to clone.</param>
-        /// <param name="summarizerType">The type of the stream summarizer, null if there is none.</param>
-        /// <param name="summarizerArgs">The arguments used when constructing the stream summarizer, null if ther is none.</param>
-        public StreamBinding(StreamBinding source, Type summarizerType, object[] summarizerArgs)
-            : this(source.StreamName, source.PartitionName, source.StoreName, source.StorePath, source.SimpleReaderType, source.StreamAdapterType, summarizerType, summarizerArgs)
-        {
-            this.streamAdapter = source.streamAdapter;
-
-            // Do not copy this over since the type or args may have changed
-            this.summarizer = null;
-        }
-
         private StreamBinding()
         {
+            // Called only by JSON deserializer
         }
 
         /// <summary>
@@ -146,13 +78,13 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Gets store name.
         /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         public string StoreName { get; private set; }
 
         /// <summary>
         /// Gets store path.
         /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         public string StorePath { get; private set; }
 
         /// <summary>
@@ -189,12 +121,7 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.streamAdapterType == null && this.StreamAdapterTypeName != null)
                 {
-                    this.streamAdapterType = Type.GetType(this.StreamAdapterTypeName);
-                    if (this.streamAdapterType == null)
-                    {
-                        var assembly = Assembly.GetEntryAssembly();
-                        this.streamAdapterType = assembly.GetType(this.StreamAdapterTypeName);
-                    }
+                    this.streamAdapterType = TypeResolutionHelper.FindType(this.StreamAdapterTypeName);
                 }
 
                 return this.streamAdapterType;
@@ -273,10 +200,10 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Gets summarizer arguments.
+        /// Gets or sets the summarizer arguments.
         /// </summary>
         [DataMember]
-        public object[] SummarizerArgs { get; private set; }
+        public object[] SummarizerArgs { get; set; }
 
         /// <summary>
         /// Gets summaraizer type.
@@ -288,12 +215,7 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.summarizerType == null && this.SummarizerTypeName != null)
                 {
-                    this.summarizerType = Type.GetType(this.SummarizerTypeName);
-                    if (this.summarizerType == null)
-                    {
-                        var assembly = Assembly.GetEntryAssembly();
-                        this.summarizerType = assembly.GetType(this.SummarizerTypeName);
-                    }
+                    this.summarizerType = TypeResolutionHelper.FindType(this.SummarizerTypeName);
                 }
 
                 return this.summarizerType;
@@ -306,6 +228,11 @@ namespace Microsoft.Psi.Visualization.Data
                 this.SummarizerTypeName = this.summarizerType?.FullName;
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the stream is bound to a data source
+        /// </summary>
+        public bool IsBound => !string.IsNullOrWhiteSpace(this.StoreName) && !string.IsNullOrWhiteSpace(this.StorePath);
 
         /// <summary>
         /// Gets or sets stream adapter type name.
@@ -324,5 +251,43 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         [DataMember]
         private string SummarizerTypeName { get; set; }
+
+        /// <summary>
+        /// Updates a stream binding in response to a session being opened or closed
+        /// </summary>
+        /// <param name="session">The session to attempt to bind to</param>
+        /// <returns>The result of the binding update operation</returns>
+        public StreamBindingResult Update(Session session)
+        {
+            // If there's no session, then we have nothing to bind to
+            if (session == null)
+            {
+                this.StoreName = null;
+                this.StorePath = null;
+                return StreamBindingResult.NoSourceToBindTo;
+            }
+
+            // Check that a partition with the required name exists in the session and
+            // that partition contains a stream with the same name as this binding object
+            IPartition partition = session.Partitions.FirstOrDefault(p => p.Name == this.PartitionName);
+            if ((partition != null) && (partition.AvailableStreams.FirstOrDefault(s => s.Name == this.StreamName) != null))
+            {
+                // Check if the binding has actually changed
+                if ((this.StoreName == partition.StoreName) && (this.StorePath == partition.StorePath))
+                {
+                    return StreamBindingResult.BindingUnchanged;
+                }
+
+                this.StoreName = partition.StoreName;
+                this.StorePath = partition.StorePath;
+                return StreamBindingResult.BoundToNewSource;
+            }
+            else
+            {
+                this.StoreName = null;
+                this.StorePath = null;
+                return StreamBindingResult.NoSourceToBindTo;
+            }
+        }
     }
 }

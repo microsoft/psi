@@ -20,13 +20,13 @@ namespace Test.Psi
         [Timeout(60000)]
         public void AddRefReleaseTest()
         {
-            SharedPool<object> pool = new SharedPool<object>(1);
+            SharedPool<object> pool = new SharedPool<object>(() => new int?(1234), 1);
 
             // Verify that nothing is available (no objects have been allocated in the pool yet)
             Assert.AreEqual(pool.AvailableCount, 0);
 
             // Create our first object
-            var origObj = pool.GetOrCreate(() => new int?(1234));
+            var origObj = pool.GetOrCreate();
             Assert.AreEqual(pool.TotalCount, 1); // One object in pool
             Assert.AreEqual(pool.AvailableCount, 0); // None available for use (since only object is in use)
 
@@ -53,8 +53,8 @@ namespace Test.Psi
         [Timeout(60000)]
         public void RefCountedTest()
         {
-            var recycler = new SharedPool<UnmanagedBuffer>(1);
-            var shared = recycler.GetOrCreate(() => UnmanagedBuffer.Allocate(100)); // refcount = 1
+            var sharedPool = new SharedPool<UnmanagedBuffer>(() => UnmanagedBuffer.Allocate(100), 1);
+            var shared = sharedPool.GetOrCreate(); // refcount = 1
 
             // a private copy shoudl point to the same resource
             var otherShared = shared.DeepClone(); // refcount = 1 + 1
@@ -71,7 +71,7 @@ namespace Test.Psi
 
             // disposing should not affect other copies
             shared.Dispose(); // refcount = 2 - 1
-            Assert.AreEqual(0, recycler.AvailableCount);
+            Assert.AreEqual(0, sharedPool.AvailableCount);
             Assert.IsNull(shared.Inner);
             Assert.IsNull(shared.Resource);
             Assert.IsNotNull(cloned.Inner);
@@ -79,7 +79,7 @@ namespace Test.Psi
 
             // disposing the last copy should return the resource to the pool
             cloned.Dispose(); // refcount = 1 - 1
-            Assert.AreEqual(1, recycler.AvailableCount);
+            Assert.AreEqual(1, sharedPool.AvailableCount);
             Assert.IsNull(cloned.Inner);
             Assert.IsNull(cloned.Resource);
         }
@@ -87,8 +87,8 @@ namespace Test.Psi
         // [TestMethod, Timeout(60000)]
         public void RefCountedFinalizationTest()
         {
-            var recycler = new SharedPool<UnmanagedBuffer>(1);
-            var shared = recycler.GetOrCreate(() => UnmanagedBuffer.Allocate(100));
+            var sharedPool = new SharedPool<UnmanagedBuffer>(() => UnmanagedBuffer.Allocate(100), 1);
+            var shared = sharedPool.GetOrCreate();
             var otherShared = shared.DeepClone();
             shared = null;
 
@@ -101,7 +101,7 @@ namespace Test.Psi
             // after GC and finalization of all live copies, the resource goes back to the pool without being finalized itself
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            var wasRecycled = recycler.TryGet(out shared);
+            var wasRecycled = sharedPool.TryGet(out shared);
             Assert.IsTrue(wasRecycled);
             Assert.IsNotNull(shared.Resource);
             Assert.AreNotEqual(IntPtr.Zero, shared.Resource.Data);
@@ -111,8 +111,8 @@ namespace Test.Psi
         [Timeout(60000)]
         public void DoubleDispose()
         {
-            var recycler = new SharedPool<UnmanagedBuffer>(1);
-            var shared = recycler.GetOrCreate(() => UnmanagedBuffer.Allocate(100));
+            var sharedPool = new SharedPool<UnmanagedBuffer>(() => UnmanagedBuffer.Allocate(100), 1);
+            var shared = sharedPool.GetOrCreate();
             shared.Dispose();
             try
             {
@@ -130,15 +130,15 @@ namespace Test.Psi
         [Timeout(60000)]
         public void RecyclerPerf()
         {
-            var recycler = new SharedPool<UnmanagedBuffer>(1);
-            var shared = recycler.GetOrCreate(() => UnmanagedBuffer.Allocate(100));
+            var sharedPool = new SharedPool<UnmanagedBuffer>(() => UnmanagedBuffer.Allocate(100), 1);
+            var shared = sharedPool.GetOrCreate();
             shared.Dispose();
 
             Stopwatch sw = Stopwatch.StartNew();
             int iterations = 10;
             for (int i = 0; i < iterations; i++)
             {
-                recycler.TryGet(out shared);
+                sharedPool.TryGet(out shared);
                 shared.Dispose();
             }
 
@@ -173,13 +173,13 @@ namespace Test.Psi
         public void Serialize()
         {
             var buffer = new BufferWriter(100);
-            var pool = new SharedPool<byte[]>(1);
+            var pool = new SharedPool<byte[]>(() => new byte[10], 1);
 
-            Shared<byte[]> s = pool.GetOrCreate(() => new byte[10]);
+            Shared<byte[]> s = pool.GetOrCreate();
             s.Resource[0] = 255;
             s.Resource[9] = 128;
 
-            Shared<byte[]> s2 = pool.GetOrCreate(() => new byte[10]);
+            Shared<byte[]> s2 = pool.GetOrCreate();
             s2.Resource[0] = 1;
             s2.Resource[9] = 1;
 
@@ -216,9 +216,9 @@ namespace Test.Psi
         public void SerializeGraph()
         {
             var buffer = new BufferWriter(100);
-            var pool = new SharedPool<byte[]>(1);
+            var pool = new SharedPool<byte[]>(() => new byte[10], 1);
 
-            Shared<byte[]> s = pool.GetOrCreate(() => new byte[10]);
+            Shared<byte[]> s = pool.GetOrCreate();
             s.Resource[0] = 255;
             s.Resource[9] = 128;
 
@@ -242,9 +242,9 @@ namespace Test.Psi
         {
             const int iterations = 10;
             var writer = new BufferWriter(100);
-            var pool = new SharedPool<byte[]>(1);
+            var pool = new SharedPool<byte[]>(() => new byte[10], 1);
 
-            using (var s = pool.GetOrCreate(() => new byte[10]))
+            using (var s = pool.GetOrCreate())
             {
                 for (int i = 0; i < iterations; i++)
                 {
@@ -257,13 +257,13 @@ namespace Test.Psi
             Assert.AreEqual(1, pool.TotalCount);
 
             var reader = new BufferReader(writer.Buffer);
-            var s2 = pool.GetOrCreate(() => throw new Exception("Expected a free entry in the pool!"));
+            Assert.IsTrue(pool.TryGet(out Shared<byte[]> s2), "Expected a free entry in the pool!");
             for (int i = 0; i < iterations; i++)
             {
                 Serializer.Deserialize(reader, ref s2, new SerializationContext());
 
                 // verify that the pool doesn't grow
-                Assert.AreEqual(pool, s2.Recycler);
+                Assert.AreEqual(pool, s2.SharedPool);
                 Assert.AreEqual(0, pool.AvailableCount);
                 Assert.AreEqual(1, pool.TotalCount);
             }
@@ -281,13 +281,13 @@ namespace Test.Psi
             int sum = 0;
             using (var p = Pipeline.Create())
             {
-                var pool = new SharedPool<int[]>(1);
+                var pool = new SharedPool<int[]>(() => new int[1], 1);
                 var g = Generators
                     .Range(p, 0, 10)
                     .Process<int, Shared<int[]>>(
                     (i, e, emitter) =>
                     {
-                        using (var shared = pool.GetOrCreate(() => new int[1]))
+                        using (var shared = pool.GetOrCreate())
                         {
                             shared.Resource[0] = i;
                             emitter.Post(shared, e.OriginatingTime);
@@ -309,12 +309,12 @@ namespace Test.Psi
             var sum = 0;
             using (var p = Pipeline.Create())
             {
-                var pool = new SharedPool<int[]>(1);
+                var pool = new SharedPool<int[]>(() => new int[1], 1);
                 var g = Generators.Range(p, 0, 10);
                 var s1 = g.Process<int, Shared<int[]>>(
                     (i, e, emitter) =>
                     {
-                        using (var shared = pool.GetOrCreate(() => new int[1]))
+                        using (var shared = pool.GetOrCreate())
                         {
                             shared.Resource[0] = i;
                             emitter.Post(shared, e.OriginatingTime);
@@ -355,6 +355,105 @@ namespace Test.Psi
             var shared75 = ImagePool.GetOrCreate(bmp75); // should *not* get the recycled image
             Assert.AreEqual<int>(7, shared75.Resource.Width);
             Assert.AreEqual<int>(5, shared75.Resource.Height);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void KeyedSharedPoolTest()
+        {
+            var allocations = new List<int>();            
+            var pool = new KeyedSharedPool<byte[], int>(
+                size =>
+                {
+                    allocations.Add(size); // to track allocations
+                    return new byte[size];
+                },
+                1);
+
+            // allocate and release a 10-byte array
+            var byte10 = pool.GetOrCreate(10);
+            Assert.AreEqual(10, byte10.Resource.Length);
+            Assert.AreEqual(1, allocations.Count); // new allocation
+            Assert.AreEqual(10, allocations[0]);
+            byte10.Dispose();
+
+            // allocate and release a 20-byte array
+            var byte20 = pool.GetOrCreate(20);
+            Assert.AreEqual(20, byte20.Resource.Length);
+            Assert.AreEqual(2, allocations.Count); // new allocation
+            Assert.AreEqual(20, allocations[1]);
+            byte20.Dispose();
+
+            // request another 10-byte array without releasing
+            byte10 = pool.GetOrCreate(10);
+            Assert.AreEqual(10, byte10.Resource.Length);
+            Assert.AreEqual(2, allocations.Count); // no new allocation
+
+            // request another 20-byte array without releasing
+            byte20 = pool.GetOrCreate(20);
+            Assert.AreEqual(20, byte20.Resource.Length);
+            Assert.AreEqual(2, allocations.Count); // no new allocation
+
+            // allocate another 20-byte array
+            var byte20_2 = pool.GetOrCreate(20);
+            Assert.AreEqual(20, byte20_2.Resource.Length);
+            Assert.AreEqual(3, allocations.Count); // new allocation
+            Assert.AreEqual(20, allocations[2]);
+
+            // allocate another 10-byte array
+            var byte10_2 = pool.GetOrCreate(10);
+            Assert.AreEqual(10, byte10_2.Resource.Length);
+            Assert.AreEqual(4, allocations.Count); // new allocation
+            Assert.AreEqual(10, allocations[3]);
+
+            // release all instances
+            byte10.Dispose();
+            byte20.Dispose();
+            byte10_2.Dispose();
+            byte20_2.Dispose();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SharedArrayPoolTest()
+        {
+            // allocate and release an array of size 10
+            var int10 = SharedArrayPool<int>.GetOrCreate(10);
+            Assert.AreEqual(10, int10.Resource.Length);
+            object ref10 = int10.Resource; // capture the underlying array reference
+            int10.Dispose();
+
+            // allocate and release an array of size 20
+            var int20 = SharedArrayPool<int>.GetOrCreate(20);
+            Assert.AreEqual(20, int20.Resource.Length);
+            object ref20 = int20.Resource; // capture the underlying array reference
+            int20.Dispose();
+
+            // request another array of size 10 without releasing
+            int10 = SharedArrayPool<int>.GetOrCreate(10);
+            Assert.AreEqual(10, int10.Resource.Length);
+            Assert.AreSame(ref10, int10.Resource); // verify recycled resource
+
+            // request another array of size 20 without releasing
+            int20 = SharedArrayPool<int>.GetOrCreate(20);
+            Assert.AreEqual(20, int20.Resource.Length);
+            Assert.AreSame(ref20, int20.Resource); // verify recycled resource
+
+            // allocate another array of size 20 without releasing
+            var int20_2 = SharedArrayPool<int>.GetOrCreate(20);
+            Assert.AreEqual(20, int20_2.Resource.Length);
+            Assert.AreNotSame(ref20, int20_2.Resource); // not recycled
+
+            // allocate another array of size 10 without releasing
+            var int10_2 = SharedArrayPool<int>.GetOrCreate(10);
+            Assert.AreEqual(10, int10_2.Resource.Length);
+            Assert.AreNotSame(ref10, int10_2.Resource); // not recycled
+
+            // release all instances
+            int10.Dispose();
+            int20.Dispose();
+            int10_2.Dispose();
+            int20_2.Dispose();
         }
     }
 }

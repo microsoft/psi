@@ -26,8 +26,8 @@ namespace Microsoft.Psi.Interop.Transport
         public FileWriter(Pipeline pipeline, string filename, IPersistentFormatSerializer serializer)
         {
             this.file = File.Create(filename);
-            pipeline.RegisterPipelineFinalHandler(this, () => serializer.PersistFooter(this.file, this.state));
             this.In = pipeline.CreateReceiver<T>(this, (m, e) => this.WriteRecord(m, e, serializer), nameof(this.In));
+            this.In.Unsubscribed += _ => serializer.PersistFooter(this.file, this.state);
         }
 
         /// <inheritdoc />

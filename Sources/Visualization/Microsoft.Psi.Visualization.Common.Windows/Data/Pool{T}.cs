@@ -12,8 +12,7 @@ namespace Microsoft.Psi.Visualization.Data
     public class Pool<T> : IPool
         where T : class
     {
-        private readonly Func<T> allocator;
-        private readonly SharedPool<T> recycler;
+        private readonly SharedPool<T> sharedPool;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pool{T}"/> class.
@@ -21,20 +20,19 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="allocator">Allocation function.</param>
         public Pool(Func<T> allocator)
         {
-            this.allocator = allocator;
-            this.recycler = new SharedPool<T>(2);
+            this.sharedPool = new SharedPool<T>(allocator, 2);
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
-            this.recycler.Dispose();
+            this.sharedPool.Dispose();
         }
 
         /// <inheritdoc />
         public object GetOrCreate()
         {
-            return this.recycler.GetOrCreate(this.allocator);
+            return this.sharedPool.GetOrCreate();
         }
     }
 }

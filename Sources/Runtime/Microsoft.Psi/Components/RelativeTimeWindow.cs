@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Components
         {
             this.relativeTimeInterval = relativeTimeInterval;
             this.selector = selector;
-            pipeline.RegisterPipelineFinalHandler(this, this.StreamClosed);
+            this.In.Unsubscribed += _ => this.OnUnsubscribed();
         }
 
         /// <inheritdoc />
@@ -136,7 +136,7 @@ namespace Microsoft.Psi.Components
             }
         }
 
-        private void StreamClosed()
+        private void OnUnsubscribed()
         {
             // give the processor an opportunity now with `final` flag set
             while (this.buffer.Count > 0)

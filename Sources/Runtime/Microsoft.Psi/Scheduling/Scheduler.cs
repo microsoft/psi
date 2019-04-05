@@ -11,10 +11,10 @@ namespace Microsoft.Psi.Scheduling
     /// </summary>
     public sealed class Scheduler
     {
+        private readonly string name;
         private readonly SimpleSemaphore threadSemaphore;
         private readonly Func<Exception, bool> errorHandler;
         private readonly bool allowSchedulingOnExternalThreads;
-        private readonly int threadCount;
         private readonly ManualResetEvent stopped = new ManualResetEvent(true);
         private readonly AutoResetEvent futureAdded = new AutoResetEvent(false);
 
@@ -29,6 +29,9 @@ namespace Microsoft.Psi.Scheduling
         private ThreadLocal<DateTime> currentWorkitemTime = new ThreadLocal<DateTime>(() => DateTime.MaxValue);
         private Clock clock;
         private bool delayFutureWorkitemsUntilDue;
+        private DateTime finalizeTime = DateTime.MaxValue;
+        private bool started = false;
+        private bool completed = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scheduler"/> class.
@@ -40,10 +43,10 @@ namespace Microsoft.Psi.Scheduling
         /// <param name="clock">Optional clock to use (defaults to virtual time offset of DateTime.MinValue and dilation factor of 0).</param>
         public Scheduler(Func<Exception, bool> errorHandler, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, string name = "default", Clock clock = null)
         {
+            this.name = name;
             this.errorHandler = errorHandler;
             this.threadSemaphore = new SimpleSemaphore((threadCount == 0) ? Environment.ProcessorCount * 2 : threadCount);
             this.allowSchedulingOnExternalThreads = allowSchedulingOnExternalThreads;
-            this.threadCount = threadCount;
             this.globalWorkitems = new WorkItemQueue(name);
             this.futureWorkitems = new FutureWorkItemQueue(name + "_future", this);
 
@@ -51,6 +54,15 @@ namespace Microsoft.Psi.Scheduling
             // the time will change when the scheduler is started, and the future workitem queue will be drained then as appropriate
             this.clock = clock ?? new Clock(DateTime.MinValue, 0);
             this.delayFutureWorkitemsUntilDue = true;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Scheduler"/> class.
+        /// </summary>
+        /// <param name="parent">Parent scheduler from which to inherit settings.</param>
+        internal Scheduler(Scheduler parent)
+            : this(parent.errorHandler, parent.threadSemaphore.MaxThreadCount, parent.allowSchedulingOnExternalThreads, $"Sub{parent.name}", new Clock(parent.clock))
+        {
         }
 
         /// <summary>
@@ -77,7 +89,7 @@ namespace Microsoft.Psi.Scheduling
         /// <returns>Success flag</returns>
         public bool TryExecute<T>(SynchronizationLock synchronizationObject, Action<T> action, T argument, DateTime startTime)
         {
-            if (this.forcedShutdownRequested)
+            if (this.forcedShutdownRequested || startTime > this.finalizeTime)
             {
                 return true;
             }
@@ -104,6 +116,7 @@ namespace Microsoft.Psi.Scheduling
             {
                 action(argument);
                 this.counters?.Increment(SchedulerCounters.WorkitemsPerSecond);
+
                 this.counters?.Increment(SchedulerCounters.ImmediateWorkitemsPerSecond);
             }
             catch (Exception e) when (this.errorHandler(e))
@@ -126,7 +139,7 @@ namespace Microsoft.Psi.Scheduling
         /// <returns>Success flag</returns>
         public bool TryExecute(SynchronizationLock synchronizationObject, Action action, DateTime startTime)
         {
-            if (this.forcedShutdownRequested)
+            if (this.forcedShutdownRequested || startTime > this.finalizeTime)
             {
                 return true;
             }
@@ -161,9 +174,10 @@ namespace Microsoft.Psi.Scheduling
         /// <param name="action">Action to execute</param>
         /// <param name="startTime">Scheduled start time</param>
         /// <param name="asContinuation">Flag whether to execute once current operation completes</param>
-        public void Schedule(SynchronizationLock synchronizationObject, Action action, DateTime startTime, bool asContinuation = true)
+        /// <param name="allowSchedulingPastFinalization">Allow scheduling past finalization time.</param>
+        public void Schedule(SynchronizationLock synchronizationObject, Action action, DateTime startTime, bool asContinuation = true, bool allowSchedulingPastFinalization = false)
         {
-            if (this.forcedShutdownRequested)
+            if (this.forcedShutdownRequested || (startTime > this.finalizeTime && !allowSchedulingPastFinalization) || this.completed)
             {
                 return;
             }
@@ -176,7 +190,7 @@ namespace Microsoft.Psi.Scheduling
             WorkItem wi = new WorkItem() { SyncLock = synchronizationObject, Callback = action, StartTime = startTime };
 
             // if the workitem not yet due, add it to the future workitem queue
-            if (startTime > this.clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue)
+            if ((startTime > this.clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue) || !this.started)
             {
                 this.futureWorkitems.Enqueue(wi);
                 this.futureAdded.Set();
@@ -258,25 +272,7 @@ namespace Microsoft.Psi.Scheduling
             // if no clock is specified, schedule everything without delay
             this.delayFutureWorkitemsUntilDue = delayFutureWorkitemsUntilDue;
             this.clock = clock;
-            this.stopped.Reset();
-            this.StartFuturesThread();
-        }
-
-        /// <summary>
-        /// Pause scheduler until all queues have drained.
-        /// </summary>
-        public void PauseForQuiescence()
-        {
-            if (this.stopped.WaitOne(0))
-            {
-                return;
-            }
-
-            // let queues drain
-            this.stopped.Set();
-            this.futuresThread.Join();
-
-            // continue for phase two - stop
+            this.started = true;
             this.stopped.Reset();
             this.StartFuturesThread();
         }
@@ -297,6 +293,7 @@ namespace Microsoft.Psi.Scheduling
             this.stopped.Set();
             this.futuresThread.Join();
             this.clock = new Clock(DateTime.MinValue, 0);
+            this.completed = true;
             this.delayFutureWorkitemsUntilDue = true;
         }
 
@@ -332,6 +329,49 @@ namespace Microsoft.Psi.Scheduling
             this.counters = perf.Enable(Category, name);
         }
 
+        /// <summary>
+        /// Pause scheduler until all queues have drained.
+        /// </summary>
+        internal void PauseForQuiescence()
+        {
+            if (this.stopped.WaitOne(0) || !this.started || this.completed)
+            {
+                return;
+            }
+
+            // let queues drain
+            this.stopped.Set();
+            try
+            {
+                this.futuresThread.Join();
+            }
+            catch (ThreadStateException)
+            {
+                // thread never started?
+            }
+        }
+
+        /// <summary>
+        /// Resume scheduler after having paused for quiescence.
+        /// </summary>
+        internal void ResumeAfterQuiescence()
+        {
+            if (this.stopped.WaitOne(0) && this.started && !this.completed)
+            {
+                this.stopped.Reset();
+                this.StartFuturesThread();
+            }
+        }
+
+        /// <summary>
+        /// Notify scheduler of latest message time enqueued or scheduled.
+        /// </summary>
+        /// <param name="finalizeTime">Originating time after which messages will no longer be scheduled.</param>
+        internal void NotifyPipelineFinalizing(DateTime finalizeTime)
+        {
+            this.finalizeTime = finalizeTime;
+        }
+
         private static bool TryGetExclusiveLock(SynchronizationLock syncLock)
         {
             return syncLock.TryLock();
@@ -349,7 +389,7 @@ namespace Microsoft.Psi.Scheduling
 
         private void StartFuturesThread()
         {
-            this.futuresThread = new Thread(new ThreadStart(this.ProcessFutureQueue));
+            this.futuresThread = new Thread(new ThreadStart(this.ProcessFutureQueue)) { IsBackground = true };
             Platform.Specific.SetApartmentState(this.futuresThread, ApartmentState.MTA);
             this.futuresThread.Start();
         }
@@ -457,6 +497,7 @@ namespace Microsoft.Psi.Scheduling
 
             var workReadyHandles = new EventWaitHandle[] { this.stopped, this.futureAdded };
             var allHandles = new[] { this.threadSemaphore.Empty, this.globalWorkitems.Empty, this.futureWorkitems.Empty };
+            var spinWait = default(SpinWait);
             while (true)
             {
                 int waitResult = WaitHandle.WaitAny(workReadyHandles, waitTimeout);
@@ -474,6 +515,13 @@ namespace Microsoft.Psi.Scheduling
                     {
                         // all work is done
                         return;
+                    }
+
+                    // check if there are any queued future work items
+                    if (this.futureWorkitems.Count == 0)
+                    {
+                        // spin to ensure we yield to other scheduler threads
+                        spinWait.SpinOnce();
                     }
                 }
 

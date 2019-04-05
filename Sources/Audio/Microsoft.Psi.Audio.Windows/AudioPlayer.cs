@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Audio
     /// <br/>
     /// **Please note**: This component uses Audio APIs that are available on Windows only.
     /// </remarks>
-    public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, IDisposable
+    public sealed class AudioPlayer : SimpleConsumer<AudioBuffer>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
         private readonly AudioPlayerConfiguration configuration;
@@ -39,8 +39,6 @@ namespace Microsoft.Psi.Audio
         public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)
             : base(pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.currentInputFormat = configuration.InputFormat;
@@ -49,8 +47,6 @@ namespace Microsoft.Psi.Audio
 
             this.wasapiRender = new WasapiRender();
             this.wasapiRender.Initialize(configuration.DeviceName);
-
-            this.pipeline.PipelineCompletionEvent += this.OnPipelineCompletionEvent;
 
             if (configuration.AudioLevel >= 0)
             {
@@ -132,10 +128,23 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Starts playing back audio.
+        /// Disposes the <see cref="AudioPlayer"/> object.
         /// </summary>
-        public void OnPipelineStart()
+        public void Dispose()
         {
+            this.Stop();
+            this.wasapiRender.Dispose();
+            this.wasapiRender = null;
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // Notify that this is an infinite source component. It is a source because it
+            // posts changes to the volume level of the output audio device to the AudioLevel
+            // stream for as long as the component is active.
+            notifyCompletionTime(DateTime.MaxValue);
+
             // If playing back at greater than original speed (ReplaySpeedFactor < 1),
             // overwrite queued audio since data buffers will be arriving faster than
             // it can be rendered.
@@ -155,25 +164,14 @@ namespace Microsoft.Psi.Audio
                 this.configuration.InputFormat);
         }
 
-        /// <summary>
-        /// Stops playing back audio.
-        /// </summary>
-        public void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             this.wasapiRender.StopRendering();
 
-            // unregister the volume changed notification event handler
+            // Unsubscribe from volume change notifications. This will cause the component to
+            // stop posting changes to the volume level on the AudioLevel stream.
             this.wasapiRender.AudioVolumeNotification -= this.HandleVolumeChangedNotification;
-        }
-
-        /// <summary>
-        /// Disposes the <see cref="AudioPlayer"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            this.OnPipelineStop();
-            this.wasapiRender.Dispose();
-            this.wasapiRender = null;
         }
 
         /// <summary>
@@ -184,17 +182,6 @@ namespace Microsoft.Psi.Audio
         private void HandleVolumeChangedNotification(object sender, AudioVolumeEventArgs e)
         {
             this.AudioLevel.Post(e.MasterVolume, this.pipeline.GetCurrentTime());
-        }
-
-        /// <summary>
-        /// Handles the <see cref="Pipeline.PipelineCompletionEvent"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="PipelineCompletionEventArgs"/> that contains the event data.</param>
-        private void OnPipelineCompletionEvent(object sender, PipelineCompletionEventArgs e)
-        {
-            // Unsubscribe from volume change notifications if pipeline has finished
-            this.wasapiRender.AudioVolumeNotification -= this.HandleVolumeChangedNotification;
         }
     }
 }

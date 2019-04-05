@@ -5,7 +5,7 @@ namespace Microsoft.Psi.PsiStudio
 {
     using System.Windows;
     using System.Windows.Controls;
-    using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Visualization.ViewModels;
 
     /// <summary>
     /// Provides a way to select the appropriate datatemplate based on the data object provided.

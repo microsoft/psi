@@ -11,7 +11,6 @@ namespace MultiModalSpeechDetection
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Speech;
-    using Microsoft.Psi.Visualization.Client;
 
     public class Program
     {
@@ -28,11 +27,11 @@ namespace MultiModalSpeechDetection
         }
 
         /// <summary>
-        /// Event handler for the PipelineCompletion event.
+        /// Event handler for the <see cref="Pipeline.PipelineCompleted"/> event.
         /// </summary>
         /// <param name="sender">The sender which raised the event.</param>
         /// <param name="e">The pipeline completion event arguments.</param>
-        private static void PipelineCompletionEvent(object sender, Microsoft.Psi.PipelineCompletionEventArgs e)
+        private static void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             Console.WriteLine("Pipeline execution completed with {0} errors", e.Errors.Count);
 
@@ -43,11 +42,9 @@ namespace MultiModalSpeechDetection
             }
         }
 
-        ///
-        /// <abstract>
+        /// <summary>
         /// This is the main code for our Multimodal Speech Detection demo
-        /// </abstract>
-        ///
+        /// </summary>
         private void PerformMultiModalSpeechDetection()
         {
             Console.WriteLine("Initializing Psi.");
@@ -57,16 +54,8 @@ namespace MultiModalSpeechDetection
             // First create our \Psi pipeline
             using (var pipeline = Pipeline.Create("MultiModalSpeechDetection"))
             {
-                VisualizationClient visualizationClient = new VisualizationClient();
-
                 // Register an event handler to catch pipeline errors
-                pipeline.PipelineCompletionEvent += PipelineCompletionEvent;
-
-                // Clear all data if the visualizer is already open
-                visualizationClient.ClearAll();
-
-                // Set the visualization client to visualize live data
-                visualizationClient.SetLiveMode();
+                pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Next create our Kinect sensor. We will be using the color images, face tracking, and audio from the Kinect sensor
                 var kinectSensorConfig = new KinectSensorConfiguration();
@@ -152,27 +141,18 @@ namespace MultiModalSpeechDetection
                 var pathToStore = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
                 Microsoft.Psi.Data.Exporter store = Store.Create(pipeline, ApplicationName, pathToStore);
 
-                visualizationClient.AddTimelinePanel().Configuration.ShowLegend = true;
-                mouthOpen.Select(v => v ? 1d : 0d).Write("MouthOpen", store).Show(visualizationClient);
+                mouthOpen.Select(v => v ? 1d : 0d).Write("MouthOpen", store);
 
-                visualizationClient.AddTimelinePanel().Configuration.ShowLegend = true;
-                speechDetector.Select(v => v ? 1d : 0d).Write("VAD", store).Show(visualizationClient);
+                speechDetector.Select(v => v ? 1d : 0d).Write("VAD", store);
 
-                visualizationClient.AddTimelinePanel().Configuration.ShowLegend = true;
-                mouthAndSpeechDetector.Write("Join(MouthOpen,VAD)", store).Show(visualizationClient);
+                mouthAndSpeechDetector.Write("Join(MouthOpen,VAD)", store);
 
-                visualizationClient.AddTimelinePanel().Configuration.ShowLegend = true;
-                kinectSensor.Audio.Write("Audio", store).Show(visualizationClient);
+                kinectSensor.Audio.Write("Audio", store);
 
-                var panel = visualizationClient.AddXYPanel();
                 var images = kinectSensor.ColorImage.EncodeJpeg(90, DeliveryPolicy.LatestMessage).Out;
                 Store.Write(images, "Images", store, true, DeliveryPolicy.LatestMessage);
-                images.Show(visualizationClient);
 
-                var ptsVis = landmarks.Write("FaceLandmarks", store).Show(visualizationClient);
-                ptsVis.Configuration.Radius = 3;
-                ptsVis.Configuration.XMax = Width;
-                ptsVis.Configuration.YMax = Height;
+                landmarks.Write("FaceLandmarks", store);
 
                 // Run the pipeline
                 pipeline.RunAsync();

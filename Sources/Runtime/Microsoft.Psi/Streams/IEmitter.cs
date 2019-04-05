@@ -3,6 +3,8 @@
 
 namespace Microsoft.Psi
 {
+    using System;
+
     /// <summary>
     /// Enables message passing between components.
     /// </summary>
@@ -27,6 +29,17 @@ namespace Microsoft.Psi
         /// Gets emitter ID.
         /// </summary>
         int Id { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether emitter has subscribers.
+        /// </summary>
+        bool HasSubscribers { get; }
+
+        /// <summary>
+        /// Close emitter, causing all receivers to be unsubscribed.
+        /// </summary>
+        /// <param name="originatingTime">The originating time at which the emitter closes.</param>
+        void Close(DateTime originatingTime);
 
         /// <summary>
         /// Enables debug visualization for this stream.

@@ -29,8 +29,10 @@ namespace Microsoft.Psi.Components
             for (int i = 0; i < vectorSize; i++)
             {
                 var subpipeline = Subpipeline.Create(pipeline, $"subpipeline{i}");
-                this.branches[i] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
-                action(i, this.branches[i]);
+                var connector = new Connector<TIn>(pipeline, subpipeline, $"connector{i}");
+                this.branches[i] = pipeline.CreateEmitter<TIn>(this, $"branch{i}");
+                this.branches[i].PipeTo(connector);
+                action(i, connector.Out);
             }
         }
 
@@ -49,8 +51,12 @@ namespace Microsoft.Psi.Components
             for (int i = 0; i < vectorSize; i++)
             {
                 var subpipeline = Subpipeline.Create(pipeline, $"subpipeline{i}");
-                this.branches[i] = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
-                branchResults[i] = transform(i, this.branches[i]);
+                var connectorIn = new Connector<TIn>(pipeline, subpipeline, $"connectorIn{i}");
+                var connectorOut = new Connector<TOut>(subpipeline, pipeline, $"connectorOut{i}");
+                this.branches[i] = pipeline.CreateEmitter<TIn>(this, $"branch{i}");
+                this.branches[i].PipeTo(connectorIn);
+                transform(i, connectorIn.Out).PipeTo(connectorOut.In);
+                branchResults[i] = connectorOut;
             }
 
             var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();

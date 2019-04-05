@@ -19,6 +19,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
+                Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5).Delay(TimeSpan.FromMilliseconds(100));
                 var secondary = Generators.Range(pipeline, 0, 5);
                 var paired = primary.Pair(secondary).ToObservable().ToListObservable();
@@ -35,6 +36,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
+                Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5);
                 var secondary = Generators.Range(pipeline, 0, 5).Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary).ToObservable().ToListObservable();
@@ -51,6 +53,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
+                Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5);
                 var secondary = Generators.Range(pipeline, 0, 5).Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary, 42).ToObservable().ToListObservable();
@@ -67,6 +70,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
+                Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5).Delay(TimeSpan.FromMilliseconds(100));
                 var secondary = Generators.Range(pipeline, 0, 5);
                 var paired = primary.Pair(secondary, (p, s) => p * 10 + s).ToObservable().ToListObservable();
@@ -83,6 +87,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
+                Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5);
                 var secondary = Generators.Range(pipeline, 0, 5).Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary, (p, s) => p * 10 + s, 7).ToObservable().ToListObservable();

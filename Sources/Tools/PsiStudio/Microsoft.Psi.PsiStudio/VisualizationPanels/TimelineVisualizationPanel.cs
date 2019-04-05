@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Windows;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Controls;
     using Microsoft.Psi.Visualization.Helpers;
@@ -22,16 +23,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     public class TimelineVisualizationPanel : VisualizationPanel<TimelineVisualizationPanelConfiguration>
     {
         private RelayCommand showHideLegendCommand;
-        private RelayCommand zoomToSelectionCommand;
-        private RelayCommand zoomToSessionExtentsCommand;
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
         private RelayCommand<MouseButtonEventArgs> mouseRightButtonDownCommand;
         private Point lastMouseLeftButtonDownPoint = new Point(0, 0);
-
-        /// <inheritdoc />
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(TimelineVisualizationPanelView));
 
         /// <summary>
         /// Gets the Mouse Position the last time the user clicked in this panel
@@ -65,12 +59,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             get
             {
-                if (this.zoomToSelectionCommand == null)
-                {
-                    this.zoomToSelectionCommand = new RelayCommand(() => this.Container.Navigator.ZoomToSelection());
-                }
-
-                return this.zoomToSelectionCommand;
+                return PsiStudioContext.Instance.ZoomToSelectionCommand;
             }
         }
 
@@ -83,12 +72,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             get
             {
-                if (this.zoomToSessionExtentsCommand == null)
-                {
-                    this.zoomToSessionExtentsCommand = new RelayCommand(() => this.Container.Navigator.ZoomToDataRange());
-                }
-
-                return this.zoomToSessionExtentsCommand;
+                return PsiStudioContext.Instance.ZoomToSessionExtentsCommand;
             }
         }
 
@@ -160,6 +144,12 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             base.InitNew();
             this.Configuration.Name = "Timeline Panel";
             this.Configuration.Height = 70;
+        }
+
+        /// <inheritdoc />
+        protected override DataTemplate CreateDefaultViewTemplate()
+        {
+            return XamlHelper.CreateTemplate(this.GetType(), typeof(TimelineVisualizationPanelView));
         }
 
         private DateTime GetTimeAtMousePointer(MouseEventArgs e)

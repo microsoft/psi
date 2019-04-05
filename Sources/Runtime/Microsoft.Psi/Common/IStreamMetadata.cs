@@ -80,5 +80,12 @@ namespace Microsoft.Psi
         /// <param name="envelope">The envelope.</param>
         /// <param name="size">The size.</param>
         void Update(Envelope envelope, int size);
+
+        /// <summary>
+        /// Updates this stream metadata with the times and originating times of the first and last messages.
+        /// </summary>
+        /// <param name="messagesTimeInterval">A TimeInterval representing the times of the first and last messages in the stream.</param>
+        /// <param name="messagesOriginatingTimeInterval">A TimeInterval representing the originating times of the first and last messages in the stream.</param>
+        void Update(TimeInterval messagesTimeInterval, TimeInterval messagesOriginatingTimeInterval);
     }
 }

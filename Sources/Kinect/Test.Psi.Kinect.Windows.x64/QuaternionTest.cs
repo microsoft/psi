@@ -5,6 +5,7 @@ namespace Test.Psi.Kinect.Windows
 {
     using System;
     using MathNet.Spatial.Euclidean;
+    using MathNet.Spatial.Units;
     using Microsoft.Kinect;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -29,7 +30,7 @@ namespace Test.Psi.Kinect.Windows
         {
             CoordinateSystem ncs = new CoordinateSystem();
             Vector3D v = new Vector3D(0.0, 1.0, 0.0);
-            ncs = ncs.RotateCoordSysAroundVector(v, 90.0 /* in LHS */, MathNet.Spatial.Units.AngleUnit.Degrees);
+            ncs = ncs.RotateCoordSysAroundVector(v.Normalize(), Angle.FromDegrees(90.0 /* in LHS */));
             Vector4 q;
             double axisX = 0.0;
             double axisY = 1.0;
@@ -43,7 +44,7 @@ namespace Test.Psi.Kinect.Windows
             var rot = ncs.GetRotationSubMatrix();
             var qrot = Microsoft.Psi.Kinect.KinectExtensions.QuaternionToMatrix(q);
             var qv = Microsoft.Psi.Kinect.KinectExtensions.MatrixToQuaternion(rot * qrot);
-            Vector4 axisAngle = Microsoft.Psi.Kinect.KinectExtensions.QuaterionAsAxisAngle(qv);
+            Vector4 axisAngle = Microsoft.Psi.Kinect.KinectExtensions.QuaternionAsAxisAngle(qv);
         }
 
         protected virtual void Dispose(bool disposing)

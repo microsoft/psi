@@ -7,28 +7,30 @@ namespace Microsoft.Psi.Imaging
     using System.Drawing.Imaging;
 
     /// <summary>
-    /// Defines a pool of images
+    /// Provides a pool of shared images.
     /// </summary>
-    public class ImagePool
+    public static class ImagePool
     {
+        private static readonly KeyedSharedPool<Image, (int, int, PixelFormat)> Instance =
+            new KeyedSharedPool<Image, (int width, int height, PixelFormat format)>(key => Image.Create(key.width, key.height, key.format));
+
         /// <summary>
-        /// Retrieves an image from the pool
+        /// Gets or creates an image from the pool.
         /// </summary>
-        /// <param name="width">Width of image requested</param>
-        /// <param name="height">Height of image requested</param>
-        /// <param name="pixelFormat">Pixel format for requested image</param>
-        /// <returns>Returns an image from the pool</returns>
+        /// <param name="width">The requested image width.</param>
+        /// <param name="height">The requested image height.</param>
+        /// <param name="pixelFormat">The requested image pixel format.</param>
+        /// <returns>A shared image from the pool.</returns>
         public static Shared<Image> GetOrCreate(int width, int height, PixelFormat pixelFormat)
         {
-            return KeyedSharedPool<Image, (int, int, PixelFormat)>.GetOrCreate((width, height, pixelFormat), () => Image.Create(width, height, pixelFormat));
+            return Instance.GetOrCreate((width, height, pixelFormat));
         }
 
         /// <summary>
-        /// Creates a shared image from a managed Bitmap object by retrieving an existing
-        /// image from the pool or allocating a new image.
+        /// Gets or creates an image from the pool and initializes it with a managed Bitmap object.
         /// </summary>
-        /// <param name="image">Bitmap from which to copy the image data</param>
-        /// <returns>Returns an shared image from the pool containing a copy of the image data from "imageData"</returns>
+        /// <param name="image">A bitmap from which to copy the image data.</param>
+        /// <returns>A shared image from the pool containing a copy of the image data from <paramref name="image"/>.</returns>
         public static Shared<Image> GetOrCreate(System.Drawing.Bitmap image)
         {
             BitmapData sourceData = image.LockBits(

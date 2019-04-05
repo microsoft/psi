@@ -66,8 +66,6 @@ namespace Microsoft.Psi.Kinect
         /// <param name="pipeline">Pipeline this sensor is a part of</param>
         private KinectSensor(Pipeline pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.StartKinect);
-            pipeline.RegisterPipelineStopHandler(this, () => this.kinectSensor?.Close());
             this.pipeline = pipeline;
             this.Bodies = pipeline.CreateEmitter<List<KinectBody>>(this, nameof(this.Bodies));
             this.ColorImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.ColorImage));
@@ -166,6 +164,21 @@ namespace Microsoft.Psi.Kinect
                 this.kinectSensor?.Close();
                 this.disposed = true;
             }
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
+            this.StartKinect();
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+            this.kinectSensor?.Close();
         }
 
         private void StartKinect()

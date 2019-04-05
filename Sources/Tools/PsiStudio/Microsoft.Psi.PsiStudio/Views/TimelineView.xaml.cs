@@ -211,15 +211,16 @@ namespace Microsoft.Psi.Visualization.Views
             TickZoomLevel tickZoomLevelMajorLast = this.tickZoomLevelMajor;
             foreach (var tickZoomLevelDescriptor in tickZoomLevelDescriptors)
             {
+                tickZoomLevelDescriptorMajor = tickZoomLevelDescriptor;
                 var countSegments = viewDurationInTicks / tickZoomLevelDescriptor.DurationInTicks;
                 var segmentWidth = this.ActualWidth / countSegments;
                 if (segmentWidth > 50)
                 {
-                    this.tickZoomLevelMajor = tickZoomLevelDescriptor.TickZoomLevel;
-                    tickZoomLevelDescriptorMajor = tickZoomLevelDescriptor;
                     break;
                 }
             }
+
+            this.tickZoomLevelMajor = tickZoomLevelDescriptorMajor.TickZoomLevel;
 
             // we've changed zoom levels so reset segments
             if (this.tickZoomLevelMajor != tickZoomLevelMajorLast)

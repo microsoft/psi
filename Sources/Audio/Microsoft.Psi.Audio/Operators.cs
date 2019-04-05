@@ -15,6 +15,32 @@ namespace Microsoft.Psi.Audio
     public static class Operators
     {
         /// <summary>
+        /// Reframes the bytes in an <see cref="AudioBuffer"/> stream, producing a new <see cref="AudioBuffer"/>
+        /// stream where each new <see cref="AudioBuffer"/> has a specified fixed size.
+        /// </summary>
+        /// <param name="source">A stream containing the input audio.</param>
+        /// <param name="frameSizeInBytes">The output frame size in bytes.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>A stream containing the reframed audio.</returns>
+        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, int frameSizeInBytes, DeliveryPolicy deliveryPolicy = null)
+        {
+            return source.PipeTo(new Reframe(source.Out.Pipeline, frameSizeInBytes), deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Reframes the bytes in an <see cref="AudioBuffer"/> stream, producing a new <see cref="AudioBuffer"/>
+        /// stream where each new <see cref="AudioBuffer"/> has a specified fixed duration.
+        /// </summary>
+        /// <param name="source">A stream containing the input audio.</param>
+        /// <param name="frameDuration">The output frame duration.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>A stream containing the reframed audio.</returns>
+        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, TimeSpan frameDuration, DeliveryPolicy deliveryPolicy = null)
+        {
+            return source.PipeTo(new Reframe(source.Out.Pipeline, frameDuration), deliveryPolicy);
+        }
+
+        /// <summary>
         /// Transforms an <see cref="AudioBuffer"/> stream to a stream of byte arrays containing the raw audio.
         /// </summary>
         /// <param name="source">A stream of audio buffers.</param>

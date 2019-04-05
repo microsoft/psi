@@ -36,7 +36,7 @@ namespace Microsoft.Psi.Imaging
             // the encoder has thread affinity, so we need to re-create it (we can't dispatch the call since we sdon't know if the thread that created us is pumping messages)
             var encoder = this.encoderFn();
 
-            using (var sharedEncodedImage = EncodedImagePool.Get())
+            using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
             {
                 sharedEncodedImage.Resource.EncodeFrom(sharedImage.Resource, encoder);
                 this.Out.Post(sharedEncodedImage, e.OriginatingTime);

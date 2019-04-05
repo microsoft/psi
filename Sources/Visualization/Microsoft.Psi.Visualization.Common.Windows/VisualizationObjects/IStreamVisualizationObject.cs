@@ -3,8 +3,9 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System;
     using System.Collections.Generic;
-    using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Data;
 
     /// <summary>
     /// Represents a stream visualization object.
@@ -12,14 +13,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     public interface IStreamVisualizationObject
     {
         /// <summary>
-        /// Closes the underlying stream.
+        /// Updates the binding between a stream visualization object and a data source.
         /// </summary>
-        void CloseStream();
+        /// <param name="session">The current session.</param>
+        void UpdateStreamBinding(Session session);
 
         /// <summary>
-        /// Update the store bindings for given enumeration of partitions.
+        /// Gets a snapped time based on a given time.
         /// </summary>
-        /// <param name="partitions">The partitions to update the bindings with.</param>
-        void UpdateStoreBindings(IEnumerable<PartitionViewModel> partitions);
+        /// <param name="time">The input time.</param>
+        /// <returns>The snapped time.</returns>
+        DateTime? GetSnappedTime(DateTime time);
     }
 }

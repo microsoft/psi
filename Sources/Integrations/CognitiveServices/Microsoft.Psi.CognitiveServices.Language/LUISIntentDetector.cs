@@ -67,14 +67,15 @@ namespace Microsoft.Psi.CognitiveServices.Language
         /// <inheritdoc/>
         protected override async Task ReceiveAsync(string utterance, Envelope e)
         {
-            using (HttpClient client = new HttpClient() { BaseAddress = new Uri(this.configuration.LUISEndpoint) })
+            string endpointUrl = string.Format(this.configuration.EndpointUrl, this.configuration.Region?.Replace(" ", string.Empty));
+            using (HttpClient client = new HttpClient() { BaseAddress = new Uri(endpointUrl) })
             {
                 // Fire off the request query asynchronously.
                 HttpResponseMessage response = await client.GetAsync(
                     string.Format(
-                        "application?id={0}&subscription-key={1}&q={2}",
-                        this.configuration.LUISAppID,
-                        this.configuration.LUISSubscriptionID,
+                        "{0}?verbose=true&subscription-key={1}&q={2}",
+                        this.configuration.ApplicationId,
+                        this.configuration.SubscriptionKey,
                         utterance));
 
                 // Read the HTML into a string and start scraping.

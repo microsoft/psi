@@ -1,0 +1,34 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+namespace Microsoft.Psi.Visualization.Windows
+{
+    using System;
+    using System.IO;
+    using System.Windows;
+
+    /// <summary>
+    /// Interaction logic for LayoutNameWindow.xaml
+    /// </summary>
+    public partial class LayoutNameWindow : Window
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LayoutNameWindow"/> class.
+        /// </summary>
+        public LayoutNameWindow()
+        {
+            this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Gets the layout name
+        /// </summary>
+        public string LayoutName => this.LayoutNameTextBox.Text + ".plo";
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            e.Handled = true;
+        }
+    }
+}

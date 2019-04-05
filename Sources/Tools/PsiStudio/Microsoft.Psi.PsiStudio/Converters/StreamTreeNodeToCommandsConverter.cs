@@ -6,7 +6,7 @@ namespace Microsoft.Psi.PsiStudio.Converters
     using System;
     using System.Globalization;
     using System.Windows.Data;
-    using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Visualization.ViewModels;
 
     /// <summary>
     /// Converts stream tree node items to commands.

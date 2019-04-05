@@ -35,7 +35,6 @@ namespace Microsoft.Psi.Interop.Transport
             this.address = address;
             this.deserializer = deserializer;
             this.Out = pipeline.CreateEmitter<T>(this, topic);
-            pipeline.RegisterPipelineStartHandler(this, this.Start);
         }
 
         /// <inheritdoc />
@@ -44,16 +43,15 @@ namespace Microsoft.Psi.Interop.Transport
         /// <inheritdoc />
         public void Dispose()
         {
-            if (this.socket != null)
-            {
-                this.poller.Dispose();
-                this.socket.Dispose();
-                this.socket = null;
-            }
+            this.Stop();
         }
 
-        private void Start()
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
             this.socket = new SubscriberSocket();
             this.socket.Connect(this.address);
             this.socket.Subscribe(this.topic);
@@ -61,6 +59,17 @@ namespace Microsoft.Psi.Interop.Transport
             this.poller = new NetMQPoller();
             this.poller.Add(this.socket);
             this.poller.RunAsync();
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+            if (this.socket != null)
+            {
+                this.poller.Dispose();
+                this.socket.Dispose();
+                this.socket = null;
+            }
         }
 
         private void ReceiveReady(object sender, NetMQSocketEventArgs e)

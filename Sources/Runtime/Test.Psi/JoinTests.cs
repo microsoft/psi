@@ -37,6 +37,61 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void DynamicJoinClosingSecondaryOrDefault()
+        {
+            using (var p = Pipeline.Create())
+            {
+                // Setup a sequence with a parallel operator, with joinOrDefault = true, and ensure that 
+                // the "orDefault" is correctly applied while the instance substream exists, but not outside of that existance.
+                // This tests for making sure we are correctly tracking stream closings and the interpolator
+                // in Join is doing the right thing based on the stream closing times.
+
+                // key           N/A       1       1       1       1       1       1       N/A     N/A     N/A
+                // value         N/A       1       2       3       4       5       6       N/A     N/A     N/A
+                // gamma-result           [1       2       -       4       -       -]
+                // out                     1       2       0       4       0       0
+
+                var input = Generators.Sequence(p, new List<Dictionary<int, int>>()
+                {
+                    new Dictionary<int, int>(),
+                    new Dictionary<int, int>() { { 1, 1 } },
+                    new Dictionary<int, int>() { { 1, 2 } },
+                    new Dictionary<int, int>() { { 1, 3 } },
+                    new Dictionary<int, int>() { { 1, 4 } },
+                    new Dictionary<int, int>() { { 1, 5 } },
+                    new Dictionary<int, int>() { { 1, 6 } },
+                    new Dictionary<int, int>(),
+                    new Dictionary<int, int>(),
+                    new Dictionary<int, int>(),
+                });
+
+                var resultsParallelOrDefault = new List<int>();
+                input.Parallel(s => s.Where(x => x != 3 && x <= 4), joinOrDefault: true).Do(d =>
+                {
+                    if (d.Count() > 0)
+                    {
+                        resultsParallelOrDefault.Add(d[1]);
+                    }
+                });
+
+                var resultsParallel = new List<int>();
+                input.Parallel(s => s.Where(x => x != 3 && x <= 4)).Do(d =>
+                {
+                    if (d.Count() > 0)
+                    {
+                        resultsParallel.Add(d[1]);
+                    }
+                });
+
+                p.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(resultsParallel, new[] { 1, 2, 4 }));
+                Assert.IsTrue(Enumerable.SequenceEqual(resultsParallelOrDefault, new[] { 1, 2, 0, 4, 0, 0 }));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void ScalarJoin()
         {
             var resultsAB = new List<ValueTuple<int, int>>();

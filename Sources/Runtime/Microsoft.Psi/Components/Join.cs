@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Components
         private readonly Match.Interpolator<TSecondary> interpolator;
         private readonly Func<TPrimary, TSecondary[], TOut> outputCreator;
         private readonly Func<TPrimary, IEnumerable<int>> secondarySelector;
-        private Queue<Message<TSecondary>>[] secondaryQueues;
+        private (Queue<Message<TSecondary>> Queue, DateTime? ClosedOriginatingTime)[] secondaryQueues;
         private Receiver<TSecondary>[] inSecondaries;
         private IEnumerable<int> defaultSecondarySet;
         private Pipeline pipeline;
@@ -44,7 +44,6 @@ namespace Microsoft.Psi.Components
             Func<TPrimary, IEnumerable<int>> secondarySelector = null)
             : base()
         {
-            pipeline.RegisterPipelineFinalHandler(this, () => this.Publish(true));
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.InPrimary = pipeline.CreateReceiver<TPrimary>(this, this.ReceivePrimary, nameof(this.InPrimary));
@@ -52,15 +51,16 @@ namespace Microsoft.Psi.Components
             this.outputCreator = outputCreator;
             this.secondarySelector = secondarySelector;
             this.inSecondaries = new Receiver<TSecondary>[secondaryCount];
-            this.secondaryQueues = new Queue<Message<TSecondary>>[secondaryCount];
+            this.secondaryQueues = new ValueTuple<Queue<Message<TSecondary>>, DateTime?>[secondaryCount];
             this.lastValues = new TSecondary[secondaryCount];
             this.lastResults = new MatchResult<TSecondary>[secondaryCount];
             this.defaultSecondarySet = Enumerable.Range(0, secondaryCount);
             for (int i = 0; i < secondaryCount; i++)
             {
-                this.secondaryQueues[i] = new Queue<Message<TSecondary>>();
+                this.secondaryQueues[i] = (new Queue<Message<TSecondary>>(), null);
                 var id = i; // needed to make the closure below byval
                 var receiver = pipeline.CreateReceiver<TSecondary>(this, (d, e) => this.ReceiveSecondary(id, d, e), "InSecondary" + i);
+                receiver.Unsubscribed += closedOriginatingTime => this.SecondaryClosed(id, closedOriginatingTime);
                 this.inSecondaries[i] = receiver;
             }
         }
@@ -88,8 +88,9 @@ namespace Microsoft.Psi.Components
             var count = lastIndex + 1;
             Array.Resize(ref this.inSecondaries, count);
             var newInput = this.inSecondaries[lastIndex] = this.pipeline.CreateReceiver<TSecondary>(this, (d, e) => this.ReceiveSecondary(lastIndex, d, e), "InSecondary" + lastIndex);
+            newInput.Unsubscribed += closedOriginatingTime => this.SecondaryClosed(lastIndex, closedOriginatingTime);
             Array.Resize(ref this.secondaryQueues, count);
-            this.secondaryQueues[lastIndex] = new Queue<Message<TSecondary>>();
+            this.secondaryQueues[lastIndex] = (new Queue<Message<TSecondary>>(), null);
             Array.Resize(ref this.lastResults, count);
             Array.Resize(ref this.lastValues, count);
             this.defaultSecondarySet = Enumerable.Range(0, count);
@@ -100,17 +101,23 @@ namespace Microsoft.Psi.Components
         {
             var clone = message.DeepClone(this.InPrimary.Recycler);
             this.primaryQueue.Enqueue(Message.Create(clone, e));
-            this.Publish(false);
+            this.Publish();
         }
 
         private void ReceiveSecondary(int id, TSecondary message, Envelope e)
         {
             var clone = message.DeepClone(this.InSecondaries[id].Recycler);
-            this.secondaryQueues[id].Enqueue(Message.Create(clone, e));
-            this.Publish(false);
+            this.secondaryQueues[id].Queue.Enqueue(Message.Create(clone, e));
+            this.Publish();
         }
 
-        private void Publish(bool final)
+        private void SecondaryClosed(int index, DateTime closedOriginatingTime)
+        {
+            this.secondaryQueues[index].ClosedOriginatingTime = closedOriginatingTime;
+            this.Publish();
+        }
+
+        private void Publish()
         {
             while (this.primaryQueue.Count > 0)
             {
@@ -120,7 +127,7 @@ namespace Microsoft.Psi.Components
                 foreach (var iSecondary in secondarySet)
                 {
                     var secondaryQueue = this.secondaryQueues[iSecondary];
-                    var matchResult = this.interpolator.Match(primary.OriginatingTime, secondaryQueue, final);
+                    var matchResult = this.interpolator.Match(primary.OriginatingTime, secondaryQueue.Queue, secondaryQueue.ClosedOriginatingTime);
                     if (matchResult.Type == MatchResultType.InsufficientData)
                     {
                         // we need to wait more
@@ -147,9 +154,9 @@ namespace Microsoft.Psi.Components
                     var secondaryQueue = this.secondaryQueues[iSecondary];
 
                     // clear the secondary queue as needed
-                    while (secondaryQueue.Peek().OriginatingTime < this.lastResults[iSecondary].ObsoleteTime)
+                    while (secondaryQueue.Queue.Count != 0 && secondaryQueue.Queue.Peek().OriginatingTime < this.lastResults[iSecondary].ObsoleteTime)
                     {
-                        this.InSecondaries[iSecondary].Recycle(secondaryQueue.Dequeue());
+                        this.InSecondaries[iSecondary].Recycle(secondaryQueue.Queue.Dequeue());
                     }
                 }
 

@@ -13,15 +13,15 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
     /// Provides methods to get a valid O-auth token. Adapted from the following sample code:
     /// https://docs.microsoft.com/en-us/azure/cognitive-services/speech/how-to/how-to-authentication
     /// </summary>
-    public class Authentication : IDisposable
+    public class Authentication : IDisposable, IAuthentication
     {
+        // Access token expires every 10 minutes. Renew it every 8 minutes.
+        private const int RefreshTokenDuration = 8;
+
         /// <summary>
         /// The token service URL.
         /// </summary>
-        public static readonly string FetchTokenUri = "https://api.cognitive.microsoft.com/sts/v1.0";
-
-        // Access token expires every 10 minutes. Renew it every 8 minutes.
-        private const int RefreshTokenDuration = 8;
+        private static readonly string FetchTokenUri = "https://api.cognitive.microsoft.com/sts/v1.0";
 
         private string subscriptionKey;
         private string token;

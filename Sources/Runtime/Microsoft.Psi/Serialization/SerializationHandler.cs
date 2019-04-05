@@ -85,6 +85,12 @@ namespace Microsoft.Psi.Serialization
         public bool IsImmutableType => this.isImmutableType;
 
         /// <summary>
+        /// Gets or sets a value indicating whether an instance of the target type must
+        /// first be cleared before it is reused as a cloning or deserialization target.
+        /// </summary>
+        public bool? IsClearRequired { get; set; }
+
+        /// <summary>
         /// Returns the size, in bytes, of the value type associated with this handler.
         /// For a reference type, the size returned is the size of a reference value of the corresponding type (4 bytes on 32-bit systems),
         /// not the size of the data stored in objects referred to by the reference value.

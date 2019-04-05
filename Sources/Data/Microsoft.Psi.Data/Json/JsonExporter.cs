@@ -12,12 +12,11 @@ namespace Microsoft.Psi.Data.Json
     /// <summary>
     /// Component that writes messages to a multi-stream JSON store.
     /// </summary>
-    public class JsonExporter : IDisposable
+    public class JsonExporter : Subpipeline, IDisposable
     {
         private readonly JsonStoreWriter writer;
         private readonly Merger<Message<JToken>, string> merger;
         private readonly Pipeline pipeline;
-        private readonly Receiver<Message<JToken>> writerInput;
         private readonly ManualResetEvent throttle = new ManualResetEvent(true);
 
         /// <summary>
@@ -38,18 +37,21 @@ namespace Microsoft.Psi.Data.Json
         /// <param name="pipeline">The pipeline that owns this instance.</param>
         /// <param name="writer">The underlying store writer.</param>
         protected JsonExporter(Pipeline pipeline, JsonStoreWriter writer)
+            : base(pipeline)
         {
             this.pipeline = pipeline;
             this.writer = writer;
-            this.merger = new Merger<Message<JToken>, string>(pipeline);
-            this.writerInput = pipeline.CreateReceiver<Message<JToken>>(this, (m, e) => this.writer.Write(m.Data, m.Envelope), nameof(this.writerInput));
-            this.merger.Select(this.ThrottledMessages).PipeTo(this.writerInput, DeliveryPolicy.Unlimited);
+            this.merger = new Merger<Message<JToken>, string>(pipeline, (_, m) =>
+            {
+                this.throttle.WaitOne();
+                this.writer.Write(m.Data.Data, m.Data.Envelope);
+            });
         }
 
         /// <summary>
         /// Gets the name of the store being written to
         /// </summary>
-        public string Name => this.writer.Name;
+        public new string Name => this.writer.Name;
 
         /// <summary>
         /// Gets the path to the store being written to if the store is persisted to disk, or null if the store is volatile.
@@ -59,9 +61,13 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Closes the store.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
-            this.writer.Dispose();
+            base.Dispose();
+            if (this.writer != null)
+            {
+                this.writer.Dispose();
+            }
         }
 
         /// <summary>
@@ -103,12 +109,6 @@ namespace Microsoft.Psi.Data.Json
             var mergeInput = this.merger.Add(metadata.Name); // this checks for duplicates
             this.writer.OpenStream(metadata);
             Operators.PipeTo(source, mergeInput, deliveryPolicy);
-        }
-
-        private Message<JToken> ThrottledMessages(ValueTuple<string, Message<Message<JToken>>> messages)
-        {
-            this.throttle.WaitOne();
-            return messages.Item2.Data;
         }
 
         private sealed class JsonSerializerComponent<T> : ConsumerProducer<T, Message<JToken>>

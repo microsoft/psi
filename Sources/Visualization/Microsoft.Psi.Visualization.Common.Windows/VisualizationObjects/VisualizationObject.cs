@@ -4,41 +4,23 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using System.Windows;
+    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Navigation;
-    using Microsoft.Psi.Visualization.Server;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
     /// Base class for visualization objects
     /// </summary>
-    [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [Guid(Guids.RemoteVisualizationObjectCLSIDString)]
-    [ComVisible(false)]
-    public abstract class VisualizationObject : ReferenceCountedObject, IRemoteVisualizationObject
+    public abstract class VisualizationObject : ObservableObject
     {
-        private Dictionary<uint, INotifyRemoteConfigurationChanged> advises;
-        private uint nextAdviseCookie;
-
-        /// <summary>
-        /// The top level visualization container this visualization object is parented under.
-        /// </summary>
-        private VisualizationContainer container;
-
         /// <summary>
         /// The visualization panel this visualization object is parented under.
         /// </summary>
         private VisualizationPanel panel;
-
-        /// <summary>
-        /// The navigator for for the container
-        /// </summary>
-        private Navigator navigator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VisualizationObject"/> class.
@@ -60,36 +42,37 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public VisualizationContainer Container => this.container;
+        public VisualizationContainer Container => this.panel?.Container;
 
         /// <summary>
         /// Gets the parent VisualizationPanel.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public VisualizationPanel Panel => this.panel;
+        public VisualizationPanel Panel
+        {
+            get => this.panel;
+            private set
+            {
+                this.RaisePropertyChanging(nameof(this.IsConnected));
+                this.panel = value;
+                this.RaisePropertyChanged(nameof(this.IsConnected));
+            }
+        }
 
         /// <summary>
         /// Gets the navigator this object is bound to.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public Navigator Navigator => this.navigator;
+        public Navigator Navigator => this.panel?.Container.Navigator;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the path to the visualization object's icon
+        /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        IRemoteNavigator IRemoteVisualizationObject.Navigator => this.Navigator;
-
-        /// <inheritdoc />
-        [Browsable(false)]
-        [IgnoreDataMember]
-        IRemoteVisualizationContainer IRemoteVisualizationObject.Container => this.Container;
-
-        /// <inheritdoc />
-        [Browsable(false)]
-        [IgnoreDataMember]
-        IRemoteVisualizationPanel IRemoteVisualizationObject.Panel => this.Panel;
+        public virtual string IconSource => IconSourcePath.Stream;
 
         /// <summary>
         /// Gets a value indicating whether this visualization object can use the snap to stream functionality
@@ -106,148 +89,57 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public virtual bool IsSnappedToStream => false;
 
         /// <summary>
+        /// Gets a value indicating whether this visualization object is an audio stream
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual bool IsAudioStream => false;
+
+        /// <summary>
+        /// Gets a value indicating whether this visualization object is connected to a panel
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public bool IsConnected => this.panel != null;
+
+        /// <summary>
         /// Snaps or unsnaps the parent container to this stream
         /// </summary>
-        /// <param name="snapToStream">TRUE if this object should be snapped, otherwise FALSE</param>
+        /// <param name="snapToStream">true if this object should be snapped, otherwise false</param>
         [Browsable(false)]
         public virtual void SnapToStream(bool snapToStream)
         {
         }
 
-        /// <inheritdoc />
-        public uint Advise(INotifyRemoteConfigurationChanged notifyVisualizationObjectChanged)
+        /// <summary>
+        /// Disconnect from the panel.
+        /// </summary>
+        internal void Disconnect()
         {
-            uint cookie = this.nextAdviseCookie++;
-            this.advises.Add(cookie, notifyVisualizationObjectChanged);
-            return cookie;
-        }
-
-        /// <inheritdoc />
-        public void BringToFront()
-        {
-            this.panel.BringToFront(this);
-        }
-
-        /// <inheritdoc />
-        public void Close()
-        {
-            this.panel.RemoveVisualizationObject(this);
-        }
-
-        /// <inheritdoc />
-        /// <remarks>
-        /// This method should not be directly called or overriden by implementors. It is for internal use only.
-        /// </remarks>
-        public abstract string GetConfiguration();
-
-        /// <inheritdoc />
-        public void SendToBack()
-        {
-            this.panel.SendToBack(this);
-        }
-
-        /// <inheritdoc />
-        /// <remarks>
-        /// This method should not be directly called or overriden by implementors. It is for internal use only.
-        /// </remarks>
-        public abstract void SetConfiguration(string jsonConfiguration);
-
-        /// <inheritdoc />
-        public void Unadvise(uint cookie)
-        {
-            if (!this.advises.Remove(cookie))
+            // if this visualization object has already been disconnected, throw an exception
+            if (this.Panel == null)
             {
-                Marshal.ThrowExceptionForHR(ComNative.E_POINTER);
+                throw new InvalidOperationException("This visualization object is already disconnected.");
             }
+
+            this.OnDisconnect();
+            this.Panel = null;
         }
 
         /// <summary>
-        /// Called internally by the VisualizationPanel to connect the parent chain.
+        /// Connect to the panel.
         /// </summary>
         /// <param name="panel">Panel to connect this visualization object to.</param>
-        internal void SetParentPanel(VisualizationPanel panel)
+        internal void ConnectToPanel(VisualizationPanel panel)
         {
+            // if this visualization object is already connected to a different panel, throw an exception
             if (this.panel != null)
             {
-                this.OnDisconnect();
-                this.navigator.CursorChanged -= this.OnCursorChanged;
-                this.panel = null;
-                this.container = null;
-                this.navigator = null;
+                throw new InvalidOperationException("This visualization object is already connected into a panel.");
             }
 
-            if (panel != null)
-            {
-                this.panel = panel;
-                this.container = this.panel.Container;
-                this.navigator = this.container.Navigator;
-                this.navigator.CursorChanged += this.OnCursorChanged;
-                this.OnConnect();
-            }
-        }
-
-        /// <summary>
-        /// Overridable method to allow derived VisualzationObject to initialize properties as part of object construction or after deserialization.
-        /// </summary>
-        protected virtual void InitNew()
-        {
-            this.advises = new Dictionary<uint, INotifyRemoteConfigurationChanged>();
-            this.nextAdviseCookie = 1;
-        }
-
-        /// <summary>
-        /// Notifiy client application when configuration has changed.
-        /// </summary>
-        protected void NotifyConfigurationChanged()
-        {
-            string jsonConfiguration = this.GetConfiguration();
-            List<uint> orphanedAdvises = new List<uint>();
-            foreach (var advise in this.advises)
-            {
-                try
-                {
-                    advise.Value.OnRemoteConfigurationChanged(jsonConfiguration);
-                }
-                catch (COMException)
-                {
-                    orphanedAdvises.Add(advise.Key);
-                }
-            }
-
-            foreach (var orphanedAdvise in orphanedAdvises)
-            {
-                this.advises.Remove(orphanedAdvise);
-            }
-        }
-
-        /// <summary>
-        /// Overridable method to allow derived VisualzationObject to react whenever the Configuration property has changed.
-        /// </summary>
-        protected virtual void OnConfigurationChanged()
-        {
-            this.NotifyConfigurationChanged();
-        }
-
-        /// <summary>
-        /// Overridable method to allow derived VisualzationObject to react whenever a property on the Configuration property has changed.
-        /// </summary>
-        /// <param name="propertyName">Name of property that has changed.</param>
-        protected virtual void OnConfigurationPropertyChanged(string propertyName)
-        {
-        }
-
-        /// <summary>
-        /// Overideable method to allow derived VisualizationObjects to react to being loaded.
-        /// </summary>
-        protected virtual void OnConnect()
-        {
-        }
-
-        /// <summary>
-        /// Overideable method to allow derived VisualizationObjects to react to being unloaded.
-        /// </summary>
-        protected virtual void OnDisconnect()
-        {
+            this.Panel = panel;
+            this.OnConnect();
         }
 
         /// <summary>
@@ -257,6 +149,56 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="e">An object that contains navigator changed event data.</param>
         protected virtual void OnCursorChanged(object sender, NavigatorTimeChangedEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Notifies the visualization object that the cursor mode has changed
+        /// </summary>
+        /// <param name="sender">The object that triggered the change event.</param>
+        /// <param name="cursorModeEventArgs">The old and new cursor modes.</param>
+        protected virtual void OnCursorModeChanged(object sender, CursorModeChangedEventArgs cursorModeEventArgs)
+        {
+        }
+
+        /// <summary>
+        /// Overridable method to allow derived VisualzationObject to initialize properties as part of object construction or after deserialization.
+        /// </summary>
+        protected virtual void InitNew()
+        {
+        }
+
+        /// <summary>
+        /// Overridable method to allow derived VisualizationObject to react whenever the Configuration property has changed.
+        /// </summary>
+        protected virtual void OnConfigurationChanged()
+        {
+        }
+
+        /// <summary>
+        /// Overridable method to allow derived VisualizationObject to react whenever a property on the Configuration property has changed.
+        /// </summary>
+        /// <param name="sender">The sender that triggered the change event.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Overideable method to allow derived VisualizationObjects to react to being loaded.
+        /// </summary>
+        protected virtual void OnConnect()
+        {
+            this.Navigator.CursorChanged += this.OnCursorChanged;
+            this.Navigator.CursorModeChanged += this.OnCursorModeChanged;
+        }
+
+        /// <summary>
+        /// Overideable method to allow derived VisualizationObjects to react to being unloaded.
+        /// </summary>
+        protected virtual void OnDisconnect()
+        {
+            this.Navigator.CursorChanged -= this.OnCursorChanged;
+            this.Navigator.CursorModeChanged -= this.OnCursorModeChanged;
         }
 
         [OnDeserializing]

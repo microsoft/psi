@@ -96,8 +96,6 @@ namespace Microsoft.Psi.Media
 
         private MediaCapture(Pipeline pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Out));
         }
@@ -184,11 +182,12 @@ namespace Microsoft.Psi.Media
             }
         }
 
-        /// <summary>
-        /// Called once all the subscriptions are established.
-        /// </summary>
-        private void OnPipelineStart()
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
             MediaCaptureDevice.Initialize();
             CaptureFormat found = null;
             foreach (var device in MediaCaptureDevice.AllDevices)
@@ -198,15 +197,14 @@ namespace Microsoft.Psi.Media
                     continue;
                 }
 
-                Trace.WriteLine($"MediaCapture - Searching for width={this.configuration.Width} height={this.configuration.Height} deviceId={this.configuration.DeviceId}");
-                Trace.WriteLine($"MediaCapture - Found: Name: '{device.FriendlyName}' SymLink: {device.SymbolicLink}");
-                Trace.WriteLine($"MediaCapture -   Current   - Width: {device.CurrentFormat.nWidth} Height: {device.CurrentFormat.nHeight} Type: {device.CurrentFormat.subType.Name}/{device.CurrentFormat.subType.Guid} Framerate: {device.CurrentFormat.nFrameRateNumerator}/{device.CurrentFormat.nFrameRateDenominator}");
-
+               // Trace.WriteLine($"MediaCapture - Searching for width={this.configuration.Width} height={this.configuration.Height} deviceId={this.configuration.DeviceId}");
+               // Trace.WriteLine($"MediaCapture - Found: Name: '{device.FriendlyName}' SymLink: {device.SymbolicLink}");
+               // Trace.WriteLine($"MediaCapture -   Current   - Width: {device.CurrentFormat.nWidth} Height: {device.CurrentFormat.nHeight} Type: {device.CurrentFormat.subType.Name}/{device.CurrentFormat.subType.Guid} Framerate: {device.CurrentFormat.nFrameRateNumerator}/{device.CurrentFormat.nFrameRateDenominator}");
                 if (string.IsNullOrEmpty(this.configuration.DeviceId) || device.FriendlyName == this.configuration.DeviceId || device.SymbolicLink == this.configuration.DeviceId)
                 {
                     foreach (var format in device.Formats)
                     {
-                        Trace.WriteLine($"MediaCapture -   Supported - Width: {format.nWidth} Height: {format.nHeight} Type: {format.subType.Name}/{format.subType.Guid} Framerate: {format.nFrameRateNumerator}/{format.nFrameRateDenominator}");
+                      // Trace.WriteLine($"MediaCapture -   Supported - Width: {format.nWidth} Height: {format.nHeight} Type: {format.subType.Name}/{format.subType.Guid} Framerate: {format.nFrameRateNumerator}/{format.nFrameRateDenominator}");
                         if (this.configuration.Width == format.nWidth && this.configuration.Height == format.nHeight)
                         {
                             // found suitable width/height
@@ -226,7 +224,7 @@ namespace Microsoft.Psi.Media
 
                 if (found != null)
                 {
-                    Trace.WriteLine($"MediaCapture - Using - Width: {found.nWidth} Height: {found.nHeight} Type: {found.subType.Name}/{found.subType.Guid} Framerate: {found.nFrameRateNumerator}/{found.nFrameRateDenominator}");
+                    // Trace.WriteLine($"MediaCapture - Using - Width: {found.nWidth} Height: {found.nHeight} Type: {found.subType.Name}/{found.subType.Guid} Framerate: {found.nFrameRateNumerator}/{found.nFrameRateDenominator}");
                     break;
                 }
             }
@@ -272,10 +270,8 @@ namespace Microsoft.Psi.Media
             }
         }
 
-        /// <summary>
-        /// Called by the pipeline when media capture should be stopped
-        /// </summary>
-        private void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             this.Dispose();
             MediaCaptureDevice.Uninitialize();

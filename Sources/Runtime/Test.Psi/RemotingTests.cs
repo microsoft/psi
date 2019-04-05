@@ -77,6 +77,21 @@ namespace Test.Psi
                     }
 
                     Console.WriteLine("Connected");
+
+                    // wait for the stream to be created in the remote server
+                    int retryIntervalMs = 10;
+                    int maxRetries = 1000;
+                    int retries = 0;
+                    while (!remote.Importer.Contains(ServerDataStream) && retries++ < maxRetries)
+                    {
+                        Thread.Sleep(retryIntervalMs);
+                        if (retries == maxRetries)
+                        {
+                            server.Kill();
+                            throw new Exception($"Stream {ServerDataStream} was not created within the allotted time.");
+                        }
+                    }
+
                     var importer = remote.Importer;
                     var dataStream = importer.OpenStream<int>(ServerDataStream);
                     dataStream.Do(data.Add).Select(i => ++count).Where(c => c == 100).Do(_ => doneEvt.Set());

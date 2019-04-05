@@ -503,6 +503,103 @@ namespace Test.Psi
             Assert.AreEqual(poco.GuidProp, last.GuidProp);
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void ClearShared()
+        {
+            // single Shared object
+            var shared = Shared.Create(new byte[10]);
+            Assert.IsNotNull(shared.Resource);
+            Serializer.Clear(ref shared, new SerializationContext());
+            Assert.IsNull(shared.Resource);
+
+            // Tuple containing Shared object
+            shared = Shared.Create(new byte[10]);
+            var tuple = Tuple.Create(1, shared);
+            Assert.IsNotNull(shared.Resource);
+            Serializer.Clear(ref tuple, new SerializationContext());
+            Assert.IsNull(shared.Resource);
+
+            // ValueTuple containing Shared object
+            shared = Shared.Create(new byte[10]);
+            var vTuple = ValueTuple.Create(1, shared);
+            Assert.IsNotNull(shared.Resource);
+            Serializer.Clear(ref vTuple, new SerializationContext());
+            Assert.IsNull(shared.Resource);
+
+            // array of Shared objects
+            var shared1 = Shared.Create(new byte[10]);
+            var shared2 = Shared.Create(new byte[10]);
+            var sharedArr = new[] { shared1, shared2 };
+            Assert.IsNotNull(shared1.Resource);
+            Assert.IsNotNull(shared2.Resource);
+            Serializer.Clear(ref sharedArr, new SerializationContext());
+            Assert.IsNull(shared1.Resource);
+            Assert.IsNull(shared2.Resource);
+
+            // Dictionary of Shared objects
+            shared1 = Shared.Create(new byte[10]);
+            shared2 = Shared.Create(new byte[10]);
+            var sharedDict = new Dictionary<int, Shared<byte[]>>() { { 1, shared1 }, { 2, shared2 } };
+            Assert.IsNotNull(shared1.Resource);
+            Assert.IsNotNull(shared2.Resource);
+            Serializer.Clear(ref sharedDict, new SerializationContext());
+            Assert.IsNull(shared1.Resource);
+            Assert.IsNull(shared2.Resource);
+
+            // LinkedList of Shared objects
+            shared1 = Shared.Create(new byte[10]);
+            shared2 = Shared.Create(new byte[10]);
+            var sharedList = new LinkedList<Shared<byte[]>>(new[] { shared1, shared2 });
+            Assert.IsNotNull(shared1.Resource);
+            Assert.IsNotNull(shared2.Resource);
+            Serializer.Clear(ref sharedList, new SerializationContext());
+            Assert.IsNull(shared1.Resource);
+            Assert.IsNull(shared2.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ClearNotRequired()
+        {
+            // test various classes for which Clear() is a no-op
+            var s1 = new STStructSimple(100);
+            var s2 = new STStructSimple(100);
+            Assert.IsTrue(s1.Equals(s2));
+            Serializer.Clear(ref s1, new SerializationContext());
+            Assert.IsTrue(s1.Equals(s2));
+
+            var c1 = new STClass(FooEnum.One, 1, "one", new[] { 1.0 });
+            var c2 = new STClass(FooEnum.One, 1, "one", new[] { 1.0 });
+            Assert.IsTrue(c1.Same(c2));
+            Serializer.Clear(ref c1, new SerializationContext());
+            Assert.IsTrue(c1.Same(c2));
+
+            var sc1 = new STStructComplex(100);
+            var sc2 = new STStructComplex(100);
+            Assert.IsTrue(sc1.Same(sc2));
+            Serializer.Clear(ref sc1, new SerializationContext());
+            Assert.IsTrue(sc1.Same(sc2));
+
+            var arr = new STStructComplex[1];
+            arr[0] = sc1;
+            Assert.IsTrue(sc1.Same(sc2));
+            Serializer.Clear(ref arr, new SerializationContext());
+            Assert.IsTrue(sc1.Same(sc2));
+
+            var list = new List<STStructComplex>();
+            list.Add(sc1);
+            Assert.IsTrue(sc1.Same(sc2));
+            Serializer.Clear(ref list, new SerializationContext());
+            Assert.IsTrue(sc1.Same(sc2));
+
+            var dict = new Dictionary<int, STStructComplex>();
+            dict.Add(1, sc1);
+            Assert.IsTrue(sc1.Same(sc2));
+            Serializer.Clear(ref dict, new SerializationContext());
+            Assert.IsTrue(sc1.Same(sc2));
+        }
+
         private void ValueTypeCloneTest<T>(T value)
         {
             Assert.AreEqual(value, value.DeepClone());

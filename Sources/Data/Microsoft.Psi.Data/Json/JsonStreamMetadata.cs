@@ -116,5 +116,11 @@ namespace Microsoft.Psi.Data.Json
             this.AverageLatency = (int)((((long)this.AverageLatency * (this.MessageCount - 1)) + ((envelope.Time - envelope.OriginatingTime).Ticks / TicksPerMicrosecond)) / this.MessageCount);
             this.AverageMessageSize = (int)((((long)this.AverageMessageSize * (this.MessageCount - 1)) + size) / this.MessageCount);
         }
+
+        /// <inheritdoc />
+        public void Update(TimeInterval messagesTimeInterval, TimeInterval messagesOriginatingTimeInterval)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

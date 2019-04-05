@@ -53,8 +53,6 @@ namespace Microsoft.Psi.Audio
         /// <param name="configuration">The component configuration.</param>
         public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
@@ -99,14 +97,15 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void Dispose()
         {
-            this.OnPipelineStop();
+            this.Stop();
         }
 
-        /// <summary>
-        /// Called to start capturing audio from the microphone.
-        /// </summary>
-        private void OnPipelineStart()
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
             this.audioDevice = LinuxAudioInterop.Open(
                 this.configuration.DeviceName,
                 LinuxAudioInterop.Mode.Capture,
@@ -153,10 +152,8 @@ namespace Microsoft.Psi.Audio
             })) { IsBackground = true }.Start();
         }
 
-        /// <summary>
-        /// Called when the pipeline is shutting down.
-        /// </summary>
-        private void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             var audioDevice = Interlocked.Exchange(ref this.audioDevice, null);
             if (audioDevice != null)

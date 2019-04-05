@@ -7,15 +7,16 @@ namespace Microsoft.Psi.Components
     using System.Collections.Generic;
 
     /// <summary>
-    /// I
+    /// Component that implements a stream sampler.
     /// </summary>
-    /// <typeparam name="T">The type of messages</typeparam>
-    public class Sampler<T> : IConsumer<T>, IProducer<T>
+    /// <typeparam name="T">The type of messages to sample.</typeparam>
+    public class Sampler<T> : ConsumerProducer<T, T>
     {
         private readonly Queue<Message<T>> inputQueue = new Queue<Message<T>>();
         private readonly Match.Interpolator<T> interpolator;
         private readonly TimeSpan samplingInterval;
         private DateTime nextPublishTime;
+        private DateTime? closingOriginatingTime = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sampler{T}"/> class.
@@ -24,21 +25,15 @@ namespace Microsoft.Psi.Components
         /// <param name="interpolator">Interpolator used to sample.</param>
         /// <param name="samplingInterval">Sampling interval.</param>
         public Sampler(Pipeline pipeline, Match.Interpolator<T> interpolator, TimeSpan samplingInterval)
-            : base()
+            : base(pipeline)
         {
-            this.Out = pipeline.CreateEmitter<T>(this, nameof(this.Out));
-            this.In = pipeline.CreateReceiver<T>(this, this.Receive, nameof(this.In));
+            this.In.Unsubscribed += closingOriginatingTime => this.closingOriginatingTime = closingOriginatingTime;
             this.interpolator = interpolator;
             this.samplingInterval = samplingInterval;
         }
 
-        /// <inheritdoc />
-        public Emitter<T> Out { get; }
-
-        /// <inheritdoc />
-        public Receiver<T> In { get; }
-
-        private void Receive(T message, Envelope e)
+        /// <inheritdoc/>
+        protected override void Receive(T message, Envelope e)
         {
             var clone = message.DeepClone(this.In.Recycler);
             this.inputQueue.Enqueue(Message.Create(clone, e));
@@ -54,7 +49,7 @@ namespace Microsoft.Psi.Components
 
             while (this.nextPublishTime <= now)
             {
-                var matchResult = this.interpolator.Match(this.nextPublishTime, this.inputQueue, false);
+                var matchResult = this.interpolator.Match(this.nextPublishTime, this.inputQueue, this.closingOriginatingTime);
                 if (matchResult.Type == MatchResultType.InsufficientData)
                 {
                     // we need to wait more

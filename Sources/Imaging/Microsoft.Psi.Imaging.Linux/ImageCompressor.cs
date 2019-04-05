@@ -45,7 +45,7 @@ namespace Microsoft.Psi.Imaging
                     break;
             }
 
-            using (var sharedEncodedImage = EncodedImagePool.Get())
+            using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
             {
                 sharedEncodedImage.Resource.EncodeFrom(instance, encoder);
                 Serializer.Serialize(writer, sharedEncodedImage, context);

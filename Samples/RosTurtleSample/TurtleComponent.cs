@@ -7,18 +7,16 @@ namespace TurtleROSSample
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
-    public class TurtleComponent : IFiniteSourceComponent
+    public class TurtleComponent : ISourceComponent
     {
         private readonly Pipeline pipeline;
         private readonly Turtle turtle;
 
-        private Action onCompleted;
+        private Action<DateTime> notifyCompletionTime;
         private bool stopped;
 
         public TurtleComponent(Pipeline pipeline, Turtle turtle)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.turtle = turtle;
             this.Velocity = pipeline.CreateReceiver<Tuple<float, float>>(this, (c, _) => this.turtle.Velocity(c.Item1, c.Item2), nameof(this.Velocity));
@@ -29,23 +27,19 @@ namespace TurtleROSSample
 
         public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
 
-        public void Initialize(Action onCompleted)
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.onCompleted = onCompleted;
-        }
-
-        public void OnPipelineStart()
-        {
+            this.notifyCompletionTime = notifyCompletionTime;
             this.turtle.Connect();
             this.turtle.PoseChanged += this.OnPoseChanged;
         }
 
-        public void OnPipelineStop()
+        public void Stop()
         {
             this.stopped = true;
             this.turtle.Disconnect();
             this.turtle.PoseChanged -= this.OnPoseChanged;
-            this.onCompleted();
+            this.notifyCompletionTime(this.pipeline.GetCurrentTime());
         }
 
         private void OnPoseChanged(object sender, Tuple<float, float, float> pose)

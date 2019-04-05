@@ -4,19 +4,19 @@
 namespace Microsoft.Psi.Imaging
 {
     /// <summary>
-    /// Defines a pool of encoded images
+    /// Provides a pool of shared encoded images.
     /// </summary>
-    public class EncodedImagePool
+    public static class EncodedImagePool
     {
-        private static readonly SharedPool<EncodedImage> Recycler = new SharedPool<EncodedImage>(10);
+        private static readonly SharedPool<EncodedImage> Instance = new SharedPool<EncodedImage>(() => new EncodedImage(), 10);
 
         /// <summary>
-        /// Retrieves an image from the pool
+        /// Gets or creates an encoded image from the pool.
         /// </summary>
-        /// <returns>Image retrieved from the pool</returns>
-        public static Shared<EncodedImage> Get()
+        /// <returns>A shared encoded image from the pool.</returns>
+        public static Shared<EncodedImage> GetOrCreate()
         {
-            return EncodedImagePool.Recycler.GetOrCreate(() => new EncodedImage());
+            return Instance.GetOrCreate();
         }
     }
 }

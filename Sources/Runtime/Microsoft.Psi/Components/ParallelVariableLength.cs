@@ -65,18 +65,22 @@ namespace Microsoft.Psi.Components
                 if (this.branches.Count == i)
                 {
                     var subpipeline = Subpipeline.Create(this.pipeline, $"subpipeline{i}");
-                    var branch = subpipeline.CreateEmitter<TIn>(subpipeline, $"branch{i}");
+                    var branch = this.pipeline.CreateEmitter<TIn>(this, $"branch{i}");
+                    var connectorIn = new Connector<TIn>(this.pipeline, subpipeline, $"connectorIn{i}");
+                    branch.PipeTo(connectorIn, true); // allows connections in running pipelines
 
                     this.branches.Add(branch);
 
                     if (this.parallelTransform != null)
                     {
-                        var branchResult = this.parallelTransform(i, branch);
-                        branchResult.PipeTo(this.join.AddInput());
+                        var branchResult = this.parallelTransform(i, connectorIn.Out);
+                        var connectorOut = new Connector<TOut>(subpipeline, this.pipeline, $"connectorOut{i}");
+                        branchResult.PipeTo(connectorOut.In, true);
+                        connectorOut.Out.PipeTo(this.join.AddInput(), true);
                     }
                     else
                     {
-                        this.parallelAction(i, branch);
+                        this.parallelAction(i, connectorIn.Out);
                     }
 
                     subpipeline.RunAsync(this.pipeline.ReplayDescriptor);

@@ -23,8 +23,7 @@ namespace Microsoft.Psi
         public static TC PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, DeliveryPolicy deliveryPolicy = null)
             where TC : IConsumer<TIn>
         {
-            source.Out.Subscribe(consumer.In, deliveryPolicy ?? source.Out.Pipeline.DeliveryPolicy);
-            return consumer;
+            return PipeTo(source, consumer, false, deliveryPolicy);
         }
 
         /// <summary>
@@ -76,6 +75,26 @@ namespace Microsoft.Psi
             }
 
             return new Connector<T>(self, pipeline, name);
+        }
+
+        /// <summary>
+        /// Connnects a stream producer to a stream consumer. As a result, all messages in the stream will be routed to the consumer for processing.
+        /// </summary>
+        /// <remarks>
+        /// This is an internal-only method which provides the option to allow connections between producers and consumers in running pipelines.
+        /// </remarks>
+        /// <typeparam name="TIn">The type of messages in the stream.</typeparam>
+        /// <typeparam name="TC">The type of consumer</typeparam>
+        /// <param name="source">The source stream to subscribe to</param>
+        /// <param name="consumer">The consumer (subscriber)</param>
+        /// <param name="allowWhileRunning">An optional flag to allow connections in running pipelines.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>The consumer (subscriber).</returns>
+        internal static TC PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, bool allowWhileRunning, DeliveryPolicy deliveryPolicy = null)
+            where TC : IConsumer<TIn>
+        {
+            source.Out.Subscribe(consumer.In, allowWhileRunning, deliveryPolicy ?? source.Out.Pipeline.DeliveryPolicy);
+            return consumer;
         }
     }
 }

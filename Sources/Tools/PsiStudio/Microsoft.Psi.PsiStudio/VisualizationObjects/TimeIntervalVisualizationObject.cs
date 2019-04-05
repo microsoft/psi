@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.Runtime.Serialization;
     using System.Windows;
+    using System.Windows.Media;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
@@ -19,6 +20,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(TimeIntervalVisualizationObjectView));
+
+        /// <inheritdoc/>
+        [IgnoreDataMember]
+        public override Color LegendColor => this.Configuration.Color;
 
         /// <inheritdoc />
         [IgnoreDataMember]

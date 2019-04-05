@@ -37,6 +37,7 @@ namespace Microsoft.Psi.Persistence
         private Mutex activeWriterMutex;
         private Queue<MemoryMappedFile> priorExtents;
         private int priorExtentQueueLength;
+        private object viewDisposeLock = new object();
 
         public InfiniteFileWriter(string path, string fileName, int extentSize, bool append = false)
             : this(path, fileName, extentSize)
@@ -68,11 +69,18 @@ namespace Microsoft.Psi.Persistence
             new Thread(new ThreadStart(() =>
             {
                 this.globalWritePulse = new Mutex(true, PulseEventName(path, fileName));
-                while (!this.disposed)
+                try
                 {
-                    this.localWritePulse?.WaitOne();
-                    this.globalWritePulse?.ReleaseMutex();
-                    this.globalWritePulse?.WaitOne();
+                    while (!this.disposed)
+                    {
+                        this.localWritePulse?.WaitOne();
+                        this.globalWritePulse?.ReleaseMutex();
+                        this.globalWritePulse?.WaitOne();
+                    }
+                }
+                catch (ObjectDisposedException)
+                {
+                    // ignore
                 }
             })) { IsBackground = true }.Start();
             bool isSingleWriter;
@@ -240,11 +248,11 @@ namespace Microsoft.Psi.Persistence
 
         private static string MakeHandleName(string format, string path, string fileName)
         {
-            var name = string.Format(format, path?.GetHashCode(), fileName);
+            var name = string.Format(format, path?.ToLower().GetHashCode(), fileName.ToLower());
             if (name.Length > 260)
             {
                 // exceeded the name length limit
-                return string.Format(format, path?.GetHashCode(), fileName.GetHashCode());
+                return string.Format(format, path?.ToLower().GetHashCode(), fileName.ToLower().GetHashCode());
             }
 
             return name;
@@ -302,7 +310,14 @@ namespace Microsoft.Psi.Persistence
                 // human-noticeable time when crossing extents), we queue this work to the thread pool.
                 // See: https://referencesource.microsoft.com/#System.Core/System/IO/MemoryMappedFiles/MemoryMappedView.cs,176
                 var temp = this.view;
-                Task.Run(() => temp.Dispose());
+                var viewDisposeTask = Task.Run(() =>
+                {
+                    // serialize disposal to avoid disk thrashing
+                    lock (this.viewDisposeLock)
+                    {
+                        temp.Dispose();
+                    }
+                });
 
                 this.view = null;
 
@@ -326,6 +341,10 @@ namespace Microsoft.Psi.Persistence
 
                 if (disposing && !this.IsVolatile)
                 {
+                    // need to wait for the view to be completely disposed before resizing the file,
+                    // otherwise there will be an access conflict and the file will not be resized
+                    viewDisposeTask.Wait();
+
                     try
                     {
                         using (var file = File.Open(this.extentName, FileMode.Open, FileAccess.Write, FileShare.None))

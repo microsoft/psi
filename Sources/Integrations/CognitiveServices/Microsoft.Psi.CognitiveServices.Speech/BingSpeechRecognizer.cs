@@ -14,18 +14,27 @@ namespace Microsoft.Psi.CognitiveServices.Speech
     using Microsoft.Psi.CognitiveServices.Speech.Service;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Components;
-    using Microsoft.Psi.Language;
     using Microsoft.Psi.Speech;
 
     /// <summary>
-    /// Component that performs speech recognition using the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>.
+    /// Component that performs speech recognition using the <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>.
     /// </summary>
-    /// <remarks>The component takes in a stream of audio and performs speech-to-text recognition. It works in conjunction with the
-    /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>
+    /// <remarks>
+    /// DEPRECATED - As the Bing Speech service will be retired soon, you can no longer
+    /// obtain a new subscription key for this service. If you have previously obtained a subscription
+    /// key for the Bing Speech service, then this key should continue to work with this component
+    /// until the service is retired. If you do not have an existing subscription
+    /// key for the Bing Speech service, please use the <see cref="AzureSpeechRecognizer"/> component
+    /// instead. You may obtain a subscription key for the Azure Speech service here:
+    /// https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services.
+    ///
+    /// This component takes in a stream of audio and performs speech-to-text recognition. It works in conjunction with the
+    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>
     /// and requires a subscription key in order to use. For more information, see the complete documentation for the
-    /// <a href="https://www.luis.ai/help">Microsoft Cognitive Services Bing Speech API</a>.
+    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>.
     /// </remarks>
-    public sealed class BingSpeechRecognizer : AsyncConsumerProducer<ValueTuple<AudioBuffer, bool>, IStreamingSpeechRecognitionResult>, IDisposable
+    [Obsolete("The Bing Speech service will be retired soon. Please use the AzureSpeechRecognizer instead.", false)]
+    public sealed class BingSpeechRecognizer : AsyncConsumerProducer<ValueTuple<AudioBuffer, bool>, IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
     {
         // For cancelling any pending recognition tasks before disposal
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -49,6 +58,11 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// The time the VAD last detected the end of speech.
         /// </summary>
         private DateTime lastVADSpeechEndTime;
+
+        /// <summary>
+        /// The time the last audio input contained speech.
+        /// </summary>
+        private DateTime lastAudioContainingSpeechTime;
 
         /// <summary>
         /// The time interval of the last detected speech segment.
@@ -170,6 +184,18 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             }
         }
 
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+        }
+
         /// <summary>
         /// Receiver for the combined VAD signal and audio data.
         /// </summary>
@@ -181,6 +207,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             byte[] audioData = data.Item1.Data;
             bool hasSpeech = data.Item2;
 
+            var previousAudioOriginatingTime = this.lastAudioOriginatingTime;
             this.lastAudioOriginatingTime = e.OriginatingTime;
 
             // Throw if a fatal error has occurred in the OnConversationError event handler
@@ -197,6 +224,11 @@ namespace Microsoft.Psi.CognitiveServices.Speech
                 return;
             }
 
+            if (hasSpeech)
+            {
+                this.lastAudioContainingSpeechTime = e.OriginatingTime;
+            }
+
             if (hasSpeech || this.lastAudioContainedSpeech)
             {
                 // Send the audio data to the cloud
@@ -209,7 +241,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             // If this is the last audio packet containing speech
             if (!hasSpeech && this.lastAudioContainedSpeech)
             {
-                this.lastVADSpeechEndTime = e.OriginatingTime;
+                this.lastVADSpeechEndTime = this.lastAudioContainingSpeechTime;
                 this.lastVADSpeechTimeInterval = new TimeInterval(this.lastVADSpeechStartTime, this.lastVADSpeechEndTime);
 
                 // Allocate a buffer large enough to hold the buffered audio
@@ -233,8 +265,9 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             }
             else if (hasSpeech && !this.lastAudioContainedSpeech)
             {
-                // If this is the first audio packet containing speech
-                this.lastVADSpeechStartTime = e.OriginatingTime;
+                // If this is the first audio packet containing speech, mark the time of the previous audio packet
+                // as the start of the actual speech
+                this.lastVADSpeechStartTime = previousAudioOriginatingTime;
 
                 // Also post a null partial recognition result
                 this.lastPartialResult = string.Empty;
@@ -424,9 +457,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <returns>A StreamingSpeechRecognitionResult object containing the partial recognition result.</returns>
         private StreamingSpeechRecognitionResult BuildPartialSpeechRecognitionResult(string partialResult, double? confidence = null)
         {
-            // Not sure what the confidence should be since the recognizer doesn't provide one,
-            // so we will just use a low value of 0.25 for now. The final alternates will come
-            // with actual (albeit quantized) confidence scores.
             return new StreamingSpeechRecognitionResult(
                 false,
                 partialResult,

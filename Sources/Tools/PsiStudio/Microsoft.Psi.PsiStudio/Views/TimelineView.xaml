@@ -9,7 +9,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ctrl="clr-namespace:Microsoft.Psi.Visualization.Controls"
     xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
-    xmlns:nav="clr-namespace:Microsoft.Psi.Visualization.Navigation;assembly=Microsoft.Psi.Visualization.Common.Windows"
     mc:Ignorable="d" 
     IsHitTestVisible="False"
     d:DesignHeight="100"
@@ -31,8 +30,8 @@
         </Grid.RowDefinitions>
 
         <Line Grid.Row="0" Grid.RowSpan="2" x:Name="CursorMarker" Stroke="{StaticResource CursorBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" />
-        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionStartMarker" Stroke="{StaticResource SelectionStartBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding NavigationMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static nav:NavigationMode.Playback}}"/>
-        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionEndMarker" Stroke="{StaticResource SelectionEndBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding NavigationMode, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static nav:NavigationMode.Playback}}"/>
+        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionStartMarker" Stroke="{StaticResource SelectionStartBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <Line Grid.Row="0" Grid.RowSpan="2" x:Name="SelectionEndMarker" Stroke="{StaticResource SelectionEndBrush}" StrokeThickness="2" X1="0" X2="0" Y1="0" Y2="{Binding ElementName=Root, Path=ActualHeight}" IsHitTestVisible="False" IsManipulationEnabled="False" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
         <ctrl:TimelineCanvas
             Grid.Row="1"

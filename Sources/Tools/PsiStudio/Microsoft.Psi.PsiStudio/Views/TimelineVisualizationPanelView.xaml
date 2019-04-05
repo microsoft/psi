@@ -95,7 +95,7 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Configuration.Name, Mode=OneWay}" Foreground="{Binding Configuration.Color, Converter={StaticResource ColorConverter}}" HorizontalAlignment="Right" Margin="3, 0, 0, 0"/>
+                                <TextBlock Text="{Binding Configuration.Name, Mode=OneWay}" Foreground="{Binding LegendColor, Converter={StaticResource ColorConverter}}" HorizontalAlignment="Right" Margin="3, 0, 0, 0"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -103,7 +103,7 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text=":" Foreground="{Binding Configuration.Color, Converter={StaticResource ColorConverter}}" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text=":" Foreground="{Binding LegendColor, Converter={StaticResource ColorConverter}}" HorizontalAlignment="Center"></TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -111,7 +111,7 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding LegendValue, Mode=OneWay}" Foreground="{Binding Configuration.Color, Converter={StaticResource ColorConverter}}" HorizontalAlignment="Left" Margin="0,0,3,3"/>
+                                <TextBlock Text="{Binding LegendValue, Mode=OneWay}" Foreground="{Binding LegendColor, Converter={StaticResource ColorConverter}}" HorizontalAlignment="Left" Margin="0,0,3,3"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

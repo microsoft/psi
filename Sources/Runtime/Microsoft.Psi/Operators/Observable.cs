@@ -38,7 +38,7 @@ namespace Microsoft.Psi
             /// <param name="deliveryPolicy">An optional delivery policy.</param>
             public StreamObservable(IProducer<T> stream, DeliveryPolicy deliveryPolicy = null)
             {
-                stream.Out.Pipeline.PipelineCompletionEvent += (_, args) =>
+                stream.Out.Pipeline.PipelineCompleted += (_, args) =>
                 {
                     foreach (var obs in this.observers)
                     {

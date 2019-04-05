@@ -97,7 +97,6 @@ namespace Microsoft.Psi.Media
         {
             if (!this.disposed)
             {
-                ((IStartable)this).Stop();
                 this.disposed = true;
             }
         }

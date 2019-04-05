@@ -18,9 +18,10 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
     public class SpeechRecognitionClient : IDisposable
     {
         private ClientWebSocket webSocket;
-        private Authentication authentication;
+        private IAuthentication authentication;
         private Task receiverTask;
         private string subscriptionKey;
+        private string region;
         private string language;
         private string connectionId;
         private string requestId;
@@ -36,10 +37,20 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// <param name="recognitionMode">The recognition mode to use.</param>
         /// <param name="language">The recognition language.</param>
         /// <param name="subscriptionKey">The speech service API key.</param>
-        public SpeechRecognitionClient(SpeechRecognitionMode recognitionMode, string language, string subscriptionKey)
+        /// <param name="region">The speech service region associated to the subscription.</param>
+        public SpeechRecognitionClient(SpeechRecognitionMode recognitionMode, string language, string subscriptionKey, string region = null)
         {
             this.webSocket = new ClientWebSocket();
-            this.authentication = new Authentication(subscriptionKey);
+            this.region = region?.Replace(" ", string.Empty); // convert to region endpoint URL string
+            if (string.IsNullOrWhiteSpace(this.region))
+            {
+                this.authentication = new Authentication(subscriptionKey);
+            }
+            else
+            {
+                this.authentication = new AzureAuthentication(subscriptionKey, this.region);
+            }
+
             this.subscriptionKey = subscriptionKey;
             this.language = language;
             this.recognitionMode = recognitionMode;
@@ -98,9 +109,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
                 while (offset < audioBytes.Length)
                 {
                     int count = Math.Min(audioBytes.Length - offset, 8192);
-
                     await this.SendMessageAsync(new AudioMessage(audioBytes, offset, count), this.requestId, token);
-
                     offset += count;
                 }
             }
@@ -190,14 +199,21 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
             var webSocket = new ClientWebSocket();
             webSocket.Options.SetRequestHeader("X-ConnectionId", this.connectionId);
             webSocket.Options.SetRequestHeader("Authorization", "Bearer " + this.authentication.GetAccessToken());
-
-            await webSocket.ConnectAsync(
-                new Uri(
-                    "wss://speech.platform.bing.com" +
-                    $"/speech/recognition/{this.recognitionMode.ToString().ToLower()}/cognitiveservices/v1" +
-                    "?format=detailed" +
-                    "&language=" + this.language),
-                token);
+            if (!string.IsNullOrWhiteSpace(this.region))
+            {
+                var uri = new Uri($"wss://{this.region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language={this.language}&format=detailed");
+                await webSocket.ConnectAsync(uri, token);
+            }
+            else
+            {
+                await webSocket.ConnectAsync(
+            new Uri(
+                "wss://speech.platform.bing.com" +
+                $"/speech/recognition/{this.recognitionMode.ToString().ToLower()}/cognitiveservices/v1" +
+                "?format=detailed" +
+                "&language=" + this.language),
+            token);
+            }
 
             return webSocket;
         }

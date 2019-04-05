@@ -25,16 +25,15 @@ namespace Microsoft.Psi
         /// <remarks>
         /// The reference count of the resource is incremented before this method returns.
         /// When the returned <see cref="Shared{T}"/> is disposed, resource's reference count is decremented.
-        /// When the reference count reaches 0, the wrapped resource is returned to the provided <see cref="SharedPool{T}"/>.
+        /// When the reference count reaches 0, the wrapped resource is released and disposed.
         /// </remarks>
         /// <typeparam name="T">The type of resource being wrapped</typeparam>
         /// <param name="resource">The resource to wrap. Usually a large memory allocation.</param>
-        /// <param name="recycler">The resource pool that will take over the resource once released</param>
         /// <returns>A <see cref="Shared{T}"/> instance wrapping the specified resource</returns>
-        public static Shared<T> Create<T>(T resource, SharedPool<T> recycler = null)
+        public static Shared<T> Create<T>(T resource)
             where T : class
         {
-            return new Shared<T>(resource, recycler);
+            return new Shared<T>(resource, null);
         }
     }
 
@@ -87,12 +86,12 @@ namespace Microsoft.Psi
         /// <summary>
         /// Initializes a new instance of the <see cref="Shared{T}"/> class.
         /// </summary>
-        /// <param name="resource">Shared resource.</param>
-        /// <param name="recycler">Shared pool recycler.</param>
-        public Shared(T resource, SharedPool<T> recycler)
+        /// <param name="resource">The shared resource.</param>
+        /// <param name="sharedPool">The shared object pool.</param>
+        internal Shared(T resource, SharedPool<T> sharedPool)
             : this()
         {
-            this.inner = new SharedContainer<T>(resource, recycler);
+            this.inner = new SharedContainer<T>(resource, sharedPool);
         }
 
         // serialization support
@@ -137,9 +136,9 @@ namespace Microsoft.Psi
         public T Resource => this.inner?.Resource;
 
         /// <summary>
-        /// Gets shared pool recycler.
+        /// Gets the shared object pool.
         /// </summary>
-        public SharedPool<T> Recycler => this.inner?.Recycler;
+        public SharedPool<T> SharedPool => this.inner?.SharedPool;
 
         internal SharedContainer<T> Inner => this.inner;
 

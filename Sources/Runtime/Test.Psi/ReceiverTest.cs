@@ -3,14 +3,16 @@
 
 namespace Test.Psi
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading;
     using Microsoft.Psi;
+    using Microsoft.Psi.Components;
     using Microsoft.Psi.Scheduling;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class ReceiverTest
+    public class ReceiverTest : ISourceComponent
     {
         [TestMethod]
         [Timeout(60000)]
@@ -21,8 +23,8 @@ namespace Test.Psi
             List<SimpleMsg> receivedValues = new List<SimpleMsg>(iter);
             using (Pipeline p = Pipeline.Create())
             {
-                var emitter = new Emitter<SimpleMsg>(0, null, null, p);
-                var receiver = new Receiver<SimpleMsg>(null, t => { receivedValues.Add(t.Data); }, new SynchronizationLock(null), p, true);
+                var emitter = new Emitter<SimpleMsg>(0, this, null, p);
+                var receiver = new Receiver<SimpleMsg>(this, t => { receivedValues.Add(t.Data); }, new SynchronizationLock(null), p, true);
                 emitter.PipeTo(receiver, DeliveryPolicy.Unlimited);
                 p.RunAsync();
                 for (int i = 0; i < iter; i++)
@@ -57,6 +59,17 @@ namespace Test.Psi
             public int Count { get; private set; }
 
             public string Label { get; private set; }
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            notifyCompletionTime(DateTime.MaxValue);
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
         }
     }
 }

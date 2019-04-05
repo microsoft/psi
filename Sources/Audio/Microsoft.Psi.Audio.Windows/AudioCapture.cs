@@ -61,8 +61,6 @@ namespace Microsoft.Psi.Audio
         /// <param name="configuration">The component configuration.</param>
         public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
@@ -159,11 +157,12 @@ namespace Microsoft.Psi.Audio
             }
         }
 
-        /// <summary>
-        /// Called to start capturing audio from the microphone.
-        /// </summary>
-        private void OnPipelineStart()
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
             // publish initial values at startup
             this.AudioLevel.Post(this.wasapiCapture.AudioLevel, this.pipeline.GetCurrentTime());
 
@@ -181,10 +180,8 @@ namespace Microsoft.Psi.Audio
             this.sourceFormat = this.Configuration.OutputFormat ?? this.wasapiCapture.MixFormat;
         }
 
-        /// <summary>
-        /// Called when the pipeline is shutting down.
-        /// </summary>
-        private void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             this.sourceFormat = null;
         }

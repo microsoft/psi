@@ -4,7 +4,8 @@
 namespace Microsoft.Psi
 {
     using System;
-    using System.Diagnostics;
+    using System.Collections.Generic;
+    using Microsoft.Psi.Executive;
     using Microsoft.Psi.Scheduling;
     using Microsoft.Psi.Serialization;
     using Microsoft.Psi.Streams;
@@ -25,10 +26,12 @@ namespace Microsoft.Psi
     {
         private readonly Action<Message<T>> onReceived;
         private readonly object owner;
+        private readonly Pipeline pipeline;
         private readonly Scheduler scheduler;
         private readonly SynchronizationLock syncContext;
         private readonly IRecyclingPool<T> cloner;
         private readonly bool enforceIsolation;
+        private readonly List<UnsubscribedHandler> unsubscribedHandlers = new List<UnsubscribedHandler>();
 
         private Emitter<T> source;
         private DeliveryQueue<T> awaitingDelivery;
@@ -38,11 +41,34 @@ namespace Microsoft.Psi
         internal Receiver(object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = false)
         {
             this.scheduler = pipeline.Scheduler;
-            this.onReceived = onReceived;
+            this.onReceived = PipelineElement.TrackStateObjectOnContext<Message<T>>(onReceived, owner, pipeline);
             this.owner = owner;
             this.syncContext = context;
             this.enforceIsolation = enforceIsolation;
             this.cloner = RecyclingPool.Create<T>();
+            this.pipeline = pipeline;
+        }
+
+        /// <summary>
+        /// Receiver unsubscribed handler.
+        /// </summary>
+        /// <param name="finalOriginatingTime">Originating time of final message posted.</param>
+        public delegate void UnsubscribedHandler(DateTime finalOriginatingTime);
+
+        /// <summary>
+        /// Event invoked after this receiver is unsubscribed from its source emitter.
+        /// </summary>
+        public event UnsubscribedHandler Unsubscribed
+        {
+            add
+            {
+                this.unsubscribedHandlers.Add(value);
+            }
+
+            remove
+            {
+                this.unsubscribedHandlers.Remove(value);
+            }
         }
 
         /// <inheritdoc />
@@ -65,10 +91,6 @@ namespace Microsoft.Psi
         public void Dispose()
         {
             this.counters?.Clear();
-            if (this.source != null)
-            {
-                this.source.Unsubscribe(this);
-            }
         }
 
         /// <summary>
@@ -129,11 +151,16 @@ namespace Microsoft.Psi
             this.awaitingDelivery.EnablePerfCounters(this.counters);
         }
 
-        internal void OnSubscribe(Emitter<T> source, DeliveryPolicy policy)
+        internal void OnSubscribe(Emitter<T> source, bool allowSubscribeWhileRunning, DeliveryPolicy policy)
         {
             if (this.source != null)
             {
                 throw new InvalidOperationException("This receiver is already connected to a source emitter.");
+            }
+
+            if (!allowSubscribeWhileRunning && (this.pipeline.IsRunning || source.Pipeline.IsRunning))
+            {
+                throw new InvalidOperationException("Attempting to connect a receiver to an emitter while pipeline is already running. Make all connections before running the pipeline.");
             }
 
             this.source = source;
@@ -144,7 +171,11 @@ namespace Microsoft.Psi
 
         internal void OnUnsubscribe()
         {
-            this.source = null;
+            if (this.source != null)
+            {
+                this.source = null;
+                this.OnUnsubscribed(this.pipeline.GetCurrentTime());
+            }
         }
 
         internal void Receive(Message<T> message)
@@ -167,7 +198,7 @@ namespace Microsoft.Psi
                 message.Data = message.Data.DeepClone(this.cloner);
             }
 
-            if (this.policy.AttemptSynchronous && this.awaitingDelivery.IsEmpty)
+            if (this.policy.AttemptSynchronous && this.awaitingDelivery.IsEmpty && message.SequenceId != int.MaxValue)
             {
                 // fast path - try to deliver synchronously for as long as we can
                 // however, if this thread already has a lock on the owner it means some other receiver is in our call stack (we have a delivery loop),
@@ -187,8 +218,7 @@ namespace Microsoft.Psi
                 message.Data = message.Data.DeepClone(this.cloner);
             }
 
-            QueueTransition stateTransition;
-            this.awaitingDelivery.Enqueue(message, out stateTransition);
+            this.awaitingDelivery.Enqueue(message, out QueueTransition stateTransition);
 
             // if the queue was empty, we need to schedule delivery
             if (stateTransition.ToNotEmpty)
@@ -206,13 +236,18 @@ namespace Microsoft.Psi
 
         internal void DeliverNext()
         {
-            Message<T> message;
-            QueueTransition stateTransition;
-            if (this.awaitingDelivery.TryDequeue(out message, out stateTransition, this.scheduler.Clock.GetCurrentTime()))
+            if (this.awaitingDelivery.TryDequeue(out Message<T> message, out QueueTransition stateTransition, this.scheduler.Clock.GetCurrentTime()))
             {
                 if (stateTransition.ToStopThrottling)
                 {
                     this.source.Pipeline.Scheduler.Thaw(this.source.SyncContext);
+                }
+
+                if (message.SequenceId == int.MaxValue)
+                {
+                    // emitter was closed
+                    this.OnUnsubscribed(message.OriginatingTime);
+                    return;
                 }
 
                 // remember the object we dequeued, and make a clone if the component requests isolation (the component will have to recycle this clone when done)
@@ -239,11 +274,20 @@ namespace Microsoft.Psi
 
                 // recycle the item we dequeued
                 this.cloner.Recycle(data);
-            }
 
-            if (!stateTransition.ToEmpty)
+                if (!stateTransition.ToEmpty)
+                {
+                    this.scheduler.Schedule(this.syncContext, this.DeliverNext, this.awaitingDelivery.NextMessageTime);
+                }
+            }
+        }
+
+        private void OnUnsubscribed(DateTime lastOriginatingTime)
+        {
+            this.source = null;
+            foreach (var handler in this.unsubscribedHandlers)
             {
-                this.scheduler.Schedule(this.syncContext, this.DeliverNext, this.awaitingDelivery.NextMessageTime);
+                this.scheduler.Schedule(this.syncContext, PipelineElement.TrackStateObjectOnContext(() => handler(lastOriginatingTime), this.Owner, this.pipeline), lastOriginatingTime, false, true);
             }
         }
 

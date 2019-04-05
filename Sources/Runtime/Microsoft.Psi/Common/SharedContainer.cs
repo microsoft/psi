@@ -18,20 +18,20 @@ namespace Microsoft.Psi
     internal class SharedContainer<T>
         where T : class
     {
-        private readonly SharedPool<T> recycler;
+        private readonly SharedPool<T> sharedPool;
         private int refCount;
         private T resource;
 
-        internal SharedContainer(T resource, SharedPool<T> recycler)
+        internal SharedContainer(T resource, SharedPool<T> pool)
         {
-            this.recycler = recycler;
+            this.sharedPool = pool;
             this.resource = resource;
             this.refCount = 1;
         }
 
         public T Resource => this.resource;
 
-        public SharedPool<T> Recycler => this.recycler;
+        public SharedPool<T> SharedPool => this.sharedPool;
 
         public void AddRef()
         {
@@ -49,9 +49,9 @@ namespace Microsoft.Psi
             if (newVal == 0)
             {
                 // return it to the pool
-                if (this.recycler != null)
+                if (this.sharedPool != null)
                 {
-                    this.recycler.Recycle(this.resource);
+                    this.sharedPool.Recycle(this.resource);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace Microsoft.Psi
             {
                 // only serialize the resource.
                 // The refCount needs not be serialized (it will be always 1 when deserializing)
-                // The recycler cannot be serialized, and needs to be provided by the deserializer, by providing a deserializing target that is already pool-aware
+                // The shared pool cannot be serialized, and needs to be provided by the deserializer, by providing a deserializing target that is already pool-aware
                 this.handler.Serialize(writer, instance.resource, context);
             }
 
@@ -109,17 +109,17 @@ namespace Microsoft.Psi
 
             public void PrepareDeserializationTarget(BufferReader reader, ref SharedContainer<T> target, SerializationContext context)
             {
-                SharedPool<T> recycler = null;
+                SharedPool<T> sharedPool = null;
                 T resource = default(T);
 
                 if (target != null)
                 {
                     target.Release();
-                    recycler = target.Recycler;
-                    recycler?.TryGet(out resource);
+                    sharedPool = target.SharedPool;
+                    sharedPool?.TryGet(out resource);
                 }
 
-                target = new SharedContainer<T>(resource, recycler);
+                target = new SharedContainer<T>(resource, sharedPool);
             }
 
             public void Deserialize(BufferReader reader, ref SharedContainer<T> target, SerializationContext context)

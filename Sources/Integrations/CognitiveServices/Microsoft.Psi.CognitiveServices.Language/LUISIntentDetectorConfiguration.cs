@@ -17,9 +17,10 @@ namespace Microsoft.Psi.CognitiveServices.Language
         /// </summary>
         public LUISIntentDetectorConfiguration()
         {
-            this.LUISEndpoint = "https://api.projectoxford.ai/luis/v1/";
-            this.LUISAppID = null;
-            this.LUISSubscriptionID = null;
+            this.EndpointUrl = "https://{0}.api.cognitive.microsoft.com/luis/v2.0/apps/";
+            this.ApplicationId = null;
+            this.SubscriptionKey = null;
+            this.Region = "westus";
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
         /// <remarks>
         /// This should be left at its default value and not be changed unless necessary.
         /// </remarks>
-        public string LUISEndpoint { get; set; }
+        public string EndpointUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the <a href="http://www.luis.ai/">LUIS</a> application ID.
@@ -38,7 +39,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
         /// https://www.luis.ai/ for more information on obtaining a LUIS subscription and creating LUIS
         /// applications.
         /// </remarks>
-        public string LUISAppID { get; set; }
+        public string ApplicationId { get; set; }
 
         /// <summary>
         /// Gets or sets the <a href="http://www.luis.ai/">LUIS</a> subscription ID.
@@ -48,6 +49,14 @@ namespace Microsoft.Psi.CognitiveServices.Language
         /// https://www.luis.ai/ for more information on obtaining a LUIS subscription and creating LUIS
         /// applications.
         /// </remarks>
-        public string LUISSubscriptionID { get; set; }
-     }
+        public string SubscriptionKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the region.
+        /// </summary>
+        /// <remarks>
+        /// This is the region in which the application is published.
+        /// </remarks>
+        public string Region { get; set; }
+    }
 }

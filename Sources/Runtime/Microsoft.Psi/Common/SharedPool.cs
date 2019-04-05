@@ -8,14 +8,15 @@ namespace Microsoft.Psi
     using Microsoft.Psi.Serialization;
 
     /// <summary>
-    /// Provides a pool of objects that can be reused.
+    /// Provides a pool of shared objects.
     /// Use this class in conjunction with <see cref="Shared{T}"/>.
     /// </summary>
-    /// <typeparam name="T">The type of data held by this pool</typeparam>
+    /// <typeparam name="T">The type of the objects managed by this pool.</typeparam>
     public class SharedPool<T> : IDisposable
         where T : class
     {
         private readonly List<T> keepAlive;
+        private readonly Func<T> allocator;
         private readonly KnownSerializers serializers;
         private readonly object availableLock = new object();
         private Queue<T> available;
@@ -23,17 +24,19 @@ namespace Microsoft.Psi
         /// <summary>
         /// Initializes a new instance of the <see cref="SharedPool{T}"/> class.
         /// </summary>
+        /// <param name="allocator">The allocation function for constructing a new object.</param>
         /// <param name="initialSize">The initial size of the pool. The size will be adjusted up as needed, but never down.</param>
-        /// <param name="knownSerializers">An optional set of known serializers. Only required if the pool holds objects that are deserialized from an older store</param>
-        public SharedPool(int initialSize, KnownSerializers knownSerializers = null)
+        /// <param name="knownSerializers">An optional set of known serializers. Only required if the pool holds objects that are deserialized from an older store.</param>
+        public SharedPool(Func<T> allocator, int initialSize = 10, KnownSerializers knownSerializers = null)
         {
+            this.allocator = allocator;
             this.available = new Queue<T>(initialSize);
             this.keepAlive = new List<T>();
             this.serializers = knownSerializers;
         }
 
         /// <summary>
-        /// Gets the number of objects available in the pool
+        /// Gets the number of objects available in the pool.
         /// </summary>
         public int AvailableCount
         {
@@ -47,7 +50,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Gets the total number of objects managed by this pool
+        /// Gets the total number of objects managed by this pool.
         /// </summary>
         public int TotalCount
         {
@@ -61,10 +64,10 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Attempts to get an object from the pool.
+        /// Attempts to retrieve an unused object from the pool.
         /// </summary>
-        /// <param name="recyclable">An unused object from the pool, if there is one</param>
-        /// <returns>True if an unused object was available, false otherwise</returns>
+        /// <param name="recyclable">An unused object from the pool, if there is one.</param>
+        /// <returns>True if an unused object was available, false otherwise.</returns>
         public bool TryGet(out T recyclable)
         {
             lock (this.availableLock)
@@ -84,7 +87,7 @@ namespace Microsoft.Psi
         /// Attempts to retrieve an unused object from the pool.
         /// </summary>
         /// <param name="recyclable">An unused object, wrapped in a ref-counted <see cref="Shared{T}"/> instance.</param>
-        /// <returns>True if an unused object was available, false otherwise</returns>
+        /// <returns>True if an unused object was available, false otherwise.</returns>
         public bool TryGet(out Shared<T> recyclable)
         {
             recyclable = null;
@@ -98,15 +101,14 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Retrieves an unused object from the pool if one is available, otherwise creates and returns a new instance.
+        /// Attempts to retrieve an unused object from the pool if one is available, otherwise creates and returns a new instance.
         /// </summary>
-        /// <param name="constructor">A function that can create the instance if an unused object is not availablke in the pool</param>
         /// <returns>An unused object, wrapped in a ref-counted <see cref="Shared{T}"/> instance.</returns>
-        public Shared<T> GetOrCreate(Func<T> constructor)
+        public Shared<T> GetOrCreate()
         {
             if (!this.TryGet(out T recycled))
             {
-                recycled = constructor();
+                recycled = this.allocator();
                 lock (this.keepAlive)
                 {
                     this.keepAlive.Add(recycled);
@@ -117,7 +119,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Releases all unused objects.
+        /// Releases all unused objects in the pool.
         /// </summary>
         public void Dispose()
         {
@@ -139,7 +141,7 @@ namespace Microsoft.Psi
         /// Returns an object to the pool.
         /// This method is meant for internal use. Use <see cref="Shared{T}.Dispose"/> instead.
         /// </summary>
-        /// <param name="recyclable">The obejct to return to the pool</param>
+        /// <param name="recyclable">The object to return to the pool.</param>
         internal void Recycle(T recyclable)
         {
             var context = new SerializationContext(this.serializers);

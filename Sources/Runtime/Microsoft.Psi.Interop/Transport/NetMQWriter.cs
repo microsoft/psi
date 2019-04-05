@@ -29,8 +29,7 @@ namespace Microsoft.Psi.Interop.Transport
             this.pipeline = pipeline;
             this.serializer = serializer;
             this.socket = new PublisherSocket();
-            pipeline.RegisterPipelineStartHandler(this, () => this.socket.Bind(address));
-            pipeline.RegisterPipelineFinalHandler(this, this.Dispose);
+            pipeline.PipelineRun += (s, e) => this.socket.Bind(address);
         }
 
         /// <summary>

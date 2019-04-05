@@ -8,6 +8,7 @@ namespace Test.Psi
     using System.Linq;
     using System.Reactive;
     using System.Reactive.Linq;
+    using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -27,6 +28,7 @@ namespace Test.Psi
 
             using (var p = Pipeline.Create("test"))
             {
+                Generators.Range(p, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var source = Generators.Range(p, 0, resultCount, TimeSpan.FromTicks(10));
                 var delayedSource = source.Delay(TimeSpan.FromMilliseconds(50));
 
@@ -108,14 +110,13 @@ namespace Test.Psi
                         handler => this.EventSourceTestEvent += handler,
                         handler => this.EventSourceTestEvent -= handler,
                         post => new EventHandler<int>((sender, e) => post(e / 10.0)));
+                eventSource.Out.Do(f => results.Add(f));
+                p.RunAsync(replay);
 
-                var eventGenerator = Generators.Sequence(p, 0, i => i + 1, 10);
-
-                List<IProducer<double>> outputs = new List<IProducer<double>>();
-                Operators.Do(eventGenerator, t => this.EventSourceTestEvent.Invoke(this, t));
-                Operators.Do(eventSource, f => results.Add(f));
-
-                p.Run(replay);
+                for (var i = 0; i < 10; i++)
+                {
+                    this.EventSourceTestEvent.Invoke(this, i);
+                }
             }
 
             Assert.AreEqual(10, results.Count);

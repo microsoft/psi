@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Data
     /// Instances of this class can be created using the <see cref="Store.Open"/> method.
     /// The store metadata is available immediately after open (before the pipeline is running) via the <see cref="AvailableStreams"/> property.
     /// </summary>
-    public sealed class Importer : IFiniteSourceComponent, IDisposable
+    public sealed class Importer : ISourceComponent, IDisposable
     {
         private readonly Receiver<bool> loopBack;
         private readonly Emitter<bool> next;
@@ -26,7 +26,8 @@ namespace Microsoft.Psi.Data
         private readonly Splitter<Message<BufferReader>, int> splitter;
         private readonly Dictionary<string, object> streams = new Dictionary<string, object>();
         private readonly Pipeline pipeline;
-        private Action onCompleted;
+        private Action<DateTime> notifyCompletionTime;
+        private long finalTicks = 0;
         private bool stopping;
         private byte[] buffer;
         private KnownSerializers serializers;
@@ -40,8 +41,6 @@ namespace Microsoft.Psi.Data
         public Importer(Pipeline pipeline, string name, string path)
         {
             this.reader = new StoreReader(name, path, this.LoadMetadata);
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.next = pipeline.CreateEmitter<bool>(this, nameof(this.next));
             this.loopBack = pipeline.CreateReceiver<bool>(this, this.Next, nameof(this.loopBack));
@@ -88,9 +87,19 @@ namespace Microsoft.Psi.Data
         public RuntimeInfo SourceRuntimeInfo => this.reader.RuntimeVersion;
 
         /// <inheritdoc />
-        void IFiniteSourceComponent.Initialize(Action onCompleted)
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.onCompleted = onCompleted;
+            this.notifyCompletionTime = notifyCompletionTime;
+
+            var replay = this.pipeline.ReplayDescriptor;
+            this.reader.Seek(replay.Interval, replay.UseOriginatingTime);
+            this.next.Post(true, replay.Start);
+        }
+
+        /// <inheritdoc />
+        public void Stop()
+        {
+            this.stopping = true;
         }
 
         /// <summary>
@@ -217,24 +226,6 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Start the psi component
-        /// </summary>
-        private void OnPipelineStart()
-        {
-            var replay = this.pipeline.ReplayDescriptor;
-            this.reader.Seek(replay.Interval, replay.UseOriginatingTime);
-            this.next.Post(true, replay.Start);
-        }
-
-        /// <summary>
-        /// Stop the psi component
-        /// </summary>
-        private void OnPipelineStop()
-        {
-            this.stopping = true;
-        }
-
-        /// <summary>
         /// Attempts to move the reader to the next message (across all logical storage streams).
         /// </summary>
         /// <param name="moreDataPromised">Indicates whether an absence of messages should be reported as the end of the store</param>
@@ -259,6 +250,7 @@ namespace Microsoft.Psi.Data
                 var nextTime = (env.OriginatingTime > e.Time) ? env.OriginatingTime : e.Time;
                 this.output.Post(Message.Create(bufferReader, e), nextTime);
                 this.next.Post(true, nextTime.AddTicks(1));
+                this.finalTicks = Math.Max(this.finalTicks, Math.Max(e.OriginatingTime.Ticks, nextTime.Ticks));
             }
             else
             {
@@ -270,7 +262,7 @@ namespace Microsoft.Psi.Data
                 }
                 else
                 {
-                    this.onCompleted();
+                    this.notifyCompletionTime(new DateTime(this.finalTicks));
                 }
             }
         }

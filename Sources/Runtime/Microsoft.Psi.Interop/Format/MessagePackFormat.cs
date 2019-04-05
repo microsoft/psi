@@ -27,15 +27,15 @@ namespace Microsoft.Psi.Interop.Format
         /// <inheritdoc />
         public (byte[], int, int) SerializeMessage(dynamic message, DateTime originatingTime)
         {
-            var bytes = LZ4MessagePackSerializer.Serialize(new { Message = message, OriginatingTime = originatingTime });
+            var bytes = MessagePackSerializer.Serialize(new { message, originatingTime = originatingTime.Ticks });
             return (bytes, 0, bytes.Length);
         }
 
         /// <inheritdoc />
         public (dynamic, DateTime) DeserializeMessage(byte[] payload, int index, int count)
         {
-            var content = LZ4MessagePackSerializer.Deserialize<dynamic>(new ArraySegment<byte>(payload, index, count));
-            return (this.NormalizeValue(content["Message"]), content["OriginatingTime"]);
+            var content = MessagePackSerializer.Deserialize<dynamic>(new ArraySegment<byte>(payload, index, count));
+            return (this.NormalizeValue(content["message"]), new DateTime((long)content["originatingTime"]));
         }
 
         /// <inheritdoc />

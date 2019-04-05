@@ -8,32 +8,26 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
+    using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
-    using Microsoft.Psi.Visualization.Datasets;
     using Microsoft.Psi.Visualization.Navigation;
-    using Microsoft.Psi.Visualization.Server;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Represents a stream visualization object.
     /// </summary>
     /// <typeparam name="TData">The type of the stream.</typeparam>
     /// <typeparam name="TConfig">The configuration of the visualizer.</typeparam>
-    [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [Guid(Guids.RemoteStreamVisualizationObjectCLSIDString)]
-    [ComVisible(false)]
-    public abstract class StreamVisualizationObject<TData, TConfig> : VisualizationObject<TConfig>, IStreamVisualizationObject, IRemoteStreamVisualizationObject
+    public abstract class StreamVisualizationObject<TData, TConfig> : VisualizationObject<TConfig>, IStreamVisualizationObject
         where TConfig : StreamVisualizationObjectConfiguration, new()
     {
         /// <summary>
-        /// Flag inidcating whether type paramamter T is Shared{} or not.
+        /// Flag indicating whether type paramamter T is Shared{} or not.
         /// </summary>
         private readonly bool isShared = typeof(TData).IsGenericType && typeof(TData).GetGenericTypeDefinition() == typeof(Shared<>);
 
@@ -51,6 +45,54 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The data read from the stream.
         /// </summary>
         private ObservableKeyedCache<DateTime, Message<TData>>.ObservableKeyedView data;
+
+        /// <summary>
+        /// The snap to stream command.
+        /// </summary>
+        private RelayCommand snapToStreamCommand;
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public override bool CanSnapToStream => true;
+
+        /// <summary>
+        /// Gets the delete visualization command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand SnapToStreamCommand
+        {
+            get
+            {
+                if (this.snapToStreamCommand == null)
+                {
+                    this.snapToStreamCommand = new RelayCommand(
+                        () =>
+                        {
+                            // If this is already the visualization object being snapped to, then
+                            // reset snap to stream, otherwise set it to this visualization object.
+                            // If another object was previously snapped, then ask it to unsnap itself
+                            // so that the correct property changed event gets raised.
+                            if (this.Container.SnapToVisualizationObject == null)
+                            {
+                                this.SnapToStream(true);
+                            }
+                            else if (this.Container.SnapToVisualizationObject == this)
+                            {
+                                this.SnapToStream(false);
+                            }
+                            else
+                            {
+                                this.Container.SnapToVisualizationObject.SnapToStream(false);
+                                this.SnapToStream(true);
+                            }
+                        });
+                }
+
+                return this.snapToStreamCommand;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the current value.
@@ -120,12 +162,47 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.data != value)
                 {
-                    var oldValue = this.data;
+                    if (this.data != null)
+                    {
+                        this.data.DetailedCollectionChanged -= this.OnDataDetailedCollectionChanged;
+                    }
+
                     this.Set(nameof(this.Data), ref this.data, value);
-                    this.OnDataChanged(oldValue, this.data);
+
+                    if (this.data != null)
+                    {
+                        this.data.DetailedCollectionChanged += this.OnDataDetailedCollectionChanged;
+                        this.OnDataCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    }
+                    else
+                    {
+                        this.CurrentValue = null;
+                    }
                 }
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the visualization object is currenty bound to a datasource
+        /// </summary>
+        [Browsable(true)]
+        [IgnoreDataMember]
+        public bool IsBound => this.Configuration.StreamBinding.IsBound;
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public override string IconSource => this.Configuration.StreamBinding.IsBound ? this.IsSnappedToStream ? IconSourcePath.SnapToStream : base.IconSource : IconSourcePath.StreamUnbound;
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public override bool IsSnappedToStream => this.Container.SnapToVisualizationObject == this;
+
+        /// <summary>
+        /// Gets the text to display in the snap to stream menu item
+        /// </summary>
+        public string SnapToStreamCommandText => this.IsSnappedToStream ? "Unsnap From Stream" : "Snap To Stream";
 
         /// <summary>
         /// Gets how to interpolate values at times that are between messages
@@ -138,48 +215,51 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        /// <inheritdoc />
-        public void CloseStream()
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override void SnapToStream(bool snapToStream)
         {
-            if (this.Configuration.StreamBinding != null)
-            {
-                this.OnCloseStream();
-                this.Configuration.StreamBinding = null;
-            }
-        }
-
-        /// <summary>
-        /// Opens a stream, closing the underlying stream if neccesary.
-        /// </summary>
-        /// <param name="streamBinding">The stream to open and visualize.</param>
-        public void OpenStream(StreamBinding streamBinding)
-        {
-            if (this.Panel == null)
-            {
-                throw new ApplicationException("You must set the parent on a StreamVisualizationObject before calling OpenStream.");
-            }
-
-            this.CloseStream();
-            this.Configuration.StreamBinding = streamBinding;
-            this.OnOpenStream();
+            this.RaisePropertyChanging(nameof(this.IsSnappedToStream));
+            this.RaisePropertyChanging(nameof(this.IconSource));
+            this.RaisePropertyChanging(nameof(this.SnapToStreamCommandText));
+            this.Container.SnapToVisualizationObject = snapToStream ? this : null;
+            this.RaisePropertyChanged(nameof(this.IsSnappedToStream));
+            this.RaisePropertyChanged(nameof(this.IconSource));
+            this.RaisePropertyChanged(nameof(this.SnapToStreamCommandText));
         }
 
         /// <inheritdoc />
-        void IRemoteStreamVisualizationObject.OpenStream(string jsonStreamBinding)
+        public void UpdateStreamBinding(Session session)
         {
-            StreamBinding streamBinding = JsonConvert.DeserializeObject<StreamBinding>(jsonStreamBinding);
-            this.OpenStream(streamBinding);
+            // Attempt to rebind to the underlying dataset
+            StreamBindingResult bindingResult = this.Configuration.StreamBinding.Update(session);
+
+            // If nothing's changed, then we're done
+            if (bindingResult == StreamBindingResult.BindingUnchanged)
+            {
+                return;
+            }
+
+            this.RaisePropertyChanging(nameof(this.IconSource));
+            this.RaisePropertyChanging(nameof(this.CanSnapToStream));
+
+            // Notify that we're no longer bound to the previous data source
+            this.OnStreamUnbound();
+
+            // Notify that we're now bound to a new data source
+            if (bindingResult == StreamBindingResult.BoundToNewSource)
+            {
+                this.OnStreamBound();
+            }
+
+            this.RaisePropertyChanged(nameof(this.IconSource));
+            this.RaisePropertyChanged(nameof(this.CanSnapToStream));
         }
 
-        /// <inheritdoc />
-        public void UpdateStoreBindings(IEnumerable<PartitionViewModel> partitions)
+        /// <inheritdoc/>
+        public virtual DateTime? GetSnappedTime(DateTime time)
         {
-            PartitionViewModel partition = partitions.FirstOrDefault(p => p.Name == this.Configuration.StreamBinding.PartitionName);
-            if (partition != null)
-            {
-                var streamBinding = new StreamBinding(this.Configuration.StreamBinding, partition.StoreName, partition.StorePath);
-                this.OpenStream(streamBinding);
-            }
+            return this.GetTimeOfNearestMessage(time, this.Data?.Count ?? 0, (idx) => this.Data[idx].OriginatingTime);
         }
 
         /// <summary>
@@ -220,26 +300,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs), TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs));
         }
 
-        /// <summary>
-        /// Called when underlying stream is closed.
-        /// </summary>
-        protected virtual void OnCloseStream()
-        {
-            this.Data = null;
-        }
-
         /// <inheritdoc />
-        protected override void OnConfigurationChanged()
+        protected override void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.OnConfigurationChanged();
-            this.OnConfigurationPropertyChanged(nameof(StreamVisualizationObjectConfiguration.CursorEpsilonMs));
-        }
-
-        /// <inheritdoc />
-        protected override void OnConfigurationPropertyChanged(string propertyName)
-        {
-            base.OnConfigurationPropertyChanged(propertyName);
-            if (propertyName == nameof(StreamVisualizationObjectConfiguration.CursorEpsilonMs))
+            base.OnConfigurationPropertyChanged(sender, e);
+            if (e.PropertyName == nameof(StreamVisualizationObjectConfiguration.CursorEpsilonMs))
             {
                 this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs), TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs));
             }
@@ -249,29 +314,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected override void OnCursorChanged(object sender, NavigatorTimeChangedEventArgs e)
         {
             this.SetCurrentValue(e.NewTime);
-        }
-
-        /// <summary>
-        /// Called when data collection property has changed.
-        /// </summary>
-        /// <param name="oldValue">Old data collection.</param>
-        /// <param name="newValue">New data collection.</param>
-        protected virtual void OnDataChanged(ObservableKeyedCache<DateTime, Message<TData>>.ObservableKeyedView oldValue, ObservableKeyedCache<DateTime, Message<TData>>.ObservableKeyedView newValue)
-        {
-            if (oldValue != null)
-            {
-                oldValue.DetailedCollectionChanged -= this.OnDataDetailedCollectionChanged;
-            }
-
-            if (newValue != null)
-            {
-                newValue.DetailedCollectionChanged += this.OnDataDetailedCollectionChanged;
-                this.OnDataCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            }
-            else
-            {
-                this.CurrentValue = null;
-            }
         }
 
         /// <summary>
@@ -286,13 +328,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return;
             }
 
-            if (this.Navigator.NavigationMode == NavigationMode.Live)
+            if (this.Navigator.CursorMode == CursorMode.Live)
             {
                 var last = this.Data.LastOrDefault();
                 if (last != default(Message<TData>))
                 {
                     this.CurrentValue = last;
-                    this.Navigator.UpdateLiveExtents(last.OriginatingTime);
                 }
             }
         }
@@ -300,15 +341,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         protected override void OnDisconnect()
         {
-            this.CloseStream();
+            this.OnStreamUnbound();
             base.OnDisconnect();
         }
 
         /// <summary>
-        /// Called when underlying stream is opened.
+        /// Called when the stream visualization object is bound to a data source.
         /// </summary>
-        protected virtual void OnOpenStream()
+        protected virtual void OnStreamBound()
         {
+        }
+
+        /// <summary>
+        /// Called when the stream visualization object is unbound from a data source.
+        /// </summary>
+        protected virtual void OnStreamUnbound()
+        {
+            this.Data = null;
         }
 
         /// <summary>

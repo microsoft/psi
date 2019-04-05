@@ -402,7 +402,8 @@ namespace Microsoft.Psi.Serialization
             // simply invoke the type serializer for each relevant field
             foreach (FieldInfo field in GetClonableFields(type))
             {
-                if (IsSimpleValueType(field.FieldType) || field.FieldType == typeof(string))
+                // optimization to omit clearing field types which do not require clearing prior to reuse
+                if (!IsClearRequired(field.FieldType, serializers))
                 {
                     continue;
                 }
@@ -461,6 +462,41 @@ namespace Microsoft.Psi.Serialization
                     GetAllFields(type).All(fi => IsClonable(fi) && fi.IsInitOnly && IsImmutableType(fi.FieldType)));
 
             // when changing this definition, make sure a Shared<> instance is not recognized as immutable
+        }
+
+        /// <summary>
+        /// Determines whether an instance of the specified type must be cleared prior to reuse
+        /// as a cloning or deserialization target.
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <param name="serializers">A registry of known serializers</param>
+        /// <returns>true if the type requires clearing prior to reuse; otherwise, false.</returns>
+        internal static bool IsClearRequired(Type type, KnownSerializers serializers)
+        {
+            // first check whether a cached result exists
+            var handler = serializers.GetUntypedHandler(type);
+            if (handler.IsClearRequired.HasValue)
+            {
+                return handler.IsClearRequired.Value;
+            }
+
+            // Initialize the cached value so that we know that we have seen it if we encounter it again during
+            // the current evaluation (i.e. if the object graph contains a cycle back to the current type).
+            handler.IsClearRequired = false;
+
+            // Skip evaluation for simple value types and strings. Otherwise, clearing is only required
+            // for Shared<> types, arrays of Shared<>, or object graphs which may contain a Shared<>.
+            bool result =
+                !IsSimpleValueType(type) &&
+                type != typeof(string) &&
+                    ((type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Shared<>)) ||
+                    (type.IsArray && IsClearRequired(type.GetElementType(), serializers)) ||
+                    GetClonableFields(type).Any(fi => IsClearRequired(fi.FieldType, serializers)));
+
+            // cache the result
+            handler.IsClearRequired = result;
+
+            return result;
         }
 
         internal static int SizeOf(Type type)

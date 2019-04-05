@@ -200,14 +200,14 @@ namespace Microsoft.Psi
         /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
             this IProducer<Dictionary<TKey, TIn>> source,
             Func<TKey, IProducer<TIn>, IProducer<TOut>> streamTransform,
             bool joinOrDefault = false,
             DeliveryPolicy deliveryPolicy = null,
-            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+            Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
         {
             var p = new ParallelSparse<TIn, TKey, TOut>(source.Out.Pipeline, streamTransform, joinOrDefault, branchTerminationPolicy);
             return PipeTo(source, p, deliveryPolicy);
@@ -222,13 +222,13 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="streamAction">The action to apply to each element stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TIn>> Parallel<TIn, TKey>(
             this IProducer<Dictionary<TKey, TIn>> source,
             Action<TKey, IProducer<TIn>> streamAction,
             DeliveryPolicy deliveryPolicy = null,
-            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+            Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
         {
             var p = new ParallelSparse<TIn, TKey, TIn>(source.Out.Pipeline, streamAction, branchTerminationPolicy);
             source.PipeTo(p, deliveryPolicy);
@@ -247,14 +247,14 @@ namespace Microsoft.Psi
         /// <param name="streamTransform">Function mapping from an input element stream to an output output element stream.</param>
         /// <param name="joinOrDefault">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, dictionary of values and the originating time of the last message containing the key.</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TOut>> Parallel<TIn, TKey, TOut>(
             this IProducer<Dictionary<TKey, TIn>> source,
             Func<IProducer<TIn>, IProducer<TOut>> streamTransform,
             bool joinOrDefault = false,
             DeliveryPolicy deliveryPolicy = null,
-            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+            Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
         {
             return source.Parallel((k, s) => streamTransform(s), joinOrDefault, deliveryPolicy, branchTerminationPolicy);
         }
@@ -268,13 +268,13 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="streamAction">The action to apply to each element stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <param name="branchTerminationPolicy">Predicate function determining when to terminate branches (defaults to when key no longer present).</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
         /// <returns>Stream of output dictionaries.</returns>
         public static IProducer<Dictionary<TKey, TIn>> Parallel<TIn, TKey>(
             this IProducer<Dictionary<TKey, TIn>> source,
             Action<IProducer<TIn>> streamAction,
             DeliveryPolicy deliveryPolicy = null,
-            Func<TKey, Dictionary<TKey, TIn>, bool> branchTerminationPolicy = null)
+            Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
         {
             return source.Parallel((k, s) => streamAction(s), deliveryPolicy, branchTerminationPolicy);
         }

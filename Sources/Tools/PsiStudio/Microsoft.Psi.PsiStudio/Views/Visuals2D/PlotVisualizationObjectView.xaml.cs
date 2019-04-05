@@ -4,11 +4,12 @@
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
     using Microsoft.Psi.Visualization.Config;
+    using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Interaction logic for PlotVisualizationObjectView.xaml
     /// </summary>
-    public partial class PlotVisualizationObjectView : PlotVisualizationObjectView<PlotVisualizationObjectConfiguration>
+    public partial class PlotVisualizationObjectView : PlotVisualizationObjectView<PlotVisualizationObject, PlotVisualizationObjectConfiguration>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlotVisualizationObjectView"/> class.
@@ -16,7 +17,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public PlotVisualizationObjectView()
         {
             this.InitializeComponent();
-            this.DynamicCanvas = this._DynamicCanvas;
+            this.Canvas = this._DynamicCanvas;
         }
     }
 }

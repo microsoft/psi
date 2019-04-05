@@ -11,7 +11,7 @@ namespace Microsoft.Psi.PsiStudio
     using System.Windows.Controls;
     using System.Windows.Input;
     using Microsoft.Psi.PsiStudio.Common;
-    using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Win32;
 
@@ -29,40 +29,13 @@ namespace Microsoft.Psi.PsiStudio
         {
             this.InitializeComponent();
 
+            // Check if the argument list includes a store to open.
+            // First arg is this exe's filename, second arg (if it exists) is the store to open
             var args = Environment.GetCommandLineArgs();
-            int argIndex = 1;
-            bool forceRegistration = false;
-            bool embedding = false;
-            bool skipRegistration = false;
             string filename = null;
-            while (argIndex < args.Length)
+            if (args.Length > 1)
             {
-                if (args[argIndex][0] == '-')
-                {
-                    if (args[argIndex] == "-ForceRegistration")
-                    {
-                        forceRegistration = true;
-                    }
-                    else if (args[argIndex] == "-SkipRegistration")
-                    {
-                        skipRegistration = true;
-                    }
-                    else if (args[argIndex] == "-Embedding")
-                    {
-                        embedding = true;
-                    }
-                }
-                else
-                {
-                    filename = args[argIndex];
-                }
-
-                argIndex++;
-            }
-
-            if (!skipRegistration)
-            {
-                this.RegisterApplication(forceRegistration);
+                filename = args[1];
             }
 
             this.Loaded += (s, e) => this.Activate();
@@ -70,7 +43,10 @@ namespace Microsoft.Psi.PsiStudio
             this.context.VisualizationContainer = new VisualizationContainer();
             this.context.VisualizationContainer.Navigator.ViewRange.SetRange(DateTime.UtcNow, TimeSpan.FromSeconds(60));
 
-            if (!embedding && !string.IsNullOrWhiteSpace(filename))
+            // register an async handler to load the current layout once the main window has finished loading
+            this.Loaded += this.MainWindow_Loaded;
+
+            if (!string.IsNullOrWhiteSpace(filename))
             {
                 // register an async handler to open the dataset once the main window has finished loading
                 this.Loaded += async (s, e) => await this.context.OpenDatasetAsync(filename);
@@ -79,106 +55,9 @@ namespace Microsoft.Psi.PsiStudio
             this.DataContext = this.context;
         }
 
-        private void RegisterApplication(bool forceRegistration)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var key = Microsoft.Win32.Registry.LocalMachine;
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string psiExePath = Path.GetDirectoryName(asm.Location);
-            string psiPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{8F2D3209-E9CF-49A0-BCCB-18264AC9F676}\LocalServer32", null, null) as string;
-            if (forceRegistration || psiPath == null || psiPath != asm.Location)
-            {
-                // Extract the .reg file from our resources and write it to a temp file
-                Stream strm = asm.GetManifestResourceStream("Microsoft.Psi.PsiStudio.PsiStudio.reg");
-                StreamReader strmReader = new StreamReader(strm);
-                string tmpFile = Path.GetTempFileName();
-                StreamWriter strmWriter = new StreamWriter(tmpFile);
-                while (!strmReader.EndOfStream)
-                {
-                    string str = strmReader.ReadLine();
-                    string modifiedPath = psiExePath.Replace("\\", "\\\\");
-                    string str2 = str.Replace("[INSTALLFOLDER]", modifiedPath);
-
-                    strmWriter.WriteLine(str2);
-                }
-
-                strmWriter.Close();
-                strmReader.Close();
-
-                // Now start "reg" using that temp file
-                var proc = new System.Diagnostics.Process();
-                try
-                {
-                    proc.StartInfo.FileName = "reg.exe";
-                    proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-                    proc.StartInfo.CreateNoWindow = false;
-                    proc.StartInfo.UseShellExecute = true;
-                    proc.StartInfo.Verb = "runas";
-                    proc.StartInfo.Arguments = "import " + tmpFile + " /reg:64";
-                    proc.Start();
-                    proc.WaitForExit();
-
-                    proc.StartInfo.FileName = "reg.exe";
-                    proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-                    proc.StartInfo.CreateNoWindow = false;
-                    proc.StartInfo.UseShellExecute = true;
-                    proc.StartInfo.Verb = "runas";
-                    proc.StartInfo.Arguments = "import " + tmpFile + " /reg:32";
-                    proc.Start();
-                    proc.WaitForExit();
-                }
-                finally
-                {
-                    proc.Dispose();
-                }
-            }
-        }
-
-        private void AddPartition_Click(object sender, RoutedEventArgs e)
-        {
-            var session = ((MenuItem)sender).DataContext as SessionViewModel;
-
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.DefaultExt = ".psi";
-            dlg.Filter = "Psi Store (.psi)|*.psi|Psi Annotation Store (.pas)|*.pas";
-            bool? result = dlg.ShowDialog();
-            if (result == true)
-            {
-                var fileInfo = new FileInfo(dlg.FileName);
-                var name = fileInfo.Name.Split('.')[0];
-
-                if (fileInfo.Extension == ".psi")
-                {
-                    session.AddStorePartition(name, fileInfo.DirectoryName);
-                }
-                else if (fileInfo.Extension == ".pas")
-                {
-                    session.AddAnnotationPartition(name, fileInfo.DirectoryName);
-                }
-                else
-                {
-                    throw new ApplicationException("Invalid file type selected when adding partition.");
-                }
-
-                this.context.DatasetViewModel.CurrentSessionViewModel = session;
-                this.context.VisualizationContainer.ZoomToRange(session.OriginatingTimeInterval);
-            }
-        }
-
-        private void VisualizeSession_Click(object sender, RoutedEventArgs e)
-        {
-            var session = ((MenuItem)sender).DataContext as SessionViewModel;
-            this.context.DatasetViewModel.CurrentSessionViewModel = session;
-            this.context.VisualizationContainer.Navigator.DataRange.SetRange(session.OriginatingTimeInterval);
-            this.context.VisualizationContainer.ZoomToRange(session.OriginatingTimeInterval);
-            this.context.VisualizationContainer.UpdateStoreBindings(session.PartitionViewModels.ToList());
-        }
-
-        private void VisualizePartition_Click(object sender, RoutedEventArgs e)
-        {
-            var partition = ((MenuItem)sender).DataContext as PartitionViewModel;
-            this.context.DatasetViewModel.CurrentSessionViewModel = partition.SessionViewModel;
-            this.context.VisualizationContainer.ZoomToRange(partition.SessionViewModel.OriginatingTimeInterval);
-            this.context.VisualizationContainer.UpdateStoreBindings(new PartitionViewModel[] { partition });
+            this.context.OpenLayout(this.context.CurrentLayout);
         }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
@@ -208,7 +87,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (treeNode != null)
                 {
                     IStreamTreeNode streamTreeNode = treeNode.DataContext as IStreamTreeNode;
-                    if (streamTreeNode != null)
+                    if (streamTreeNode != null && streamTreeNode.CanVisualize)
                     {
                         // Begin the Drag & Drop operation
                         DataObject data = new DataObject();

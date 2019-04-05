@@ -35,5 +35,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             base.OnConnect();
             this.Container.AddPanel(this.XYVisualizationPanel, false);
         }
+
+        /// <inheritdoc/>
+        protected override void OnDisconnect()
+        {
+            this.Container.RemovePanel(this.XYVisualizationPanel);
+            base.OnDisconnect();
+        }
     }
 }

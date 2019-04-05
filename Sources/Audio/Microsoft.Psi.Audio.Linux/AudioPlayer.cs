@@ -43,8 +43,8 @@ namespace Microsoft.Psi.Audio
         public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)
             : base(pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
+            pipeline.PipelineRun += (s, e) => this.OnPipelineRun();
+            this.In.Unsubscribed += _ => this.OnUnsubscribed();
             this.pipeline = pipeline;
             this.configuration = configuration;
             this.frameSize = this.configuration.Format.Channels * configuration.Format.BitsPerSample / 8;
@@ -79,13 +79,13 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void Dispose()
         {
-            this.OnPipelineStop();
+            this.OnUnsubscribed();
         }
 
         /// <summary>
         /// Starts playing back audio.
         /// </summary>
-        private void OnPipelineStart()
+        private void OnPipelineRun()
         {
             this.audioDevice = LinuxAudioInterop.Open(
                 this.configuration.DeviceName,
@@ -98,7 +98,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Stops playing back audio.
         /// </summary>
-        private void OnPipelineStop()
+        private void OnUnsubscribed()
         {
             if (this.audioDevice != null)
             {

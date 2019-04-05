@@ -88,7 +88,7 @@ namespace Microsoft.Psi.Samples.OpenCV
             this.pipeline = Pipeline.Create();
 
             // Next register an event handler to catch pipeline errors
-            this.pipeline.PipelineCompletionEvent += this.PipelineCompletionEvent;
+            this.pipeline.PipelineCompleted += this.Pipeline_PipelineCompleted;
 
             // Create our webcam
             MediaCapture webcam = new MediaCapture(this.pipeline, 1280, 720, 30);
@@ -118,11 +118,11 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// PipelineCompletionEvent is called when the pipeline finishes running
+        /// <see cref="Pipeline_PipelineCompleted"/> is called when the pipeline finishes running
         /// </summary>
         /// <param name="sender">Object that sent this event</param>
         /// <param name="e">Pipeline event arguments. Primarily used to get any pipeline errors back.</param>
-        private void PipelineCompletionEvent(object sender, PipelineCompletionEventArgs e)
+        private void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             if (e.Errors.Count > 0)
             {

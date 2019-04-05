@@ -4,11 +4,12 @@
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
     using Microsoft.Psi.Visualization.Config;
+    using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Interaction logic for AudioVisualizationObjectView.xaml
     /// </summary>
-    public partial class AudioVisualizationObjectView : PlotVisualizationObjectView<AudioVisualizationObjectConfiguration>
+    public partial class AudioVisualizationObjectView : PlotVisualizationObjectView<AudioVisualizationObject, AudioVisualizationObjectConfiguration>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioVisualizationObjectView"/> class.
@@ -16,7 +17,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public AudioVisualizationObjectView()
         {
             this.InitializeComponent();
-            this.DynamicCanvas = this._DynamicCanvas;
+            this.Canvas = this._DynamicCanvas;
         }
     }
 }

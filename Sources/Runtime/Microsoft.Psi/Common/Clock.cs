@@ -43,6 +43,18 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Clock"/> class.
+        /// </summary>
+        /// <param name="clock">Clock from which to take parameters.</param>
+        internal Clock(Clock clock)
+        {
+            this.offsetInRealTime = clock.offsetInRealTime;
+            this.originInRealTime = clock.originInRealTime;
+            this.virtualTimeDilateFactorInverse = clock.virtualTimeDilateFactorInverse;
+            this.virtualTimeDilateFactor = clock.virtualTimeDilateFactor;
+        }
+
+        /// <summary>
         /// Gets the origin in real time.
         /// </summary>
         public DateTime RealTimeOrigin => this.originInRealTime;

@@ -7,29 +7,29 @@ namespace Microsoft.Psi.Kinect
     using Microsoft.Psi.Calibration;
 
     /// <summary>
-    /// IKinectCalibration defines a calibration object that handles both extrinsics and intrinsics for a Kinect camera
+    /// Defines the calibration information (intrinsics and extrinsics of color and depth cameras) for a Kinect sensor.
     /// </summary>
     public interface IKinectCalibration
     {
         /// <summary>
-        /// Gets or sets the extrinsics associated with the Kinect's color image
+        /// Gets the extrinsics associated with the Kinect's color image.
         /// </summary>
-        CoordinateSystem ColorExtrinsics { get; set; }
+        CoordinateSystem ColorExtrinsics { get; }
 
         /// <summary>
-        /// Gets or sets the intrinsics associated with the Kinect's color image
+        /// Gets the intrinsics associated with the Kinect's color image.
         /// </summary>
-        ICameraIntrinsics ColorIntrinsics { get; set; }
+        ICameraIntrinsics ColorIntrinsics { get; }
 
         /// <summary>
-        /// Gets or sets the extrinsics associated with the Kinect's depth image
+        /// Gets the extrinsics associated with the Kinect's depth image.
         /// </summary>
-        CoordinateSystem DepthExtrinsics { get; set; }
+        CoordinateSystem DepthExtrinsics { get; }
 
         /// <summary>
-        /// Gets or sets the intrinsics associated with the Kinect's depth image
+        /// Gets the intrinsics associated with the Kinect's depth image.
         /// </summary>
-        ICameraIntrinsics DepthIntrinsics { get; set; }
+        ICameraIntrinsics DepthIntrinsics { get; }
 
         /// <summary>
         /// Converts a 3D point from Kinect depth coordinates into color image coordinates.

@@ -8,26 +8,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
     using System.Windows.Data;
     using GalaSoft.MvvmLight.Command;
-    using Microsoft.Psi.Visualization.Datasets;
+    using Microsoft.Psi.Data;
+    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Serialization;
-    using Microsoft.Psi.Visualization.Server;
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Newtonsoft.Json;
 
     /// <summary>
     /// Represents the container where all visualization panels are hosted. The is the root UI element for visualizations.
     /// </summary>
-    [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [Guid(Guids.RemoteVisualizationContainerCLSIDString)]
-    [ComVisible(false)]
-    public class VisualizationContainer : ReferenceCountedObject, IRemoteVisualizationContainer
+    public class VisualizationContainer : ObservableObject
     {
         private RelayCommand<VisualizationPanel> deleteVisualizationPanelCommand;
 
@@ -94,7 +88,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Gets the current navigator
         /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         public Navigator Navigator
         {
             get { return this.navigator; }
@@ -148,16 +142,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        /// <inheritdoc />
-        IRemoteVisualizationPanel IRemoteVisualizationContainer.CurrentPanel
-        {
-            get => this.CurrentPanel;
-            set => this.CurrentPanel = (VisualizationPanel)value;
-        }
-
-        /// <inheritdoc />
-        IRemoteNavigator IRemoteVisualizationContainer.Navigator => this.Navigator;
-
         /// <summary>
         /// Loads a visualization layout from the specified file.
         /// </summary>
@@ -190,21 +174,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 jsonFile?.Dispose();
             }
-        }
-
-        /// <inheritdoc />
-        public IRemoteVisualizationPanel AddPanel(string type)
-        {
-            var t = Type.GetType(type);
-            if (t == null)
-            {
-                var assembly = Assembly.GetEntryAssembly();
-                t = assembly.GetType(type);
-            }
-
-            VisualizationPanel panel = (VisualizationPanel)Activator.CreateInstance(t);
-            this.AddPanel(panel);
-            return panel;
         }
 
         /// <summary>
@@ -255,27 +224,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             this.Panels.Clear();
             this.CurrentPanel = null;
-        }
-
-        /// <summary>
-        /// Close all streams in all visualization objects.
-        /// </summary>
-        public void CloseStreams()
-        {
-            foreach (var panel in this.Panels)
-            {
-                foreach (var vo in panel.VisualizationObjects)
-                {
-                    var svo = vo as IStreamVisualizationObject;
-                    svo?.CloseStream();
-                }
-            }
-        }
-
-        /// <inheritdoc />
-        public void RemovePanel(IRemoteVisualizationPanel panel)
-        {
-            this.RemovePanel((VisualizationPanel)panel);
         }
 
         /// <summary>
@@ -341,15 +289,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Update the store bindings with the specified enumeration of partitions.
         /// </summary>
-        /// <param name="partitions">Partitions to use in updating store bindings.</param>
-        public void UpdateStoreBindings(IEnumerable<PartitionViewModel> partitions)
+        /// <param name="session">The session currently being visualized.</param>
+        public void UpdateStreamBindings(Session session)
         {
             foreach (var panel in this.Panels)
             {
                 foreach (var vo in ((VisualizationPanel)panel).VisualizationObjects)
                 {
                     var svo = vo as IStreamVisualizationObject;
-                    svo?.UpdateStoreBindings(partitions);
+                    svo?.UpdateStreamBinding(session);
                 }
             }
         }
@@ -367,14 +315,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void InitNew()
         {
-            ((Navigator)this.navigator).NavigationModeChanged += this.Navigator_NavigationModeChanged;
             this.panelsLock = new object();
             BindingOperations.EnableCollectionSynchronization(this.panels, this.panelsLock);
-        }
-
-        private void Navigator_NavigationModeChanged(object sender, NavigatorModeChangedEventArgs e)
-        {
-            this.Clear();
         }
 
         [OnDeserialized]

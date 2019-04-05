@@ -123,6 +123,12 @@ namespace Microsoft.Psi.Visualization.Collections
                 {
                     view = new ObservableKeyedView(this, mode, startKey, endKey, tailCount, tailRange);
                     weakView.SetTarget(view);
+
+                    // Sometimes the weak view gets deleted between when we grab it to check
+                    // if it has a hard reference and when we actually set the new hard reference
+                    // that we just created.  If that happens, then the following code makes sure
+                    // the weak view gets put back into the collection.
+                    this.views[viewKey] = weakView;
                 }
             }
             else

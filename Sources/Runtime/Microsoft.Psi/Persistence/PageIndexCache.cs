@@ -36,6 +36,7 @@ namespace Microsoft.Psi.Persistence
             if (indexList.Length == 0 || CompareTime(time, indexList[indexList.Length - 1], useOriginatingTime) > 0)
             {
                 this.Update();
+                indexList = this.pageIndex;
             }
 
             if (indexList.Length == 0)

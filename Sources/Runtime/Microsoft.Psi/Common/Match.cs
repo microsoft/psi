@@ -385,16 +385,28 @@ namespace Microsoft.Psi
             return new Interpolator<T>(NearestValueFn<T>(window, requireNextValue, orDefault), window, requireNextValue, orDefault);
         }
 
-        private static Func<DateTime, IEnumerable<Message<T>>, bool, MatchResult<T>> NearestValueFn<T>(RelativeTimeInterval window, bool requireNextValue, bool orDefault)
+        private static Func<DateTime, IEnumerable<Message<T>>, DateTime?, MatchResult<T>> NearestValueFn<T>(RelativeTimeInterval window, bool requireNextValue, bool orDefault)
         {
-            return (DateTime matchTime, IEnumerable<Message<T>> messages, bool final) =>
+            return (DateTime matchTime, IEnumerable<Message<T>> messages, DateTime? closedOriginatingTime) =>
             {
                 var count = messages.Count();
 
-                // If no messages available, signal insufficient data
+                // If no messages available,
                 if (count == 0)
                 {
-                    return MatchResult<T>.InsufficientData(DateTime.MinValue);
+                    // If stream is closed,
+                    if (closedOriginatingTime.HasValue)
+                    {
+                        // Then depending on orDefault, either create a default value or return does not exist.
+                        return orDefault && (matchTime <= closedOriginatingTime.Value) ?
+                            MatchResult<T>.Create(default(T), DateTime.MinValue) :
+                            MatchResult<T>.DoesNotExist(DateTime.MinValue);
+                    }
+                    else
+                    {
+                        // otherwise insufficient data
+                        return MatchResult<T>.InsufficientData(DateTime.MinValue);
+                    }
                 }
 
                 Message<T> bestMatch = default(Message<T>);
@@ -430,13 +442,14 @@ namespace Microsoft.Psi
                 {
                     // Check if we need to satisfy additional conditions
                     // if the best match is the last available message
-                    if (requireNextValue && (i == count) && !final)
+                    if (requireNextValue && (i == count) && !closedOriginatingTime.HasValue)
                     {
                         // We need to guarantee that bestMatch is indeed the best match. If it has an
                         // originating time that occurs at or after the match time (or the
                         // upper boundary of the window, whichever occurs earlier in time), then this
                         // must be true as we will never see a closer match in any of the messages
-                        // that may arrive in the future. However if it is before the match time,
+                        // that may arrive in the future (if the stream was closed then we know that no
+                        // messages may arrive in the future). However if it is before the match time,
                         // then we will need to see a message beyond the match/window time to
                         // be sure that there is no closer match (i.e. as long as we haven't seen a
                         // message at or past the match/window time, it is always possible that
@@ -454,12 +467,11 @@ namespace Microsoft.Psi
                     return MatchResult<T>.Create(bestMatch.Data, bestMatch.OriginatingTime);
                 }
 
-                var last = messages.Last();
-                if (last.OriginatingTime >= upperBound)
+                if (closedOriginatingTime.HasValue || messages.Last().OriginatingTime >= upperBound)
                 {
                     // If no nearest match was found and the match time occurs before or coincident with
-                    // the last message, then no future message will alter the result and we can therefore conclude
-                    // that no matched value exists at that time.
+                    // the last message (or the stream was closed), then no future message will alter
+                    // the result and we can therefore conclude that no matched value exists at that time.
 
                     // In that case, either return DoesNotExist or the default value (according to the parameter)
                     return orDefault ?
@@ -480,7 +492,7 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of messages.</typeparam>
         public class Interpolator<T>
         {
-            private readonly Func<DateTime, IEnumerable<Message<T>>, bool, MatchResult<T>> matchFn;
+            private readonly Func<DateTime, IEnumerable<Message<T>>, DateTime?, MatchResult<T>> matchFn;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Interpolator{T}"/> class.
@@ -489,7 +501,7 @@ namespace Microsoft.Psi
             /// <param name="window">Message window interval.</param>
             /// <param name="requireNextValue">Whether the next value is required as confirmation of proper match.</param>
             /// <param name="orDefault">Whether to return a default value upon failure to find a suitable match.</param>
-            public Interpolator(Func<DateTime, IEnumerable<Message<T>>, bool, MatchResult<T>> match, RelativeTimeInterval window, bool requireNextValue, bool orDefault)
+            public Interpolator(Func<DateTime, IEnumerable<Message<T>>, DateTime?, MatchResult<T>> match, RelativeTimeInterval window, bool requireNextValue, bool orDefault)
             {
                 this.Window = window;
                 this.RequireNextValue = requireNextValue;
@@ -535,11 +547,11 @@ namespace Microsoft.Psi
             /// </summary>
             /// <param name="matchTime">Time at which to match.</param>
             /// <param name="messages">Window of messages.</param>
-            /// <param name="final">Flag indicating whether this is a final call (stream closed)</param>
+            /// <param name="closedOriginatingTime">Time at which this stream was closed, or null if the stream is open.</param>
             /// <returns>Resulting match.</returns>
-            public MatchResult<T> Match(DateTime matchTime, IEnumerable<Message<T>> messages, bool final)
+            public MatchResult<T> Match(DateTime matchTime, IEnumerable<Message<T>> messages, DateTime? closedOriginatingTime)
             {
-                return this.matchFn(matchTime, messages, final);
+                return this.matchFn(matchTime, messages, closedOriginatingTime);
             }
         }
     }

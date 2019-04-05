@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.Collections.Specialized;
+    using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Threading;
     using System.Windows.Media;
@@ -21,6 +22,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private static Color[] colorChoice = new[] { Colors.LightBlue, Colors.Pink, Colors.LightGreen, Colors.Blue, Colors.Yellow, Colors.Green, Colors.Red };
         private static int nextColorChoice;
         private AxisComputeMode currentYAxisComputeMode;
+
+        /// <inheritdoc/>
+        [IgnoreDataMember]
+        public override Color LegendColor => this.Configuration.Color;
 
         /// <inheritdoc/>
         protected override InterpolationStyle InterpolationStyle => this.Configuration.InterpolationStyle;
@@ -44,19 +49,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        protected override void OnConfigurationChanged()
+        protected override void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.OnConfigurationChanged();
+            base.OnConfigurationPropertyChanged(sender, e);
 
-            // Whene the entire configuration changes, we also need to notify config property changed for the properties that we care about
-            this.OnConfigurationPropertyChanged(nameof(PlotVisualizationObjectConfiguration.YAxisComputeMode));
-        }
-
-        /// <inheritdoc />
-        protected override void OnConfigurationPropertyChanged(string propertyName)
-        {
-            base.OnConfigurationPropertyChanged(propertyName);
-            if (propertyName == nameof(PlotVisualizationObjectConfiguration.YAxisComputeMode))
+            if (e.PropertyName == nameof(PlotVisualizationObjectConfiguration.YAxisComputeMode))
             {
                 // Take action only if value changed
                 if (this.Configuration.YAxisComputeMode != this.currentYAxisComputeMode)
@@ -64,6 +61,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.currentYAxisComputeMode = this.Configuration.YAxisComputeMode;
                     this.AutoComputeYAxis();
                 }
+            }
+            else if (e.PropertyName == nameof(PlotVisualizationObjectConfiguration.Color))
+            {
+                this.RaisePropertyChanged(nameof(this.LegendColor));
             }
         }
 

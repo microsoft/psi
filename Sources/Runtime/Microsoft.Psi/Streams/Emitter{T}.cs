@@ -4,8 +4,10 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Microsoft.Psi.Executive;
     using Microsoft.Psi.Scheduling;
     using Microsoft.Psi.Serialization;
 
@@ -21,6 +23,7 @@ namespace Microsoft.Psi
         private readonly object owner;
         private readonly Pipeline pipeline;
         private readonly int id;
+        private readonly List<ClosedHandler> closedHandlers = new List<ClosedHandler>();
         private int nextSeqId;
         private SynchronizationLock syncContext;
         private Envelope lastEnvelope;
@@ -43,6 +46,28 @@ namespace Microsoft.Psi
             this.pipeline = pipeline;
         }
 
+        /// <summary>
+        /// Emitter closed handler.
+        /// </summary>
+        /// <param name="finalOriginatingTime">Originating time of final message posted.</param>
+        public delegate void ClosedHandler(DateTime finalOriginatingTime);
+
+        /// <summary>
+        /// Event invoked after this emitter is closed.
+        /// </summary>
+        internal event ClosedHandler Closed
+        {
+            add
+            {
+                this.closedHandlers.Add(value);
+            }
+
+            remove
+            {
+                this.closedHandlers.Remove(value);
+            }
+        }
+
         /// <inheritdoc />
         public string Name { get; set; }
 
@@ -51,6 +76,11 @@ namespace Microsoft.Psi
 
         /// <inheritdoc />
         public Pipeline Pipeline => this.pipeline;
+
+        /// <summary>
+        /// Gets envelope of last message posted on this emitter.
+        /// </summary>
+        public Envelope LastEnvelope => this.lastEnvelope;
 
         /// <summary>
         /// Gets a value indicating whether this emitter has subscribers.
@@ -65,19 +95,21 @@ namespace Microsoft.Psi
 
         internal SynchronizationLock SyncContext => this.syncContext;
 
-        /// <summary>
-        /// Close emitter (unsubscribing receivers).
-        /// </summary>
-        public void Close()
+        /// <inheritdoc />
+        public void Close(DateTime originatingTime)
         {
-            lock (this.receivers)
+            if (this.lastEnvelope.SequenceId != int.MaxValue)
             {
-                foreach (var receiver in this.receivers)
-                {
-                    receiver.OnUnsubscribe();
-                }
+                var e = this.CreateEnvelope(originatingTime);
+                e.SequenceId = int.MaxValue; // special "closing" ID
+                this.Deliver(new Message<T>(default(T), e));
 
                 this.receivers = new Receiver<T>[0];
+
+                foreach (var handler in this.closedHandlers)
+                {
+                    this.pipeline.Scheduler.Schedule(this.syncContext, PipelineElement.TrackStateObjectOnContext(() => handler(originatingTime), this.Owner, this.pipeline), originatingTime, false, true);
+                }
             }
         }
 
@@ -89,6 +121,10 @@ namespace Microsoft.Psi
         /// <param name="originatingTime">The time of the real-world event that led to the creation of this message</param>
         public void Post(T message, DateTime originatingTime)
         {
+#if DEBUG
+            PipelineElement.CheckStateObjectOnContext(this.owner, this.pipeline);
+#endif
+
             var e = this.CreateEnvelope(originatingTime);
             this.Deliver(new Message<T>(message, e));
         }
@@ -130,10 +166,11 @@ namespace Microsoft.Psi
         /// Allows a receiver to subscribe to messages from this emitter.
         /// </summary>
         /// <param name="receiver">The receiver subscribing to this emitter.</param>
+        /// <param name="allowSubscribeWhileRunning"> If true, bypasses checks that subscriptions are not made while pipelines are running.</param>
         /// <param name="deliveryPolicy">The desired policy to use when delivering messages to the specified receiver.</param>
-        internal void Subscribe(Receiver<T> receiver, DeliveryPolicy deliveryPolicy)
+        internal void Subscribe(Receiver<T> receiver, bool allowSubscribeWhileRunning, DeliveryPolicy deliveryPolicy)
         {
-            receiver.OnSubscribe(this, deliveryPolicy);
+            receiver.OnSubscribe(this, allowSubscribeWhileRunning, deliveryPolicy);
 
             lock (this.receivers)
             {
@@ -166,7 +203,13 @@ namespace Microsoft.Psi
 
         private void Deliver(Message<T> msg)
         {
-            if (this.lastEnvelope.SequenceId != 0)
+            if (this.lastEnvelope.SequenceId == int.MaxValue)
+            {
+                // emitter is closed
+                return;
+            }
+
+            if (this.lastEnvelope.SequenceId != 0 && msg.SequenceId != int.MaxValue)
             {
                 // make sure the data is consistent
                 if (msg.Envelope.OriginatingTime <= this.lastEnvelope.OriginatingTime || msg.Envelope.Time < this.lastEnvelope.Time || msg.Envelope.SequenceId <= this.lastEnvelope.SequenceId)

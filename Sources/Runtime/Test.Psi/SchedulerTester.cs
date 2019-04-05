@@ -8,11 +8,12 @@ namespace Test.Psi
     using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
+    using Microsoft.Psi.Components;
     using Microsoft.Psi.Scheduling;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class SchedulerTester
+    public class SchedulerTester : ISourceComponent
     {
         [TestMethod]
         [Timeout(60000)]
@@ -21,6 +22,7 @@ namespace Test.Psi
             var scheduler = new Scheduler(error => { throw new AggregateException(error); });
             scheduler.Start(new Clock(), false);
             scheduler.PauseForQuiescence();
+            scheduler.ResumeAfterQuiescence();
             scheduler.Stop();
         }
 
@@ -74,6 +76,7 @@ namespace Test.Psi
             var results = new List<long>();
             using (var p = Pipeline.Create())
             {
+                Generators.Range(p, 0, 2, TimeSpan.FromSeconds(10)); // hold pipeline open
                 var generator = Generators.Sequence(p, 0, i => i++, 10, delay)
                     .Do((i, e) => results.Add(p.GetCurrentTime().Ticks - e.OriginatingTime.Ticks));
                 p.Run(enforceReplayClock: false);
@@ -101,7 +104,7 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create())
             {
-                p.PipelineCompletionEvent += (o, e) => Console.WriteLine("Error handled");
+                p.PipelineCompleted += (o, e) => Console.WriteLine("Error handled");
                 Generators.Return(p, 1).Select(i => i / 0); // shouldn't throw because of completion event handler
                 p.RunAsync();
             }
@@ -181,6 +184,17 @@ namespace Test.Psi
 
                 lastTime = currentTime;
             }
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            notifyCompletionTime(DateTime.MaxValue);
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
         }
     }
 }

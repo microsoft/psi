@@ -57,7 +57,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     {
                         var bitmap = image.Resource.ToManagedImage(true);
                         bitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
-                        var sh = new Shared<Microsoft.Psi.Imaging.Image>(Imaging.Image.FromManagedImage(bitmap), null);
+                        var sh = Shared.Create(Imaging.Image.FromManagedImage(bitmap));
                         this.DisplayImage.UpdateImage(sh);
                     }
                     else

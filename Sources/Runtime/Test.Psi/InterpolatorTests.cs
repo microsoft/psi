@@ -23,23 +23,23 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message
-            var result = interpolator.Match(new DateTime(100), messages, false);
+            var result = interpolator.Match(new DateTime(100), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
 
             // Interpolate at point before first message
-            result = interpolator.Match(new DateTime(9), messages, false);
+            result = interpolator.Match(new DateTime(9), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
         }
 
@@ -56,23 +56,23 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message
-            var result = interpolator.Match(new DateTime(100), messages, false);
+            var result = interpolator.Match(new DateTime(100), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point before first message
-            result = interpolator.Match(new DateTime(9), messages, false);
+            result = interpolator.Match(new DateTime(9), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
         }
 
@@ -89,23 +89,23 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message
-            var result = interpolator.Match(new DateTime(100), messages, false);
+            var result = interpolator.Match(new DateTime(100), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
 
             // Interpolate at point before first message
-            result = interpolator.Match(new DateTime(9), messages, false);
+            result = interpolator.Match(new DateTime(9), messages, null);
             Assert.AreEqual(MatchResult<int>.DoesNotExist(new DateTime(9)), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
         }
 
@@ -122,23 +122,23 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message
-            var result = interpolator.Match(new DateTime(100), messages, false);
+            var result = interpolator.Match(new DateTime(100), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point before first message
-            result = interpolator.Match(new DateTime(9), messages, false);
+            result = interpolator.Match(new DateTime(9), messages, null);
             Assert.AreEqual(MatchResult<int>.DoesNotExist(new DateTime(9)), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
         }
 
@@ -155,23 +155,23 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message
-            var result = interpolator.Match(new DateTime(100), messages, false);
+            var result = interpolator.Match(new DateTime(100), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point before first message
-            result = interpolator.Match(new DateTime(9), messages, false);
+            result = interpolator.Match(new DateTime(9), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
         }
 
@@ -188,23 +188,23 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message
-            var result = interpolator.Match(new DateTime(100), messages, false);
+            var result = interpolator.Match(new DateTime(100), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point before first message
-            result = interpolator.Match(new DateTime(9), messages, false);
+            result = interpolator.Match(new DateTime(9), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
         }
 
@@ -221,31 +221,31 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message (outside upper bound)
-            var result = interpolator.Match(new DateTime(36), messages, false);
+            var result = interpolator.Match(new DateTime(36), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point later than last message (within upper bound)
-            result = interpolator.Match(new DateTime(35), messages, false);
+            result = interpolator.Match(new DateTime(35), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
 
             // Interpolate at point before first message (outside lower bound)
-            result = interpolator.Match(new DateTime(4), messages, false);
+            result = interpolator.Match(new DateTime(4), messages, null);
             Assert.AreEqual(MatchResult<int>.DoesNotExist(new DateTime(4)), result);
 
             // Interpolate at point before first message (within lower bound)
-            result = interpolator.Match(new DateTime(5), messages, false);
+            result = interpolator.Match(new DateTime(5), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
         }
 
@@ -262,31 +262,31 @@ namespace Test.Psi
             };
 
             // Interpolate at point later than last message (outside upper bound)
-            var result = interpolator.Match(new DateTime(36), messages, false);
+            var result = interpolator.Match(new DateTime(36), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point later than last message (within upper bound)
-            result = interpolator.Match(new DateTime(35), messages, false);
+            result = interpolator.Match(new DateTime(35), messages, null);
             Assert.AreEqual(MatchResult<int>.InsufficientData(DateTime.MinValue), result);
 
             // Interpolate at point before first message (outside lower bound)
-            result = interpolator.Match(new DateTime(4), messages, false);
+            result = interpolator.Match(new DateTime(4), messages, null);
             Assert.AreEqual(MatchResult<int>.DoesNotExist(new DateTime(4)), result);
 
             // Interpolate at point before first message (within lower bound)
-            result = interpolator.Match(new DateTime(5), messages, false);
+            result = interpolator.Match(new DateTime(5), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (closer to earlier message)
-            result = interpolator.Match(new DateTime(14), messages, false);
+            result = interpolator.Match(new DateTime(14), messages, null);
             Assert.AreEqual(this.MakeResult(messages[0]), result);
 
             // Interpolate between first two messages (exactly mid-way)
-            result = interpolator.Match(new DateTime(15), messages, false);
+            result = interpolator.Match(new DateTime(15), messages, null);
             Assert.AreEqual(this.MakeResult(messages[1]), result);
 
             // Interpolate between last two messages (closer to later message)
-            result = interpolator.Match(new DateTime(26), messages, false);
+            result = interpolator.Match(new DateTime(26), messages, null);
             Assert.AreEqual(this.MakeResult(messages[2]), result);
         }
 

@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Components
     /// This is useful for components that need to poll some resource. Such components can simply subscribe to this
     /// clock component rather than registering a timer on their own.
     /// </summary>
-    public abstract class Timer : IFiniteSourceComponent, IDisposable
+    public abstract class Timer : ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
 
@@ -52,7 +52,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// An action to call when done
         /// </summary>
-        private Action onCompleted;
+        private Action<DateTime> notifyCompletionTime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Timer"/> class.
@@ -62,8 +62,6 @@ namespace Microsoft.Psi.Components
         /// <param name="timerInterval">The timer firing interval, in ms.</param>
         public Timer(Pipeline pipeline, uint timerInterval)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.timerInterval = TimeSpan.FromMilliseconds(timerInterval);
         }
@@ -85,27 +83,14 @@ namespace Microsoft.Psi.Components
         /// </summary>
         public void Dispose()
         {
-            this.OnPipelineStop();
+            this.Stop();
         }
 
         /// <inheritdoc/>
-        void IFiniteSourceComponent.Initialize(Action onCompleted)
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.onCompleted = onCompleted;
-        }
+            this.notifyCompletionTime = notifyCompletionTime;
 
-        /// <summary>
-        /// Called by the timer. Override to publish actual messages
-        /// </summary>
-        /// <param name="absoluteTime">The current (virtual) time</param>
-        /// <param name="relativeTime">The time elapsed since the generator was started</param>
-        protected abstract void Generate(DateTime absoluteTime, TimeSpan relativeTime);
-
-        /// <summary>
-        /// Starts the timer. Called by the runtime when the pipeline starts.
-        /// </summary>
-        private void OnPipelineStart()
-        {
             var replay = this.pipeline.ReplayDescriptor;
             if (replay.Start == DateTime.MinValue)
             {
@@ -124,21 +109,26 @@ namespace Microsoft.Psi.Components
             this.running = true;
         }
 
-        /// <summary>
-        /// Stops the timer. Called by the runtime when the pipeline shuts down.
-        /// </summary>
-        private void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             if (this.running)
             {
                 this.timer.Stop();
                 this.running = false;
-                this.onCompleted();
-                this.onCompleted = null;
+                this.notifyCompletionTime(this.pipeline.GetCurrentTime());
+                this.notifyCompletionTime = null;
             }
 
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Called by the timer. Override to publish actual messages
+        /// </summary>
+        /// <param name="absoluteTime">The current (virtual) time</param>
+        /// <param name="relativeTime">The time elapsed since the generator was started</param>
+        protected abstract void Generate(DateTime absoluteTime, TimeSpan relativeTime);
 
         /// <summary>
         /// Wakes up every timerInterval to publish a new message.
@@ -153,7 +143,7 @@ namespace Microsoft.Psi.Components
             var now = this.pipeline.GetCurrentTime();
             if (now >= this.endTime)
             {
-                this.OnPipelineStop();
+                this.Stop();
             }
             else
             {

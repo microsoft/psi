@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Media
 
         private Mpeg4Writer(Pipeline pipeline, string filename)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
+            pipeline.PipelineRun += (s, e) => this.OnPipelineRun();
             this.pipeline = pipeline;
             this.ImageIn = pipeline.CreateReceiver<Shared<Image>>(this, this.ReceiveImage, nameof(this.ImageIn));
             this.AudioIn = pipeline.CreateReceiver<AudioBuffer>(this, this.ReceiveAudio, nameof(this.AudioIn));
@@ -103,7 +103,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Called once all the subscriptions are established.
         /// </summary>
-        private void OnPipelineStart()
+        private void OnPipelineRun()
         {
             MP4Writer.Startup();
             this.writer = new MP4Writer();

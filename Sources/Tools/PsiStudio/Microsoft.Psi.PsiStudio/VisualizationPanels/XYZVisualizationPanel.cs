@@ -16,14 +16,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     public class XYZVisualizationPanel : VisualizationPanel<XYZVisualizationPanelConfiguration>
     {
         /// <inheritdoc />
-        [IgnoreDataMember]
-        public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(XYZVisualizationPanelView));
-
-        /// <inheritdoc />
         protected override void InitNew()
         {
             base.InitNew();
             this.Configuration.Name = "3D Panel";
+        }
+
+        /// <inheritdoc />
+        protected override DataTemplate CreateDefaultViewTemplate()
+        {
+            return XamlHelper.CreateTemplate(this.GetType(), typeof(XYZVisualizationPanelView));
         }
     }
 }

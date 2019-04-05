@@ -13,7 +13,8 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
     {
         // This field is required and must be a valid key which may be obtained by signing up at
         // https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-api.
-        private static string bingSubscriptionKey = string.Empty;
+        private static string azureSubscriptionKey = string.Empty;
+        private static string azureRegion = string.Empty; // the region to which the subscription is associated (e.g. "westus")
 
         public static void Main(string[] args)
         {
@@ -25,7 +26,7 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
                 Console.WriteLine("================================================================================");
                 Console.WriteLine("                               Psi Speech Sample");
                 Console.WriteLine("================================================================================");
-                Console.WriteLine("1) Speech-To-Text using Bing speech recognizer");
+                Console.WriteLine("1) Speech-To-Text using Azure speech recognizer");
                 Console.WriteLine("Q) QUIT");
                 Console.Write("Enter selection: ");
                 ConsoleKey key = Console.ReadKey().Key;
@@ -35,11 +36,11 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
                 switch (key)
                 {
                     case ConsoleKey.D1:
-                        // Bing speech service requires a valid subscription key
+                        // Azure speech service requires a valid subscription key
                         if (GetSubscriptionKey())
                         {
-                            // Demonstrate the use of the BingSpeechRecognizer component
-                            RunBingSpeech();
+                            // Demonstrate the use of the AzureSpeechRecognizer component
+                            RunAzureSpeech();
                         }
 
                         break;
@@ -56,16 +57,16 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         }
 
         /// <summary>
-        /// Builds and runs a speech recognition pipeline using the Bing speech recognizer. Requires a valid Cognitive Services
+        /// Builds and runs a speech recognition pipeline using the Azure speech recognizer. Requires a valid Cognitive Services
         /// subscription key. See https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account.
         /// </summary>
         /// <remarks>
-        /// If you are getting a <see cref="System.InvalidOperationException"/> with the message 'BingSpeechRecognizer returned
+        /// If you are getting a <see cref="System.InvalidOperationException"/> with the message 'AzureSpeechRecognizer returned
         /// OnConversationError with error code: LoginFailed. Original error text: Transport error', this most likely is due to
         /// an invalid subscription key. Please check your Azure portal at https://portal.azure.com and ensure that you have
-        /// added a subscription to the Bing Speech API on your account.
+        /// added a subscription to the Azure Speech API on your account.
         /// </remarks>
-        public static void RunBingSpeech()
+        public static void RunAzureSpeech()
         {
             // Create the pipeline object.
             using (Pipeline pipeline = Pipeline.Create())
@@ -78,10 +79,10 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
                 var vad = new SimpleVoiceActivityDetector(pipeline);
                 audioInput.PipeTo(vad);
 
-                // Create Bing speech recognizer component
-                var recognizer = new BingSpeechRecognizer(pipeline, new BingSpeechRecognizerConfiguration() { SubscriptionKey = Program.bingSubscriptionKey, RecognitionMode = SpeechRecognitionMode.Interactive });
+                // Create Azure speech recognizer component
+                var recognizer = new AzureSpeechRecognizer(pipeline, new AzureSpeechRecognizerConfiguration() { SubscriptionKey = Program.azureSubscriptionKey, Region = Program.azureRegion });
 
-                // The input audio to the Bing speech recognizer needs to be annotated with a voice activity flag.
+                // The input audio to the Azure speech recognizer needs to be annotated with a voice activity flag.
                 // This can be constructed by using the Psi Join() operator to combine the audio and VAD streams.
                 var annotatedAudio = audioInput.Join(vad);
 
@@ -96,12 +97,12 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
                 finalResults.Do(result => Console.WriteLine(result.Text));
 
                 // Register an event handler to catch pipeline errors
-                pipeline.PipelineCompletionEvent += PipelineCompletionEvent;
+                pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Run the pipeline
                 pipeline.RunAsync();
 
-                // Bing speech transcribes speech to text
+                // Azure speech transcribes speech to text
                 Console.WriteLine("Say anything");
 
                 Console.WriteLine("Press any key to exit...");
@@ -110,11 +111,11 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         }
 
         /// <summary>
-        /// Event handler for the PipelineCompletion event.
+        /// Event handler for the <see cref="Pipeline.PipelineCompleted"/> event.
         /// </summary>
         /// <param name="sender">The sender which raised the event.</param>
         /// <param name="e">The pipeline completion event arguments.</param>
-        private static void PipelineCompletionEvent(object sender, PipelineCompletionEventArgs e)
+        private static void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             Console.WriteLine("Pipeline execution completed with {0} errors", e.Errors.Count);
 
@@ -129,28 +130,38 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         }
 
         /// <summary>
-        /// Prompt user to enter Bing Speech subscription key from Cognitive Services. Or just set the BingSubscriptionKey
+        /// Prompt user to enter Azure Speech subscription key from Cognitive Services. Or just set the AzureSubscriptionKey
         /// static member at the top of this file to avoid having to enter it each time. For more information on how to
         /// register for a subscription, see https://www.microsoft.com/cognitive-services/en-us/sign-up
         /// </summary>
         /// <returns>
-        /// True if <see cref="bingSubscriptionKey"/> contains a non-empty key (the key will not actually be
+        /// True if <see cref="azureSubscriptionKey"/> contains a non-empty key (the key will not actually be
         /// authenticated until the first attempt to access the speech recognition service). False otherwise.
         /// </returns>
         private static bool GetSubscriptionKey()
         {
-            Console.WriteLine("A cognitive services Bing Speech subscription key is required to use this. For more info, see 'https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account'");
+            Console.WriteLine("A Cognitive Services Speech subscription key is required to use this. For more info, see 'https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account'");
             Console.Write("Enter subscription key");
-            Console.Write(string.IsNullOrWhiteSpace(Program.bingSubscriptionKey) ? ": " : string.Format(" (current = {0}): ", Program.bingSubscriptionKey));
+            Console.Write(string.IsNullOrWhiteSpace(Program.azureSubscriptionKey) ? ": " : string.Format(" (current = {0}): ", Program.azureSubscriptionKey));
 
             // Read a new key or hit enter to keep using the current one (if any)
             string response = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(response))
             {
-                Program.bingSubscriptionKey = response;
+                Program.azureSubscriptionKey = response;
             }
 
-            return !string.IsNullOrWhiteSpace(Program.bingSubscriptionKey);
+            Console.Write("Enter region");
+            Console.Write(string.IsNullOrWhiteSpace(Program.azureRegion) ? ": " : string.Format(" (current = {0}): ", Program.azureRegion));
+
+            // Read a new key or hit enter to keep using the current one (if any)
+            response = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(response))
+            {
+                Program.azureRegion = response;
+            }
+
+            return !string.IsNullOrWhiteSpace(Program.azureSubscriptionKey) && !string.IsNullOrWhiteSpace(Program.azureRegion);
         }
     }
 }

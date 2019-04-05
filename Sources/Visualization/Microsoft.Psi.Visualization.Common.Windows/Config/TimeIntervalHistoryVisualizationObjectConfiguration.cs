@@ -12,16 +12,52 @@ namespace Microsoft.Psi.Visualization.Config
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class TimeIntervalHistoryVisualizationObjectConfiguration : TimelineVisualizationObjectConfiguration
     {
-        private Color color = Colors.LightSkyBlue;
+        private Color lineColor = Colors.LightBlue;
+
+        private double lineWidth = 2;
+
+        private Color fillColor = Colors.LightSlateGray;
+
+        private bool showFinal = true;
 
         /// <summary>
-        /// Gets or sets the name of the visualization object
+        /// Gets or sets the default line color for the visualization object.
         /// </summary>
         [DataMember]
-        public Color Color
+        public Color LineColor
         {
-            get { return this.color; }
-            set { this.Set(nameof(this.Color), ref this.color, value); }
+            get { return this.lineColor; }
+            set { this.Set(nameof(this.LineColor), ref this.lineColor, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the line width.
+        /// </summary>
+        [DataMember]
+        public double LineWidth
+        {
+            get { return this.lineWidth; }
+            set { this.Set(nameof(this.LineWidth), ref this.lineWidth, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the default fill color for the visualization object.
+        /// </summary>
+        [DataMember]
+        public Color FillColor
+        {
+            get { return this.fillColor; }
+            set { this.Set(nameof(this.FillColor), ref this.fillColor, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether we are only showing the final results
+        /// </summary>
+        [DataMember]
+        public bool ShowFinal
+        {
+            get { return this.showFinal; }
+            set { this.Set(nameof(this.ShowFinal), ref this.showFinal, value); }
         }
     }
 }

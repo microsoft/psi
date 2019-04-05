@@ -7,18 +7,19 @@ namespace Microsoft.Psi
     using System.Linq;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Executive;
+    using Microsoft.Psi.Scheduling;
 
     /// <summary>
     /// Represents a graph of components and controls scheduling and message passing.
     /// </summary>
     /// <remarks>This is essentially a pipeline as a component within other pipelines.</remarks>
-    public class Subpipeline : Pipeline, IFiniteSourceComponent
+    public class Subpipeline : Pipeline, ISourceComponent
     {
-        private Action onCompleted;
+        private Pipeline parent;
+        private Action<DateTime> notifyCompletionTime;
         private bool hasSourceComponents;
-        private bool suspended = false;
         private bool stopping = false;
-        private bool parentStopping = false;
+        private bool finalizeComponents = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Subpipeline"/> class.
@@ -27,16 +28,12 @@ namespace Microsoft.Psi
         /// <param name="name">Subpipeline name (inherits "Sub<Parent>" name if unspecified)</Parent>.</param>
         /// <param name="deliveryPolicy">Pipeline-level delivery policy (inherits from parent if unspecified).</param>
         public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
-            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, parent.Scheduler)
+            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, new Scheduler(parent.Scheduler))
         {
-            parent.RegisterPipelineStartHandler(this, () => this.Start(parent));
-            parent.RegisterPipelineStopHandler(this, this.Suspend);
-            parent.RegisterPipelineFinalHandler(this, () =>
-            {
-                this.parentStopping = true;
-                this.Stop(false);
-                this.Complete(true);
-            });
+            this.parent = parent;
+
+            // ensures that the subpipeline is registered with the parent
+            parent.AddComponent(this);
         }
 
         /// <summary>
@@ -55,10 +52,33 @@ namespace Microsoft.Psi
         /// Initialize subpipeline as a finite source component.
         /// </summary>
         /// <remarks>This is called by the parent subpipeline, if any.</remarks>
-        /// <param name="onCompleted">Delegate to call when the subpipeline shuts down.</param>
-        public void Initialize(Action onCompleted)
+        /// <param name="notifyCompletionTime">Delegate to call to notify of completion time.</param>
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.onCompleted = onCompleted;
+            this.notifyCompletionTime = notifyCompletionTime;
+
+            // start the subpipeline
+            this.RunAsync(this.parent.ReplayDescriptor);
+            this.InitializeCompletionTimes();
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+            this.StopComponents();
+        }
+
+        /// <summary>
+        /// Proposes a replay time interval for the pipeline.
+        /// </summary>
+        /// <param name="activeInterval">Active time interval.</param>
+        /// <param name="originatingTimeInterval">Originating time interval.</param>
+        public override void ProposeReplayTime(TimeInterval activeInterval, TimeInterval originatingTimeInterval)
+        {
+            base.ProposeReplayTime(activeInterval, originatingTimeInterval);
+
+            // propagate the proposed replay time interval back up to the parent
+            this.parent.ProposeReplayTime(activeInterval, originatingTimeInterval);
         }
 
         /// <summary>
@@ -68,20 +88,43 @@ namespace Microsoft.Psi
         /// <returns>Disposable used to terminate pipeline.</returns>
         public override IDisposable RunAsync(ReplayDescriptor descriptor)
         {
-            return this.RunAsync(descriptor, this.Scheduler.Clock);
+            return this.RunAsync(descriptor, this.parent.Clock);
         }
 
         /// <summary>
-        /// Suspend pipeline.
+        /// Stop subpipeline.
         /// </summary>
-        /// <remarks>Deactivate components.</remarks>
-        public void Suspend()
+        /// <param name="finalOriginatingTime">Originating time of final message scheduled.</param>
+        public void Stop(DateTime finalOriginatingTime)
         {
-            if (!this.suspended)
+            if (finalOriginatingTime > this.FinalOriginatingTime)
             {
-                this.suspended = true;
-                this.DeactivateComponents();
+                this.FinalOriginatingTime = finalOriginatingTime;
             }
+
+            this.Final();
+        }
+
+        /// <summary>
+        /// Finalize subpipeline.
+        /// </summary>
+        public void Final()
+        {
+            this.finalizeComponents = true;
+            this.Stop(false);
+            this.Complete(true);
+        }
+
+        internal override bool NotifyCompletionTime(PipelineElement component, DateTime finalOriginatingTime)
+        {
+            var onlyInfiniteRemaining = base.NotifyCompletionTime(component, finalOriginatingTime);
+            if (onlyInfiniteRemaining)
+            {
+                // only infinite children remain, notify that subpipeline itself is infinite
+                this.notifyCompletionTime(DateTime.MaxValue);
+            }
+
+            return onlyInfiniteRemaining;
         }
 
         /// <summary>
@@ -98,35 +141,49 @@ namespace Microsoft.Psi
             }
 
             this.stopping = true;
-            this.Suspend();
 
-            if (this.parentStopping)
+            if (this.finalizeComponents)
             {
-                this.StopComponents();
+                this.Scheduler.NotifyPipelineFinalizing(this.FinalOriginatingTime == DateTime.MinValue ? this.GetCurrentTime() : this.FinalOriginatingTime);
+            }
+
+            // stop components
+            var stopped = false;
+            do
+            {
+                stopped = this.StopComponents() > 0;
+                this.PauseForQuiescence();
+            }
+            while (stopped);
+
+            if (this.finalizeComponents)
+            {
+                this.FinalizeComponents();
+                this.PauseForQuiescence();
+                this.Scheduler.Stop(abandonPendingWorkitems);
             }
 
             if (this.hasSourceComponents)
             {
-                this.onCompleted();
+                this.notifyCompletionTime(this.GetCurrentTime());
             }
 
             this.Completed.Set();
         }
 
-        private void Start(Pipeline parent)
+        private void InitializeCompletionTimes()
         {
             this.hasSourceComponents = this.Components.Where(c => c.StateObject != this).Any(c => c.IsSource);
-            this.RunAsync(parent.ReplayDescriptor); // TODO: allow specifying replay?
             if (!this.hasSourceComponents)
             {
                 // no source components, so purely reactive
-                this.onCompleted();
+                this.notifyCompletionTime(DateTime.MaxValue); // MaxValue is special; meaning this Subpipeline was *never* a finite source
             }
 
             // emitters created from this subpipeline look like components, but should not prevent completion
             foreach (var c in this.Components.Where(c => c.StateObject == this))
             {
-                this.NotifyCompleted(c);
+                this.NotifyCompletionTime(c, DateTime.MinValue);
             }
         }
     }

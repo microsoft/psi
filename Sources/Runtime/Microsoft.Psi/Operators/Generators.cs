@@ -22,7 +22,7 @@ namespace Microsoft.Psi
         /// <param name="initialValue">The initial value.</param>
         /// <param name="generateNext">The function that generates a new value based on the previous value.</param>
         /// <param name="count">The count of values to generate. Use int.MaxValue if the generator should never stop.</param>
-        /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
@@ -38,7 +38,7 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="enumerator">The enumerator producing the values to publish.</param>
-        /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
@@ -55,7 +55,7 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="enumerable">The sequence to publish.</param>
-        /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
@@ -113,7 +113,7 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="value">The value to publish.</param>
         /// <param name="count">The count of values to generate. Use int.MaxValue if the generator should never stop.</param>
-        /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of values of type T</returns>
@@ -129,7 +129,7 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="start">The starting value.</param>
         /// <param name="count">The count of values to generate. Use int.MaxValue if the generator should never stop.</param>
-        /// <param name="interval">The desired time interval between consecutive messages. Defaults ot 1 tick.</param>
+        /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of consecutive integers</returns>

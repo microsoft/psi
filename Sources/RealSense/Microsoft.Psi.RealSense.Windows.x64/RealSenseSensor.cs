@@ -24,8 +24,6 @@ namespace Microsoft.Psi.RealSense.Windows
         /// <param name="pipeline">Pipeline this component is a part of</param>
         public RealSenseSensor(Pipeline pipeline)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.shutdown = false;
             this.ColorImage = pipeline.CreateEmitter<Shared<Image>>(this, "ColorImage");
             this.DepthImage = pipeline.CreateEmitter<Shared<Image>>(this, "DepthImage");
@@ -41,16 +39,6 @@ namespace Microsoft.Psi.RealSense.Windows
         /// Gets the emitter that generates Depth images from the RealSense depth camera
         /// </summary>
         public Emitter<Shared<Image>> DepthImage { get; private set; }
-
-        /// <summary>
-        /// Called once all the subscriptions are established.
-        /// </summary>
-        private void OnPipelineStart()
-        {
-            this.device = new RealSenseDevice();
-            this.thread = new Thread(new ThreadStart(ThreadProc));
-            this.thread.Start();
-        }
 
         private void ThreadProc()
         {
@@ -91,9 +79,30 @@ namespace Microsoft.Psi.RealSense.Windows
         }
 
         /// <summary>
-        /// Called by the pipeline when media capture should be stopped
+        /// Dispose method
         /// </summary>
-        private void OnPipelineStop()
+        public void Dispose()
+        {
+            if (this.device != null)
+            {
+                this.device.Dispose();
+                this.device = null;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
+            this.device = new RealSenseDevice();
+            this.thread = new Thread(new ThreadStart(ThreadProc));
+            this.thread.Start();
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
         {
             if (this.thread != null)
             {
@@ -106,18 +115,6 @@ namespace Microsoft.Psi.RealSense.Windows
             }
             if (this.device != null)
             {
-                this.device = null;
-            }
-        }
-
-        /// <summary>
-        /// Dispose method
-        /// </summary>
-        public void Dispose()
-        {
-            if (this.device != null)
-            {
-                this.device.Dispose();
                 this.device = null;
             }
         }

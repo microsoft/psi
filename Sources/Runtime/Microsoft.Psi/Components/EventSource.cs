@@ -4,13 +4,14 @@
 namespace Microsoft.Psi.Components
 {
     using System;
+    using Microsoft.Psi.Executive;
 
     /// <summary>
     /// A generator component that publishes messages of a specified type whenever an event is raised.
     /// </summary>
     /// <typeparam name="TEventHandler">The event handler delegate type.</typeparam>
     /// <typeparam name="TOut">The output stream type.</typeparam>
-    public class EventSource<TEventHandler, TOut> : IProducer<TOut>, IDisposable
+    public class EventSource<TEventHandler, TOut> : IProducer<TOut>, ISourceComponent, IDisposable
     {
         private readonly Action<TEventHandler> subscribe;
         private readonly Action<TEventHandler> unsubscribe;
@@ -42,8 +43,15 @@ namespace Microsoft.Psi.Components
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.subscribe = subscribe;
             this.unsubscribe = unsubscribe;
-            this.eventHandler = converter(this.Post);
-            this.subscribe(this.eventHandler);
+
+            // If the source event is triggered from the execution context of some other receiver, then because the
+            // execution context flows all the way through to the event handler, the tracked state object (if tracking
+            // is enabled) would represent the owner of the receiver, which would be inconsistent with posting from a
+            // pure source (no tracked state object). In order to rectify this, we set the tracked state object to null
+            // just prior to the call to this.Post by wrapping it in TrackStateObjectOnContext with a null state object.
+            this.eventHandler = converter(PipelineElement.TrackStateObjectOnContext<TOut>(this.Post, null, pipeline));
+
+            this.pipeline.PipelineRun += (s, e) => this.subscribe(this.eventHandler);
         }
 
         /// <summary>
@@ -51,12 +59,25 @@ namespace Microsoft.Psi.Components
         /// </summary>
         public Emitter<TOut> Out { get; }
 
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+            this.unsubscribe(this.eventHandler);
+        }
+
         /// <summary>
         /// Disposes the component.
         /// </summary>
         public void Dispose()
         {
-            this.unsubscribe(this.eventHandler);
+            this.Stop();
         }
 
         /// <summary>

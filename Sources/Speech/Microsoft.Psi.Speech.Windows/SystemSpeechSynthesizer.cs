@@ -19,8 +19,13 @@ namespace Microsoft.Psi.Speech
     /// This component performs text-to-speech synthesis, operating on an input stream of text strings and producing a
     /// stream of audio containing the synthesized speech.
     /// </remarks>
-    public sealed class SystemSpeechSynthesizer : ConsumerProducer<string, AudioBuffer>, IDisposable
+    public sealed class SystemSpeechSynthesizer : ConsumerProducer<string, AudioBuffer>, ISourceComponent, IDisposable
     {
+        /// <summary>
+        /// A pointer to the pipeline
+        /// </summary>
+        private readonly Pipeline pipeline;
+
         /// <summary>
         /// The configuration for this component.
         /// </summary>
@@ -30,11 +35,6 @@ namespace Microsoft.Psi.Speech
         /// The System.Speech speech synthesizer.
         /// </summary>
         private SpeechSynthesizer speechSynthesizer;
-
-        /// <summary>
-        /// A pointer to the pipeline
-        /// </summary>
-        private Pipeline pipeline = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemSpeechSynthesizer"/> class.
@@ -138,18 +138,30 @@ namespace Microsoft.Psi.Speech
         {
             if (this.speechSynthesizer != null)
             {
-                // Unregister handlers so they won't fire while disposing.
-                this.speechSynthesizer.BookmarkReached -= this.OnBookmarkReached;
-                this.speechSynthesizer.PhonemeReached -= this.OnPhonemeReached;
-                this.speechSynthesizer.SpeakCompleted -= this.OnSpeakCompleted;
-                this.speechSynthesizer.SpeakProgress -= this.OnSpeakProgress;
-                this.speechSynthesizer.SpeakStarted -= this.OnSpeakStarted;
-                this.speechSynthesizer.StateChanged -= this.OnStateChanged;
-                this.speechSynthesizer.VisemeReached -= this.OnVisemeReached;
-
-                this.speechSynthesizer.SpeakAsyncCancelAll();
                 this.speechSynthesizer.Dispose();
+                this.speechSynthesizer = null;
             }
+        }
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            notifyCompletionTime(DateTime.MaxValue);
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
+            // Unregister handlers so they won't fire while disposing.
+            this.speechSynthesizer.BookmarkReached -= this.OnBookmarkReached;
+            this.speechSynthesizer.PhonemeReached -= this.OnPhonemeReached;
+            this.speechSynthesizer.SpeakCompleted -= this.OnSpeakCompleted;
+            this.speechSynthesizer.SpeakProgress -= this.OnSpeakProgress;
+            this.speechSynthesizer.SpeakStarted -= this.OnSpeakStarted;
+            this.speechSynthesizer.StateChanged -= this.OnStateChanged;
+            this.speechSynthesizer.VisemeReached -= this.OnVisemeReached;
+
+            this.speechSynthesizer.SpeakAsyncCancelAll();
         }
 
         /// <summary>
@@ -476,11 +488,11 @@ namespace Microsoft.Psi.Speech
         #region Synthesizer output stream
 
         /// <summary>
-        /// A System.IO.Stream adapter that takes a write delegate.
+        /// A <see cref="System.IO.Stream"/> adapter that takes a write delegate.
         /// </summary>
         private class IOStream : System.IO.Stream
         {
-            private Action<byte[], int, int> write;
+            private readonly Action<byte[], int, int> write;
 
             public IOStream(Action<byte[], int, int> write)
             {

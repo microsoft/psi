@@ -46,6 +46,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 this.Set(nameof(this.Configuration), ref this.configuration, value);
 
                 this.OnConfigurationChanged();
+
                 if (this.configuration != null)
                 {
                     this.configuration.PropertyChanged += this.OnConfigurationPropertyChanged;
@@ -142,18 +143,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <inheritdoc />
-        public override string GetConfiguration()
-        {
-            return JsonConvert.SerializeObject(this.Configuration);
-        }
-
-        /// <inheritdoc />
-        public override void SetConfiguration(string jsonConfiguration)
-        {
-            this.Configuration = JsonConvert.DeserializeObject<TConfig>(jsonConfiguration);
-        }
-
-        /// <inheritdoc />
         protected override void InitNew()
         {
             base.InitNew();
@@ -175,35 +164,31 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <inheritdoc />
-        protected override void OnConfigurationPropertyChanged(string propertyName)
+        protected override void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (propertyName == nameof(this.configuration.Width))
+            if (e.PropertyName == nameof(this.configuration.Width))
             {
                 // RaisePropertyChanging since this.Width => this.configuration.Width
                 this.RaisePropertyChanging(nameof(this.Width));
             }
-            else if (propertyName == nameof(this.configuration.Height))
+            else if (e.PropertyName == nameof(this.configuration.Height))
             {
                 // RaisePropertyChanging since this.Height => this.configuration.Height
                 this.RaisePropertyChanging(nameof(this.Height));
             }
 
-            base.OnConfigurationPropertyChanged(propertyName);
-            if (propertyName == nameof(this.configuration.Width))
+            base.OnConfigurationPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(this.configuration.Width))
             {
                 // RaisePropertyChanged since this.Width => this.configuration.Width
                 this.RaisePropertyChanged(nameof(this.Width));
             }
-            else if (propertyName == nameof(this.configuration.Height))
+            else if (e.PropertyName == nameof(this.configuration.Height))
             {
                 // RaisePropertyChanged since this.Height => this.configuration.Height
                 this.RaisePropertyChanged(nameof(this.Height));
             }
-        }
-
-        private void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            this.OnConfigurationPropertyChanged(e.PropertyName);
         }
 
         [OnDeserializing]

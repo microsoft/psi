@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Scheduling
     /// </summary>
     public class SimpleSemaphore
     {
-        private readonly int maxCount;
+        private readonly int maxThreadCount;
         private int count;
         private ManualResetEvent empty;
         private ManualResetEvent available;
@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Scheduling
         /// <param name="maxThreadCount">Maximum number of threads.</param>
         public SimpleSemaphore(int maxThreadCount)
         {
-            this.maxCount = maxThreadCount;
+            this.maxThreadCount = maxThreadCount;
             this.empty = new ManualResetEvent(true);
             this.available = new ManualResetEvent(true);
         }
@@ -37,6 +37,11 @@ namespace Microsoft.Psi.Scheduling
         public WaitHandle Available => this.available;
 
         /// <summary>
+        /// Gets maximum number of threads.
+        /// </summary>
+        public int MaxThreadCount => this.maxThreadCount;
+
+        /// <summary>
         /// Try to enter the semaphore.
         /// </summary>
         /// <returns>Success.</returns>
@@ -44,7 +49,7 @@ namespace Microsoft.Psi.Scheduling
         {
             this.empty.Reset();
             var newCount = Interlocked.Increment(ref this.count);
-            if (newCount > this.maxCount)
+            if (newCount > this.maxThreadCount)
             {
                 this.Exit();
                 return false;

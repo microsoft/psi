@@ -7,29 +7,27 @@ namespace Microsoft.Psi.Components
     using System.Collections.Generic;
 
     /// <summary>
-    /// Combines the input messages from multiple inputs into a single output.
+    /// Combines the input messages from multiple inputs; invoking given lambda for each.
     /// </summary>
     /// <typeparam name="TIn">The message type</typeparam>
     /// <typeparam name="TKey">The key type to use to identify the inputs</typeparam>
-    public class Merger<TIn, TKey> : IProducer<ValueTuple<TKey, Message<TIn>>>
+    public class Merger<TIn, TKey>
     {
         private readonly Dictionary<TKey, Receiver<TIn>> inputs = new Dictionary<TKey, Receiver<TIn>>();
         private readonly Pipeline pipeline;
-        private readonly Emitter<ValueTuple<TKey, Message<TIn>>> output;
+        private readonly Action<TKey, Message<TIn>> action;
         private readonly object syncRoot = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Merger{TIn, TKey}"/> class.
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
-        public Merger(Pipeline pipeline)
+        /// <param name="action">Action invoked for each key/message.</param>
+        public Merger(Pipeline pipeline, Action<TKey, Message<TIn>> action)
         {
             this.pipeline = pipeline;
-            this.output = pipeline.CreateEmitter<ValueTuple<TKey, Message<TIn>>>(this, nameof(this.Out));
+            this.action = action;
         }
-
-        /// <inheritdoc />
-        public Emitter<ValueTuple<TKey, Message<TIn>>> Out => this.output;
 
         /// <summary>
         /// Add a key to which a receiver will be mapped.
@@ -43,17 +41,11 @@ namespace Microsoft.Psi.Components
             {
                 if (this.inputs.ContainsKey(key))
                 {
-                    throw new InvalidOperationException($"An input for this key {key} has already been addded.");
+                    throw new InvalidOperationException($"An input for this key {key} has already been added.");
                 }
 
-                return this.inputs[key] = this.pipeline.CreateReceiver<TIn>(this, m => this.Receive(key, m), key.ToString());
+                return this.inputs[key] = this.pipeline.CreateReceiver<TIn>(this, m => this.action(key, m), key.ToString());
             }
-        }
-
-        private void Receive(TKey key, Message<TIn> message)
-        {
-            // to avoid ordering issues, we post the whole message with a new envelope
-            this.output.Post(ValueTuple.Create(key, message), this.pipeline.GetCurrentTime());
         }
     }
 }

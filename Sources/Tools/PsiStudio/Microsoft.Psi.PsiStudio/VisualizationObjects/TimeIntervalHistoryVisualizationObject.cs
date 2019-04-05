@@ -6,11 +6,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Windows;
+    using System.Windows.Media;
     using Microsoft.Psi.Visualization.Config;
+    using Microsoft.Psi.Visualization.DataTypes;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
@@ -18,17 +21,31 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Represents a discrete event visualization object.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    public class TimeIntervalHistoryVisualizationObject : TimelineVisualizationObject<Dictionary<string, List<(TimeInterval, string)>>, TimeIntervalHistoryVisualizationObjectConfiguration>
+    public class TimeIntervalHistoryVisualizationObject : TimelineVisualizationObject<TimeIntervalHistory, TimeIntervalHistoryVisualizationObjectConfiguration>
     {
+        /// <summary>
+        /// The dictionary of brushes.
+        /// </summary>
+        private readonly Dictionary<Color, Brush> brushes = new Dictionary<Color, Brush>();
+
         /// <summary>
         /// The names of all the tracks discovered so far.
         /// </summary>
         private List<string> trackNames = new List<string>();
 
         /// <summary>
-        /// The value to display in the legend
+        /// The value to display in the legend.
         /// </summary>
         private string legendValue = string.Empty;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeIntervalHistoryVisualizationObject"/> class.
+        /// </summary>
+        public TimeIntervalHistoryVisualizationObject()
+        {
+            this.PropertyChanged += this.TimeIntervalHistoryVisualizationObject_PropertyChanged;
+            this.Configuration.PropertyChanged += this.Configuration_PropertyChanged;
+        }
 
         /// <summary>
         /// Gets the data to de displayed in the control
@@ -40,59 +57,124 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         public int TrackCount => Math.Max(1, this.trackNames.Count);
 
+        /// <inheritdoc/>
+        [IgnoreDataMember]
+        public override Color LegendColor => this.Configuration.FillColor;
+
         /// <inheritdoc />
+        [IgnoreDataMember]
         public override string LegendValue => this.legendValue;
 
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(TimeIntervalHistoryVisualizationObjectView));
 
+        /// <summary>
+        /// Invoked when a <see cref="TimeIntervalHistoryVisualizationObject"/> property changes.
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The PropertyChangingEventArgs</param>
+        protected void TimeIntervalHistoryVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.CurrentValue))
+            {
+                // if we are not showing only the final results, listen to current value changes and update
+                // the DisplayData accordingly
+                if (!this.Configuration.ShowFinal)
+                {
+                    if (this.CurrentValue != null)
+                    {
+                        this.UpdateDisplayData(this.CurrentValue.Value);
+                    }
+                }
+            }
+        }
+
         /// <inheritdoc />
         protected override void OnDataCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            // if we are showing the final results, listen to OnDataCollectionChanged and update
+            // the data accordingly
+            if (this.Configuration.ShowFinal)
+            {
+                this.UpdateDisplayData(this.Data.LastOrDefault());
+            }
+
+            base.OnDataCollectionChanged(e);
+        }
+
+        /// <inheritdoc />
+        protected override void InitNew()
+        {
+            base.InitNew();
+            this.Configuration.PropertyChanged += this.Configuration_PropertyChanged;
+        }
+
+        private void Configuration_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if ((e.PropertyName == nameof(TimeIntervalHistoryVisualizationObjectConfiguration.ShowFinal)) ||
+                (e.PropertyName == nameof(TimeIntervalHistoryVisualizationObjectConfiguration.FillColor)))
+            {
+                if (this.Configuration.ShowFinal)
+                {
+                    this.UpdateDisplayData(this.Data != null ? this.Data.LastOrDefault() : default(Message<TimeIntervalHistory>));
+                }
+                else
+                {
+                    this.UpdateDisplayData(this.CurrentValue != null ? this.CurrentValue.Value : default(Message<TimeIntervalHistory>));
+                }
+            }
+        }
+
+        private void UpdateDisplayData(Message<TimeIntervalHistory> message)
         {
             this.RaisePropertyChanging(nameof(this.DisplayData));
 
             // Rebuild the data
             this.DisplayData = new List<TimeIntervalVisualizationObjectData>();
-            this.trackNames = new List<string>();
+            this.RaisePropertyChanging(nameof(this.TrackCount));
+            this.trackNames.Clear();
+            if ((message != null) && (message.Data != null))
+            {
+                this.trackNames.AddRange(message.Data.Keys.OrderBy(s => s));
+            }
 
-            // Since these messages are cumulative, we only need to look at the last message we've received.
-            Message<Dictionary<string, List<(TimeInterval, string)>>> lastMessage = this.Data.LastOrDefault();
-            if ((lastMessage != null) && (lastMessage.Data != null))
+            this.GenerateLegendValue();
+            this.RaisePropertyChanged(nameof(this.TrackCount));
+
+            if ((message != null) && (message.Data != null))
             {
                 // Flatten the dictionary
-                foreach (KeyValuePair<string, List<(TimeInterval, string)>> dictionaryEntry in lastMessage.Data)
+                foreach (KeyValuePair<string, List<(TimeInterval, string, System.Drawing.Color?)>> dictionaryEntry in message.Data)
                 {
-                    foreach ((TimeInterval timeInterval, string text) timeIntervalInfo in dictionaryEntry.Value)
+                    foreach ((TimeInterval timeInterval, string text, System.Drawing.Color? color) in dictionaryEntry.Value)
                     {
-                        this.DisplayData.Add(new TimeIntervalVisualizationObjectData(this.TrackNameToTrackNumber(dictionaryEntry.Key), timeIntervalInfo.timeInterval.Left, timeIntervalInfo.timeInterval.Right, timeIntervalInfo.text));
+                        this.DisplayData.Add(
+                            new TimeIntervalVisualizationObjectData(
+                                this.trackNames.IndexOf(dictionaryEntry.Key),
+                                timeInterval,
+                                text,
+                                this.GetBrush(color)));
                     }
                 }
             }
 
             this.RaisePropertyChanged(nameof(this.DisplayData));
-            base.OnDataCollectionChanged(e);
         }
 
-        private int TrackNameToTrackNumber(string trackName)
+        private Brush GetBrush(System.Drawing.Color? color)
         {
-            if (!this.trackNames.Contains(trackName))
+            return color == null ? this.GetBrush(this.Configuration.FillColor) : this.GetBrush(Color.FromArgb(color.Value.A, color.Value.R, color.Value.B, color.Value.G));
+        }
+
+        private Brush GetBrush(Color color)
+        {
+            if (!this.brushes.ContainsKey(color))
             {
-                this.RaisePropertyChanging(nameof(this.TrackCount));
-
-                lock (this.trackNames)
-                {
-                    if (!this.trackNames.Contains(trackName))
-                    {
-                        this.trackNames.Add(trackName);
-                    }
-                }
-
-                this.GenerateLegendValue();
-                this.RaisePropertyChanged(nameof(this.TrackCount));
+                this.brushes.Add(color, new SolidColorBrush(color));
             }
 
-            return this.trackNames.IndexOf(trackName);
+            return this.brushes[color];
         }
 
         private void GenerateLegendValue()
@@ -116,15 +198,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             /// Initializes a new instance of the <see cref="TimeIntervalVisualizationObjectData"/> class.
             /// </summary>
             /// <param name="trackNumber">The track number for this event</param>
-            /// <param name="startTime">The start time of the event</param>
-            /// <param name="endTime">The end time of the event</param>
+            /// <param name="timeInterval">The time interval for the event</param>
             /// <param name="text">The text label for the event</param>
-            public TimeIntervalVisualizationObjectData(int trackNumber, DateTime startTime, DateTime endTime, string text)
+            /// <param name="brush">The brush for the event</param>
+            public TimeIntervalVisualizationObjectData(int trackNumber, TimeInterval timeInterval, string text, Brush brush)
             {
                 this.TrackNumber = trackNumber;
-                this.StartTime = startTime;
-                this.EndTime = endTime;
+                this.TimeInterval = timeInterval;
                 this.Text = text;
+                this.Brush = brush;
             }
 
             /// <summary>
@@ -133,19 +215,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             public int TrackNumber { get; set; }
 
             /// <summary>
-            /// Gets or sets the channel id
+            /// Gets or sets the time interval
             /// </summary>
-            public DateTime StartTime { get; set; }
-
-            /// <summary>
-            /// Gets or sets the channel id
-            /// </summary>
-            public DateTime EndTime { get; set; }
+            public TimeInterval TimeInterval { get; set; }
 
             /// <summary>
             /// Gets or sets the text
             /// </summary>
             public string Text { get; set; }
+
+            /// <summary>
+            /// Gets or sets the brush to paint this time interval with
+            /// </summary>
+            public Brush Brush { get; set; }
         }
     }
 }

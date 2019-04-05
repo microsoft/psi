@@ -3,15 +3,25 @@
 
 namespace Microsoft.Psi.CognitiveServices.Speech
 {
+    using System;
     using Microsoft.Psi.Audio;
 
     /// <summary>
     /// Represents the configuration for the <see cref="BingSpeechRecognizer"/> component.
     /// </summary>
     /// <remarks>
+    /// DEPRECATED - As the Bing Speech service will be retired soon, you can no longer
+    /// obtain a new subscription key for this service. If you have previously obtained a subscription
+    /// key for the Bing Speech service, then this key should continue to work with this component
+    /// until the service is retired. If you do not have an existing subscription
+    /// key for the Bing Speech service, please use the <see cref="AzureSpeechRecognizer"/> component
+    /// instead. You may obtain a subscription key for the Azure Speech service here:
+    /// https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services.
+    ///
     /// Use this class to configure a new instance of the <see cref="BingSpeechRecognizer"/> component.
     /// Refer to the properties in this class for more information on the various configuration options.
     /// </remarks>
+    [Obsolete("The Bing Speech service will be retired soon. Please use the AzureSpeechRecognizer instead.", false)]
     public sealed class BingSpeechRecognizerConfiguration
     {
         /// <summary>
@@ -52,9 +62,14 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <remarks>
         /// This component uses the Bing Speech API to perform speech recognition. A Cognitive Services
         /// subscription is required in order to use this service. The <see cref="BingSpeechRecognizer"/>
-        /// authenticates with the service using a subscription key associated with the subcription. See
-        /// https://azure.microsoft.com/en-us/try/cognitive-services/ for more information on obtaining a
-        /// subscription.
+        /// authenticates with the service using a subscription key associated with the subcription.
+        /// However, as the Bing Speech service will be retired soon, you can no longer
+        /// obtain a new subscription key for this service. If you have previously obtained a subscription
+        /// key for the Bing Speech service, then this key should continue to work with this component
+        /// until the service is retired. If you do not have an existing subscription
+        /// key for the Bing Speech service, please use the <see cref="AzureSpeechRecognizer"/> component
+        /// instead. You may obtain a subscription key for the Azure Speech service here:
+        /// https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services.
         /// </remarks>
         public string SubscriptionKey { get; set; }
 

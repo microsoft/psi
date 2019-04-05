@@ -158,27 +158,27 @@ namespace Test.Psi
         [Timeout(60000)]
         public void RefCountedPipeline()
         {
-            var recycler = new SharedPool<int[]>(ParallelBranchCount * TransformCount);
+            var sharedPool = new SharedPool<int[]>(() => new int[ArraySize], ParallelBranchCount * TransformCount);
             this.RunPipeline<Shared<int[]>>(
-                   create: i => recycler.GetOrCreate(() => new int[ArraySize]),
+                   create: i => sharedPool.GetOrCreate(),
                    initialize: (old, i) =>
-                    {
-                        old.Dispose();
-                       var tgt = recycler.GetOrCreate(() => new int[ArraySize]);
+                   {
+                       old.Dispose();
+                       var tgt = sharedPool.GetOrCreate();
                        Set(tgt.Resource, i);
                        return tgt;
-                    },
+                   },
                    increment: (old, a) =>
-                    {
-                        old.Dispose();
-                       var tgt = recycler.GetOrCreate(() => new int[ArraySize]);
+                   {
+                       old.Dispose();
+                       var tgt = sharedPool.GetOrCreate();
                        Inc(tgt.Resource, a.Resource, 1);
                        return tgt;
-                    },
+                   },
                    add: (old, a, b) =>
                     {
-                        old.Dispose();
-                       var tgt = recycler.GetOrCreate(() => new int[ArraySize]);
+                       old.Dispose();
+                       var tgt = sharedPool.GetOrCreate();
                        Add(tgt.Resource, a.Resource, b.Resource);
                        return tgt;
                     },

@@ -3,7 +3,7 @@
 
 namespace Microsoft.Psi.Language
 {
-    using System.IO;
+    using System;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Json;
     using System.Text;
@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Language
     /// intents and extracted entities from spoken or textual input, or utterances.
     /// </remarks>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    public class IntentData
+    public class IntentData : IFormattable
     {
         /// <summary>
         /// A static instance of the serializer used to deserialize the JSON object.
@@ -42,40 +42,71 @@ namespace Microsoft.Psi.Language
         [DataMember]
         public Entity[] Entities { get; set; }
 
-        /// <summary>
-        /// Returns a string representation of the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
+            return this.ToString("G", null);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
             StringBuilder sb = new StringBuilder();
-
-            if (this.Intents != null)
+            if (format == "G")
             {
-                sb.AppendLine("********* Intents *********");
-                for (int i = 0; i < this.Intents.Length; i++)
+                sb.Append("[");
+                if (this.Intents != null)
                 {
-                    sb.AppendFormat(
-                        "[{0}] Intent={1} ({2})",
-                        i,
-                        this.Intents[i].Value,
-                        this.Intents[i].Score);
-                    sb.AppendLine();
+                    for (int i = 0; i < this.Intents.Length; i++)
+                    {
+                        if (i > 0)
+                        {
+                            sb.Append(" ");
+                        }
+
+                        sb.Append(this.Intents[i].Value);
+                    }
                 }
-            }
 
-            if (this.Entities != null)
-            {
-                sb.AppendLine("********* Entities *********");
-                for (int i = 0; i < this.Entities.Length; i++)
+                if (this.Entities != null)
                 {
-                    sb.AppendFormat(
-                        "[{0}] {1} = {2} ({3})",
-                        i,
-                        this.Entities[i].Type,
-                        this.Entities[i].Value,
-                        this.Entities[i].Score);
-                    sb.AppendLine();
+                    for (int i = 0; i < this.Entities.Length; i++)
+                    {
+                        sb.Append($" ({this.Entities[i].Type} {this.Entities[i].Value})");
+                    }
+                }
+
+                sb.Append("]");
+            }
+            else if (format == "L")
+            {
+                if (this.Intents != null)
+                {
+                    sb.AppendLine("********* Intents *********");
+                    for (int i = 0; i < this.Intents.Length; i++)
+                    {
+                        sb.AppendFormat(
+                            "[{0}] Intent={1} ({2})",
+                            i,
+                            this.Intents[i].Value,
+                            this.Intents[i].Score);
+                        sb.AppendLine();
+                    }
+                }
+
+                if (this.Entities != null)
+                {
+                    sb.AppendLine("********* Entities *********");
+                    for (int i = 0; i < this.Entities.Length; i++)
+                    {
+                        sb.AppendFormat(
+                            "[{0}] {1} = {2} ({3})",
+                            i,
+                            this.Entities[i].Type,
+                            this.Entities[i].Value,
+                            this.Entities[i].Score);
+                        sb.AppendLine();
+                    }
                 }
             }
 

@@ -15,8 +15,6 @@ namespace ArmControlROSSample
 
         public UArmComponent(Pipeline pipeline, UArm arm)
         {
-            pipeline.RegisterPipelineStartHandler(this, this.OnPipelineStart);
-            pipeline.RegisterPipelineStopHandler(this, this.OnPipelineStop);
             this.pipeline = pipeline;
             this.arm = arm;
             this.Beep = pipeline.CreateReceiver<Tuple<float, float>>(this, (b, _) => this.arm.Beep(b.Item1, b.Item2), nameof(this.Beep));
@@ -36,13 +34,18 @@ namespace ArmControlROSSample
 
         public Emitter<Tuple<float, float, float>> PositionChanged { get; private set; }
 
-        private void OnPipelineStart()
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
+            // notify that this is an infinite source component
+            notifyCompletionTime(DateTime.MaxValue);
+
             this.arm.Connect();
             this.arm.PositionChanged += this.OnPositionChanged;
         }
 
-        private void OnPipelineStop()
+        /// <inheritdoc/>
+        public void Stop()
         {
             this.arm.Disconnect();
             this.arm.PositionChanged -= this.OnPositionChanged;

@@ -109,6 +109,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PsiSettings.cs" />
     <Compile Include="Collections\ObservableDataCollection{T}.cs" />
     <Compile Include="Collections\ObservableDataItem{T}.cs" />
     <Compile Include="Common\ContextMenuName.cs" />
@@ -117,7 +118,6 @@
     <Compile Include="Common\LabeledValue.cs" />
     <Compile Include="Common\LineStyle.cs" />
     <Compile Include="Common\TicksComputeMode.cs" />
-    <Compile Include="Common\VisualizationRange.cs" />
     <Compile Include="Controls\TimelineCanvas.cs" />
     <Compile Include="Controls\TimelineScroller.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
@@ -127,13 +127,11 @@
     <Compile Include="Converters\ObjectToPointConverter.cs" />
     <Compile Include="Converters\PassThroughConverter.cs" />
     <Compile Include="Converters\PlacementConverter.cs" />
-    <Compile Include="Converters\StreamTreeNodeToVisibilityConverter.cs" />
     <Compile Include="Converters\StreamTreeNodeToCommandsConverter.cs" />
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\TreeViewItemExtensions.cs" />
     <Compile Include="Converters\VisualizationObjectToColorConverter.cs" />
     <Compile Include="Helpers\DragDropHelper.cs" />
-    <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -145,6 +143,14 @@
     <Compile Include="Summarizers\RangeSummarizer.cs" />
     <Compile Include="Summarizers\TimeIntervalSummarizer.cs" />
     <Compile Include="TypeKeyedActionCommand{TKey,TParam}.cs" />
+    <Compile Include="ViewModels\DatasetViewModel.cs" />
+    <Compile Include="ViewModels\IStreamTreeNode.cs" />
+    <Compile Include="ViewModels\LayoutInfo.cs" />
+    <Compile Include="ViewModels\PartitionViewModel.cs" />
+    <Compile Include="ViewModels\PsiLiveStreamMetadata.cs" />
+    <Compile Include="ViewModels\SessionViewModel.cs" />
+    <Compile Include="ViewModels\StreamTreeNode.cs" />
+    <Compile Include="ViewModels\ViewModelBrushes.cs" />
     <Compile Include="Views\NavigatorView.xaml.cs">
       <DependentUpon>NavigatorView.xaml</DependentUpon>
     </Compile>
@@ -170,6 +176,7 @@
     <Compile Include="Views\Visuals2D\AudioVisualizationObjectView.xaml.cs">
       <DependentUpon>AudioVisualizationObjectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Visuals2D\PlotVisualizationObjectView{TTimelineVisualizationObject,TConfig}.cs" />
     <Compile Include="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml.cs">
       <DependentUpon>TimeIntervalHistoryVisualizationObjectView.xaml</DependentUpon>
     </Compile>
@@ -182,7 +189,6 @@
     <Compile Include="Views\Visuals2D\PlotVisualizationObjectView.xaml.cs">
       <DependentUpon>PlotVisualizationObjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Visuals2D\PlotVisualizationObjectView{TConfig}.cs" />
     <Compile Include="Views\Visuals2D\ScatterPlotVisualizationObjectView.xaml.cs">
       <DependentUpon>ScatterPlotVisualizationObjectView.xaml</DependentUpon>
     </Compile>
@@ -195,6 +201,7 @@
     <Compile Include="Views\Visuals2D\StringWithDurationVisualizationObjectView.xaml.cs">
       <DependentUpon>StringWithDurationVisualizationObjectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectViewItem.cs" />
     <Compile Include="Views\Visuals2D\TimeIntervalVisualizationObjectView.xaml.cs">
       <DependentUpon>TimeIntervalVisualizationObjectView.xaml</DependentUpon>
     </Compile>
@@ -245,9 +252,11 @@
     <Compile Include="VisualizationPanels\TimelineVisualizationPanel.cs" />
     <Compile Include="VisualizationPanels\XYVisualizationPanel.cs" />
     <Compile Include="VisualizationPanels\XYZVisualizationPanel.cs" />
-    <Compile Include="VisualizationService.cs" />
     <Compile Include="TypeKeyedActionCommand.cs" />
     <Compile Include="VisualizationTypeResolver.cs" />
+    <Compile Include="Windows\LayoutNameWindow.xaml.cs">
+      <DependentUpon>LayoutNameWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingDatasetWindow.xaml.cs">
       <DependentUpon>LoadingDatasetWindow.xaml</DependentUpon>
     </Compile>
@@ -257,24 +266,15 @@
     <Compile Include="Windows\SetAnnotationValueWindow.xaml.cs">
       <DependentUpon>SetAnnotationValueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Microsoft.Psi.PsiStudio.tlb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Microsoft.Psi.Visualization.Client.Windows.tlb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Microsoft.Psi.Visualization.Common.Windows.tlb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <AdditionalFiles Include="stylecop.json" />
-    <EmbeddedResource Include="PsiStudio.reg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj">
@@ -460,6 +460,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\LayoutNameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\LoadingDatasetWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -472,8 +476,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Icons\play_x4.png" />
     <Resource Include="Images\AdvancedProperties11.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1160,9 +1169,6 @@
     <Resource Include="Icons\play_x3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\play_x4.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Icons\play_x5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1526,10 +1532,10 @@
       <Version>2.3.0</Version>
     </PackageReference>
     <PackageReference Include="MathNet.Numerics.Signed">
-      <Version>3.20.2</Version>
+      <Version>4.7.0</Version>
     </PackageReference>
     <PackageReference Include="MathNet.Spatial.Signed">
-      <Version>0.4.0</Version>
+      <Version>0.5.0-beta05</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Kinect">
       <Version>2.0.1410.19000</Version>
@@ -1554,6 +1560,48 @@
     <PackageReference Include="System.Windows.Interactivity.WPF">
       <Version>2.0.20525</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\move-to-beginning_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\move-to-end_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\reverse_x4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\live-mode_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\live-partition_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\audio-muted_x4.png" />
+    <Resource Include="Icons\audio_x4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\settings_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\stream-unbound_x4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\play-repeat_x4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\blank-icon_x4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\audio-unbound_x4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

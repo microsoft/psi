@@ -33,14 +33,19 @@ namespace Microsoft.Psi.Speech
         private readonly SystemVoiceActivityDetectorConfiguration configuration;
 
         /// <summary>
+        /// Stream for buffering audio samples to send to the speech recognition engine.
+        /// </summary>
+        private readonly BufferedAudioStream inputAudioStream;
+
+        /// <summary>
+        /// Queue of input message originating times;
+        /// </summary>
+        private readonly Queue<DateTime> messageOriginatingTimes;
+
+        /// <summary>
         /// The System.Speech speech recognition engine.
         /// </summary>
         private SpeechRecognitionEngine speechRecognitionEngine;
-
-        /// <summary>
-        /// Stream for buffering audio samples to send to the speech recognition engine.
-        /// </summary>
-        private BufferedAudioStream inputAudioStream;
 
         /// <summary>
         /// The implied stream start time.
@@ -66,11 +71,6 @@ namespace Microsoft.Psi.Speech
         /// Event to signal that the recognizer has been stopped.
         /// </summary>
         private ManualResetEvent recognizeComplete;
-
-        /// <summary>
-        /// Queue of input message originating times;
-        /// </summary>
-        private Queue<DateTime> messageOriginatingTimes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SystemVoiceActivityDetector"/> class.
@@ -112,10 +112,7 @@ namespace Microsoft.Psi.Speech
         /// <summary>
         /// Gets the configuration for this component.
         /// </summary>
-        private SystemVoiceActivityDetectorConfiguration Configuration
-        {
-            get { return this.configuration; }
-        }
+        private SystemVoiceActivityDetectorConfiguration Configuration => this.configuration;
 
         /// <summary>
         /// Disposes of managed resources.
@@ -194,22 +191,10 @@ namespace Microsoft.Psi.Speech
         /// <returns>A new speech recognition engine object.</returns>
         private SpeechRecognitionEngine CreateSpeechRecognitionEngine()
         {
-            SpeechRecognitionEngine recognizer = new SpeechRecognitionEngine(new CultureInfo(this.Configuration.Language));
-            if (this.Configuration.Grammars == null)
-            {
-                recognizer.LoadGrammar(new DictationGrammar());
-            }
-            else
-            {
-                foreach (GrammarInfo grammarInfo in this.Configuration.Grammars)
-                {
-                    Grammar grammar = new Grammar(grammarInfo.FileName);
-                    grammar.Name = grammarInfo.Name;
-                    recognizer.LoadGrammar(grammar);
-                }
-            }
+            // Create speech recognition engine
+            var recognizer = SystemSpeech.CreateSpeechRecognitionEngine(this.Configuration.Language, this.Configuration.Grammars);
 
-            // Event handlers for speech recognition events
+            // Attach event handlers for speech recognition events
             recognizer.AudioStateChanged += this.OnAudioStateChanged;
             recognizer.RecognizeCompleted += this.OnRecognizeCompleted;
 

@@ -19,6 +19,7 @@ namespace Microsoft.Psi.Serialization
         private Dictionary<object, int> serialized;
         private int nextSerializedId;
         private Dictionary<object, int> deserialized;
+        private Dictionary<int, object> deserializedById;
         private int nextDeserializedId;
 
         /// <summary>
@@ -54,16 +55,14 @@ namespace Microsoft.Psi.Serialization
         {
             this.serialized?.Clear();
             this.deserialized?.Clear();
+            this.deserializedById?.Clear();
             this.nextSerializedId = 0;
             this.nextDeserializedId = 0;
         }
 
         internal void PublishPolymorphicType(int id, Type type)
         {
-            if (this.polymorphicTypePublisher != null)
-            {
-                this.polymorphicTypePublisher(id, type);
-            }
+            this.polymorphicTypePublisher?.Invoke(id, type);
         }
 
         internal bool GetOrAddSerializedObjectId(object obj, out int id)
@@ -98,9 +97,9 @@ namespace Microsoft.Psi.Serialization
 
         internal object GetDeserializedObject(int id)
         {
-            if (this.deserialized != null)
+            if (this.deserializedById != null)
             {
-                return this.deserialized.First(kv => kv.Value == id).Key;
+                return this.deserializedById[id];
             }
 
             return null;
@@ -124,9 +123,11 @@ namespace Microsoft.Psi.Serialization
             if (this.deserialized == null)
             {
                 this.deserialized = new Dictionary<object, int>(ReferenceEqualsComparer.Default);
+                this.deserializedById = new Dictionary<int, object>();
             }
 
             this.deserialized.Add(obj, id);
+            this.deserializedById.Add(id, obj);
         }
 
         internal bool ContainsDeserializedObject(object obj)

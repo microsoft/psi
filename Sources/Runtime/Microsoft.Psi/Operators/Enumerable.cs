@@ -8,6 +8,7 @@ namespace Microsoft.Psi
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Threading;
+    using Microsoft.Psi.Components;
 
     /// <summary>
     /// Extension methods that simplify operator usage
@@ -47,13 +48,17 @@ namespace Microsoft.Psi
             public StreamEnumerable(IProducer<T> source, Func<T, bool> predicate = null, DeliveryPolicy deliveryPolicy = null)
             {
                 this.enumerator = new StreamEnumerator(predicate ?? (_ => true));
-                source.Do(
-                    x =>
+
+                var processor = new Processor<T, T>(
+                    source.Out.Pipeline,
+                    (d, e, s) =>
                     {
-                        this.enumerator.Queue.Enqueue(x);
-                        this.enumerator.Enqueued.Set();
-                    },
-                    deliveryPolicy);
+                        this.enumerator.Queue.Enqueue(d);
+                        this.enumerator.Update.Set();
+                    });
+
+                source.PipeTo(processor, deliveryPolicy);
+                processor.In.Unsubscribed += _ => this.enumerator.Update.Set();
             }
 
             /// <inheritdoc />
@@ -85,7 +90,7 @@ namespace Microsoft.Psi
 
                 public ConcurrentQueue<T> Queue => this.queue;
 
-                public ManualResetEvent Enqueued => this.enqueued;
+                public ManualResetEvent Update => this.enqueued;
 
                 public object Current => this.current;
 
@@ -104,7 +109,11 @@ namespace Microsoft.Psi
                             return this.predicate(this.current);
                         }
 
-                        this.Enqueued.WaitOne();
+                        this.Update.WaitOne();
+                        if (this.Queue.IsEmpty)
+                        {
+                            return false;
+                        }
                     }
                 }
 

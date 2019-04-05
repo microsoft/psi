@@ -166,12 +166,13 @@ We could call it done at this point. We have a working class with an imperative 
 We'll now construct a simple wrapper to join the \psi world.
 
 ```C#
-class TurtleComponent : IStartable
+public class TurtleComponent : ISourceComponent
 {
-    private Action onCompleted;
-    private bool stopped;
     private readonly Pipeline pipeline;
     private readonly Turtle turtle;
+
+    private Action<DateTime> notifyCompletionTime;
+    private bool stopped;
 
     public TurtleComponent(Pipeline pipeline, Turtle turtle)
     {
@@ -181,37 +182,38 @@ class TurtleComponent : IStartable
         this.PoseChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PoseChanged));
     }
 
-    private void OnPoseChanged(object sender, Tuple<float, float, float> pose)
-    {
-        if (!stopped)
-        {
-            this.PoseChanged.Post(pose, pipeline.GetCurrentTime());
-        }
-    }
+    public Receiver<Tuple<float, float>> Velocity { get; private set; }
 
-    public void Start(Action onCompleted, ReplayDescriptor descriptor)
+    public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
+
+    public void Start(Action<DateTime> notifyCompletionTime)
     {
+        this.notifyCompletionTime = notifyCompletionTime;
         this.turtle.Connect();
-        this.turtle.PoseChanged += OnPoseChanged;
+        this.turtle.PoseChanged += this.OnPoseChanged;
     }
 
     public void Stop()
     {
         this.stopped = true;
         this.turtle.Disconnect();
-        this.turtle.PoseChanged -= OnPoseChanged;
-        this.onCompleted();
+        this.turtle.PoseChanged -= this.OnPoseChanged;
+        this.notifyCompletionTime(this.pipeline.GetCurrentTime());
     }
 
-    public Receiver<Tuple<float, float>> Velocity { get; private set; }
-
-    public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
+    private void OnPoseChanged(object sender, Tuple<float, float, float> pose)
+    {
+        if (!this.stopped)
+        {
+            this.PoseChanged.Post(pose, this.pipeline.GetCurrentTime());
+        }
+    }
 }
 ```
 
 The `PoseChanged` `Event` becomes an `Emitter` and the `Velocity(...)` method becomes a `Receiver`.
-We make our component `IStartable` and `Connect()`/`Disconnect()` the `turtle` as well as register/unregister the event handler upon `Start()`/`Stop()`:
-In fact, it is _very_ important to ensure that nothing is `Post`ed when a component is not running (before `Start` or after `Stop`).
+We make our component `ISourceComponent` and `Connect()`/`Disconnect()` the `turtle` as well as register/unregister the event handler upon pipeline start/stop.
+In fact, it is _very_ important to ensure that nothing is `Post`ed when a component is not running (before `OnPipelineStart` or after `OnPipelineStop`).
 To this end, we maintain the `stopped` flag and guard within `OnPoseChanged`.
 
 Finally, to make use of our component, we make a very straightforward app to spew pose updates to the console and to map key events to motion.

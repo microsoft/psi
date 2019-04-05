@@ -10,7 +10,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
     using HelixToolkit.Wpf;
+    using MathNet.Spatial.Euclidean;
     using Microsoft.Kinect;
+    using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -21,12 +23,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
     {
         private static readonly int SphereDiv = 5;
         private static readonly int PipeDiv = 7;
+        private Plane horizontalPlane = new Plane(new MathNet.Spatial.Euclidean.Point3D(0, 0, 0), UnitVector3D.Create(0, 0, 1));
+        private int numBodies = 0;
 
         private KinectBodies3DVisualizationObject visualizationObject;
         private Dictionary<ulong, List<SphereVisual3D>> bodyJoints = new Dictionary<ulong, List<SphereVisual3D>>();
         private Dictionary<ulong, List<bool>> bodyJointsTracked = new Dictionary<ulong, List<bool>>();
         private Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, PipeVisual3D>> bodyBones = new Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, PipeVisual3D>>();
         private Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, bool>> bodyBonesTracked = new Dictionary<ulong, Dictionary<Tuple<JointType, JointType>, bool>>();
+        private Dictionary<ulong, BillboardTextVisual3D> trackingIdBillboards = new Dictionary<ulong, BillboardTextVisual3D>();
 
         private Brush trackedEntitiesBrush = new SolidColorBrush();
         private Brush untrackedEntitiesBrush = new SolidColorBrush();
@@ -49,6 +54,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             this.bodyJointsTracked.Clear();
             this.bodyBones.Clear();
             this.bodyBonesTracked.Clear();
+            this.trackingIdBillboards.Clear();
             this.Children.Clear();
         }
 
@@ -133,6 +139,18 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
             this.bodyBones.Add(trackingId, bones);
             this.bodyBonesTracked.Add(trackingId, bonesTracked);
 
+            // add the billboard
+            var billboard = new BillboardTextVisual3D()
+            {
+                // Background = new SolidColorBrush(Color.FromArgb(255, 70, 85, 198)),
+                Background = Brushes.Gray,
+                Foreground = new SolidColorBrush(Colors.White),
+                Padding = new System.Windows.Thickness(5),
+                Text = $"Kinect Id: {this.numBodies++}"
+            };
+            this.trackingIdBillboards.Add(trackingId, billboard);
+            this.Children.Add(billboard);
+
             this.UpdateProperties();
         }
 
@@ -150,10 +168,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 this.Children.Remove(bone);
             }
 
+            this.Children.Remove(this.trackingIdBillboards[trackingId]);
+
             this.bodyJoints.Remove(trackingId);
             this.bodyJointsTracked.Remove(trackingId);
             this.bodyBones.Remove(trackingId);
             this.bodyBonesTracked.Remove(trackingId);
+            this.trackingIdBillboards.Remove(trackingId);
         }
 
         private void UpdateProperties()
@@ -183,9 +204,27 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                     bone.Value.Fill = this.bodyBonesTracked[body.Key][bone.Key] ? this.trackedEntitiesBrush : this.untrackedEntitiesBrush;
                 }
             }
+
+            foreach (var billboard in this.trackingIdBillboards)
+            {
+                if (this.visualizationObject.Configuration.ShowTrackingBillboards)
+                {
+                    if (!this.Children.Contains(billboard.Value))
+                    {
+                        this.Children.Add(billboard.Value);
+                    }
+                }
+                else
+                {
+                    if (this.Children.Contains(billboard.Value))
+                    {
+                        this.Children.Remove(billboard.Value);
+                    }
+                }
+            }
         }
 
-        private void UpdateBodies(List<Microsoft.Psi.Kinect.KinectBody> kinectBodies)
+        private void UpdateBodies(List<KinectBody> kinectBodies)
         {
             if (kinectBodies == null)
             {
@@ -240,8 +279,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                     {
                         var joint1Position = kinectBodies[body].Joints[bone.Item1].Position;
                         var joint2Position = kinectBodies[body].Joints[bone.Item2].Position;
-                        this.bodyBones[trackingId][bone].Point1 = new Point3D(joint1Position.X, joint1Position.Y, joint1Position.Z);
-                        this.bodyBones[trackingId][bone].Point2 = new Point3D(joint2Position.X, joint2Position.Y, joint2Position.Z);
+                        this.bodyBones[trackingId][bone].Point1 = new System.Windows.Media.Media3D.Point3D(joint1Position.X, joint1Position.Y, joint1Position.Z);
+                        this.bodyBones[trackingId][bone].Point2 = new System.Windows.Media.Media3D.Point3D(joint2Position.X, joint2Position.Y, joint2Position.Z);
                         this.bodyBonesTracked[trackingId][bone] = kinectBodies[body].Joints[bone.Item1].TrackingState == TrackingState.Tracked && kinectBodies[body].Joints[bone.Item2].TrackingState == TrackingState.Tracked;
                     }
                     else
@@ -249,6 +288,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                         this.bodyBonesTracked[trackingId][bone] = false;
                     }
                 }
+
+                // set billboard position
+                var spineBasePosition = kinectBodies[body].Joints[JointType.SpineBase].Position;
+                this.trackingIdBillboards[trackingId].Position = new System.Windows.Media.Media3D.Point3D(
+                    spineBasePosition.X,
+                    spineBasePosition.Y,
+                    spineBasePosition.Z + 1);
             }
         }
 

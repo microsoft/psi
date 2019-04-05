@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
@@ -104,9 +105,13 @@ namespace Microsoft.Psi.Visualization.Views
             // operation, otherwise we'll begin a Visualization Panel reorder operation
             if (this.IsHorizontalDrag(mousePosition))
             {
-                this.currentDragOperation = DragOperation.TimelineScroll;
-                this.DoDragTimeline(mousePosition);
-                this.Cursor = Cursors.Hand;
+                // Only drag the timeline of the navigator is currently paused
+                if (PsiStudioContext.Instance.VisualizationContainer.Navigator.CursorMode == CursorMode.Manual)
+                {
+                    this.currentDragOperation = DragOperation.TimelineScroll;
+                    this.DoDragTimeline(mousePosition);
+                    this.Cursor = Cursors.Hand;
+                }
             }
             else
             {

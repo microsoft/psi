@@ -4,6 +4,7 @@
 namespace Test.Psi
 {
     using System;
+    using System.Threading;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -110,20 +111,139 @@ namespace Test.Psi
             var odd = new Dictionary<int, int> { { 1, 100 }, { 3, 300 }, { 5, 500 } };
             var even = new Dictionary<int, int> { { 0, 0 }, { 2, 200 }, { 4, 400 } };
 
-            List<int[]> results = new List<int[]>();
+            List<Dictionary<int, int>> results = new List<Dictionary<int, int>>();
 
             using (var p = Pipeline.Create())
             {
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => (i % 2 == 0) ? even : odd)
                     .Parallel(s => s.Select(val => val / 100), true)
-                    .Do(x => results.Add(x.Values.ToArray()));
+                    .Do(x => results.Add(x.DeepClone()));
 
                 p.Run();
             }
 
-            CollectionAssert.AreEqual(new int[] { 0, 2, 4 }, results[8]);
-            CollectionAssert.AreEqual(new int[] { 1, 3, 5 }, results[9]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 0, 0 }, { 2, 2 }, { 4, 4 } }, results[8]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 3, 3 }, { 5, 5 } }, results[9]);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SparseVectorWithGapParallel()
+        {
+            var sequence = new List<Dictionary<int, int>>() {
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 }, { 2, 200 } },
+                new Dictionary<int, int> { { 1, 100 }, { 2, 200 } },
+                new Dictionary<int, int> { { 1, 100 }, { 2, 200 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int>(),
+                new Dictionary<int, int>(),
+                new Dictionary<int, int>(),
+                new Dictionary<int, int> { { 3, 300 } },
+                new Dictionary<int, int> { { 3, 300 } },
+                new Dictionary<int, int> { { 3, 300 } },
+            };
+
+            List<Dictionary<int, int>> results = new List<Dictionary<int, int>>();
+
+            using (var p = Pipeline.Create())
+            {
+                Generators.Sequence(p, sequence, TimeSpan.FromMilliseconds(1))
+                    .Parallel(s => s.Select(val => val / 100), true)
+                    .Do(x => results.Add(x.DeepClone()));
+
+                p.Run();
+            }
+
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, results[0]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, results[1]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, results[2]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, results[3]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, results[4]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, results[5]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, results[6]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, results[7]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, results[8]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, results[9]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, results[10]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, results[11]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 3, 3 } }, results[12]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 3, 3 } }, results[13]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 3, 3 } }, results[14]);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SparseVectorBranchTerminationPolicy()
+        {
+            var sequence = new List<Dictionary<int, int>>() {
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 } },
+                new Dictionary<int, int> { { 1, 100 }, { 2, 200 } },
+                new Dictionary<int, int> { { 1, 100 }, { 2, 200 } },
+                new Dictionary<int, int> { { 2, 200 } },
+                new Dictionary<int, int> { { 2, 200 } },
+                new Dictionary<int, int>(),
+                new Dictionary<int, int>(),
+                new Dictionary<int, int>(),
+            };
+
+            List<Dictionary<int, int>> resultsDefault = new List<Dictionary<int, int>>();
+            List<Dictionary<int, int>> resultsAfterKeyNotPresentOnce = new List<Dictionary<int, int>>();
+            List<Dictionary<int, int>> resultsNever = new List<Dictionary<int, int>>();
+
+            using (var p = Pipeline.Create())
+            {
+                var source = Generators.Sequence(p, sequence, TimeSpan.FromMilliseconds(1));
+
+                source.Parallel(s => s.Select(val => val / 100), true)
+                    .Do(x => resultsDefault.Add(x.DeepClone()));
+                source.Parallel(s => s.Select(val => val / 100), true, null, BranchTerminationPolicy<int, int>.AfterKeyNotPresent(1))
+                    .Do(x => resultsAfterKeyNotPresentOnce.Add(x.DeepClone()));
+                source.Parallel(s => s.Select(val => val / 100), true, null, BranchTerminationPolicy<int, int>.Never())
+                    .Do(x => resultsNever.Add(x.DeepClone()));
+
+                p.Run();
+            }
+
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsDefault[0]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsDefault[1]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsDefault[2]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, resultsDefault[3]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, resultsDefault[4]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 2, 2 } }, resultsDefault[5]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 2, 2 } }, resultsDefault[6]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, resultsDefault[7]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, resultsDefault[8]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, resultsDefault[9]);
+
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsAfterKeyNotPresentOnce[0]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsAfterKeyNotPresentOnce[1]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsAfterKeyNotPresentOnce[2]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, resultsAfterKeyNotPresentOnce[3]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, resultsAfterKeyNotPresentOnce[4]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 0 }, { 2, 2 } }, resultsAfterKeyNotPresentOnce[5]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 2, 2 } }, resultsAfterKeyNotPresentOnce[6]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 2, 0 } }, resultsAfterKeyNotPresentOnce[7]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, resultsAfterKeyNotPresentOnce[8]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { }, resultsAfterKeyNotPresentOnce[9]);
+
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsNever[0]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsNever[1]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 } }, resultsNever[2]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, resultsNever[3]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 1 }, { 2, 2 } }, resultsNever[4]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 0 }, { 2, 2 } }, resultsNever[5]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 0 }, { 2, 2 } }, resultsNever[6]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 0 }, { 2, 0 } }, resultsNever[7]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 0 }, { 2, 0 } }, resultsNever[8]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 0 }, { 2, 0 } }, resultsNever[9]);
         }
 
         [TestMethod]
@@ -146,28 +266,29 @@ namespace Test.Psi
                     new Dictionary<int, int> { { 1, 10 }, { 2, 20 }                                  }, // 100 160
                 };
 
-            List<int[]> results = new List<int[]>();
+            List<Dictionary<int, int>> results = new List<Dictionary<int, int>>();
 
             using (var p = Pipeline.Create())
             {
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => frames[i])
                     .Parallel(stream => stream.Aggregate(0, (prev, v) => v + prev), true)
-                    .Do(x => results.Add(x.Values.ToArray()));
+                    // orderby is there b/c order is not guaranteed when enumerating dictionaries.
+                    .Do(x => results.Add(x.DeepClone()));
 
                 p.Run();
             }
 
-            CollectionAssert.AreEqual(new int[] { 10, 30 }, results[0]);
-            CollectionAssert.AreEqual(new int[] { 20, 60, 50 }, results[1]);
-            CollectionAssert.AreEqual(new int[] { 30, 20, 90, 40, 100 }, results[2]);
-            CollectionAssert.AreEqual(new int[] { 40, 40, 120, 80, 150 }, results[3]);
-            CollectionAssert.AreEqual(new int[] { 50, 60, 150, 120, }, results[4]);
-            CollectionAssert.AreEqual(new int[] { 60, 80, 180, 160, 50 }, results[5]);
-            CollectionAssert.AreEqual(new int[] { 70, 100, 210, 200, 100 }, results[6]);
-            CollectionAssert.AreEqual(new int[] { 80, 120, 240 }, results[7]);
-            CollectionAssert.AreEqual(new int[] { 90, 140 }, results[8]);
-            CollectionAssert.AreEqual(new int[] { 100, 160 }, results[9]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 10 }, { 3, 30 } }, results[0]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 20 }, { 3, 60 }, { 5, 50 } }, results[1]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 30 }, { 2, 20 }, { 3, 90 }, { 4, 40 }, { 5, 100 } }, results[2]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 40 }, { 2, 40 }, { 3, 120 }, { 4, 80 }, { 5, 150 } }, results[3]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 50 }, { 2, 60 }, { 3, 150 }, { 4, 120 }, }, results[4]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 60 }, { 2, 80 }, { 3, 180 }, { 4, 160 }, { 5, 50 } }, results[5]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 70 }, { 2, 100 }, { 3, 210 }, { 4, 200 }, { 5, 100 } }, results[6]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 80 }, { 2, 120 }, { 3, 240 } }, results[7]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 90 }, { 2, 140 } }, results[8]);
+            CollectionAssert.AreEquivalent(new Dictionary<int, int> { { 1, 100 }, { 2, 160 } }, results[9]);
         }
 
         [TestMethod]
@@ -195,16 +316,25 @@ namespace Test.Psi
                 };
 
             var results = new List<string>();
+            var lastOriginatingTime = new DateTime[3];
 
             using (var p = Pipeline.Create())
             {
                 Generators.Range(p, 0, 15, TimeSpan.FromMilliseconds(10))
                     .Select(i => frames[i])
-                    .Parallel((_, stream) => stream.Window(-TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(20)))
+                    .Parallel((i, stream) =>
+                    {
+                        // verify unsubscribed originating time matches last message on stream
+                        var receiver = stream.Out.Pipeline.CreateReceiver<int>(this, (_, e) => lastOriginatingTime[i] = e.OriginatingTime, string.Empty);
+                        receiver.Unsubscribed += originatingTime => Assert.AreEqual(lastOriginatingTime[i], originatingTime);
+                        stream.Out.PipeTo(receiver);
+
+                        return stream.Window(-TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(20));
+                    })
                     .Do(x =>
                     {
                         var sb = new StringBuilder();
-                        foreach (var k in x.Keys)
+                        foreach (var k in x.Keys.OrderBy(v => v)) // ensure keys are in sorted order for comparison
                         {
                             sb.Append($" {k}->");
                             foreach (var v in x[k])
@@ -275,10 +405,7 @@ namespace Test.Psi
                 p.Run();
             }
 
-            // In reality the test here should test for 10, but that doesn't work because
-            // the joinOrDefault does not push the default message until the next one arrives
-            // and for the last message the next one never arrives
-            Assert.IsTrue(results.Count == 9);
+            Assert.IsTrue(results.Count == 10);
 
             original.Clear();
             results.Clear();
@@ -312,6 +439,140 @@ namespace Test.Psi
                 var parallelSparse = new ParallelSparse<int, int, int>(p, (i, prod) => prod, false);
                 Assert.AreEqual(p, parallelSparse.Out.Pipeline); // composite components shouldn't expose subpipelines
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SparseVectorWithGammaCreatingHolesAndJoinOrDefault()
+        {
+            var frames =
+                new[]
+                {
+                    //                           full        end         start       mid         intermittent
+                    new Dictionary<int, char> { { 1, 'A' },             { 3, 'C' }                         },
+                    new Dictionary<int, char> { { 1, 'A' },             { 3, 'C' },             { 5, 'E' } },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' },            },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }                         },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }                                     },
+                    new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }                                     },
+                };
+
+            var results = new List<Dictionary<int, char>>();
+
+            using (var p = Pipeline.Create())
+            {
+                var stepper = new ManualSteppingGenerator<Dictionary<int, char>>(p, frames);
+                stepper.Out
+                    .Parallel(stream => stream.Join(stream.Count()).Where(x => x.Item2 != 3).Select(x => x.Item1), true) // drop 3rd value
+                    .Do(x => results.Add(x.DeepClone()));
+
+                //  Where filter introduces "holes" when > 100
+                //
+                // A   C
+                // A   C   E
+                // - B - D E
+                // A B C D -
+                // A - C -
+                // A B C D E
+                // A B C D E
+                // A B C
+                // A B
+                // A B
+
+                p.RunAsync();
+
+                Action<int> step = (expected) =>
+                {
+                    stepper.Step();
+                    while (results.Count != expected)
+                    {
+                        Thread.Sleep(10);
+                    }
+
+                    Assert.AreEqual<int>(expected, results.Count);
+                };
+
+                Assert.AreEqual<int>(0, results.Count);
+
+                step(1); // A   C
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 3, 'C' } }, results[0]);
+
+                step(2); // A   C   E
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 3, 'C' }, { 5, 'E' } }, results[1]);
+
+                step(2); // - B - D E (holes) no new results
+
+                step(3); // A B C D - (hole) stream 5/E closed
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, '\0' }, { 2, 'B' }, { 3, '\0' }, { 4, 'D' }, { 5, 'E' } }, results[2]); // note default '\0' values
+
+                step(4); // A - C -
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, '\0' } }, results[3]); // note default '\0' value
+
+                step(6); // A B C D E stream 5/E "reopens" two outputs
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, '\0' }, { 3, 'C' }, { 4, '\0' } }, results[4]); // note default '\0' values
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } }, results[5]);
+
+                step(7); // A B C D E
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } }, results[6]);
+
+                step(8); // A B C streams 4/D and 5/E closed
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' } }, results[7]);
+
+                step(9); // A B stream 3/C closed
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' } }, results[8]);
+
+                step(10); // A B streams 1/A and 2/B now closed
+                CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' } }, results[9]);
+
+                Assert.IsFalse(stepper.Step()); // we're done
+
+                p.WaitAll();
+            }
+        }
+
+        private class ManualSteppingGenerator<T> : IProducer<T>, ISourceComponent
+        {
+            private readonly Pipeline pipeline;
+            private readonly List<T> sequence;
+
+            private int index = 0;
+            private Action<DateTime> notifyCompletionTime;
+            private DateTime lastTime;
+
+            public ManualSteppingGenerator(Pipeline pipeline, IEnumerable<T> sequence)
+            {
+                this.pipeline = pipeline;
+                this.sequence = sequence.ToList();
+                this.Out = pipeline.CreateEmitter<T>(this, "Out");
+            }
+
+            public bool Step()
+            {
+                if (this.index < this.sequence.Count)
+                {
+                    this.lastTime = this.pipeline.GetCurrentTime();
+                    this.Out.Post(this.sequence[this.index++], this.lastTime);
+                    return true;
+                }
+
+                this.notifyCompletionTime(this.lastTime);
+                return false;
+            }
+
+            public void Start(Action<DateTime> notifyCompletionTime)
+            {
+                this.notifyCompletionTime = notifyCompletionTime;
+            }
+
+            public void Stop()
+            {
+            }
+
+            public Emitter<T> Out { get; private set; }
         }
     }
 }

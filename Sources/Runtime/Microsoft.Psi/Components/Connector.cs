@@ -19,9 +19,9 @@ namespace Microsoft.Psi.Components
         /// <param name="to">The pipeline to which to attach.</param>
         /// <param name="name">The name of the connector</param>
         /// <remarks>Composite components may use the `Connector` to bridge `from` a parent pipeline into a `subpipeline` and/or `from` a subpipeline back out `to` the parent.</remarks>
-        public Connector(Pipeline from, Pipeline to, string name)
+        public Connector(Pipeline from, Pipeline to, string name = null)
         {
-            this.Out = to.CreateEmitter<T>(this, name);
+            this.Out = to.CreateEmitter<T>(this, name ?? $"connector-{from.Name}->{to.Name}");
             this.In = from.CreateReceiver<T>(this, (m, e) => this.Out.Post(m, e.OriginatingTime), name);
         }
 
@@ -30,8 +30,8 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="name">The name of the connector</param>
-        public Connector(Pipeline pipeline, string name)
-            : this(pipeline, pipeline, name)
+        public Connector(Pipeline pipeline, string name = null)
+            : this(pipeline, pipeline, name ?? $"connector-{pipeline.Name}")
         {
         }
 

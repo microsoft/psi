@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Persistence
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using Microsoft.Psi.Common;
 
     /// <summary>
@@ -100,6 +101,24 @@ namespace Microsoft.Psi.Persistence
         /// Gets the version of the runtime used to write to this store.
         /// </summary>
         public RuntimeInfo RuntimeVersion => this.metadataCache.Resource.RuntimeVersion;
+
+        /// <summary>
+        /// Indicates whether the specified data store has an active writer.
+        /// </summary>
+        /// <param name="storeName">The store name.</param>
+        /// <param name="storePath">The store path.</param>
+        /// <returns>Returns true if there is an active data file writer to this store.</returns>
+        public static bool IsStoreLive(string storeName, string storePath)
+        {
+            Mutex writerActiveMutex;
+            if (!Mutex.TryOpenExisting(InfiniteFileWriter.ActiveWriterMutexName(storePath, StoreCommon.GetCatalogFileName(storeName)), out writerActiveMutex))
+            {
+                return false;
+            }
+
+            writerActiveMutex.Dispose();
+            return true;
+        }
 
         /// <summary>
         /// Indicates whether this store is still being written to by an active writer.
@@ -243,6 +262,44 @@ namespace Microsoft.Psi.Persistence
         }
 
         /// <summary>
+        /// Gets the current temporal extents of the store by time and originating time
+        /// </summary>
+        /// <returns>A pair of TimeInterval objects that represent the times and originating times of the first and last messages currently in the store.</returns>
+        public (TimeInterval, TimeInterval) GetLiveStoreExtents()
+        {
+            Envelope envelope;
+
+            // Get the times of the first message
+            this.Seek(new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true);
+            DateTime firstMessageTime = DateTime.MinValue;
+            DateTime firstMessageOriginatingTime = DateTime.MinValue;
+            if (this.messageReader.MoveNext())
+            {
+                envelope = this.messageReader.Current;
+                firstMessageTime = envelope.Time;
+                firstMessageOriginatingTime = envelope.OriginatingTime;
+            }
+
+            // Get the last Index Entry from the cache and seek to it
+            IndexEntry indexEntry = this.indexCache.Resource.Search(DateTime.MaxValue, true);
+            this.Seek(new TimeInterval(indexEntry.OriginatingTime, DateTime.MaxValue), true);
+
+            // Find the last message in the extent
+            DateTime lastMessageTime = DateTime.MinValue;
+            DateTime lastMessageOriginatingTime = DateTime.MinValue;
+            while (this.messageReader.MoveNext())
+            {
+                envelope = this.messageReader.Current;
+                lastMessageTime = envelope.Time;
+                lastMessageOriginatingTime = envelope.OriginatingTime;
+            }
+
+            this.metadataCache.Resource.Update();
+
+            return (new TimeInterval(firstMessageTime, lastMessageTime), new TimeInterval(firstMessageOriginatingTime, lastMessageOriginatingTime));
+        }
+
+        /// <summary>
         /// Positions the reader to the next message from any one of the enabled streams.
         /// </summary>
         /// <param name="envelope">The envelope associated with the message read</param>
@@ -260,7 +317,16 @@ namespace Microsoft.Psi.Persistence
                         return false;
                     }
 
-                    var acquired = this.messageReader.DataReady.WaitOne(100); // DataReady is a pulse event, and might be missed
+                    bool acquired = false;
+                    try
+                    {
+                        acquired = this.messageReader.DataReady.WaitOne(100); // DataReady is a pulse event, and might be missed
+                    }
+                    catch (AbandonedMutexException)
+                    {
+                        // If the writer goes away while we're still reading from the store we'll receive this exception
+                    }
+
                     hasData = this.autoOpenAllStreams ? this.messageReader.MoveNext() : this.messageReader.MoveNext(this.enabledStreams);
                     if (acquired)
                     {

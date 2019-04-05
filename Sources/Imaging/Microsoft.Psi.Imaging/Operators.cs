@@ -149,23 +149,31 @@ namespace Microsoft.Psi.Imaging
             }
             else
             {
-                var bitmap = new Bitmap(image.Width, image.Height);
-                var graphics = Graphics.FromImage(bitmap);
-                switch (mode)
+                using (var bitmap = new Bitmap(image.Width, image.Height))
                 {
-                    case FlipMode.AlongHorizontalAxis:
-                        graphics.TranslateTransform(0.0f, image.Height - 1);
-                        graphics.ScaleTransform(1.0f, -1.0f);
-                        break;
+                    using (var graphics = Graphics.FromImage(bitmap))
+                    {
+                        switch (mode)
+                        {
+                            case FlipMode.AlongHorizontalAxis:
+                                graphics.TranslateTransform(0.0f, image.Height - 1);
+                                graphics.ScaleTransform(1.0f, -1.0f);
+                                break;
 
-                    case FlipMode.AlongVerticalAxis:
-                        graphics.TranslateTransform(image.Width - 1, 0.0f);
-                        graphics.ScaleTransform(-1.0f, 1.0f);
-                        break;
+                            case FlipMode.AlongVerticalAxis:
+                                graphics.TranslateTransform(image.Width - 1, 0.0f);
+                                graphics.ScaleTransform(-1.0f, 1.0f);
+                                break;
+                        }
+
+                        using (var dstimage = image.ToManagedImage())
+                        {
+                            graphics.DrawImage(dstimage, new Point(0, 0));
+                        }
+
+                        return ImagePool.GetOrCreate(bitmap);
+                    }
                 }
-
-                graphics.DrawImage(image.ToManagedImage(), new Point(0, 0));
-                return ImagePool.GetOrCreate(bitmap);
             }
         }
 
@@ -193,36 +201,45 @@ namespace Microsoft.Psi.Imaging
 
             int dstWidth = (int)(image.Width * xScale);
             int dstHeight = (int)(image.Height * yScale);
-            var bitmap = new Bitmap(dstWidth, dstHeight);
-            var graphics = Graphics.FromImage(bitmap);
-            graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-            switch (mode)
+            using (var bitmap = new Bitmap(dstWidth, dstHeight))
             {
-                case SamplingMode.Point:
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
-                    break;
+                using (var graphics = Graphics.FromImage(bitmap))
+                {
+                    graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                    switch (mode)
+                    {
+                        case SamplingMode.Point:
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+                            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+                            break;
 
-                case SamplingMode.Bilinear:
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                    break;
+                        case SamplingMode.Bilinear:
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                            break;
 
-                case SamplingMode.Bicubic:
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                    break;
+                        case SamplingMode.Bicubic:
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                            break;
+                    }
+
+                    graphics.ScaleTransform(xScale, yScale);
+
+                    using (var managedimg = image.ToManagedImage())
+                    {
+                        graphics.DrawImage(managedimg, new Point(0, 0));
+                    }
+
+                    return ImagePool.GetOrCreate(bitmap);
+                }
             }
-
-            graphics.ScaleTransform(xScale, yScale);
-            graphics.DrawImage(image.ToManagedImage(), new Point(0, 0));
-            return ImagePool.GetOrCreate(bitmap);
         }
 
         /// <summary>
@@ -314,37 +331,46 @@ namespace Microsoft.Psi.Imaging
 
             int dstWidth = (int)(maxx - minx + 1);
             int dstHeight = (int)(maxy - miny + 1);
-            var bitmap = new Bitmap(dstWidth, dstHeight);
-            var graphics = Graphics.FromImage(bitmap);
-            graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-            switch (mode)
+            using (var bitmap = new Bitmap(dstWidth, dstHeight))
             {
-                case SamplingMode.Point:
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
-                    break;
+                using (var graphics = Graphics.FromImage(bitmap))
+                {
+                    graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                    switch (mode)
+                    {
+                        case SamplingMode.Point:
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+                            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+                            break;
 
-                case SamplingMode.Bilinear:
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                    break;
+                        case SamplingMode.Bilinear:
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                            break;
 
-                case SamplingMode.Bicubic:
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                    break;
+                        case SamplingMode.Bicubic:
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                            break;
+                    }
+
+                    graphics.TranslateTransform(-minx, -miny);
+                    graphics.RotateTransform(angleInDegrees);
+
+                    using (var managedimg = image.ToManagedImage())
+                    {
+                        graphics.DrawImage(managedimg, new Point(0, 0));
+                    }
+
+                    return ImagePool.GetOrCreate(bitmap);
+                }
             }
-
-            graphics.TranslateTransform(-minx, -miny);
-            graphics.RotateTransform(angleInDegrees);
-            graphics.DrawImage(image.ToManagedImage(), new Point(0, 0));
-            return ImagePool.GetOrCreate(bitmap);
         }
     }
 
@@ -362,11 +388,17 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line</param>
         public static void DrawRectangle(this Image image, Rectangle rect, Color color, int width)
         {
-            Bitmap bm = image.ToManagedImage(false);
-            var graphics = Graphics.FromImage(bm);
-            var pen = new Pen(new SolidBrush(color));
-            pen.Width = width;
-            graphics.DrawRectangle(pen, rect);
+            using (Bitmap bm = image.ToManagedImage(false))
+            {
+                using (var graphics = Graphics.FromImage(bm))
+                {
+                    using (var pen = new Pen(new SolidBrush(color)))
+                    {
+                        pen.Width = width;
+                        graphics.DrawRectangle(pen, rect);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -379,11 +411,17 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line</param>
         public static void DrawLine(this Image image, Point p0, Point p1, Color color, int width)
         {
-            Bitmap bm = image.ToManagedImage(false);
-            var graphics = Graphics.FromImage(bm);
-            var pen = new Pen(new SolidBrush(color));
-            pen.Width = width;
-            graphics.DrawLine(pen, p0, p1);
+            using (Bitmap bm = image.ToManagedImage(false))
+            {
+                using (var graphics = Graphics.FromImage(bm))
+                {
+                    using (var pen = new Pen(new SolidBrush(color)))
+                    {
+                        pen.Width = width;
+                        graphics.DrawLine(pen, p0, p1);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -396,11 +434,17 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line</param>
         public static void DrawCircle(this Image image, Point p0, int radius, Color color, int width)
         {
-            Bitmap bm = image.ToManagedImage(false);
-            var graphics = Graphics.FromImage(bm);
-            var pen = new Pen(new SolidBrush(color));
-            pen.Width = width;
-            graphics.DrawEllipse(pen, p0.X - radius, p0.Y - radius, 2 * radius, 2 * radius);
+            using (Bitmap bm = image.ToManagedImage(false))
+            {
+                using (var graphics = Graphics.FromImage(bm))
+                {
+                    using (var pen = new Pen(new SolidBrush(color)))
+                    {
+                        pen.Width = width;
+                        graphics.DrawEllipse(pen, p0.X - radius, p0.Y - radius, 2 * radius, 2 * radius);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -411,13 +455,23 @@ namespace Microsoft.Psi.Imaging
         /// <param name="p0">Pixel coordinates for center of circle</param>
         public static void DrawText(this Image image, string str, Point p0)
         {
-            Bitmap bm = image.ToManagedImage(false);
-            var graphics = Graphics.FromImage(bm);
-            Font drawFont = new Font("Arial", 24);
-            SolidBrush drawBrush = new SolidBrush(Color.Black);
-            StringFormat drawFormat = new StringFormat();
-            drawFormat.FormatFlags = 0;
-            graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
+            using (Bitmap bm = image.ToManagedImage(false))
+            {
+                using (var graphics = Graphics.FromImage(bm))
+                {
+                    using (Font drawFont = new Font("Arial", 24))
+                    {
+                        using (SolidBrush drawBrush = new SolidBrush(Color.Black))
+                        {
+                            using (StringFormat drawFormat = new StringFormat())
+                            {
+                                drawFormat.FormatFlags = 0;
+                                graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -929,9 +983,9 @@ namespace Microsoft.Psi.Imaging
                                 break;
 
                             case PixelFormat.BGRX_32bpp:
-                                 dstCol[0] = (byte)b;
-                                 dstCol[1] = (byte)g;
-                                 dstCol[2] = (byte)r;
+                                dstCol[0] = (byte)b;
+                                dstCol[1] = (byte)g;
+                                dstCol[2] = (byte)r;
                                 break;
 
                             case PixelFormat.BGR_24bpp:
@@ -972,7 +1026,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Flips an image along a specified axis
+        /// Computes the absolute difference between two images.
         /// </summary>
         /// <param name="imageA">First image</param>
         /// <param name="imageB">Second image</param>

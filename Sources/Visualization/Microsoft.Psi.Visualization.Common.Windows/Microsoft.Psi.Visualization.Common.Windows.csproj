@@ -30,10 +30,12 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Include="C5" Version="2.5.3" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.1" />
-    <PackageReference Include="MathNet.Spatial.Signed" Version="0.4.0" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0-beta05" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj" />
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
     <ProjectReference Include="..\..\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
@@ -45,5 +47,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  <Import Project="..\Microsoft.Psi.Visualization.Shared.Windows\Microsoft.Psi.Visualization.Shared.Windows.projitems" Label="Shared" />
+  <ItemGroup>
+    <Folder Include="Views\Visuals2D\" />
+  </ItemGroup>
 </Project>

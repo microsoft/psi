@@ -13,7 +13,6 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Media.Media3D;
     using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Helpers;
-    using Microsoft.Psi.Visualization.Server;
     using Microsoft.Psi.Visualization.Views.Visuals3D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
@@ -41,7 +40,7 @@ namespace Microsoft.Psi.Visualization.Views
         /// </summary>
         protected VisualizationPanel VisualizationPanel => this.DataContext as VisualizationPanel;
 
-        private void AddVisualForVisualizationObject(IRemoteVisualizationObject visualizationObject)
+        private void AddVisualForVisualizationObject(VisualizationObject visualizationObject)
         {
             Visual3D visual = ((I3DVisualizationObject)visualizationObject).Visual3D;
             this.SortingVisualRoot.Children.Add(visual);
