@@ -15,7 +15,7 @@ There are many additions and updates in this release, but the major changes can 
 * Streamlining the use of Shared<T> for more efficient messaging of large objects such as images, and added [in-depth documentation](/topics/InDepth.Shared.md) on this topic.
 * PsiStudio now supports connecting to live stores and fast layout switching.
 
-### <div style="color:red;font-weight:bold">Breaking Changes:</div>
+### Breaking Changes:
 
 * The pipeline startup and shutdown procedure has been updated to support correct and reproducible shutdown where possible in dynamic pipelines. Specifically:
     * Removed the `RegisterPipelineStart/Stop/Final` handlers. If the component implements `ISourceComponent`, then use the `Start` or `Stop` method, or use one of the following events instead:  `PipelineRun`, `PipelineCompleted`, `Receiver.Unsubscribed`.
@@ -93,7 +93,7 @@ There have been multiple changes made to the pipeline finalization code to suppo
 
 ## 2018/11/30: Beta-release, version 0.6.48.2
 
-### <div style="color:red;font-weight:bold">Breaking Changes:</div>
+### Breaking Changes:
 
 * It is now a requirement that messages posted on an `Emitter` have strictly increasing originating times. Attempting to post multiple messages with the same originating time on the same stream will cause an exception to be thrown.
 * The `Buffer`, `History` and `Window` operators have been unified as a single set of `Window` operators which take either an index-based or a relative time-based interval. The index-based variants emit the initial buffer only after the total count of messages within the specified index interval have been accumulated, whereas the time-based variants emit the initial buffer as soon as messages within the specified relative time interval are available.
