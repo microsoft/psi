@@ -7,12 +7,12 @@ title:  Release Notes
 
 ## 2019/04/05: Beta-release, version 0.7.57.2
 
-OVERVIEW:
+### OVERVIEW:
 
 There are many additions and updates in this release, but the major changes can be summarized as:
 
 * Improvements and fixes to the pipeline shutdown procedure, as well as fixes to the `Parallel` and `Join` operators to support reproducible dynamic sub-pipeline construction and teardown via the `Parallel` operator.
-* Streamlining the use of Shared<T> for more efficient messaging of large objects such as images, and added [in-depth documentation](/topics/InDepth.Shared.md) on this topic.
+* Streamlining the use of `Shared<T>` for more efficient messaging of large objects such as images, and added [in-depth documentation](/topics/InDepth.Shared.md) on this topic.
 * PsiStudio now supports connecting to live stores and fast layout switching.
 
 ### Breaking Changes:
