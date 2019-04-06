@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>KinectCalibration holds the intrinsics and extrinsics for a Kinect camera  
+<p>Represents the calibration information (intrinsics and extrinsics of color and depth cameras) for a Kinect sensor.  
  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#details">More...</a></p>
 
 <p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html">Microsoft.Psi.Kinect.IKinectCalibration</a>.</p>
@@ -84,10 +84,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad62176ebf2726fdbcbac0cf041b309dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#ad62176ebf2726fdbcbac0cf041b309dc">KinectCalibration</a> ()</td></tr>
-<tr class="memdesc:ad62176ebf2726fdbcbac0cf041b309dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="KinectCalibration holds the intrinsics and extrinsics for a Kinect camera ">KinectCalibration</a> class.  <a href="#ad62176ebf2726fdbcbac0cf041b309dc">More...</a><br /></td></tr>
+<tr class="memdesc:ad62176ebf2726fdbcbac0cf041b309dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="Represents the calibration information (intrinsics and extrinsics of color and depth cameras) for a K...">KinectCalibration</a> class.  <a href="#ad62176ebf2726fdbcbac0cf041b309dc">More...</a><br /></td></tr>
 <tr class="separator:ad62176ebf2726fdbcbac0cf041b309dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65542eef0878ec131cfbca56a14bd8de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a65542eef0878ec131cfbca56a14bd8de">KinectCalibration</a> (int colorWidth, int colorHeight, Matrix&lt; double &gt; colorTransform, double colorRadial0, double colorRadial1, double colorTangential0, double colorTangential1, Matrix&lt; double &gt; depthToColorTransform, int depthWidth, int depthHeight, Matrix&lt; double &gt; depthTransform, double depthRadial0, double depthRadial1, double depthTangential0, double depthTangential1)</td></tr>
-<tr class="memdesc:a65542eef0878ec131cfbca56a14bd8de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="KinectCalibration holds the intrinsics and extrinsics for a Kinect camera ">KinectCalibration</a> class.  <a href="#a65542eef0878ec131cfbca56a14bd8de">More...</a><br /></td></tr>
+<tr class="memdesc:a65542eef0878ec131cfbca56a14bd8de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="Represents the calibration information (intrinsics and extrinsics of color and depth cameras) for a K...">KinectCalibration</a> class.  <a href="#a65542eef0878ec131cfbca56a14bd8de">More...</a><br /></td></tr>
 <tr class="separator:a65542eef0878ec131cfbca56a14bd8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a047a5b0e6e5eaef29b9d71d0e2aaa99f"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a047a5b0e6e5eaef29b9d71d0e2aaa99f">ToColorSpace</a> (Point3D point3D)</td></tr>
 <tr class="memdesc:a047a5b0e6e5eaef29b9d71d0e2aaa99f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a 3D point from Kinect depth coordinates into color image coordinates.   <a href="#a047a5b0e6e5eaef29b9d71d0e2aaa99f">More...</a><br /></td></tr>
@@ -96,42 +96,37 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6115316e325c0b7fffd2ef7cb8de9365"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html">KinectCalibration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a6115316e325c0b7fffd2ef7cb8de9365">Default</a> = new <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html">KinectCalibration</a>()</td></tr>
-<tr class="memdesc:a6115316e325c0b7fffd2ef7cb8de9365"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default calibration  <a href="#a6115316e325c0b7fffd2ef7cb8de9365">More...</a><br /></td></tr>
+<tr class="memdesc:a6115316e325c0b7fffd2ef7cb8de9365"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default calibration.  <a href="#a6115316e325c0b7fffd2ef7cb8de9365">More...</a><br /></td></tr>
 <tr class="separator:a6115316e325c0b7fffd2ef7cb8de9365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a4d78d1da216a159d20d11b24a2e0b8a9"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a4d78d1da216a159d20d11b24a2e0b8a9">ColorExtrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a4d78d1da216a159d20d11b24a2e0b8a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the color camera's extrinsics  <a href="#a4d78d1da216a159d20d11b24a2e0b8a9">More...</a><br /></td></tr>
+<tr class="memitem:a4d78d1da216a159d20d11b24a2e0b8a9"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a4d78d1da216a159d20d11b24a2e0b8a9">ColorExtrinsics</a><code> [get]</code></td></tr>
 <tr class="separator:a4d78d1da216a159d20d11b24a2e0b8a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57183f34b1eee516b949925192e3e9e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a57183f34b1eee516b949925192e3e9e9">ColorIntrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a57183f34b1eee516b949925192e3e9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the color camera's intrinsics  <a href="#a57183f34b1eee516b949925192e3e9e9">More...</a><br /></td></tr>
+<tr class="memitem:a57183f34b1eee516b949925192e3e9e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a57183f34b1eee516b949925192e3e9e9">ColorIntrinsics</a><code> [get]</code></td></tr>
 <tr class="separator:a57183f34b1eee516b949925192e3e9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02fa1bdf01027424099e644d5eebd24b"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a02fa1bdf01027424099e644d5eebd24b">DepthExtrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a02fa1bdf01027424099e644d5eebd24b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the depth camera's extrinsics  <a href="#a02fa1bdf01027424099e644d5eebd24b">More...</a><br /></td></tr>
+<tr class="memitem:a02fa1bdf01027424099e644d5eebd24b"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a02fa1bdf01027424099e644d5eebd24b">DepthExtrinsics</a><code> [get]</code></td></tr>
 <tr class="separator:a02fa1bdf01027424099e644d5eebd24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a931b7fb2c0285602a963206470b0a3e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a931b7fb2c0285602a963206470b0a3e8">DepthIntrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a931b7fb2c0285602a963206470b0a3e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the depth camera's intrinsics  <a href="#a931b7fb2c0285602a963206470b0a3e8">More...</a><br /></td></tr>
+<tr class="memitem:a931b7fb2c0285602a963206470b0a3e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a931b7fb2c0285602a963206470b0a3e8">DepthIntrinsics</a><code> [get]</code></td></tr>
 <tr class="separator:a931b7fb2c0285602a963206470b0a3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fdafc4321d4740c283eb5f41d765807"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a3fdafc4321d4740c283eb5f41d765807">DepthToColorTransform</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a3fdafc4321d4740c283eb5f41d765807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the transform to go from the depth camera to the color camera  <a href="#a3fdafc4321d4740c283eb5f41d765807">More...</a><br /></td></tr>
+<tr class="memitem:a3fdafc4321d4740c283eb5f41d765807"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a3fdafc4321d4740c283eb5f41d765807">DepthToColorTransform</a><code> [get]</code></td></tr>
 <tr class="separator:a3fdafc4321d4740c283eb5f41d765807"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html">Microsoft.Psi.Kinect.IKinectCalibration</a></td></tr>
-<tr class="memitem:a3efad3e13fef7c0096abb822831f8ee7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a3efad3e13fef7c0096abb822831f8ee7">ColorExtrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a3efad3e13fef7c0096abb822831f8ee7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the extrinsics associated with the Kinect's color image  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a3efad3e13fef7c0096abb822831f8ee7">More...</a><br /></td></tr>
+<tr class="memitem:a3efad3e13fef7c0096abb822831f8ee7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a3efad3e13fef7c0096abb822831f8ee7">ColorExtrinsics</a><code> [get]</code></td></tr>
+<tr class="memdesc:a3efad3e13fef7c0096abb822831f8ee7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extrinsics associated with the Kinect's color image.  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a3efad3e13fef7c0096abb822831f8ee7">More...</a><br /></td></tr>
 <tr class="separator:a3efad3e13fef7c0096abb822831f8ee7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a569bf7ee4138f556fe599c9d07a877c7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a569bf7ee4138f556fe599c9d07a877c7">ColorIntrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a569bf7ee4138f556fe599c9d07a877c7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the intrinsics associated with the Kinect's color image  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a569bf7ee4138f556fe599c9d07a877c7">More...</a><br /></td></tr>
+<tr class="memitem:a569bf7ee4138f556fe599c9d07a877c7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a569bf7ee4138f556fe599c9d07a877c7">ColorIntrinsics</a><code> [get]</code></td></tr>
+<tr class="memdesc:a569bf7ee4138f556fe599c9d07a877c7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the intrinsics associated with the Kinect's color image.  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a569bf7ee4138f556fe599c9d07a877c7">More...</a><br /></td></tr>
 <tr class="separator:a569bf7ee4138f556fe599c9d07a877c7 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a848ea26d920ee5db848fe2497f747acc inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a848ea26d920ee5db848fe2497f747acc">DepthExtrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a848ea26d920ee5db848fe2497f747acc inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the extrinsics associated with the Kinect's depth image  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a848ea26d920ee5db848fe2497f747acc">More...</a><br /></td></tr>
+<tr class="memitem:a848ea26d920ee5db848fe2497f747acc inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a848ea26d920ee5db848fe2497f747acc">DepthExtrinsics</a><code> [get]</code></td></tr>
+<tr class="memdesc:a848ea26d920ee5db848fe2497f747acc inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extrinsics associated with the Kinect's depth image.  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a848ea26d920ee5db848fe2497f747acc">More...</a><br /></td></tr>
 <tr class="separator:a848ea26d920ee5db848fe2497f747acc inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7eed19dcb04b41c8fa9746a101e267f3 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a7eed19dcb04b41c8fa9746a101e267f3">DepthIntrinsics</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a7eed19dcb04b41c8fa9746a101e267f3 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the intrinsics associated with the Kinect's depth image  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a7eed19dcb04b41c8fa9746a101e267f3">More...</a><br /></td></tr>
+<tr class="memitem:a7eed19dcb04b41c8fa9746a101e267f3 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a7eed19dcb04b41c8fa9746a101e267f3">DepthIntrinsics</a><code> [get]</code></td></tr>
+<tr class="memdesc:a7eed19dcb04b41c8fa9746a101e267f3 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the intrinsics associated with the Kinect's depth image.  <a href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html#a7eed19dcb04b41c8fa9746a101e267f3">More...</a><br /></td></tr>
 <tr class="separator:a7eed19dcb04b41c8fa9746a101e267f3 inherit properties_interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>KinectCalibration holds the intrinsics and extrinsics for a Kinect camera </p>
+<div class="textblock"><p>Represents the calibration information (intrinsics and extrinsics of color and depth cameras) for a Kinect sensor. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad62176ebf2726fdbcbac0cf041b309dc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad62176ebf2726fdbcbac0cf041b309dc">&#9670;&nbsp;</a></span>KinectCalibration() <span class="overload">[1/2]</span></h2>
@@ -148,7 +143,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="KinectCalibration holds the intrinsics and extrinsics for a Kinect camera ">KinectCalibration</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="Represents the calibration information (intrinsics and extrinsics of color and depth cameras) for a K...">KinectCalibration</a> class. </p>
 
 </div>
 </div>
@@ -256,7 +251,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="KinectCalibration holds the intrinsics and extrinsics for a Kinect camera ">KinectCalibration</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html" title="Represents the calibration information (intrinsics and extrinsics of color and depth cameras) for a K...">KinectCalibration</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">colorWidth</td><td>Width of color camera in pixels</td></tr>
@@ -324,7 +319,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The default calibration </p>
+<p>The default calibration. </p>
 
 </div>
 </div>
@@ -344,12 +339,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the color camera's extrinsics </p>
+<p></p>
 
 </div>
 </div>
@@ -368,12 +363,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the color camera's intrinsics </p>
+<p></p>
 
 </div>
 </div>
@@ -392,12 +387,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the depth camera's extrinsics </p>
+<p></p>
 
 </div>
 </div>
@@ -416,12 +411,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the depth camera's intrinsics </p>
+<p></p>
 
 </div>
 </div>
@@ -440,12 +435,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the transform to go from the depth camera to the color camera </p>
+<p></p>
 
 </div>
 </div>

@@ -1094,18 +1094,18 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a65ef49a7f9ff9d811f3c9251e8f74732"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a65ef49a7f9ff9d811f3c9251e8f74732">Parallel&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn[]&gt; source, Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
 <tr class="memdesc:a65ef49a7f9ff9d811f3c9251e8f74732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of variable-size array messages by creating a stream for each element in the array, and performing an action on each of these streams.  <a href="#a65ef49a7f9ff9d811f3c9251e8f74732">More...</a><br /></td></tr>
 <tr class="separator:a65ef49a7f9ff9d811f3c9251e8f74732"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e3b52df122345cb1f7c8ee490c07e00"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a2e3b52df122345cb1f7c8ee490c07e00">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
-<tr class="memdesc:a2e3b52df122345cb1f7c8ee490c07e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream.  <a href="#a2e3b52df122345cb1f7c8ee490c07e00">More...</a><br /></td></tr>
-<tr class="separator:a2e3b52df122345cb1f7c8ee490c07e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b0a3600e269fd2cc3544a85db4175ba"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a5b0a3600e269fd2cc3544a85db4175ba">Parallel&lt; TIn, TKey &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Action&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
-<tr class="memdesc:a5b0a3600e269fd2cc3544a85db4175ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams.  <a href="#a5b0a3600e269fd2cc3544a85db4175ba">More...</a><br /></td></tr>
-<tr class="separator:a5b0a3600e269fd2cc3544a85db4175ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e86869c5900d2b0d0ba40c3873589ac"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a4e86869c5900d2b0d0ba40c3873589ac">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
-<tr class="memdesc:a4e86869c5900d2b0d0ba40c3873589ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream.  <a href="#a4e86869c5900d2b0d0ba40c3873589ac">More...</a><br /></td></tr>
-<tr class="separator:a4e86869c5900d2b0d0ba40c3873589ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad336cc671ab9c45e90e9ad8c3cc2a24a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ad336cc671ab9c45e90e9ad8c3cc2a24a">Parallel&lt; TIn, TKey &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt; branchTerminationPolicy=null)</td></tr>
-<tr class="memdesc:ad336cc671ab9c45e90e9ad8c3cc2a24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams.  <a href="#ad336cc671ab9c45e90e9ad8c3cc2a24a">More...</a><br /></td></tr>
-<tr class="separator:ad336cc671ab9c45e90e9ad8c3cc2a24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a655ef34f0dfe0a19b789e24649256bef"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a655ef34f0dfe0a19b789e24649256bef">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a655ef34f0dfe0a19b789e24649256bef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream.  <a href="#a655ef34f0dfe0a19b789e24649256bef">More...</a><br /></td></tr>
+<tr class="separator:a655ef34f0dfe0a19b789e24649256bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87bf0c230b69f73683ea07b8f8ca2cdf"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a87bf0c230b69f73683ea07b8f8ca2cdf">Parallel&lt; TIn, TKey &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Action&lt; TKey, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a87bf0c230b69f73683ea07b8f8ca2cdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams.  <a href="#a87bf0c230b69f73683ea07b8f8ca2cdf">More...</a><br /></td></tr>
+<tr class="separator:a87bf0c230b69f73683ea07b8f8ca2cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a7f809021e04ff25fdad2693c5a0393"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TOut &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a6a7f809021e04ff25fdad2693c5a0393">Parallel&lt; TIn, TKey, TOut &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; streamTransform, bool joinOrDefault=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:a6a7f809021e04ff25fdad2693c5a0393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output dictionary stream.  <a href="#a6a7f809021e04ff25fdad2693c5a0393">More...</a><br /></td></tr>
+<tr class="separator:a6a7f809021e04ff25fdad2693c5a0393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae20ade8e89cefee20374a123c2eaee23"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ae20ade8e89cefee20374a123c2eaee23">Parallel&lt; TIn, TKey &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Dictionary&lt; TKey, TIn &gt;&gt; source, Action&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; streamAction, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null, Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt; branchTerminationPolicy=null)</td></tr>
+<tr class="memdesc:ae20ade8e89cefee20374a123c2eaee23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a stream of dictionary messages by creating a stream for each key in the dictionary, applying a sub-pipeline to each of these streams.  <a href="#ae20ade8e89cefee20374a123c2eaee23">More...</a><br /></td></tr>
+<tr class="separator:ae20ade8e89cefee20374a123c2eaee23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4861b744b8d4326179c49d9196f96a23"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; U &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a4861b744b8d4326179c49d9196f96a23">Window&lt; T, U &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; T &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_int_interval.html">IntInterval</a> indexInterval, Func&lt; IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; T &gt;&gt;, U &gt; selector, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
 <tr class="memdesc:a4861b744b8d4326179c49d9196f96a23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process windows of messages by relative index interval.  <a href="#a4861b744b8d4326179c49d9196f96a23">More...</a><br /></td></tr>
 <tr class="separator:a4861b744b8d4326179c49d9196f96a23"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -16164,8 +16164,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5b0a3600e269fd2cc3544a85db4175ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b0a3600e269fd2cc3544a85db4175ba">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey &gt;() <span class="overload">[1/2]</span></h2>
+<a id="a87bf0c230b69f73683ea07b8f8ca2cdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87bf0c230b69f73683ea07b8f8ca2cdf">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey &gt;() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -16194,7 +16194,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt;&#160;</td>
           <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -16223,7 +16223,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
     <tr><td class="paramname">streamAction</td><td>The action to apply to each element stream.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
-    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -16231,8 +16231,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad336cc671ab9c45e90e9ad8c3cc2a24a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad336cc671ab9c45e90e9ad8c3cc2a24a">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey &gt;() <span class="overload">[2/2]</span></h2>
+<a id="ae20ade8e89cefee20374a123c2eaee23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae20ade8e89cefee20374a123c2eaee23">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey &gt;() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -16261,7 +16261,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt;&#160;</td>
           <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -16290,7 +16290,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">source</td><td>Source stream.</td></tr>
     <tr><td class="paramname">streamAction</td><td>The action to apply to each element stream.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
-    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate branches (defaults to when key no longer present).</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -16298,8 +16298,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2e3b52df122345cb1f7c8ee490c07e00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e3b52df122345cb1f7c8ee490c07e00">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[1/2]</span></h2>
+<a id="a655ef34f0dfe0a19b789e24649256bef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a655ef34f0dfe0a19b789e24649256bef">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -16334,7 +16334,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt;&#160;</td>
           <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -16365,7 +16365,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output element stream.</td></tr>
     <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
-    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</td></tr>
   </table>
   </dd>
 </dl>
@@ -16373,8 +16373,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4e86869c5900d2b0d0ba40c3873589ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e86869c5900d2b0d0ba40c3873589ac">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[2/2]</span></h2>
+<a id="a6a7f809021e04ff25fdad2693c5a0393"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a7f809021e04ff25fdad2693c5a0393">&#9670;&nbsp;</a></span>Parallel&lt; TIn, TKey, TOut &gt;() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -16409,7 +16409,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, bool &gt;&#160;</td>
+          <td class="paramtype">Func&lt; TKey, Dictionary&lt; TKey, TIn &gt;, DateTime,(bool, DateTime)&gt;&#160;</td>
           <td class="paramname"><em>branchTerminationPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -16440,7 +16440,7 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">streamTransform</td><td>Function mapping from an input element stream to an output output element stream.</td></tr>
     <tr><td class="paramname">joinOrDefault</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
-    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining when to terminate sub-pipelines (defaults to when key no longer present).</td></tr>
+    <tr><td class="paramname">branchTerminationPolicy</td><td>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, dictionary of values and the originating time of the last message containing the key.</td></tr>
   </table>
   </dd>
 </dl>

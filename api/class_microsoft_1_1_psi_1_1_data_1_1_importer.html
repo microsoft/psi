@@ -78,13 +78,19 @@ $(function() {
 <p>Reads messages from a multi-stream store, either at the full speed allowed by available resources or at the desired rate specified by the <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html" title="Represents a graph of components and controls scheduling and message passing. ">Pipeline</a>. Instances of this class can be created using the <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a33a73e2fb58f468e2c2252f815c15cd2" title="Opens a multi-stream store for read and returns an Importer instance which can be used to inspect the...">Store.Open</a> method. The store metadata is available immediately after open (before the pipeline is running) via the <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a29ffcec9197319088b9609e7ab363059" title="Gets the metadata of all the storage streams in this store. ">AvailableStreams</a> property.  
  <a href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_finite_source_component.html">Microsoft.Psi.Components.IFiniteSourceComponent</a>, and IDisposable.</p>
+<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, and IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab2485da3b82b4bb8612c92cebd232992"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#ab2485da3b82b4bb8612c92cebd232992">Importer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string name, string path)</td></tr>
 <tr class="memdesc:ab2485da3b82b4bb8612c92cebd232992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html" title="Reads messages from a multi-stream store, either at the full speed allowed by available resources or ...">Importer</a> class.  <a href="#ab2485da3b82b4bb8612c92cebd232992">More...</a><br /></td></tr>
 <tr class="separator:ab2485da3b82b4bb8612c92cebd232992"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62ea12a3f1837f969e50362bf2b16c6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a62ea12a3f1837f969e50362bf2b16c6c">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:a62ea12a3f1837f969e50362bf2b16c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#a62ea12a3f1837f969e50362bf2b16c6c">More...</a><br /></td></tr>
+<tr class="separator:a62ea12a3f1837f969e50362bf2b16c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6acea9776e13c00a2a27818d6859a0d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a6acea9776e13c00a2a27818d6859a0d2">Stop</a> ()</td></tr>
+<tr class="memdesc:a6acea9776e13c00a2a27818d6859a0d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a6acea9776e13c00a2a27818d6859a0d2">More...</a><br /></td></tr>
+<tr class="separator:a6acea9776e13c00a2a27818d6859a0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a778894bb9a17eaa0539173d144b3d79c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a778894bb9a17eaa0539173d144b3d79c">Dispose</a> ()</td></tr>
 <tr class="memdesc:a778894bb9a17eaa0539173d144b3d79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the store and disposes of the current instance.  <a href="#a778894bb9a17eaa0539173d144b3d79c">More...</a><br /></td></tr>
 <tr class="separator:a778894bb9a17eaa0539173d144b3d79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -391,6 +397,49 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A stream that publishes the data read from the store.</dd></dl>
+
+</div>
+</div>
+<a id="a62ea12a3f1837f969e50362bf2b16c6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62ea12a3f1837f969e50362bf2b16c6c">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Data.Importer.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a6acea9776e13c00a2a27818d6859a0d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6acea9776e13c00a2a27818d6859a0d2">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Data.Importer.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

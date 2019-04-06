@@ -68,6 +68,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object-members.html">List of all members</a>  </div>
@@ -79,24 +80,38 @@ $(function() {
 <p>Represents a stream visualization object.  
  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>, and IRemoteStreamVisualizationObject.</p>
+<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>, and <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>.</p>
 
 <p>Inherited by <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData, TConfig &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af629f1aadd8be3c8dfc6db9804aa78af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#af629f1aadd8be3c8dfc6db9804aa78af">CloseStream</a> ()</td></tr>
-<tr class="memdesc:af629f1aadd8be3c8dfc6db9804aa78af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the underlying stream.   <a href="#af629f1aadd8be3c8dfc6db9804aa78af">More...</a><br /></td></tr>
-<tr class="separator:af629f1aadd8be3c8dfc6db9804aa78af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ed39ccc061c80492ea27e3cb25d50b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a9ed39ccc061c80492ea27e3cb25d50b3">OpenStream</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_binding.html">StreamBinding</a> streamBinding)</td></tr>
-<tr class="memdesc:a9ed39ccc061c80492ea27e3cb25d50b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a stream, closing the underlying stream if neccesary.  <a href="#a9ed39ccc061c80492ea27e3cb25d50b3">More...</a><br /></td></tr>
-<tr class="separator:a9ed39ccc061c80492ea27e3cb25d50b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25e6b040ae91eede5f37ec08a2fb2855"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a25e6b040ae91eede5f37ec08a2fb2855">UpdateStoreBindings</a> (IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_partition_view_model.html">PartitionViewModel</a> &gt; partitions)</td></tr>
-<tr class="memdesc:a25e6b040ae91eede5f37ec08a2fb2855"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the store bindings for given enumeration of partitions.   <a href="#a25e6b040ae91eede5f37ec08a2fb2855">More...</a><br /></td></tr>
-<tr class="separator:a25e6b040ae91eede5f37ec08a2fb2855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae83d7607515e33e3c2732a06869562b2"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ae83d7607515e33e3c2732a06869562b2">SnapToStream</a> (bool snapToStream)</td></tr>
+<tr class="separator:ae83d7607515e33e3c2732a06869562b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c4c609301c0af13130c3c3a4d07d51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ab6c4c609301c0af13130c3c3a4d07d51">UpdateStreamBinding</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html">Session</a> session)</td></tr>
+<tr class="memdesc:ab6c4c609301c0af13130c3c3a4d07d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the binding between a stream visualization object and a data source.   <a href="#ab6c4c609301c0af13130c3c3a4d07d51">More...</a><br /></td></tr>
+<tr class="separator:ab6c4c609301c0af13130c3c3a4d07d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab624d67faf7a67445b8d20cdfdd42afe"><td class="memItemLeft" align="right" valign="top">virtual DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ab624d67faf7a67445b8d20cdfdd42afe">GetSnappedTime</a> (DateTime time)</td></tr>
+<tr class="memdesc:ab624d67faf7a67445b8d20cdfdd42afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a snapped time based on a given time.   <a href="#ab624d67faf7a67445b8d20cdfdd42afe">More...</a><br /></td></tr>
+<tr class="separator:ab624d67faf7a67445b8d20cdfdd42afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada6ac9773f584241e7d6059259042b79"><td class="memItemLeft" align="right" valign="top">DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ada6ac9773f584241e7d6059259042b79">GetTimeOfNearestMessage</a> (DateTime currentTime, int count, Func&lt; int, DateTime &gt; timeAtIndex)</td></tr>
 <tr class="memdesc:ada6ac9773f584241e7d6059259042b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the timestamp of the Message that's closest to currentTime. Used by the "Snap To Stream" functionality.  <a href="#ada6ac9773f584241e7d6059259042b79">More...</a><br /></td></tr>
 <tr class="separator:ada6ac9773f584241e7d6059259042b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a8f179750228b80b2da5cd971a27fc1bb"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a8f179750228b80b2da5cd971a27fc1bb">CanSnapToStream</a> =&gt; true</td></tr>
+<tr class="separator:a8f179750228b80b2da5cd971a27fc1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ff889c7488476c177c64d5b61b69084"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a3ff889c7488476c177c64d5b61b69084">IsBound</a> =&gt; this.Configuration.StreamBinding.IsBound</td></tr>
+<tr class="memdesc:a3ff889c7488476c177c64d5b61b69084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether the visualization object is currenty bound to a datasource  <a href="#a3ff889c7488476c177c64d5b61b69084">More...</a><br /></td></tr>
+<tr class="separator:a3ff889c7488476c177c64d5b61b69084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93fe3728e6902ef7920ab8209c52fa10"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a93fe3728e6902ef7920ab8209c52fa10">IconSource</a> =&gt; this.Configuration.StreamBinding.IsBound ? this.IsSnappedToStream ? <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a9dc7c9b18e3c8b270abe79b003e87616">IconSourcePath.SnapToStream</a> : base.IconSource : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a0929899a060b2289fb3fba125e7571db">IconSourcePath.StreamUnbound</a></td></tr>
+<tr class="separator:a93fe3728e6902ef7920ab8209c52fa10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeac6d486ab74da1c70c53c90ef04162"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#afeac6d486ab74da1c70c53c90ef04162">IsSnappedToStream</a> =&gt; this.Container.SnapToVisualizationObject == this</td></tr>
+<tr class="separator:afeac6d486ab74da1c70c53c90ef04162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34400b6e332b36e3be892669acc86a88"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a34400b6e332b36e3be892669acc86a88">SnapToStreamCommandText</a> =&gt; this.IsSnappedToStream ? &quot;Unsnap From Stream&quot; : &quot;Snap To Stream&quot;</td></tr>
+<tr class="memdesc:a34400b6e332b36e3be892669acc86a88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the text to display in the snap to stream menu item  <a href="#a34400b6e332b36e3be892669acc86a88">More...</a><br /></td></tr>
+<tr class="separator:a34400b6e332b36e3be892669acc86a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -105,32 +120,30 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ac8f3e8ad7d1f0e40860b03088413a78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b899cb5cc1fcbfe46b4134f1edcdf65"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a5b899cb5cc1fcbfe46b4134f1edcdf65">InitNew</a> ()</td></tr>
 <tr class="separator:a5b899cb5cc1fcbfe46b4134f1edcdf65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5db360989dbe4f123267066e65dda301"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a5db360989dbe4f123267066e65dda301">OnCloseStream</a> ()</td></tr>
-<tr class="memdesc:a5db360989dbe4f123267066e65dda301"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when underlying stream is closed.  <a href="#a5db360989dbe4f123267066e65dda301">More...</a><br /></td></tr>
-<tr class="separator:a5db360989dbe4f123267066e65dda301"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58d247d1461abcaf68e655ce2e5edc83"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a58d247d1461abcaf68e655ce2e5edc83">OnConfigurationChanged</a> ()</td></tr>
-<tr class="separator:a58d247d1461abcaf68e655ce2e5edc83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06b4338009998f64a2ab7a9091c3eccb"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a06b4338009998f64a2ab7a9091c3eccb">OnConfigurationPropertyChanged</a> (string propertyName)</td></tr>
-<tr class="separator:a06b4338009998f64a2ab7a9091c3eccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24580556fbef105543d5ac017570e5d7"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a24580556fbef105543d5ac017570e5d7">OnConfigurationPropertyChanged</a> (object sender, PropertyChangedEventArgs e)</td></tr>
+<tr class="separator:a24580556fbef105543d5ac017570e5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6891f32bfdfef6a1ba6f9e3c5a43c079"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a6891f32bfdfef6a1ba6f9e3c5a43c079">OnCursorChanged</a> (object sender, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator_time_changed_event_args.html">NavigatorTimeChangedEventArgs</a> e)</td></tr>
 <tr class="separator:a6891f32bfdfef6a1ba6f9e3c5a43c079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68e517d979895e6c6c0fa346a95e83f5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a68e517d979895e6c6c0fa346a95e83f5">OnDataChanged</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TData &gt;&gt;.ObservableKeyedView oldValue, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TData &gt;&gt;.ObservableKeyedView newValue)</td></tr>
-<tr class="memdesc:a68e517d979895e6c6c0fa346a95e83f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when data collection property has changed.  <a href="#a68e517d979895e6c6c0fa346a95e83f5">More...</a><br /></td></tr>
-<tr class="separator:a68e517d979895e6c6c0fa346a95e83f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace9d9b9ccc93c16b20db5ba536407c0d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ace9d9b9ccc93c16b20db5ba536407c0d">OnDataCollectionChanged</a> (NotifyCollectionChangedEventArgs e)</td></tr>
 <tr class="memdesc:ace9d9b9ccc93c16b20db5ba536407c0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when data collection contents have changed.  <a href="#ace9d9b9ccc93c16b20db5ba536407c0d">More...</a><br /></td></tr>
 <tr class="separator:ace9d9b9ccc93c16b20db5ba536407c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe2f85e219ca44cdf2b03d5e3eb8736a"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#afe2f85e219ca44cdf2b03d5e3eb8736a">OnDisconnect</a> ()</td></tr>
 <tr class="separator:afe2f85e219ca44cdf2b03d5e3eb8736a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeb97b3522a485468b5d82e8d107018c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#aaeb97b3522a485468b5d82e8d107018c">OnOpenStream</a> ()</td></tr>
-<tr class="memdesc:aaeb97b3522a485468b5d82e8d107018c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when underlying stream is opened.  <a href="#aaeb97b3522a485468b5d82e8d107018c">More...</a><br /></td></tr>
-<tr class="separator:aaeb97b3522a485468b5d82e8d107018c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a0cff661e3d10433a273683812037f5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a5a0cff661e3d10433a273683812037f5">OnStreamBound</a> ()</td></tr>
+<tr class="memdesc:a5a0cff661e3d10433a273683812037f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the stream visualization object is bound to a data source.  <a href="#a5a0cff661e3d10433a273683812037f5">More...</a><br /></td></tr>
+<tr class="separator:a5a0cff661e3d10433a273683812037f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af543ba347df1beeb6f962fe2b3e758a5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#af543ba347df1beeb6f962fe2b3e758a5">OnStreamUnbound</a> ()</td></tr>
+<tr class="memdesc:af543ba347df1beeb6f962fe2b3e758a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the stream visualization object is unbound from a data source.  <a href="#af543ba347df1beeb6f962fe2b3e758a5">More...</a><br /></td></tr>
+<tr class="separator:af543ba347df1beeb6f962fe2b3e758a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc80f682a6119e6b159a4a5291ef8b25"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#adc80f682a6119e6b159a4a5291ef8b25">SetCurrentValue</a> (DateTime currentTime)</td></tr>
 <tr class="memdesc:adc80f682a6119e6b159a4a5291ef8b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current value to the value at the the indicated time.  <a href="#adc80f682a6119e6b159a4a5291ef8b25">More...</a><br /></td></tr>
 <tr class="separator:adc80f682a6119e6b159a4a5291ef8b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:a2332fc117d6cc022a9b63d12e9bf2629"><td class="memItemLeft" align="right" valign="top">RelayCommand&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a2332fc117d6cc022a9b63d12e9bf2629">SnapToStreamCommand</a><code> [get]</code></td></tr>
+<tr class="memdesc:a2332fc117d6cc022a9b63d12e9bf2629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the delete visualization command.  <a href="#a2332fc117d6cc022a9b63d12e9bf2629">More...</a><br /></td></tr>
+<tr class="separator:a2332fc117d6cc022a9b63d12e9bf2629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18904b2ba25752070764167b787196d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TData &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a18904b2ba25752070764167b787196d6">CurrentValue</a><code> [get, protected set]</code></td></tr>
 <tr class="memdesc:a18904b2ba25752070764167b787196d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the current value.  <a href="#a18904b2ba25752070764167b787196d6">More...</a><br /></td></tr>
 <tr class="separator:a18904b2ba25752070764167b787196d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,27 +176,6 @@ Properties</h2></td></tr>
 </dl>
 </div>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="af629f1aadd8be3c8dfc6db9804aa78af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af629f1aadd8be3c8dfc6db9804aa78af">&#9670;&nbsp;</a></span>CloseStream()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.CloseStream </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Closes the underlying stream.  </p>
-
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#ac34f5181d96d6b87912415c89ef1a21f">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>.</p>
-
-</div>
-</div>
 <a id="ac8f3e8ad7d1f0e40860b03088413a78c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac8f3e8ad7d1f0e40860b03088413a78c">&#9670;&nbsp;</a></span>GetIndexForTime()</h2>
 
@@ -234,6 +226,38 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Best matching index or -1 if no qualifying match was found.</dd></dl>
+
+</div>
+</div>
+<a id="ab624d67faf7a67445b8d20cdfdd42afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab624d67faf7a67445b8d20cdfdd42afe">&#9670;&nbsp;</a></span>GetSnappedTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual DateTime <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.GetSnappedTime </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a snapped time based on a given time.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a1a000c0c04a09b219930e9a5dff8e73b">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#a1461d24311df4afe6ff8898e543ff0b2">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>.</p>
 
 </div>
 </div>
@@ -309,64 +333,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a5db360989dbe4f123267066e65dda301"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5db360989dbe4f123267066e65dda301">&#9670;&nbsp;</a></span>OnCloseStream()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnCloseStream </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called when underlying stream is closed. </p>
-
-<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html#a3d61529cfe963fc1055e2ebe6fc62324">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData, TConfig &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#a46da0d877805c7c08b531b58df861fa9">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a58d247d1461abcaf68e655ce2e5edc83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58d247d1461abcaf68e655ce2e5edc83">&#9670;&nbsp;</a></span>OnConfigurationChanged()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">override void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnConfigurationChanged </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p></p>
-
-</div>
-</div>
-<a id="a06b4338009998f64a2ab7a9091c3eccb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06b4338009998f64a2ab7a9091c3eccb">&#9670;&nbsp;</a></span>OnConfigurationPropertyChanged()</h2>
+<a id="a24580556fbef105543d5ac017570e5d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24580556fbef105543d5ac017570e5d7">&#9670;&nbsp;</a></span>OnConfigurationPropertyChanged()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -377,9 +345,19 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname">override void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnConfigurationPropertyChanged </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>propertyName</em></td><td>)</td>
+          <td class="paramtype">object&#160;</td>
+          <td class="paramname"><em>sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">PropertyChangedEventArgs&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -428,51 +406,6 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p></p>
-
-</div>
-</div>
-<a id="a68e517d979895e6c6c0fa346a95e83f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68e517d979895e6c6c0fa346a95e83f5">&#9670;&nbsp;</a></span>OnDataChanged()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnDataChanged </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TData &gt;&gt;.ObservableKeyedView&#160;</td>
-          <td class="paramname"><em>oldValue</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TData &gt;&gt;.ObservableKeyedView&#160;</td>
-          <td class="paramname"><em>newValue</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Called when data collection property has changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">oldValue</td><td>Old data collection.</td></tr>
-    <tr><td class="paramname">newValue</td><td>New data collection.</td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -537,8 +470,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="aaeb97b3522a485468b5d82e8d107018c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaeb97b3522a485468b5d82e8d107018c">&#9670;&nbsp;</a></span>OnOpenStream()</h2>
+<a id="a5a0cff661e3d10433a273683812037f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a0cff661e3d10433a273683812037f5">&#9670;&nbsp;</a></span>OnStreamBound()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -547,7 +480,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnOpenStream </td>
+          <td class="memname">virtual void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnStreamBound </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -560,35 +493,38 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Called when underlying stream is opened. </p>
+<p>Called when the stream visualization object is bound to a data source. </p>
 
-<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html#ae68af0810760ff5aff83792dc25a1b58">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData, TConfig &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#af0493ae9e524bc50c0d56a11021613ac">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#ab1f541e254082bcd79dd71741d1124d6">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html#a3cfbfa743d00d837b001cd66bb8f3f3c">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData, TConfig &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a9ed39ccc061c80492ea27e3cb25d50b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ed39ccc061c80492ea27e3cb25d50b3">&#9670;&nbsp;</a></span>OpenStream()</h2>
+<a id="af543ba347df1beeb6f962fe2b3e758a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af543ba347df1beeb6f962fe2b3e758a5">&#9670;&nbsp;</a></span>OnStreamUnbound()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OpenStream </td>
+          <td class="memname">virtual void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.OnStreamUnbound </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_binding.html">StreamBinding</a>&#160;</td>
-          <td class="paramname"><em>streamBinding</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Opens a stream, closing the underlying stream if neccesary. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">streamBinding</td><td>The stream to open and visualize.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Called when the stream visualization object is unbound from a data source. </p>
+
+<p>Reimplemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#aa6f9a85d30887e4d232b16697a262e06">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html#a02b6a9436a21b82adf426a80a8de0af7">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData, TConfig &gt;</a>.</p>
 
 </div>
 </div>
@@ -628,25 +564,126 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a25e6b040ae91eede5f37ec08a2fb2855"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25e6b040ae91eede5f37ec08a2fb2855">&#9670;&nbsp;</a></span>UpdateStoreBindings()</h2>
+<a id="ae83d7607515e33e3c2732a06869562b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae83d7607515e33e3c2732a06869562b2">&#9670;&nbsp;</a></span>SnapToStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.UpdateStoreBindings </td>
+          <td class="memname">override void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.SnapToStream </td>
           <td>(</td>
-          <td class="paramtype">IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_partition_view_model.html">PartitionViewModel</a> &gt;&#160;</td>
-          <td class="paramname"><em>partitions</em></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>snapToStream</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Update the store bindings for given enumeration of partitions.  </p>
+<p></p>
 
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a8b31980359eb4dca5c3a831b26bd133c">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>.</p>
+</div>
+</div>
+<a id="ab6c4c609301c0af13130c3c3a4d07d51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6c4c609301c0af13130c3c3a4d07d51">&#9670;&nbsp;</a></span>UpdateStreamBinding()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.UpdateStreamBinding </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html">Session</a>&#160;</td>
+          <td class="paramname"><em>session</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates the binding between a stream visualization object and a data source.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a4140794451be8e9f9c93291992d0df6b">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8f179750228b80b2da5cd971a27fc1bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f179750228b80b2da5cd971a27fc1bb">&#9670;&nbsp;</a></span>CanSnapToStream</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override bool <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.CanSnapToStream =&gt; true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
+<a id="a93fe3728e6902ef7920ab8209c52fa10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93fe3728e6902ef7920ab8209c52fa10">&#9670;&nbsp;</a></span>IconSource</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override string <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.IconSource =&gt; this.Configuration.StreamBinding.IsBound ? this.IsSnappedToStream ? <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a9dc7c9b18e3c8b270abe79b003e87616">IconSourcePath.SnapToStream</a> : base.IconSource : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a0929899a060b2289fb3fba125e7571db">IconSourcePath.StreamUnbound</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
+<a id="a3ff889c7488476c177c64d5b61b69084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ff889c7488476c177c64d5b61b69084">&#9670;&nbsp;</a></span>IsBound</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.IsBound =&gt; this.Configuration.StreamBinding.IsBound</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a value indicating whether the visualization object is currenty bound to a datasource </p>
+
+</div>
+</div>
+<a id="afeac6d486ab74da1c70c53c90ef04162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afeac6d486ab74da1c70c53c90ef04162">&#9670;&nbsp;</a></span>IsSnappedToStream</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override bool <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.IsSnappedToStream =&gt; this.Container.SnapToVisualizationObject == this</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
+<a id="a34400b6e332b36e3be892669acc86a88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34400b6e332b36e3be892669acc86a88">&#9670;&nbsp;</a></span>SnapToStreamCommandText</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.SnapToStreamCommandText =&gt; this.IsSnappedToStream ? &quot;Unsnap From Stream&quot; : &quot;Snap To Stream&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the text to display in the snap to stream menu item </p>
 
 </div>
 </div>
@@ -744,6 +781,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets how to interpolate values at times that are between messages </p>
+
+</div>
+</div>
+<a id="a2332fc117d6cc022a9b63d12e9bf2629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2332fc117d6cc022a9b63d12e9bf2629">&#9670;&nbsp;</a></span>SnapToStreamCommand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RelayCommand <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject</a>&lt; TData, TConfig &gt;.SnapToStreamCommand</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the delete visualization command. </p>
 
 </div>
 </div>

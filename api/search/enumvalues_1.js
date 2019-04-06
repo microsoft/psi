@@ -11,6 +11,8 @@ var searchData=
   ['bilinear',['Bilinear',['../namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284aaf17c98bbd83c27d6426d2ff3fa81d7f',1,'Microsoft::Psi::Imaging']]],
   ['binary',['Binary',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a8ac7547d7f33146fdc7a9059744b0243a6ce976e8f061b2b5cfe4d0c50c3405dd',1,'Microsoft::Psi::Imaging']]],
   ['binaryinv',['BinaryInv',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a8ac7547d7f33146fdc7a9059744b0243aa6091cf13fc1b21898aae8e5f481893b',1,'Microsoft::Psi::Imaging']]],
+  ['bindingunchanged',['BindingUnchanged',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html#a1372668b57b020ca154a0c7ed493380bae933a32e8ce6307dc1f7bac0d17b4ac9',1,'Microsoft::Psi::Visualization::Data']]],
+  ['boundtonewsource',['BoundToNewSource',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html#a1372668b57b020ca154a0c7ed493380baf2fe14cc0d38fba71faa04b86743c43f',1,'Microsoft::Psi::Visualization::Data']]],
   ['brightness',['Brightness',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13ab25323f99788ce64617f018b8a9f5f70',1,'Microsoft::Psi::Media_Interop']]],
   ['bt2020',['BT2020',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825bacede9bc5f1db241392356796faabf6e6',1,'Microsoft::Psi::Media']]],
   ['bt878',['BT878',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba327555f39c1aaaec26649d7e71c50d46',1,'Microsoft::Psi::Media']]]

@@ -82,6 +82,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a06fa91b94d42ba768f2933aca9be3bed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a06fa91b94d42ba768f2933aca9be3bed">Close</a> (DateTime originatingTime)</td></tr>
+<tr class="memdesc:a06fa91b94d42ba768f2933aca9be3bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close emitter, causing all receivers to be unsubscribed.  <a href="#a06fa91b94d42ba768f2933aca9be3bed">More...</a><br /></td></tr>
+<tr class="separator:a06fa91b94d42ba768f2933aca9be3bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e814cd7cbdf98f238c205e949515af7"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a7e814cd7cbdf98f238c205e949515af7">DebugView</a> (string debugName=null)</td></tr>
 <tr class="memdesc:a7e814cd7cbdf98f238c205e949515af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables debug visualization for this stream.  <a href="#a7e814cd7cbdf98f238c205e949515af7">More...</a><br /></td></tr>
 <tr class="separator:a7e814cd7cbdf98f238c205e949515af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,10 +103,41 @@ Properties</h2></td></tr>
 <tr class="memitem:a528037cd291b10ca0070d37b7c623b13"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a528037cd291b10ca0070d37b7c623b13">Id</a><code> [get]</code></td></tr>
 <tr class="memdesc:a528037cd291b10ca0070d37b7c623b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets emitter ID.  <a href="#a528037cd291b10ca0070d37b7c623b13">More...</a><br /></td></tr>
 <tr class="separator:a528037cd291b10ca0070d37b7c623b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6735ad58b76e2f405a70c2c1fdd2f645"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a6735ad58b76e2f405a70c2c1fdd2f645">HasSubscribers</a><code> [get]</code></td></tr>
+<tr class="memdesc:a6735ad58b76e2f405a70c2c1fdd2f645"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether emitter has subscribers.  <a href="#a6735ad58b76e2f405a70c2c1fdd2f645">More...</a><br /></td></tr>
+<tr class="separator:a6735ad58b76e2f405a70c2c1fdd2f645"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Enables message passing between components. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a06fa91b94d42ba768f2933aca9be3bed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06fa91b94d42ba768f2933aca9be3bed">&#9670;&nbsp;</a></span>Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.IEmitter.Close </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>originatingTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Close emitter, causing all receivers to be unsubscribed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">originatingTime</td><td>The originating time at which the emitter closes.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#ac4fea35fe3136247bbe09f5ab39529de">Microsoft.Psi.Emitter&lt; T &gt;</a>.</p>
+
+</div>
+</div>
 <a id="a7e814cd7cbdf98f238c205e949515af7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e814cd7cbdf98f238c205e949515af7">&#9670;&nbsp;</a></span>DebugView()</h2>
 
@@ -134,6 +168,30 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a6735ad58b76e2f405a70c2c1fdd2f645"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6735ad58b76e2f405a70c2c1fdd2f645">&#9670;&nbsp;</a></span>HasSubscribers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Microsoft.Psi.IEmitter.HasSubscribers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a value indicating whether emitter has subscribers. </p>
+
+</div>
+</div>
 <a id="a528037cd291b10ca0070d37b7c623b13"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a528037cd291b10ca0070d37b7c623b13">&#9670;&nbsp;</a></span>Id</h2>
 

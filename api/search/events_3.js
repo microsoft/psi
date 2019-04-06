@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['onconversationerror',['OnConversationError',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#a3c9034a4dc97b158d846c10020bb2d36',1,'Microsoft::Psi::CognitiveServices::Speech::Service::SpeechRecognitionClient']]],
-  ['onpartialresponsereceived',['OnPartialResponseReceived',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#a20dddcee45c7069327bdff87d446a448',1,'Microsoft::Psi::CognitiveServices::Speech::Service::SpeechRecognitionClient']]],
-  ['onresponsereceived',['OnResponseReceived',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#a906dccc6a4eda4b3ef0f6af97c3fa896',1,'Microsoft::Psi::CognitiveServices::Speech::Service::SpeechRecognitionClient']]]
+  ['pipelinecompleted',['PipelineCompleted',['../class_microsoft_1_1_psi_1_1_pipeline.html#ae3e33306ced7cd3dcb3f09967e7d9193',1,'Microsoft::Psi::Pipeline']]],
+  ['pipelinerun',['PipelineRun',['../class_microsoft_1_1_psi_1_1_pipeline.html#aa2382e8238a7b5d1cb71f0743b43d2af',1,'Microsoft::Psi::Pipeline']]],
+  ['propertychanged',['PropertyChanged',['../class_microsoft_1_1_psi_1_1_visualization_1_1_base_1_1_observable_object.html#ad1ac4f6382ab85e0e493f6b3956e9529',1,'Microsoft.Psi.Visualization.Base.ObservableObject.PropertyChanged()'],['../class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache_1_1_observable_keyed_view.html#ae9d12dd8a570c935014aabb841073756',1,'Microsoft.Psi.Visualization.Collections.ObservableKeyedCache.ObservableKeyedView.PropertyChanged()'],['../class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_sorted_collection.html#a6bac64a3f5d9bbb97fe4fcec8354d6cc',1,'Microsoft.Psi.Visualization.Collections.ObservableSortedCollection.PropertyChanged()']]],
+  ['propertychanging',['PropertyChanging',['../class_microsoft_1_1_psi_1_1_visualization_1_1_base_1_1_observable_object.html#a8da7d14c51386aa3e4b143d617a3bd30',1,'Microsoft::Psi::Visualization::Base::ObservableObject']]]
 ];

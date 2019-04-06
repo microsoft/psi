@@ -79,7 +79,7 @@ $(function() {
 <p>Component that performs speech recognition using the Microsoft Speech Platform SDK.  
  <a href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; AudioBuffer, IStreamingSpeechRecognitionResult &gt;</a>, and IDisposable.</p>
+<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; AudioBuffer, IStreamingSpeechRecognitionResult &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, and IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -89,9 +89,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2db3b114e6d640fd842678b509eae68e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#a2db3b114e6d640fd842678b509eae68e">MicrosoftSpeechRecognizer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string configurationFilename=null)</td></tr>
 <tr class="memdesc:a2db3b114e6d640fd842678b509eae68e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html" title="Component that performs speech recognition using the Microsoft Speech Platform SDK. ">MicrosoftSpeechRecognizer</a> class.  <a href="#a2db3b114e6d640fd842678b509eae68e">More...</a><br /></td></tr>
 <tr class="separator:a2db3b114e6d640fd842678b509eae68e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1d74cf1bc67627107c8be514374b660"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#aa1d74cf1bc67627107c8be514374b660">OnPipelineStart</a> ()</td></tr>
-<tr class="memdesc:aa1d74cf1bc67627107c8be514374b660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called once all the subscriptions are established.  <a href="#aa1d74cf1bc67627107c8be514374b660">More...</a><br /></td></tr>
-<tr class="separator:aa1d74cf1bc67627107c8be514374b660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaa8f6e76fa8b46546dde9abd2ade1f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#abaa8f6e76fa8b46546dde9abd2ade1f1">SetGrammars</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; IEnumerable&lt; string &gt;&gt; srgsXmlGrammars)</td></tr>
 <tr class="memdesc:abaa8f6e76fa8b46546dde9abd2ade1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace grammars with given.  <a href="#abaa8f6e76fa8b46546dde9abd2ade1f1">More...</a><br /></td></tr>
 <tr class="separator:abaa8f6e76fa8b46546dde9abd2ade1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,6 +100,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abdf559f78ca864bff945402698c8c258"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c99d05a35a0e48868e5cd751754039a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#a9c99d05a35a0e48868e5cd751754039a">Dispose</a> ()</td></tr>
 <tr class="separator:a9c99d05a35a0e48868e5cd751754039a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeda4b16a0daf54fc99adc07b8bc1d1ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#aeda4b16a0daf54fc99adc07b8bc1d1ce">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:aeda4b16a0daf54fc99adc07b8bc1d1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#aeda4b16a0daf54fc99adc07b8bc1d1ce">More...</a><br /></td></tr>
+<tr class="separator:aeda4b16a0daf54fc99adc07b8bc1d1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5351876ece43909e9be6a8f67b891f18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html#a5351876ece43909e9be6a8f67b891f18">Stop</a> ()</td></tr>
+<tr class="memdesc:a5351876ece43909e9be6a8f67b891f18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a5351876ece43909e9be6a8f67b891f18">More...</a><br /></td></tr>
+<tr class="separator:a5351876ece43909e9be6a8f67b891f18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; AudioBuffer, IStreamingSpeechRecognitionResult &gt;</a></td></tr>
 <tr class="memitem:ad4771eb944799bdd53c4c9743fdf71c2 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2">ConsumerProducer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline)</td></tr>
 <tr class="memdesc:ad4771eb944799bdd53c4c9743fdf71c2 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2" title="Initializes a new instance of the ConsumerProducer&lt;TIn, TOut&gt; class. ">ConsumerProducer&lt;TIn, TOut&gt;</a> class.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2">More...</a><br /></td></tr>
@@ -320,25 +323,6 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="aa1d74cf1bc67627107c8be514374b660"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1d74cf1bc67627107c8be514374b660">&#9670;&nbsp;</a></span>OnPipelineStart()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizer.OnPipelineStart </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Called once all the subscriptions are established. </p>
-
-</div>
-</div>
 <a id="a402fa7acec592997dc762eaf80979be2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a402fa7acec592997dc762eaf80979be2">&#9670;&nbsp;</a></span>Receive()</h2>
 
@@ -407,6 +391,49 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aeda4b16a0daf54fc99adc07b8bc1d1ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeda4b16a0daf54fc99adc07b8bc1d1ce">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizer.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a5351876ece43909e9be6a8f67b891f18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5351876ece43909e9be6a8f67b891f18">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizer.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

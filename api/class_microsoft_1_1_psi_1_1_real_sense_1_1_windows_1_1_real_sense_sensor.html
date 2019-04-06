@@ -88,6 +88,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af946a38210ca4d4bc98812835379f406"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_real_sense_1_1_windows_1_1_real_sense_sensor.html#af946a38210ca4d4bc98812835379f406">Dispose</a> ()</td></tr>
 <tr class="memdesc:af946a38210ca4d4bc98812835379f406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispose method  <a href="#af946a38210ca4d4bc98812835379f406">More...</a><br /></td></tr>
 <tr class="separator:af946a38210ca4d4bc98812835379f406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1a37b948387615bc3a2600af0ddfd59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_real_sense_1_1_windows_1_1_real_sense_sensor.html#ab1a37b948387615bc3a2600af0ddfd59">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:ab1a37b948387615bc3a2600af0ddfd59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#ab1a37b948387615bc3a2600af0ddfd59">More...</a><br /></td></tr>
+<tr class="separator:ab1a37b948387615bc3a2600af0ddfd59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f590242d57bcb67f039f17cc2224c45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_real_sense_1_1_windows_1_1_real_sense_sensor.html#a0f590242d57bcb67f039f17cc2224c45">Stop</a> ()</td></tr>
+<tr class="memdesc:a0f590242d57bcb67f039f17cc2224c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a0f590242d57bcb67f039f17cc2224c45">More...</a><br /></td></tr>
+<tr class="separator:a0f590242d57bcb67f039f17cc2224c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -144,6 +150,49 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Dispose method </p>
+
+</div>
+</div>
+<a id="ab1a37b948387615bc3a2600af0ddfd59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1a37b948387615bc3a2600af0ddfd59">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.RealSense.Windows.RealSenseSensor.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a0f590242d57bcb67f039f17cc2224c45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f590242d57bcb67f039f17cc2224c45">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.RealSense.Windows.RealSenseSensor.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

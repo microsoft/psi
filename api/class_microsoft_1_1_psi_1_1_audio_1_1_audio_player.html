@@ -79,7 +79,7 @@ $(function() {
 <p>Component that plays back an audio stream to an output device such as the speakers.  
  <a href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html">Microsoft.Psi.Components.SimpleConsumer&lt; AudioBuffer &gt;</a>, IDisposable, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html">Microsoft.Psi.Components.SimpleConsumer&lt; AudioBuffer &gt;</a>, and IDisposable.</p>
+<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html">Microsoft.Psi.Components.SimpleConsumer&lt; AudioBuffer &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, IDisposable, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html">Microsoft.Psi.Components.SimpleConsumer&lt; AudioBuffer &gt;</a>, and IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -107,15 +107,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6699fe1f42b1378091814fba2a3d7905"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#a6699fe1f42b1378091814fba2a3d7905">Receive</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; <a class="el" href="struct_microsoft_1_1_psi_1_1_audio_1_1_audio_buffer.html">AudioBuffer</a> &gt; audioData)</td></tr>
 <tr class="memdesc:a6699fe1f42b1378091814fba2a3d7905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receiver for the audio data.  <a href="#a6699fe1f42b1378091814fba2a3d7905">More...</a><br /></td></tr>
 <tr class="separator:a6699fe1f42b1378091814fba2a3d7905"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa165d308efc89416d2630439a0408f37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#aa165d308efc89416d2630439a0408f37">OnPipelineStart</a> ()</td></tr>
-<tr class="memdesc:aa165d308efc89416d2630439a0408f37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts playing back audio.  <a href="#aa165d308efc89416d2630439a0408f37">More...</a><br /></td></tr>
-<tr class="separator:aa165d308efc89416d2630439a0408f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74a3b81dc9f97f367ffe5512b88bf283"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#a74a3b81dc9f97f367ffe5512b88bf283">OnPipelineStop</a> ()</td></tr>
-<tr class="memdesc:a74a3b81dc9f97f367ffe5512b88bf283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops playing back audio.  <a href="#a74a3b81dc9f97f367ffe5512b88bf283">More...</a><br /></td></tr>
-<tr class="separator:a74a3b81dc9f97f367ffe5512b88bf283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab84e281f5e2c3e34bd09e66d51e20072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#ab84e281f5e2c3e34bd09e66d51e20072">Dispose</a> ()</td></tr>
 <tr class="memdesc:ab84e281f5e2c3e34bd09e66d51e20072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disposes the <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html" title="Component that plays back an audio stream to an output device such as the speakers. ">AudioPlayer</a> object.  <a href="#ab84e281f5e2c3e34bd09e66d51e20072">More...</a><br /></td></tr>
 <tr class="separator:ab84e281f5e2c3e34bd09e66d51e20072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4367e5f9efe2d36b2e53e22677db018e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#a4367e5f9efe2d36b2e53e22677db018e">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:a4367e5f9efe2d36b2e53e22677db018e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#a4367e5f9efe2d36b2e53e22677db018e">More...</a><br /></td></tr>
+<tr class="separator:a4367e5f9efe2d36b2e53e22677db018e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2774ed4b27f49d49bb506dda8026d67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player.html#ab2774ed4b27f49d49bb506dda8026d67">Stop</a> ()</td></tr>
+<tr class="memdesc:ab2774ed4b27f49d49bb506dda8026d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#ab2774ed4b27f49d49bb506dda8026d67">More...</a><br /></td></tr>
+<tr class="separator:ab2774ed4b27f49d49bb506dda8026d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html">Microsoft.Psi.Components.SimpleConsumer&lt; AudioBuffer &gt;</a></td></tr>
 <tr class="memitem:a14ef04a5ea08282159b938e405919bdf inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html#a14ef04a5ea08282159b938e405919bdf">SimpleConsumer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline)</td></tr>
 <tr class="memdesc:a14ef04a5ea08282159b938e405919bdf inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html#a14ef04a5ea08282159b938e405919bdf" title="Initializes a new instance of the SimpleConsumer&lt;TIn&gt; class. ">SimpleConsumer&lt;TIn&gt;</a> class.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html#a14ef04a5ea08282159b938e405919bdf">More...</a><br /></td></tr>
@@ -363,44 +363,6 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="aa165d308efc89416d2630439a0408f37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa165d308efc89416d2630439a0408f37">&#9670;&nbsp;</a></span>OnPipelineStart()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Audio.AudioPlayer.OnPipelineStart </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Starts playing back audio. </p>
-
-</div>
-</div>
-<a id="a74a3b81dc9f97f367ffe5512b88bf283"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74a3b81dc9f97f367ffe5512b88bf283">&#9670;&nbsp;</a></span>OnPipelineStop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Audio.AudioPlayer.OnPipelineStop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Stops playing back audio. </p>
-
-</div>
-</div>
 <a id="a6699fe1f42b1378091814fba2a3d7905"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6699fe1f42b1378091814fba2a3d7905">&#9670;&nbsp;</a></span>Receive() <span class="overload">[1/2]</span></h2>
 
@@ -476,6 +438,49 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a4367e5f9efe2d36b2e53e22677db018e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4367e5f9efe2d36b2e53e22677db018e">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Audio.AudioPlayer.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="ab2774ed4b27f49d49bb506dda8026d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2774ed4b27f49d49bb506dda8026d67">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Audio.AudioPlayer.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

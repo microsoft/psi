@@ -73,8 +73,8 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration.html#ace1a980be80afbf2621d66e19dbe9253">Microsoft.Psi.Calibration.SystemCalibration</a>
 </li>
 <li>CameraIntrinsics()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ae49be70eb6b36a3b83953861ce2d2131">Microsoft.Psi.Calibration.CameraIntrinsics</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration_1_1_camera_calibration.html#aab7096f1edd47966236de5ad6a41cde3">Microsoft.Psi.Calibration.SystemCalibration.CameraCalibration</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a972d03d288287c04160e97d0481eb3a1">Microsoft.Psi.Calibration.CameraIntrinsics</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration_1_1_camera_calibration.html#a119eb74a124bb21e37bfce5d01182f4a">Microsoft.Psi.Calibration.SystemCalibration.CameraCalibration</a>
 </li>
 <li>CameraName
 : <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration_1_1_camera_calibration.html#a2e11cfb456678029baceb4da66faa14b">Microsoft.Psi.Calibration.SystemCalibration.CameraCalibration</a>
@@ -97,7 +97,14 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_circular_buffer_stream.html#ab889b17ea6290c38a480b744498c98ca">Microsoft.Psi.Audio.CircularBufferStream</a>
 </li>
 <li>CanSnapToStream
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#a8871df69b2c4029e0bf810fc18821849">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a8f179750228b80b2da5cd971a27fc1bb">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#a8871df69b2c4029e0bf810fc18821849">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
+</li>
+<li>Canvas
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals2_d_1_1_canvas_visualization_object_view.html#a119e565f9533a3b0df433003daab4223">Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView&lt; TStreamVisualizationObject, TData, TConfig &gt;</a>
+</li>
+<li>CanvasVisualizationObjectView()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals2_d_1_1_canvas_visualization_object_view.html#a2291c2b6e5ace41b83dcf4e626eca020">Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView&lt; TStreamVisualizationObject, TData, TConfig &gt;</a>
 </li>
 <li>CanWrite
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_circular_buffer_stream.html#ad13dd7738a763d38831dda43a6829581">Microsoft.Psi.Audio.CircularBufferStream</a>
@@ -140,15 +147,8 @@ $(function() {
 <li>CheckerBoardWidth
 : <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration.html#af3e2b4b1a5e77b39a181a616011d108f">Microsoft.Psi.Calibration.SystemCalibration</a>
 </li>
-<li>Children
-: <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_i_stream_tree_node.html#a7b1884759037712ffc5ad47bb673b3b1">Microsoft.Psi.Visualization.Datasets.IStreamTreeNode</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_stream_tree_node.html#a9bab44debae61c873eec3ea1475254b9">Microsoft.Psi.Visualization.Datasets.StreamTreeNode</a>
-</li>
 <li>CircularBufferStream()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_circular_buffer_stream.html#a959d042f2559b8178230637ba6dd84df">Microsoft.Psi.Audio.CircularBufferStream</a>
-</li>
-<li>CLASS_E_NOAGGREGATION
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_server_1_1_com_native.html#a25851ca334ee6106a9be86caa5abbac0">Microsoft.Psi.Visualization.Server.ComNative</a>
 </li>
 <li>Clear()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#af6f0f864cf2076f09aa7a45157f89a8e">Microsoft.Psi.Common.UnmanagedArray&lt; T &gt;</a>
@@ -158,8 +158,6 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_perf_counter_collection.html#a79bdd8975305d1c91c3d707da8cb30b0">Microsoft.Psi.PerfCounterCollection&lt; TKey &gt;</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_serialization_1_1_i_serializer.html#a3b5941035baecf378c19df086114d6c3">Microsoft.Psi.Serialization.ISerializer&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html#ae349fd173595597f6310267d57c307fb">Microsoft.Psi.Serialization.SerializationHandler&lt; T &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_container.html#a8a52fcc2e467becffd66f7e7e345c4b3">Microsoft.Psi.Visualization.Client.VisualizationContainer</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_panel.html#a7bceb195049fe39ce8c99d925e773262">Microsoft.Psi.Visualization.Client.VisualizationPanel&lt; TConfig &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache_1_1_observable_keyed_view.html#a50efbc8f8ebf52b047e3c343aab04a9f">Microsoft.Psi.Visualization.Collections.ObservableKeyedCache&lt; TKey, TItem &gt;.ObservableKeyedView</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_sorted_collection.html#a4686c908e60fe926239e5b672dc3a3ec">Microsoft.Psi.Visualization.Collections.ObservableSortedCollection&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#ad0c21ba8a9dd0c3947f428c3a5f8d25d">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
@@ -167,9 +165,6 @@ $(function() {
 </li>
 <li>Clear&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_serializer.html#a28dd396ad5d696a2b8309c00b38359b8">Microsoft.Psi.Serializer</a>
-</li>
-<li>ClearAll()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_client_extensions.html#ab6b472e1893e9677fcb23b2f81f38783">Microsoft.Psi.Visualization.Client.VisualizationClientExtensions</a>
 </li>
 <li>ClearPanelCommand
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#ad91684ccd020399551e05291e2084ebe">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
@@ -194,9 +189,8 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_serializer.html#a14e74106822547bd5e83c68900505e88">Microsoft.Psi.Serializer</a>
 </li>
 <li>Close()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#a3f4f9bf726dc76f8800e0418b82b3db3">Microsoft.Psi.Emitter&lt; T &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_object.html#a2b18ca4a1b3ad1b455c72c52f3fa6ace">Microsoft.Psi.Visualization.Client.VisualizationObject&lt; TConfig &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#ad52b08172b6e2342e6104f4ec94fed90">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#ac4fea35fe3136247bbe09f5ab39529de">Microsoft.Psi.Emitter&lt; T &gt;</a>
+, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a06fa91b94d42ba768f2933aca9be3bed">Microsoft.Psi.IEmitter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ab84dfbae34dbe5c73b73072a82128179">Microsoft.Psi::Media_Interop::MP4Writer</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#a0256d2acc5ca4af6b73bacf3390fe6c1">Microsoft.Psi::Media_Interop::MP4WriterUnmanagedData</a>
 </li>
@@ -212,19 +206,13 @@ $(function() {
 <li>closed
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#a628c006edbed4a13073574ef391466e0">Microsoft.Psi::Media_Interop::MP4WriterUnmanagedData</a>
 </li>
-<li>CloseDatasetCommand
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a6c4af9ad587bdacff3f88ca5c9cc058b">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
+<li>ClosedHandler()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#a3259e907fa9b5a28656c34118a3dcf43">Microsoft.Psi.Emitter&lt; T &gt;</a>
 </li>
 <li>CloseStream()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store_reader.html#a8668bb341b84334ed5f90c7e9e2aae99">Microsoft.Psi.Data.Json.JsonStoreReader</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_reader.html#a5cff718e2d3c3c6574184cc3a796e540">Microsoft.Psi.Persistence.StoreReader</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_writer.html#a28b646a886f7ec83688c89b3d25ea343">Microsoft.Psi.Persistence.StoreWriter</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_stream_visualization_object.html#a2167a787696ce2ec6cb02ea8675d3f9d">Microsoft.Psi.Visualization.Client.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
-, <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#ac34f5181d96d6b87912415c89ef1a21f">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#af629f1aadd8be3c8dfc6db9804aa78af">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
-</li>
-<li>CloseStreams()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a80ca08f10d3b769979895a6341dc0521">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
 </li>
 <li>CmdLine
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#ad61a7ef8dfd54aa0aa6685ab011d3fcc">Microsoft.Psi.Common.RuntimeInfo</a>
@@ -246,7 +234,6 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_planar_direction_visualization_object_configuration.html#af7221ee0d4f69edecd5a7e599d29dce9">Microsoft.Psi.Visualization.Config.ScatterPlanarDirectionVisualizationObjectConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_rect3_d_visualization_object_configuration.html#a06756acae8904d395d4283168f586ec3">Microsoft.Psi.Visualization.Config.ScatterRect3DVisualizationObjectConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_rectangle_visualization_object_configuration.html#aac0e965634799d4bba9cf433e28db42a">Microsoft.Psi.Visualization.Config.ScatterRectangleVisualizationObjectConfiguration</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_time_interval_history_visualization_object_configuration.html#a6661cf54778e6fcb709098053c1a204a">Microsoft.Psi.Visualization.Config.TimeIntervalHistoryVisualizationObjectConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_time_interval_visualization_object_configuration.html#a1b11f0240772063800a5ca33800671a2">Microsoft.Psi.Visualization.Config.TimeIntervalVisualizationObjectConfiguration</a>
 </li>
 <li>ColorEnable
@@ -294,15 +281,19 @@ $(function() {
 <li>Completed
 : <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a5b2d9a12d7cd8331c657dbeb041ceec0">Microsoft.Psi.Pipeline</a>
 </li>
+<li>CompletedDateTime
+: <a class="el" href="class_microsoft_1_1_psi_1_1_component_completed_event_args.html#a5e791c939c62b18fedc6e13da303c437">Microsoft.Psi.ComponentCompletedEventArgs</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline_completed_event_args.html#a115265112d81d0fdbfd0ed4e011234a0">Microsoft.Psi.PipelineCompletedEventArgs</a>
+</li>
 <li>CompleteReadRequest()
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#ade8808c638043df9fc988e8a11add4f2">Microsoft.Psi.Visualization.Data.IStreamReader</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#adbc5e890290b90153f2d71b428ddd987">Microsoft.Psi.Visualization.Data.StreamReader&lt; T &gt;</a>
 </li>
-<li>CompletionDateTime
-: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline_completion_event_args.html#a7d0663c8514c4d6e7a81011e9d5ee5d9">Microsoft.Psi.PipelineCompletionEventArgs</a>
+<li>ComponentCompleted
+: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a705cb8fef2780bd968cd2e3436e58d99">Microsoft.Psi.Pipeline</a>
 </li>
-<li>ComponentCompletionEvent
-: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a7f752e33c524012aa1c47e3587b20e4e">Microsoft.Psi.Pipeline</a>
+<li>ComponentName
+: <a class="el" href="class_microsoft_1_1_psi_1_1_component_completed_event_args.html#a6c2a20a660f082702d14bb2df131498f">Microsoft.Psi.ComponentCompletedEventArgs</a>
 </li>
 <li>CompressionMethod
 : <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808e">Microsoft.Psi.Imaging.Image.CustomSerializer</a>
@@ -344,8 +335,6 @@ $(function() {
 </li>
 <li>Configuration
 : <a class="el" href="class_microsoft_1_1_psi_1_1_configuration_helper.html#a9b066f9be1fe21f7edbf0c6bfe375525">Microsoft.Psi.ConfigurationHelper&lt; T &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_object.html#ab5395bea2f37517e33416f36d3c3ee5e">Microsoft.Psi.Visualization.Client.VisualizationObject&lt; TConfig &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_panel.html#a78f76a1f59cabb32225f88c7d3c63529">Microsoft.Psi.Visualization.Client.VisualizationPanel&lt; TConfig &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#a92c3c9f8156b3d903f3890d473a7d794">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#acf1c8ba90af9290ce03a3fb0cc40af41">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
 </li>
@@ -359,15 +348,13 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_remoting_1_1_remote_importer.html#a6a5ddcc01dea537a77d6a20272a6d187">Microsoft.Psi.Remoting.RemoteImporter</a>
 </li>
 <li>Connector()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_connector.html#a0fcd5e3f8b7738135f86f9257eb525da">Microsoft.Psi.Components.Connector&lt; T &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_connector.html#a3919f55819d8e1d4a9b6764896d0ac15">Microsoft.Psi.Components.Connector&lt; T &gt;</a>
 </li>
 <li>ConsumerProducer()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2">Microsoft.Psi.Components.ConsumerProducer&lt; TIn, TOut &gt;</a>
 </li>
 <li>Container
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_object.html#aad35c751ba04e3404f845c5da7681bf7">Microsoft.Psi.Visualization.Client.VisualizationObject&lt; TConfig &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_panel.html#a83816f946470eb0fcbb185f8177680be">Microsoft.Psi.Visualization.Client.VisualizationPanel&lt; TConfig &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#a9c4cef8e3c007506b1efcc41e564879b">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#a9c4cef8e3c007506b1efcc41e564879b">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#a8ca7208639568d1250c679c1d6a2099a">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
 </li>
 <li>Contains()
@@ -392,12 +379,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_finite_state_machine_1_1_machine.html#a218a6b8d96d17682337d1f9ec0c84fc0">Microsoft.Psi.FiniteStateMachine.Machine&lt; TInput, TOutput, TContext &gt;</a>
 </li>
 <li>ContractResolver
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_kinect_bodies3_d_visualization_object.html#afc016354fe89c7ad674d37653da57494">Microsoft.Psi.Visualization.Client.KinectBodies3DVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_points3_d_visualization_object.html#a35820cdbc0474ab68f7e84ce340dcf46">Microsoft.Psi.Visualization.Client.Points3DVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_scatter_coordinate_systems_visualization_object.html#aabff39141e201bd01b7630bb974f0886">Microsoft.Psi.Visualization.Client.ScatterCoordinateSystemsVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_scatter_rect3_d_visualization_object.html#ae6abce853c89342d0ab759922fea46f7">Microsoft.Psi.Visualization.Client.ScatterRect3DVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_object.html#ac1fcd531d761bb0de43b0577cd82fbea">Microsoft.Psi.Visualization.Client.VisualizationObject&lt; TConfig &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant3_d_visualization_object.html#ad025612e8b03b678051aabd416a065fe">Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject&lt; TData, TConfig &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant3_d_visualization_object.html#ad025612e8b03b678051aabd416a065fe">Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject&lt; TData, TConfig &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#ad780bca1b1cfcd3ef6df1918f609b902">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
 </li>
 <li>Contrast
@@ -429,7 +411,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#a45db368a20e443acc9e184f1d5253a46">Microsoft.Psi.Common.UnmanagedArray&lt; T &gt;</a>
 </li>
 <li>Copy&lt; T &gt;()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_ex.html#a0410ecb17688f0f68e44461e038119c6">Microsoft.Psi.Common.BufferEx</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_ex.html#a2a119914bbcc983ec3942d349a6879ba">Microsoft.Psi.Common.BufferEx</a>
 </li>
 <li>CopyFrom()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html#abd9e59327f555589517410aaebb19270">Microsoft.Psi.Audio.WaveFormat</a>
@@ -445,7 +427,7 @@ $(function() {
 </li>
 <li>CopyTo()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#a8548604037df60a8a7cbea10e079c2ca">Microsoft.Psi.Common.UnmanagedArray&lt; T &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html#a4e7bad8c0b0720dc4d690d15697f88df">Microsoft.Psi.Common.UnmanagedBuffer</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html#a0a8221c3955d840f1c3f26ee179e52ed">Microsoft.Psi.Common.UnmanagedBuffer</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a84dfc53ad1a0863ecec06f4862443717">Microsoft.Psi.Imaging.Image</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_operators.html#af7812d560b8ce2da6528e222e99758d9">Microsoft.Psi.Imaging.Operators</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache_1_1_observable_keyed_view.html#af3d24f3bf92bc7a6cd1638377fbfe378">Microsoft.Psi.Visualization.Collections.ObservableKeyedCache&lt; TKey, TItem &gt;.ObservableKeyedView</a>
@@ -459,7 +441,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_sorted_collection.html#a0b4cbd7063ce8a721545732ac2edcad3">Microsoft.Psi.Visualization.Collections.ObservableSortedCollection&lt; T &gt;</a>
 </li>
 <li>Count&lt; T &gt;()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a6b98508601ebbea8ddb9be891bbe9004">Microsoft.Psi.Operators</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a0c5ee028c843f4277b44c58a9ae355c9">Microsoft.Psi.Operators</a>
 </li>
 <li>CountBytes
 : <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#ae769b7cc29368bf73f4fc767219d218b">Microsoft.Psi.Imaging.EncodedImage</a>
@@ -496,7 +478,7 @@ $(function() {
 <li>Create&lt; T &gt;()
 : <a class="el" href="struct_microsoft_1_1_psi_1_1_message.html#a4356a505f935f7445e0e640471e7dc65">Microsoft.Psi.Message&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_recycling_pool.html#adf635f4b471623faf742c3d8f6bad619">Microsoft.Psi.RecyclingPool</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html#aa2d6c4b95e04b768102529c17a82e02d">Microsoft.Psi.Shared&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html#ae5bc4eab6193f10ae0203dc8f8d9c2da">Microsoft.Psi.Shared&lt; T &gt;</a>
 , <a class="el" href="struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a0837b7173d99fbf4300d91c72be955fa">Microsoft.Psi.Visualization.Data.IntervalData&lt; T &gt;</a>
 </li>
 <li>CreateAnnotatedEvent()
@@ -504,7 +486,6 @@ $(function() {
 </li>
 <li>CreateAnnotationPartition()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html#a23cf97267315c4f06cf51cb121365e30">Microsoft.Psi.Data.Session</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a82de4fc6c07f6e16ffc32dc2dc66b114">Microsoft.Psi.Visualization.Datasets.SessionViewModel</a>
 </li>
 <li>CreateAsyncReceiver&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a79be006f37ab38c09dc9e9fb663493eb">Microsoft.Psi.Pipeline</a>
@@ -513,7 +494,10 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a76613b6a53d25c531c64e92d47355c46">Microsoft.Psi.Operators</a>
 </li>
 <li>CreateCopyFrom()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html#a9f71bca7d802bd4c5e6704f94c62ff3e">Microsoft.Psi.Common.UnmanagedBuffer</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html#a6df1ba382236dfd174d01666145bdf0d">Microsoft.Psi.Common.UnmanagedBuffer</a>
+</li>
+<li>CreateDefaultViewTemplate()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#a313438b129aad0a8d9e66fad53099ac5">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
 </li>
 <li>CreateDerivedPartitionAsync()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a15ab102e9c9ef111986062f4f327bd29">Microsoft.Psi.Data.Dataset</a>
@@ -529,10 +513,6 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_partition.html#a442b83da94250da93cc32665c5814ace">Microsoft.Psi.Data.Annotations.AnnotationPartition</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a90ab49972e8d1fcfe37d5afe7c185cc0">Microsoft.Psi.Data.Dataset</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_store_partition.html#a7866a29a588c567ac7f65e66b3bcaa45">Microsoft.Psi.Data.StorePartition</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a987fdfebeed155d9f87f2e226b050306">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
-</li>
-<li>CreateFromExistingStoreAsync()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a76dc7e143112e2e8eba61ea76631054f">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
 </li>
 <li>CreateIeeeFloat()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html#af3ab73c926248e3d8b4dcf0e60ce76e6">Microsoft.Psi.Audio.WaveFormat</a>
@@ -541,8 +521,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a4fc3f1b9642c7c733635a25458af2313">Microsoft.Psi.Operators</a>
 </li>
 <li>CreateInstance()
-: <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_server_1_1_i_class_factory.html#adaf2b161dc6dab28c818fd7f04a258fe">Microsoft.Psi.Visualization.Server.IClassFactory</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_source_reader_callback.html#a796984a52f65998888ab831fbd1e994f">Microsoft.Psi::Media_Interop::SourceReaderCallback</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_source_reader_callback.html#a796984a52f65998888ab831fbd1e994f">Microsoft.Psi::Media_Interop::SourceReaderCallback</a>
 </li>
 <li>CreateOutputConnector&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#aa9ada2204cb2b223fa70e84d519bf69f">Microsoft.Psi.Operators</a>
@@ -554,17 +533,10 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_serialization_1_1_instant3_d_visualization_object_contract_resolver.html#a1dbe39119d19cc49368d947ecdf2822f">Microsoft.Psi.Visualization.Serialization.Instant3DVisualizationObjectContractResolver</a>
 </li>
 <li>CreateReceiver&lt; T &gt;()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#acb6b2119f10b435a661347a4d4f9fd35">Microsoft.Psi.Pipeline</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aaec30508a49d0b04a6f99bd1230bf59d">Microsoft.Psi.Pipeline</a>
 </li>
 <li>CreateSession()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a3cbf372cefb705d64134b9adb0fd7bb1">Microsoft.Psi.Data.Dataset</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a82567d267faccb2f396124305bf45105">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
-</li>
-<li>CreateSessionCommand
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#aadcd711bea7f65ad4d827aa1437f9cc9">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
-</li>
-<li>CreateSessionFromExistingStoreCommand
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#a21e26df77dcde0e9c78f2f93582c6040">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
 </li>
 <li>CreateStore()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_simple_writer.html#a3c1b0eee00f7a9b25dcf70528005ad06">Microsoft.Psi.Data.Annotations.AnnotationSimpleWriter</a>
@@ -573,11 +545,13 @@ $(function() {
 </li>
 <li>CreateStorePartition()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html#ae9f9e2e0a49f6733ba8aea286ad25a83">Microsoft.Psi.Data.Session</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_session_view_model.html#a4db1c56b846093cb7610a9fab7b74a38">Microsoft.Psi.Visualization.Datasets.SessionViewModel</a>
 </li>
 <li>CreateStream&lt; TData &gt;()
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_writer.html#a6eb13606d1494939afa9d40a6198c68b">Microsoft.Psi.Data.ISimpleWriter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_simple_writer.html#ab5253ebb6b3e45766561bd0490d38bc2">Microsoft.Psi.Data.Json.JsonSimpleWriter</a>
+</li>
+<li>CreateTemplate()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_xaml_helper.html#a38e51ec172676cba6c35bc0d46662fbd">Microsoft.Psi.Visualization.Helpers.XamlHelper</a>
 </li>
 <li>Crop()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#afa5d39d4c724673a9d1af7bd93749b2a">Microsoft.Psi.Imaging.Image</a>
@@ -589,27 +563,14 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#a87ca394b45d7b30c94888723436e6be9">Microsoft.Psi.Common.RuntimeInfo</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_r_g_b_camera_enumerator.html#a148e42143a9e2b434084fc52c9b1439e">Microsoft.Psi::Media_Interop::RGBCameraEnumerator</a>
 </li>
-<li>CurrentContainer
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_client.html#af7cfc339f3683abaf2926de9373a38b8">Microsoft.Psi.Visualization.Client.VisualizationClient</a>
-</li>
 <li>CurrentFormat
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a8349cb777e159ddc2f314cf79ef1c664">Microsoft.Psi::Media_Interop::MediaCaptureDevice</a>
 </li>
 <li>CurrentPanel
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_client.html#a3d4ab78586b0d4bda32534c1680ae6e2">Microsoft.Psi.Visualization.Client.VisualizationClient</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a79cf454f21014ab4d4645d3375a8e5c3">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
-</li>
-<li>CurrentRemoteVisualizationObject
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_panel.html#a37f4e5769c08f34ffa54df95e0d13e7a">Microsoft.Psi.Visualization.Client.VisualizationPanel&lt; TConfig &gt;</a>
-</li>
-<li>CurrentRemoteVisualizationPanel
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_visualization_container.html#a2d36a94d1c4dd08862055f17ce7323ff">Microsoft.Psi.Visualization.Client.VisualizationContainer</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a79cf454f21014ab4d4645d3375a8e5c3">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
 </li>
 <li>CurrentRuntimeVersion
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_runtime_info.html#a4b4678bace9f46c259365c5c3a28c961">Microsoft.Psi.Common.RuntimeInfo</a>
-</li>
-<li>CurrentSessionViewModel
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html#aa5bba626b62b17e556b5f26bc72a312c">Microsoft.Psi.Visualization.Datasets.DatasetViewModel</a>
 </li>
 <li>CurrentValue
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a18904b2ba25752070764167b787196d6">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
@@ -628,6 +589,15 @@ $(function() {
 </li>
 <li>CursorEpsilonMs
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_stream_visualization_object_configuration.html#a6223481a85c59462b38f98370bfacfac">Microsoft.Psi.Visualization.Config.StreamVisualizationObjectConfiguration</a>
+</li>
+<li>CursorMode
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#a88f0ed19157ff662f9b20dc3a4f041fa">Microsoft.Psi.Visualization.Navigation.Navigator</a>
+</li>
+<li>CursorModeChanged
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#a3629b4e4e13c261f68bce018f9162be1">Microsoft.Psi.Visualization.Navigation.Navigator</a>
+</li>
+<li>CursorModeChangedEventArgs()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_cursor_mode_changed_event_args.html#a8eaa864ba43024b05f94d3d03d35d870">Microsoft.Psi.Visualization.Navigation.CursorModeChangedEventArgs</a>
 </li>
 <li>CursorRelativeToSelectionStartFormatted
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#ae9d507bcfe272bf50ca35c53395d3767">Microsoft.Psi.Visualization.Navigation.Navigator</a>

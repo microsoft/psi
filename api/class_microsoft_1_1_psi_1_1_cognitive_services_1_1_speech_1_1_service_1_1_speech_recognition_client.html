@@ -82,9 +82,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac0b9bc76da1ae20c267ef1647eb53176"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#ac0b9bc76da1ae20c267ef1647eb53176">SpeechRecognitionClient</a> (<a class="el" href="namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech.html#abc432aee3ab213195bfdafbafdbb1c2c">SpeechRecognitionMode</a> recognitionMode, string language, string subscriptionKey)</td></tr>
-<tr class="memdesc:ac0b9bc76da1ae20c267ef1647eb53176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html" title="Provides a client for the Cognitive Services Speech service. ">SpeechRecognitionClient</a> class.  <a href="#ac0b9bc76da1ae20c267ef1647eb53176">More...</a><br /></td></tr>
-<tr class="separator:ac0b9bc76da1ae20c267ef1647eb53176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea8f66448d45dd57ed2868a8852c5e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#a3ea8f66448d45dd57ed2868a8852c5e2">SpeechRecognitionClient</a> (<a class="el" href="namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech.html#abc432aee3ab213195bfdafbafdbb1c2c">SpeechRecognitionMode</a> recognitionMode, string language, string subscriptionKey, string region=null)</td></tr>
+<tr class="memdesc:a3ea8f66448d45dd57ed2868a8852c5e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html" title="Provides a client for the Cognitive Services Speech service. ">SpeechRecognitionClient</a> class.  <a href="#a3ea8f66448d45dd57ed2868a8852c5e2">More...</a><br /></td></tr>
+<tr class="separator:a3ea8f66448d45dd57ed2868a8852c5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29429a367f9d81dee6dbe34a2da3008d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#a29429a367f9d81dee6dbe34a2da3008d">Dispose</a> ()</td></tr>
 <tr class="separator:a29429a367f9d81dee6dbe34a2da3008d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a653fbf668a289f06d6b270ab2e5f89c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_speech_recognition_client.html#a653fbf668a289f06d6b270ab2e5f89c6">SetAudioFormat</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html">WaveFormat</a> audioFormat)</td></tr>
@@ -112,8 +112,8 @@ Events</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a client for the Cognitive Services Speech service. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac0b9bc76da1ae20c267ef1647eb53176"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0b9bc76da1ae20c267ef1647eb53176">&#9670;&nbsp;</a></span>SpeechRecognitionClient()</h2>
+<a id="a3ea8f66448d45dd57ed2868a8852c5e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ea8f66448d45dd57ed2868a8852c5e2">&#9670;&nbsp;</a></span>SpeechRecognitionClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,7 +134,13 @@ Events</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>subscriptionKey</em>&#160;</td>
+          <td class="paramname"><em>subscriptionKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>region</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -150,6 +156,7 @@ Events</h2></td></tr>
     <tr><td class="paramname">recognitionMode</td><td>The recognition mode to use.</td></tr>
     <tr><td class="paramname">language</td><td>The recognition language.</td></tr>
     <tr><td class="paramname">subscriptionKey</td><td>The speech service API key.</td></tr>
+    <tr><td class="paramname">region</td><td>The speech service region associated to the subscription.</td></tr>
   </table>
   </dd>
 </dl>

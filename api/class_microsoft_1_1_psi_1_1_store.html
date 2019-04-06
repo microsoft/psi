@@ -91,9 +91,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a65e07abb092e5148b7c6b46100be3220"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a65e07abb092e5148b7c6b46100be3220">Exists</a> (string name, string path)</td></tr>
 <tr class="memdesc:a65e07abb092e5148b7c6b46100be3220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the specified store file exists.  <a href="#a65e07abb092e5148b7c6b46100be3220">More...</a><br /></td></tr>
 <tr class="separator:a65e07abb092e5148b7c6b46100be3220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf136e1ec07f97d2c2f0f9390e9d1080"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#abf136e1ec07f97d2c2f0f9390e9d1080">IsValid</a> (string name, string path)</td></tr>
-<tr class="memdesc:abf136e1ec07f97d2c2f0f9390e9d1080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the specified store is valid.  <a href="#abf136e1ec07f97d2c2f0f9390e9d1080">More...</a><br /></td></tr>
-<tr class="separator:abf136e1ec07f97d2c2f0f9390e9d1080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c89163356f2e48bbfca86a7546c85a8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a1c89163356f2e48bbfca86a7546c85a8">IsClosed</a> (string name, string path)</td></tr>
+<tr class="memdesc:a1c89163356f2e48bbfca86a7546c85a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether all streams in a store have been marked as "closed".  <a href="#a1c89163356f2e48bbfca86a7546c85a8">More...</a><br /></td></tr>
+<tr class="separator:a1c89163356f2e48bbfca86a7546c85a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7ea58fa8e610120d363e23c3eb9b812"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#ab7ea58fa8e610120d363e23c3eb9b812">Repair</a> (string name, string path, bool deleteOldStore=true)</td></tr>
 <tr class="memdesc:ab7ea58fa8e610120d363e23c3eb9b812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repairs an invalid store.  <a href="#ab7ea58fa8e610120d363e23c3eb9b812">More...</a><br /></td></tr>
 <tr class="separator:ab7ea58fa8e610120d363e23c3eb9b812"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -369,8 +369,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abf136e1ec07f97d2c2f0f9390e9d1080"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf136e1ec07f97d2c2f0f9390e9d1080">&#9670;&nbsp;</a></span>IsValid()</h2>
+<a id="a1c89163356f2e48bbfca86a7546c85a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c89163356f2e48bbfca86a7546c85a8">&#9670;&nbsp;</a></span>IsClosed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -379,7 +379,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool Microsoft.Psi.Store.IsValid </td>
+          <td class="memname">static bool Microsoft.Psi.Store.IsClosed </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -403,7 +403,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Indicates whether the specified store is valid. </p>
+<p>Indicates whether all streams in a store have been marked as "closed". </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name of the store to check.</td></tr>
@@ -411,7 +411,7 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns true if the store is valid.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns true if all streams in the store are marked as closed.</dd></dl>
 
 </div>
 </div>

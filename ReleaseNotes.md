@@ -5,9 +5,95 @@ title:  Release Notes
 
 # Release Notes
 
-**2018/11/30**: Beta-release, version 0.6.48.2
+## 2019/04/05: Beta-release, version 0.7.57.2
 
-BREAKING CHANGES:
+OVERVIEW:
+
+There are many additions and updates in this release, but the major changes can be summarized as:
+
+* Improvements and fixes to the pipeline shutdown procedure, as well as fixes to the `Parallel` and `Join` operators to support reproducible dynamic sub-pipeline construction and teardown via the `Parallel` operator.
+* Streamlining the use of Shared<T> for more efficient messaging of large objects such as images, and added [in-depth documentation](/topics/InDepth.Shared.md) on this topic.
+* PsiStudio now supports connecting to live stores and fast layout switching.
+
+### <div style="color:red;font-weight:bold">Breaking Changes:</div>
+
+* The pipeline startup and shutdown procedure has been updated to support correct and reproducible shutdown where possible in dynamic pipelines. Specifically:
+    * Removed the `RegisterPipelineStart/Stop/Final` handlers. If the component implements `ISourceComponent`, then use the `Start` or `Stop` method, or use one of the following events instead:  `PipelineRun`, `PipelineCompleted`, `Receiver.Unsubscribed`.
+    * The authoring of source components has been streamlined, and in the process the `IFiniteSourceComponent` and `ISourceComponent` interfaces have been unified into a single, new `ISourceComponent` interface. Implementers should call the `notifyCompletionTime` delegate supplied in the interface's `Start` method to indicate its completion time (or `DateTime.MaxValue` if it is infinite).
+* Removed `GroupBy` operator.
+* `MessagePack` no longer uses LZ4 compression during serialization, and now emits `DateTime` objects as Ticks rather than string representations.
+
+### Updates to Pipeline Shutdown Logic:
+
+There have been multiple changes made to the pipeline finalization code to support an orderly shutdown process.
+
+* Subpipeline now has independent scheduler so that it may fully shut down independently of the main pipeline.
+* Renamed several `Pipeline` events:
+    * `PipelineCompletedEvent` event has been renamed `PipelineCompleted`.
+    * `ComponentCompletedEvent` event has been renamed `ComponentCompleted`.
+    * `PipelineCompletionEventArgs` class has been renamed `PipelineCompletedEventArgs`.
+    * A new event `PipelineRun` has been added, it is raised when `Pipeline.Run` (or `Pipeline.RunAsync`) has been called but before the components have started work.
+* `Receiver` component now provides an `Unsubscribed` event.
+* `Scheduler` now drops messages that were posted after the pipeline has shut down.
+* `Scheduler.Schedule` method now returns an indication of whether the call was ignored due to the pipeline having already shut down.
+* Bug fix in `ParallelSparse` so it works correctly with various branch termination policies.
+* Pipeline pause for quiescence now includes all child subpipeline schedulers.
+* Fixed bug in the `ToEnumerable` operator where empty streams were not being handled correctly.
+
+### Updates to Parallel Operator:
+
+* Default branch termination policy now returns the OriginatingTime of the last message from that branch.
+* `Parallel` operators now use a `Connector` to bridge to Subpipelines.
+* Added a fix for Parallel with orDefault, which was not working properly in some cases due to errors in the matching function.
+
+### Updates to Join and Match Operators:
+
+* Fixed bug in `Join` operator relating to the dynamic closing of secondary streams.
+* Fixed bug in `Match` component's `NearestMatch` function where if there were no available messages we would always return `InsufficientData`. We now first check if the stream is closed, and in this case we return `DoesNotExist` instead.
+
+### New Features in Shared Pool APIs:
+
+* The `Shared<T>.Create` method no longer supports specifying a SharedPool<T> to which shared objects may be recycled. Recyclable shared objects must now be created from a shared pool.
+* The `SharedPool<T>.GetOrCreate` method no longer supports specifying a construction delegate, it must now be provided when the `SharedPool<T>` is created.
+
+### New Features in Audio and Speech:
+
+* Added grammar-based intent detectors using `Microsoft.Speech` and `System.Speech`
+* We now ensure that messages have monotonically increasing OriginatingTimes in the `MicrosoftSpeechRecognizer` component to comply with the new rule on the `Emitter` component introduced in the last release.
+* Added support for `AzureSpeechServices` and marked as deprecated the obsolete component `BingSpeechRecognizer`.
+* The Speech event duration is now defined as the OriginatingTime of the last message where the VAD was still false (before it switched to true) to the last message where the VAD output was still true.  Previously we were defining the event duration as the OriginatingTime of the first message where the VAD switched to true to the OriginatingTime of the first message where it went false again.
+* Added `Reframe` operator to `Audio`.
+
+### New Psi Components:
+
+* Added new Psi component `PersonalityChat` to the Microsoft.Psi.CognitiveServices.Languages.Windows project that wraps [Project Personality Chat](https://labs.cognitive.microsoft.com/en-us/project-personality-chat).
+
+### New Features in Platform for Situated Intelligence Studio:
+
+* Removed all of the COM features that allowed a Psi application to launch and control PsiStudio.  See next point.
+* PsiStudio can now connect directly to the store of a running Psi application in the same way it connects to a previously created store.  Users can seamlessly switch between Live mode and Playback mode when visualizing a live store.
+* Simplified the hierarchy of `VisualizationObject` classes.
+* Added option to show tracking id in the `kinect body` visualizer.
+* When multiple audio streams are being visualized, users can now select which audio source should be played through the user's PC speakers by right-clicking the relevent stream in the `Visualizations` view.
+* Added new `Repeat` button to the toolbar so that playback will loop infinitely between the `Selection Start` and `Selection End` markers.
+* The position and layout of PsiStudio is now preserved when the application is shut down and is restored the next time PsiStudio is launched.
+* Added `Layout Chooser` to the toolbar.  This allows the user to quickly switch between different Visualization layouts.  Users can create new layouts either from scratch or based on an existing layout and then save this new layout.  Layouts are stored in `/MyDocuments/PsiStudio/Layouts/`.
+* Loading and then switching between multiple sessions is now correctly supported.  When a Visualization layout is selected, switching to a different session will automatically cause all Visualizers to rebind to the stores associated with this newly selected session.
+* Added new icons to indicate when a `Visualization` has no stream to bind to in the current session.
+
+### Other Bug Fixes:
+
+* Fixed bug where the final extent of the store on disk was not being correctly truncated to the actual stream size after pipeline shutdown.
+* Fixed bug in PsiStudio where zooming out a long way would cause the app to apparently freeze.
+* Fixed bug where `StoreWriters` and `StoreReaders` were generating different names for the same global mutex that indicated a store was currently live and being written to.
+* Fixed bug where replay time intervals in parent pipelines did not take into account the replay time intervals in subpipelines.
+* Fixed memory leaks in `Microsoft.Psi.Imaging.Operators` class.
+* Improved performance of the serialization classes.
+* Reduced startup delays in subpipelines.
+
+## 2018/11/30: Beta-release, version 0.6.48.2
+
+### <div style="color:red;font-weight:bold">Breaking Changes:</div>
 
 * It is now a requirement that messages posted on an `Emitter` have strictly increasing originating times. Attempting to post multiple messages with the same originating time on the same stream will cause an exception to be thrown.
 * The `Buffer`, `History` and `Window` operators have been unified as a single set of `Window` operators which take either an index-based or a relative time-based interval. The index-based variants emit the initial buffer only after the total count of messages within the specified index interval have been accumulated, whereas the time-based variants emit the initial buffer as soon as messages within the specified relative time interval are available.
@@ -79,7 +165,7 @@ Bug Fixes:
 * Fixed a bug which sometimes caused a loss of precision when computing the current pipeline time.
 
 
-**2018/09/13**: Beta-release, version 0.5.48.2
+## 2018/09/13: Beta-release, version 0.5.48.2
 
 <div style="color:red;font-weight:bold">IMPORTANT NOTE:</div>
 
@@ -135,7 +221,7 @@ BREAKING CHANGES in this release:
 * Psi Studio will no longer load third party visualizers, for the time being it will only display its built-in visualizers.
 
 
-**2018/07/02**: Beta-release, version 0.4.216.2
+## 2018/07/02: Beta-release, version 0.4.216.2
 
 Interim release with support for new devices, runtime enhancements and several API changes, as well as minor bug fixes:
 
@@ -152,7 +238,7 @@ Several API changes have been made:
 * `Generators.Timer(...)` is now `Timers.Timer(...)`
 * `IStartable` has been [replaced by `ISourceControl`/`IFiniteSourceControl`](/psi/topics/InDepth.WritingComponents#SourceComponents) and the [way that components get notified about the pipeline starting and stopping](/psi/topics/InDepth.WritingComponents#PipelineStartStop) has changed
 
-**2018/04/04**: Beta-release, version 0.3.16.5
+## 2018/04/04: Beta-release, version 0.3.16.5
 
 Interim release with a few changes to the samples and some minor bug fixes:
 
@@ -163,7 +249,7 @@ Interim release with a few changes to the samples and some minor bug fixes:
 * NuGet packages are now marked beta.
 * Additional minor bug fixes.
 
-**2018/03/17**: Beta-release, version 0.2.123.1
+## 2018/03/17: Beta-release, version 0.2.123.1
 
 Initial, beta version of the Platform for Situated Intelligence. Includes the Platform for Situated Intelligence runtime, visualization tools, and an initial set of components (mostly geared towards audio and visual processing). Relevant documents:
 

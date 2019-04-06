@@ -80,57 +80,106 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a5175c94e64eddd7da512b96cb051cfa2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point3D &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a5175c94e64eddd7da512b96cb051cfa2">GetJointPosition</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> &gt; source, JointType jointType, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a5175c94e64eddd7da512b96cb051cfa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of a given joint in the body  <a href="#a5175c94e64eddd7da512b96cb051cfa2">More...</a><br /></td></tr>
+<tr class="memdesc:a5175c94e64eddd7da512b96cb051cfa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of a given joint in the body.  <a href="#a5175c94e64eddd7da512b96cb051cfa2">More...</a><br /></td></tr>
 <tr class="separator:a5175c94e64eddd7da512b96cb051cfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68255b4d1efba9a3cd33fb77da3430d7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; List&lt; Point3D &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a68255b4d1efba9a3cd33fb77da3430d7">ProjectTo3D</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html">IKinectCalibration</a>)&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a68255b4d1efba9a3cd33fb77da3430d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects set of points into 3D  <a href="#a68255b4d1efba9a3cd33fb77da3430d7">More...</a><br /></td></tr>
+<tr class="memdesc:a68255b4d1efba9a3cd33fb77da3430d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects set of 2D image points into 3D.  <a href="#a68255b4d1efba9a3cd33fb77da3430d7">More...</a><br /></td></tr>
 <tr class="separator:a68255b4d1efba9a3cd33fb77da3430d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c1e6f07505feadc27d05c24e8f6600f"><td class="memItemLeft" align="right" valign="top">static CameraSpacePoint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a5c1e6f07505feadc27d05c24e8f6600f">Transform</a> (this CoordinateSystem cs, CameraSpacePoint csp)</td></tr>
-<tr class="memdesc:a5c1e6f07505feadc27d05c24e8f6600f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a point in camera space to another coordinate system  <a href="#a5c1e6f07505feadc27d05c24e8f6600f">More...</a><br /></td></tr>
-<tr class="separator:a5c1e6f07505feadc27d05c24e8f6600f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfeb6f5d815a08665c43da41be4aa5b7"><td class="memItemLeft" align="right" valign="top">static Joint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#adfeb6f5d815a08665c43da41be4aa5b7">Transform</a> (this CoordinateSystem cs, Joint joint)</td></tr>
-<tr class="memdesc:adfeb6f5d815a08665c43da41be4aa5b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a joint to the specified coordinate system  <a href="#adfeb6f5d815a08665c43da41be4aa5b7">More...</a><br /></td></tr>
-<tr class="separator:adfeb6f5d815a08665c43da41be4aa5b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19d4fa048c8403e8e2e02fa5843444f6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a19d4fa048c8403e8e2e02fa5843444f6">Transform</a> (this CoordinateSystem cs, <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> psiBody)</td></tr>
-<tr class="memdesc:a19d4fa048c8403e8e2e02fa5843444f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms joint orientations in the specified body to the specified coordinate system.  <a href="#a19d4fa048c8403e8e2e02fa5843444f6">More...</a><br /></td></tr>
-<tr class="separator:a19d4fa048c8403e8e2e02fa5843444f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b720b4449eae5020fe1b7033018f000"><td class="memItemLeft" align="right" valign="top">static CameraSpacePoint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a8b720b4449eae5020fe1b7033018f000">Transform</a> (this CoordinateSystem cs, CameraSpacePoint cameraSpacePoint)</td></tr>
+<tr class="memdesc:a8b720b4449eae5020fe1b7033018f000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms a Kinect CameraSpacePoint to another coordinate system.  <a href="#a8b720b4449eae5020fe1b7033018f000">More...</a><br /></td></tr>
+<tr class="separator:a8b720b4449eae5020fe1b7033018f000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde68efd3857de4f0c94fc83a924f54a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#adde68efd3857de4f0c94fc83a924f54a">Rebase</a> (this <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> kinectBody, CoordinateSystem cs)</td></tr>
+<tr class="memdesc:adde68efd3857de4f0c94fc83a924f54a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebases the kinect body in a specified coordinate system.  <a href="#adde68efd3857de4f0c94fc83a924f54a">More...</a><br /></td></tr>
+<tr class="separator:adde68efd3857de4f0c94fc83a924f54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aace0706258ae68dbb3a2c4e4e5fc8b1c"><td class="memItemLeft" align="right" valign="top">static CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aace0706258ae68dbb3a2c4e4e5fc8b1c">GetJointCoordinateSystem</a> (this <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> kinectBody, JointType jointType)</td></tr>
+<tr class="memdesc:aace0706258ae68dbb3a2c4e4e5fc8b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a CoordinateSystem from a given kinect joint  <a href="#aace0706258ae68dbb3a2c4e4e5fc8b1c">More...</a><br /></td></tr>
+<tr class="separator:aace0706258ae68dbb3a2c4e4e5fc8b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6222ef76ba04001ef2fc5e4538f1be2e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point2D &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a6222ef76ba04001ef2fc5e4538f1be2e">ToColorSpace</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;(Point3D, <a class="el" href="interface_microsoft_1_1_psi_1_1_kinect_1_1_i_kinect_calibration.html">IKinectCalibration</a>)&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a6222ef76ba04001ef2fc5e4538f1be2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms the specified point by the specified calibration  <a href="#a6222ef76ba04001ef2fc5e4538f1be2e">More...</a><br /></td></tr>
+<tr class="memdesc:a6222ef76ba04001ef2fc5e4538f1be2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms the specified 3D point into a 2D point via the specified calibration.  <a href="#a6222ef76ba04001ef2fc5e4538f1be2e">More...</a><br /></td></tr>
 <tr class="separator:a6222ef76ba04001ef2fc5e4538f1be2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ff7c5dad4176d6051f52b3ca4537a9b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point2D?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a2ff7c5dad4176d6051f52b3ca4537a9b">ToPoint2D</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; ColorSpacePoint?&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a2ff7c5dad4176d6051f52b3ca4537a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts points in color space into pixel coordinates  <a href="#a2ff7c5dad4176d6051f52b3ca4537a9b">More...</a><br /></td></tr>
+<tr class="memdesc:a2ff7c5dad4176d6051f52b3ca4537a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts points in from Kinect color space into 2D points.  <a href="#a2ff7c5dad4176d6051f52b3ca4537a9b">More...</a><br /></td></tr>
 <tr class="separator:a2ff7c5dad4176d6051f52b3ca4537a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a804b656d808d002b1a53833c177462ee"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point2D &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a804b656d808d002b1a53833c177462ee">ToPoint2D</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; ColorSpacePoint &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a804b656d808d002b1a53833c177462ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts points in color space into pixel coordinates  <a href="#a804b656d808d002b1a53833c177462ee">More...</a><br /></td></tr>
+<tr class="memdesc:a804b656d808d002b1a53833c177462ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts points in from Kinect color space into 2D points.  <a href="#a804b656d808d002b1a53833c177462ee">More...</a><br /></td></tr>
 <tr class="separator:a804b656d808d002b1a53833c177462ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafa0037d55ff45f7834a78a3aa4090e8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point3D &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aafa0037d55ff45f7834a78a3aa4090e8">ToPoint3D</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; CameraSpacePoint &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:aafa0037d55ff45f7834a78a3aa4090e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts points in color space into 3D coordinates  <a href="#aafa0037d55ff45f7834a78a3aa4090e8">More...</a><br /></td></tr>
-<tr class="separator:aafa0037d55ff45f7834a78a3aa4090e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acaa4f20cc4224b3b114aed8ac788b4f1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; CoordinateSystem &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#acaa4f20cc4224b3b114aed8ac788b4f1">GetTrackedJointPosition</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> &gt; source, JointType jointType, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:acaa4f20cc4224b3b114aed8ac788b4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks a joint on the Kinect Body  <a href="#acaa4f20cc4224b3b114aed8ac788b4f1">More...</a><br /></td></tr>
+<tr class="memdesc:acaa4f20cc4224b3b114aed8ac788b4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the coordinate system corresponding to a tracked joint from the kinect body.  <a href="#acaa4f20cc4224b3b114aed8ac788b4f1">More...</a><br /></td></tr>
 <tr class="separator:acaa4f20cc4224b3b114aed8ac788b4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ffa862b3ce8781a8e22d43b915243a3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; CoordinateSystem &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a9ffa862b3ce8781a8e22d43b915243a3">GetTrackedJointPositionOrDefault</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> &gt; source, JointType jointType, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a9ffa862b3ce8781a8e22d43b915243a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tracks a joint on the Kinect Body  <a href="#a9ffa862b3ce8781a8e22d43b915243a3">More...</a><br /></td></tr>
+<tr class="memdesc:a9ffa862b3ce8781a8e22d43b915243a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the coordinate system corresponding to a tracked joint from the kinect body, or null if the specified joint is not currently tracked.  <a href="#a9ffa862b3ce8781a8e22d43b915243a3">More...</a><br /></td></tr>
 <tr class="separator:a9ffa862b3ce8781a8e22d43b915243a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb123f99fe6cc000e32b9874b8ae84e3"><td class="memItemLeft" align="right" valign="top">static Point3D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#acb123f99fe6cc000e32b9874b8ae84e3">ToPoint3D</a> (this CameraSpacePoint cameraSpacePoint)</td></tr>
-<tr class="memdesc:acb123f99fe6cc000e32b9874b8ae84e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a point from camera space to a 3D point  <a href="#acb123f99fe6cc000e32b9874b8ae84e3">More...</a><br /></td></tr>
+<tr class="memdesc:acb123f99fe6cc000e32b9874b8ae84e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a point from Kinect camera space to a 3D point.  <a href="#acb123f99fe6cc000e32b9874b8ae84e3">More...</a><br /></td></tr>
 <tr class="separator:acb123f99fe6cc000e32b9874b8ae84e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafa0037d55ff45f7834a78a3aa4090e8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point3D &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aafa0037d55ff45f7834a78a3aa4090e8">ToPoint3D</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; CameraSpacePoint &gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
+<tr class="memdesc:aafa0037d55ff45f7834a78a3aa4090e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts points from Kinect camera space to 3D points.  <a href="#aafa0037d55ff45f7834a78a3aa4090e8">More...</a><br /></td></tr>
+<tr class="separator:aafa0037d55ff45f7834a78a3aa4090e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0b1f1ca2e387ee8b3b9d200212de207"><td class="memItemLeft" align="right" valign="top">static CameraSpacePoint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#af0b1f1ca2e387ee8b3b9d200212de207">ToCameraSpacePoint</a> (this Point3D point)</td></tr>
-<tr class="memdesc:af0b1f1ca2e387ee8b3b9d200212de207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a generate 3D point to a point in camera space  <a href="#af0b1f1ca2e387ee8b3b9d200212de207">More...</a><br /></td></tr>
+<tr class="memdesc:af0b1f1ca2e387ee8b3b9d200212de207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a 3D point to a Kinect camera space point.  <a href="#af0b1f1ca2e387ee8b3b9d200212de207">More...</a><br /></td></tr>
 <tr class="separator:af0b1f1ca2e387ee8b3b9d200212de207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbf258dfaef70a17c0a6783f01dd592b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; CameraSpacePoint &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#afbf258dfaef70a17c0a6783f01dd592b">ToCameraSpacePoint</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; Point3D &gt; point, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:afbf258dfaef70a17c0a6783f01dd592b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a producer of generic 3D points this method returns the point as a camera space point  <a href="#afbf258dfaef70a17c0a6783f01dd592b">More...</a><br /></td></tr>
+<tr class="memdesc:afbf258dfaef70a17c0a6783f01dd592b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts 3D points to Kinect camera space points.  <a href="#afbf258dfaef70a17c0a6783f01dd592b">More...</a><br /></td></tr>
 <tr class="separator:afbf258dfaef70a17c0a6783f01dd592b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c20ddad57c28abd6263e8e382bb5e87"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a9c20ddad57c28abd6263e8e382bb5e87">GZipCompressImageProjection</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; CameraSpacePoint[]&gt; cameraSpacePoints, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a9c20ddad57c28abd6263e8e382bb5e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compresses a list of camera space points  <a href="#a9c20ddad57c28abd6263e8e382bb5e87">More...</a><br /></td></tr>
+<tr class="memdesc:a9c20ddad57c28abd6263e8e382bb5e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compresses a list of Kinect camera space points.  <a href="#a9c20ddad57c28abd6263e8e382bb5e87">More...</a><br /></td></tr>
 <tr class="separator:a9c20ddad57c28abd6263e8e382bb5e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae62e25dac06812f74237da3f417f90c4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; List&lt; Point3D &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#ae62e25dac06812f74237da3f417f90c4">GZipUncompressImageProjection</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; byte[]&gt; compressedBytes, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> deliveryPolicy=null)</td></tr>
-<tr class="memdesc:ae62e25dac06812f74237da3f417f90c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a producer of compressed image projection points this method generates the uncompressed points  <a href="#ae62e25dac06812f74237da3f417f90c4">More...</a><br /></td></tr>
+<tr class="memdesc:ae62e25dac06812f74237da3f417f90c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uncompresses a list of Kinect 3D points.  <a href="#ae62e25dac06812f74237da3f417f90c4">More...</a><br /></td></tr>
 <tr class="separator:ae62e25dac06812f74237da3f417f90c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af93a88aec164d1d695fab172f010c6b5"><td class="memItemLeft" align="right" valign="top">static Vector4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#af93a88aec164d1d695fab172f010c6b5">MatrixToQuaternion</a> (Matrix&lt; double &gt; matrix)</td></tr>
+<tr class="memdesc:af93a88aec164d1d695fab172f010c6b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a rotation matrix to a quaternion.  <a href="#af93a88aec164d1d695fab172f010c6b5">More...</a><br /></td></tr>
+<tr class="separator:af93a88aec164d1d695fab172f010c6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements stream operator methods for Kinect </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aace0706258ae68dbb3a2c4e4e5fc8b1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aace0706258ae68dbb3a2c4e4e5fc8b1c">&#9670;&nbsp;</a></span>GetJointCoordinateSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static CoordinateSystem Microsoft.Psi.Kinect.KinectExtensions.GetJointCoordinateSystem </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a>&#160;</td>
+          <td class="paramname"><em>kinectBody</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">JointType&#160;</td>
+          <td class="paramname"><em>jointType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a CoordinateSystem from a given kinect joint </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">kinectBody</td><td>Kinect body containing the joint</td></tr>
+    <tr><td class="paramname">jointType</td><td>Which joint to create a CoordinateSystem from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>CoordinateSystem capturing the given joint's orientation and position</dd></dl>
+
+</div>
+</div>
 <a id="a5175c94e64eddd7da512b96cb051cfa2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5175c94e64eddd7da512b96cb051cfa2">&#9670;&nbsp;</a></span>GetJointPosition()</h2>
 
@@ -171,16 +220,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the position of a given joint in the body </p>
+<p>Returns the position of a given joint in the body. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>The stream of kinect body</td></tr>
-    <tr><td class="paramname">jointType</td><td>The type of joint</td></tr>
+    <tr><td class="paramname">source</td><td>The stream of kinect body.</td></tr>
+    <tr><td class="paramname">jointType</td><td>The type of joint.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The joint position as a camera space point</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The joint position as a 3D point in Kinect camera space.</dd></dl>
 
 </div>
 </div>
@@ -224,16 +273,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Tracks a joint on the Kinect Body </p>
+<p>Returns the coordinate system corresponding to a tracked joint from the kinect body. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source of Kinect Bodies</td></tr>
-    <tr><td class="paramname">jointType</td><td>Which joint to track</td></tr>
+    <tr><td class="paramname">source</td><td>The stream of Kinect body.</td></tr>
+    <tr><td class="paramname">jointType</td><td>The joint to return.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the transformed joint's coordinate system</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the coordinate system for the specified joint if the joint is tracked. If the joint is not tracked, no message is posted on the return stream.</dd></dl>
 
 </div>
 </div>
@@ -277,16 +326,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Tracks a joint on the Kinect Body </p>
+<p>Returns the coordinate system corresponding to a tracked joint from the kinect body, or null if the specified joint is not currently tracked. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source of Kinect Bodies</td></tr>
-    <tr><td class="paramname">jointType</td><td>Which joint to track</td></tr>
+    <tr><td class="paramname">source</td><td>The stream of Kinect body.</td></tr>
+    <tr><td class="paramname">jointType</td><td>The joint to return.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the coordiante system for the tracked joint</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the coordinate system for the specified joint if the joint is tracker, or null otherwise.</dd></dl>
 
 </div>
 </div>
@@ -324,15 +373,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Compresses a list of camera space points </p>
+<p>Compresses a list of Kinect camera space points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cameraSpacePoints</td><td>List of points in camera space</td></tr>
+    <tr><td class="paramname">cameraSpacePoints</td><td>Stream of list of Kinect camera space points.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates a compressed byte array of the camera space points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates a compressed byte array representation of the given Kinect camera space points.</dd></dl>
 
 </div>
 </div>
@@ -370,15 +419,50 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Given a producer of compressed image projection points this method generates the uncompressed points </p>
+<p>Uncompresses a list of Kinect 3D points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">compressedBytes</td><td>Producer that generates compressed image projection points</td></tr>
+    <tr><td class="paramname">compressedBytes</td><td>A stream containing a compressed representation of Kinect camera space points.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a generator that returns a list of points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the corresponding list of 3D points.</dd></dl>
+
+</div>
+</div>
+<a id="af93a88aec164d1d695fab172f010c6b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af93a88aec164d1d695fab172f010c6b5">&#9670;&nbsp;</a></span>MatrixToQuaternion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Vector4 Microsoft.Psi.Kinect.KinectExtensions.MatrixToQuaternion </td>
+          <td>(</td>
+          <td class="paramtype">Matrix&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>matrix</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a rotation matrix to a quaternion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">matrix</td><td>Rotation matrix to convert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Quaternion that represents the rotation.</dd></dl>
 
 </div>
 </div>
@@ -416,15 +500,62 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Projects set of points into 3D </p>
+<p>Projects set of 2D image points into 3D. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Tuple of image, list of points to project, and calibration</td></tr>
+    <tr><td class="paramname">source</td><td>Tuple of depth image, list of points to project, and calibration information.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates a list of transformed points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates a list of corresponding 3D points in Kinect camera space.</dd></dl>
+
+</div>
+</div>
+<a id="adde68efd3857de4f0c94fc83a924f54a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adde68efd3857de4f0c94fc83a924f54a">&#9670;&nbsp;</a></span>Rebase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> Microsoft.Psi.Kinect.KinectExtensions.Rebase </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a>&#160;</td>
+          <td class="paramname"><em>kinectBody</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CoordinateSystem&#160;</td>
+          <td class="paramname"><em>cs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rebases the kinect body in a specified coordinate system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cs</td><td>Coordinate system to transform to</td></tr>
+    <tr><td class="paramname">kinectBody</td><td>Body to transform</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The body rebased in the specified coordinate system.</dd></dl>
+<p>The method rebases all the joints, including position and orientation, in the specified coordinate system.</p>
 
 </div>
 </div>
@@ -452,14 +583,14 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts a generate 3D point to a point in camera space </p>
+<p>Converts a 3D point to a Kinect camera space point. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">point</td><td>Point to convert</td></tr>
+    <tr><td class="paramname">point</td><td>The 3D point to convert.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the generate 3D point as a point in camera space</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The corresponding Kinect camera space point.</dd></dl>
 
 </div>
 </div>
@@ -497,15 +628,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Given a producer of generic 3D points this method returns the point as a camera space point </p>
+<p>Converts 3D points to Kinect camera space points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">point</td><td>Point to convert</td></tr>
+    <tr><td class="paramname">point</td><td>Stream of 3D points to convert.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates of camera space points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the corresponding Kinect camera space points.</dd></dl>
 
 </div>
 </div>
@@ -543,15 +674,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms the specified point by the specified calibration </p>
+<p>Transforms the specified 3D point into a 2D point via the specified calibration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Point/Calibration to transform</td></tr>
+    <tr><td class="paramname">source</td><td>A stream of tuples containing the 3D point and calibration inforamtion.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A producer that generates transformed points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the 2D transformed points.</dd></dl>
 
 </div>
 </div>
@@ -589,15 +720,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts points in color space into pixel coordinates </p>
+<p>Converts points in from Kinect color space into 2D points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source of color space points</td></tr>
+    <tr><td class="paramname">source</td><td>A stream of points in color space.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates transformed points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates transformed 2D points.</dd></dl>
 
 </div>
 </div>
@@ -635,20 +766,55 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts points in color space into pixel coordinates </p>
+<p>Converts points in from Kinect color space into 2D points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source of color space points</td></tr>
+    <tr><td class="paramname">source</td><td>A stream of points in color space.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates transformed points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates transformed 2D points.</dd></dl>
+
+</div>
+</div>
+<a id="acb123f99fe6cc000e32b9874b8ae84e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb123f99fe6cc000e32b9874b8ae84e3">&#9670;&nbsp;</a></span>ToPoint3D() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Point3D Microsoft.Psi.Kinect.KinectExtensions.ToPoint3D </td>
+          <td>(</td>
+          <td class="paramtype">this CameraSpacePoint&#160;</td>
+          <td class="paramname"><em>cameraSpacePoint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a point from Kinect camera space to a 3D point. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cameraSpacePoint</td><td>The Kinect camera space point to convert.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The corresponding 3D point.</dd></dl>
 
 </div>
 </div>
 <a id="aafa0037d55ff45f7834a78a3aa4090e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafa0037d55ff45f7834a78a3aa4090e8">&#9670;&nbsp;</a></span>ToPoint3D() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aafa0037d55ff45f7834a78a3aa4090e8">&#9670;&nbsp;</a></span>ToPoint3D() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -681,55 +847,20 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts points in color space into 3D coordinates </p>
+<p>Converts points from Kinect camera space to 3D points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source of color space points</td></tr>
+    <tr><td class="paramname">source</td><td>Stream of Kinect camera space points.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates transformed points</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the corresponding 3D points.</dd></dl>
 
 </div>
 </div>
-<a id="acb123f99fe6cc000e32b9874b8ae84e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb123f99fe6cc000e32b9874b8ae84e3">&#9670;&nbsp;</a></span>ToPoint3D() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static Point3D Microsoft.Psi.Kinect.KinectExtensions.ToPoint3D </td>
-          <td>(</td>
-          <td class="paramtype">this CameraSpacePoint&#160;</td>
-          <td class="paramname"><em>cameraSpacePoint</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Converts a point from camera space to a 3D point </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cameraSpacePoint</td><td>Point to convert</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the point as a Point3D</dd></dl>
-
-</div>
-</div>
-<a id="a5c1e6f07505feadc27d05c24e8f6600f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c1e6f07505feadc27d05c24e8f6600f">&#9670;&nbsp;</a></span>Transform() <span class="overload">[1/3]</span></h2>
+<a id="a8b720b4449eae5020fe1b7033018f000"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b720b4449eae5020fe1b7033018f000">&#9670;&nbsp;</a></span>Transform()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -747,7 +878,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">CameraSpacePoint&#160;</td>
-          <td class="paramname"><em>csp</em>&#160;</td>
+          <td class="paramname"><em>cameraSpacePoint</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -762,107 +893,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Transforms a point in camera space to another coordinate system </p>
+<p>Transforms a Kinect CameraSpacePoint to another coordinate system. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cs</td><td>Coordinate system to transform to</td></tr>
-    <tr><td class="paramname">csp</td><td>point in camera space</td></tr>
+    <tr><td class="paramname">cs</td><td>Coordinate system to transform to.</td></tr>
+    <tr><td class="paramname">cameraSpacePoint</td><td>Point in Kinect camera space.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>New point</dd></dl>
-
-</div>
-</div>
-<a id="adfeb6f5d815a08665c43da41be4aa5b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfeb6f5d815a08665c43da41be4aa5b7">&#9670;&nbsp;</a></span>Transform() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static Joint Microsoft.Psi.Kinect.KinectExtensions.Transform </td>
-          <td>(</td>
-          <td class="paramtype">this CoordinateSystem&#160;</td>
-          <td class="paramname"><em>cs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Joint&#160;</td>
-          <td class="paramname"><em>joint</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Transforms a joint to the specified coordinate system </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cs</td><td>Coordinate system to transform to</td></tr>
-    <tr><td class="paramname">joint</td><td>Joint to be transformed</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Transformed joint</dd></dl>
-
-</div>
-</div>
-<a id="a19d4fa048c8403e8e2e02fa5843444f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19d4fa048c8403e8e2e02fa5843444f6">&#9670;&nbsp;</a></span>Transform() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a> Microsoft.Psi.Kinect.KinectExtensions.Transform </td>
-          <td>(</td>
-          <td class="paramtype">this CoordinateSystem&#160;</td>
-          <td class="paramname"><em>cs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html">KinectBody</a>&#160;</td>
-          <td class="paramname"><em>psiBody</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Transforms joint orientations in the specified body to the specified coordinate system. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cs</td><td>Cordinate systemt to transform to</td></tr>
-    <tr><td class="paramname">psiBody</td><td>Body to transform</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Body with transformed joints</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Tranformed point in Kinect camera space.</dd></dl>
 
 </div>
 </div>

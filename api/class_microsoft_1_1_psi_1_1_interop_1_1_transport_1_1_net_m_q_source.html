@@ -87,6 +87,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0e55b3b857b284eaecea90ca5005f8dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0855994c6473181c04ca3465c30001b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_transport_1_1_net_m_q_source.html#a0855994c6473181c04ca3465c30001b7">Dispose</a> ()</td></tr>
 <tr class="separator:a0855994c6473181c04ca3465c30001b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec69be7d9d120f95b5d293f34f6b7ae0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_transport_1_1_net_m_q_source.html#aec69be7d9d120f95b5d293f34f6b7ae0">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:aec69be7d9d120f95b5d293f34f6b7ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#aec69be7d9d120f95b5d293f34f6b7ae0">More...</a><br /></td></tr>
+<tr class="separator:aec69be7d9d120f95b5d293f34f6b7ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad547fae7882e584bb8b7f3718c72bc15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_transport_1_1_net_m_q_source.html#ad547fae7882e584bb8b7f3718c72bc15">Stop</a> ()</td></tr>
+<tr class="memdesc:ad547fae7882e584bb8b7f3718c72bc15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#ad547fae7882e584bb8b7f3718c72bc15">More...</a><br /></td></tr>
+<tr class="separator:ad547fae7882e584bb8b7f3718c72bc15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -174,6 +180,49 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p></p>
+
+</div>
+</div>
+<a id="aec69be7d9d120f95b5d293f34f6b7ae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec69be7d9d120f95b5d293f34f6b7ae0">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_transport_1_1_net_m_q_source.html">Microsoft.Psi.Interop.Transport.NetMQSource</a>&lt; T &gt;.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="ad547fae7882e584bb8b7f3718c72bc15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad547fae7882e584bb8b7f3718c72bc15">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_transport_1_1_net_m_q_source.html">Microsoft.Psi.Interop.Transport.NetMQSource</a>&lt; T &gt;.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

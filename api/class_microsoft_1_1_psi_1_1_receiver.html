@@ -70,6 +70,7 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_receiver-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Receiver&lt; T &gt; Class Template Reference</div>  </div>
@@ -83,6 +84,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a3273ae55917cf81242a3baf903dc3298"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html#a3273ae55917cf81242a3baf903dc3298">UnsubscribedHandler</a> (DateTime finalOriginatingTime)</td></tr>
+<tr class="memdesc:a3273ae55917cf81242a3baf903dc3298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receiver unsubscribed handler.  <a href="#a3273ae55917cf81242a3baf903dc3298">More...</a><br /></td></tr>
+<tr class="separator:a3273ae55917cf81242a3baf903dc3298"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a846f8e5eb086d8cafa9ddbfd1ee45527"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html#a846f8e5eb086d8cafa9ddbfd1ee45527">Dispose</a> ()</td></tr>
 <tr class="separator:a846f8e5eb086d8cafa9ddbfd1ee45527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a168d82c86b4dcf3b2fb4a05bf20085b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html#a168d82c86b4dcf3b2fb4a05bf20085b4">Recycle</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; T &gt; freeMessage)</td></tr>
@@ -103,8 +107,11 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:ab7794dd178189bca68258405172d548c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets receiver message recycler.  <a href="#ab7794dd178189bca68258405172d548c">More...</a><br /></td></tr>
 <tr class="separator:ab7794dd178189bca68258405172d548c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:ac0c77decf97d6d7e0fa68a104162565a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html#a3273ae55917cf81242a3baf903dc3298">UnsubscribedHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html#ac0c77decf97d6d7e0fa68a104162565a">Unsubscribed</a></td></tr>
+<tr class="memdesc:ac0c77decf97d6d7e0fa68a104162565a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event invoked after this receiver is unsubscribed from its source emitter.  <a href="#ac0c77decf97d6d7e0fa68a104162565a">More...</a><br /></td></tr>
+<tr class="separator:ac0c77decf97d6d7e0fa68a104162565a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_i_receiver"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_i_receiver')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_i_receiver.html">Microsoft.Psi.IReceiver</a></td></tr>
 <tr class="memitem:ab2a0a47dc27b21b7c082111b65ccf589 inherit properties_interface_microsoft_1_1_psi_1_1_i_receiver"><td class="memItemLeft" align="right" valign="top">object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_receiver.html#ab2a0a47dc27b21b7c082111b65ccf589">Owner</a><code> [get]</code></td></tr>
 <tr class="memdesc:ab2a0a47dc27b21b7c082111b65ccf589 inherit properties_interface_microsoft_1_1_psi_1_1_i_receiver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets receiver owner object.  <a href="interface_microsoft_1_1_psi_1_1_i_receiver.html#ab2a0a47dc27b21b7c082111b65ccf589">More...</a><br /></td></tr>
@@ -235,6 +242,32 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a3273ae55917cf81242a3baf903dc3298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3273ae55917cf81242a3baf903dc3298">&#9670;&nbsp;</a></span>UnsubscribedHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">delegate void <a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Microsoft.Psi.Receiver</a>&lt; T &gt;.UnsubscribedHandler </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>finalOriginatingTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Receiver unsubscribed handler. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">finalOriginatingTime</td><td>Originating time of final message posted.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="af4a8fe156ca754058f9aa643ac6dc97b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4a8fe156ca754058f9aa643ac6dc97b">&#9670;&nbsp;</a></span>Owner</h2>
@@ -265,6 +298,31 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets receiver message recycler. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="ac0c77decf97d6d7e0fa68a104162565a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c77decf97d6d7e0fa68a104162565a">&#9670;&nbsp;</a></span>Unsubscribed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html#a3273ae55917cf81242a3baf903dc3298">UnsubscribedHandler</a> <a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Microsoft.Psi.Receiver</a>&lt; T &gt;.Unsubscribed</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">add</span><span class="mlabel">remove</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event invoked after this receiver is unsubscribed from its source emitter. </p>
 
 </div>
 </div>

@@ -3,7 +3,6 @@ var searchData=
   ['datachunker',['DataChunker',['../class_microsoft_1_1_psi_1_1_remoting_1_1_data_chunker.html',1,'Microsoft::Psi::Remoting']]],
   ['datamanager',['DataManager',['../class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_data_manager.html',1,'Microsoft::Psi::Visualization::Data']]],
   ['dataset',['Dataset',['../class_microsoft_1_1_psi_1_1_data_1_1_dataset.html',1,'Microsoft::Psi::Data']]],
-  ['datasetviewmodel',['DatasetViewModel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_dataset_view_model.html',1,'Microsoft::Psi::Visualization::Datasets']]],
   ['datastorereader',['DataStoreReader',['../class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_data_store_reader.html',1,'Microsoft::Psi::Visualization::Data']]],
   ['dataunchunker',['DataUnchunker',['../class_microsoft_1_1_psi_1_1_remoting_1_1_data_unchunker.html',1,'Microsoft::Psi::Remoting']]],
   ['debugextensions',['DebugExtensions',['../class_microsoft_1_1_psi_1_1_debug_extensions.html',1,'Microsoft::Psi']]],

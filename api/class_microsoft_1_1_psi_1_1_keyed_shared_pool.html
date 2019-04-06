@@ -68,35 +68,34 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_keyed_shared_pool-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.KeyedSharedPool&lt; T, TKey &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Initializes a new instance of the KeyedSharedPool&lt;T, TKey&gt; class.  
+<p>Provides a pool of shared objects organized by a key. The key is used both to group interchangeable objects as well as a parameter to the object allocation function.  
  <a href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#details">More...</a></p>
 
 <p>Inherits IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ac98a77c70d566e07c8077aefb0034b61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#ac98a77c70d566e07c8077aefb0034b61">KeyedSharedPool</a> (Func&lt; TKey, T &gt; allocator, int initialSize=10)</td></tr>
+<tr class="memdesc:ac98a77c70d566e07c8077aefb0034b61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#ac98a77c70d566e07c8077aefb0034b61" title="Initializes a new instance of the KeyedSharedPool&lt;T, TKey&gt; class. ">KeyedSharedPool&lt;T, TKey&gt;</a> class.  <a href="#ac98a77c70d566e07c8077aefb0034b61">More...</a><br /></td></tr>
+<tr class="separator:ac98a77c70d566e07c8077aefb0034b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd58af6b11ca8dddd9ce0c3fcdacba07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#acd58af6b11ca8dddd9ce0c3fcdacba07">GetOrCreate</a> (TKey key)</td></tr>
+<tr class="memdesc:acd58af6b11ca8dddd9ce0c3fcdacba07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get or creates a shared object from the pool.  <a href="#acd58af6b11ca8dddd9ce0c3fcdacba07">More...</a><br /></td></tr>
+<tr class="separator:acd58af6b11ca8dddd9ce0c3fcdacba07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a105832e9dc75048e952ae89aa7e8cc29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#a105832e9dc75048e952ae89aa7e8cc29">Dispose</a> ()</td></tr>
 <tr class="separator:a105832e9dc75048e952ae89aa7e8cc29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a34fe47e12f1e2224cdc5a34ff0e77aee"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#a34fe47e12f1e2224cdc5a34ff0e77aee">GetOrCreate</a> (TKey key, Func&lt; T &gt; constructor)</td></tr>
-<tr class="memdesc:a34fe47e12f1e2224cdc5a34ff0e77aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pooled instance or create when necessary.  <a href="#a34fe47e12f1e2224cdc5a34ff0e77aee">More...</a><br /></td></tr>
-<tr class="separator:a34fe47e12f1e2224cdc5a34ff0e77aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Initializes a new instance of the KeyedSharedPool&lt;T, TKey&gt; class. </p>
+<div class="textblock"><p>Provides a pool of shared objects organized by a key. The key is used both to group interchangeable objects as well as a parameter to the object allocation function. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of shared resource.</td></tr>
-    <tr><td class="paramname">TKey</td><td>Type of shared resource key.</td></tr>
+    <tr><td class="paramname">T</td><td>The type of the objects managed by this pool.</td></tr>
+    <tr><td class="paramname">TKey</td><td>The type of the key.</td></tr>
   </table>
   </dd>
 </dl>
@@ -108,7 +107,45 @@ Static Public Member Functions</h2></td></tr>
 </dd>
 </dl>
 </div>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac98a77c70d566e07c8077aefb0034b61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac98a77c70d566e07c8077aefb0034b61">&#9670;&nbsp;</a></span>KeyedSharedPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html">Microsoft.Psi.KeyedSharedPool</a>&lt; T, TKey &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html">KeyedSharedPool</a> </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; TKey, T &gt;&#160;</td>
+          <td class="paramname"><em>allocator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>initialSize</em> = <code>10</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#ac98a77c70d566e07c8077aefb0034b61" title="Initializes a new instance of the KeyedSharedPool&lt;T, TKey&gt; class. ">KeyedSharedPool&lt;T, TKey&gt;</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">allocator</td><td>The allocation function for constructing a new object.</td></tr>
+    <tr><td class="paramname">initialSize</td><td>Initial size of each pool.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a105832e9dc75048e952ae89aa7e8cc29"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a105832e9dc75048e952ae89aa7e8cc29">&#9670;&nbsp;</a></span>Dispose()</h2>
 
@@ -128,49 +165,30 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a34fe47e12f1e2224cdc5a34ff0e77aee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34fe47e12f1e2224cdc5a34ff0e77aee">&#9670;&nbsp;</a></span>GetOrCreate()</h2>
+<a id="acd58af6b11ca8dddd9ce0c3fcdacba07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd58af6b11ca8dddd9ce0c3fcdacba07">&#9670;&nbsp;</a></span>GetOrCreate()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;T&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html">Microsoft.Psi.KeyedSharedPool</a>&lt; T, TKey &gt;.GetOrCreate </td>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;T&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html">Microsoft.Psi.KeyedSharedPool</a>&lt; T, TKey &gt;.GetOrCreate </td>
           <td>(</td>
           <td class="paramtype">TKey&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>key</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">Func&lt; T &gt;&#160;</td>
-          <td class="paramname"><em>constructor</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Get pooled instance or create when necessary. </p>
+<p>Get or creates a shared object from the pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>Shared resource key</td></tr>
-    <tr><td class="paramname">constructor</td><td>Constructor function called as necessary to create new instances</td></tr>
+    <tr><td class="paramname">key</td><td>The shared object key.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Shared resource</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared object from the pool.</dd></dl>
 
 </div>
 </div>

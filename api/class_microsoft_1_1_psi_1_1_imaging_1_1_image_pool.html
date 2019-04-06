@@ -74,20 +74,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Defines a pool of images  
+<p>Provides a pool of shared images.  
  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2aad1eaff8207008b62846cd226403f9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html#a2aad1eaff8207008b62846cd226403f9">GetOrCreate</a> (int width, int height, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:a2aad1eaff8207008b62846cd226403f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an image from the pool  <a href="#a2aad1eaff8207008b62846cd226403f9">More...</a><br /></td></tr>
+<tr class="memdesc:a2aad1eaff8207008b62846cd226403f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or creates an image from the pool.  <a href="#a2aad1eaff8207008b62846cd226403f9">More...</a><br /></td></tr>
 <tr class="separator:a2aad1eaff8207008b62846cd226403f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a833139be0d4eb4f956d6165aba4e0c7d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html#a833139be0d4eb4f956d6165aba4e0c7d">GetOrCreate</a> (System.Drawing.Bitmap image)</td></tr>
-<tr class="memdesc:a833139be0d4eb4f956d6165aba4e0c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a shared image from a managed Bitmap object by retrieving an existing image from the pool or allocating a new image.  <a href="#a833139be0d4eb4f956d6165aba4e0c7d">More...</a><br /></td></tr>
+<tr class="memdesc:a833139be0d4eb4f956d6165aba4e0c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or creates an image from the pool and initializes it with a managed Bitmap object.  <a href="#a833139be0d4eb4f956d6165aba4e0c7d">More...</a><br /></td></tr>
 <tr class="separator:a833139be0d4eb4f956d6165aba4e0c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines a pool of images </p>
+<div class="textblock"><p>Provides a pool of shared images. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2aad1eaff8207008b62846cd226403f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2aad1eaff8207008b62846cd226403f9">&#9670;&nbsp;</a></span>GetOrCreate() <span class="overload">[1/2]</span></h2>
@@ -129,16 +129,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Retrieves an image from the pool </p>
+<p>Gets or creates an image from the pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">width</td><td>Width of image requested</td></tr>
-    <tr><td class="paramname">height</td><td>Height of image requested</td></tr>
-    <tr><td class="paramname">pixelFormat</td><td>Pixel format for requested image</td></tr>
+    <tr><td class="paramname">width</td><td>The requested image width.</td></tr>
+    <tr><td class="paramname">height</td><td>The requested image height.</td></tr>
+    <tr><td class="paramname">pixelFormat</td><td>The requested image pixel format.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns an image from the pool</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared image from the pool.</dd></dl>
 
 </div>
 </div>
@@ -166,14 +166,14 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a shared image from a managed Bitmap object by retrieving an existing image from the pool or allocating a new image. </p>
+<p>Gets or creates an image from the pool and initializes it with a managed Bitmap object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">image</td><td>Bitmap from which to copy the image data</td></tr>
+    <tr><td class="paramname">image</td><td>A bitmap from which to copy the image data.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns an shared image from the pool containing a copy of the image data from "imageData"</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared image from the pool containing a copy of the image data from <em>image</em> .</dd></dl>
 
 </div>
 </div>

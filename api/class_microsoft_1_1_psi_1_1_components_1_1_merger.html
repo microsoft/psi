@@ -68,34 +68,26 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_components_1_1_merger-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Components.Merger&lt; TIn, TKey &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Combines the input messages from multiple inputs into a single output.  
+<p>Combines the input messages from multiple inputs; invoking given lambda for each.  
  <a href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#details">More...</a></p>
-
-<p>Inherits IProducer&lt; ValueTuple&lt; TKey, Message&lt; TIn &gt;&gt;&gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad86aff705d6b255b4632722cbb95efd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#ad86aff705d6b255b4632722cbb95efd0">Merger</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline)</td></tr>
-<tr class="memdesc:ad86aff705d6b255b4632722cbb95efd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#ad86aff705d6b255b4632722cbb95efd0" title="Initializes a new instance of the Merger&lt;TIn, TKey&gt; class. ">Merger&lt;TIn, TKey&gt;</a> class.  <a href="#ad86aff705d6b255b4632722cbb95efd0">More...</a><br /></td></tr>
-<tr class="separator:ad86aff705d6b255b4632722cbb95efd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb05fa39c27a67366961ee3e936285d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#a8cb05fa39c27a67366961ee3e936285d">Merger</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Action&lt; TKey, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TIn &gt;&gt; action)</td></tr>
+<tr class="memdesc:a8cb05fa39c27a67366961ee3e936285d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#a8cb05fa39c27a67366961ee3e936285d" title="Initializes a new instance of the Merger&lt;TIn, TKey&gt; class. ">Merger&lt;TIn, TKey&gt;</a> class.  <a href="#a8cb05fa39c27a67366961ee3e936285d">More...</a><br /></td></tr>
+<tr class="separator:a8cb05fa39c27a67366961ee3e936285d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0909709b907fbfd8fe46a6fea784ff3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#a0909709b907fbfd8fe46a6fea784ff3f">Add</a> (TKey key)</td></tr>
 <tr class="memdesc:a0909709b907fbfd8fe46a6fea784ff3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a key to which a receiver will be mapped.  <a href="#a0909709b907fbfd8fe46a6fea784ff3f">More...</a><br /></td></tr>
 <tr class="separator:a0909709b907fbfd8fe46a6fea784ff3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a26f11ace462067ffe7d50d22eab1d466"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; ValueTuple&lt; TKey, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TIn &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#a26f11ace462067ffe7d50d22eab1d466">Out</a> =&gt; this.output</td></tr>
-<tr class="separator:a26f11ace462067ffe7d50d22eab1d466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Combines the input messages from multiple inputs into a single output. </p>
+<div class="textblock"><p>Combines the input messages from multiple inputs; invoking given lambda for each. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TIn</td><td>The message type</td></tr>
@@ -104,8 +96,8 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad86aff705d6b255b4632722cbb95efd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad86aff705d6b255b4632722cbb95efd0">&#9670;&nbsp;</a></span>Merger()</h2>
+<a id="a8cb05fa39c27a67366961ee3e936285d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cb05fa39c27a67366961ee3e936285d">&#9670;&nbsp;</a></span>Merger()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -114,16 +106,27 @@ Public Attributes</h2></td></tr>
           <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html">Microsoft.Psi.Components.Merger</a>&lt; TIn, TKey &gt;.<a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html">Merger</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
-          <td class="paramname"><em>pipeline</em></td><td>)</td>
+          <td class="paramname"><em>pipeline</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Action&lt; TKey, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TIn &gt;&gt;&#160;</td>
+          <td class="paramname"><em>action</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#ad86aff705d6b255b4632722cbb95efd0" title="Initializes a new instance of the Merger&lt;TIn, TKey&gt; class. ">Merger&lt;TIn, TKey&gt;</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html#a8cb05fa39c27a67366961ee3e936285d" title="Initializes a new instance of the Merger&lt;TIn, TKey&gt; class. ">Merger&lt;TIn, TKey&gt;</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
+    <tr><td class="paramname">action</td><td>Action invoked for each key/message.</td></tr>
   </table>
   </dd>
 </dl>
@@ -155,23 +158,6 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Receiver having been mapped.</dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a26f11ace462067ffe7d50d22eab1d466"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26f11ace462067ffe7d50d22eab1d466">&#9670;&nbsp;</a></span>Out</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt;ValueTuple&lt;TKey, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt;TIn&gt; &gt; &gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_merger.html">Microsoft.Psi.Components.Merger</a>&lt; TIn, TKey &gt;.Out =&gt; this.output</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p></p>
 
 </div>
 </div>

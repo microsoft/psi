@@ -70,7 +70,6 @@ $(function() {
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_i_emitter.html#a528037cd291b10ca0070d37b7c623b13">Microsoft.Psi.IEmitter</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_i_stream_metadata.html#a52526c74de74451707afb7bb50c95a8a">Microsoft.Psi.IStreamMetadata</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_metadata.html#ae29cec6c67d65412d9aa2679f743f1c5">Microsoft.Psi.Metadata</a>
-, <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_i_stream_tree_node.html#adcb1c3891f0e000dd7a696516af1d190">Microsoft.Psi.Visualization.Datasets.IStreamTreeNode</a>
 </li>
 <li>Image
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a35d9e2c6397344c47fc4e11d73a1d6c2">Microsoft.Psi.Media.MediaSource</a>
@@ -106,7 +105,6 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a83e2193b1af3f247cbc300298e38b73b">Microsoft.Psi.Components.ParallelFixedLength&lt; TIn, TOut &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse.html#a354271ad4d134c6bcb5c0cff3166bd7d">Microsoft.Psi.Components.ParallelSparse&lt; TIn, TKey, TOut &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_variable_length.html#ad6a4e9691d6b8b01e499433b47450d84">Microsoft.Psi.Components.ParallelVariableLength&lt; TIn, TOut &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#a46dde2f463e71e90ac8e73f304bb87b3">Microsoft.Psi.Components.Sampler&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_simple_consumer.html#ae983d88e0f63de11043960aae38de7a2">Microsoft.Psi.Components.SimpleConsumer&lt; TIn &gt;</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html#a26f37c94d15ea17ed5baaf2e954a2920">Microsoft.Psi.IConsumer&lt; TIn &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_interop_1_1_transport_1_1_file_writer.html#a4f528fbdf0510fd3154748d15a8996a0">Microsoft.Psi.Interop.Transport.FileWriter&lt; T &gt;</a>
@@ -143,6 +141,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_acoustic_features_extractor_configuration.html#ace76e674338ce4b38b901e14e8ea4347">Microsoft.Psi.Audio.AcousticFeaturesExtractorConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_player_configuration.html#aeb41b0778a75f3203548b6fd82426890">Microsoft.Psi.Audio.AudioPlayerConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler_configuration.html#a495bd2728a01d793c77df49dc15a6bef">Microsoft.Psi.Audio.AudioResamplerConfiguration</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_azure_speech_recognizer_configuration.html#ae8d2cd6a3fa6a04f69d1ad030a26fb40">Microsoft.Psi.CognitiveServices.Speech.AzureSpeechRecognizerConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_bing_speech_recognizer_configuration.html#ab539a22542602bd313d9cf29836379f0">Microsoft.Psi.CognitiveServices.Speech.BingSpeechRecognizerConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer_configuration.html#a01641a59ef1a585f0e61c42110509fac">Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizerConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_recognizer_configuration.html#ad6299915cc276478aa4d87bb225c4e8a">Microsoft.Psi.Speech.SystemSpeechRecognizerConfiguration</a>
@@ -185,6 +184,9 @@ $(function() {
 </li>
 <li>IsCanceled
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#af3137053cd16b345cf435500a1241335">Microsoft.Psi.Visualization.Data.IStreamReader</a>
+</li>
+<li>IsClearRequired
+: <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html#a27a602569becfd45b8ce79e143e1fd46">Microsoft.Psi.Serialization.SerializationHandler&lt; T &gt;</a>
 </li>
 <li>IsClosed
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_i_interval.html#ae6c7a5964ad306330eb9f684368314e3">Microsoft.Psi.IInterval&lt; TPoint, TSpan, TEndpoint, T &gt;</a>
@@ -234,11 +236,11 @@ $(function() {
 <li>IsRestricted
 : <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abf14e67b7f71abcf38def4b7d6f9d925">Microsoft.Psi.Kinect.KinectBody</a>
 </li>
-<li>IsStream
-: <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_i_stream_tree_node.html#a752cc84e0aaa790b94011bfd1a881fbe">Microsoft.Psi.Visualization.Datasets.IStreamTreeNode</a>
-</li>
 <li>IsTracked
 : <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#acf4ebe7fcb6aacd415a99c1d3f8572ed">Microsoft.Psi.Kinect.KinectBody</a>
+</li>
+<li>IsTreeNodeExpanded
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#a24a0e59bd620b21fe5baaff248f89dba">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

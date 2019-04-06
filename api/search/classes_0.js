@@ -6,7 +6,6 @@ var searchData=
   ['animatedmodel3dvisualizationobjectconfiguration',['AnimatedModel3DVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_animated_model3_d_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['annotatedevent',['AnnotatedEvent',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotated_event.html',1,'Microsoft::Psi::Data::Annotations']]],
   ['annotatedeventdefinition',['AnnotatedEventDefinition',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotated_event_definition.html',1,'Microsoft::Psi::Data::Annotations']]],
-  ['annotatedeventvisualizationobject',['AnnotatedEventVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_annotated_event_visualization_object.html',1,'Microsoft::Psi::Visualization::Client']]],
   ['annotatedeventvisualizationobjectconfiguration',['AnnotatedEventVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_annotated_event_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['annotationexporter',['AnnotationExporter',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_exporter.html',1,'Microsoft::Psi::Data::Annotations']]],
   ['annotationgenerator',['AnnotationGenerator',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_generator.html',1,'Microsoft::Psi::Data::Annotations']]],
@@ -33,8 +32,10 @@ var searchData=
   ['audioplayerconfiguration',['AudioPlayerConfiguration',['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_player_configuration.html',1,'Microsoft::Psi::Audio']]],
   ['audioresampler',['AudioResampler',['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler.html',1,'Microsoft::Psi::Audio']]],
   ['audioresamplerconfiguration',['AudioResamplerConfiguration',['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler_configuration.html',1,'Microsoft::Psi::Audio']]],
-  ['audiovisualizationobject',['AudioVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_audio_visualization_object.html',1,'Microsoft::Psi::Visualization::Client']]],
   ['audiovisualizationobjectconfiguration',['AudioVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_audio_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['authentication',['Authentication',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_authentication.html',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
-  ['axisinfo',['AxisInfo',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_axis_info.html',1,'Microsoft::Psi::Visualization::Common']]]
+  ['axisinfo',['AxisInfo',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_axis_info.html',1,'Microsoft::Psi::Visualization::Common']]],
+  ['azureauthentication',['AzureAuthentication',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_azure_authentication.html',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
+  ['azurespeechrecognizer',['AzureSpeechRecognizer',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_azure_speech_recognizer.html',1,'Microsoft::Psi::CognitiveServices::Speech']]],
+  ['azurespeechrecognizerconfiguration',['AzureSpeechRecognizerConfiguration',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_azure_speech_recognizer_configuration.html',1,'Microsoft::Psi::CognitiveServices::Speech']]]
 ];

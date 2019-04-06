@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['keyedsharedpool',['KeyedSharedPool',['../class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#ac98a77c70d566e07c8077aefb0034b61',1,'Microsoft::Psi::KeyedSharedPool']]],
   ['kinectaudiobeaminfo',['KinectAudioBeamInfo',['../struct_microsoft_1_1_psi_1_1_kinect_1_1_kinect_audio_beam_info.html#ad5e9b223e924e3029b24e48f1b38ea01',1,'Microsoft::Psi::Kinect::KinectAudioBeamInfo']]],
   ['kinectcalibration',['KinectCalibration',['../class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#ad62176ebf2726fdbcbac0cf041b309dc',1,'Microsoft.Psi.Kinect.KinectCalibration.KinectCalibration()'],['../class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html#a65542eef0878ec131cfbca56a14bd8de',1,'Microsoft.Psi.Kinect.KinectCalibration.KinectCalibration(int colorWidth, int colorHeight, Matrix&lt; double &gt; colorTransform, double colorRadial0, double colorRadial1, double colorTangential0, double colorTangential1, Matrix&lt; double &gt; depthToColorTransform, int depthWidth, int depthHeight, Matrix&lt; double &gt; depthTransform, double depthRadial0, double depthRadial1, double depthTangential0, double depthTangential1)']]],
   ['kinectfacedetector',['KinectFaceDetector',['../class_microsoft_1_1_psi_1_1_kinect_1_1_face_1_1_kinect_face_detector.html#a697169effca5b38d7e4008737277124b',1,'Microsoft::Psi::Kinect::Face::KinectFaceDetector']]],

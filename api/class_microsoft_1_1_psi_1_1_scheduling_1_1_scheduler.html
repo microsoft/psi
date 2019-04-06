@@ -89,9 +89,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a97dcd3d1fbb588dabb0e71579104d931"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a97dcd3d1fbb588dabb0e71579104d931">TryExecute</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html">SynchronizationLock</a> synchronizationObject, Action action, DateTime startTime)</td></tr>
 <tr class="memdesc:a97dcd3d1fbb588dabb0e71579104d931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to execute the delegate immediately, on the calling thread, without scheduling.  <a href="#a97dcd3d1fbb588dabb0e71579104d931">More...</a><br /></td></tr>
 <tr class="separator:a97dcd3d1fbb588dabb0e71579104d931"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49169732a1317ce75c284489ad12249d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a49169732a1317ce75c284489ad12249d">Schedule</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html">SynchronizationLock</a> synchronizationObject, Action action, DateTime startTime, bool asContinuation=true)</td></tr>
-<tr class="memdesc:a49169732a1317ce75c284489ad12249d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a workitem and, if possible, kicks off a worker thread to pick it up  <a href="#a49169732a1317ce75c284489ad12249d">More...</a><br /></td></tr>
-<tr class="separator:a49169732a1317ce75c284489ad12249d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4da673575dff57d0b4f3782b6413f04d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a4da673575dff57d0b4f3782b6413f04d">Schedule</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html">SynchronizationLock</a> synchronizationObject, Action action, DateTime startTime, bool asContinuation=true, bool allowSchedulingPastFinalization=false)</td></tr>
+<tr class="memdesc:a4da673575dff57d0b4f3782b6413f04d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enqueues a workitem and, if possible, kicks off a worker thread to pick it up  <a href="#a4da673575dff57d0b4f3782b6413f04d">More...</a><br /></td></tr>
+<tr class="separator:a4da673575dff57d0b4f3782b6413f04d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac72c2fca73066a3a2ac0d47b9de394d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#ac72c2fca73066a3a2ac0d47b9de394d8">Freeze</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html">SynchronizationLock</a> synchronizationObject)</td></tr>
 <tr class="memdesc:ac72c2fca73066a3a2ac0d47b9de394d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prevent further scheduling.  <a href="#ac72c2fca73066a3a2ac0d47b9de394d8">More...</a><br /></td></tr>
 <tr class="separator:ac72c2fca73066a3a2ac0d47b9de394d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,9 +101,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4d2b3a94ef660c7ad317496755bbf43d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a4d2b3a94ef660c7ad317496755bbf43d">Start</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_clock.html">Clock</a> clock, bool delayFutureWorkitemsUntilDue)</td></tr>
 <tr class="memdesc:a4d2b3a94ef660c7ad317496755bbf43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start scheduler.  <a href="#a4d2b3a94ef660c7ad317496755bbf43d">More...</a><br /></td></tr>
 <tr class="separator:a4d2b3a94ef660c7ad317496755bbf43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84a4ad79c21b3377ad7d21d4398f014c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a84a4ad79c21b3377ad7d21d4398f014c">PauseForQuiescence</a> ()</td></tr>
-<tr class="memdesc:a84a4ad79c21b3377ad7d21d4398f014c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pause scheduler until all queues have drained.  <a href="#a84a4ad79c21b3377ad7d21d4398f014c">More...</a><br /></td></tr>
-<tr class="separator:a84a4ad79c21b3377ad7d21d4398f014c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22eeb8e893f1dde56a48a20690259516"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a22eeb8e893f1dde56a48a20690259516">Stop</a> (bool abandonPendingWorkitems=false)</td></tr>
 <tr class="memdesc:a22eeb8e893f1dde56a48a20690259516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reject any new scheduling and block until running threads finish their current work.  <a href="#a22eeb8e893f1dde56a48a20690259516">More...</a><br /></td></tr>
 <tr class="separator:a22eeb8e893f1dde56a48a20690259516"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,27 +239,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a84a4ad79c21b3377ad7d21d4398f014c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84a4ad79c21b3377ad7d21d4398f014c">&#9670;&nbsp;</a></span>PauseForQuiescence()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Scheduling.Scheduler.PauseForQuiescence </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Pause scheduler until all queues have drained. </p>
-
-</div>
-</div>
-<a id="a49169732a1317ce75c284489ad12249d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49169732a1317ce75c284489ad12249d">&#9670;&nbsp;</a></span>Schedule()</h2>
+<a id="a4da673575dff57d0b4f3782b6413f04d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4da673575dff57d0b4f3782b6413f04d">&#9670;&nbsp;</a></span>Schedule()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,7 +267,13 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>asContinuation</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>asContinuation</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>allowSchedulingPastFinalization</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -306,6 +290,7 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">action</td><td>Action to execute</td></tr>
     <tr><td class="paramname">startTime</td><td>Scheduled start time</td></tr>
     <tr><td class="paramname">asContinuation</td><td>Flag whether to execute once current operation completes</td></tr>
+    <tr><td class="paramname">allowSchedulingPastFinalization</td><td>Allow scheduling past finalization time.</td></tr>
   </table>
   </dd>
 </dl>

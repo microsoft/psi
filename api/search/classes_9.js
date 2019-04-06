@@ -1,8 +1,9 @@
 var searchData=
 [
   ['keyedsharedpool',['KeyedSharedPool',['../class_microsoft_1_1_psi_1_1_keyed_shared_pool.html',1,'Microsoft::Psi']]],
+  ['keyedsharedpool_3c_20microsoft_3a_3apsi_3a_3aimaging_3a_3aimage_2c_28int_2c_20int_2c_20pixelformat_29_3e',['KeyedSharedPool&lt; Microsoft::Psi::Imaging::Image,(int, int, PixelFormat)&gt;',['../class_microsoft_1_1_psi_1_1_keyed_shared_pool.html',1,'Microsoft::Psi']]],
+  ['keyedsharedpool_3c_20t_5b_5d_2c_20int_20_3e',['KeyedSharedPool&lt; T[], int &gt;',['../class_microsoft_1_1_psi_1_1_keyed_shared_pool.html',1,'Microsoft::Psi']]],
   ['kinectaudiobeaminfo',['KinectAudioBeamInfo',['../struct_microsoft_1_1_psi_1_1_kinect_1_1_kinect_audio_beam_info.html',1,'Microsoft::Psi::Kinect']]],
-  ['kinectbodies3dvisualizationobject',['KinectBodies3DVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_client_1_1_kinect_bodies3_d_visualization_object.html',1,'Microsoft::Psi::Visualization::Client']]],
   ['kinectbodies3dvisualizationobjectconfiguration',['KinectBodies3DVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_kinect_bodies3_d_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['kinectbody',['KinectBody',['../class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html',1,'Microsoft::Psi::Kinect']]],
   ['kinectcalibration',['KinectCalibration',['../class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_calibration.html',1,'Microsoft::Psi::Kinect']]],

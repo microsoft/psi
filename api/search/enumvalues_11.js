@@ -3,7 +3,6 @@ var searchData=
   ['saturation',['Saturation',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13a2e3307b9b1a2cc64b48f1cd6977a4b29',1,'Microsoft::Psi::Media_Interop']]],
   ['scanmode',['ScanMode',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942a8127be4a1d9d373c05e6e48f001a5ea4',1,'Microsoft::Psi::Media_Interop']]],
   ['sharpness',['Sharpness',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13ac50a2697a9800ac4fa2a230bee190adc',1,'Microsoft::Psi::Media_Interop']]],
-  ['singleuse',['SINGLEUSE',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_server.html#ad3c42cc72e00ec0749ef6bd036155ca3a2f218784343afeaa489b48023d281b54',1,'Microsoft::Psi::Visualization::Server']]],
   ['smpte170m',['SMPTE170M',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba2e079c2fa31081f70ae351862c5a2bf1',1,'Microsoft::Psi::Media']]],
   ['smpte240m',['SMPTE240M',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba4caac6367dac34f43c86c62b4fc624d0',1,'Microsoft::Psi::Media']]],
   ['sn9c10x',['SN9C10X',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7adb04c91c4135e83d301b48e3d48d40d9',1,'Microsoft::Psi::Media']]],
@@ -13,8 +12,6 @@ var searchData=
   ['step',['Step',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973a48c7c41b72e1d678923ce3571aa65b2d',1,'Microsoft::Psi::Visualization::Common']]],
   ['streammetadata',['StreamMetadata',['../namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41cad41aa02dcf5298202e860bef68835ad3',1,'Microsoft::Psi']]],
   ['success',['Success',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106a505a83f220c02df2f85c3810cd9ceb38',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
-  ['surrogate',['SURROGATE',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_server.html#ad3c42cc72e00ec0749ef6bd036155ca3ac8b1c91d6d338f0d4315bf3e44c0dec7',1,'Microsoft::Psi::Visualization::Server']]],
-  ['suspended',['SUSPENDED',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_server.html#ad3c42cc72e00ec0749ef6bd036155ca3a0cb707127aebaa0023eb38363993843a',1,'Microsoft::Psi::Visualization::Server']]],
   ['systembg470',['SystemBG470',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba517deff3c8d274d4cf7e9e5c89e25f9c',1,'Microsoft::Psi::Media']]],
   ['systemm470',['SystemM470',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba53890fb7401640c47fbf041a01ed69c6',1,'Microsoft::Psi::Media']]]
 ];

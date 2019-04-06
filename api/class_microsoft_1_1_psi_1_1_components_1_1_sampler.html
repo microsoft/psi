@@ -68,44 +68,52 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#properties">Properties</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_components_1_1_sampler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Components.Sampler&lt; T &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>I  
+<p>Component that implements a stream sampler.  
  <a href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html">Microsoft.Psi.IConsumer&lt; T &gt;</a>, and <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; T &gt;</a>.</p>
+<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; T, T &gt;</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a516786f6911a5cd3376d750e2bb73480"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#a516786f6911a5cd3376d750e2bb73480">Sampler</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_match_1_1_interpolator.html">Match.Interpolator</a>&lt; T &gt; interpolator, TimeSpan samplingInterval)</td></tr>
 <tr class="memdesc:a516786f6911a5cd3376d750e2bb73480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#a516786f6911a5cd3376d750e2bb73480" title="Initializes a new instance of the Sampler&lt;T&gt; class. ">Sampler&lt;T&gt;</a> class.  <a href="#a516786f6911a5cd3376d750e2bb73480">More...</a><br /></td></tr>
 <tr class="separator:a516786f6911a5cd3376d750e2bb73480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; T, T &gt;</a></td></tr>
+<tr class="memitem:ad4771eb944799bdd53c4c9743fdf71c2 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2">ConsumerProducer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline)</td></tr>
+<tr class="memdesc:ad4771eb944799bdd53c4c9743fdf71c2 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2" title="Initializes a new instance of the ConsumerProducer&lt;TIn, TOut&gt; class. ">ConsumerProducer&lt;TIn, TOut&gt;</a> class.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#ad4771eb944799bdd53c4c9743fdf71c2">More...</a><br /></td></tr>
+<tr class="separator:ad4771eb944799bdd53c4c9743fdf71c2 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:af849a34294a0adff3f294ae504a7ecd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#af849a34294a0adff3f294ae504a7ecd9">Out</a><code> [get]</code></td></tr>
-<tr class="separator:af849a34294a0adff3f294ae504a7ecd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46dde2f463e71e90ac8e73f304bb87b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#a46dde2f463e71e90ac8e73f304bb87b3">In</a><code> [get]</code></td></tr>
-<tr class="separator:a46dde2f463e71e90ac8e73f304bb87b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_i_consumer')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html">Microsoft.Psi.IConsumer&lt; T &gt;</a></td></tr>
-<tr class="memitem:a26f37c94d15ea17ed5baaf2e954a2920 inherit properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html#a26f37c94d15ea17ed5baaf2e954a2920">In</a><code> [get]</code></td></tr>
-<tr class="memdesc:a26f37c94d15ea17ed5baaf2e954a2920 inherit properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the input we receive messages on.  <a href="interface_microsoft_1_1_psi_1_1_i_consumer.html#a26f37c94d15ea17ed5baaf2e954a2920">More...</a><br /></td></tr>
-<tr class="separator:a26f37c94d15ea17ed5baaf2e954a2920 inherit properties_interface_microsoft_1_1_psi_1_1_i_consumer"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_i_producer"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_i_producer')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; T &gt;</a></td></tr>
-<tr class="memitem:a105253033c938a4e5b889415a942389d inherit properties_interface_microsoft_1_1_psi_1_1_i_producer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TOut &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html#a105253033c938a4e5b889415a942389d">Out</a><code> [get]</code></td></tr>
-<tr class="memdesc:a105253033c938a4e5b889415a942389d inherit properties_interface_microsoft_1_1_psi_1_1_i_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the stream to write messages to.  <a href="interface_microsoft_1_1_psi_1_1_i_producer.html#a105253033c938a4e5b889415a942389d">More...</a><br /></td></tr>
-<tr class="separator:a105253033c938a4e5b889415a942389d inherit properties_interface_microsoft_1_1_psi_1_1_i_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aa5b5dec1beee0dd4665f47c87652e603"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html#aa5b5dec1beee0dd4665f47c87652e603">Receive</a> (T message, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> e)</td></tr>
+<tr class="separator:aa5b5dec1beee0dd4665f47c87652e603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; T, T &gt;</a></td></tr>
+<tr class="memitem:a355b0fd7a21fa6ed1a811789b38f823e inherit pro_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#a355b0fd7a21fa6ed1a811789b38f823e">Receive</a> (TIn data, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> envelope)</td></tr>
+<tr class="memdesc:a355b0fd7a21fa6ed1a811789b38f823e inherit pro_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this method to process the incomming message and potentially publish one or more output messages. The input message payload is only valid for the duration of the call. If the data needs to be stored beyond the scope of this method, use the extension method Serializer.DeepClone&lt;T&gt;(T, ref T) to create a private copy.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#a355b0fd7a21fa6ed1a811789b38f823e">More...</a><br /></td></tr>
+<tr class="separator:a355b0fd7a21fa6ed1a811789b38f823e inherit pro_methods_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td colspan="2" onclick="javascript:toggleInherit('properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html">Microsoft.Psi.Components.ConsumerProducer&lt; T, T &gt;</a></td></tr>
+<tr class="memitem:aa258bd93f0f2853adb49ed7e73525fdb inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#aa258bd93f0f2853adb49ed7e73525fdb">In</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa258bd93f0f2853adb49ed7e73525fdb inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the input to receive messages on  <a href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#aa258bd93f0f2853adb49ed7e73525fdb">More...</a><br /></td></tr>
+<tr class="separator:aa258bd93f0f2853adb49ed7e73525fdb inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51b311c38805f699e6f527dba1475837 inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TOut &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#a51b311c38805f699e6f527dba1475837">Out</a><code> [get]</code></td></tr>
+<tr class="memdesc:a51b311c38805f699e6f527dba1475837 inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the stream to write messages to  <a href="class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html#a51b311c38805f699e6f527dba1475837">More...</a><br /></td></tr>
+<tr class="separator:a51b311c38805f699e6f527dba1475837 inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>I </p>
+<div class="textblock"><p>Component that implements a stream sampler. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of messages</td></tr>
+    <tr><td class="paramname">T</td><td>The type of messages to sample.</td></tr>
   </table>
   </dd>
 </dl>
@@ -154,9 +162,9 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Property Documentation</h2>
-<a id="a46dde2f463e71e90ac8e73f304bb87b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46dde2f463e71e90ac8e73f304bb87b3">&#9670;&nbsp;</a></span>In</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa5b5dec1beee0dd4665f47c87652e603"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b5dec1beee0dd4665f47c87652e603">&#9670;&nbsp;</a></span>Receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,36 +173,26 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_receiver.html">Receiver</a>&lt;T&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html">Microsoft.Psi.Components.Sampler</a>&lt; T &gt;.In</td>
+          <td class="memname">override void <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html">Microsoft.Psi.Components.Sampler</a>&lt; T &gt;.Receive </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
         </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p></p>
-
-</div>
-</div>
-<a id="af849a34294a0adff3f294ae504a7ecd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af849a34294a0adff3f294ae504a7ecd9">&#9670;&nbsp;</a></span>Out</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt;T&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_sampler.html">Microsoft.Psi.Components.Sampler</a>&lt; T &gt;.Out</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a>&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

@@ -76,10 +76,10 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Component that performs speech recognition using the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>.  
+<p>Component that performs speech recognition using the <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>.  
  <a href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_bing_speech_recognizer.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html">Microsoft.Psi.Components.AsyncConsumerProducer&lt; ValueTuple&lt; AudioBuffer, bool &gt;, IStreamingSpeechRecognitionResult &gt;</a>, and IDisposable.</p>
+<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html">Microsoft.Psi.Components.AsyncConsumerProducer&lt; ValueTuple&lt; AudioBuffer, bool &gt;, IStreamingSpeechRecognitionResult &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, and IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -92,6 +92,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8777d878e25bd658647b798e7dc13452"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_bing_speech_recognizer.html#a8777d878e25bd658647b798e7dc13452">Dispose</a> ()</td></tr>
 <tr class="memdesc:a8777d878e25bd658647b798e7dc13452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispose method.  <a href="#a8777d878e25bd658647b798e7dc13452">More...</a><br /></td></tr>
 <tr class="separator:a8777d878e25bd658647b798e7dc13452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a88ecac68677d38da6e79c3311c63a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_bing_speech_recognizer.html#ab0a88ecac68677d38da6e79c3311c63a">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:ab0a88ecac68677d38da6e79c3311c63a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#ab0a88ecac68677d38da6e79c3311c63a">More...</a><br /></td></tr>
+<tr class="separator:ab0a88ecac68677d38da6e79c3311c63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18d0125a4b0e0862ba9f4158c9850199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_bing_speech_recognizer.html#a18d0125a4b0e0862ba9f4158c9850199">Stop</a> ()</td></tr>
+<tr class="memdesc:a18d0125a4b0e0862ba9f4158c9850199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a18d0125a4b0e0862ba9f4158c9850199">More...</a><br /></td></tr>
+<tr class="separator:a18d0125a4b0e0862ba9f4158c9850199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html">Microsoft.Psi.Components.AsyncConsumerProducer&lt; ValueTuple&lt; AudioBuffer, bool &gt;, IStreamingSpeechRecognitionResult &gt;</a></td></tr>
 <tr class="memitem:a23b35db8eea089ab442c69c6d65c8033 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#a23b35db8eea089ab442c69c6d65c8033">AsyncConsumerProducer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline)</td></tr>
 <tr class="memdesc:a23b35db8eea089ab442c69c6d65c8033 inherit pub_methods_class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#a23b35db8eea089ab442c69c6d65c8033" title="Initializes a new instance of the AsyncConsumerProducer&lt;TIn, TOut&gt; class. ">AsyncConsumerProducer&lt;TIn, TOut&gt;</a> class.  <a href="class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer.html#a23b35db8eea089ab442c69c6d65c8033">More...</a><br /></td></tr>
@@ -128,8 +134,9 @@ Properties</h2></td></tr>
 <tr class="separator:a3ebd603c163e2dffbbe7b112b8e64fe3 inherit properties_class_microsoft_1_1_psi_1_1_components_1_1_async_consumer_producer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Component that performs speech recognition using the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>. </p>
-<p>The component takes in a stream of audio and performs speech-to-text recognition. It works in conjunction with the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a> and requires a subscription key in order to use. For more information, see the complete documentation for the <a href="https://www.luis.ai/help">Microsoft Cognitive Services Bing Speech API</a>. </p>
+<div class="textblock"><p>Component that performs speech recognition using the <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>. </p>
+<p>DEPRECATED - As the Bing Speech service will be retired soon, you can no longer obtain a new subscription key for this service. If you have previously obtained a subscription key for the Bing Speech service, then this key should continue to work with this component until the service is retired. If you do not have an existing subscription key for the Bing Speech service, please use the <a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_azure_speech_recognizer.html" title="Component that performs speech recognition using the Microsoft Cognitive Services Azure Speech API...">AzureSpeechRecognizer</a> component instead. You may obtain a subscription key for the Azure Speech service here: <a href="https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services">https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services</a>.</p>
+<p>This component takes in a stream of audio and performs speech-to-text recognition. It works in conjunction with the <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a> and requires a subscription key in order to use. For more information, see the complete documentation for the <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adbae4575c5a0b2054e8e50bdd3572a74"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adbae4575c5a0b2054e8e50bdd3572a74">&#9670;&nbsp;</a></span>BingSpeechRecognizer() <span class="overload">[1/2]</span></h2>
@@ -268,6 +275,49 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The Task representing the asynchronous operation.</dd></dl>
+
+</div>
+</div>
+<a id="ab0a88ecac68677d38da6e79c3311c63a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0a88ecac68677d38da6e79c3311c63a">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.CognitiveServices.Speech.BingSpeechRecognizer.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a18d0125a4b0e0862ba9f4158c9850199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18d0125a4b0e0862ba9f4158c9850199">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.CognitiveServices.Speech.BingSpeechRecognizer.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

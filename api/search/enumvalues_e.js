@@ -6,7 +6,7 @@ var searchData=
   ['pantiltrelative',['PanTiltRelative',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942a58be988e4ce3dd51b2541fc0be0f3ff0',1,'Microsoft::Psi::Media_Interop']]],
   ['pipelineexclusivedelay',['PipelineExclusiveDelay',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a12720470d610ba6ab74b742871087e65',1,'Microsoft::Psi']]],
   ['pipelineinclusivedelay',['PipelineInclusiveDelay',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a9cafeb9ccb75172db301c1c388fa7e6e',1,'Microsoft::Psi']]],
-  ['playback',['Playback',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_navigation.html#aaaea3fd974b32886de2ea75c3e5a9081a8dc55bfcd34d5dc5860d3fefba972b7c',1,'Microsoft::Psi::Visualization::Navigation']]],
+  ['playback',['Playback',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_navigation.html#a078489a82b219f7e200893b93bb47c03a8dc55bfcd34d5dc5860d3fefba972b7c',1,'Microsoft::Psi::Visualization::Navigation']]],
   ['plus',['Plus',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833a32ba78fe43257d3e7f88e3935a8ea0d4',1,'Microsoft::Psi::Visualization::Common']]],
   ['png',['PNG',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808ea55505ba281b015ec31f03ccb151b2a34',1,'Microsoft::Psi::Imaging::Image::CustomSerializer']]],
   ['point',['Point',['../namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284a2a3cd5946cfd317eb99c3d32e35e2d4c',1,'Microsoft::Psi::Imaging']]],

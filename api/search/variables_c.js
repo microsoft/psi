@@ -13,7 +13,7 @@ var searchData=
   ['managedcameracontrolproperties',['ManagedCameraControlProperties',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a0460174197fdce3e0998e709ec47b2cf',1,'Microsoft::Psi::Media_Interop::MediaCaptureDevice']]],
   ['maximum',['Maximum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#af630f2655aee1d9117a2bbab1613c51d',1,'Microsoft::Psi::Visualization::Data::IntervalData']]],
   ['maxsummaryinterval',['MaxSummaryInterval',['../class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_summary_manager.html#ab16d7df2ee30dbfb40efd632905252a1',1,'Microsoft::Psi::Visualization::Data::StreamSummaryManager']]],
-  ['messagecount',['MessageCount',['../class_microsoft_1_1_psi_1_1_visualization_1_1_datasets_1_1_stream_tree_node.html#aca394aebd967fa59a4910e053bf21091',1,'Microsoft::Psi::Visualization::Datasets::StreamTreeNode']]],
+  ['maxthreadcount',['MaxThreadCount',['../class_microsoft_1_1_psi_1_1_scheduling_1_1_simple_semaphore.html#ac960d4f69ab535a5f9ca55a5089c05cd',1,'Microsoft::Psi::Scheduling::SimpleSemaphore']]],
   ['microseconds',['MicroSeconds',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_internal_1_1_image_frame.html#a834dee5f95b8e0fc3df89c47ed00e6b8',1,'Microsoft::Psi::Media::MediaCaptureInternal::ImageFrame']]],
   ['minimum',['Minimum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a2fd61dd4619a1aa934e58fd5fee46233',1,'Microsoft::Psi::Visualization::Data::IntervalData']]]
 ];

@@ -78,13 +78,19 @@ $(function() {
 <p>A generator component that publishes messages of a specified type whenever an event is raised.  
  <a href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#details">More...</a></p>
 
-<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; TOut &gt;</a>, and IDisposable.</p>
+<p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">Microsoft.Psi.IProducer&lt; TOut &gt;</a>, <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>, and IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a836cfffdcdb44ca345896843843c5a3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#a836cfffdcdb44ca345896843843c5a3c">EventSource</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Action&lt; TEventHandler &gt; subscribe, Action&lt; TEventHandler &gt; unsubscribe, Func&lt; Action&lt; TOut &gt;, TEventHandler &gt; converter)</td></tr>
 <tr class="memdesc:a836cfffdcdb44ca345896843843c5a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#a836cfffdcdb44ca345896843843c5a3c" title="Initializes a new instance of the EventSource&lt;TEventHandler, TOut&gt; class. The component will subscrib...">EventSource&lt;TEventHandler, TOut&gt;</a> class. The component will subscribe to an event on startup via the <em>subscribe</em>  delegate, using the supplied <em>converter</em>  function to transform the Post action delegate into an event handler compatible with the external event that is being subscribed to.  <a href="#a836cfffdcdb44ca345896843843c5a3c">More...</a><br /></td></tr>
 <tr class="separator:a836cfffdcdb44ca345896843843c5a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafac5db8662b3a458283fa1c663b4009"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#aafac5db8662b3a458283fa1c663b4009">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:aafac5db8662b3a458283fa1c663b4009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#aafac5db8662b3a458283fa1c663b4009">More...</a><br /></td></tr>
+<tr class="separator:aafac5db8662b3a458283fa1c663b4009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3337f9d5dedc872aa2e35515f4a15898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#a3337f9d5dedc872aa2e35515f4a15898">Stop</a> ()</td></tr>
+<tr class="memdesc:a3337f9d5dedc872aa2e35515f4a15898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a3337f9d5dedc872aa2e35515f4a15898">More...</a><br /></td></tr>
+<tr class="separator:a3337f9d5dedc872aa2e35515f4a15898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0c7db6523a6cab0d106c3f15796dc49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html#ad0c7db6523a6cab0d106c3f15796dc49">Dispose</a> ()</td></tr>
 <tr class="memdesc:ad0c7db6523a6cab0d106c3f15796dc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disposes the component.  <a href="#ad0c7db6523a6cab0d106c3f15796dc49">More...</a><br /></td></tr>
 <tr class="separator:ad0c7db6523a6cab0d106c3f15796dc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,6 +183,49 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Disposes the component. </p>
+
+</div>
+</div>
+<a id="aafac5db8662b3a458283fa1c663b4009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafac5db8662b3a458283fa1c663b4009">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html">Microsoft.Psi.Components.EventSource</a>&lt; TEventHandler, TOut &gt;.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a3337f9d5dedc872aa2e35515f4a15898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3337f9d5dedc872aa2e35515f4a15898">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_event_source.html">Microsoft.Psi.Components.EventSource</a>&lt; TEventHandler, TOut &gt;.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

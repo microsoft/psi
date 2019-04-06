@@ -92,6 +92,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9f611642acece71714cf9d809ac5669c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#a9f611642acece71714cf9d809ac5669c">Dispose</a> ()</td></tr>
 <tr class="memdesc:a9f611642acece71714cf9d809ac5669c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispose method.  <a href="#a9f611642acece71714cf9d809ac5669c">More...</a><br /></td></tr>
 <tr class="separator:a9f611642acece71714cf9d809ac5669c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac507f6144a11fca8accdbb78c0131788"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#ac507f6144a11fca8accdbb78c0131788">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:ac507f6144a11fca8accdbb78c0131788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#ac507f6144a11fca8accdbb78c0131788">More...</a><br /></td></tr>
+<tr class="separator:ac507f6144a11fca8accdbb78c0131788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f192304bca097932acecf271ed26da9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#a5f192304bca097932acecf271ed26da9">Stop</a> ()</td></tr>
+<tr class="memdesc:a5f192304bca097932acecf271ed26da9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a5f192304bca097932acecf271ed26da9">More...</a><br /></td></tr>
+<tr class="separator:a5f192304bca097932acecf271ed26da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac12df37266209e6c5ec650374990c4d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#ac12df37266209e6c5ec650374990c4d1">AudioCapture</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture_configuration.html">AudioCaptureConfiguration</a> configuration)</td></tr>
 <tr class="memdesc:ac12df37266209e6c5ec650374990c4d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html" title="Component that captures and streams audio from an input device such as a microphone. ">AudioCapture</a> class.  <a href="#ac12df37266209e6c5ec650374990c4d1">More...</a><br /></td></tr>
 <tr class="separator:ac12df37266209e6c5ec650374990c4d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,6 +110,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9f611642acece71714cf9d809ac5669c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#a9f611642acece71714cf9d809ac5669c">Dispose</a> ()</td></tr>
 <tr class="memdesc:a9f611642acece71714cf9d809ac5669c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispose method.  <a href="#a9f611642acece71714cf9d809ac5669c">More...</a><br /></td></tr>
 <tr class="separator:a9f611642acece71714cf9d809ac5669c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac507f6144a11fca8accdbb78c0131788"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#ac507f6144a11fca8accdbb78c0131788">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:ac507f6144a11fca8accdbb78c0131788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline to start the component once all the subscriptions are established.   <a href="#ac507f6144a11fca8accdbb78c0131788">More...</a><br /></td></tr>
+<tr class="separator:ac507f6144a11fca8accdbb78c0131788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f192304bca097932acecf271ed26da9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_audio_capture.html#a5f192304bca097932acecf271ed26da9">Stop</a> ()</td></tr>
+<tr class="memdesc:a5f192304bca097932acecf271ed26da9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.   <a href="#a5f192304bca097932acecf271ed26da9">More...</a><br /></td></tr>
+<tr class="separator:a5f192304bca097932acecf271ed26da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -374,6 +386,92 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ac507f6144a11fca8accdbb78c0131788"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac507f6144a11fca8accdbb78c0131788">&#9670;&nbsp;</a></span>Start() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Audio.AudioCapture.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="ac507f6144a11fca8accdbb78c0131788"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac507f6144a11fca8accdbb78c0131788">&#9670;&nbsp;</a></span>Start() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Audio.AudioCapture.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline to start the component once all the subscriptions are established.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a5f192304bca097932acecf271ed26da9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f192304bca097932acecf271ed26da9">&#9670;&nbsp;</a></span>Stop() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Audio.AudioCapture.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="a5f192304bca097932acecf271ed26da9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f192304bca097932acecf271ed26da9">&#9670;&nbsp;</a></span>Stop() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Audio.AudioCapture.Stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a6af9adbcc4242c831399596c49878306">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

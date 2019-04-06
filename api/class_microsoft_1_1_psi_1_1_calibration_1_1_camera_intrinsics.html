@@ -69,6 +69,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -83,21 +84,21 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae49be70eb6b36a3b83953861ce2d2131"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ae49be70eb6b36a3b83953861ce2d2131">CameraIntrinsics</a> ()</td></tr>
-<tr class="memdesc:ae49be70eb6b36a3b83953861ce2d2131"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html" title="CameraIntrinsics defines the intrinsic properties for a given camera ">CameraIntrinsics</a> class.  <a href="#ae49be70eb6b36a3b83953861ce2d2131">More...</a><br /></td></tr>
-<tr class="separator:ae49be70eb6b36a3b83953861ce2d2131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a972d03d288287c04160e97d0481eb3a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a972d03d288287c04160e97d0481eb3a1">CameraIntrinsics</a> (int imageWidth, int imageHeight, Matrix&lt; double &gt; transform, Vector&lt; double &gt; radialDistortion=null, Vector&lt; double &gt; tangentialDistortion=null)</td></tr>
+<tr class="memdesc:a972d03d288287c04160e97d0481eb3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html" title="CameraIntrinsics defines the intrinsic properties for a given camera ">CameraIntrinsics</a> class.  <a href="#a972d03d288287c04160e97d0481eb3a1">More...</a><br /></td></tr>
+<tr class="separator:a972d03d288287c04160e97d0481eb3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c4310bba70600496213eccba70540cd"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a7c4310bba70600496213eccba70540cd">ToPixelSpace</a> (Point3D pt, bool distort)</td></tr>
-<tr class="memdesc:a7c4310bba70600496213eccba70540cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a point in the camera's local space to a pixel coordinate  <a href="#a7c4310bba70600496213eccba70540cd">More...</a><br /></td></tr>
+<tr class="memdesc:a7c4310bba70600496213eccba70540cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects a 3D point into the pixel space.   <a href="#a7c4310bba70600496213eccba70540cd">More...</a><br /></td></tr>
 <tr class="separator:a7c4310bba70600496213eccba70540cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7ec906995d092730d559c0c724c9298"><td class="memItemLeft" align="right" valign="top">Point3D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ab7ec906995d092730d559c0c724c9298">ToCameraSpace</a> (Point2D pt, double depth, bool undistort)</td></tr>
-<tr class="memdesc:ab7ec906995d092730d559c0c724c9298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a pixel coordinate back into a camera space coordinate  <a href="#ab7ec906995d092730d559c0c724c9298">More...</a><br /></td></tr>
+<tr class="memdesc:ab7ec906995d092730d559c0c724c9298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unprojects a point from pixel space into 3D space.   <a href="#ab7ec906995d092730d559c0c724c9298">More...</a><br /></td></tr>
 <tr class="separator:ab7ec906995d092730d559c0c724c9298"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a106556dabed6ec6beab5a5bf444b3761"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a106556dabed6ec6beab5a5bf444b3761">UndistortPoint</a> (Point2D distortedPt)</td></tr>
-<tr class="memdesc:a106556dabed6ec6beab5a5bf444b3761"><td class="mdescLeft">&#160;</td><td class="mdescRight">UndistortPoint applies the camera's radial and tangential undistortion to the specified (distorted) point. Point is camera space after projection (camera post-projection space).  <a href="#a106556dabed6ec6beab5a5bf444b3761">More...</a><br /></td></tr>
-<tr class="separator:a106556dabed6ec6beab5a5bf444b3761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a597ba3669ad42b617370f582c54f07fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a597ba3669ad42b617370f582c54f07fc">DistortPoint</a> (Point2D undistortedPt, out Point2D distortedPt)</td></tr>
-<tr class="memdesc:a597ba3669ad42b617370f582c54f07fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distort takes a camera post-projection coordinate and applies the distortion model to it.  <a href="#a597ba3669ad42b617370f582c54f07fc">More...</a><br /></td></tr>
+<tr class="memdesc:a597ba3669ad42b617370f582c54f07fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the distortion model to a point in the camera post-projection coordinates.The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients r - sqrt(Xd*Xd+Yd*Yd)Newton's method is used to find the inverse of this. That is Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd)   <a href="#a597ba3669ad42b617370f582c54f07fc">More...</a><br /></td></tr>
 <tr class="separator:a597ba3669ad42b617370f582c54f07fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106556dabed6ec6beab5a5bf444b3761"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a106556dabed6ec6beab5a5bf444b3761">UndistortPoint</a> (Point2D distortedPt)</td></tr>
+<tr class="memdesc:a106556dabed6ec6beab5a5bf444b3761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the camera's radial and tangential undistortion to the specified (distorted) point.The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients  <a href="#a106556dabed6ec6beab5a5bf444b3761">More...</a><br /></td></tr>
+<tr class="separator:a106556dabed6ec6beab5a5bf444b3761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -105,66 +106,63 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:af9592b31fa78a753b0b980b6c6525aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build is used to create our camera's intrinsic matrix. This matrix converts from camera space coordinates into pixel coordinates.  <a href="#af9592b31fa78a753b0b980b6c6525aea">More...</a><br /></td></tr>
 <tr class="separator:af9592b31fa78a753b0b980b6c6525aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ae70f89dbf7883b2bc8ff47a84d5862e2">FocalLength</a> =&gt; 0.5 * (this.FocalLengthXY.X + this.FocalLengthXY.Y)</td></tr>
+<tr class="separator:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a34c589ba5baa05cef03a1fa360389b5d"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a34c589ba5baa05cef03a1fa360389b5d">RadialDistortion</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a34c589ba5baa05cef03a1fa360389b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the camera's radial distortion coefficients This should be a 2x1 vector of coefficients.  <a href="#a34c589ba5baa05cef03a1fa360389b5d">More...</a><br /></td></tr>
+<tr class="memitem:a34c589ba5baa05cef03a1fa360389b5d"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a34c589ba5baa05cef03a1fa360389b5d">RadialDistortion</a><code> [get]</code></td></tr>
 <tr class="separator:a34c589ba5baa05cef03a1fa360389b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac50327fb34ba3b980f6ef5f414efc578"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ac50327fb34ba3b980f6ef5f414efc578">TangentialDistortion</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:ac50327fb34ba3b980f6ef5f414efc578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the camera's tangential distortion coefficients. This should be a 2x1 vector of coefficients.  <a href="#ac50327fb34ba3b980f6ef5f414efc578">More...</a><br /></td></tr>
+<tr class="memitem:ac50327fb34ba3b980f6ef5f414efc578"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ac50327fb34ba3b980f6ef5f414efc578">TangentialDistortion</a><code> [get]</code></td></tr>
 <tr class="separator:ac50327fb34ba3b980f6ef5f414efc578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d3d3dcff1f1a798fa4700cf48257db2"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a2d3d3dcff1f1a798fa4700cf48257db2">Transform</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a2d3d3dcff1f1a798fa4700cf48257db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the camera's instrinsic transform. This transform converts camera coordinates (in the camera's local space) into normalized device coordinates (NDC) ranging from -1..+1  <a href="#a2d3d3dcff1f1a798fa4700cf48257db2">More...</a><br /></td></tr>
+<tr class="memitem:a2d3d3dcff1f1a798fa4700cf48257db2"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a2d3d3dcff1f1a798fa4700cf48257db2">Transform</a><code> [get]</code></td></tr>
 <tr class="separator:a2d3d3dcff1f1a798fa4700cf48257db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2ecadc3c3364b8721b0117d0eae80fe"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ac2ecadc3c3364b8721b0117d0eae80fe">InvTransform</a><code> [get]</code></td></tr>
-<tr class="memdesc:ac2ecadc3c3364b8721b0117d0eae80fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the camera's inverse intrinsic transform.  <a href="#ac2ecadc3c3364b8721b0117d0eae80fe">More...</a><br /></td></tr>
 <tr class="separator:ac2ecadc3c3364b8721b0117d0eae80fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ae70f89dbf7883b2bc8ff47a84d5862e2">FocalLength</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the Focal length (in pixels)  <a href="#ae70f89dbf7883b2bc8ff47a84d5862e2">More...</a><br /></td></tr>
-<tr class="separator:ae70f89dbf7883b2bc8ff47a84d5862e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba6679c54778bb08ed99ca37708692e2"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#aba6679c54778bb08ed99ca37708692e2">FocalLengthXY</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aba6679c54778bb08ed99ca37708692e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the Focal length separated in X and Y (in pixels)  <a href="#aba6679c54778bb08ed99ca37708692e2">More...</a><br /></td></tr>
+<tr class="memitem:aba6679c54778bb08ed99ca37708692e2"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#aba6679c54778bb08ed99ca37708692e2">FocalLengthXY</a><code> [get]</code></td></tr>
 <tr class="separator:aba6679c54778bb08ed99ca37708692e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cf4790972f95454c139b00948ddde2c"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a3cf4790972f95454c139b00948ddde2c">PrincipalPoint</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a3cf4790972f95454c139b00948ddde2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the principal point (in pixels)  <a href="#a3cf4790972f95454c139b00948ddde2c">More...</a><br /></td></tr>
+<tr class="memitem:a3cf4790972f95454c139b00948ddde2c"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a3cf4790972f95454c139b00948ddde2c">PrincipalPoint</a><code> [get]</code></td></tr>
 <tr class="separator:a3cf4790972f95454c139b00948ddde2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace491dbd3e73dfa1bb3a08f6c5aecb9d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ace491dbd3e73dfa1bb3a08f6c5aecb9d">ImageWidth</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:ace491dbd3e73dfa1bb3a08f6c5aecb9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the width of the image plane in pixels  <a href="#ace491dbd3e73dfa1bb3a08f6c5aecb9d">More...</a><br /></td></tr>
+<tr class="memitem:ace491dbd3e73dfa1bb3a08f6c5aecb9d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#ace491dbd3e73dfa1bb3a08f6c5aecb9d">ImageWidth</a><code> [get]</code></td></tr>
 <tr class="separator:ace491dbd3e73dfa1bb3a08f6c5aecb9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75685f5988c275ed3be9ec2557933054"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a75685f5988c275ed3be9ec2557933054">ImageHeight</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a75685f5988c275ed3be9ec2557933054"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the height of the image plane in pixels  <a href="#a75685f5988c275ed3be9ec2557933054">More...</a><br /></td></tr>
+<tr class="memitem:a75685f5988c275ed3be9ec2557933054"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html#a75685f5988c275ed3be9ec2557933054">ImageHeight</a><code> [get]</code></td></tr>
 <tr class="separator:a75685f5988c275ed3be9ec2557933054"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">Microsoft.Psi.Calibration.ICameraIntrinsics</a></td></tr>
-<tr class="memitem:a97183049e5fa7d3c653903bdb8899de0 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a97183049e5fa7d3c653903bdb8899de0">Transform</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a97183049e5fa7d3c653903bdb8899de0 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the Instrinsic matrix  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a97183049e5fa7d3c653903bdb8899de0">More...</a><br /></td></tr>
+<tr class="memitem:a97183049e5fa7d3c653903bdb8899de0 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a97183049e5fa7d3c653903bdb8899de0">Transform</a><code> [get]</code></td></tr>
+<tr class="memdesc:a97183049e5fa7d3c653903bdb8899de0 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the intrinsics matrix. This transform converts camera coordinates (in the camera's local space) into normalized device coordinates (NDC) ranging from -1 .. +1  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a97183049e5fa7d3c653903bdb8899de0">More...</a><br /></td></tr>
 <tr class="separator:a97183049e5fa7d3c653903bdb8899de0 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1c3a0ccdc98461955d85cf71066fb2e inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Matrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af1c3a0ccdc98461955d85cf71066fb2e">InvTransform</a><code> [get]</code></td></tr>
-<tr class="memdesc:af1c3a0ccdc98461955d85cf71066fb2e inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the inverse of Instrinsic matrix  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af1c3a0ccdc98461955d85cf71066fb2e">More...</a><br /></td></tr>
+<tr class="memdesc:af1c3a0ccdc98461955d85cf71066fb2e inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the inverse of instrinsics matrix.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af1c3a0ccdc98461955d85cf71066fb2e">More...</a><br /></td></tr>
 <tr class="separator:af1c3a0ccdc98461955d85cf71066fb2e inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad7f3f6bd72aff3a2d250021b194188a inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aad7f3f6bd72aff3a2d250021b194188a">RadialDistortion</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aad7f3f6bd72aff3a2d250021b194188a inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the radial distortion parameters  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aad7f3f6bd72aff3a2d250021b194188a">More...</a><br /></td></tr>
+<tr class="memitem:aad7f3f6bd72aff3a2d250021b194188a inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aad7f3f6bd72aff3a2d250021b194188a">RadialDistortion</a><code> [get]</code></td></tr>
+<tr class="memdesc:aad7f3f6bd72aff3a2d250021b194188a inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the radial distortion parameters.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aad7f3f6bd72aff3a2d250021b194188a">More...</a><br /></td></tr>
 <tr class="separator:aad7f3f6bd72aff3a2d250021b194188a inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf17a42d79cd04881b045de702d1f46f inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aaf17a42d79cd04881b045de702d1f46f">TangentialDistortion</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aaf17a42d79cd04881b045de702d1f46f inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the tangential distortion parameters  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aaf17a42d79cd04881b045de702d1f46f">More...</a><br /></td></tr>
+<tr class="memitem:aaf17a42d79cd04881b045de702d1f46f inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aaf17a42d79cd04881b045de702d1f46f">TangentialDistortion</a><code> [get]</code></td></tr>
+<tr class="memdesc:aaf17a42d79cd04881b045de702d1f46f inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the tangential distortion parameters.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aaf17a42d79cd04881b045de702d1f46f">More...</a><br /></td></tr>
 <tr class="separator:aaf17a42d79cd04881b045de702d1f46f inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77da88775d682f37f1a4d8fbcae4f4fe inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a77da88775d682f37f1a4d8fbcae4f4fe">FocalLength</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a77da88775d682f37f1a4d8fbcae4f4fe inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the focal length  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a77da88775d682f37f1a4d8fbcae4f4fe">More...</a><br /></td></tr>
+<tr class="memitem:a77da88775d682f37f1a4d8fbcae4f4fe inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a77da88775d682f37f1a4d8fbcae4f4fe">FocalLength</a><code> [get]</code></td></tr>
+<tr class="memdesc:a77da88775d682f37f1a4d8fbcae4f4fe inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the focal length (in pixels).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a77da88775d682f37f1a4d8fbcae4f4fe">More...</a><br /></td></tr>
 <tr class="separator:a77da88775d682f37f1a4d8fbcae4f4fe inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed0e91a3b452cb4eef066d8b80d13598 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aed0e91a3b452cb4eef066d8b80d13598">PrincipalPoint</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aed0e91a3b452cb4eef066d8b80d13598 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the principal point  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aed0e91a3b452cb4eef066d8b80d13598">More...</a><br /></td></tr>
+<tr class="memitem:aaac2f268ece1c05af95013cd7005c9fd inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aaac2f268ece1c05af95013cd7005c9fd">FocalLengthXY</a><code> [get]</code></td></tr>
+<tr class="memdesc:aaac2f268ece1c05af95013cd7005c9fd inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or the focal length separated in X and Y (in pixels).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aaac2f268ece1c05af95013cd7005c9fd">More...</a><br /></td></tr>
+<tr class="separator:aaac2f268ece1c05af95013cd7005c9fd inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed0e91a3b452cb4eef066d8b80d13598 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aed0e91a3b452cb4eef066d8b80d13598">PrincipalPoint</a><code> [get]</code></td></tr>
+<tr class="memdesc:aed0e91a3b452cb4eef066d8b80d13598 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the principal point (in pixels).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aed0e91a3b452cb4eef066d8b80d13598">More...</a><br /></td></tr>
 <tr class="separator:aed0e91a3b452cb4eef066d8b80d13598 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6a517700f551fa6fc76c5bdfcf28251 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af6a517700f551fa6fc76c5bdfcf28251">ImageWidth</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:af6a517700f551fa6fc76c5bdfcf28251 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets width of the camera's image in pixels  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af6a517700f551fa6fc76c5bdfcf28251">More...</a><br /></td></tr>
+<tr class="memitem:af6a517700f551fa6fc76c5bdfcf28251 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af6a517700f551fa6fc76c5bdfcf28251">ImageWidth</a><code> [get]</code></td></tr>
+<tr class="memdesc:af6a517700f551fa6fc76c5bdfcf28251 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the width of the camera's image (in pixels).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#af6a517700f551fa6fc76c5bdfcf28251">More...</a><br /></td></tr>
 <tr class="separator:af6a517700f551fa6fc76c5bdfcf28251 inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9f71ebd52fb00fd4968b142a9d4a1cb inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aa9f71ebd52fb00fd4968b142a9d4a1cb">ImageHeight</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aa9f71ebd52fb00fd4968b142a9d4a1cb inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets height of the camera's image in pixels  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aa9f71ebd52fb00fd4968b142a9d4a1cb">More...</a><br /></td></tr>
+<tr class="memitem:aa9f71ebd52fb00fd4968b142a9d4a1cb inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aa9f71ebd52fb00fd4968b142a9d4a1cb">ImageHeight</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa9f71ebd52fb00fd4968b142a9d4a1cb inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the camera's image (in pixels).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#aa9f71ebd52fb00fd4968b142a9d4a1cb">More...</a><br /></td></tr>
 <tr class="separator:aa9f71ebd52fb00fd4968b142a9d4a1cb inherit properties_interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>CameraIntrinsics defines the intrinsic properties for a given camera </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae49be70eb6b36a3b83953861ce2d2131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae49be70eb6b36a3b83953861ce2d2131">&#9670;&nbsp;</a></span>CameraIntrinsics()</h2>
+<a id="a972d03d288287c04160e97d0481eb3a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a972d03d288287c04160e97d0481eb3a1">&#9670;&nbsp;</a></span>CameraIntrinsics()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,13 +170,52 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname">Microsoft.Psi.Calibration.CameraIntrinsics.CameraIntrinsics </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>imageWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>imageHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Matrix&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Vector&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>radialDistortion</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Vector&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>tangentialDistortion</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_camera_intrinsics.html" title="CameraIntrinsics defines the intrinsic properties for a given camera ">CameraIntrinsics</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imageWidth</td><td>The width of the image.</td></tr>
+    <tr><td class="paramname">imageHeight</td><td>The height of the image.</td></tr>
+    <tr><td class="paramname">transform</td><td>The intrinsics transform matrix.</td></tr>
+    <tr><td class="paramname">radialDistortion</td><td>The radial distortion parameters.</td></tr>
+    <tr><td class="paramname">tangentialDistortion</td><td>The tangential distortion parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -290,19 +327,9 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Distort takes a camera post-projection coordinate and applies the distortion model to it. </p>
-<p>The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients r - sqrt(Xd*Xd+Yd*Yd)</p>
-<p>We use Newton's method for finding the inverse of this. That is Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">undistortedPt</td><td>Defines our distorted point in camera post-projection coordinates</td></tr>
-    <tr><td class="paramname">distortedPt</td><td>Returns the distorted point</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if 'distortedPt' contains the distorted point. false if it didn't converge</dd></dl>
+<p>Applies the distortion model to a point in the camera post-projection coordinates.The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients r - sqrt(Xd*Xd+Yd*Yd)Newton's method is used to find the inverse of this. That is Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd)  </p>
 
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a9c4760ebc15a960385f3585a074ef279">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a2be33302e6b21272996d9a6599077912">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
 
 </div>
 </div>
@@ -338,18 +365,9 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts a pixel coordinate back into a camera space coordinate </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pt</td><td>Point in pixel space</td></tr>
-    <tr><td class="paramname">depth</td><td>Depth at specified pixel</td></tr>
-    <tr><td class="paramname">undistort</td><td>Should undistortion be applied to the point</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a point in camera space</dd></dl>
+<p>Unprojects a point from pixel space into 3D space.  </p>
 
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a9f838d8d27246aa779625de7bcf042e6">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a1ccb4005a1e95dc44537465433e4c15d">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
 
 </div>
 </div>
@@ -379,17 +397,9 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts a point in the camera's local space to a pixel coordinate </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pt</td><td>Point in camera space</td></tr>
-    <tr><td class="paramname">distort</td><td>Should distortion be applied to the project pixel coordinates</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Point in pixel space</dd></dl>
+<p>Projects a 3D point into the pixel space.  </p>
 
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#abb40dc0207710e94ccb5fa9b0fd7d762">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a6b9a0babbe80fef71031eef2081d1d7b">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
 
 </div>
 </div>
@@ -409,45 +419,30 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>UndistortPoint applies the camera's radial and tangential undistortion to the specified (distorted) point. Point is camera space after projection (camera post-projection space). </p>
-<p>The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">distortedPt</td><td>Distorted point in camera post-projection coordinates</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Undistorted coordinates in camera post-projection coordinates</dd></dl>
+<p>Applies the camera's radial and tangential undistortion to the specified (distorted) point.The undistortion is defined by the following equations: Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd where: Xd,Yd - distorted point's coordinates Xu,Yu - undistorted point's coordinates K0,K1 - radial distortion coefficients T0,T1 - tangential distortion coefficients </p>
 
-<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a68cf0f04c0b5f108e83a22a002b8585b">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html#a8397afba233c0c7fd9fc29419a45f60f">Microsoft.Psi.Calibration.ICameraIntrinsics</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Property Documentation</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="ae70f89dbf7883b2bc8ff47a84d5862e2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae70f89dbf7883b2bc8ff47a84d5862e2">&#9670;&nbsp;</a></span>FocalLength</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double Microsoft.Psi.Calibration.CameraIntrinsics.FocalLength</td>
+          <td class="memname">double Microsoft.Psi.Calibration.CameraIntrinsics.FocalLength =&gt; 0.5 * (this.FocalLengthXY.X + this.FocalLengthXY.Y)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Gets or sets the Focal length (in pixels) </p>
+<p></p>
 
 </div>
 </div>
+<h2 class="groupheader">Property Documentation</h2>
 <a id="aba6679c54778bb08ed99ca37708692e2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba6679c54778bb08ed99ca37708692e2">&#9670;&nbsp;</a></span>FocalLengthXY</h2>
 
@@ -463,12 +458,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the Focal length separated in X and Y (in pixels) </p>
+<p></p>
 
 </div>
 </div>
@@ -487,12 +482,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the height of the image plane in pixels </p>
+<p></p>
 
 </div>
 </div>
@@ -511,12 +506,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the width of the image plane in pixels </p>
+<p></p>
 
 </div>
 </div>
@@ -540,7 +535,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the camera's inverse intrinsic transform. </p>
+<p></p>
 
 </div>
 </div>
@@ -559,12 +554,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the principal point (in pixels) </p>
+<p></p>
 
 </div>
 </div>
@@ -583,12 +578,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the camera's radial distortion coefficients This should be a 2x1 vector of coefficients. </p>
+<p></p>
 
 </div>
 </div>
@@ -607,12 +602,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the camera's tangential distortion coefficients. This should be a 2x1 vector of coefficients. </p>
+<p></p>
 
 </div>
 </div>
@@ -631,12 +626,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the camera's instrinsic transform. This transform converts camera coordinates (in the camera's local space) into normalized device coordinates (NDC) ranging from -1..+1 </p>
+<p></p>
 
 </div>
 </div>
