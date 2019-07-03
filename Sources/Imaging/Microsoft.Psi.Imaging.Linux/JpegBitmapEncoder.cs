@@ -12,15 +12,15 @@ namespace Microsoft.Psi.Imaging
     public class JpegBitmapEncoder : IBitmapEncoder
     {
         /// <summary>
-        /// Gets or sets JPEG image quality (0-100)
+        /// Gets or sets JPEG image quality (0-100).
         /// </summary>
         public int QualityLevel { get; set; }
 
         /// <summary>
         /// Encode image to stream.
         /// </summary>
-        /// <param name="image">Image to be encoded</param>
-        /// <param name="stream">Stream to which to encode</param>
+        /// <param name="image">Image to be encoded.</param>
+        /// <param name="stream">Stream to which to encode.</param>
         public void Encode(Image image, Stream stream)
         {
             var data = SKData.Create(image.ImageData, image.Size);

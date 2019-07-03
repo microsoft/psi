@@ -4,17 +4,17 @@
 namespace Microsoft.Psi.Scheduling
 {
     /// <summary>
-    /// The counters we support
+    /// The counters we support.
     /// </summary>
     public enum PriorityQueueCounters
     {
         /// <summary>
-        /// The number of workitems in the global queue
+        /// The number of workitems in the global queue.
         /// </summary>
         WorkitemCount,
 
         /// <summary>
-        /// The time it took to enqueue a workitem
+        /// The time it took to enqueue a workitem.
         /// </summary>
         EnqueuingTime,
 
@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Scheduling
         DequeueingTime,
 
         /// <summary>
-        /// The ratio of retries per enqueue operation
+        /// The ratio of retries per enqueue operation.
         /// </summary>
         EnqueueingRetries,
 
@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Scheduling
         EnqueueingCount,
 
         /// <summary>
-        /// The ratio of retries per dequeue operation
+        /// The ratio of retries per dequeue operation.
         /// </summary>
         DequeuingRetries,
 

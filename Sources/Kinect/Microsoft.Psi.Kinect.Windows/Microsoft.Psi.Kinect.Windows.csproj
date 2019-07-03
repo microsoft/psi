@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <Description>Provides APIs and components for using Microsoft Kinect sensor.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.Kinect</RootNamespace>
@@ -28,14 +28,14 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.7.0" />
-    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0-beta05" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.8.1" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
     <PackageReference Include="Microsoft.Kinect" Version="2.0.1410.19000" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
   </ItemGroup> 
   <ItemGroup>
     <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
     <ProjectReference Include="..\..\Calibration\Microsoft.Psi.Calibration\Microsoft.Psi.Calibration.csproj" />
-    <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
   </ItemGroup>

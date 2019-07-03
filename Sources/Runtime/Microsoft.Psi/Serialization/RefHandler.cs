@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Serialization
     /// The typed contract enables efficient calling (no type lookup and parameter boxing),
     /// while the untyped contract is used for polymorphic fields.
     /// </summary>
-    /// <typeparam name="T">The type of objects the handler understands</typeparam>
+    /// <typeparam name="T">The type of objects the handler understands.</typeparam>
     internal sealed class RefHandler<T> : SerializationHandler<T>
     {
         // the inner serializer and serializerEx
@@ -145,9 +145,9 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Creates a deep clone of the given object.
         /// </summary>
-        /// <param name="instance">The instance to clone</param>
-        /// <param name="target">An optional existing instance to clone into</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <param name="instance">The instance to clone.</param>
+        /// <param name="target">An optional existing instance to clone into.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         public override void Clone(T instance, ref T target, SerializationContext context)
         {
             // null?
@@ -199,8 +199,8 @@ namespace Microsoft.Psi.Serialization
         /// An opportunity to clear an instance before caching it for future reuse as a cloning or deserialization target.
         /// The method is expected to call Serializer.Clear on all reference-type fields.
         /// </summary>
-        /// <param name="target">The instance to clear</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="target">The instance to clear.</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         public override void Clear(ref T target, SerializationContext context)
         {
             // null?

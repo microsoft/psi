@@ -8,12 +8,18 @@ namespace TurtleROSSample
     using System.Linq;
     using Microsoft.Psi;
 
+    /// <summary>
+    /// ROS turtle sample program.
+    /// </summary>
     public class Program
     {
         private const string RosSlave = "127.0.0.1"; // replace with your dev machine
         private const string RosMaster = "127.0.0.1"; // replace with your ROS machine
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        public static void Main()
         {
             using (var pipeline = Pipeline.Create())
             {
@@ -22,11 +28,6 @@ namespace TurtleROSSample
                 var keys = Generators.Sequence(pipeline, Keys(), TimeSpan.FromMilliseconds(10));
                 keys.Select(k =>
                 {
-                    if (k == ConsoleKey.Q)
-                    {
-                        turtle.Stop();
-                    }
-
                     var linear = k == ConsoleKey.UpArrow ? 1f : k == ConsoleKey.DownArrow ? -1f : 0f;
                     var angular = k == ConsoleKey.LeftArrow ? 1f : k == ConsoleKey.RightArrow ? -1f : 0f;
                     return Tuple.Create(linear, angular);

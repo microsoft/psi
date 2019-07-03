@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private Point lastMouseLeftButtonDownPoint = new Point(0, 0);
 
         /// <summary>
-        /// Gets the Mouse Position the last time the user clicked in this panel
+        /// Gets the Mouse Position the last time the user clicked in this panel.
         /// </summary>
         public Point LastMouseLeftButtonDownPoint => this.lastMouseLeftButtonDownPoint;
 
@@ -136,14 +136,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
                 return this.mouseRightButtonDownCommand;
             }
-        }
-
-        /// <inheritdoc />
-        protected override void InitNew()
-        {
-            base.InitNew();
-            this.Configuration.Name = "Timeline Panel";
-            this.Configuration.Height = 70;
         }
 
         /// <inheritdoc />

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.Media</RootNamespace>
     <Description>Provides Windows-specific APIs and components for audio-visual capture and processing.</Description>
@@ -35,7 +35,7 @@
     <Compile Include="..\Shared\FFMPEGMediaSource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="SharpDX.MediaFoundation" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>

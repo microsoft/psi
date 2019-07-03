@@ -33,7 +33,7 @@ namespace Microsoft.Psi.Serialization
     /// In such cases the runtime might not be able to find the correct type to use,
     /// and can only instantiate the correct deserializer if one of the following is true:
     /// - a serializer has been explicitly registered for the object type or contract using <see cref="Register{T, TSerializer}()"/>
-    /// - a type has been explicitly registered with an explicit contract name <see cref="Register{T}(string)"/> or <see cref="Register{T, TSerializer}(string)"/>/>
+    /// - a type has been explicitly registered with an explicit contract name <see cref="Register{T}(string)"/> or <see cref="Register{T, TSerializer}(string)"/>.
     /// </remarks>
     public class KnownSerializers
     {
@@ -187,7 +187,7 @@ namespace Microsoft.Psi.Serialization
         public RuntimeInfo RuntimeVersion => this.runtimeVersion;
 
         /// <summary>
-        /// Gets the set of schemas in use
+        /// Gets the set of schemas in use.
         /// </summary>
         public IDictionary<string, TypeSchema> Schemas => this.schemas;
 
@@ -195,7 +195,7 @@ namespace Microsoft.Psi.Serialization
         /// Registers type T with the specified contract name.
         /// Use this overload to deserialize data persisted before a type name change.
         /// </summary>
-        /// <typeparam name="T">The type to use when deserializing objects with the specified contract</typeparam>
+        /// <typeparam name="T">The type to use when deserializing objects with the specified contract.</typeparam>
         /// <param name="contractName">The name to remap. This can be a full type name or a contract name.</param>
         public void Register<T>(string contractName) => this.Register(typeof(T), contractName);
 
@@ -203,7 +203,7 @@ namespace Microsoft.Psi.Serialization
         /// Registers a given type with the specified contract name.
         /// Use this overload to deserialize data persisted before a type name change.
         /// </summary>
-        /// <param name="type">The type to use when deserializing objects with the specified contract</param>
+        /// <param name="type">The type to use when deserializing objects with the specified contract.</param>
         /// <param name="contractName">The name to remap. This can be a full type name or a contract name.</param>
         public void Register(Type type, string contractName)
         {
@@ -221,7 +221,7 @@ namespace Microsoft.Psi.Serialization
         /// Registers a type that the serialization system would not be able find or resolve.
         /// Use this overload when type T is required in a polymorphic context.
         /// </summary>
-        /// <typeparam name="T">The type to serialize</typeparam>
+        /// <typeparam name="T">The type to serialize.</typeparam>
         /// <remarks>
         /// When deserializing a polymorphic field, the field's object value might have a different type than the declared (static)
         /// type of the field (e.g the field is declared as IEnumerable{int} and is assigned a MyCustomCollection{int}).
@@ -233,7 +233,7 @@ namespace Microsoft.Psi.Serialization
         /// Registers a serializer based on type.
         /// Use this overload to register a custom implementation of <see cref="ISerializer{T}"/>.
         /// </summary>
-        /// <typeparam name="T">The type being serialized</typeparam>
+        /// <typeparam name="T">The type being serialized.</typeparam>
         /// <typeparam name="TSerializer">
         /// The corresponding type of serializer to use, which replaces any <see cref="SerializerAttribute"/> annotation.
         /// </typeparam>
@@ -245,7 +245,7 @@ namespace Microsoft.Psi.Serialization
         /// Use this overload to deserialize data persisted before a type name change.
         /// </summary>
         /// <param name="contractName">The previous contract name of type T.</param>
-        /// <typeparam name="T">The type being serialized</typeparam>
+        /// <typeparam name="T">The type being serialized.</typeparam>
         /// <typeparam name="TSerializer">
         /// The corresponding type of serializer to use, which replaces any <see cref="SerializerAttribute"/> annotation.
         /// </typeparam>
@@ -409,8 +409,8 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Creates and registers a handler for the specified type according to the rules added so far.
         /// </summary>
-        /// <typeparam name="T">The type being serialized</typeparam>
-        /// <returns>The newly created handler</returns>
+        /// <typeparam name="T">The type being serialized.</typeparam>
+        /// <returns>The newly created handler.</returns>
         private SerializationHandler AddHandler<T>()
         {
             SerializationHandler handler = null;

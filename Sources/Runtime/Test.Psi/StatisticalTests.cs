@@ -828,7 +828,7 @@ namespace Test.Psi
             this.RunTest(Operators.Std,
                 (
                     new double[] { }, // empty sequence
-                    new double[] { }  // expected output
+                    new double[] { } // expected output
                 ),
                 (
                     new[] { -1.0, -2.0, -3.0, 0.0, 1.0, 2.0 }, // real numbers only

@@ -14,6 +14,9 @@ namespace Test.Psi.Data.Annotations
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Test.Psi.Common;
 
+    /// <summary>
+    /// Annotation tests.
+    /// </summary>
     [TestClass]
     public class AnnotationTests
     {
@@ -29,7 +32,7 @@ namespace Test.Psi.Data.Annotations
             BelowToBetween,
             BetweenToAbove,
             AboveToBetween,
-            BetweenToBelow
+            BetweenToBelow,
         }
 
         /// <summary>

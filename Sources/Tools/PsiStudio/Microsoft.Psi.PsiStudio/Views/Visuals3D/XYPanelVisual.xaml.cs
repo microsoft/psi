@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for XYPanelVisual.xaml
+    /// Interaction logic for XYPanelVisual.xaml.
     /// </summary>
     public partial class XYPanelVisual : ModelVisual3D
     {

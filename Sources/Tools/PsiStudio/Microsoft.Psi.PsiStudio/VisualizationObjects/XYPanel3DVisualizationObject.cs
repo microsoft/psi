@@ -24,23 +24,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         protected override void InitNew()
         {
-            base.InitNew();
-            this.XYVisualizationPanel = new XYVisualizationPanel();
             this.Visual3D = new XYPanelVisual(this);
+            this.XYVisualizationPanel = new XYVisualizationPanel();
+            base.InitNew();
         }
 
         /// <inheritdoc />
-        protected override void OnConnect()
+        protected override void OnAddToPanel()
         {
-            base.OnConnect();
+            base.OnAddToPanel();
             this.Container.AddPanel(this.XYVisualizationPanel, false);
         }
 
         /// <inheritdoc/>
-        protected override void OnDisconnect()
+        protected override void OnRemoveFromPanel()
         {
             this.Container.RemovePanel(this.XYVisualizationPanel);
-            base.OnDisconnect();
+            base.OnRemoveFromPanel();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Microsoft.Psi
         /// A base counter that is used in the calculation of time or count averages, such as <see cref="AverageCount64"/>. Stores the denominator for calculating a counter to present
         /// "time per operation" or "count per operation".
         /// </summary>
-        AverageBase
+        AverageBase,
     }
 
     /// <summary>

@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Scheduling
 {
     /// <summary>
-    /// A workitem priority queue that locks workitems before dequeueing
+    /// A workitem priority queue that locks workitems before dequeueing.
     /// </summary>
     internal class WorkItemQueue : PriorityQueue<WorkItem>
     {

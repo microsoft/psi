@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Config
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class KinectDepth3DVisualizationObjectConfiguration : Instant3DVisualizationObjectConfiguration
     {
-        private Color color;
+        private Color color = Colors.Navy;
 
         /// <summary>
         /// Gets or sets the mesh color.

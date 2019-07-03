@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Imaging
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Pipeline component that converts an Image to a different format
+    /// Pipeline component that converts an Image to a different format.
     /// </summary>
     internal class ToPixelFormat : ConsumerProducer<Shared<Image>, Shared<Image>>
     {
@@ -16,8 +16,8 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="ToPixelFormat"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipline</param>
-        /// <param name="pixelFormat">The pixel format to conver to</param>
+        /// <param name="pipeline">The pipline.</param>
+        /// <param name="pixelFormat">The pixel format to conver to.</param>
         internal ToPixelFormat(Pipeline pipeline, PixelFormat pixelFormat)
             : base(pipeline)
         {
@@ -25,9 +25,9 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Receiver for incoming image
+        /// Receiver for incoming image.
         /// </summary>
-        /// <param name="sharedImage">The incoming image</param>
+        /// <param name="sharedImage">The incoming image.</param>
         /// <param name="e">The message envelope for the incoming image.</param>
         protected override void Receive(Shared<Image> sharedImage, Envelope e)
         {

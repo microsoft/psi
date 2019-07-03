@@ -6,17 +6,17 @@ namespace Microsoft.Psi.Kinect.Face
     using Microsoft.Kinect.Face;
 
     /// <summary>
-    /// Defines settings used to configure the Kinect's Face detector/tracking
+    /// Defines settings used to configure the Kinect's Face detector/tracking.
     /// </summary>
     public class KinectFaceDetectorConfiguration
     {
         /// <summary>
-        /// Defines the default configuration settings
+        /// Defines the default configuration settings.
         /// </summary>
         public static readonly KinectFaceDetectorConfiguration Default = new KinectFaceDetectorConfiguration();
 
         /// <summary>
-        /// Gets or sets which face detection features are reported
+        /// Gets or sets which face detection features are reported.
         /// </summary>
         public FaceFrameFeatures FaceFrameFeatures { get; set; } =
             FaceFrameFeatures.BoundingBoxInColorSpace |

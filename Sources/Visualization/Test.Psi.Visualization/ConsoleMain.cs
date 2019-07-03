@@ -10,6 +10,7 @@ namespace Test.Psi.Visualization.Client
         /// <summary>
         /// Entry point to make debugging easier and faster.
         /// </summary>
+        /// <param name="args">Command-line args.</param>
         public static void Main(string[] args)
         {
             TestRunner.RunAll(args);

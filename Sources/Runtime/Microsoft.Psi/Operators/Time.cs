@@ -7,7 +7,7 @@ namespace Microsoft.Psi
     using System.Linq;
 
     /// <summary>
-    /// Extension methods that simplify operator usage
+    /// Extension methods that simplify operator usage.
     /// </summary>
     public static partial class Operators
     {

@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Serialization
     /// <summary>
     /// Serializers for types that can't really be serialized.
     /// </summary>
-    /// <typeparam name="T">The type known to not be serializable</typeparam>
+    /// <typeparam name="T">The type known to not be serializable.</typeparam>
     internal class NonSerializer<T> : ISerializer<T>
     {
         private const int Version = 0;

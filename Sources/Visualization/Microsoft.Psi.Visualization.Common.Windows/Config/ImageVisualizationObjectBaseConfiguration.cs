@@ -12,17 +12,17 @@ namespace Microsoft.Psi.Visualization.Config
     public class ImageVisualizationObjectBaseConfiguration : InstantVisualizationObjectConfiguration
     {
         /// <summary>
-        /// Indicates whether we will flip the image horizontally
+        /// Indicates whether we will flip the image horizontally.
         /// </summary>
-        private bool horizontalFlip;
+        private bool horizontalFlip = false;
 
         /// <summary>
-        /// Indicates whether we are stretching to fit
+        /// Indicates whether we are stretching to fit.
         /// </summary>
-        private bool stretchToFit;
+        private bool stretchToFit = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether we will flip the image horizontally
+        /// Gets or sets a value indicating whether we will flip the image horizontally.
         /// </summary>
         [DataMember]
         public bool HorizontalFlip
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether we are stretching to fit
+        /// Gets or sets a value indicating whether we are stretching to fit.
         /// </summary>
         [DataMember]
         public bool StretchToFit

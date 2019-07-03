@@ -10,14 +10,14 @@ namespace Microsoft.Psi.Kinect
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Producer that project points into 3D
+    /// Producer that project points into 3D.
     /// </summary>
     public sealed class ProjectTo3D : ConsumerProducer<(Shared<Image>, List<Point2D>, IKinectCalibration), List<Point3D>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectTo3D"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
         public ProjectTo3D(Pipeline pipeline)
             : base(pipeline)
         {
@@ -26,11 +26,11 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Method for projecting a point in pixel coordinate from the color camera into the world coordinates by determining the corresponding depth pixel.
         /// </summary>
-        /// <param name="kinectCalibration">Calibration object for the Kinect camera</param>
-        /// <param name="point2D">Pixel coordinates in the color camera</param>
+        /// <param name="kinectCalibration">Calibration object for the Kinect camera.</param>
+        /// <param name="point2D">Pixel coordinates in the color camera.</param>
         /// <param name="colorExtrinsicsInverse">The inverse of the color extrinsics matrix (kinectCalibration.ColorExtrinsics). Passed in so that it isn't computed each time this method is called.</param>
-        /// <param name="depthImage">Depth map</param>
-        /// <returns>Point in world coordinates</returns>
+        /// <param name="depthImage">Depth map.</param>
+        /// <returns>Point in world coordinates.</returns>
         public static Point3D? ColorPointToWorldSpace(IKinectCalibration kinectCalibration, Point2D point2D, Matrix<double> colorExtrinsicsInverse, Shared<Image> depthImage)
         {
             Point3D pointInCameraSpace = kinectCalibration.ColorIntrinsics.ToCameraSpace(point2D, 1.0, true);
@@ -44,10 +44,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Callback from pipeline that receives an image, a list of points, and a calibration
+        /// Callback from pipeline that receives an image, a list of points, and a calibration.
         /// </summary>
-        /// <param name="data">list of points to transform, associated camera image, and calibration</param>
-        /// <param name="e">Pipeline sample information</param>
+        /// <param name="data">list of points to transform, associated camera image, and calibration.</param>
+        /// <param name="e">Pipeline sample information.</param>
         protected override void Receive((Shared<Image>, List<Point2D>, IKinectCalibration) data, Envelope e)
         {
             var point2DList = data.Item2;

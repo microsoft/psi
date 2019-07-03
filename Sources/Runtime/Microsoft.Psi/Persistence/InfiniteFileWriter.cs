@@ -133,6 +133,7 @@ namespace Microsoft.Psi.Persistence
             }
 
             this.disposed = true;
+            this.localWritePulse.Set();
             this.localWritePulse.Dispose();
             this.localWritePulse = null;
             this.globalWritePulse.Dispose();

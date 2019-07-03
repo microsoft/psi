@@ -14,8 +14,8 @@ namespace Microsoft.Psi.Components
     /// If the data needs to be stored beyond the scope of this method,
     /// use the extension method <see cref="Serializer.DeepClone{T}(T, ref T)"/> to create a private copy.
     /// </summary>
-    /// <typeparam name="TIn">The input message type</typeparam>
-    /// <typeparam name="TOut">The result type</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
+    /// <typeparam name="TOut">The result type.</typeparam>
     public class Processor<TIn, TOut> : ConsumerProducer<TIn, TOut>
     {
         private Action<TIn, Envelope, Emitter<TOut>> transform;
@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Components
         /// Initializes a new instance of the <see cref="Processor{TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
-        /// <param name="transform">A delegate that processes the input data and potentially publishes a result on the provided <see cref="Emitter{T}"/></param>
+        /// <param name="transform">A delegate that processes the input data and potentially publishes a result on the provided <see cref="Emitter{T}"/>.</param>
         public Processor(Pipeline pipeline, Action<TIn, Envelope, Emitter<TOut>> transform)
             : base(pipeline)
         {

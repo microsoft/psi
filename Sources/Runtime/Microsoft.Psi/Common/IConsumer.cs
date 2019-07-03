@@ -4,9 +4,9 @@
 namespace Microsoft.Psi
 {
     /// <summary>
-    /// Components that implement this interface are simple, single input consumers
+    /// Components that implement this interface are simple, single input consumers.
     /// </summary>
-    /// <typeparam name="TIn">The type of message input</typeparam>
+    /// <typeparam name="TIn">The type of message input.</typeparam>
     public interface IConsumer<TIn>
     {
         /// <summary>

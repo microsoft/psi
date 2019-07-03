@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IMFMediaBuffer COM interface (defined in Mfobjects.h)
+    /// IMFMediaBuffer COM interface (defined in Mfobjects.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMFMediaBufferIIDString)]

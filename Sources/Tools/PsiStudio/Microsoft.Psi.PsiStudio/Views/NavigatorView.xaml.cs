@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Views
     using Microsoft.Psi.Visualization.Navigation;
 
     /// <summary>
-    /// Interaction logic for NavigatorView.xaml
+    /// Interaction logic for NavigatorView.xaml.
     /// </summary>
     public partial class NavigatorView : UserControl
     {

@@ -7,7 +7,7 @@
 
 In recent years, we have seen significant progress with machine learning techniques on various perceptual and control problems. At the same time, building end-to-end, multimodal, integrative-AI systems that leverage multiple technologies and act autonomously or interact with people in the open world remains a challenging, error-prone and time-consuming engineering task. Numerous challenges stem from the sheer complexity of these systems and are amplified by the lack of appropriate infrastructure and development tools.
 
-The Platform for Situated Intelligence project aims to address these issues and provide a basis for developing, fielding and studying integrative-AI systems. The platform consists of three layers. The **Runtime** layer provides a parallel programming model centered around temporal streams of data, and enables easy development of components and applications using .NET, while retaining the performance properties of natively written, carefully tuned systems. A set of **Tools** enable multimodal data visualization, annotations, analytics, tuning and machine learning scenarios. Finally, an open ecosystem of **Components** encapsulate various AI technologies and allow for quick compositing of integrative-AI applications. For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](https://microsoft.github.io/psi/PlatformOverview).
+The Platform for Situated Intelligence project aims to address these issues and provide a basis for developing, fielding and studying integrative-AI systems. The platform consists of three layers. The **Runtime** layer provides a parallel programming model centered around temporal streams of data, and enables easy development of components and applications using .NET, while retaining the performance properties of natively written, carefully tuned systems. A set of **Tools** enable multimodal data visualization, annotations, analytics, tuning and machine learning scenarios. Finally, an open ecosystem of **Components** encapsulate various AI technologies and allow for quick compositing of integrative-AI applications. For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](https://github.com/microsoft/psi/wiki/Platform-Overview).
 
 # Using and Building
 
@@ -15,24 +15,27 @@ Platform for Situated Intelligence is built on the .NET Framework. Large parts o
 
 You can build applications based on Platform for Situated Intelligence either by leveraging nuget packages, or by cloning and building the code. Below are instructions:
 
-* [Using \\psi via Nuget packages](https://microsoft.github.io/psi/UsingWithNuget)
-* [Building the \\psi codebase](https://microsoft.github.io/psi/BuildingPsi)
+* [Using \\psi via Nuget packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages)
+* [Building the \\psi codebase](https://github.com/microsoft/psi/wiki/Building-the-Codebase)
 
 # Getting Started
 
-__Brief Introduction__. To get started with using Platform for Situated Intelligence, the [Brief Introduction](https://microsoft.github.io/psi/tutorials) page provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist to and replay data from disk. We recommend that you work through the examples in this tutorial to familiarize yourself with these core concepts.
+__Brief Introduction__. A number of [tutorials](https://github.com/microsoft/psi/wiki/Basic-Tutorials) are available to get you started with using Platform for Situated Intelligence. We recommend starting with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction), which provides a guided walk-through for some of the main concepts in \psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist to and replay streams from disk. We recommend that you first work through the examples in this tutorial to familiarize yourself with these core concepts. The [Writing Components](https://github.com/microsoft/psi/wiki/Writing-Components) tutorial explains how to write new \psi components, and the [Delivery Policies](https://github.com/microsoft/psi/wiki/Delivery-Policies) tutorial describes how to control throughput on streams in your application.
 
-__Samples__. After going through this first brief tutorial, it may be helpful to look through the set of [Samples](https://microsoft.github.io/psi/samples) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \\psi.
+__Advanced Topics__. A number of documents on more [advanced topics](https://github.com/microsoft/psi/wiki/More-Advanced-Topics) describe in more detail various aspects of the framework, including [stream operators](https://github.com/microsoft/psi/wiki/Stream-Operators), [synchronization](https://github.com/microsoft/psi/wiki/Synchronization), [remoting](https://github.com/microsoft/psi/wiki/Remoting), [interop](https://github.com/microsoft/psi/wiki/Interop), [shared objects and memory management](https://github.com/microsoft/psi/wiki/Shared-Objects), etc.
 
-__In-depth Topics__. Finally, additional information is provided in a set of [In-Depth Topics](https://microsoft.github.io/psi/topics) that dive into ore detail on various aspects of the framework including synchronization, persistence, remoting, visualization etc. 
 
-Like the rest of the codebase, the documentation is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it `documentation`, as this will help us target our documentation development efforts to the highest priority needs.
+__Samples__. Besides the tutorials and topics, it may be helpful to look through the set of [Samples](https://github.com/microsoft/psi/wiki/Samples) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \psi.
+
+__Components__. Additional useful information regarding available packages and components can be found in the [NuGet packages list](https://github.com/microsoft/psi/wiki/List-of-NuGet-Packages) and in the [component list](https://github.com/microsoft/psi/wiki/List-of-Components) pages. The latter page also has pointers to other repositories by third parties containing other \psi components.
+
+__Documentation__. Like the rest of the codebase, the documentation available in the [wiki](https://github.com/microsoft/psi/wiki) is still under construction and in various phases of completion. If you need further explanation in any of these areas, please open an issue, label it `documentation`, as this will help us target our documentation development efforts to the highest priority needs.
 
 # Disclaimer
 
 The codebase is currently in beta and various aspects of the platform are at different levels of completion and robustness. There are probably still bugs in the code and we will likely be making breaking API changes. We plan to continuously improve the framework and we encourage the community to contribute.
 
-For additional information, we recommend you read the [Known Issues](https://microsoft.github.io/psi/ReleaseNotes#KnownIssues) section from the [Release Notes](https://microsoft.github.io/psi/ReleaseNotes) document, which provides more information about important issues that are known and which we plan to address in the near future. Also, the [Roadmap](https://microsoft.github.io/psi/Roadmap) document provides more information about our future plans. 
+The [Roadmap](https://github.com/microsoft/psi/wiki/Roadmap) document provides more information about our future plans. 
 
 # Getting Help
 
@@ -40,7 +43,7 @@ If you find a reproducible bug or if you would like to request a new feature or 
 
 # Contributing
 
-We hope the community can help improve and evolve Platform for Situated Intelligence. If you plan to contribute to the codebase, please read the [Contributing Guidelines](CONTRIBUTING.md) document. It describes how the source code is organized and things you need to know before making any source code changes.
+We hope the community can help improve and evolve Platform for Situated Intelligence. If you plan to contribute to the codebase, please read the [Contributing Guidelines](https://github.com/microsoft/psi/wiki/Contributing) page. It describes how the source code is organized and things you need to know before making any source code changes.
 
 # Who is Using
 
@@ -52,9 +55,10 @@ Platform for Situated Intelligence is currently being used in a number of indust
 
 If you would like to be added to this list, just add a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
 
-## License
+# License
 
 Platform for Situated Intelligence is available under an [MIT License](LICENSE.txt). See also [Third Party Notices](ThirdPartyNotices.txt).
+
 # Acknowledgments
 
 We would like to thank our internal and external early adopters for the feedback provided during the alpha testing period, including (but not limited to): [Daniel McDuff](http://alumni.media.mit.edu/~djmcduff/) and [Kael Rowan](https://www.microsoft.com/en-us/research/people/kaelr/) at MSR, Chirag Raman and Louis-Phillipe Morency in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at CMU, as well as adopters in the [SLIM research group](https://coen.boisestate.edu/slim/) at Boise State and in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/) at Northwestern University.

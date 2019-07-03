@@ -7,10 +7,10 @@ namespace Microsoft.Psi.Imaging
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Defines the delegate used to perform an image transformation
+    /// Defines the delegate used to perform an image transformation.
     /// </summary>
-    /// <param name="src">Source image to be transformed</param>
-    /// <param name="dest">Destination for transformed image</param>
+    /// <param name="src">Source image to be transformed.</param>
+    /// <param name="dest">Destination for transformed image.</param>
     public delegate void TransformDelegate(Image src, Image dest);
 
     /// <summary>
@@ -24,9 +24,9 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTransformer"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="transformer">Function for transforming the source image</param>
-        /// <param name="pixelFormat">Pixel format for destination image</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="transformer">Function for transforming the source image.</param>
+        /// <param name="pixelFormat">Pixel format for destination image.</param>
         public ImageTransformer(Pipeline pipeline, TransformDelegate transformer, PixelFormat pixelFormat)
             : base(pipeline)
         {
@@ -35,10 +35,10 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Pipeline callback for processing this component
+        /// Pipeline callback for processing this component.
         /// </summary>
-        /// <param name="sharedImage">Image to transform</param>
-        /// <param name="e">Pipeline sample information</param>
+        /// <param name="sharedImage">Image to transform.</param>
+        /// <param name="e">Pipeline sample information.</param>
         protected override void Receive(Shared<Image> sharedImage, Envelope e)
         {
             using (var psiImageDest = ImagePool.GetOrCreate(sharedImage.Resource.Width, sharedImage.Resource.Height, this.pixelFormat))

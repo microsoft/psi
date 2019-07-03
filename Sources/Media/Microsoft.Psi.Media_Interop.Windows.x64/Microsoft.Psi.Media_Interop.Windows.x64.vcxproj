@@ -12,11 +12,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5348A94F-7B3A-4B42-8555-2A1491971090}</ProjectGuid>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>VideoCapture</RootNamespace>
     <ProjectName>Microsoft.Psi.Media_Interop.Windows.x64</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(FFMPEGDir)'!=''">
     <FFMpegLibs>$(FFMPEGDir)\lib\avdevice.lib;$(FFMPEGDir)\lib\avfilter.lib;$(FFMPEGDir)\lib\postproc.lib;$(FFMPEGDir)\lib\swresample.lib;$(FFMPEGDir)\lib\avcodec.lib;$(FFMPEGDir)\lib\avformat.lib;$(FFMPEGDir)\lib\avutil.lib;$(FFMPEGDir)\lib\swscale.lib</FFMpegLibs>

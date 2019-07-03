@@ -160,7 +160,7 @@ namespace Microsoft.Psi.Audio
                     AudioClientProperties properties = new AudioClientProperties
                     {
                         Size = Marshal.SizeOf<AudioClientProperties>(),
-                        Category = AudioStreamCategory.Speech
+                        Category = AudioStreamCategory.Speech,
                     };
 
                     int hr = audioClient2.SetClientProperties(ref properties);

@@ -12,10 +12,13 @@ namespace Microsoft.Psi.Visualization.Config
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class AnnotatedEventVisualizationObjectConfiguration : TimelineVisualizationObjectConfiguration
     {
-        private double height;
+        /// <summary>
+        /// The height of the annotated event.
+        /// </summary>
+        private double height = 20;
 
         /// <summary>
-        /// The color of the text
+        /// The color of the text.
         /// </summary>
         private Color textColor = Colors.Black;
 

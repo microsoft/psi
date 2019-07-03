@@ -23,8 +23,8 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigatorRange"/> class.
         /// </summary>
-        /// <param name="startTime">The range's start time</param>
-        /// <param name="endTime">The range's end time</param>
+        /// <param name="startTime">The range's start time.</param>
+        /// <param name="endTime">The range's end time.</param>
         public NavigatorRange(DateTime startTime, DateTime endTime)
         {
             this.StartTime = startTime;
@@ -59,9 +59,9 @@ namespace Microsoft.Psi.Visualization.Navigation
         public DateTime StartTime { get; private set; }
 
         /// <summary>
-        /// Scrolls the start and end times of the Range
+        /// Scrolls the start and end times of the Range.
         /// </summary>
-        /// <param name="timespan">The amount of time to scroll the range</param>
+        /// <param name="timespan">The amount of time to scroll the range.</param>
         public void ScrollBy(TimeSpan timespan)
         {
             this.SetRange(this.StartTime + timespan, this.EndTime + timespan);

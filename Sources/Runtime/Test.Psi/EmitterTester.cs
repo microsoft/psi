@@ -116,37 +116,6 @@ namespace Test.Psi
             Assert.AreEqual(result.Reference, c); // we expect the same instance
         }
 
-        public struct STStruct
-        {
-            internal readonly int Value;
-            internal readonly STClass Reference;
-
-            internal STStruct(int value, STClass reference)
-            {
-                this.Value = value;
-                this.Reference = reference;
-            }
-        }
-
-        public class STClass
-        {
-            private int count;
-            private string label;
-            private double[] buffer;
-
-            internal STClass()
-            {
-                this.count = 10;
-                this.label = "Something with ten";
-                this.buffer = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            }
-
-            public bool Same(STClass that)
-            {
-                return this.count == that.count && this.label == that.label && (this.buffer.Except(that.buffer).Count() == 0) && (that.buffer.Except(this.buffer).Count() == 0);
-            }
-        }
-
 #if DEBUG
         [TestMethod]
         [Timeout(60000)]
@@ -184,7 +153,7 @@ namespace Test.Psi
                     var emitter = p.CreateEmitter<int>(componentB, "emitterOnB");
                     var receiver = p.CreateReceiver<int>(componentA, x => emitter.Post(x, p.GetCurrentTime()), "receiverOnA");
                     Generators.Return(p, 123).PipeTo(receiver);
-                    p.Run(enableExceptionHandling: true);
+                    p.Run();
                 }
             }
             catch (AggregateException ex)
@@ -218,7 +187,7 @@ namespace Test.Psi
                         },
                         "receiverOnA");
                     Generators.Return(p, 123).PipeTo(receiver);
-                    p.Run(enableExceptionHandling: true);
+                    p.Run();
                 }
             }
             catch (AggregateException ex)
@@ -257,7 +226,7 @@ namespace Test.Psi
                         },
                         "receiver");
                     Generators.Return(p, 123).PipeTo(receiver);
-                    p.Run(enableExceptionHandling: true);
+                    p.Run();
                 }
             }
             catch (AggregateException)
@@ -270,7 +239,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void PostAcrossPipelinesShouldThrow()
+        public void SubscriptionAcrossPipelinesShouldThrow()
         {
             var exceptionThrown = false;
             try
@@ -281,18 +250,48 @@ namespace Test.Psi
                     var emitter = p.CreateEmitter<int>(this, "pipelineEmitter");
                     var receiver = s.CreateReceiver<int>(this, x => emitter.Post(x, p.GetCurrentTime()), "subpipelineReceiver");
                     Generators.Return(p, 123).PipeTo(receiver);
-                    p.Run(enableExceptionHandling: true);
+                    p.Run();
                 }
             }
-            catch (AggregateException ex)
+            catch (InvalidOperationException ex)
             {
                 exceptionThrown = true;
-                Assert.AreEqual<int>(1, ex.InnerExceptions.Count);
-                Assert.IsTrue(ex.InnerExceptions[0].Message.StartsWith("Emitter created in one pipeline unexpectedly received post from a receiver in another pipeline"));
+                Assert.IsTrue(ex.Message.StartsWith("Receiver cannot subscribe to an emitter from a different pipeline"));
             }
 
             Assert.IsTrue(exceptionThrown);
         }
 #endif
+
+        public struct STStruct
+        {
+            internal readonly int Value;
+            internal readonly STClass Reference;
+
+            internal STStruct(int value, STClass reference)
+            {
+                this.Value = value;
+                this.Reference = reference;
+            }
+        }
+
+        public class STClass
+        {
+            private int count;
+            private string label;
+            private double[] buffer;
+
+            internal STClass()
+            {
+                this.count = 10;
+                this.label = "Something with ten";
+                this.buffer = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            }
+
+            public bool Same(STClass that)
+            {
+                return this.count == that.count && this.label == that.label && (this.buffer.Except(that.buffer).Count() == 0) && (that.buffer.Except(this.buffer).Count() == 0);
+            }
+        }
     }
 }

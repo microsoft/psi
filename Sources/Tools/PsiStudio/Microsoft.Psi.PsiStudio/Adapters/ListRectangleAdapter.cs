@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of lists of rectangles into lists of named rectangles
+    /// Used to adapt streams of lists of rectangles into lists of named rectangles.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class ListRectangleAdapter : StreamAdapter<List<Rectangle>, List<Tuple<Rectangle, string>>>

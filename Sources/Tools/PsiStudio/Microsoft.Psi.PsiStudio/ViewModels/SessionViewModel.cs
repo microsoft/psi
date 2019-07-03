@@ -76,17 +76,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets the originating time of the first message in the session
+        /// Gets the originating time of the first message in the session.
         /// </summary>
         public DateTime? FirstMessageOriginatingTime => this.OriginatingTimeInterval.Left;
 
         /// <summary>
-        /// Gets the originating time of the last message in the session
+        /// Gets the originating time of the last message in the session.
         /// </summary>
         public DateTime? LastMessageOriginatingTime => this.OriginatingTimeInterval.Right;
 
         /// <summary>
-        /// Gets the brush for drawing text
+        /// Gets the brush for drawing text.
         /// </summary>
         public Brush TextBrush => this.DatasetViewModel.CurrentSessionViewModel == this ? ViewModelBrushes.SelectedBrush : ViewModelBrushes.StandardBrush;
 
@@ -107,12 +107,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public ReadOnlyObservableCollection<PartitionViewModel> PartitionViewModels => this.partitionViewModels;
 
         /// <summary>
-        /// Gets a value indicating whether this session is the parent dataset's current session
+        /// Gets a value indicating whether this session is the parent dataset's current session.
         /// </summary>
         public bool IsCurrentSession => this.DatasetViewModel.CurrentSessionViewModel == this;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the tree view item is expanded
+        /// Gets or sets a value indicating whether the tree view item is expanded.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -123,7 +123,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets a value indicating whether this session contains live partitions
+        /// Gets a value indicating whether this session contains live partitions.
         /// </summary>
         public bool ContainsLivePartitions
         {
@@ -294,7 +294,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Checks all partitions in the session to determine whether they have an active writer attached and updates their IsLivePartition property
+        /// Checks all partitions in the session to determine whether they have an active writer attached and updates their IsLivePartition property.
         /// </summary>
         internal void UpdateLivePartitionStatuses()
         {

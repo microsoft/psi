@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Converters
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Provides a way to apply custom logic to a binding. Specifically, converting from a <see cref="Image"/> to a <see cref="WriteableBitmap"/>
+    /// Provides a way to apply custom logic to a binding. Specifically, converting from a <see cref="Image"/> to a <see cref="WriteableBitmap"/>.
     /// </summary>
     public class PsiImageToWriteableBitmapConverter : IValueConverter
     {

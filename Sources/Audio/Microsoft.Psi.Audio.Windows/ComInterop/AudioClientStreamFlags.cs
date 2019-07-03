@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System;
 
     /// <summary>
-    /// AUDCLNT_STREAMFLAGS_XXX Constants (defined in Audiosessiontypes.h)
+    /// AUDCLNT_STREAMFLAGS_XXX Constants (defined in Audiosessiontypes.h).
     /// </summary>
     [Flags]
     internal enum AudioClientStreamFlags : uint
@@ -49,6 +49,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY
         /// </summary>
-        SourceDefaultQuality = 0x08000000
+        SourceDefaultQuality = 0x08000000,
     }
 }

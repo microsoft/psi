@@ -18,27 +18,27 @@ namespace Microsoft.Psi.Media
         private readonly Pipeline pipeline;
 
         /// <summary>
-        /// The video camera configuration
+        /// The video camera configuration.
         /// </summary>
         private readonly MediaCaptureConfiguration configuration;
 
         /// <summary>
-        /// The video capture device
+        /// The video capture device.
         /// </summary>
         private MediaCaptureDevice camera;
 
         private IProducer<Microsoft.Psi.Audio.AudioBuffer> audio;
 
         /// <summary>
-        /// Defines attributes of properties exposed by MediaCaptureDevice
+        /// Defines attributes of properties exposed by MediaCaptureDevice.
         /// </summary>
         private MediaCaptureInfo deviceInfo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="configurationFilename">Name of file containing media capture device configuration</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
         public MediaCapture(Pipeline pipeline, string configurationFilename)
         : this(pipeline)
         {
@@ -53,8 +53,8 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="configuration">Describes how to configure the media capture device</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="configuration">Describes how to configure the media capture device.</param>
         public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration)
         : this(pipeline)
         {
@@ -68,14 +68,14 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="width">Width of output image in pixels</param>
-        /// <param name="height">Height of output image in pixels</param>
-        /// <param name="framerate">Frame rate</param>
-        /// <param name="captureAudio">Should we create an audio capture device</param>
-        /// <param name="deviceId">Device ID</param>
-        /// <param name="persistVideoFrames">Indicates whether video frames should be persisted</param>
-        /// <param name="useInSharedMode">Indicates whether camera is shared amongst multiple applications</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="width">Width of output image in pixels.</param>
+        /// <param name="height">Height of output image in pixels.</param>
+        /// <param name="framerate">Frame rate.</param>
+        /// <param name="captureAudio">Should we create an audio capture device.</param>
+        /// <param name="deviceId">Device ID.</param>
+        /// <param name="persistVideoFrames">Indicates whether video frames should be persisted.</param>
+        /// <param name="useInSharedMode">Indicates whether camera is shared amongst multiple applications.</param>
         public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 15, bool captureAudio = false, string deviceId = null, bool persistVideoFrames = false, bool useInSharedMode = false)
             : this(pipeline)
         {
@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Media
                 Width = width,
                 Height = height,
                 Framerate = framerate,
-                CaptureAudio = captureAudio
+                CaptureAudio = captureAudio,
             };
             if (this.configuration.CaptureAudio)
             {
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets the emitter for the audio stream
+        /// Gets the emitter for the audio stream.
         /// </summary>
         public Emitter<Audio.AudioBuffer> Audio
         {
@@ -110,28 +110,28 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets the emitter for the video stream
+        /// Gets the emitter for the video stream.
         /// </summary>
         public Emitter<Shared<Image>> Video => this.Out;
 
         /// <summary>
-        /// Gets the output stream of images
+        /// Gets the output stream of images.
         /// </summary>
         public Emitter<Shared<Image>> Out { get; private set; }
 
         /// <summary>
-        /// Returns information about each property exposed by the media capture device
+        /// Returns information about each property exposed by the media capture device.
         /// </summary>
-        /// <returns>MediaCaptureInfo object definiting ranges and availability of each property</returns>
+        /// <returns>MediaCaptureInfo object definiting ranges and availability of each property.</returns>
         public MediaCaptureInfo GetDeviceInfo()
         {
             return this.deviceInfo;
         }
 
         /// <summary>
-        /// Returns the current configuration for the media capture device
+        /// Returns the current configuration for the media capture device.
         /// </summary>
-        /// <returns>A new MediaCaptureConfiguration object with the device's current settings</returns>
+        /// <returns>A new MediaCaptureConfiguration object with the device's current settings.</returns>
         public MediaCaptureConfiguration GetDeviceConfiguration()
         {
             MediaCaptureConfiguration config = new MediaCaptureConfiguration();
@@ -150,9 +150,9 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Assigns the specified configuration to the media capture device
+        /// Assigns the specified configuration to the media capture device.
         /// </summary>
-        /// <param name="config">Configuration to set on media capture device</param>
+        /// <param name="config">Configuration to set on media capture device.</param>
         public void SetDeviceConfiguration(MediaCaptureConfiguration config)
         {
             this.SetDeviceProperty(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo, config.BacklightCompensation);
@@ -169,7 +169,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Dispose method
+        /// Dispose method.
         /// </summary>
         public void Dispose()
         {
@@ -271,10 +271,11 @@ namespace Microsoft.Psi.Media
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             this.Dispose();
             MediaCaptureDevice.Uninitialize();
+            notifyCompleted();
         }
 
         private void SetDeviceProperty(VideoProperty prop, MediaCaptureInfo.PropertyInfo propInfo, MediaCaptureConfiguration.PropertyValue<int> value)

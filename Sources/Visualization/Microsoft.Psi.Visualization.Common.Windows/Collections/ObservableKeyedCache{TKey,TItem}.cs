@@ -434,7 +434,7 @@ namespace Microsoft.Psi.Visualization.Collections
                 /// <summary>
                 /// TailRange view mode. View will slide based on time window.
                 /// </summary>
-                TailRange
+                TailRange,
             }
 
             /// <inheritdoc/>

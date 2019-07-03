@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IMFTransform COM interface (defined in Mftransform.h)
+    /// IMFTransform COM interface (defined in Mftransform.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMFTransformIIDString)]
@@ -182,10 +182,10 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// Sends a message to the MFT.
         /// </summary>
-        /// <param name="eMessage">The message to send.</param>
-        /// <param name="pParam">Message parameter. The meaning of this parameter depends on the message type.</param>
+        /// <param name="message">The message to send.</param>
+        /// <param name="param">Message parameter. The meaning of this parameter depends on the message type.</param>
         /// <returns>An HRESULT return code.</returns>
-        int ProcessMessage(MFTMessageType eMessage, [In] IntPtr pParam);
+        int ProcessMessage(MFTMessageType message, [In] IntPtr param);
 
         /// <summary>
         /// Delivers data to an input stream on this MFT.

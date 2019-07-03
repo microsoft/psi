@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Represents a time interval history view item
+    /// Represents a time interval history view item.
     /// </summary>
     internal class TimeIntervalHistoryVisualizationObjectViewItem
     {
@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 StartPoint = new Point(0, 0),
                 IsClosed = true,
-                IsFilled = true
+                IsFilled = true,
             };
             this.timeIntervalFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
             this.timeIntervalFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
@@ -54,7 +54,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
             this.label = new Grid
             {
-                RenderTransform = new TranslateTransform()
+                RenderTransform = new TranslateTransform(),
             };
 
             var textBlock = new TextBlock()
@@ -62,7 +62,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
-                Margin = new Thickness(3)
+                Margin = new Thickness(3),
             };
 
             this.label.Children.Add(textBlock);
@@ -129,20 +129,20 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             var binding = new Binding(nameof(this.parent.VisualizationObject.Configuration) + "." + nameof(TimeIntervalHistoryVisualizationObjectConfiguration.LineColor))
             {
                 Source = this.parent.VisualizationObject,
-                Converter = new Converters.ColorConverter()
+                Converter = new Converters.ColorConverter(),
             };
             BindingOperations.SetBinding(this.figure, Shape.StrokeProperty, binding);
 
             binding = new Binding(nameof(this.parent.VisualizationObject.Configuration) + "." + nameof(TimeIntervalHistoryVisualizationObjectConfiguration.LineWidth))
             {
-                Source = this.parent.VisualizationObject
+                Source = this.parent.VisualizationObject,
             };
             BindingOperations.SetBinding(this.figure, Shape.StrokeThicknessProperty, binding);
 
             binding = new Binding(nameof(this.parent.VisualizationObject.Configuration) + "." + nameof(TimeIntervalHistoryVisualizationObjectConfiguration.FillColor))
             {
                 Source = this.parent.VisualizationObject,
-                Converter = new Converters.ColorConverter()
+                Converter = new Converters.ColorConverter(),
             };
             BindingOperations.SetBinding(this.figure, Shape.FillProperty, binding);
         }

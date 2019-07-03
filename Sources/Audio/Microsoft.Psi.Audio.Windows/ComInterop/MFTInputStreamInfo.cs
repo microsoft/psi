@@ -6,33 +6,33 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// MFT_INPUT_STREAM_INFO structure (defined in Mftransform.h)
+    /// MFT_INPUT_STREAM_INFO structure (defined in Mftransform.h).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct MFTInputStreamInfo
     {
         /// <summary>
-        /// hnsMaxLatency
+        /// hnsMaxLatency.
         /// </summary>
         internal long MaxLatency;
 
         /// <summary>
-        /// dwFlags
+        /// dwFlags.
         /// </summary>
         internal int Flags;
 
         /// <summary>
-        /// cbSize
+        /// cbSize.
         /// </summary>
         internal int Size;
 
         /// <summary>
-        /// cbMaxLookahead
+        /// cbMaxLookahead.
         /// </summary>
         internal int MaxLookahead;
 
         /// <summary>
-        /// cbAlignment
+        /// cbAlignment.
         /// </summary>
         internal int Alignment;
     }

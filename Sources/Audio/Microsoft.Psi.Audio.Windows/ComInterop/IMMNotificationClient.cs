@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IMMNotificationClient COM interface (defined in Mmdeviceapi.h)
+    /// IMMNotificationClient COM interface (defined in Mmdeviceapi.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMMNotificationClientIIDString)]

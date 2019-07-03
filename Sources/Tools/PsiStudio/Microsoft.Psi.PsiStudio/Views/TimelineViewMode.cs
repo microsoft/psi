@@ -16,6 +16,6 @@ namespace Microsoft.Psi.Visualization.Views
         /// <summary>
         /// View range mode.
         /// </summary>
-        ViewRange
+        ViewRange,
     }
 }

@@ -6,11 +6,15 @@ namespace Test.Psi.CognitiveServices.Speech
     using System;
     using Test.Psi.Common;
 
+    /// <summary>
+    /// Test runner to make debugging easier and faster.
+    /// </summary>
     public class ConsoleMain
     {
         /// <summary>
         /// Entry point to make debugging easier and faster.
         /// </summary>
+        /// <param name="args">Command-line args.</param>
         public static void Main(string[] args)
         {
             TestRunner.RunAll(args);

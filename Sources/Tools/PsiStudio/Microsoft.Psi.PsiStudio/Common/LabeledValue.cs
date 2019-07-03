@@ -4,9 +4,9 @@
 namespace Microsoft.Psi.Visualization.Common
 {
     /// <summary>
-    /// Encasulates an immutable labeled value
+    /// Encasulates an immutable labeled value.
     /// </summary>
-    /// <typeparam name="T">The type of the value</typeparam>
+    /// <typeparam name="T">The type of the value.</typeparam>
     public class LabeledValue<T>
         where T : struct
     {
@@ -17,8 +17,8 @@ namespace Microsoft.Psi.Visualization.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="LabeledValue{T}"/> class.
         /// </summary>
-        /// <param name="value">The value</param>
-        /// <param name="label">The corresponding label</param>
+        /// <param name="value">The value.</param>
+        /// <param name="label">The corresponding label.</param>
         public LabeledValue(T value, string label)
         {
             this.value = value;
@@ -26,12 +26,12 @@ namespace Microsoft.Psi.Visualization.Common
         }
 
         /// <summary>
-        /// Gets the value
+        /// Gets the value.
         /// </summary>
         public T Value => this.value;
 
         /// <summary>
-        /// Gets the label
+        /// Gets the label.
         /// </summary>
         public string Label => this.label;
     }

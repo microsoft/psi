@@ -36,6 +36,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// <summary>
         /// The service detected the end of dictation in dictation mode.
         /// </summary>
-        EndOfDictation
+        EndOfDictation,
     }
 }

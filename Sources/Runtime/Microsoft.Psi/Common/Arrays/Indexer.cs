@@ -14,10 +14,10 @@ namespace Microsoft.Psi.Arrays
     public interface IIndexer
     {
         /// <summary>
-        /// Takes a rectangular slice of the possible values of this indexer
+        /// Takes a rectangular slice of the possible values of this indexer.
         /// </summary>
-        /// <param name="ranges">The set of restrictions to apply to each dimension</param>
-        /// <returns>A rectangular slice of the current index space</returns>
+        /// <param name="ranges">The set of restrictions to apply to each dimension.</param>
+        /// <returns>A rectangular slice of the current index space.</returns>
         Indexer Slice(params Range[] ranges);
     }
 
@@ -31,14 +31,14 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="Indexer"/> class.
         /// </summary>
-        /// <param name="count">The count of distinct possible index values</param>
+        /// <param name="count">The count of distinct possible index values.</param>
         public Indexer(int count)
         {
             this.count = count;
         }
 
         /// <summary>
-        /// Gets the count of distinct possible index values
+        /// Gets the count of distinct possible index values.
         /// </summary>
         public int Count => this.count;
 

@@ -29,6 +29,7 @@
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding PlayPauseCommand}" Key="F10" />
+        <KeyBinding Command="{Binding ToggleCursorFollowsMouseComand}" Key="F" Modifiers="Alt" />
         <!--<KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.PreviousAnnotatedEventCommand}" Key="F2" />
         <KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.NextAnnotatedEventCommand}" Key="F3" />
         <KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.StartAnnotatedEventCommand}" Key="F5" />
@@ -147,6 +148,10 @@
                 <Button Command="{Binding SaveLayoutAsCommand}" ToolTip="Save Layout As...">
                     <Image Source="Icons\open-layout_x4.png"/>
                 </Button>
+                <Separator />
+                <ToggleButton Command="{Binding ToggleCursorFollowsMouseComand}" IsChecked="{Binding VisualizationContainer.Navigator.CursorFollowsMouse, Mode=OneWay}" ToolTip="Cursor Follows Mouse (Alt+F)">
+                    <Image Source="Icons\cursor-follows-mouse_x4.png"/>
+                </ToggleButton>
                 <!--Separator />
                 <Button Command="{Binding ShowSettingsWindowComand}" ToolTip="PsiStudio Settings">
                     <Image Source="Icons\settings_x4.png"/>

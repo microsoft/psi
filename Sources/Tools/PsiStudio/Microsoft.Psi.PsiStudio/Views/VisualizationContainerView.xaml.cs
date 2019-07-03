@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Visualization.Views
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Interaction logic for VisualizationContainerView.xaml
+    /// Interaction logic for VisualizationContainerView.xaml.
     /// </summary>
     public partial class VisualizationContainerView : UserControl
     {

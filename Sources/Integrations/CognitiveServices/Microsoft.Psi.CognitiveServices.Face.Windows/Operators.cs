@@ -6,7 +6,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
     using System.Collections.Generic;
 
     /// <summary>
-    /// Stream operators and extension methods for Microsoft.Psi.CognitiveServices.Face
+    /// Stream operators and extension methods for Microsoft.Psi.CognitiveServices.Face.
     /// </summary>
     public static class Operators
     {
@@ -20,7 +20,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <remarks>
         /// A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
         /// subscription key is required to use this operators. In addition, a person group needs to be created ahead of time, and the id of the person group
-        /// passed to the operator via the configuration. For more information, and to see how to create person groups, see the full direct API for
+        /// passed to the operator via the configuration. For more information, and to see how to create person groups, see the full direct API for.
         /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
         /// </remarks>
         public static IProducer<Dictionary<string, double>> RecognizeFace(this IProducer<Shared<Imaging.Image>> source, FaceRecognizerConfiguration configuration, DeliveryPolicy deliveryPolicy = null)

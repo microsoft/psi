@@ -21,6 +21,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// All
         /// </summary>
-        All
+        All,
     }
 }

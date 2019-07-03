@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Remoting
     using System;
     using System.IO;
     using System.IO.Pipes;
-    using Common;
+    using Microsoft.Psi.Common;
 
     /// <summary>
     /// Named pipes transport.

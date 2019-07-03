@@ -20,6 +20,14 @@ namespace Microsoft.Psi.Visualization.Config
         private AxisInfo yAxis2;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="XYVisualizationPanelConfiguration"/> class.
+        /// </summary>
+        public XYVisualizationPanelConfiguration()
+        {
+            this.Name = "2D Panel";
+        }
+
+        /// <summary>
         /// Gets or sets X axis.
         /// </summary>
         [DataMember]

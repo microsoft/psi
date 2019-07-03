@@ -56,6 +56,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// <summary>
         /// The service encountered an internal error and could not satisfy the request.
         /// </summary>
-        WebSocketServerError = 1011
+        WebSocketServerError = 1011,
     }
 }

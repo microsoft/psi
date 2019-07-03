@@ -9,12 +9,15 @@ namespace Test.Psi
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
-    /// Scenarios and usage around PerfCounters
+    /// Scenarios and usage around PerfCounters.
     /// </summary>
     [TestClass]
     public class APITester
     {
-        // run "Test.Psi.Windows.exe !PerfCounters" with admin rights to execute this test.
+        /// <summary>
+        /// Perf counter test.
+        /// </summary>
+        /// <remarks>Run "Test.Psi.Windows.exe !PerfCounters" with admin rights to execute this test.</remarks>
         public void PerfCounters()
         {
             using (var p = Pipeline.Create("perf counters"))

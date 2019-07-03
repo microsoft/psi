@@ -44,11 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
-    <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
-    <PackageReference Include="System.Reactive.Linq" Version="4.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.2.0-preview.102" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,12 +56,6 @@
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\Microsoft.Psi.Interop\Microsoft.Psi.Interop.csproj" />
     <ProjectReference Include="..\Microsoft.Psi\Microsoft.Psi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Psi.IL">
-      <HintPath>..\Microsoft.Psi\bin\$(Configuration)\netstandard2.0\Microsoft.Psi.IL.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

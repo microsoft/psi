@@ -361,7 +361,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void KeyedSharedPoolTest()
         {
-            var allocations = new List<int>();            
+            var allocations = new List<int>();
             var pool = new KeyedSharedPool<byte[], int>(
                 size =>
                 {

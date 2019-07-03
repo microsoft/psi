@@ -24,7 +24,7 @@ namespace Test.Psi
             using (Pipeline p = Pipeline.Create())
             {
                 var emitter = new Emitter<SimpleMsg>(0, this, null, p);
-                var receiver = new Receiver<SimpleMsg>(this, t => { receivedValues.Add(t.Data); }, new SynchronizationLock(null), p, true);
+                var receiver = new Receiver<SimpleMsg>(0, string.Empty, null, this, t => { receivedValues.Add(t.Data); }, new SynchronizationLock(null), p, true);
                 emitter.PipeTo(receiver, DeliveryPolicy.Unlimited);
                 p.RunAsync();
                 for (int i = 0; i < iter; i++)
@@ -68,8 +68,9 @@ namespace Test.Psi
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
         }
     }
 }

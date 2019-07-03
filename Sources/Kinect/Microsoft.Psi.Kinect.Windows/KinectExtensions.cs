@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Kinect
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Implements stream operator methods for Kinect
+    /// Implements stream operator methods for Kinect.
     /// </summary>
     public static class KinectExtensions
     {
@@ -58,8 +58,8 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Rebases the kinect body in a specified coordinate system.
         /// </summary>
-        /// <param name="cs">Coordinate system to transform to</param>
-        /// <param name="kinectBody">Body to transform</param>
+        /// <param name="kinectBody">Body to transform.</param>
+        /// <param name="cs">Coordinate system to transform to.</param>
         /// <returns>The body rebased in the specified coordinate system.</returns>
         /// <remarks>The method rebases all the joints, including position and orientation, in the specified coordinate system.</remarks>
         public static KinectBody Rebase(this KinectBody kinectBody, CoordinateSystem cs)
@@ -100,11 +100,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Creates a CoordinateSystem from a given kinect joint
+        /// Creates a CoordinateSystem from a given kinect joint.
         /// </summary>
-        /// <param name="kinectBody">Kinect body containing the joint</param>
-        /// <param name="jointType">Which joint to create a CoordinateSystem from </param>
-        /// <returns>CoordinateSystem capturing the given joint's orientation and position</returns>
+        /// <param name="kinectBody">Kinect body containing the joint.</param>
+        /// <param name="jointType">Which joint to create a CoordinateSystem from.</param>
+        /// <returns>CoordinateSystem capturing the given joint's orientation and position.</returns>
         public static CoordinateSystem GetJointCoordinateSystem(this KinectBody kinectBody, JointType jointType)
         {
             if (!kinectBody.Joints.ContainsKey(jointType))
@@ -135,18 +135,20 @@ namespace Microsoft.Psi.Kinect
         /// <returns>A producer that generates the 2D transformed points.</returns>
         public static IProducer<Point2D> ToColorSpace(this IProducer<(Point3D, IKinectCalibration)> source, DeliveryPolicy deliveryPolicy = null)
         {
-            return source.Select(m =>
-            {
-                var (point3D, calibration) = m;
-                if (calibration != default(IKinectCalibration))
+            return source.Select(
+                m =>
                 {
-                    return calibration.ToColorSpace(point3D);
-                }
-                else
-                {
-                    return default(Point2D?);
-                }
-            }, deliveryPolicy).Where(p => p.HasValue, deliveryPolicy).Select(p => p.Value);
+                    var (point3D, calibration) = m;
+                    if (calibration != default(IKinectCalibration))
+                    {
+                        return calibration.ToColorSpace(point3D);
+                    }
+                    else
+                    {
+                        return default(Point2D?);
+                    }
+                },
+                deliveryPolicy).Where(p => p.HasValue, deliveryPolicy).Select(p => p.Value);
         }
 
         /// <summary>
@@ -291,6 +293,7 @@ namespace Microsoft.Psi.Kinect
                     {
                         compressedStream.Write(buffer, 0, buffer.Length);
                     }
+
                     var output = new byte[memoryStream.Position];
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     memoryStream.Read(output, 0, output.Length);
@@ -323,69 +326,9 @@ namespace Microsoft.Psi.Kinect
                     {
                         pointList.Add(new Point3D(floatArray[i], floatArray[i + 1], floatArray[i + 2]));
                     }
+
                     return pointList;
                 }, deliveryPolicy);
-        }
-
-        /// <summary>
-        /// Converts a quaternion into an axis/angle representation.
-        /// </summary>
-        /// <param name="quaternion">Quaternion to convert.</param>
-        /// <returns>Axis angle representation corresponding to the quaternion.</returns>
-        internal static Vector4 QuaternionAsAxisAngle(Vector4 quaternion)
-        {
-            Vector4 v;
-            float len = (float)Math.Sqrt(quaternion.X * quaternion.X + quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z);
-            v.X = quaternion.X / len;
-            v.Y = quaternion.Y / len;
-            v.Z = quaternion.Z / len;
-            v.W = 2.0f * (float)Math.Atan2(len, quaternion.W);
-            return v;
-        }
-
-        /// <summary>
-        /// Converts a quaternion into a matrix.
-        /// </summary>
-        /// <param name="quaternion">Quaternion to convert.</param>
-        /// <returns>Rotation matrix corresponding to the quaternion.</returns>
-        internal static Matrix<double> QuaternionToMatrix(Vector4 quaternion)
-        {
-            var s = (float)Math.Sqrt(quaternion.X * quaternion.X + quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z + quaternion.W * quaternion.W);
-
-            if (s  <= float.Epsilon)
-            {
-                return CoordinateSystem.CreateIdentity(3);
-            }
-
-            quaternion.X /= s;
-            quaternion.Y /= s;
-            quaternion.Z /= s;
-            quaternion.W /= s;
-            var qij = quaternion.X * quaternion.Y;
-            var qik = quaternion.X * quaternion.Z;
-            var qir = quaternion.X * quaternion.W;
-            var qjk = quaternion.Y * quaternion.Z;
-            var qjr = quaternion.Y * quaternion.W;
-            var qkr = quaternion.Z * quaternion.W;
-            var qii = quaternion.X * quaternion.X;
-            var qjj = quaternion.Y * quaternion.Y;
-            var qkk = quaternion.Z * quaternion.Z;
-            var a00 = 1.0 - 2.0 * (qjj + qkk);
-            var a11 = 1.0 - 2.0 * (qii + qkk);
-            var a22 = 1.0 - 2.0 * (qii + qjj);
-            var a01 = 2.0 * (qij - qkr);
-            var a10 = 2.0 * (qij + qkr);
-            var a02 = 2.0 * (qik + qjr);
-            var a20 = 2.0 * (qik - qjr);
-            var a12 = 2.0 * (qjk - qir);
-            var a21 = 2.0 * (qjk + qir);
-            double[] data =
-            {
-                a00, a01, a02,
-                a10, a11, a12,
-                a20, a21, a22
-            };
-            return MathNet.Numerics.LinearAlgebra.CreateMatrix.Dense(3, 3, data);
         }
 
         /// <summary>
@@ -433,6 +376,67 @@ namespace Microsoft.Psi.Kinect
             }
 
             return v;
+        }
+
+        /// <summary>
+        /// Converts a quaternion into an axis/angle representation.
+        /// </summary>
+        /// <param name="quaternion">Quaternion to convert.</param>
+        /// <returns>Axis angle representation corresponding to the quaternion.</returns>
+        internal static Vector4 QuaternionAsAxisAngle(Vector4 quaternion)
+        {
+            Vector4 v;
+            float len = (float)Math.Sqrt(quaternion.X * quaternion.X + quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z);
+            v.X = quaternion.X / len;
+            v.Y = quaternion.Y / len;
+            v.Z = quaternion.Z / len;
+            v.W = 2.0f * (float)Math.Atan2(len, quaternion.W);
+            return v;
+        }
+
+        /// <summary>
+        /// Converts a quaternion into a matrix.
+        /// </summary>
+        /// <param name="quaternion">Quaternion to convert.</param>
+        /// <returns>Rotation matrix corresponding to the quaternion.</returns>
+        internal static Matrix<double> QuaternionToMatrix(Vector4 quaternion)
+        {
+            var s = (float)Math.Sqrt(quaternion.X * quaternion.X + quaternion.Y * quaternion.Y + quaternion.Z * quaternion.Z + quaternion.W * quaternion.W);
+
+            if (s <= float.Epsilon)
+            {
+                return CoordinateSystem.CreateIdentity(3);
+            }
+
+            quaternion.X /= s;
+            quaternion.Y /= s;
+            quaternion.Z /= s;
+            quaternion.W /= s;
+            var qij = quaternion.X * quaternion.Y;
+            var qik = quaternion.X * quaternion.Z;
+            var qir = quaternion.X * quaternion.W;
+            var qjk = quaternion.Y * quaternion.Z;
+            var qjr = quaternion.Y * quaternion.W;
+            var qkr = quaternion.Z * quaternion.W;
+            var qii = quaternion.X * quaternion.X;
+            var qjj = quaternion.Y * quaternion.Y;
+            var qkk = quaternion.Z * quaternion.Z;
+            var a00 = 1.0 - 2.0 * (qjj + qkk);
+            var a11 = 1.0 - 2.0 * (qii + qkk);
+            var a22 = 1.0 - 2.0 * (qii + qjj);
+            var a01 = 2.0 * (qij - qkr);
+            var a10 = 2.0 * (qij + qkr);
+            var a02 = 2.0 * (qik + qjr);
+            var a20 = 2.0 * (qik - qjr);
+            var a12 = 2.0 * (qjk - qir);
+            var a21 = 2.0 * (qjk + qir);
+            double[] data =
+            {
+                a00, a01, a02,
+                a10, a11, a12,
+                a20, a21, a22,
+            };
+            return MathNet.Numerics.LinearAlgebra.CreateMatrix.Dense(3, 3, data);
         }
     }
 }

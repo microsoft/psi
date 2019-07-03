@@ -6,6 +6,7 @@
 namespace Test.Psi.Imaging
 {
     using System;
+    using System.IO;
     using System.Windows.Media.Imaging;
     using Microsoft.Psi;
     using Microsoft.Psi.Imaging;

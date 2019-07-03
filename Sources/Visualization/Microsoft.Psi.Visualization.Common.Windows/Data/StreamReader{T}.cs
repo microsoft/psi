@@ -205,9 +205,9 @@ namespace Microsoft.Psi.Visualization.Data
                 }
                 else
                 {
-                    dynamic dynStreamAdapater = this.StreamBinding.StreamAdapter;
-                    dynamic dynAdaptedReciever = dynStreamAdapater.AdaptReceiver(new Action<T, Envelope>(this.OnReceiveData));
-                    reader.OpenStream(this.StreamName, dynAdaptedReciever, dynStreamAdapater.Allocator);
+                    dynamic dynStreamAdapter = this.StreamBinding.StreamAdapter;
+                    dynamic dynAdaptedReceiver = dynStreamAdapter.AdaptReceiver(new Action<T, Envelope>(this.OnReceiveData));
+                    reader.OpenStream(this.StreamName, dynAdaptedReceiver, dynStreamAdapter.Allocator);
                 }
             }
         }

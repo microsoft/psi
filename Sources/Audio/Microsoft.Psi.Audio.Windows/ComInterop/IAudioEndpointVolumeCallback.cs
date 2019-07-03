@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IAudioEndpointVolumeCallback COM interface (defined in Endpointvolume.h)
+    /// IAudioEndpointVolumeCallback COM interface (defined in Endpointvolume.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IAudioEndpointVolumeCallbackIIDString)]
@@ -17,8 +17,7 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// Notifies the client that the volume level or muting state of the audio endpoint device has changed.
         /// </summary>
-        /// <param name="pNotify">Pointer to the volume-notification data.</param>
-        /// <returns>An HRESULT return code.</returns>
-        int OnNotify(IntPtr pNotify);
+        /// <param name="notify">Pointer to the volume-notification data.</param>
+        void OnNotify(IntPtr notify);
     }
 }

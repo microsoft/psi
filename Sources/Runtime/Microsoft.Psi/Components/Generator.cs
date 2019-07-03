@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Components
     /// Rather, such source components must implement the Generator pattern, in which an internal emitter/receiver
     /// pair is used to yield back to the runtime.
     /// The following example shows how to implement a multi-stream generator:
-    /// /include ..\..\Test.Psi\GeneratorSample.cs
+    /// /include ..\..\Test.Psi\GeneratorSample.cs.
     /// </remarks>
     public abstract class Generator : ISourceComponent
     {
@@ -30,6 +30,9 @@ namespace Microsoft.Psi.Components
         private readonly bool isInfiniteSource;
         private bool stopped;
         private Action<DateTime> notifyCompletionTime;
+        private Action notifyCompleted;
+        private DateTime finalMessageTime = DateTime.MaxValue;
+        private DateTime nextMessageTime = DateTime.MinValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator"/> class.
@@ -69,12 +72,18 @@ namespace Microsoft.Psi.Components
             this.Next(0, firstEnvelope);
         }
 
-        /// <summary>
-        /// Stop this component.
-        /// </summary>
-        public void Stop()
+        /// <inheritdoc />
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
-            this.stopped = true;
+            this.finalMessageTime = finalOriginatingTime;
+            this.notifyCompleted = notifyCompleted;
+
+            // if next message would be past the final message time, stop immediately and notify completion
+            if (this.nextMessageTime > this.finalMessageTime)
+            {
+                this.stopped = true;
+                this.notifyCompleted();
+            }
         }
 
         /// <summary>
@@ -93,28 +102,30 @@ namespace Microsoft.Psi.Components
         {
             if (this.stopped)
             {
-                this.notifyCompletionTime(envelope.OriginatingTime);
                 return;
             }
 
-            var nextMessageTime = this.GenerateNext(envelope.OriginatingTime);
+            this.nextMessageTime = this.GenerateNext(envelope.OriginatingTime);
 
-            // Getting MaxValue for the next message is a signal to stop
-            if (nextMessageTime == DateTime.MaxValue)
+            // stop if nextMessageTime is past finalMessageTime or is equal to DateTime.MaxValue (which indicates that there is no more data)
+            if (this.nextMessageTime > this.finalMessageTime || this.nextMessageTime == DateTime.MaxValue)
             {
                 this.stopped = true;
                 this.notifyCompletionTime(envelope.OriginatingTime);
+
+                // additionally notify completed if we have already been requested by the pipeline to stop
+                this.notifyCompleted?.Invoke();
                 return;
             }
 
             // Check if the times coming out of GenerateNext are not strictly increasing
             // (but only check once we've gone through this method at least once)
-            if ((counter > 0) && (nextMessageTime <= envelope.OriginatingTime))
+            if ((counter > 0) && (this.nextMessageTime <= envelope.OriginatingTime))
             {
                 throw new InvalidOperationException("Generator is creating timestamps out of order. The times returned by GenerateNext are required to be strictly increasing.");
             }
 
-            this.loopBackOut.Post(counter + 1, nextMessageTime);
+            this.loopBackOut.Post(counter + 1, this.nextMessageTime);
         }
     }
 }

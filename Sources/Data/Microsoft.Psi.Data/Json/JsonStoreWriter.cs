@@ -24,9 +24,9 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonStoreWriter"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store.</param>
         /// <param name="extension">The extension for the underlying file.</param>
         public JsonStoreWriter(string name, string path, bool createSubdirectory = true, string extension = DefaultExtension)
             : base(extension)
@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Opens the stream for the specified stream
+        /// Opens the stream for the specified stream.
         /// </summary>
         /// <param name="metadata">The metadata of the stream.</param>
         /// <returns>The stream metadata.</returns>
@@ -86,11 +86,11 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Opens the stream for the specified stream
+        /// Opens the stream for the specified stream.
         /// </summary>
         /// <param name="streamId">The stream id.</param>
         /// <param name="streamName">The stream name.</param>
-        /// <param name="typeName">The stream type name..</param>
+        /// <param name="typeName">The stream type name.</param>
         /// <returns>The stream metadata.</returns>
         public JsonStreamMetadata OpenStream(int streamId, string streamName, string typeName)
         {

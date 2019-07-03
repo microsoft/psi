@@ -24,8 +24,8 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="configurationFilename">Name of file containing media capture device configuration</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
         public MediaCapture(Pipeline pipeline, string configurationFilename)
         : this(pipeline)
         {
@@ -36,8 +36,8 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="configuration">Describes how to configure the media capture device</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="configuration">Describes how to configure the media capture device.</param>
         public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration)
         : this(pipeline)
         {
@@ -47,11 +47,11 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="width">Width of output image in pixels</param>
-        /// <param name="height">Height of output image in pixels</param>
-        /// <param name="deviceId">Device ID</param>
-        /// <param name="pixelFormat">Pixel format</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="width">Width of output image in pixels.</param>
+        /// <param name="height">Height of output image in pixels.</param>
+        /// <param name="deviceId">Device ID.</param>
+        /// <param name="pixelFormat">Pixel format.</param>
         public MediaCapture(Pipeline pipeline, int width, int height, string deviceId = "/dev/video0", PixelFormatId pixelFormat = PixelFormatId.BGR24)
             : this(pipeline)
         {
@@ -85,12 +85,12 @@ namespace Microsoft.Psi.Media
         /// Gets the raw output stream of image frames.
         /// </summary>
         /// <remarks>
-        /// This is the unprocessed/unconverted frame data. (e.g. YUYV or MJPEG)
+        /// This is the unprocessed/unconverted frame data. (e.g. YUYV or MJPEG).
         /// </remarks>
         public Emitter<Shared<byte[]>> Raw { get; private set; }
 
         /// <summary>
-        /// Dispose method
+        /// Dispose method.
         /// </summary>
         public void Dispose()
         {
@@ -211,7 +211,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             if (this.camera != null)
             {
@@ -219,6 +219,8 @@ namespace Microsoft.Psi.Media
                 this.camera.Dispose();
                 this.camera = null;
             }
+
+            notifyCompleted();
         }
     }
 }

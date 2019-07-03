@@ -7,6 +7,9 @@ namespace ArmControlROSSample
     using System.Threading;
     using Microsoft.Psi;
 
+    /// <summary>
+    /// ROS arm sample program.
+    /// </summary>
     public class Program
     {
         private const string RosSlave = "127.0.0.1"; // replace with your dev machine
@@ -14,7 +17,10 @@ namespace ArmControlROSSample
 
         private static UArm uarm = new UArm(RosSlave, RosMaster);
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        public static void Main()
         {
             Console.WriteLine("UArm Metal Controller");
             Console.WriteLine();

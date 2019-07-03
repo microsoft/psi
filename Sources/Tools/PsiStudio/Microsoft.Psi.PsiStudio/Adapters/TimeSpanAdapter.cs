@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of time spans into doubles
+    /// Used to adapt streams of time spans into doubles.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class TimeSpanAdapter : StreamAdapter<TimeSpan, double>

@@ -5,6 +5,9 @@ namespace Test.Psi.PsiStudio
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Visualization tests.
+    /// </summary>
     [TestClass]
     public class VisualizationTests
     {

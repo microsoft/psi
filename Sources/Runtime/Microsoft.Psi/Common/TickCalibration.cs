@@ -68,11 +68,11 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Returns the system file time corresponding to the number of 100ns ticks from system boot
+        /// Returns the system file time corresponding to the number of 100ns ticks from system boot.
         /// </summary>
         /// <param name="ticks">The number of 100ns ticks since system boot.</param>
         /// <param name="recalibrate">Recalibrates if necessary before conversion.</param>
-        /// <returns>The system file time</returns>
+        /// <returns>The system file time.</returns>
         public long ConvertToFileTime(long ticks, bool recalibrate = true)
         {
             if (recalibrate)

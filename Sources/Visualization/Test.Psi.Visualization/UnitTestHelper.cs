@@ -19,6 +19,7 @@ namespace Test.Psi.Visualization
         /// <param name="basis">The basis collection.</param>
         /// <param name="test">The test collection.</param>
         /// <param name="size">The expected size of the collections.</param>
+        /// <typeparam name="T">Type of list elements.</typeparam>
         public static void AssertAreEqual<T>(IList<T> basis, IList<T> test, int size)
         {
             Assert.AreEqual(test.Count, size);

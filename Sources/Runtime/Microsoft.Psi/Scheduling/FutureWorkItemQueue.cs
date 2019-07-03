@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Scheduling
 {
     /// <summary>
-    /// A workitem priority queue that dequeues workitems based on the scheduler's clock
+    /// A workitem priority queue that dequeues workitems based on the scheduler's clock.
     /// </summary>
     internal class FutureWorkItemQueue : PriorityQueue<WorkItem>
     {

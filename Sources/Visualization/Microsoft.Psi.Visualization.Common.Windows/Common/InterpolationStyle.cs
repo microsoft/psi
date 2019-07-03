@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Visualization.Common
 {
     /// <summary>
-    /// Defines various plot types
+    /// Defines various plot types.
     /// </summary>
     public enum InterpolationStyle
     {
@@ -21,6 +21,6 @@ namespace Microsoft.Psi.Visualization.Common
         /// <summary>
         /// No lines are rendered between adjacent points
         /// </summary>
-        None
+        None,
     }
 }

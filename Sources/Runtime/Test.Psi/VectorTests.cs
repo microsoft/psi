@@ -66,7 +66,7 @@ namespace Test.Psi
                 var caughtException = false;
                 try
                 {
-                    p.Run(enableExceptionHandling: true);
+                    p.Run();
                 }
                 catch (AggregateException exception)
                 {
@@ -273,7 +273,6 @@ namespace Test.Psi
                 Generators.Range(p, 0, 10, TimeSpan.FromTicks(10))
                     .Select(i => frames[i])
                     .Parallel(stream => stream.Aggregate(0, (prev, v) => v + prev), true)
-                    // orderby is there b/c order is not guaranteed when enumerating dictionaries.
                     .Do(x => results.Add(x.DeepClone()));
 
                 p.Run();
@@ -320,7 +319,7 @@ namespace Test.Psi
 
             using (var p = Pipeline.Create())
             {
-                Generators.Range(p, 0, 15, TimeSpan.FromMilliseconds(10))
+                Generators.Range(p, 0, frames.Length, TimeSpan.FromMilliseconds(10))
                     .Select(i => frames[i])
                     .Parallel((i, stream) =>
                     {
@@ -568,8 +567,9 @@ namespace Test.Psi
                 this.notifyCompletionTime = notifyCompletionTime;
             }
 
-            public void Stop()
+            public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
             {
+                notifyCompleted();
             }
 
             public Emitter<T> Out { get; private set; }

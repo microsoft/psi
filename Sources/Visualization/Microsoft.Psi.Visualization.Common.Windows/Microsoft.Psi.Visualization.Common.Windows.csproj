@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.Visualization</RootNamespace>
     <Description>Provides base data structures for visualization APIs for Platform for Situated Intelligence.</Description>
@@ -26,11 +26,12 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MvvmLightLibs" Version="5.4.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
+    <PackageReference Include="HelixToolkit.Wpf" Version="2.8.0" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="C5" Version="2.5.3" />
-    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.1" />
-    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0-beta05" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.1.0" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
   <ItemGroup>

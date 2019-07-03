@@ -7,9 +7,9 @@ namespace Microsoft.Psi.Serialization
     using Microsoft.Psi.Common;
 
     /// <summary>
-    /// Auto-generated serializer for immutable types (both reference and value type)
+    /// Auto-generated serializer for immutable types (both reference and value type).
     /// </summary>
-    /// <typeparam name="T">The type of objects this serializer knows how to handle</typeparam>
+    /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal class ImmutableSerializer<T> : ISerializer<T>
     {
         private const int Version = 1;

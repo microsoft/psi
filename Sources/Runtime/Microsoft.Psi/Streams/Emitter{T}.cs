@@ -35,9 +35,9 @@ namespace Microsoft.Psi
         /// This constructor is intended to be used by the framework.
         /// </summary>
         /// <param name="id">The id of this stream.</param>
-        /// <param name="owner">The owning component</param>
-        /// <param name="syncContext">The synchronization context this emitter operates in</param>
-        /// <param name="pipeline">The pipeline to associate with</param>
+        /// <param name="owner">The owning component.</param>
+        /// <param name="syncContext">The synchronization context this emitter operates in.</param>
+        /// <param name="pipeline">The pipeline to associate with.</param>
         internal Emitter(int id, object owner, SynchronizationLock syncContext, Pipeline pipeline)
         {
             this.id = id;
@@ -75,12 +75,10 @@ namespace Microsoft.Psi
         public int Id => this.id;
 
         /// <inheritdoc />
-        public Pipeline Pipeline => this.pipeline;
+        public Type Type => typeof(T);
 
-        /// <summary>
-        /// Gets envelope of last message posted on this emitter.
-        /// </summary>
-        public Envelope LastEnvelope => this.lastEnvelope;
+        /// <inheritdoc />
+        public Pipeline Pipeline => this.pipeline;
 
         /// <summary>
         /// Gets a value indicating whether this emitter has subscribers.
@@ -108,7 +106,7 @@ namespace Microsoft.Psi
 
                 foreach (var handler in this.closedHandlers)
                 {
-                    this.pipeline.Scheduler.Schedule(this.syncContext, PipelineElement.TrackStateObjectOnContext(() => handler(originatingTime), this.Owner, this.pipeline), originatingTime, false, true);
+                    PipelineElement.TrackStateObjectOnContext(() => handler(originatingTime), this.Owner, this.pipeline).Invoke();
                 }
             }
         }
@@ -117,8 +115,8 @@ namespace Microsoft.Psi
         /// Synchronously calls all subscribers.
         /// When the call returns, the message is assumed to be unchanged and reusable (that is, no downstream component is referencing it or any of its parts).
         /// </summary>
-        /// <param name="message">The message to post</param>
-        /// <param name="originatingTime">The time of the real-world event that led to the creation of this message</param>
+        /// <param name="message">The message to post.</param>
+        /// <param name="originatingTime">The time of the real-world event that led to the creation of this message.</param>
         public void Post(T message, DateTime originatingTime)
         {
 #if DEBUG

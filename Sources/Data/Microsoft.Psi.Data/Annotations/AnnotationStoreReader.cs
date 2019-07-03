@@ -17,8 +17,8 @@ namespace Microsoft.Psi.Data.Annotations
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnotationStoreReader"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
         public AnnotationStoreReader(string name, string path)
             : base(name, path, AnnotationStoreCommon.DefaultExtension)
         {

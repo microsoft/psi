@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Media
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// Structs, enums and static methods for interacting with Video4Linux drivers (V4L2)
+    /// Structs, enums and static methods for interacting with Video4Linux drivers (V4L2).
     /// </summary>
     /// <remarks>
     /// This implimentation is based on this spec: https://www.linuxtv.org/downloads/legacy/video4linux/API/V4L2_API/spec-single/v4l2.html
@@ -170,7 +170,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Buffer type (v4l2_buf_type)
+        /// Buffer type (v4l2_buf_type).
         /// </summary>
         internal enum BufferType : uint
         {
@@ -262,7 +262,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Pixel field (v4l2_field)
+        /// Pixel field (v4l2_field).
         /// </summary>
         internal enum PixelField : uint
         {
@@ -318,7 +318,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Driver memory sharing model (v4l2_memory)
+        /// Driver memory sharing model (v4l2_memory).
         /// </summary>
         internal enum Memory
         {
@@ -341,8 +341,8 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Query device capabilities (POSIX ioctl VIDIOC_QUERYCAP).
         /// </summary>
-        /// <param name="fd">Device name (e.g. "/dev/video0")</param>
-        /// <returns>Device capabilites</returns>
+        /// <param name="fd">Device name (e.g. "/dev/video0").</param>
+        /// <returns>Device capabilites.</returns>
         public static Capability QueryCapabilities(int fd)
         {
             var caps = default(Capability);
@@ -361,7 +361,7 @@ namespace Microsoft.Psi.Media
         /// Only video capture (BufferType.VideoCapture) supported.
         /// </remarks>
         /// <param name="fd">Device file descriptor.</param>
-        /// <returns>Format descriptions</returns>
+        /// <returns>Format descriptions.</returns>
         public static IEnumerable<FormatDescription> EnumerateFormats(int fd)
         {
             var format = default(FormatDescription);
@@ -502,7 +502,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Enqueue buffer (POSIX ioctl VIDIOC_QBUF)
+        /// Enqueue buffer (POSIX ioctl VIDIOC_QBUF).
         /// </summary>
         /// <param name="fd">Device file descriptor.</param>
         /// <param name="buffer">Buffer struct to enqueue.</param>
@@ -562,8 +562,8 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="readWrite">Read/write flag (IOC_READ, IOC_WRITE).</param>
         /// <param name="size">Size of struct parameter.</param>
-        /// <param name="command">Command number</param>
-        /// <returns>IOC number</returns>
+        /// <param name="command">Command number.</param>
+        /// <returns>IOC number.</returns>
         private static uint VIDIOC(uint readWrite, int size, int command)
         {
             return readWrite | ((uint)size << 16) | V | (uint)command;
@@ -652,7 +652,7 @@ namespace Microsoft.Psi.Media
         private static unsafe extern int MemUnmap(ulong start, ulong length);
 
         /// <summary>
-        /// Enqueue buffer (POSIX ioctl VIDIOC_QBUF)
+        /// Enqueue buffer (POSIX ioctl VIDIOC_QBUF).
         /// </summary>
         /// <param name="fd">Device file descriptor.</param>
         /// <param name="request">Request type (VIDIOC_QBUF).</param>
@@ -738,7 +738,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Format description (v4l2_fmtdesc)
+        /// Format description (v4l2_fmtdesc).
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct FormatDescription
@@ -777,7 +777,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Pixel format (v4l2_pix_format)
+        /// Pixel format (v4l2_pix_format).
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct PixFormat
@@ -823,28 +823,28 @@ namespace Microsoft.Psi.Media
             public uint Private;
 
             /// <summary>
-            /// Pixel format flags (V4L2_PIX_FMT_FLAG_*)
+            /// Pixel format flags (V4L2_PIX_FMT_FLAG_*).
             /// </summary>
             public uint Flags;
 
             /// <summary>
-            /// Encoding (v4l2_ycbcr_encoding / v4l2_hsv_encoding enum [union])
+            /// Encoding (v4l2_ycbcr_encoding / v4l2_hsv_encoding enum [union]).
             /// </summary>
             public uint Encoding;
 
             /// <summary>
-            /// Quantization (v4l2_quantization enum)
+            /// Quantization (v4l2_quantization enum).
             /// </summary>
             public uint Quantization;
 
             /// <summary>
-            /// Transfer function (v4l2_xfer_func enum)
+            /// Transfer function (v4l2_xfer_func enum).
             /// </summary>
             public uint TransferFunction;
         }
 
         /// <summary>
-        /// Video format (v4l2_format)
+        /// Video format (v4l2_format).
         /// </summary>
         /// <remarks>
         /// Note: only supporting pixel format (normally union of mplane, window, vbi, sdr, meta, etc.)
@@ -866,7 +866,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Request buffers (v4l2_requestbuffers)
+        /// Request buffers (v4l2_requestbuffers).
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct RequestBuffers
@@ -922,7 +922,7 @@ namespace Microsoft.Psi.Media
             public uint Type;
 
             /// <summary>
-            /// Flags (V4L2_PC_FLAG_*)
+            /// Flags (V4L2_PC_FLAG_*).
             /// </summary>
             public uint Flags;
 
@@ -954,7 +954,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Buffer (v4l2_buffer)
+        /// Buffer (v4l2_buffer).
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct Buffer
@@ -975,7 +975,7 @@ namespace Microsoft.Psi.Media
             public uint BytesUsed;
 
             /// <summary>
-            /// Flags (V4L2_BUF_FLAG_*)
+            /// Flags (V4L2_BUF_FLAG_*).
             /// </summary>
             public uint Flags;
 

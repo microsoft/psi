@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Kinect.Face
     using Microsoft.Psi.Kinect;
 
     /// <summary>
-    /// Used for receiving information from a Kinect sensor
+    /// Used for receiving information from a Kinect sensor.
     /// </summary>
     public class KinectFaceDetector : IKinectFaceDetector, ISourceComponent, IDisposable
     {
@@ -30,9 +30,9 @@ namespace Microsoft.Psi.Kinect.Face
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectFaceDetector"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of</param>
-        /// <param name="kinectSensor">Psi Kinect device from which we get our associated bodies</param>
-        /// <param name="configuration">Configuration to use</param>
+        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="kinectSensor">Psi Kinect device from which we get our associated bodies.</param>
+        /// <param name="configuration">Configuration to use.</param>
         public KinectFaceDetector(Pipeline pipeline, Kinect.KinectSensor kinectSensor, KinectFaceDetectorConfiguration configuration = null)
         {
             this.pipeline = pipeline;
@@ -44,15 +44,15 @@ namespace Microsoft.Psi.Kinect.Face
         }
 
         /// <summary>
-        /// Gets the list of faces from the Kinect
+        /// Gets the list of faces from the Kinect.
         /// </summary>
         public Emitter<List<KinectFace>> Faces { get; private set; }
 
         /// <summary>
-        /// Called with a list of bodies we got from our Kinect sensor
+        /// Called with a list of bodies we got from our Kinect sensor.
         /// </summary>
-        /// <param name="kinectBodies">List of KinectBody</param>
-        /// <param name="e">Envelope containing originating time of the kinect bodies</param>
+        /// <param name="kinectBodies">List of KinectBody.</param>
+        /// <param name="e">Envelope containing originating time of the kinect bodies.</param>
         public void UpdateFaceTracking(List<KinectBody> kinectBodies, Envelope e)
         {
             if (kinectBodies.Count == 0)
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Kinect.Face
         }
 
         /// <summary>
-        /// Called to release the sensor
+        /// Called to release the sensor.
         /// </summary>
         public void Dispose()
         {
@@ -133,15 +133,16 @@ namespace Microsoft.Psi.Kinect.Face
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
         }
 
         /// <summary>
-        /// Defines callback for handling when a face frame arrives from the kinect sensor
+        /// Defines callback for handling when a face frame arrives from the kinect sensor.
         /// </summary>
-        /// <param name="sender">Kinect device sending this event</param>
-        /// <param name="e">Event data</param>
+        /// <param name="sender">Kinect device sending this event.</param>
+        /// <param name="e">Event data.</param>
         internal void FaceFrameReader_FrameArrived(object sender, FaceFrameArrivedEventArgs e)
         {
             using (FaceFrame faceFrame = e.FrameReference.AcquireFrame())
@@ -192,7 +193,7 @@ namespace Microsoft.Psi.Kinect.Face
 
         /// <summary>
         /// Define an internal component used to receive KinectBody's from
-        /// our Kinect sensor device associated with this face detector
+        /// our Kinect sensor device associated with this face detector.
         /// </summary>
         internal class KinectBodyReceiver : IConsumer<List<KinectBody>>
         {
@@ -200,10 +201,10 @@ namespace Microsoft.Psi.Kinect.Face
 
             /// <summary>
             /// Initializes a new instance of the <see cref="KinectBodyReceiver"/> class.
-            /// Defines an internal receiver for receiving the KinectBody from our associated Kinect sensor
+            /// Defines an internal receiver for receiving the KinectBody from our associated Kinect sensor.
             /// </summary>
-            /// <param name="pipeline">Pipeline sensor is running in</param>
-            /// <param name="faceDetector">Our parent face detector</param>
+            /// <param name="pipeline">Pipeline sensor is running in.</param>
+            /// <param name="faceDetector">Our parent face detector.</param>
             public KinectBodyReceiver(Pipeline pipeline, KinectFaceDetector faceDetector)
             {
                 this.faceDetector = faceDetector;
@@ -211,15 +212,15 @@ namespace Microsoft.Psi.Kinect.Face
             }
 
             /// <summary>
-            /// Gets or sets receives the KinectBody
+            /// Gets or sets receives the KinectBody.
             /// </summary>
             public Receiver<List<KinectBody>> In { get; set; }
 
             /// <summary>
-            /// Callback for processing a list of KinectBodys once it is received from the Kinect sensor
+            /// Callback for processing a list of KinectBodys once it is received from the Kinect sensor.
             /// </summary>
-            /// <param name="kinectBodies">List of Kinect bodies</param>
-            /// <param name="e">Envelope</param>
+            /// <param name="kinectBodies">List of Kinect bodies.</param>
+            /// <param name="e">Envelope.</param>
             public void ReceiveInput(List<KinectBody> kinectBodies, Envelope e)
             {
                 this.faceDetector.UpdateFaceTracking(kinectBodies, e);

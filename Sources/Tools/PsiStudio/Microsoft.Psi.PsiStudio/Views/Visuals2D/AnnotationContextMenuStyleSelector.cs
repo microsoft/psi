@@ -15,17 +15,17 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     public class AnnotationContextMenuStyleSelector : StyleSelector
     {
         /// <summary>
-        /// Gets or sets annotation menu style
+        /// Gets or sets annotation menu style.
         /// </summary>
         public Style AnnotationStyle { get; set; }
 
         /// <summary>
-        /// Gets or sets command menu style
+        /// Gets or sets command menu style.
         /// </summary>
         public Style CommandStyle { get; set; }
 
         /// <summary>
-        /// Gets or sets separator menu style
+        /// Gets or sets separator menu style.
         /// </summary>
         public Style SeparatorStyle { get; set; }
 

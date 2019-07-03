@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Serialization
     /// Auto-generated serializer for complex value types (that is, structs having one or more non-primitive fields).
     /// Implementers of ISerializer should instantiate and call this class to do the heavy lifting.
     /// </summary>
-    /// <typeparam name="T">The value type this serializer knows how to handle</typeparam>
+    /// <typeparam name="T">The value type this serializer knows how to handle.</typeparam>
     internal sealed class StructSerializer<T> : ISerializer<T>
     {
         private const int Version = 1;

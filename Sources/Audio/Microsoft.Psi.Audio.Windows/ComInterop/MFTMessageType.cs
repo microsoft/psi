@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Audio.ComInterop
 {
     /// <summary>
-    /// MFT_MESSAGE_TYPE enum (defined in mftransform.h)
+    /// MFT_MESSAGE_TYPE enum (defined in mftransform.h).
     /// </summary>
     internal enum MFTMessageType
     {
@@ -81,6 +81,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// MFT_MESSAGE_COMMAND_MARKER = 0x20000000
         /// </summary>
-        COMMAND_MARKER = 0x20000000
+        COMMAND_MARKER = 0x20000000,
     }
 }

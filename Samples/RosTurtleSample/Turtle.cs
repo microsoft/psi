@@ -10,6 +10,9 @@ namespace TurtleROSSample
     using System.Linq;
     using Microsoft.Ros;
 
+    /// <summary>
+    /// ROS turtle bridge.
+    /// </summary>
     public class Turtle
     {
         private const string NodeName = "/turtle_sample";
@@ -32,17 +35,28 @@ namespace TurtleROSSample
                 Tuple.Create("y", RosMessage.RosFieldDef.Float32Def),
                 Tuple.Create("theta", RosMessage.RosFieldDef.Float32Def),
                 Tuple.Create("linear_velocity", RosMessage.RosFieldDef.Float32Def),
-                Tuple.Create("angular_velocity", RosMessage.RosFieldDef.Float32Def)
+                Tuple.Create("angular_velocity", RosMessage.RosFieldDef.Float32Def),
             });
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Turtle"/> class.
+        /// </summary>
+        /// <param name="rosSlave">ROS slave address.</param>
+        /// <param name="rosMaster">ROS master address.</param>
         public Turtle(string rosSlave, string rosMaster)
         {
             this.rosSlave = rosSlave;
             this.rosMaster = rosMaster;
         }
 
+        /// <summary>
+        /// Pose changed event handler.
+        /// </summary>
         public event EventHandler<Tuple<float, float, float>> PoseChanged;
 
+        /// <summary>
+        /// Connect to ROS.
+        /// </summary>
         public void Connect()
         {
             this.node = new RosNode.Node(NodeName, this.rosSlave, this.rosMaster);
@@ -50,12 +64,20 @@ namespace TurtleROSSample
             this.poseSubscriber = this.node.Subscribe(this.poseMessageDef, PoseTopic, this.PoseUpdate);
         }
 
+        /// <summary>
+        /// Disconnect from ROS.
+        /// </summary>
         public void Disconnect()
         {
             this.node.UnregisterPublisher(CmdVelTopic);
             this.node.UnregisterSubscriber(PoseTopic);
         }
 
+        /// <summary>
+        /// Velocity action.
+        /// </summary>
+        /// <param name="linear">Linear speed.</param>
+        /// <param name="angular">Angular speed.</param>
         public void Velocity(float linear, float angular)
         {
             this.cmdVelPublisher.Publish(

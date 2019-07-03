@@ -7,9 +7,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for AudioVisualizationObjectView.xaml
+    /// Interaction logic for AudioVisualizationObjectView.xaml.
     /// </summary>
-    public partial class AudioVisualizationObjectView : PlotVisualizationObjectView<AudioVisualizationObject, AudioVisualizationObjectConfiguration>
+    public partial class AudioVisualizationObjectView : PlotVisualizationObjectView<AudioVisualizationObject, double, AudioVisualizationObjectConfiguration>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioVisualizationObjectView"/> class.

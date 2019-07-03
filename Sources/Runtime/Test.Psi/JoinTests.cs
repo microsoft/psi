@@ -41,7 +41,7 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create())
             {
-                // Setup a sequence with a parallel operator, with joinOrDefault = true, and ensure that 
+                // Setup a sequence with a parallel operator, with joinOrDefault = true, and ensure that
                 // the "orDefault" is correctly applied while the instance substream exists, but not outside of that existance.
                 // This tests for making sure we are correctly tracking stream closings and the interpolator
                 // in Join is doing the right thing based on the stream closing times.
@@ -50,7 +50,6 @@ namespace Test.Psi
                 // value         N/A       1       2       3       4       5       6       N/A     N/A     N/A
                 // gamma-result           [1       2       -       4       -       -]
                 // out                     1       2       0       4       0       0
-
                 var input = Generators.Sequence(p, new List<Dictionary<int, int>>()
                 {
                     new Dictionary<int, int>(),

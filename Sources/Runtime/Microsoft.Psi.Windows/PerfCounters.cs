@@ -8,7 +8,7 @@ namespace Microsoft.Psi
     using System.Diagnostics;
 
     /// <summary>
-    /// Provides methods for creating and updating the performance counters
+    /// Provides methods for creating and updating the performance counters.
     /// </summary>
     /// <typeparam name="TKey">Performance counter key type.</typeparam>
     public class PerfCounters<TKey> : IPerfCounters<TKey>

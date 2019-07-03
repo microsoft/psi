@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.Windows
     using System.Windows.Forms;
 
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction logic for SettingsWindow.xaml.
     /// </summary>
     public partial class SettingsWindow : Window
     {
@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Visualization.Windows
         }
 
         /// <summary>
-        /// Gets or sets the directory to search for layout files
+        /// Gets or sets the directory to search for layout files.
         /// </summary>
         public string LayoutsDirectory
         {

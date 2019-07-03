@@ -64,8 +64,8 @@ namespace Microsoft.Psi.Data
         /// </summary>
         protected override void InitNew()
         {
-            base.InitNew();
             this.Reader = new SimpleReader(this.StoreName, this.StorePath);
+            base.InitNew();
         }
     }
 }

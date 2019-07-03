@@ -18,15 +18,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
-    /// The delegate for updating a stream's metadata
+    /// The delegate for updating a stream's metadata.
     /// </summary>
-    /// <param name="metadata">A collection of store metadata objects</param>
+    /// <param name="metadata">A collection of store metadata objects.</param>
     internal delegate void UpdateStreamMetadataDelegate(IEnumerable<Metadata> metadata);
 
     /// <summary>
-    /// The delegate for new live messages
+    /// The delegate for new live messages.
     /// </summary>
-    /// <param name="envelope">The message envelope</param>
+    /// <param name="envelope">The message envelope.</param>
     internal delegate void LiveMessageReceivedDelegate(Envelope envelope);
 
     /// <summary>
@@ -113,12 +113,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public TimeInterval OriginatingTimeInterval => this.streamTreeRoot.OriginatingTimeInterval;
 
         /// <summary>
-        /// Gets the originating time of the first message in the partition
+        /// Gets the originating time of the first message in the partition.
         /// </summary>
         public DateTime? FirstMessageOriginatingTime => this.OriginatingTimeInterval.Left;
 
         /// <summary>
-        /// Gets the originating time of the last message in the partition
+        /// Gets the originating time of the last message in the partition.
         /// </summary>
         public DateTime? LastMessageOriginatingTime => this.OriginatingTimeInterval.Right;
 
@@ -149,7 +149,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this partition is currently receiving new messages from an active writer
+        /// Gets or sets a value indicating whether this partition is currently receiving new messages from an active writer.
         /// </summary>
         [Browsable(false)]
         public bool IsLivePartition
@@ -168,12 +168,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets the brush for drawing text
+        /// Gets the brush for drawing text.
         /// </summary>
         public Brush TextBrush => this.SessionViewModel.DatasetViewModel.CurrentSessionViewModel == this.SessionViewModel ? ViewModelBrushes.SelectedBrush : ViewModelBrushes.StandardBrush;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the tree view item is expanded
+        /// Gets or sets a value indicating whether the tree view item is expanded.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -221,7 +221,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Checks whether the partition has an active writer attached and updates its IsLivePartition property
+        /// Checks whether the partition has an active writer attached and updates its IsLivePartition property.
         /// </summary>
         /// <returns>true if the partition is a live partition, otherwise false.</returns>
         internal bool UpdateLiveStatus()

@@ -16,7 +16,15 @@ namespace Microsoft.Psi.Visualization.Config
         private double thickness = 0.01;
 
         /// <summary>
-        /// Gets or sets the major distance
+        /// Initializes a new instance of the <see cref="XYZVisualizationPanelConfiguration"/> class.
+        /// </summary>
+        public XYZVisualizationPanelConfiguration()
+        {
+            this.Name = "3D Panel";
+        }
+
+        /// <summary>
+        /// Gets or sets the major distance.
         /// </summary>
         [DataMember]
         public double MajorDistance
@@ -26,7 +34,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the minor distance
+        /// Gets or sets the minor distance.
         /// </summary>
         [DataMember]
         public double MinorDistance
@@ -36,7 +44,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the thickness
+        /// Gets or sets the thickness.
         /// </summary>
         [DataMember]
         public double Thickness

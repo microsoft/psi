@@ -18,10 +18,10 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigatorTimeRangeChangedEventArgs"/> class.
         /// </summary>
-        /// <param name="originalStartTime">The original start time</param>
-        /// <param name="newStartTime">The new start time</param>
-        /// <param name="originalEndTime">The original end time</param>
-        /// <param name="newEndTime">The new end time</param>
+        /// <param name="originalStartTime">The original start time.</param>
+        /// <param name="newStartTime">The new start time.</param>
+        /// <param name="originalEndTime">The original end time.</param>
+        /// <param name="newEndTime">The new end time.</param>
         public NavigatorTimeRangeChangedEventArgs(
             DateTime originalStartTime,
             DateTime newStartTime,
@@ -35,22 +35,22 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets the original start time
+        /// Gets the original start time.
         /// </summary>
         public DateTime OriginalStartTime { get; }
 
         /// <summary>
-        /// Gets the new start time
+        /// Gets the new start time.
         /// </summary>
         public DateTime NewStartTime { get; }
 
         /// <summary>
-        /// Gets the original end time
+        /// Gets the original end time.
         /// </summary>
         public DateTime OriginalEndTime { get; }
 
         /// <summary>
-        /// Gets the new end time
+        /// Gets the new end time.
         /// </summary>
         public DateTime NewEndTime { get; }
     }

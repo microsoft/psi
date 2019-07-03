@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Components
     /// </summary>
     /// <typeparam name="TEventHandler">The event handler delegate type.</typeparam>
     /// <typeparam name="TOut">The output stream type.</typeparam>
-    public class EventSource<TEventHandler, TOut> : IProducer<TOut>, ISourceComponent, IDisposable
+    public class EventSource<TEventHandler, TOut> : IProducer<TOut>, ISourceComponent
     {
         private readonly Action<TEventHandler> subscribe;
         private readonly Action<TEventHandler> unsubscribe;
@@ -50,8 +50,6 @@ namespace Microsoft.Psi.Components
             // pure source (no tracked state object). In order to rectify this, we set the tracked state object to null
             // just prior to the call to this.Post by wrapping it in TrackStateObjectOnContext with a null state object.
             this.eventHandler = converter(PipelineElement.TrackStateObjectOnContext<TOut>(this.Post, null, pipeline));
-
-            this.pipeline.PipelineRun += (s, e) => this.subscribe(this.eventHandler);
         }
 
         /// <summary>
@@ -64,20 +62,15 @@ namespace Microsoft.Psi.Components
         {
             // notify that this is an infinite source component
             notifyCompletionTime(DateTime.MaxValue);
+
+            this.subscribe(this.eventHandler);
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             this.unsubscribe(this.eventHandler);
-        }
-
-        /// <summary>
-        /// Disposes the component.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Stop();
+            notifyCompleted();
         }
 
         /// <summary>

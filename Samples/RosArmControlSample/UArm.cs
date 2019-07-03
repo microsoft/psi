@@ -9,6 +9,9 @@ namespace ArmControlROSSample
     using System.Collections.Generic;
     using Microsoft.Ros;
 
+    /// <summary>
+    /// UArm ROS bridge.
+    /// </summary>
     public class UArm
     {
         private const string NodeName = "/uarm_metal_sample";
@@ -32,7 +35,7 @@ namespace ArmControlROSSample
             new[]
             {
                 Tuple.Create("frequency", RosMessage.RosFieldDef.Float32Def),
-                Tuple.Create("duration", RosMessage.RosFieldDef.Float32Def)
+                Tuple.Create("duration", RosMessage.RosFieldDef.Float32Def),
             });
 
         private RosMessage.MessageDef positionMessageDef = RosMessage.CreateMessageDef(
@@ -42,7 +45,7 @@ namespace ArmControlROSSample
             {
                 Tuple.Create("x", RosMessage.RosFieldDef.Float32Def),
                 Tuple.Create("y", RosMessage.RosFieldDef.Float32Def),
-                Tuple.Create("z", RosMessage.RosFieldDef.Float32Def)
+                Tuple.Create("z", RosMessage.RosFieldDef.Float32Def),
             });
 
         private float x;
@@ -51,14 +54,25 @@ namespace ArmControlROSSample
 
         private float z;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UArm"/> class.
+        /// </summary>
+        /// <param name="rosSlave">ROS slave address.</param>
+        /// <param name="rosMaster">ROS master address.</param>
         public UArm(string rosSlave, string rosMaster)
         {
             this.rosSlave = rosSlave;
             this.rosMaster = rosMaster;
         }
 
+        /// <summary>
+        /// Position changed event.
+        /// </summary>
         public event EventHandler<Tuple<float, float, float>> PositionChanged;
 
+        /// <summary>
+        /// Connect to ROS.
+        /// </summary>
         public void Connect()
         {
             this.node = new RosNode.Node(NodeName, this.rosSlave, this.rosMaster);
@@ -68,6 +82,9 @@ namespace ArmControlROSSample
             this.positionPublisher = this.node.CreatePublisher(this.positionMessageDef, PositionWriteTopic, false);
         }
 
+        /// <summary>
+        /// Disconnect from ROS.
+        /// </summary>
         public void Disconnect()
         {
             this.node.UnregisterPublisher(PumpTopic);
@@ -76,21 +93,42 @@ namespace ArmControlROSSample
             this.node.UnregisterPublisher(PositionWriteTopic);
         }
 
+        /// <summary>
+        /// Pump command.
+        /// </summary>
+        /// <param name="pump">Whether to enable the pump.</param>
         public void Pump(bool pump)
         {
             this.pumpPublisher.Publish(RosMessageTypes.Standard.Bool.ToMessage(pump));
         }
 
+        /// <summary>
+        /// Beep command.
+        /// </summary>
+        /// <param name="frequency">Frequency of beep.</param>
+        /// <param name="duration">Duration of beep (milliseconds).</param>
         public void Beep(float frequency, float duration)
         {
             this.beepPublisher.Publish(this.BeepMessage(frequency, duration));
         }
 
+        /// <summary>
+        /// Set absolute cartesian position.
+        /// </summary>
+        /// <param name="x">Coordinate X.</param>
+        /// <param name="y">Coordinate Y.</param>
+        /// <param name="z">Coordinate Z.</param>
         public void AbsolutePosition(float x, float y, float z)
         {
             this.positionPublisher.Publish(this.PositionMessage(x, y, z));
         }
 
+        /// <summary>
+        /// Set relative cartesian position.
+        /// </summary>
+        /// <param name="x">Delta X.</param>
+        /// <param name="y">Delta Y.</param>
+        /// <param name="z">Delta Z.</param>
         public void RelativePosition(float x, float y, float z)
         {
             this.AbsolutePosition(this.x + x, this.y + y, this.z + z);
@@ -101,7 +139,7 @@ namespace ArmControlROSSample
             return new[]
             {
                 Tuple.Create("frequency", RosMessage.RosFieldVal.NewFloat32Val(frequency)),
-                Tuple.Create("duration", RosMessage.RosFieldVal.NewFloat32Val(duration))
+                Tuple.Create("duration", RosMessage.RosFieldVal.NewFloat32Val(duration)),
             };
         }
 
@@ -136,7 +174,7 @@ namespace ArmControlROSSample
             {
                 Tuple.Create("x", RosMessage.RosFieldVal.NewFloat32Val(x)),
                 Tuple.Create("y", RosMessage.RosFieldVal.NewFloat32Val(y)),
-                Tuple.Create("z", RosMessage.RosFieldVal.NewFloat32Val(z))
+                Tuple.Create("z", RosMessage.RosFieldVal.NewFloat32Val(z)),
             };
         }
     }

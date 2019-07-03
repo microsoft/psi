@@ -11,12 +11,12 @@ namespace Microsoft.Psi.Audio.ComInterop
     internal struct PropertyKey
     {
         /// <summary>
-        /// Format ID
+        /// Format ID.
         /// </summary>
         internal Guid FormatId;
 
         /// <summary>
-        /// Property ID
+        /// Property ID.
         /// </summary>
         internal int PropertyId;
     }

@@ -38,6 +38,15 @@ namespace Microsoft.Psi.Components
         /// method completes. However, the component might still receive new messages (if it is subscribed to other
         /// components) after this call and is expected to handle them.
         /// </summary>
-        void Stop();
+        /// <param name="finalOriginatingTime">
+        /// The last originating time of any message which may be posted, after which the component should stop
+        /// posting non-reactive source messages.
+        /// </param>
+        /// <param name="notifyCompleted">
+        /// Delegate to call to notify the pipeline that the component has completed posting non-reactive source
+        /// messages. This delegate should be called once the component has posted its last non-reactive source
+        /// message, but only up to (and possibly including) <paramref name="finalOriginatingTime"/>.
+        /// </param>
+        void Stop(DateTime finalOriginatingTime, Action notifyCompleted);
     }
 }

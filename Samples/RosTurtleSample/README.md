@@ -2,7 +2,7 @@
 
 In this sample, we'll create a simple console app to control the ROS TurtleSim.
 The sample itself will run under the Core CLR (Mac/Linux/Windows), but depends on ROS running under Linux.
-An overview of ROS and our ROS bridge is [covered in a separate document](https://microsoft.github.io/psi/topics/InDepth.PsiROSIntegration).
+An overview of ROS and our ROS bridge is [covered in a separate document](https://github.com/microsoft/psi/wiki/ROS-Integration).
 
 First we will build a simple class to talk to the Turtle sim, then we'll expose this as a \psi component and will write a small app making use of it.
 
@@ -213,7 +213,7 @@ public class TurtleComponent : ISourceComponent
 
 The `PoseChanged` `Event` becomes an `Emitter` and the `Velocity(...)` method becomes a `Receiver`.
 We make our component `ISourceComponent` and `Connect()`/`Disconnect()` the `turtle` as well as register/unregister the event handler upon pipeline start/stop.
-In fact, it is _very_ important to ensure that nothing is `Post`ed when a component is not running (before `OnPipelineStart` or after `OnPipelineStop`).
+The component is not allowed to post messages when the pipeline is not running (i.e. before `OnPipelineStart` or after `OnPipelineStop`).
 To this end, we maintain the `stopped` flag and guard within `OnPoseChanged`.
 
 Finally, to make use of our component, we make a very straightforward app to spew pose updates to the console and to map key events to motion.
@@ -275,4 +275,4 @@ Also, in the less common case that you run a distributed ROS system in which nod
 ## Links
 
 * A [tutorial using physical robot arm hardware](https://github.com/Microsoft/psi/blob/master/Samples/RosArmControlSample)
-* An [overview of ROS and our ROS bridge](https://microsoft.github.io/psi/topics/InDepth.PsiROSIntegration)
+* An [overview of ROS and our ROS bridge](https://github.com/microsoft/psi/wiki/ROS-Integration)

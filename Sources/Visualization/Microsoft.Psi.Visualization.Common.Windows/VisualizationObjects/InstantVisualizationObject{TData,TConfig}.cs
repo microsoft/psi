@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <summary>
     /// Represents an instant visualization object.
     /// </summary>
-    /// <typeparam name="TData">The type of the instant visualization</typeparam>
+    /// <typeparam name="TData">The type of the instant visualization.</typeparam>
     /// <typeparam name="TConfig">The type of the instant visualization object configuration.</typeparam>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public abstract class InstantVisualizationObject<TData, TConfig> : StreamVisualizationObject<TData, TConfig>

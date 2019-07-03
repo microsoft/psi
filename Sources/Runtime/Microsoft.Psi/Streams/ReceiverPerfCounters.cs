@@ -4,7 +4,7 @@
 namespace Microsoft.Psi
 {
     /// <summary>
-    /// The counters we support
+    /// The counters we support.
     /// </summary>
     public enum ReceiverCounters
     {
@@ -76,6 +76,6 @@ namespace Microsoft.Psi
         /// <summary>
         /// The number of messages that are available for recycling
         /// </summary>
-        AvailableRecycled
+        AvailableRecycled,
     }
 }

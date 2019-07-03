@@ -26,9 +26,9 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="EncodedImage"/> class.
         /// </summary>
-        /// <param name="width">Width of image in pixels</param>
-        /// <param name="height">Height of image in pixels</param>
-        /// <param name="contents">Byte array used to initialize the image data</param>
+        /// <param name="width">Width of image in pixels.</param>
+        /// <param name="height">Height of image in pixels.</param>
+        /// <param name="contents">Byte array used to initialize the image data.</param>
         public EncodedImage(int width, int height, byte[] contents)
         {
             this.Width = width;
@@ -40,22 +40,22 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Gets the width of the image in pixels
+        /// Gets the width of the image in pixels.
         /// </summary>
         public int Width { get; internal set; }
 
         /// <summary>
-        /// Gets the height of the image in pixels
+        /// Gets the height of the image in pixels.
         /// </summary>
         public int Height { get; internal set; }
 
         /// <summary>
-        /// Gets number of bytes of data in the image
+        /// Gets number of bytes of data in the image.
         /// </summary>
         public int CountBytes { get; internal set; }
 
         /// <summary>
-        /// Releases the image
+        /// Releases the image.
         /// </summary>
         public void Dispose()
         {
@@ -64,19 +64,19 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Returns the image data as a byte array
+        /// Returns the image data as a byte array.
         /// </summary>
-        /// <returns>Byte array containing the image data</returns>
+        /// <returns>Byte array containing the image data.</returns>
         public byte[] GetBuffer()
         {
             return this.stream.GetBuffer();
         }
 
         /// <summary>
-        /// Returns the image data as a byte array
+        /// Returns the image data as a byte array.
         /// </summary>
-        /// <param name="newLength">Number of bytes to return</param>/>
-        /// <returns>Byte array containing the image data</returns>
+        /// <param name="newLength">Number of bytes to return.</param>/>
+        /// <returns>Byte array containing the image data.</returns>
         public byte[] GetBuffer(int newLength)
         {
             this.stream.SetLength(newLength);
@@ -84,10 +84,10 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Compresses an image using the specified encoder
+        /// Compresses an image using the specified encoder.
         /// </summary>
-        /// <param name="image">Image to compress</param>
-        /// <param name="encoder">Encoder to use to compress</param>
+        /// <param name="image">Image to compress.</param>
+        /// <param name="encoder">Encoder to use to compress.</param>
         public void EncodeFrom(Image image, IBitmapEncoder encoder)
         {
             this.stream.Position = 0;
@@ -100,9 +100,9 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Decompresses the current image into another another image
+        /// Decompresses the current image into another another image.
         /// </summary>
-        /// <param name="image">Image used to store decompressed results</param>
+        /// <param name="image">Image used to store decompressed results.</param>
         public void DecodeTo(Image image)
         {
             this.stream.Position = 0;

@@ -95,7 +95,7 @@ namespace Microsoft.Psi.Audio
         public bool DropOutOfOrderPackets { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired format for the captured audio
+        /// Gets or sets the desired format for the captured audio.
         /// </summary>
         /// <remarks>
         /// By default, audio will be captured in the default format of the audio recording device.

@@ -326,7 +326,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                             SetAnnotationValueWindow dlg = new SetAnnotationValueWindow
                             {
                                 // Currently, only support one annotation
-                                AnnotationValue = annotatedEvent.Annotations[0]
+                                AnnotationValue = annotatedEvent.Annotations[0],
                             };
                             var result = dlg.ShowDialog();
                             if (result.HasValue && result.Value)
@@ -450,9 +450,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         protected override void InitNew()
         {
-            base.InitNew();
-            this.Configuration.Height = 20;
             this.isDirty = false;
+            base.InitNew();
         }
 
         /// <inheritdoc />
@@ -471,7 +470,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        protected override void OnDisconnect()
+        protected override void OnRemoveFromPanel()
         {
             this.Save();
         }

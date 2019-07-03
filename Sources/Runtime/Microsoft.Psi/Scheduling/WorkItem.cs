@@ -4,13 +4,13 @@
 namespace Microsoft.Psi.Scheduling
 {
     using System;
-    using System.Threading;
 
     /// <summary>
-    /// A workitem that can be scheduled for execution by the scheduler
+    /// A workitem that can be scheduled for execution by the scheduler.
     /// </summary>
     internal struct WorkItem
     {
+        public SchedulerContext SchedulerContext;
         public SynchronizationLock SyncLock;
         public DateTime StartTime;
         public Action Callback;

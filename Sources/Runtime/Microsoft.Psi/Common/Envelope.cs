@@ -12,12 +12,12 @@ namespace Microsoft.Psi
     public struct Envelope
     {
         /// <summary>
-        /// The id of the stream that generated the message
+        /// The id of the stream that generated the message.
         /// </summary>
         public int SourceId;
 
         /// <summary>
-        /// The sequence number of this message, unique within the stream idetified by <see cref="SourceId"/>
+        /// The sequence number of this message, unique within the stream idetified by <see cref="SourceId"/>.
         /// </summary>
         public int SequenceId;
 
@@ -39,7 +39,7 @@ namespace Microsoft.Psi
         /// <param name="originatingTime">The <see cref="OriginatingTime"/> of this message.</param>
         /// <param name="time">The creation <see cref="Time"/> of the message.</param>
         /// <param name="sourceId">The <see cref="SourceId"/> of the message.</param>
-        /// <param name="sequenceId">The unique <see cref="SequenceId"/> of the message</param>
+        /// <param name="sequenceId">The unique <see cref="SequenceId"/> of the message.</param>
         public Envelope(DateTime originatingTime, DateTime time, int sourceId, int sequenceId)
         {
             this.SourceId = sourceId;
@@ -49,11 +49,11 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Determines whether two instances are equal
+        /// Determines whether two instances are equal.
         /// </summary>
-        /// <param name="first">The first object to compare</param>
-        /// <param name="second">The object to compare to</param>
-        /// <returns>True if the instances are equal</returns>
+        /// <param name="first">The first object to compare.</param>
+        /// <param name="second">The object to compare to.</param>
+        /// <returns>True if the instances are equal.</returns>
         public static bool operator ==(Envelope first, Envelope second)
         {
             return
@@ -64,30 +64,30 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Determines whether two instances are equal
+        /// Determines whether two instances are equal.
         /// </summary>
-        /// <param name="first">The first object to compare</param>
-        /// <param name="second">The object to compare to</param>
-        /// <returns>True if the instances are equal</returns>
+        /// <param name="first">The first object to compare.</param>
+        /// <param name="second">The object to compare to.</param>
+        /// <returns>True if the instances are equal.</returns>
         public static bool operator !=(Envelope first, Envelope second)
         {
             return !(first == second);
         }
 
         /// <summary>
-        /// Provide a string representation of this Timestamped instance
+        /// Provide a string representation of this Timestamped instance.
         /// </summary>
-        /// <returns>Payload preceded by originating time</returns>
+        /// <returns>Payload preceded by originating time.</returns>
         public override string ToString()
         {
             return string.Format("{0}.{1} ({2})", this.SourceId, this.SequenceId, this.OriginatingTime);
         }
 
         /// <summary>
-        /// Determines whether two instances are equal
+        /// Determines whether two instances are equal.
         /// </summary>
-        /// <param name="other">The object to compare to</param>
-        /// <returns>True if the instances are equal</returns>
+        /// <param name="other">The object to compare to.</param>
+        /// <returns>True if the instances are equal.</returns>
         public override bool Equals(object other)
         {
             if (!(other is Envelope))
@@ -99,9 +99,9 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Returns a hash code for this instance, obtained by combining the hash codes of the instance fields
+        /// Returns a hash code for this instance, obtained by combining the hash codes of the instance fields.
         /// </summary>
-        /// <returns>A hashcode</returns>
+        /// <returns>A hashcode.</returns>
         public override int GetHashCode()
         {
             return this.SourceId ^ this.SequenceId ^ this.Time.GetHashCode() ^ this.OriginatingTime.GetHashCode();

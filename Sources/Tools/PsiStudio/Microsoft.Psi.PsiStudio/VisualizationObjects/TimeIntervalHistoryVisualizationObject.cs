@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// The names of all the tracks discovered so far.
         /// </summary>
-        private List<string> trackNames = new List<string>();
+        private readonly List<string> trackNames = new List<string>();
 
         /// <summary>
         /// The value to display in the legend.
@@ -39,21 +39,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private string legendValue = string.Empty;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimeIntervalHistoryVisualizationObject"/> class.
-        /// </summary>
-        public TimeIntervalHistoryVisualizationObject()
-        {
-            this.PropertyChanged += this.TimeIntervalHistoryVisualizationObject_PropertyChanged;
-            this.Configuration.PropertyChanged += this.Configuration_PropertyChanged;
-        }
-
-        /// <summary>
-        /// Gets the data to de displayed in the control
+        /// Gets the data to de displayed in the control.
         /// </summary>
         public List<TimeIntervalVisualizationObjectData> DisplayData { get; private set; } = new List<TimeIntervalVisualizationObjectData>();
 
         /// <summary>
-        /// Gets the data to de displayed in the control
+        /// Gets the data to de displayed in the control.
         /// </summary>
         public int TrackCount => Math.Max(1, this.trackNames.Count);
 
@@ -69,12 +60,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(TimeIntervalHistoryVisualizationObjectView));
 
-        /// <summary>
-        /// Invoked when a <see cref="TimeIntervalHistoryVisualizationObject"/> property changes.
-        /// </summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The PropertyChangingEventArgs</param>
-        protected void TimeIntervalHistoryVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.CurrentValue))
             {
@@ -88,6 +75,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     }
                 }
             }
+
+            base.OnPropertyChanged(sender, e);
         }
 
         /// <inheritdoc />
@@ -103,14 +92,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             base.OnDataCollectionChanged(e);
         }
 
-        /// <inheritdoc />
-        protected override void InitNew()
-        {
-            base.InitNew();
-            this.Configuration.PropertyChanged += this.Configuration_PropertyChanged;
-        }
-
-        private void Configuration_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if ((e.PropertyName == nameof(TimeIntervalHistoryVisualizationObjectConfiguration.ShowFinal)) ||
                 (e.PropertyName == nameof(TimeIntervalHistoryVisualizationObjectConfiguration.FillColor)))
@@ -124,6 +107,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.UpdateDisplayData(this.CurrentValue != null ? this.CurrentValue.Value : default(Message<TimeIntervalHistory>));
                 }
             }
+
+            base.OnConfigurationPropertyChanged(sender, e);
         }
 
         private void UpdateDisplayData(Message<TimeIntervalHistory> message)
@@ -190,17 +175,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Time interval visualization object data
+        /// Time interval visualization object data.
         /// </summary>
         public class TimeIntervalVisualizationObjectData
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="TimeIntervalVisualizationObjectData"/> class.
             /// </summary>
-            /// <param name="trackNumber">The track number for this event</param>
-            /// <param name="timeInterval">The time interval for the event</param>
-            /// <param name="text">The text label for the event</param>
-            /// <param name="brush">The brush for the event</param>
+            /// <param name="trackNumber">The track number for this event.</param>
+            /// <param name="timeInterval">The time interval for the event.</param>
+            /// <param name="text">The text label for the event.</param>
+            /// <param name="brush">The brush for the event.</param>
             public TimeIntervalVisualizationObjectData(int trackNumber, TimeInterval timeInterval, string text, Brush brush)
             {
                 this.TrackNumber = trackNumber;
@@ -210,22 +195,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             /// <summary>
-            /// Gets or sets the track number for the event
+            /// Gets or sets the track number for the event.
             /// </summary>
             public int TrackNumber { get; set; }
 
             /// <summary>
-            /// Gets or sets the time interval
+            /// Gets or sets the time interval.
             /// </summary>
             public TimeInterval TimeInterval { get; set; }
 
             /// <summary>
-            /// Gets or sets the text
+            /// Gets or sets the text.
             /// </summary>
             public string Text { get; set; }
 
             /// <summary>
-            /// Gets or sets the brush to paint this time interval with
+            /// Gets or sets the brush to paint this time interval with.
             /// </summary>
             public Brush Brush { get; set; }
         }

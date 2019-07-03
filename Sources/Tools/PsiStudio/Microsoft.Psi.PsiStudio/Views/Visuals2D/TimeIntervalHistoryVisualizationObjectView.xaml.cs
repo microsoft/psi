@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for TimeIntervalHistoryVisualizationObjectView.xaml
+    /// Interaction logic for TimeIntervalHistoryVisualizationObjectView.xaml.
     /// </summary>
     public partial class TimeIntervalHistoryVisualizationObjectView : TimelineCanvasVisualizationObjectView<
         TimeIntervalHistoryVisualizationObject,

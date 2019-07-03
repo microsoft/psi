@@ -122,33 +122,33 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Serializes the given instance to the specified stream.
         /// </summary>
-        /// <param name="writer">The stream writer to serialize to</param>
-        /// <param name="instance">The instance to serialize</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <param name="writer">The stream writer to serialize to.</param>
+        /// <param name="instance">The instance to serialize.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         internal abstract void UntypedSerialize(BufferWriter writer, object instance, SerializationContext context);
 
         /// <summary>
         /// Deserializes an instance from the specified stream. This gets called after the ref prefix (if any) has been read.
         /// </summary>
-        /// <param name="reader">The stream reader to deserialize from</param>
-        /// <param name="target">An optional existing instance to deserialize into</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <param name="reader">The stream reader to deserialize from.</param>
+        /// <param name="target">An optional existing instance to deserialize into.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         internal abstract void UntypedDeserialize(BufferReader reader, ref object target, SerializationContext context);
 
         /// <summary>
         /// Deep clones the given object into an existing allocation.
         /// </summary>
-        /// <param name="instance">The instance to clone</param>
-        /// <param name="target">An existing instance to clone into</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <param name="instance">The instance to clone.</param>
+        /// <param name="target">An existing instance to clone into.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         internal abstract void UntypedClone(object instance, ref object target, SerializationContext context);
 
         /// <summary>
         /// An opportunity to clear the instance before caching it for future reuse as a cloning or deserialization target.
         /// The method is expected to call Serializer.Clear on all reference-type fields.
         /// </summary>
-        /// <param name="target">The instance to clone</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="target">The instance to clone.</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         internal abstract void UntypedClear(ref object target, SerializationContext context);
     }
 
@@ -156,7 +156,7 @@ namespace Microsoft.Psi.Serialization
     /// Base class for serialization handlers.
     /// Custom serializers should cache the handlers they need for serializing object fields.
     /// </summary>
-    /// <typeparam name="T">The type to serialize</typeparam>
+    /// <typeparam name="T">The type to serialize.</typeparam>
     public abstract class SerializationHandler<T> : SerializationHandler
     {
         /// <summary>

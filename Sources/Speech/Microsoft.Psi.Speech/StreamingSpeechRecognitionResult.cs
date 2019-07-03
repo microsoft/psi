@@ -17,12 +17,12 @@ namespace Microsoft.Psi.Speech
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamingSpeechRecognitionResult"/> class.
         /// </summary>
-        /// <param name="isFinal"> Indicates whether this is a final or a partial result</param>
+        /// <param name="isFinal"> Indicates whether this is a final or a partial result.</param>
         /// <param name="text">The recognized text of this result.</param>
         /// <param name="confidence"> The confidence score of the result.</param>
-        /// <param name="alternates"> The list of alternates for this result, as text strings</param>
-        /// <param name="audio"> The audio buffer that formed this result</param>
-        /// <param name="duration"> The duration of the audio that produced this recognition result</param>
+        /// <param name="alternates"> The list of alternates for this result, as text strings.</param>
+        /// <param name="audio"> The audio buffer that formed this result.</param>
+        /// <param name="duration"> The duration of the audio that produced this recognition result.</param>
         public StreamingSpeechRecognitionResult(bool isFinal, string text, double? confidence = null, IEnumerable<SpeechRecognitionAlternate> alternates = null, AudioBuffer? audio = null, TimeSpan? duration = null)
             : base(text, confidence, alternates, audio, duration)
         {
@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <summary>
-        /// Gets a value indicating whether this result is final (true), or if it is a partial hypothesis (false)
+        /// Gets a value indicating whether this result is final (true), or if it is a partial hypothesis (false).
         /// </summary>
         [DataMember]
         public bool IsFinal { get; private set; }

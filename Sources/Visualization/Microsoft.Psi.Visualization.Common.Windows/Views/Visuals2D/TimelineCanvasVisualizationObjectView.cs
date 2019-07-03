@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Base class for 2D timeline canvas-based visualization object views
+    /// Base class for 2D timeline canvas-based visualization object views.
     /// </summary>
     /// <typeparam name="TTimelineVisualizationObject">The type of timeline visualization object.</typeparam>
     /// <typeparam name="TData">The type of data.</typeparam>
@@ -31,6 +31,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// Gets the navigator for the visualization object.
         /// </summary>
         public Navigator Navigator => this.VisualizationObject.Navigator;
+
+        /// <inheritdoc/>
+        public override TTimelineVisualizationObject VisualizationObject { get; protected set; }
 
         /// <inheritdoc/>
         protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

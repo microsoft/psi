@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Serialization
 
     /// <summary>
     /// Maintains the objects and types seen during serialization, to enable polymorphism,
-    /// single-instanced references (multiple references to same object) and circular dependencies
+    /// single-instanced references (multiple references to same object) and circular dependencies.
     /// </summary>
     public class SerializationContext
     {

@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Audio.ComInterop
 {
     /// <summary>
-    /// AudioClientShareMode enumeration (defined in AudioClient.h)
+    /// AudioClientShareMode enumeration (defined in AudioClient.h).
     /// </summary>
     internal enum AudioClientShareMode
     {
@@ -16,6 +16,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// AUDCLNT_SHAREMODE_EXCLUSIVE
         /// </summary>
-        Exclusive
+        Exclusive,
     }
 }

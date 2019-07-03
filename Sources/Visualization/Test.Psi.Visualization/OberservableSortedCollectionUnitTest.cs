@@ -9,6 +9,9 @@ namespace Test.Psi.Visualization
     using Microsoft.Psi.Visualization.Collections;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Observable sorted collection unit tests.
+    /// </summary>
     [TestClass]
     public class OberservableSortedCollectionUnitTest
     {
@@ -52,7 +55,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Insert tests
+        /// Insert tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -64,7 +67,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// AddRange tests
+        /// AddRange tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -92,7 +95,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// UpdateOrAdd tests
+        /// UpdateOrAdd tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -125,7 +128,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Clear tests
+        /// Clear tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -140,7 +143,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Contains tests
+        /// Contains tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -153,7 +156,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// CopyTo tests
+        /// CopyTo tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -175,7 +178,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Empty list tests
+        /// Empty list tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -189,7 +192,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Enumerator tests
+        /// Enumerator tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -205,15 +208,11 @@ namespace Test.Psi.Visualization
                 }
 
                 Assert.IsFalse(testEnum.MoveNext());
-                testEnum.Reset();
-                basisEnum.Reset();
-                Assert.AreEqual(testEnum.Current, default(double));
-                Assert.AreEqual(basisEnum.Current.Value, testEnum.Current);
             }
         }
 
         /// <summary>
-        /// IndexOf tests
+        /// IndexOf tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -226,7 +225,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Indexer tests
+        /// Indexer tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -243,7 +242,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Remove tests
+        /// Remove tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -262,7 +261,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// RemoveRange tests
+        /// RemoveRange tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -286,10 +285,11 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Helper method for tracking changes to collections under test
+        /// Helper method for tracking changes to collections under test.
         /// </summary>
         /// <param name="e">Collection changed event arguments.</param>
         /// <param name="eventCount">Reference to the number of collection changed events received.</param>
+        /// <param name="itemCount">Item count.</param>
         private void CollectionChangedHandler(NotifyCollectionChangedEventArgs e, ref int eventCount, ref int itemCount)
         {
             eventCount++;

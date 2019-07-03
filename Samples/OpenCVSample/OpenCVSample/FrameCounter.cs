@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Samples.OpenCV
     using System.Diagnostics;
 
     /// <summary>
-    /// FrameCounter is a simple class for determining the frame rate of the playback
+    /// FrameCounter is a simple class for determining the frame rate of the playback.
     /// </summary>
     public class FrameCounter : INotifyPropertyChanged
     {
@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// Called each time we output a frame
+        /// Called each time we output a frame.
         /// </summary>
         public void Increment()
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// Used to reset the frame rate counter
+        /// Used to reset the frame rate counter.
         /// </summary>
         private void Reset()
         {
@@ -69,7 +69,7 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// WPF helper for firing an event when a property changes
+        /// WPF helper for firing an event when a property changes.
         /// </summary>
         /// <param name="propertyName">The name of the property that changed.</param>
         private void OnPropertyChanged(string propertyName)

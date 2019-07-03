@@ -10,16 +10,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Config;
-    using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
-    using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
     /// Represents an audio visualization object.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    public class AudioVisualizationObject : PlotVisualizationObject<AudioVisualizationObjectConfiguration>
+    public class AudioVisualizationObject : PlotVisualizationObject<double, AudioVisualizationObjectConfiguration>
     {
         private RelayCommand enableAudioCommand;
 
@@ -63,7 +61,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public override bool IsAudioStream => true;
 
         /// <summary>
-        /// Gets a value indicating whether this stream is currently enabled for audio playback
+        /// Gets a value indicating whether this stream is currently enabled for audio playback.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -73,19 +71,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public override string IconSource => this.Configuration.StreamBinding.IsBound ? this.IsAudioPlaybackStream ? IconSourcePath.Audio : IconSourcePath.AudioMuted : IconSourcePath.AudioUnbound;
 
         /// <summary>
-        /// Gets the text for the enable/mute audio playback menu item
+        /// Gets the text for the enable/mute audio playback menu item.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public string EnableAudioCommandText => this.IsAudioPlaybackStream ? "Mute Audio" : "Enable Audio";
 
-        /// <inheritdoc />
-        protected override void InitNew()
+        /// <inheritdoc/>
+        public override double GetDoubleValue(double data)
         {
-            base.InitNew();
-            this.Configuration.Color = Colors.White;
-            this.Configuration.MarkerColor = Colors.White;
-            this.Configuration.RangeColor = Colors.White;
+            return data;
+        }
+
+        /// <inheritdoc/>
+        public override string GetStringValue(double data)
+        {
+            return data.ToString();
         }
 
         /// <inheritdoc/>

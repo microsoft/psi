@@ -59,9 +59,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public TranslateTransform TranslateTransform => this.translateTransform;
 
         /// <summary>
-        /// Gets the stream visualization object.
+        /// Gets or sets the stream visualization object.
         /// </summary>
-        public TStreamVisualizationObject VisualizationObject { get; private set; }
+        public virtual TStreamVisualizationObject VisualizationObject { get; protected set; }
 
         /// <summary>
         /// Implements changes in response to data context changing.

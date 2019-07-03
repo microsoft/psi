@@ -29,13 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Sources\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
-    <ProjectReference Include="..\..\..\..\Sources\Language\Microsoft.Psi.Language\Microsoft.Psi.Language.csproj" />
     <ProjectReference Include="..\..\..\..\Sources\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj" />
   </ItemGroup>
 

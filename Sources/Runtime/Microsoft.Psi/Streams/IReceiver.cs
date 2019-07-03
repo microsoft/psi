@@ -11,6 +11,21 @@ namespace Microsoft.Psi
     public interface IReceiver : IDisposable
     {
         /// <summary>
+        /// Gets receiver ID.
+        /// </summary>
+        int Id { get; }
+
+        /// <summary>
+        /// Gets receiver name.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
+        /// Gets receiver type.
+        /// </summary>
+        Type Type { get; }
+
+        /// <summary>
         /// Gets receiver owner object.
         /// </summary>
         object Owner { get; }

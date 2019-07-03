@@ -237,7 +237,7 @@ namespace Microsoft.Psi.Media
             /// <summary>
             /// Initializes a new instance of the <see cref="PixelFormat"/> class.
             /// </summary>
-            /// <param name="internalFormat">Internal format provided by the driver</param>
+            /// <param name="internalFormat">Internal format provided by the driver.</param>
             internal PixelFormat(LinuxVideoInterop.FormatDescription internalFormat)
             {
                 this.internalFormat = internalFormat;
@@ -279,7 +279,7 @@ namespace Microsoft.Psi.Media
             /// <summary>
             /// Initializes a new instance of the <see cref="VideoFormat"/> class.
             /// </summary>
-            /// <param name="internalFormat">Internal format provided by the driver</param>
+            /// <param name="internalFormat">Internal format provided by the driver.</param>
             internal VideoFormat(LinuxVideoInterop.VideoFormat internalFormat)
             {
                 this.internalFormat = internalFormat;

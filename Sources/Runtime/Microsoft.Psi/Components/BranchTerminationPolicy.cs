@@ -9,8 +9,8 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Static class containing branch termination functions for the <see cref="ParallelSparse{TIn, TKey, TOut}"/> operator.
     /// </summary>
-    /// <typeparam name="TKey">The key type</typeparam>
-    /// <typeparam name="TIn">The input message type</typeparam>
+    /// <typeparam name="TKey">The key type.</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
     public static class BranchTerminationPolicy<TKey, TIn>
     {
         /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Components
         /// Constructs a branch termination policy function instance to terminate after a number of messages have elapsed
         /// and the corresponding key was no longer present.
         /// </summary>
-        /// <param name="count">The number of messages that have to elapse with the key not present for the branch to close</param>
+        /// <param name="count">The number of messages that have to elapse with the key not present for the branch to close.</param>
         /// <returns>Function indicating whether and when (originating time) to terminate the given branch.</returns>
         /// <remarks>The closing time for the branch is the time of the count-th message that does not contain the key.</remarks>
         public static Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> AfterKeyNotPresent(int count)

@@ -26,32 +26,32 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private RelayCommand<VisualizationPanel> deleteVisualizationPanelCommand;
 
         /// <summary>
-        /// The name of the container
+        /// The name of the container.
         /// </summary>
         private string name;
 
         /// <summary>
-        /// The time navigator view model
+        /// The time navigator view model.
         /// </summary>
         private Navigator navigator;
 
         /// <summary>
-        /// The collection of visualization Panels
+        /// The collection of visualization Panels.
         /// </summary>
         private ObservableCollection<VisualizationPanel> panels;
 
         /// <summary>
-        /// multithreaded collection lock
+        /// multithreaded collection lock.
         /// </summary>
         private object panelsLock;
 
         /// <summary>
-        /// The current visualization panel
+        /// The current visualization panel.
         /// </summary>
         private VisualizationPanel currentPanel;
 
         /// <summary>
-        /// The current visualization object (if any) currently being snapped to
+        /// The current visualization object (if any) currently being snapped to.
         /// </summary>
         private VisualizationObject snapToVisualizationObject;
 
@@ -66,7 +66,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the current visualization panel
+        /// Gets or sets the current visualization panel.
         /// </summary>
         [IgnoreDataMember]
         public VisualizationPanel CurrentPanel
@@ -76,7 +76,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the name of the container
+        /// Gets or sets the name of the container.
         /// </summary>
         [DataMember]
         public string Name
@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets the current navigator
+        /// Gets the current navigator.
         /// </summary>
         [IgnoreDataMember]
         public Navigator Navigator
@@ -156,7 +156,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.Auto,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 });
 
             StreamReader jsonFile = null;
@@ -267,7 +267,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.Auto,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 });
 
             StreamWriter jsonFile = null;

@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonGenerator"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides.</param>
         public JsonGenerator(Pipeline pipeline, string name, string path)
@@ -123,10 +123,10 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// GenerateNext is called by the Generator base class when the next sample should be read
+        /// GenerateNext is called by the Generator base class when the next sample should be read.
         /// </summary>
-        /// <param name="previous">Time of previous sample</param>
-        /// <returns>Time for current sample</returns>
+        /// <param name="previous">Time of previous sample.</param>
+        /// <returns>Time for current sample.</returns>
         protected override DateTime GenerateNext(DateTime previous)
         {
             Envelope env;

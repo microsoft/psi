@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27128.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{A0856299-D28A-4513-B964-3FA5290FF160}"
 EndProject
@@ -189,7 +189,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Interop", "So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PsiStoreTool", "Sources\Tools\PsiStoreTool\PsiStoreTool.csproj", "{896CE6A5-59AA-4F7B-90EB-562F47D3C49E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.CognitiveServices.Language.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language.Windows\Microsoft.Psi.CognitiveServices.Language.Windows.csproj", "{FE571017-BC81-4B70-A876-58A52CAB40B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Language.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language.Windows\Microsoft.Psi.CognitiveServices.Language.Windows.csproj", "{FE571017-BC81-4B70-A876-58A52CAB40B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Msagl.WpfGraphControl", "Sources\Visualization\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj", "{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -421,6 +423,10 @@ Global
 		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE571017-BC81-4B70-A876-58A52CAB40B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -503,6 +509,7 @@ Global
 		{825B11E7-9BF3-43B7-9BCE-4309EE404AEE} = {3F77CC04-2E58-452B-8107-0C93E7944D4E}
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E} = {8FEFAB80-0A89-4109-9104-5E937315C913}
 		{FE571017-BC81-4B70-A876-58A52CAB40B4} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
+		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

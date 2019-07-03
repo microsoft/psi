@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Serialization
     /// <summary>
     /// Default class for custom serializers of primitive types.
     /// </summary>
-    /// <typeparam name="T">A primitive type (pure value type)</typeparam>
+    /// <typeparam name="T">A primitive type (pure value type).</typeparam>
     internal sealed class SimpleSerializer<T> : ISerializer<T>
     {
         private const int Version = 0;

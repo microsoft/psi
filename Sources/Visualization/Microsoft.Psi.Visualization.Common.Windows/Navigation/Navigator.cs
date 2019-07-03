@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Navigation
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Class implements the time Navigator view model
+    /// Class implements the time Navigator view model.
     /// </summary>
     public partial class Navigator : ObservableObject
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         private Pipeline audioPlaybackPipeline = null;
 
         /// <summary>
-        /// The current stream providing audio playback (if any)
+        /// The current stream providing audio playback (if any).
         /// </summary>
         private StreamBinding audioPlaybackStream = null;
 
@@ -40,7 +40,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 
         /// <summary>
         /// The padding (in percentage) when performing a zoom to selection. The resulting view
-        /// will be larger than the selection by this percentage
+        /// will be larger than the selection by this percentage.
         /// </summary>
         private double zoomToSelectionPadding;
 
@@ -60,6 +60,9 @@ namespace Microsoft.Psi.Visualization.Navigation
 
         // Repeats playback in a loop if true, otherwise stops playback at the selection end marker
         private bool repeatPlayback = false;
+
+        // True if the timeline cursor should follow the mouse cursor when in manual navigation mode, otherwise false
+        private bool cursorFollowsMouse = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
@@ -89,7 +92,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         public event NavigatorTimeChangedHandler CursorChanged;
 
         /// <summary>
-        /// Gets or the cursor mode
+        /// Gets or the cursor mode.
         /// </summary>
         public CursorMode CursorMode
         {
@@ -117,7 +120,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets the cursor position
+        /// Gets or sets the cursor position.
         /// </summary>
         [DataMember]
         public DateTime Cursor
@@ -141,7 +144,23 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets the play speed
+        /// Gets or sets a value indicating whether the timeline cursor follows the mouse cursor when in manual navigation mode.
+        /// </summary>
+        [IgnoreDataMember]
+        public bool CursorFollowsMouse
+        {
+            get { return this.cursorFollowsMouse; }
+
+            set
+            {
+                this.RaisePropertyChanging(nameof(this.CursorFollowsMouse));
+                this.cursorFollowsMouse = value;
+                this.RaisePropertyChanged(nameof(this.CursorFollowsMouse));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the play speed.
         /// </summary>
         public double PlaySpeed
         {
@@ -160,12 +179,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets the cursor position relative to the Session Start time
+        /// Gets the cursor position relative to the Session Start time.
         /// </summary>
         public string CursorRelativeToSessionStartFormatted => this.FormatTimespan(this.Cursor - this.DataRange.StartTime);
 
         /// <summary>
-        /// Gets the cursor position relative to the Selection Start time
+        /// Gets the cursor position relative to the Selection Start time.
         /// </summary>
         public string CursorRelativeToSelectionStartFormatted => this.FormatTimespan(this.Cursor - this.SelectionRange.StartTime);
 
@@ -176,7 +195,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         public NavigatorRange DataRange => this.dataRange;
 
         /// <summary>
-        /// Gets the Session End time relative to the Selection Start time
+        /// Gets the Session End time relative to the Selection Start time.
         /// </summary>
         public string SessionEndRelativeToSelectionStartFormatted => this.FormatTimespan(this.DataRange.EndTime - this.SelectionRange.StartTime);
 
@@ -186,17 +205,17 @@ namespace Microsoft.Psi.Visualization.Navigation
         public bool HasFiniteRange => this.selectionRange.IsFinite && this.viewRange.IsFinite && this.dataRange.IsFinite;
 
         /// <summary>
-        /// Gets a value indicating whether we're currently playing back data
+        /// Gets a value indicating whether we're currently playing back data.
         /// </summary>
         public bool IsCursorModePlayback => this.CursorMode == CursorMode.Playback;
 
         /// <summary>
-        /// Gets a value indicating whether the navigator is currently tracking a live partition
+        /// Gets a value indicating whether the navigator is currently tracking a live partition.
         /// </summary>
         public bool IsCursorModeLive => this.CursorMode == CursorMode.Live;
 
         /// <summary>
-        /// Gets a value indicating whether the start and end selection markers should be displayed in the timeline view
+        /// Gets a value indicating whether the start and end selection markers should be displayed in the timeline view.
         /// </summary>
         public bool DisplaySelectionMarkers => this.CursorMode != CursorMode.Live;
 
@@ -207,12 +226,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         public NavigatorRange SelectionRange => this.selectionRange;
 
         /// <summary>
-        /// Gets the offset of the Section Start marker from the start of the Session
+        /// Gets the offset of the Section Start marker from the start of the Session.
         /// </summary>
         public string SelectionStartRelativeToSessionStartFormatted => this.FormatTimespan(this.SelectionRange.StartTime - this.DataRange.StartTime);
 
         /// <summary>
-        /// Gets the offset of the Section End marker from the start of the Session
+        /// Gets the offset of the Section End marker from the start of the Session.
         /// </summary>
         public string SelectionEndRelativeToSessionStartFormatted => this.FormatTimespan(this.SelectionRange.EndTime - this.DataRange.StartTime);
 
@@ -233,12 +252,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets a value indicating whether the Timing Header is visible
+        /// Gets a value indicating whether the Timing Header is visible.
         /// </summary>
         public bool ShowTimingHeader => this.ShowAbsoluteTiming || this.ShowTimingRelativeToSessionStart || this.ShowTimingRelativeToSelectionStart;
 
         /// <summary>
-        /// Gets or sets a value indicating whether Absolute Timing is displayed
+        /// Gets or sets a value indicating whether Absolute Timing is displayed.
         /// </summary>
         public bool ShowAbsoluteTiming
         {
@@ -253,7 +272,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Timing Relative to the Session Start is displayed
+        /// Gets or sets a value indicating whether Timing Relative to the Session Start is displayed.
         /// </summary>
         public bool ShowTimingRelativeToSessionStart
         {
@@ -268,7 +287,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Timing Relative to the Selection Start is displayed
+        /// Gets or sets a value indicating whether Timing Relative to the Selection Start is displayed.
         /// </summary>
         public bool ShowTimingRelativeToSelectionStart
         {
@@ -283,7 +302,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets the audio stream to be played during playback
+        /// Gets or sets the audio stream to be played during playback.
         /// </summary>
         public StreamBinding AudioPlaybackStream
         {
@@ -298,7 +317,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether playback repeats
+        /// Gets or sets a value indicating whether playback repeats.
         /// </summary>
         public bool RepeatPlayback
         {
@@ -311,7 +330,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Moves the cursor to the start of the selection
+        /// Moves the cursor to the start of the selection.
         /// </summary>
         public void MoveToSelectionStart()
         {
@@ -323,7 +342,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Moves the cursor to the end of the selection
+        /// Moves the cursor to the end of the selection.
         /// </summary>
         public void MoveToSelectionEnd()
         {
@@ -335,9 +354,9 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Sets the cursor mode
+        /// Sets the cursor mode.
         /// </summary>
-        /// <param name="cursorMode">The cursor mode to set</param>
+        /// <param name="cursorMode">The cursor mode to set.</param>
         public void SetCursorMode(CursorMode cursorMode)
         {
             switch (cursorMode)
@@ -388,9 +407,9 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Updates the viewport in response to live messages
+        /// Updates the viewport in response to live messages.
         /// </summary>
-        /// <param name="datetime">The new message time to set the cursor at</param>
+        /// <param name="datetime">The new message time to set the cursor at.</param>
         public void NotifyLiveMessageReceived(DateTime datetime)
         {
             // Check if the new event is newer than the current data range
@@ -411,7 +430,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Zoom to a particular location
+        /// Zoom to a particular location.
         /// </summary>
         /// <param name="start">The start of the time interval to zoom to.</param>
         /// <param name="end">The end of the time interval to zoom to.</param>
@@ -432,7 +451,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Zoom to a certain view duration
+        /// Zoom to a certain view duration.
         /// </summary>
         /// <param name="viewDuration">The timespan to zoom to.</param>
         public void ZoomAroundCenter(TimeSpan viewDuration)
@@ -464,7 +483,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Zoom in
+        /// Zoom in.
         /// </summary>
         public void ZoomIn()
         {
@@ -472,7 +491,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Zoom out
+        /// Zoom out.
         /// </summary>
         public void ZoomOut()
         {
@@ -480,7 +499,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Zooms out to the maximum extent of data
+        /// Zooms out to the maximum extent of data.
         /// </summary>
         public void ZoomToDataRange()
         {
@@ -488,7 +507,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Zooms to selection
+        /// Zooms to selection.
         /// </summary>
         public void ZoomToSelection()
         {
@@ -570,7 +589,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Sets the cursor mode to live
+        /// Sets the cursor mode to live.
         /// </summary>
         private void EnterLiveMode()
         {
@@ -598,6 +617,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                 if (this.RepeatPlayback)
                 {
                     this.Cursor = this.SelectionRange.StartTime;
+                    this.EnsureCursorVisible();
                     this.UpdateAudioPlayback();
                 }
                 else

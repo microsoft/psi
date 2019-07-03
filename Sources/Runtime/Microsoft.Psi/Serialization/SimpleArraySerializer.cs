@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Serialization
     /// The underlying element type is assumed to not contain any reference fields or struct fields. Thus, the serializer simply copies memory
     /// and does not invoke the element serializer for each element.
     /// </summary>
-    /// <typeparam name="T">The type of objects this serializer knows how to handle</typeparam>
+    /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal sealed class SimpleArraySerializer<T> : ISerializer<T[]>
     {
         private const int Version = 2;

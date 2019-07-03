@@ -126,8 +126,8 @@ namespace Test.Psi
                     Height = 61
                 }
             };
-            // notice Face is skipped - no hierarchy allowed
-            AssertStringSerialization(structured, "_OriginatingTime_,ID,Confidence\r\n1971-11-03T00:00:00.1234567Z,123,0.92\r\n", csv, csv);
+            // notice Face is traversed but flattened - no hierarchy allowed
+            AssertStringSerialization(structured, "_OriginatingTime_,ID,Confidence,X,Y,Width,Height\r\n1971-11-03T00:00:00.1234567Z,123,0.92,213,107,42,61\r\n", csv, csv);
 
             var flat = new
             {

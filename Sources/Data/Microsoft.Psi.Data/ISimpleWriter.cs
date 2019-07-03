@@ -27,8 +27,8 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the persisted file will reside.</param>
-        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store</param>
-        /// <param name="serializers">Optional set of serialization configuration (known types, serializers, known assemblies)</param>
+        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store.</param>
+        /// <param name="serializers">Optional set of serialization configuration (known types, serializers, known assemblies).</param>
         void CreateStore(string name, string path, bool createSubdirectory = true, KnownSerializers serializers = null);
 
         /// <summary>

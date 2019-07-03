@@ -4,38 +4,38 @@
 namespace Microsoft.Psi.Visualization.Common
 {
     /// <summary>
-    /// Defines various line styles
+    /// Defines various line styles.
     /// </summary>
     public enum LineStyle
     {
         /// <summary>
-        /// Represents a normal line style
+        /// Represents a normal line style.
         /// </summary>
         Solid,
 
         /// <summary>
-        /// Represents a line style that is not visible
+        /// Represents a line style that is not visible.
         /// </summary>
         None,
 
         /// <summary>
-        /// Represents a dash line style
+        /// Represents a dash line style.
         /// </summary>
         Dash,
 
         /// <summary>
-        /// Represents a dot line style
+        /// Represents a dot line style.
         /// </summary>
         Dot,
 
         /// <summary>
-        /// Represents a dash-dot line style
+        /// Represents a dash-dot line style.
         /// </summary>
         DashDot,
 
         /// <summary>
-        /// Represents a dash-dot-dot line style
+        /// Represents a dash-dot-dot line style.
         /// </summary>
-        DashDotDot
+        DashDotDot,
     }
 }

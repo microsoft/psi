@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IAudioRenderClient COM interface (defined in Audioclient.h)
+    /// IAudioRenderClient COM interface (defined in Audioclient.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IAudioRenderClientIIDString)]

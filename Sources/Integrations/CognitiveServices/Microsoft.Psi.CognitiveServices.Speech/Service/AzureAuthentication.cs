@@ -11,7 +11,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
 
     /// <summary>
     /// Provides methods to get a valid O-auth token. Adapted from the following sample code:
-    /// https://docs.microsoft.com/en-us/azure/cognitive-services/speech/how-to/how-to-authentication
+    /// https://docs.microsoft.com/en-us/azure/cognitive-services/speech/how-to/how-to-authentication.
     /// </summary>
     public class AzureAuthentication : IDisposable, IAuthentication
     {
@@ -113,8 +113,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
                 var result = await client.PostAsync(fetchUri, null);
                 Debug.WriteLine(string.Format("Token Uri: {0}", fetchUri));
 
-                var foo = await result.Content.ReadAsStringAsync();
-                return foo;
+                return await result.Content.ReadAsStringAsync();
             }
         }
     }

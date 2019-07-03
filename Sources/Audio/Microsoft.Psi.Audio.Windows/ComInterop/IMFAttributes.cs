@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Text;
 
     /// <summary>
-    /// IMFAttributes COM interface (defined in Mfobjects.h)
+    /// IMFAttributes COM interface (defined in Mfobjects.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMFAttributesIIDString)]

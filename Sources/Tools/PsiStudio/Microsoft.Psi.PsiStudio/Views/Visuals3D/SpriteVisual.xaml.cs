@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for SpriteVisual.xaml
+    /// Interaction logic for SpriteVisual.xaml.
     /// </summary>
     public partial class SpriteVisual : ModelVisual3D
     {

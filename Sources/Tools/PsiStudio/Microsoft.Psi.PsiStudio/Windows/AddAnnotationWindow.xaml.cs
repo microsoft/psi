@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.Windows
     using Microsoft.Psi.Visualization.Annotations;
 
     /// <summary>
-    /// Interaction logic for AddAnnotationWindow.xaml
+    /// Interaction logic for AddAnnotationWindow.xaml.
     /// </summary>
     public partial class AddAnnotationWindow : Window, INotifyPropertyChanged
     {

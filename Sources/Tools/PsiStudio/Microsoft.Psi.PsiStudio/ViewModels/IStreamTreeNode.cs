@@ -52,7 +52,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         DateTime? LastMessageTime { get; }
 
         /// <summary>
-        /// Gets the originating time interval
+        /// Gets the originating time interval.
         /// </summary>
         TimeInterval OriginatingTimeInterval { get; }
 
@@ -97,12 +97,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
         string TypeName { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this IStreamTreeNode can currently be visualized
+        /// Gets a value indicating whether this IStreamTreeNode can currently be visualized.
         /// </summary>
         bool CanVisualize { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this IStreamTreeNode should display a context menu
+        /// Gets a value indicating whether this IStreamTreeNode should display a context menu.
         /// </summary>
         bool CanShowContextMenu { get; }
 
@@ -110,7 +110,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Adds a new store stream tree node based on the specified stream as child of this node.
         /// </summary>
         /// <param name="streamMetadata">The stream to add to the tree.</param>
-        /// <returns>A reference to the new stream tree node</returns>
+        /// <returns>A reference to the new stream tree node.</returns>
         IStreamTreeNode AddPath(IStreamMetadata streamMetadata);
     }
 }

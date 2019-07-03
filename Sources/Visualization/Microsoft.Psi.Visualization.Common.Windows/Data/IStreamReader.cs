@@ -95,10 +95,10 @@ namespace Microsoft.Psi.Visualization.Data
         /// View mode can be one of three values:
         ///     Fixed - fixed range based on start and end times
         ///     TailCount - sliding dynamic range that includes the tail of the underlying data based on quantity
-        ///     TailRange - sliding dynamic range that includes the tail of the underlying data based on function
+        ///     TailRange - sliding dynamic range that includes the tail of the underlying data based on function.
         /// </summary>
         /// <typeparam name="TItem">The type of the message to read.</typeparam>
-        /// <param name="viewMode">Mode the view will be created in</param>
+        /// <param name="viewMode">Mode the view will be created in.</param>
         /// <param name="startTime">Start time of messages to read.</param>
         /// <param name="endTime">End time of messages to read.</param>
         /// <param name="tailCount">Number of messages to included in tail.</param>

@@ -23,22 +23,22 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private RelayCommand<VisualizationObject> deleteVisualizationCommand;
 
         /// <summary>
-        /// The current visualization object
+        /// The current visualization object.
         /// </summary>
         private VisualizationObject currentVisualizationObject;
 
         /// <summary>
-        /// multithreaded collection lock
+        /// multithreaded collection lock.
         /// </summary>
         private object visualizationObjectsLock;
 
         /// <summary>
-        /// Determines whether the visualization panel is initially expanded when shown in a tree view
+        /// Determines whether the visualization panel is initially expanded when shown in a tree view.
         /// </summary>
         private bool isTreeNodeExpanded = true;
 
         /// <summary>
-        /// The template to use when creating the view for this panel
+        /// The template to use when creating the view for this panel.
         /// </summary>
         private DataTemplate defaultViewTemplate = null;
 
@@ -87,20 +87,20 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the height of the panel
+        /// Gets the height of the panel.
         /// </summary>
         [IgnoreDataMember]
         public abstract double Height { get; }
 
         /// <summary>
-        /// Gets a value indicating whether or not this is the current panel
+        /// Gets a value indicating whether or not this is the current panel.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public bool IsCurrentPanel => this.Container.CurrentPanel == this;
 
         /// <summary>
-        /// Gets the navigator associated with this panel
+        /// Gets the navigator associated with this panel.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -114,7 +114,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         public ObservableCollection<VisualizationObject> VisualizationObjects { get; internal set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the visualization panel is initially expanded when shown in a tree view
+        /// Gets or sets a value indicating whether the visualization panel is initially expanded when shown in a tree view.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -147,18 +147,18 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the width of the panel
+        /// Gets the width of the panel.
         /// </summary>
         [IgnoreDataMember]
         public abstract double Width { get; }
 
         /// <summary>
-        /// Add a visualization object to the panel
+        /// Add a visualization object to the panel.
         /// </summary>
         /// <param name="visualizationObject">The visualization object to be added.</param>
         public void AddVisualizationObject(VisualizationObject visualizationObject)
         {
-            visualizationObject.ConnectToPanel(this);
+            visualizationObject.AddToPanel(this);
             this.VisualizationObjects.Add(visualizationObject);
             this.CurrentVisualizationObject = visualizationObject;
         }
@@ -179,7 +179,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <summary>
         /// Brings a visualization object to the front.
         /// </summary>
-        /// <param name="visualizationObject">The visualization object to bring to front</param>
+        /// <param name="visualizationObject">The visualization object to bring to front.</param>
         public void BringToFront(VisualizationObject visualizationObject)
         {
             int oldIndex = this.VisualizationObjects.IndexOf(visualizationObject);
@@ -201,7 +201,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Removes a visualization object specified by a view model
+        /// Removes a visualization object specified by a view model.
         /// </summary>
         /// <param name="visualizationObject">The visualization object to be removed.</param>
         public void RemoveVisualizationObject(VisualizationObject visualizationObject)
@@ -218,7 +218,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 this.Container.SnapToVisualizationObject = null;
             }
 
-            visualizationObject.Disconnect();
+            visualizationObject.RemoveFromPanel();
             this.VisualizationObjects.Remove(visualizationObject);
 
             if ((this.currentVisualizationObject == null) && (this.VisualizationObjects.Count > 0))
@@ -230,7 +230,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <summary>
         /// Sends a visualization object to the back.
         /// </summary>
-        /// <param name="visualizationObject">The visualization object to bring to front</param>
+        /// <param name="visualizationObject">The visualization object to bring to front.</param>
         public void SendToBack(VisualizationObject visualizationObject)
         {
             int oldIndex = this.VisualizationObjects.IndexOf(visualizationObject);
@@ -259,7 +259,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
             foreach (var visualizationObject in this.VisualizationObjects)
             {
-                visualizationObject.ConnectToPanel(this);
+                visualizationObject.AddToPanel(this);
             }
         }
 
@@ -274,9 +274,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Creates the view template
+        /// Creates the view template.
         /// </summary>
-        /// <returns>The template for the view</returns>
+        /// <returns>The template for the view.</returns>
         protected abstract DataTemplate CreateDefaultViewTemplate();
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <summary>
         /// Overridable method to allow derived VisualzationObject to react whenever a property on the Configuration property has changed.
         /// </summary>
-        /// <param name="sender">The object that triggered the configuration property change event</param>
+        /// <param name="sender">The object that triggered the configuration property change event.</param>
         /// <param name="e">The event arguments.</param>
         protected virtual void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

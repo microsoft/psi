@@ -8,6 +8,9 @@ namespace Test.Psi.Kinect
     using Microsoft.Psi.Kinect;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Mesh tests.
+    /// </summary>
     [TestClass]
     [Ignore]
     public class MeshTests : IDisposable
@@ -18,6 +21,9 @@ namespace Test.Psi.Kinect
         private Shared<Microsoft.Psi.Imaging.Image> lastColor = null;
         private bool disposed = false;
 
+        /// <summary>
+        /// Setup Kinect.
+        /// </summary>
         public void SetupKinect()
         {
             using (var pipeline = Pipeline.Create())
@@ -29,6 +35,9 @@ namespace Test.Psi.Kinect
             }
         }
 
+        /// <summary>
+        /// Generate texture mapped mesh.
+        /// </summary>
         [TestMethod]
         [Timeout(60000)]
         [Ignore]
@@ -52,6 +61,7 @@ namespace Test.Psi.Kinect
                     {
                         this.lastImage = image.AddRef();
                     }
+
                     if (this.lastImage != null && this.lastColor != null && this.calibration != null)
                     {
                         var mesh = Test.Psi.Kinect.Mesh.MeshFromDepthMap(this.lastImage, this.lastColor, this.calibration);
@@ -63,6 +73,7 @@ namespace Test.Psi.Kinect
                                 faceCount++;
                             }
                         }
+
                         bool writePLY = false;
                         if (writePLY)
                         {
@@ -94,6 +105,7 @@ namespace Test.Psi.Kinect
                                             (int)mesh.Vertices[i].Color.Y,
                                             (int)mesh.Vertices[i].Color.Z));
                                 }
+
                                 for (int i = 0; i < mesh.NumberFaces; i++)
                                 {
                                     if (mesh.Faces[i].Valid)
@@ -115,11 +127,16 @@ namespace Test.Psi.Kinect
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             this.Dispose(true);
         }
 
+        /// <summary>
+        /// Dispose mesh tests.
+        /// </summary>
+        /// <param name="disposing">Whether disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

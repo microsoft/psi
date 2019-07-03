@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Audio
         private readonly Emitter<AudioBuffer> audioBuffers;
 
         /// <summary>
-        /// The audio capture device
+        /// The audio capture device.
         /// </summary>
         private WasapiCapture wasapiCapture;
 
@@ -181,8 +181,9 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
             this.sourceFormat = null;
         }
 
@@ -235,7 +236,7 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Handles volume notifications
+        /// Handles volume notifications.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="AudioVolumeEventArgs"/> that contains the event data.</param>

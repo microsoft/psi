@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Convert MathNet.Spatial.Euclidean.Point3D to System.Windows.Media.Media3D.Point3D
+        /// Convert MathNet.Spatial.Euclidean.Point3D to System.Windows.Media.Media3D.Point3D.
         /// </summary>
         /// <param name="point">The point to convert.</param>
         /// <returns>The converted point.</returns>
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Convert MathNet.Spatial.Euclidean.Vector3D to System.Windows.Media.Media3D.Vector3D
+        /// Convert MathNet.Spatial.Euclidean.Vector3D to System.Windows.Media.Media3D.Vector3D.
         /// </summary>
         /// <param name="vector">The vector to convert.</param>
         /// <returns>The converted vector.</returns>

@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Calibration
     {
         /// <summary>
         /// Gets the intrinsics matrix. This transform converts camera coordinates (in the camera's local space) into
-        /// normalized device coordinates (NDC) ranging from -1 .. +1
+        /// normalized device coordinates (NDC) ranging from -1 .. +1.
         /// </summary>
         Matrix<double> Transform { get; }
 
@@ -90,7 +90,7 @@ namespace Microsoft.Psi.Calibration
         ///    r - sqrt(Xd*Xd+Yd*Yd)
         ///
         /// Newton's method is used to find the inverse of this. That is
-        ///             Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd)
+        ///             Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).
         /// </summary>
         /// <param name="undistortedPoint">The undistorted point in camera post-projection coordinates.</param>
         /// <param name="distortedPoint">The distorted point.</param>
@@ -107,7 +107,7 @@ namespace Microsoft.Psi.Calibration
         ///    Xd,Yd - distorted point's coordinates
         ///    Xu,Yu - undistorted point's coordinates
         ///    K0,K1 - radial distortion coefficients
-        ///    T0,T1 - tangential distortion coefficients
+        ///    T0,T1 - tangential distortion coefficients.
         ///
         /// </summary>
         /// <param name="distortedPoint">Distorted point in camera post-projection coordinates.</param>

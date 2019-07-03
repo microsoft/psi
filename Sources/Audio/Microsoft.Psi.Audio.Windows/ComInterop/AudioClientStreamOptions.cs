@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Audio.ComInterop
 {
     /// <summary>
-    /// AudioClientStreamOptions enumeration (defined in AudioClient.h)
+    /// AudioClientStreamOptions enumeration (defined in AudioClient.h).
     /// </summary>
     internal enum AudioClientStreamOptions
     {
@@ -21,6 +21,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// AUDCLNT_STREAMOPTIONS_MATCH_FORMAT
         /// </summary>
-        MatchFormat = 0x2
+        MatchFormat = 0x2,
     }
 }

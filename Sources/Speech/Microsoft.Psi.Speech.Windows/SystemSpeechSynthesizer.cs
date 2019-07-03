@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Speech
     public sealed class SystemSpeechSynthesizer : ConsumerProducer<string, AudioBuffer>, ISourceComponent, IDisposable
     {
         /// <summary>
-        /// A pointer to the pipeline
+        /// A pointer to the pipeline.
         /// </summary>
         private readonly Pipeline pipeline;
 
@@ -75,37 +75,37 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <summary>
-        /// Gets the output stream of bookmark reached events
+        /// Gets the output stream of bookmark reached events.
         /// </summary>
         public Emitter<BookmarkReachedEventData> BookmarkReached { get; private set; }
 
         /// <summary>
-        /// Gets the output stream of phoneme reached events
+        /// Gets the output stream of phoneme reached events.
         /// </summary>
         public Emitter<PhonemeReachedEventData> PhonemeReached { get; private set; }
 
         /// <summary>
-        /// Gets the output stream of speak completed
+        /// Gets the output stream of speak completed.
         /// </summary>
         public Emitter<SpeakCompletedEventData> SpeakCompleted { get; private set; }
 
         /// <summary>
-        /// Gets the output stream of speak progress events
+        /// Gets the output stream of speak progress events.
         /// </summary>
         public Emitter<SpeakProgressEventData> SpeakProgress { get; private set; }
 
         /// <summary>
-        /// Gets the output stream of speak started events
+        /// Gets the output stream of speak started events.
         /// </summary>
         public Emitter<SpeakStartedEventData> SpeakStarted { get; private set; }
 
         /// <summary>
-        /// Gets the output stream of state changed events
+        /// Gets the output stream of state changed events.
         /// </summary>
         public Emitter<StateChangedEventData> StateChanged { get; private set; }
 
         /// <summary>
-        /// Gets the output stream of viseme reached events
+        /// Gets the output stream of viseme reached events.
         /// </summary>
         public Emitter<VisemeReachedEventData> VisemeReached { get; private set; }
 
@@ -118,10 +118,10 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <summary>
-        /// Writes all output stream to a store, with a given prefix
+        /// Writes all output stream to a store, with a given prefix.
         /// </summary>
         /// <param name="prefix">The prefix for the streams.</param>
-        /// <param name="store">The store to write the streams to</param>
+        /// <param name="store">The store to write the streams to.</param>
         public void Write(string prefix, Exporter store)
         {
             this.BookmarkReached.Write($"{prefix}.{nameof(this.BookmarkReached)}", store);
@@ -150,7 +150,7 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             // Unregister handlers so they won't fire while disposing.
             this.speechSynthesizer.BookmarkReached -= this.OnBookmarkReached;
@@ -162,6 +162,7 @@ namespace Microsoft.Psi.Speech
             this.speechSynthesizer.VisemeReached -= this.OnVisemeReached;
 
             this.speechSynthesizer.SpeakAsyncCancelAll();
+            notifyCompleted();
         }
 
         /// <summary>
@@ -218,6 +219,7 @@ namespace Microsoft.Psi.Speech
                                 audioData = new byte[count];
                                 Array.Copy(buffer, offset, audioData, 0, count);
                             }
+
                             this.Out.Post(new AudioBuffer(audioData, this.Configuration.OutputFormat), this.pipeline.GetCurrentTime());
                         }),
                     formatInfo);

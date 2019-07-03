@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for ScatterPlotVisualizationObjectView.xaml
+    /// Interaction logic for ScatterPlotVisualizationObjectView.xaml.
     /// </summary>
     public partial class ScatterPlotVisualizationObjectView : UserControl
     {

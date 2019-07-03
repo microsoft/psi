@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Persistence
 
         /// <summary>
         /// The id of the extent this index entry refers to.
-        /// A negative extentId indicates an entry in the large file
+        /// A negative extentId indicates an entry in the large file.
         /// </summary>
         public int ExtentId;
 

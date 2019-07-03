@@ -101,7 +101,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
             {
                 Query = queryString,
                 Intents = ParseIntentArray(intentsArray),
-                Entities = ParseEntityArray(entitiesArray)
+                Entities = ParseEntityArray(entitiesArray),
             };
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
                 intents[i] = new Intent()
                 {
                     Value = (string)token["intent"],
-                    Score = (double?)token["score"]
+                    Score = (double?)token["score"],
                 };
             }
 
@@ -131,7 +131,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
                 {
                     Value = (string)token["entity"],
                     Type = (string)token["type"],
-                    Score = (double?)token["score"]
+                    Score = (double?)token["score"],
                 };
             }
 

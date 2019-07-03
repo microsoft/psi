@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// PROPVARIANT structure (defined in Propidl.h)
+    /// PROPVARIANT structure (defined in Propidl.h).
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Microsoft.StyleCop.CSharp.NamingRules",
@@ -129,17 +129,17 @@ namespace Microsoft.Psi.Audio.ComInterop
     }
 
     /// <summary>
-    /// Blob data structure
+    /// Blob data structure.
     /// </summary>
     internal struct Blob
     {
         /// <summary>
-        /// Blob data size
+        /// Blob data size.
         /// </summary>
         internal int Size;
 
         /// <summary>
-        /// Blob data
+        /// Blob data.
         /// </summary>
         internal IntPtr Data;
     }

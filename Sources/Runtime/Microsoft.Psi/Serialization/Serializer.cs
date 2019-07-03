@@ -22,10 +22,10 @@ namespace Microsoft.Psi
         /// Serializes the given instance to the specified stream.
         /// Call this override from within custom serializers.
         /// </summary>
-        /// <typeparam name="T">The type of object to serialize</typeparam>
-        /// <param name="writer">The stream writer to serialize to</param>
-        /// <param name="instance">The instance to serialize</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <typeparam name="T">The type of object to serialize.</typeparam>
+        /// <param name="writer">The stream writer to serialize to.</param>
+        /// <param name="instance">The instance to serialize.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Serialize<T>(BufferWriter writer, T instance, SerializationContext context)
         {
@@ -37,10 +37,10 @@ namespace Microsoft.Psi
         /// Deserializes the given instance from the specified stream.
         /// Call this override from within custom serializers.
         /// </summary>
-        /// <typeparam name="T">The type of object to deserialize</typeparam>
-        /// <param name="reader">The stream reader to deserialize from</param>
-        /// <param name="target">An optional existing instance to clone into</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <typeparam name="T">The type of object to deserialize.</typeparam>
+        /// <param name="reader">The stream reader to deserialize from.</param>
+        /// <param name="target">An optional existing instance to clone into.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Deserialize<T>(BufferReader reader, ref T target, SerializationContext context)
         {
@@ -53,10 +53,10 @@ namespace Microsoft.Psi
         /// avoiding any allocations, provided that the target object graph has the same shape.
         /// Call this override from within custom serializers.
         /// </summary>
-        /// <typeparam name="T">The type of object to clone</typeparam>
-        /// <param name="instance">The instance to clone</param>
-        /// <param name="target">An existing instance to clone into</param>
-        /// <param name="context">An optional serialization context</param>
+        /// <typeparam name="T">The type of object to clone.</typeparam>
+        /// <param name="instance">The instance to clone.</param>
+        /// <param name="target">An existing instance to clone into.</param>
+        /// <param name="context">An optional serialization context.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Clone<T>(T instance, ref T target, SerializationContext context)
         {
@@ -75,9 +75,9 @@ namespace Microsoft.Psi
         /// Makes a deep clone of the given object graph into the target object graph,
         /// avoiding any allocations (provided that the target object tree has the same shape).
         /// </summary>
-        /// <typeparam name="T">The type of object to clone</typeparam>
-        /// <param name="instance">The instance to clone</param>
-        /// <param name="target">An existing instance to clone into</param>
+        /// <typeparam name="T">The type of object to clone.</typeparam>
+        /// <param name="instance">The instance to clone.</param>
+        /// <param name="target">An existing instance to clone into.</param>
         public static void DeepClone<T>(this T instance, ref T target)
         {
             Serializer.Clone(instance, ref target, new SerializationContext());
@@ -88,10 +88,10 @@ namespace Microsoft.Psi
         /// The method will clone into an unused target instance obtained from the specified recycler.
         /// The caller should return the clone to the recycler when done.
         /// </summary>
-        /// <typeparam name="T">The type of object to clone</typeparam>
-        /// <param name="instance">The instance to clone</param>
+        /// <typeparam name="T">The type of object to clone.</typeparam>
+        /// <param name="instance">The instance to clone.</param>
         /// <param name="recycler">An object recycling cache.</param>
-        /// <returns>The deep-clone</returns>
+        /// <returns>The deep-clone.</returns>
         public static T DeepClone<T>(this T instance, IRecyclingPool<T> recycler)
         {
             T result = (recycler == null) ? default(T) : recycler.Get();
@@ -105,9 +105,9 @@ namespace Microsoft.Psi
         /// This can become a performance bottleneck when the clone operation needs to be executed many times.
         /// In these cases, the other Clone overrides which avoid allocations perform significantly better.
         /// </summary>
-        /// <typeparam name="T">The type of object to clone</typeparam>
-        /// <param name="instance">The instance to clone</param>
-        /// <returns>The deep-clone</returns>
+        /// <typeparam name="T">The type of object to clone.</typeparam>
+        /// <param name="instance">The instance to clone.</param>
+        /// <returns>The deep-clone.</returns>
         public static T DeepClone<T>(this T instance)
         {
             T result = default(T);
@@ -120,9 +120,9 @@ namespace Microsoft.Psi
         /// The method is expected to call Serializer.Clear on all reference-type fields.
         /// This method is for custom serializers.
         /// </summary>
-        /// <typeparam name="T">The type of object to clear</typeparam>
-        /// <param name="target">The instance to clear</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <typeparam name="T">The type of object to clear.</typeparam>
+        /// <param name="target">The instance to clear.</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Clear<T>(ref T target, SerializationContext context)
         {
@@ -136,10 +136,10 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Returns true if the type is immutable (it is a primitive type or all its fields are read-only immutable types)
+        /// Returns true if the type is immutable (it is a primitive type or all its fields are read-only immutable types).
         /// </summary>
-        /// <typeparam name="T">The type to analyze</typeparam>
-        /// <returns>True if the type is immutable</returns>
+        /// <typeparam name="T">The type to analyze.</typeparam>
+        /// <returns>True if the type is immutable.</returns>
         public static bool IsImmutableType<T>()
         {
             return KnownSerializers.Default.GetHandler<T>().IsImmutableType;

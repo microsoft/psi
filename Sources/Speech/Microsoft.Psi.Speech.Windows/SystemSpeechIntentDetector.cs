@@ -66,7 +66,7 @@ namespace Microsoft.Psi.Speech
         public Receiver<IEnumerable<string>> ReceiveGrammars { get; }
 
         /// <summary>
-        /// Gets the output stream of load grammar completed events
+        /// Gets the output stream of load grammar completed events.
         /// </summary>
         public Emitter<LoadGrammarCompletedEventArgs> LoadGrammarCompleted { get; }
 
@@ -110,8 +110,9 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
         }
 
         /// <inheritdoc/>

@@ -35,11 +35,9 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// Callback method for endpoint-volume-change notifications.
         /// </summary>
         /// <param name="pNotify">Pointer to the notification data.</param>
-        /// <returns>Always returns zero.</returns>
-        public int OnNotify(IntPtr pNotify)
+        public void OnNotify(IntPtr pNotify)
         {
             this.callback?.Invoke(AudioVolumeNotificationData.MarshalFromPtr(pNotify));
-            return 0;
         }
     }
 }

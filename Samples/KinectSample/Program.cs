@@ -12,6 +12,9 @@ namespace MultiModalSpeechDetection
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Speech;
 
+    /// <summary>
+    /// Kinect sample program.
+    /// </summary>
     public class Program
     {
         // Variables related to Psi
@@ -20,7 +23,10 @@ namespace MultiModalSpeechDetection
         private const string ApplicationName = "KinectSample";
         private static TimeSpan hundredMs = TimeSpan.FromSeconds(0.1);
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        public static void Main()
         {
             Program prog = new Program();
             prog.PerformMultiModalSpeechDetection();
@@ -34,16 +40,20 @@ namespace MultiModalSpeechDetection
         private static void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             Console.WriteLine("Pipeline execution completed with {0} errors", e.Errors.Count);
-
-            // Prints all exceptions that were thrown by the pipeline
-            if (e.Errors.Count > 0)
-            {
-                Console.WriteLine("Error: " + e.Errors[0].Message);
-            }
         }
 
         /// <summary>
-        /// This is the main code for our Multimodal Speech Detection demo
+        /// Event handler for the <see cref="Pipeline.PipelineExceptionNotHandled"/> event.
+        /// </summary>
+        /// <param name="sender">The sender which raised the event.</param>
+        /// <param name="e">The pipeline exception event arguments.</param>
+        private static void Pipeline_PipelineException(object sender, PipelineExceptionNotHandledEventArgs e)
+        {
+            Console.WriteLine(e.Exception);
+        }
+
+        /// <summary>
+        /// This is the main code for our Multimodal Speech Detection demo.
         /// </summary>
         private void PerformMultiModalSpeechDetection()
         {
@@ -55,6 +65,9 @@ namespace MultiModalSpeechDetection
             using (var pipeline = Pipeline.Create("MultiModalSpeechDetection"))
             {
                 // Register an event handler to catch pipeline errors
+                pipeline.PipelineExceptionNotHandled += Pipeline_PipelineException;
+
+                // Register an event handler to be notified when the pipeline completes
                 pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Next create our Kinect sensor. We will be using the color images, face tracking, and audio from the Kinect sensor

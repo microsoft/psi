@@ -125,7 +125,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the resize panel command
+        /// Gets the resize panel command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -145,8 +145,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <inheritdoc />
         protected override void InitNew()
         {
-            base.InitNew();
             this.Configuration = new TConfig();
+            base.InitNew();
         }
 
         /// <inheritdoc />

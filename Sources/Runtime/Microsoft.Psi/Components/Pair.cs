@@ -8,9 +8,9 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Performs a wall-clock based pairing of streams; taking the last (or provided initial) value from the secondary.
     /// </summary>
-    /// <typeparam name="TPrimary">The type the messages on the primary stream</typeparam>
-    /// <typeparam name="TSecondary">The type messages on the secondary stream</typeparam>
-    /// <typeparam name="TOut">The type of output message</typeparam>
+    /// <typeparam name="TPrimary">The type the messages on the primary stream.</typeparam>
+    /// <typeparam name="TSecondary">The type messages on the secondary stream.</typeparam>
+    /// <typeparam name="TOut">The type of output message.</typeparam>
     public class Pair<TPrimary, TSecondary, TOut> : IProducer<TOut>
     {
         private readonly Func<TPrimary, TSecondary, TOut> outputCreator;

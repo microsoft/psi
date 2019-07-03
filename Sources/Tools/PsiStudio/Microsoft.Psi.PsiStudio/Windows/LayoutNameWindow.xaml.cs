@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.Windows
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for LayoutNameWindow.xaml
+    /// Interaction logic for LayoutNameWindow.xaml.
     /// </summary>
     public partial class LayoutNameWindow : Window
     {
@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Visualization.Windows
         }
 
         /// <summary>
-        /// Gets the layout name
+        /// Gets the layout name.
         /// </summary>
         public string LayoutName => this.LayoutNameTextBox.Text + ".plo";
 

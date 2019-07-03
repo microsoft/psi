@@ -9,8 +9,8 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Serializer optimized for streaming scenarios, where buffers and instances can be cached.
     /// </summary>
-    /// <typeparam name="T">The type of messages to serialize</typeparam>
-    public sealed class SerializerComponent<T> : ConsumerProducer<T, Message<BufferReader>>
+    /// <typeparam name="T">The type of messages to serialize.</typeparam>
+    internal sealed class SerializerComponent<T> : ConsumerProducer<Message<T>, Message<BufferReader>>
     {
         private readonly SerializationContext context;
         private readonly BufferWriter serializationBuffer = new BufferWriter(16);
@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="serializers">Known serializers.</param>
-        public SerializerComponent(Pipeline pipeline, KnownSerializers serializers)
+        internal SerializerComponent(Pipeline pipeline, KnownSerializers serializers)
             : base(pipeline)
         {
             this.context = new SerializationContext(serializers);
@@ -29,15 +29,15 @@ namespace Microsoft.Psi.Components
         }
 
         /// <inheritdoc />
-        protected override void Receive(T data, Envelope e)
+        protected override void Receive(Message<T> data, Envelope e)
         {
             this.serializationBuffer.Reset();
-            this.handler.Serialize(this.serializationBuffer, data, this.context);
+            this.handler.Serialize(this.serializationBuffer, data.Data, this.context);
             this.context.Reset();
             var outputBuffer = new BufferReader(this.serializationBuffer);
 
             // preserve the envelope we received
-            var resultMsg = Message.Create(outputBuffer, e);
+            var resultMsg = Message.Create(outputBuffer, data.Envelope);
             this.Out.Post(resultMsg, e.OriginatingTime);
         }
     }

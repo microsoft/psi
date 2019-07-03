@@ -8,11 +8,17 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Media;
 
+    /// <summary>
+    /// Webcam with audio sample program.
+    /// </summary>
     public class Program
     {
         private const string ApplicationName = "WebcamWithAudioSample";
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        public static void Main()
         {
             // Flag to exit the application
             bool exit = false;
@@ -43,7 +49,7 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
         }
 
         /// <summary>
-        /// Builds and runs a webcam pipeline and records the data to a Psi store
+        /// Builds and runs a webcam pipeline and records the data to a Psi store.
         /// </summary>
         /// <param name="pathToStore">The path to directory where store should be saved.</param>
         public static void RecordAudioVideo(string pathToStore)
@@ -52,6 +58,9 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
             using (Pipeline pipeline = Pipeline.Create())
             {
                 // Register an event handler to catch pipeline errors
+                pipeline.PipelineExceptionNotHandled += Pipeline_PipelineException;
+
+                // Register an event handler to be notified when the pipeline completes
                 pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Create store
@@ -87,12 +96,16 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
         private static void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             Console.WriteLine("Pipeline execution completed with {0} errors", e.Errors.Count);
+        }
 
-            // Prints all exceptions that were thrown by the pipeline
-            if (e.Errors.Count > 0)
-            {
-                Console.WriteLine("Error: " + e.Errors[0].Message);
-            }
+        /// <summary>
+        /// Event handler for the <see cref="Pipeline.PipelineExceptionNotHandled"/> event.
+        /// </summary>
+        /// <param name="sender">The sender which raised the event.</param>
+        /// <param name="e">The pipeline exception event arguments.</param>
+        private static void Pipeline_PipelineException(object sender, PipelineExceptionNotHandledEventArgs e)
+        {
+            Console.WriteLine(e.Exception);
         }
     }
 }

@@ -83,9 +83,9 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
-        /// <param name="width">Width of image in pixels</param>
-        /// <param name="height">Height of image in pixels</param>
-        /// <param name="pixelFormat">Pixel format</param>
+        /// <param name="width">Width of image in pixels.</param>
+        /// <param name="height">Height of image in pixels.</param>
+        /// <param name="pixelFormat">Pixel format.</param>
         public Image(int width, int height, PixelFormat pixelFormat)
             : this(UnmanagedBuffer.Allocate(height * width * GetBytesPerPixel(pixelFormat)), width, height, width * GetBytesPerPixel(pixelFormat), pixelFormat)
         {
@@ -110,30 +110,30 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Interface implemented by the system specific assembly.
         /// For instance, Microsoft.Psi.Imaging.Windows will define
-        /// an ImageCompressor that implements this interfaces
+        /// an ImageCompressor that implements this interfaces.
         /// </summary>
         public interface IImageCompressor
         {
             /// <summary>
             /// Initialize compressor.
             /// </summary>
-            /// <param name="compressionMethod">Compression method</param>
+            /// <param name="compressionMethod">Compression method.</param>
             void Initialize(Image.CustomSerializer.CompressionMethod compressionMethod);
 
             /// <summary>
             /// Serialize compressor.
             /// </summary>
-            /// <param name="writer">Writer to which to serialize</param>
-            /// <param name="instance">Image instance to serialize</param>
-            /// <param name="context">Serialization context</param>
+            /// <param name="writer">Writer to which to serialize.</param>
+            /// <param name="instance">Image instance to serialize.</param>
+            /// <param name="context">Serialization context.</param>
             void Serialize(BufferWriter writer, Image instance, SerializationContext context);
 
             /// <summary>
             /// Deserialize compressor.
             /// </summary>
-            /// <param name="reader">Reader from which to deserialize</param>
-            /// <param name="target">Target image to which to deserialize</param>
-            /// <param name="context">Serialization context</param>
+            /// <param name="reader">Reader from which to deserialize.</param>
+            /// <param name="target">Target image to which to deserialize.</param>
+            /// <param name="context">Serialization context.</param>
             void Deserialize(BufferReader reader, ref Image target, SerializationContext context);
         }
 
@@ -158,12 +158,12 @@ namespace Microsoft.Psi.Imaging
         public int Stride => this.stride;
 
         /// <summary>
-        /// Gets the size of the image in bytes (stride times height)
+        /// Gets the size of the image in bytes (stride times height).
         /// </summary>
         public int Size => this.stride * this.height;
 
         /// <summary>
-        /// Gets the bits per pixel in the image
+        /// Gets the bits per pixel in the image.
         /// </summary>
         public int BitsPerPixel => PixelFormatHelper.GetBitsPerPixel(this.pixelFormat);
 
@@ -251,24 +251,24 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Function to convert RGB color into grayscale
+        /// Function to convert RGB color into grayscale.
         /// </summary>
-        /// <param name="r">red component (Range=0..255)</param>
-        /// <param name="g">green component (Range=0..255)</param>
-        /// <param name="b">Blue component (Range=0..255)</param>
-        /// <returns>Grayscale value (Range=0..255)</returns>
+        /// <param name="r">red component (Range=0..255).</param>
+        /// <param name="g">green component (Range=0..255).</param>
+        /// <param name="b">Blue component (Range=0..255).</param>
+        /// <returns>Grayscale value (Range=0..255).</returns>
         public static byte Rgb2Gray(byte r, byte g, byte b)
         {
             return (byte)(((4897 * r) + (9617 * g) + (1868 * b)) >> 14);
         }
 
         /// <summary>
-        /// Function to convert RGB color into grayscale
+        /// Function to convert RGB color into grayscale.
         /// </summary>
-        /// <param name="r">red component (Range=0..65535)</param>
-        /// <param name="g">green component (Range=0..65535)</param>
-        /// <param name="b">Blue component (Range=0..65535)</param>
-        /// <returns>Grayscale value (Range=0..65535)</returns>
+        /// <param name="r">red component (Range=0..65535).</param>
+        /// <param name="g">green component (Range=0..65535).</param>
+        /// <param name="b">Blue component (Range=0..65535).</param>
+        /// <returns>Grayscale value (Range=0..65535).</returns>
         public static ushort Rgb2Gray(ushort r, ushort g, ushort b)
         {
             return (ushort)(((4897 * r) + (9617 * g) + (1868 * b)) >> 14);
@@ -323,7 +323,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="destImage">Destination image to copy this image to.</param>
         /// <remarks><para>The method copies current unmanaged image to the specified image.
         /// Size of the destination image must be exactly the same. Some differences in pixel
-        /// formats are allowed and the method implements a translation of pixel formats</para></remarks>
+        /// formats are allowed and the method implements a translation of pixel formats.</para></remarks>
         public void CopyTo(Image destImage)
         {
             this.CopyTo(destImage.image.Data, destImage.Width, destImage.Height, destImage.Stride, destImage.PixelFormat);
@@ -341,14 +341,14 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Sets a pixel in the image
+        /// Sets a pixel in the image.
         /// </summary>
-        /// <param name="x">Pixel's X coordinate</param>
-        /// <param name="y">Pixel's Y coordinate</param>
-        /// <param name="r">Red channel's value</param>
-        /// <param name="g">Green channel's value</param>
-        /// <param name="b">Blue channel's value</param>
-        /// <param name="a">Alpha channel's value</param>
+        /// <param name="x">Pixel's X coordinate.</param>
+        /// <param name="y">Pixel's Y coordinate.</param>
+        /// <param name="r">Red channel's value.</param>
+        /// <param name="g">Green channel's value.</param>
+        /// <param name="b">Blue channel's value.</param>
+        /// <param name="a">Alpha channel's value.</param>
         public void SetPixel(int x, int y, int r, int g, int b, int a)
         {
             if (x < 0 || y < 0 || x >= (int)this.width || y >= (int)this.height)
@@ -390,11 +390,11 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Copies the psi image to an unmanaged buffer.
         /// </summary>
-        /// <param name="destination">The destination buffer</param>
-        /// <param name="width">The destination image width</param>
-        /// <param name="height">The destination image height</param>
-        /// <param name="dstStride">The destination image stride</param>
-        /// <param name="destinationFormat">The destination pixel format</param>
+        /// <param name="destination">The destination buffer.</param>
+        /// <param name="width">The destination image width.</param>
+        /// <param name="height">The destination image height.</param>
+        /// <param name="dstStride">The destination image stride.</param>
+        /// <param name="destinationFormat">The destination pixel format.</param>
         public void CopyTo(IntPtr destination, int width, int height, int dstStride, PixelFormat destinationFormat)
         {
             if ((this.width != width) || (this.height != height))
@@ -498,7 +498,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Copies data from a byte array buffer into the psi image
+        /// Copies data from a byte array buffer into the psi image.
         /// </summary>
         /// <param name="sourceBuffer">The buffer to copy from.</param>
         /// <remarks><para>The method copies data from the specified buffer into the unmanaged image
@@ -509,7 +509,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Copies data from an unmanaged buffer
+        /// Copies data from an unmanaged buffer.
         /// </summary>
         /// <param name="sourcePtr">A pointer to the unmanaged buffer to copy from.</param>
         /// <remarks><para>The method copies data from the specified buffer into the unmanaged image
@@ -520,7 +520,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Copies data from an unmanaged buffer
+        /// Copies data from an unmanaged buffer.
         /// </summary>
         /// <param name="bitmap">A bitmap to copy from.</param>
         /// <remarks><para>The method copies data from the specified bitmap into the unmanaged image
@@ -633,11 +633,11 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Reads image data as a series of bytes
+        /// Reads image data as a series of bytes.
         /// </summary>
-        /// <param name="count">Number of bytes to read</param>
-        /// <param name="offset">Offset from start of image data</param>
-        /// <returns>Array of bytes read</returns>
+        /// <param name="count">Number of bytes to read.</param>
+        /// <param name="offset">Offset from start of image data.</param>
+        /// <returns>Array of bytes read.</returns>
         public byte[] ReadBytes(int count, int offset = 0)
         {
             return this.image.ReadBytes(count, offset);
@@ -810,7 +810,7 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Custom serializer used for reading/writing images
+        /// Custom serializer used for reading/writing images.
         /// </summary>
         public class CustomSerializer : ISerializer<Image>
         {
@@ -820,7 +820,7 @@ namespace Microsoft.Psi.Imaging
             private IImageCompressor imageCompressor;
 
             /// <summary>
-            /// Defines type of compression to use when serializing out an Image
+            /// Defines type of compression to use when serializing out an Image.
             /// </summary>
             public enum CompressionMethod
             {
@@ -837,13 +837,13 @@ namespace Microsoft.Psi.Imaging
                 /// <summary>
                 /// Use no compression
                 /// </summary>
-                None
+                None,
             }
 
             /// <summary>
-            /// Maybe called to initialize type of compression to use. Default is no compression
+            /// Maybe called to initialize type of compression to use. Default is no compression.
             /// </summary>
-            /// <param name="method">Type of compression to use</param>
+            /// <param name="method">Type of compression to use.</param>
             public static void ConfigureCompression(CompressionMethod method)
             {
                 compressionMethod = method;
@@ -852,9 +852,9 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Initialize custom serializer.
             /// </summary>
-            /// <param name="serializers">Known serializers</param>
-            /// <param name="targetSchema">Target type schema</param>
-            /// <returns>Type schema</returns>
+            /// <param name="serializers">Known serializers.</param>
+            /// <param name="targetSchema">Target type schema.</param>
+            /// <returns>Type schema.</returns>
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 if (targetSchema == null)
@@ -902,9 +902,9 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Serialize image.
             /// </summary>
-            /// <param name="writer">Writer to which to serialize</param>
-            /// <param name="instance">Image instace to serialize</param>
-            /// <param name="context">Serialization context</param>
+            /// <param name="writer">Writer to which to serialize.</param>
+            /// <param name="instance">Image instace to serialize.</param>
+            /// <param name="context">Serialization context.</param>
             public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
             {
                 Serializer.Serialize(writer, compressionMethod, context);
@@ -930,10 +930,10 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Prepare target for cloning.
             /// </summary>
-            /// <remarks>Called before Clone, to ensure the target is valid</remarks>
-            /// <param name="instance">Image instance from which to clone</param>
-            /// <param name="target">Image into which to clone</param>
-            /// <param name="context">Serialization context</param>
+            /// <remarks>Called before Clone, to ensure the target is valid.</remarks>
+            /// <param name="instance">Image instance from which to clone.</param>
+            /// <param name="target">Image into which to clone.</param>
+            /// <param name="context">Serialization context.</param>
             public void PrepareCloningTarget(Image instance, ref Image target, SerializationContext context)
             {
                 if (target == null ||
@@ -949,9 +949,9 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Clone image.
             /// </summary>
-            /// <param name="instance">Image instance to clone</param>
-            /// <param name="target">Target image into which to clone</param>
-            /// <param name="context">Serialization context</param>
+            /// <param name="instance">Image instance to clone.</param>
+            /// <param name="target">Target image into which to clone.</param>
+            /// <param name="context">Serialization context.</param>
             public void Clone(Image instance, ref Image target, SerializationContext context)
             {
                 Serializer.Clone(instance.image, ref target.image, context);
@@ -964,10 +964,10 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Prepare target for deserialization.
             /// </summary>
-            /// <remarks>Called before Deserialize, to ensure the target is valid</remarks>
+            /// <remarks>Called before Deserialize, to ensure the target is valid.</remarks>
             /// <param name="reader">Reader being used.</param>
-            /// <param name="target">Target image into which to deserialize</param>
-            /// <param name="context">Serialization context</param>
+            /// <param name="target">Target image into which to deserialize.</param>
+            /// <param name="context">Serialization context.</param>
             public void PrepareDeserializationTarget(BufferReader reader, ref Image target, SerializationContext context)
             {
                 if (target == null)
@@ -979,9 +979,9 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Deserialize image.
             /// </summary>
-            /// <param name="reader">Buffer reader being used</param>
-            /// <param name="target">Target image into which to deserialize</param>
-            /// <param name="context">Serialization context</param>
+            /// <param name="reader">Buffer reader being used.</param>
+            /// <param name="target">Target image into which to deserialize.</param>
+            /// <param name="context">Serialization context.</param>
             public void Deserialize(BufferReader reader, ref Image target, SerializationContext context)
             {
                 CompressionMethod methodOfCompression = CompressionMethod.None;
@@ -1016,9 +1016,9 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Clear image to be reused.
             /// </summary>
-            /// <remarks>Called once the object becomes unused and can be reused as a cloning target</remarks>
-            /// <param name="target">Target image to clear</param>
-            /// <param name="context">Serialization context</param>
+            /// <remarks>Called once the object becomes unused and can be reused as a cloning target.</remarks>
+            /// <param name="target">Target image to clear.</param>
+            /// <param name="context">Serialization context.</param>
             public void Clear(ref Image target, SerializationContext context)
             {
                 Serializer.Clear(ref target.image, context);

@@ -9,6 +9,9 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
     using Microsoft.Psi.CognitiveServices.Speech;
     using Microsoft.Psi.Speech;
 
+    /// <summary>
+    /// Speech sample on Linux sample program.
+    /// </summary>
     public static class Program
     {
         // This field is required and must be a valid key which may be obtained by signing up at
@@ -16,7 +19,10 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         private static string azureSubscriptionKey = string.Empty;
         private static string azureRegion = string.Empty; // the region to which the subscription is associated (e.g. "westus")
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// Main entry point.
+        /// </summary>
+        public static void Main()
         {
             // Flag to exit the application
             bool exit = false;
@@ -97,6 +103,9 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
                 finalResults.Do(result => Console.WriteLine(result.Text));
 
                 // Register an event handler to catch pipeline errors
+                pipeline.PipelineExceptionNotHandled += Pipeline_PipelineException;
+
+                // Register an event handler to be notified when the pipeline completes
                 pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Run the pipeline
@@ -118,21 +127,22 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         private static void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
         {
             Console.WriteLine("Pipeline execution completed with {0} errors", e.Errors.Count);
+        }
 
-            // Prints all exceptions that were thrown by the pipeline
-            if (e.Errors.Count > 0)
-            {
-                foreach (var error in e.Errors)
-                {
-                    Console.WriteLine(error);
-                }
-            }
+        /// <summary>
+        /// Event handler for the <see cref="Pipeline.PipelineExceptionNotHandled"/> event.
+        /// </summary>
+        /// <param name="sender">The sender which raised the event.</param>
+        /// <param name="e">The pipeline exception event arguments.</param>
+        private static void Pipeline_PipelineException(object sender, PipelineExceptionNotHandledEventArgs e)
+        {
+            Console.WriteLine(e.Exception);
         }
 
         /// <summary>
         /// Prompt user to enter Azure Speech subscription key from Cognitive Services. Or just set the AzureSubscriptionKey
         /// static member at the top of this file to avoid having to enter it each time. For more information on how to
-        /// register for a subscription, see https://www.microsoft.com/cognitive-services/en-us/sign-up
+        /// register for a subscription, see https://www.microsoft.com/cognitive-services/en-us/sign-up.
         /// </summary>
         /// <returns>
         /// True if <see cref="azureSubscriptionKey"/> contains a non-empty key (the key will not actually be

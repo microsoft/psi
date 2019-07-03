@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
+
 namespace Microsoft.Psi.RealSense.Windows
 {
     using System;
     using System.Threading;
     using Microsoft.Psi;
-    using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Components;
+    using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// Component that captures and streams video and depth from an Intel RealSense camera.
@@ -21,7 +22,7 @@ namespace Microsoft.Psi.RealSense.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="RealSenseSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
         public RealSenseSensor(Pipeline pipeline)
         {
             this.shutdown = false;
@@ -31,55 +32,17 @@ namespace Microsoft.Psi.RealSense.Windows
         }
 
         /// <summary>
-        /// Gets the emitter that generates RGB images from the RealSense depth camera
+        /// Gets the emitter that generates RGB images from the RealSense depth camera.
         /// </summary>
         public Emitter<Shared<Image>> ColorImage { get; private set; }
 
         /// <summary>
-        /// Gets the emitter that generates Depth images from the RealSense depth camera
+        /// Gets the emitter that generates Depth images from the RealSense depth camera.
         /// </summary>
         public Emitter<Shared<Image>> DepthImage { get; private set; }
 
-        private void ThreadProc()
-        {
-            Imaging.PixelFormat pixelFormat = Imaging.PixelFormat.BGR_24bpp;
-            switch (device.GetColorBpp())
-            {
-                case 24:
-                    pixelFormat = Imaging.PixelFormat.BGR_24bpp;
-                    break;
-                case 32:
-                    pixelFormat = Imaging.PixelFormat.BGRX_32bpp;
-                    break;
-                default:
-                    throw new NotSupportedException("Expected 24bpp or 32bpp image.");
-            }
-            var colorImage = ImagePool.GetOrCreate((int)device.GetColorWidth(), (int)device.GetColorHeight(), pixelFormat);
-            uint colorImageSize = device.GetColorHeight() * device.GetColorStride();
-            switch (device.GetDepthBpp())
-            {
-                case 16:
-                    pixelFormat = Imaging.PixelFormat.Gray_16bpp;
-                    break;
-                case 8:
-                    pixelFormat = Imaging.PixelFormat.Gray_8bpp;
-                    break;
-                default:
-                    throw new NotSupportedException("Expected 8bpp or 16bpp image.");
-            }
-            var depthImage = ImagePool.GetOrCreate((int)device.GetDepthWidth(), (int)device.GetDepthHeight(), pixelFormat);
-            uint depthImageSize = device.GetDepthHeight() * device.GetDepthStride();
-            while (!this.shutdown)
-            {
-                device.ReadFrame(colorImage.Resource.ImageData, colorImageSize, depthImage.Resource.ImageData, depthImageSize);
-                DateTime t = DateTime.Now;
-                ColorImage.Post(colorImage, t);
-                DepthImage.Post(depthImage, t);
-            }
-        }
-
         /// <summary>
-        /// Dispose method
+        /// Dispose method.
         /// </summary>
         public void Dispose()
         {
@@ -97,12 +60,12 @@ namespace Microsoft.Psi.RealSense.Windows
             notifyCompletionTime(DateTime.MaxValue);
 
             this.device = new RealSenseDevice();
-            this.thread = new Thread(new ThreadStart(ThreadProc));
+            this.thread = new Thread(new ThreadStart(this.ThreadProc));
             this.thread.Start();
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             if (this.thread != null)
             {
@@ -113,9 +76,52 @@ namespace Microsoft.Psi.RealSense.Windows
                     this.thread.Abort();
                 }
             }
+
             if (this.device != null)
             {
                 this.device = null;
+            }
+
+            notifyCompleted();
+        }
+
+        private void ThreadProc()
+        {
+            Imaging.PixelFormat pixelFormat = Imaging.PixelFormat.BGR_24bpp;
+            switch (this.device.GetColorBpp())
+            {
+                case 24:
+                    pixelFormat = Imaging.PixelFormat.BGR_24bpp;
+                    break;
+                case 32:
+                    pixelFormat = Imaging.PixelFormat.BGRX_32bpp;
+                    break;
+                default:
+                    throw new NotSupportedException("Expected 24bpp or 32bpp image.");
+            }
+
+            var colorImage = ImagePool.GetOrCreate((int)this.device.GetColorWidth(), (int)this.device.GetColorHeight(), pixelFormat);
+            uint colorImageSize = this.device.GetColorHeight() * this.device.GetColorStride();
+            switch (this.device.GetDepthBpp())
+            {
+                case 16:
+                    pixelFormat = Imaging.PixelFormat.Gray_16bpp;
+                    break;
+                case 8:
+                    pixelFormat = Imaging.PixelFormat.Gray_8bpp;
+                    break;
+                default:
+                    throw new NotSupportedException("Expected 8bpp or 16bpp image.");
+            }
+
+            var depthImage = ImagePool.GetOrCreate((int)this.device.GetDepthWidth(), (int)this.device.GetDepthHeight(), pixelFormat);
+            uint depthImageSize = this.device.GetDepthHeight() * this.device.GetDepthStride();
+            while (!this.shutdown)
+            {
+                this.device.ReadFrame(colorImage.Resource.ImageData, colorImageSize, depthImage.Resource.ImageData, depthImageSize);
+                DateTime t = DateTime.Now;
+                this.ColorImage.Post(colorImage, t);
+                this.DepthImage.Post(depthImage, t);
             }
         }
     }

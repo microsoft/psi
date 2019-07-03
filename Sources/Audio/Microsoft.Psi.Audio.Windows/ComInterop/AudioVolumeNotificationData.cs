@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// AUDIO_VOLUME_NOTIFICATION_DATA structure (defined in Endpointvolume.h)
+    /// AUDIO_VOLUME_NOTIFICATION_DATA structure (defined in Endpointvolume.h).
     /// </summary>
     internal class AudioVolumeNotificationData
     {
@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Audio.ComInterop
                 Muted = data.Muted,
                 MasterVolume = data.MasterVolume,
                 Channels = data.Channels,
-                ChannelVolume = channelVolume
+                ChannelVolume = channelVolume,
             };
 
             return notificationData;
@@ -73,27 +73,27 @@ namespace Microsoft.Psi.Audio.ComInterop
         internal struct AudioVolumeNotificationDataStruct
         {
             /// <summary>
-            /// guidEventContext
+            /// guidEventContext.
             /// </summary>
             internal Guid EventContext;
 
             /// <summary>
-            /// bMuted
+            /// bMuted.
             /// </summary>
             internal bool Muted;
 
             /// <summary>
-            /// fMasterVolume
+            /// fMasterVolume.
             /// </summary>
             internal float MasterVolume;
 
             /// <summary>
-            /// nChannels
+            /// nChannels.
             /// </summary>
             internal int Channels;
 
             /// <summary>
-            /// afChannelVolumes[1]
+            /// afChannelVolumes[1].
             /// </summary>
             internal float ChannelVolume0;
 

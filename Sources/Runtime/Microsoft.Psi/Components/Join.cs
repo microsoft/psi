@@ -8,11 +8,11 @@ namespace Microsoft.Psi.Components
     using System.Linq;
 
     /// <summary>
-    /// Performs a merge between a pair of streams
+    /// Performs a merge between a pair of streams.
     /// </summary>
-    /// <typeparam name="TPrimary">The type the messages on the primary stream</typeparam>
-    /// <typeparam name="TSecondary">The type messages on the secondary stream</typeparam>
-    /// <typeparam name="TOut">The type of output message</typeparam>
+    /// <typeparam name="TPrimary">The type the messages on the primary stream.</typeparam>
+    /// <typeparam name="TSecondary">The type messages on the secondary stream.</typeparam>
+    /// <typeparam name="TOut">The type of output message.</typeparam>
     public class Join<TPrimary, TSecondary, TOut> : IProducer<TOut>
     {
         private readonly Queue<Message<TPrimary>> primaryQueue = new Queue<Message<TPrimary>>(); // to be paired
@@ -84,17 +84,28 @@ namespace Microsoft.Psi.Components
         /// <returns>Receiver.</returns>
         public Receiver<TSecondary> AddInput()
         {
-            var lastIndex = this.inSecondaries.Length;
-            var count = lastIndex + 1;
-            Array.Resize(ref this.inSecondaries, count);
-            var newInput = this.inSecondaries[lastIndex] = this.pipeline.CreateReceiver<TSecondary>(this, (d, e) => this.ReceiveSecondary(lastIndex, d, e), "InSecondary" + lastIndex);
-            newInput.Unsubscribed += closedOriginatingTime => this.SecondaryClosed(lastIndex, closedOriginatingTime);
-            Array.Resize(ref this.secondaryQueues, count);
-            this.secondaryQueues[lastIndex] = (new Queue<Message<TSecondary>>(), null);
-            Array.Resize(ref this.lastResults, count);
-            Array.Resize(ref this.lastValues, count);
-            this.defaultSecondarySet = Enumerable.Range(0, count);
-            return newInput;
+            // use the sync context to protect the queues from concurrent access
+            var syncContext = this.Out.SyncContext;
+            syncContext.Lock();
+
+            try
+            {
+                var lastIndex = this.inSecondaries.Length;
+                var count = lastIndex + 1;
+                Array.Resize(ref this.inSecondaries, count);
+                var newInput = this.inSecondaries[lastIndex] = this.pipeline.CreateReceiver<TSecondary>(this, (d, e) => this.ReceiveSecondary(lastIndex, d, e), "InSecondary" + lastIndex);
+                newInput.Unsubscribed += closedOriginatingTime => this.SecondaryClosed(lastIndex, closedOriginatingTime);
+                Array.Resize(ref this.secondaryQueues, count);
+                this.secondaryQueues[lastIndex] = (new Queue<Message<TSecondary>>(), null);
+                Array.Resize(ref this.lastResults, count);
+                Array.Resize(ref this.lastValues, count);
+                this.defaultSecondarySet = Enumerable.Range(0, count);
+                return newInput;
+            }
+            finally
+            {
+                syncContext.Release();
+            }
         }
 
         private void ReceivePrimary(TPrimary message, Envelope e)
@@ -124,9 +135,9 @@ namespace Microsoft.Psi.Components
                 var primary = this.primaryQueue.Peek();
                 bool ready = true;
                 var secondarySet = (this.secondarySelector != null) ? this.secondarySelector(primary.Data) : this.defaultSecondarySet;
-                foreach (var iSecondary in secondarySet)
+                foreach (var secondaryIndex in secondarySet)
                 {
-                    var secondaryQueue = this.secondaryQueues[iSecondary];
+                    var secondaryQueue = this.secondaryQueues[secondaryIndex];
                     var matchResult = this.interpolator.Match(primary.OriginatingTime, secondaryQueue.Queue, secondaryQueue.ClosedOriginatingTime);
                     if (matchResult.Type == MatchResultType.InsufficientData)
                     {
@@ -134,8 +145,8 @@ namespace Microsoft.Psi.Components
                         return;
                     }
 
-                    this.lastResults[iSecondary] = matchResult;
-                    this.lastValues[iSecondary] = matchResult.Value;
+                    this.lastResults[secondaryIndex] = matchResult;
+                    this.lastValues[secondaryIndex] = matchResult.Value;
                     ready = ready && matchResult.Type == MatchResultType.Created;
                 }
 
@@ -149,14 +160,14 @@ namespace Microsoft.Psi.Components
                 }
 
                 // if we got here, all secondaries either successfully match a value, or we have confirmation that they will never be able to match it
-                foreach (var iSecondary in secondarySet)
+                foreach (var secondaryIndex in secondarySet)
                 {
-                    var secondaryQueue = this.secondaryQueues[iSecondary];
+                    var secondaryQueue = this.secondaryQueues[secondaryIndex];
 
                     // clear the secondary queue as needed
-                    while (secondaryQueue.Queue.Count != 0 && secondaryQueue.Queue.Peek().OriginatingTime < this.lastResults[iSecondary].ObsoleteTime)
+                    while (secondaryQueue.Queue.Count != 0 && secondaryQueue.Queue.Peek().OriginatingTime < this.lastResults[secondaryIndex].ObsoleteTime)
                     {
-                        this.InSecondaries[iSecondary].Recycle(secondaryQueue.Queue.Dequeue());
+                        this.InSecondaries[secondaryIndex].Recycle(secondaryQueue.Queue.Dequeue());
                     }
                 }
 

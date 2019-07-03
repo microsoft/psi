@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Serialization
     /// Auto-generated serializer for reference types.
     /// Implementers of ISerializer should instantiate and call this class to do the heavy lifting.
     /// </summary>
-    /// <typeparam name="T">The type of objects this serializer knows how to handle</typeparam>
+    /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal class ClassSerializer<T> : ISerializer<T>
     {
         private const int Version = 1;
@@ -48,9 +48,9 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Serializes the given instance to the specified stream.
         /// </summary>
-        /// <param name="writer">The stream writer to serialize to</param>
-        /// <param name="instance">The instance to serialize</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="writer">The stream writer to serialize to.</param>
+        /// <param name="instance">The instance to serialize.</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Serialize(BufferWriter writer, T instance, SerializationContext context)
         {
@@ -60,9 +60,9 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Deserializes an instance from the specified stream into the specified target object.
         /// </summary>
-        /// <param name="reader">The stream reader to deserialize from</param>
-        /// <param name="target">An instance to deserialize into</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="reader">The stream reader to deserialize from.</param>
+        /// <param name="target">An instance to deserialize into.</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Deserialize(BufferReader reader, ref T target, SerializationContext context)
         {
@@ -72,9 +72,9 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Deep-clones the given object into an existing allocation.
         /// </summary>
-        /// <param name="instance">The instance to clone</param>
-        /// <param name="target">An existing instance to clone into</param>
-        /// <param name="context">A context object containing accumulated type and object references</param>
+        /// <param name="instance">The instance to clone.</param>
+        /// <param name="target">An existing instance to clone into.</param>
+        /// <param name="context">A context object containing accumulated type and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clone(T instance, ref T target, SerializationContext context)
         {
@@ -85,8 +85,8 @@ namespace Microsoft.Psi.Serialization
         /// Provides an opportunity to clear an instance before caching it for future reuse as a cloning or deserialization target.
         /// The method is expected to call Serializer.Clear on all reference-type fields.
         /// </summary>
-        /// <param name="target">The instance to clear</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="target">The instance to clear.</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear(ref T target, SerializationContext context)
         {
@@ -96,9 +96,9 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Prepares an empty object to clone into. This method is expected to allocate a new empty target object if the provided one is insufficient.
         /// </summary>
-        /// <param name="instance">The instance to clone</param>
+        /// <param name="instance">The instance to clone.</param>
         /// <param name="target">An existing instance to clone into. Could be null.</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void PrepareCloningTarget(T instance, ref T target, SerializationContext context)
         {
@@ -111,9 +111,9 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Prepares an empty object to deserialize into. This method is expected to allocate a new empty target object if the provided one is insufficient.
         /// </summary>
-        /// <param name="reader">The stream reader to deserialize from</param>
+        /// <param name="reader">The stream reader to deserialize from.</param>
         /// <param name="target">An optional existing instance to deserialize into. Could be null.</param>
-        /// <param name="context">A context object containing accumulated type mappings and object references</param>
+        /// <param name="context">A context object containing accumulated type mappings and object references.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void PrepareDeserializationTarget(BufferReader reader, ref T target, SerializationContext context)
         {

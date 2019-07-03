@@ -52,6 +52,7 @@ namespace Microsoft.Psi.Kinect
 
             double epsilon = 0.01; // margin to allow for rounding errors
             double epsilon2 = 0.1; // margin to distinguish between 0 and 180 degrees
+
             // optional check that input is pure rotation, 'isRotationMatrix' is defined at:
             // http://www.euclideanspace.com/maths/algebra/matrix/orthogonal/rotation/
             // assert isRotationMatrix(m) : "not valid rotation matrix" ;// for debugging

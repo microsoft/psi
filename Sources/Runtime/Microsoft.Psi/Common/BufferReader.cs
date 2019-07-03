@@ -87,7 +87,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Moves the current position to the specified place in the underlying buffer.
         /// </summary>
-        /// <param name="position">The position to move the to</param>
+        /// <param name="position">The position to move the to.</param>
         public void Seek(int position)
         {
             if (position < 0 || position > this.length)
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Resets the reader to the beginning and resizes the buffer as needed. Note that any data in the buffer is lost.
         /// </summary>
-        /// <param name="length">The new buffer length</param>
+        /// <param name="length">The new buffer length.</param>
         public void Reset(int length)
         {
             if (this.buffer == null || this.buffer.Length < length)
@@ -116,8 +116,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of bytes from the underlying buffer to the specified memory address.
         /// </summary>
-        /// <param name="target">The target memory address</param>
-        /// <param name="lenghtInBytes">The number of bytes to copy</param>
+        /// <param name="target">The target memory address.</param>
+        /// <param name="lenghtInBytes">The number of bytes to copy.</param>
         public unsafe void Read(void* target, int lenghtInBytes)
         {
             var start = this.MoveCurrentPosition(lenghtInBytes);
@@ -133,8 +133,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of bytes from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of bytes to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of bytes to copy.</param>
         public void Read(byte[] target, int count)
         {
             unsafe
@@ -149,8 +149,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type Double from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(double[] target, int count)
         {
             unsafe
@@ -165,8 +165,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type Single from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(float[] target, int count)
         {
             unsafe
@@ -181,8 +181,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type UInt16 from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(ushort[] target, int count)
         {
             unsafe
@@ -197,8 +197,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type Int16 from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(short[] target, int count)
         {
             unsafe
@@ -213,8 +213,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type Int32 from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(int[] target, int count)
         {
             unsafe
@@ -229,8 +229,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type Int64 from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(long[] target, int count)
         {
             unsafe
@@ -245,8 +245,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Copies the specified number of elements of type Char from the underlying buffer into the specified array.
         /// </summary>
-        /// <param name="target">The array to copy to</param>
-        /// <param name="count">The number of elements to copy</param>
+        /// <param name="target">The array to copy to.</param>
+        /// <param name="count">The number of elements to copy.</param>
         public void Read(char[] target, int count)
         {
             unsafe

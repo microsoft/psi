@@ -28,28 +28,6 @@ namespace Test.Psi
             TestRunner.SafeDirectoryDelete(this.path, true);
         }
 
-        private dynamic InstanceToDynamic<T>(T instance)
-        {
-            // Rube Goldberg machine to convert instance to dynamic by
-            // writing to a store (typed) and reading back as dynamic
-            using (var p = Pipeline.Create())
-            {
-                var gen = Generators.Return(p, instance);
-                var exporter = Store.Create(p, "Test", this.path);
-                exporter.Write(gen.Out, "Data", true);
-                p.Run();
-            }
-
-            using (var p = Pipeline.Create())
-            {
-                var importer = Store.Open(p, "Test", this.path);
-                var data = importer.OpenDynamicStream("Data");
-                var result = data.ToEnumerable();
-                p.Run();
-                return result.First();
-            }
-        }
-
         [TestMethod]
         [Timeout(60000)]
         public void PrimitiveToDynamicTest()
@@ -145,7 +123,6 @@ namespace Test.Psi
             Assert.AreSame(dyn, dyn.Self); // also, literally the same object!
         }
 
-
         public class ComplexTestObject
         {
             public ComplexTestObject Self;
@@ -156,6 +133,28 @@ namespace Test.Psi
             {
                 Self = this; // cyclic!
                 NestedA = NestedB = new TestObject(); // duplicate!
+            }
+        }
+
+        private dynamic InstanceToDynamic<T>(T instance)
+        {
+            // Rube Goldberg machine to convert instance to dynamic by
+            // writing to a store (typed) and reading back as dynamic
+            using (var p = Pipeline.Create())
+            {
+                var gen = Generators.Return(p, instance);
+                var exporter = Store.Create(p, "Test", this.path);
+                exporter.Write(gen.Out, "Data", true);
+                p.Run();
+            }
+
+            using (var p = Pipeline.Create())
+            {
+                var importer = Store.Open(p, "Test", this.path);
+                var data = importer.OpenDynamicStream("Data");
+                var result = data.ToEnumerable();
+                p.Run();
+                return result.First();
             }
         }
     }

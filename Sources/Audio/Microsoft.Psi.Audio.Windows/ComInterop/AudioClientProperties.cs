@@ -6,28 +6,28 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// Audio client properties (defined in AudioClient.h)
+    /// Audio client properties (defined in AudioClient.h).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct AudioClientProperties
     {
         /// <summary>
-        /// cbSize
+        /// cbSize.
         /// </summary>
         public int Size;
 
         /// <summary>
-        /// bIsOffload
+        /// bIsOffload.
         /// </summary>
         public bool IsOffload;
 
         /// <summary>
-        /// eCategory
+        /// eCategory.
         /// </summary>
         public AudioStreamCategory Category;
 
         /// <summary>
-        /// Options
+        /// Options.
         /// </summary>
         public AudioClientStreamOptions Options;
     }

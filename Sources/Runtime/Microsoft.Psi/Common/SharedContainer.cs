@@ -13,7 +13,7 @@ namespace Microsoft.Psi
     /// This class performs AddRef and Release and overrides serialization to preempt cloning from making deep copies of the resource.
     /// This class is for internal use only. The Shared class is the public-facing API for this functionality.
     /// </summary>
-    /// <typeparam name="T">The type of data held by this container</typeparam>
+    /// <typeparam name="T">The type of data held by this container.</typeparam>
     [Serializer(typeof(SharedContainer<>.CustomSerializer))]
     internal class SharedContainer<T>
         where T : class

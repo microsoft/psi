@@ -30,8 +30,8 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonStoreReader"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
         /// <param name="extension">The extension for the underlying file.</param>
         public JsonStoreReader(string name, string path, string extension = DefaultExtension)
             : base(extension)
@@ -117,7 +117,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Gets the stream metadata for the specified stream
+        /// Gets the stream metadata for the specified stream.
         /// </summary>
         /// <param name="streamName">The name of the stream.</param>
         /// <returns>The stream metadata.</returns>
@@ -138,7 +138,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Gets the stream metadata for the specified stream
+        /// Gets the stream metadata for the specified stream.
         /// </summary>
         /// <param name="id">The id of the stream.</param>
         /// <returns>The stream metadata.</returns>
@@ -154,7 +154,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Opens the stream for the specified stream
+        /// Opens the stream for the specified stream.
         /// </summary>
         /// <param name="streamName">The name of the stream.</param>
         /// <returns>The stream metadata.</returns>
@@ -166,7 +166,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Opens the stream for the specified stream
+        /// Opens the stream for the specified stream.
         /// </summary>
         /// <param name="id">The id of the stream.</param>
         /// <returns>The stream metadata.</returns>
@@ -178,7 +178,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Opens the stream for the specified stream
+        /// Opens the stream for the specified stream.
         /// </summary>
         /// <param name="metadata">The metadata of the stream.</param>
         /// <returns>true if the stream was opened; otherwise false.</returns>

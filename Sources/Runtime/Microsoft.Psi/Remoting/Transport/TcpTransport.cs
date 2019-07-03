@@ -4,10 +4,9 @@
 namespace Microsoft.Psi.Remoting
 {
     using System;
-    using System.IO;
     using System.Net;
     using System.Net.Sockets;
-    using Common;
+    using Microsoft.Psi.Common;
 
     /// <summary>
     /// TCP network transport.

@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Data
         /// <param name="storeName">The store name of this partition.</param>
         /// <param name="storePath">The store path of this partition.</param>
         /// <param name="name">The partition name.</param>
-        /// <param name="simpleReaderType">The SimpleReader type</param>
+        /// <param name="simpleReaderType">The SimpleReader type.</param>
         protected Partition(Session session, string storeName, string storePath, string name, Type simpleReaderType)
         {
             this.Session = session;

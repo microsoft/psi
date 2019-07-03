@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="minimum">The minimum value in the range.</param>
         /// <param name="maximum">The maximum value in the range.</param>
         /// <param name="originatingTime">The start time of the range.</param>
-        /// <param name="interval">The interval of the range</param>
+        /// <param name="interval">The interval of the range.</param>
         public IntervalData(T value, T minimum, T maximum, DateTime originatingTime, TimeSpan interval)
         {
             this.originatingTime = originatingTime;
@@ -108,11 +108,11 @@ namespace Microsoft.Psi.Visualization.Data
         public T Value => this.value;
 
         /// <summary>
-        /// Determines whether two instances are equal
+        /// Determines whether two instances are equal.
         /// </summary>
-        /// <param name="first">The first object to compare</param>
-        /// <param name="second">The object to compare to</param>
-        /// <returns>True if the instances are equal</returns>
+        /// <param name="first">The first object to compare.</param>
+        /// <param name="second">The object to compare to.</param>
+        /// <returns>True if the instances are equal.</returns>
         public static bool operator ==(IntervalData<T> first, IntervalData<T> second)
         {
             return
@@ -124,11 +124,11 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Determines whether two instances are equal
+        /// Determines whether two instances are equal.
         /// </summary>
-        /// <param name="first">The first object to compare</param>
-        /// <param name="second">The object to compare to</param>
-        /// <returns>True if the instances are equal</returns>
+        /// <param name="first">The first object to compare.</param>
+        /// <param name="second">The object to compare to.</param>
+        /// <returns>True if the instances are equal.</returns>
         public static bool operator !=(IntervalData<T> first, IntervalData<T> second)
         {
             return !(first == second);

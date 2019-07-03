@@ -15,7 +15,7 @@ namespace Microsoft.Psi
         where T : class, new()
     {
         /// <summary>
-        /// The configuration class
+        /// The configuration class.
         /// </summary>
         private T configuration;
 
@@ -47,7 +47,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Gets the configuration object
+        /// Gets the configuration object.
         /// </summary>
         public T Configuration
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Loads an object of type T from XML
+        /// Loads an object of type T from XML.
         /// </summary>
         /// <param name="filename">The name of the file to load from.</param>
         private void LoadFromXml(string filename)
@@ -72,7 +72,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Saves the configuration to XML
+        /// Saves the configuration to XML.
         /// </summary>
         /// <param name="filename">The name of the file to save to.</param>
         private void SaveToXml(string filename)

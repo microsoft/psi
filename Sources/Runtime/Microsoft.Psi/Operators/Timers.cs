@@ -23,7 +23,7 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="interval">The interval at which to generate messages.</param>
         /// <param name="generatorFn">The function generating the messages.</param>
-        /// <returns>A stream of messages of type T</returns>
+        /// <returns>A stream of messages of type T.</returns>
         public static IProducer<T> Timer<T>(Pipeline pipeline, TimeSpan interval, Func<DateTime, TimeSpan, T> generatorFn)
         {
             return new Timer<T>(pipeline, (uint)interval.TotalMilliseconds, generatorFn);
@@ -38,7 +38,7 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="interval">The interval at which to generate messages.</param>
-        /// <returns>A stream of messages representing time elapsed since the start of the pipeline</returns>
+        /// <returns>A stream of messages representing time elapsed since the start of the pipeline.</returns>
         public static IProducer<TimeSpan> Timer(Pipeline pipeline, TimeSpan interval)
         {
             return Timer<TimeSpan>(pipeline, interval, (_, t) => t);

@@ -52,7 +52,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Insert tests
+        /// Insert tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -64,7 +64,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// AddRange tests
+        /// AddRange tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -92,7 +92,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// UpdateOrAdd tests
+        /// UpdateOrAdd tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -125,7 +125,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Clear tests
+        /// Clear tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -140,7 +140,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Contains tests
+        /// Contains tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -153,7 +153,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// CopyTo tests
+        /// CopyTo tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -175,7 +175,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Empty list tests
+        /// Empty list tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -189,7 +189,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Enumerator tests
+        /// Enumerator tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -205,15 +205,11 @@ namespace Test.Psi.Visualization
                 }
 
                 Assert.IsFalse(testEnum.MoveNext());
-                testEnum.Reset();
-                basisEnum.Reset();
-                Assert.AreEqual(testEnum.Current, default(double));
-                Assert.AreEqual(basisEnum.Current.Value, testEnum.Current);
             }
         }
 
         /// <summary>
-        /// Get view tests
+        /// Get view tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -244,7 +240,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// IndexOf tests
+        /// IndexOf tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -257,7 +253,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Indexer tests
+        /// Indexer tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -274,7 +270,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Remove tests
+        /// Remove tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -293,7 +289,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// TryGetValue tests
+        /// TryGetValue tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -315,7 +311,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Add tests
+        /// View Add tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -344,7 +340,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View AddRange tests
+        /// View AddRange tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -375,7 +371,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Clear tests
+        /// View Clear tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -395,7 +391,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Contains tests
+        /// View Contains tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -407,7 +403,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View CopyTo tests
+        /// View CopyTo tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -430,7 +426,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View empty view tests
+        /// View empty view tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -444,7 +440,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Enumerator tests
+        /// View Enumerator tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -470,7 +466,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View IndexOf tests
+        /// View IndexOf tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -483,7 +479,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Indexer tests
+        /// View Indexer tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -499,7 +495,7 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Remove tests
+        /// View Remove tests.
         /// </summary>
         [TestMethod]
         [Timeout(60000)]
@@ -518,10 +514,11 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// Helper method for tracking changes to collections under test
+        /// Helper method for tracking changes to collections under test.
         /// </summary>
         /// <param name="e">Collection changed event arguments.</param>
         /// <param name="eventCount">Reference to the number of collection changed events received.</param>
+        /// <param name="itemCount">Item count.</param>
         private void CollectionChangedHandler(NotifyCollectionChangedEventArgs e, ref int eventCount, ref int itemCount)
         {
             eventCount++;

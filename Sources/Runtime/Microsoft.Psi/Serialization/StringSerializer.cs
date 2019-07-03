@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Serialization
     /// <summary>
     /// Simple string serializer.
     /// </summary>
-    /// <remarks>Don't use this as a template for other custom serializers!!!</remarks>
+    /// <remarks>Don't use this as a template for other custom serializers!!!.</remarks>
     internal sealed class StringSerializer : ISerializer<string>
     {
         private const int Version = 0;

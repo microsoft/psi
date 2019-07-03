@@ -17,8 +17,8 @@ namespace Microsoft.Psi.Scheduling
         /// <summary>
         /// Initializes a new instance of the <see cref="SynchronizationLock"/> class.
         /// </summary>
-        /// <param name="owner">Owner object</param>
-        /// <param name="locked">Locked flag</param>
+        /// <param name="owner">Owner object.</param>
+        /// <param name="locked">Locked flag.</param>
         public SynchronizationLock(object owner, bool locked = false)
         {
             this.owner = owner;
@@ -36,7 +36,7 @@ namespace Microsoft.Psi.Scheduling
         /// <summary>
         /// Attempts to take exclusive hold of the lock.
         /// </summary>
-        /// <returns>True if no one else was holding the lock</returns>
+        /// <returns>True if no one else was holding the lock.</returns>
         public bool TryLock()
         {
             var v = Interlocked.CompareExchange(ref this.counter, 1, 0);
@@ -44,9 +44,9 @@ namespace Microsoft.Psi.Scheduling
         }
 
         /// <summary>
-        /// Spins until the lock is acquired, with no back-off
+        /// Spins until the lock is acquired, with no back-off.
         /// </summary>
-        /// <returns>Number of spins before the lock was acquired</returns>
+        /// <returns>Number of spins before the lock was acquired.</returns>
         public int Lock()
         {
             SpinWait sw = default(SpinWait);

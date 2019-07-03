@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Serialization
     /// The typed contract enables efficient calling (no type lookup and parameter boxing), while the untyped contract is used for polymorphic fields.
     /// The handler also covers the case of cloning a struct into a boxed struct.
     /// </summary>
-    /// <typeparam name="T">The type of objects the handler understands</typeparam>
+    /// <typeparam name="T">The type of objects the handler understands.</typeparam>
     internal sealed class StructHandler<T> : SerializationHandler<T>
     {
         private static readonly CloneDelegate<object> CopyToBox = Generator.GenerateCloneMethod<object>(il => Generator.EmitCopyToBox(typeof(T), il));

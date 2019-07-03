@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Class implements a plot visualization object view model
+    /// Class implements a plot visualization object view model.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class EncodedImageVisualizationObject : ImageVisualizationObjectBase<Shared<EncodedImage>>

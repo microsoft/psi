@@ -23,9 +23,9 @@ namespace Microsoft.Psi.Data.Json
         /// Initializes a new instance of the <see cref="JsonExporter"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline that owns this instance.</param>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store.</param>
         public JsonExporter(Pipeline pipeline, string name, string path, bool createSubdirectory = true)
             : this(pipeline, new JsonStoreWriter(name, path, createSubdirectory))
         {
@@ -49,7 +49,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Gets the name of the store being written to
+        /// Gets the name of the store being written to.
         /// </summary>
         public new string Name => this.writer.Name;
 
@@ -73,8 +73,8 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Writes the specified stream to this multi-stream store.
         /// </summary>
-        /// <typeparam name="T">The type of messages in the stream</typeparam>
-        /// <param name="source">The source stream to write</param>
+        /// <typeparam name="T">The type of messages in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
         /// <param name="name">The name of the persisted stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         public void Write<T>(Emitter<T> source, string name, DeliveryPolicy deliveryPolicy = null)
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Writes the specified stream to this multi-stream store.
         /// </summary>
-        /// <param name="source">The source stream to write</param>
+        /// <param name="source">The source stream to write.</param>
         /// <param name="metadata">The stream metadata of the stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         internal void Write(Emitter<Message<JToken>> source, JsonStreamMetadata metadata, DeliveryPolicy deliveryPolicy = null)

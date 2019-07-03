@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for AnimatedModelVisual.xaml
+    /// Interaction logic for AnimatedModelVisual.xaml.
     /// </summary>
     public partial class AnimatedModelVisual : ModelVisual3D
     {

@@ -9,14 +9,14 @@ namespace Microsoft.Psi.Components
     /// Otherwise, use one of the the <see cref="Operators.Select{TIn, TOut}(IProducer{TIn}, System.Func{TIn, Envelope, TOut}, DeliveryPolicy)"/>
     /// or <see cref="Operators.Process{TIn, TOut}(IProducer{TIn}, System.Action{TIn, Envelope, Emitter{TOut}}, DeliveryPolicy)"/> operators.
     /// </summary>
-    /// <typeparam name="TIn">The input message type</typeparam>
-    /// <typeparam name="TOut">The output message type</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
+    /// <typeparam name="TOut">The output message type.</typeparam>
     public abstract class ConsumerProducer<TIn, TOut> : IConsumerProducer<TIn, TOut>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerProducer{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to attach to</param>
+        /// <param name="pipeline">The pipeline to attach to.</param>
         public ConsumerProducer(Pipeline pipeline)
         {
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
@@ -24,12 +24,12 @@ namespace Microsoft.Psi.Components
         }
 
         /// <summary>
-        /// Gets the input to receive messages on
+        /// Gets the input to receive messages on.
         /// </summary>
         public Receiver<TIn> In { get; }
 
         /// <summary>
-        /// Gets the stream to write messages to
+        /// Gets the stream to write messages to.
         /// </summary>
         public Emitter<TOut> Out { get; }
 

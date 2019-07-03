@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Windows
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for SetAnnotationValueWindow.xaml
+    /// Interaction logic for SetAnnotationValueWindow.xaml.
     /// </summary>
     public partial class SetAnnotationValueWindow : Window
     {

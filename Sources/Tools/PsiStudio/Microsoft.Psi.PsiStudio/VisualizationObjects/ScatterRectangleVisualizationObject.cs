@@ -21,15 +21,5 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(ScatterRectangleVisualizationObjectView));
-
-        /// <inheritdoc />
-        protected override void InitNew()
-        {
-            base.InitNew();
-            this.Configuration.Height = 1080;
-            this.Configuration.Color = System.Windows.Media.Color.FromArgb(255, 70, 85, 198);
-            this.Configuration.LineWidth = 1;
-            this.Configuration.Width = 1920;
-        }
     }
 }

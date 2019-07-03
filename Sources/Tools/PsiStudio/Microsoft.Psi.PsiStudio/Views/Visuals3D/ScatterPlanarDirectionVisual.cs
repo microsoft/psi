@@ -41,7 +41,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 InnerRadius = 0.1,
                 OuterRadius = 0.4,
                 Material = new DiffuseMaterial(new SolidColorBrush(this.visualizationObject.Configuration.Color)),
-                BackMaterial = new DiffuseMaterial(new SolidColorBrush(this.visualizationObject.Configuration.Color))
+                BackMaterial = new DiffuseMaterial(new SolidColorBrush(this.visualizationObject.Configuration.Color)),
             };
             this.pieSlices.Add(pieSlice);
             this.Children.Add(pieSlice);

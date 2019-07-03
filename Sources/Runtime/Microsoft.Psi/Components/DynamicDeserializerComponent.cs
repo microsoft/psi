@@ -18,9 +18,9 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="DynamicDeserializerComponent"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to which to attach</param>
-        /// <param name="typeName">Type name</param>
-        /// <param name="schemas">Known type schemas</param>
+        /// <param name="pipeline">The pipeline to which to attach.</param>
+        /// <param name="typeName">Type name.</param>
+        /// <param name="schemas">Known type schemas.</param>
         public DynamicDeserializerComponent(Pipeline pipeline, string typeName, IDictionary<string, TypeSchema> schemas)
             : base(pipeline)
         {
@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Deserializes and instance from the specified reader.
         /// </summary>
-        /// <param name="message">The byte data to deserialize</param>
+        /// <param name="message">The byte data to deserialize.</param>
         /// <param name="envelope">The envelope of the message.</param>
         protected override void Receive(Message<BufferReader> message, Envelope envelope)
         {

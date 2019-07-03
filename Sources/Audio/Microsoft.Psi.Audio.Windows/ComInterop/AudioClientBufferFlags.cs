@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System;
 
     /// <summary>
-    /// _AUDCLNT_BUFFERFLAGS enumeration (defined in AudioClient.h)
+    /// _AUDCLNT_BUFFERFLAGS enumeration (defined in AudioClient.h).
     /// </summary>
     [Flags]
     internal enum AudioClientBufferFlags
@@ -29,6 +29,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// AUDCLNT_BUFFERFLAGS_TIMESTAMP_ERROR
         /// </summary>
-        TimestampError = 0x4
+        TimestampError = 0x4,
     }
 }

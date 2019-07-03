@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Audio
         private static readonly PropertyKey PKeyDeviceFriendlyName = new PropertyKey()
         {
             FormatId = new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0),
-            PropertyId = 14
+            PropertyId = 14,
         };
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Microsoft.Psi.Audio
         /// Wave format output from resampling operation.
         /// </param>
         /// <returns>
-        /// Media transform object that will resample audio
+        /// Media transform object that will resample audio.
         /// </returns>
         internal static IMFTransform CreateResampler(WaveFormat inputFormat, WaveFormat outputFormat)
         {

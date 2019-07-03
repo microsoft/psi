@@ -12,7 +12,7 @@ namespace Microsoft.Psi.FiniteStateMachine
     /// States are the classic FSM states. They’re given a name (for logging/debugging)
     /// and have an (optional) OnEnter and OnExit function called as things change.
     /// </summary>
-    /// <typeparam name="TContext">Context type</typeparam>
+    /// <typeparam name="TContext">Context type.</typeparam>
     public sealed class State<TContext>
     {
         /// <summary>

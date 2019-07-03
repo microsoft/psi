@@ -47,9 +47,9 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Initializes a new instance of the <see cref="StoreWriter"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which to create the partition, or null to create a volatile data store</param>
-        /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which to create the partition, or null to create a volatile data store.</param>
+        /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store.</param>
         /// <param name="append">If true, the store is opened in append mode.</param>
         public StoreWriter(string name, string path, bool createSubdirectory = true, bool append = false)
         {
@@ -105,7 +105,7 @@ namespace Microsoft.Psi.Persistence
         public string Path => this.path;
 
         /// <summary>
-        /// Closes the store
+        /// Closes the store.
         /// </summary>
         public void Dispose()
         {
@@ -124,7 +124,7 @@ namespace Microsoft.Psi.Persistence
         /// Creates a logical storage stream to write messages to.
         /// The storage stream characteristics are extracted form the prvoided metadata descriptor.
         /// </summary>
-        /// <param name="meta">The metadata describing the stream to open</param>
+        /// <param name="meta">The metadata describing the stream to open.</param>
         /// <returns>The complete metadata for the storage stream just created.</returns>
         public PsiStreamMetadata OpenStream(PsiStreamMetadata meta)
         {
@@ -136,7 +136,7 @@ namespace Microsoft.Psi.Persistence
         /// </summary>
         /// <param name="streamId">The id of the stream, unique for this store. All messages with this stream id will be written to this storage stream.</param>
         /// <param name="streamName">The name of the stream. This name can be later used to open the sorage stream for reading.</param>
-        /// <param name="indexed">Indicates whether the stream is indexed or not. Indexed streams have a small index entry in the main data file and the actual message body in a large data file</param>
+        /// <param name="indexed">Indicates whether the stream is indexed or not. Indexed streams have a small index entry in the main data file and the actual message body in a large data file.</param>
         /// <param name="typeName">A name identifying the type of the messages in this stream. This is usually a fully-qualified type name or a data contract name, but can be anything that the caller wants.</param>
         /// <returns>The complete metadata for the storage stream just created.</returns>
         public PsiStreamMetadata OpenStream(int streamId, string streamName, bool indexed, string typeName)
@@ -236,7 +236,7 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Updates the seek index (which is an index into the main data file) if needed (every <see cref="IndexPageSize"/> bytes).
         /// </summary>
-        /// <param name="bytes">Number of bytes written so far to the data file</param>
+        /// <param name="bytes">Number of bytes written so far to the data file.</param>
         /// <param name="lastEnvelope">The envelope of the last message written.</param>
         private void UpdatePageIndex(int bytes, Envelope lastEnvelope)
         {

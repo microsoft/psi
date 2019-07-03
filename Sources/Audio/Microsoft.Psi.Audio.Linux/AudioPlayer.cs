@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Audio
         private readonly int frameSize;
 
         /// <summary>
-        /// The audio capture device
+        /// The audio capture device.
         /// </summary>
         private LinuxAudioInterop.AudioDevice audioDevice;
 

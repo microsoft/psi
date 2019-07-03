@@ -25,12 +25,12 @@ namespace Microsoft.Psi.Components
         private Time.TimerDelegate timerDelegate;
 
         /// <summary>
-        /// The id of the multimedia timer we use under the covers
+        /// The id of the multimedia timer we use under the covers.
         /// </summary>
         private Platform.ITimer timer;
 
         /// <summary>
-        /// The last time published by the timer
+        /// The last time published by the timer.
         /// </summary>
         private DateTime currentTime;
 
@@ -45,12 +45,12 @@ namespace Microsoft.Psi.Components
         private DateTime endTime;
 
         /// <summary>
-        /// True if the timer is set
+        /// True if the timer is set.
         /// </summary>
         private bool running;
 
         /// <summary>
-        /// An action to call when done
+        /// An action to call when done.
         /// </summary>
         private Action<DateTime> notifyCompletionTime;
 
@@ -58,7 +58,7 @@ namespace Microsoft.Psi.Components
         /// Initializes a new instance of the <see cref="Timer"/> class.
         /// The timer fires off messages at the rate specified  by timerInterval.
         /// </summary>
-        /// <param name="pipeline">The pipeline this component will be part of</param>
+        /// <param name="pipeline">The pipeline this component will be part of.</param>
         /// <param name="timerInterval">The timer firing interval, in ms.</param>
         public Timer(Pipeline pipeline, uint timerInterval)
         {
@@ -83,7 +83,7 @@ namespace Microsoft.Psi.Components
         /// </summary>
         public void Dispose()
         {
-            this.Stop();
+            this.StopTimer();
         }
 
         /// <inheritdoc/>
@@ -110,24 +110,17 @@ namespace Microsoft.Psi.Components
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
-            if (this.running)
-            {
-                this.timer.Stop();
-                this.running = false;
-                this.notifyCompletionTime(this.pipeline.GetCurrentTime());
-                this.notifyCompletionTime = null;
-            }
-
-            GC.SuppressFinalize(this);
+            this.StopTimer();
+            notifyCompleted();
         }
 
         /// <summary>
-        /// Called by the timer. Override to publish actual messages
+        /// Called by the timer. Override to publish actual messages.
         /// </summary>
-        /// <param name="absoluteTime">The current (virtual) time</param>
-        /// <param name="relativeTime">The time elapsed since the generator was started</param>
+        /// <param name="absoluteTime">The current (virtual) time.</param>
+        /// <param name="relativeTime">The time elapsed since the generator was started.</param>
         protected abstract void Generate(DateTime absoluteTime, TimeSpan relativeTime);
 
         /// <summary>
@@ -143,7 +136,8 @@ namespace Microsoft.Psi.Components
             var now = this.pipeline.GetCurrentTime();
             if (now >= this.endTime)
             {
-                this.Stop();
+                this.StopTimer();
+                this.notifyCompletionTime(this.endTime);
             }
             else
             {
@@ -152,6 +146,17 @@ namespace Microsoft.Psi.Components
             }
 
             this.currentTime += this.timerInterval;
+        }
+
+        private void StopTimer()
+        {
+            if (this.running)
+            {
+                this.timer.Stop();
+                this.running = false;
+            }
+
+            GC.SuppressFinalize(this);
         }
     }
 }

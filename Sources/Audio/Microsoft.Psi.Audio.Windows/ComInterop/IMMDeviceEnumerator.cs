@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IMMDeviceEnumerator COM interface (defined in Mmdeviceapi.h)
+    /// IMMDeviceEnumerator COM interface (defined in Mmdeviceapi.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMMDeviceEnumeratorIIDString)]

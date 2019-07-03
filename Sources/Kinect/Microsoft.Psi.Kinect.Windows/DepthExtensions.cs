@@ -10,27 +10,27 @@ namespace Microsoft.Psi.Kinect
     using Microsoft.Psi.Imaging;
 
     /// <summary>
-    /// Define set of extensions for dealing with depth maps
+    /// Define set of extensions for dealing with depth maps.
     /// </summary>
     public static class DepthExtensions
     {
         /// <summary>
-        /// Simple producer for converting from depth map to colored version of depth map
+        /// Simple producer for converting from depth map to colored version of depth map.
         /// </summary>
-        /// <param name="depthImage">Depth image to convert</param>
+        /// <param name="depthImage">Depth image to convert.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>Returns colored representation of the depth map</returns>
+        /// <returns>Returns colored representation of the depth map.</returns>
         public static IProducer<Shared<Image>> ToColor(this IProducer<Shared<Image>> depthImage, DeliveryPolicy deliveryPolicy = null)
         {
             return depthImage.PipeTo(new DepthToColorConverter(depthImage.Out.Pipeline), deliveryPolicy);
         }
 
         /// <summary>
-        /// Creates a gzipped byte array of the depth image
+        /// Creates a gzipped byte array of the depth image.
         /// </summary>
-        /// <param name="depthImage">Depth image to compress</param>
+        /// <param name="depthImage">Depth image to compress.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>Byte array containing the compressed depth map</returns>
+        /// <returns>Byte array containing the compressed depth map.</returns>
         public static IProducer<byte[]> GZipCompressDepthImage(this IProducer<Shared<Image>> depthImage, DeliveryPolicy deliveryPolicy = null)
         {
             var memoryStream = new MemoryStream();
@@ -51,6 +51,7 @@ namespace Microsoft.Psi.Kinect
                     {
                         compressedStream.Write(buffer, 0, buffer.Length);
                     }
+
                     var output = new byte[memoryStream.Position];
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     memoryStream.Read(output, 0, output.Length);
@@ -59,11 +60,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Uncompressed a depth map that was previously compressed with GZip
+        /// Uncompressed a depth map that was previously compressed with GZip.
         /// </summary>
-        /// <param name="compressedDepthBytes">Byte array of compressed depth values</param>
+        /// <param name="compressedDepthBytes">Byte array of compressed depth values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>Uncompressed depth map as an image</returns>
+        /// <returns>Uncompressed depth map as an image.</returns>
         public static IProducer<Shared<Image>> GZipUncompressDepthImage(this IProducer<byte[]> compressedDepthBytes, DeliveryPolicy deliveryPolicy = null)
         {
             var buffer = new byte[424 * 512 * 2];
@@ -82,14 +83,14 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Performs a ray/mesh intersection with the depth map
+        /// Performs a ray/mesh intersection with the depth map.
         /// </summary>
-        /// <param name="kinectCalibration">Defines the calibration (extrinsics and intrinsics) for the Kinect</param>
-        /// <param name="line">Ray to intersect against depth map</param>
-        /// <param name="depthImage">Depth map to ray cast against</param>
-        /// <param name="skipFactor">Distance to march on each step along ray</param>
-        /// <param name="undistort">Should undistortion be applied to the point?</param>
-        /// <returns>Returns point of intersection</returns>
+        /// <param name="kinectCalibration">Defines the calibration (extrinsics and intrinsics) for the Kinect.</param>
+        /// <param name="line">Ray to intersect against depth map.</param>
+        /// <param name="depthImage">Depth map to ray cast against.</param>
+        /// <param name="skipFactor">Distance to march on each step along ray.</param>
+        /// <param name="undistort">Whether undistortion should be applied to the point.</param>
+        /// <returns>Returns point of intersection.</returns>
         internal static Point3D? IntersectLineWithDepthMesh(IKinectCalibration kinectCalibration, Line3D line, Image depthImage, double skipFactor, bool undistort = true)
         {
             // max distance to check for intersection with the scene

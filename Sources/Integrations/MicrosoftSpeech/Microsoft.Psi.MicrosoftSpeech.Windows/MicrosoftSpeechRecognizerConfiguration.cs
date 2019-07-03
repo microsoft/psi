@@ -39,7 +39,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// each language in which you want to recognize speech. A Runtime Language includes the language model,
         /// acoustic model, and other data necessary to provision a speech engine to perform speech recognition
         /// in a particular language. For a list of supported Runtime Languages and to download them, see
-        /// http://go.microsoft.com/fwlink/?LinkID=223569
+        /// http://go.microsoft.com/fwlink/?LinkID=223569.
         /// </remarks>
         public string Language { get; set; }
 

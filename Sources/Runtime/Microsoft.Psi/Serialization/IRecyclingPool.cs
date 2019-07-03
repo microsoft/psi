@@ -6,7 +6,7 @@ namespace Microsoft.Psi
     /// <summary>
     /// Maintains a cache of unused instances that can be use as cloning or deserialization targets.
     /// </summary>
-    /// <typeparam name="T">The type of instances that can be cached by this cloner</typeparam>
+    /// <typeparam name="T">The type of instances that can be cached by this cloner.</typeparam>
     public interface IRecyclingPool<T>
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Returns the next available cached object.
         /// </summary>
-        /// <returns>An unused cached object that can be reused as a target for cloning or deserialization</returns>
+        /// <returns>An unused cached object that can be reused as a target for cloning or deserialization.</returns>
         T Get();
 
         /// <summary>

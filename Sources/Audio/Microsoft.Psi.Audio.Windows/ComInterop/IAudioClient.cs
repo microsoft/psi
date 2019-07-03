@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IAudioClient COM interface (defined in Audioclient.h)
+    /// IAudioClient COM interface (defined in Audioclient.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IAudioClientIIDString)]
@@ -21,10 +21,10 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <param name="streamFlags">Flags to control creation of the stream.</param>
         /// <param name="hnsBufferDuration">The buffer capacity as a time value.</param>
         /// <param name="hnsPeriodicity">The device period.</param>
-        /// <param name="pFormat">Pointer to a format descriptor.</param>
+        /// <param name="format">Pointer to a format descriptor.</param>
         /// <param name="audioSessionGuid">A session GUID.</param>
         /// <returns>An HRESULT return code.</returns>
-        int Initialize(AudioClientShareMode shareMode, AudioClientStreamFlags streamFlags, long hnsBufferDuration, long hnsPeriodicity, [In] IntPtr pFormat, [In] ref Guid audioSessionGuid);
+        int Initialize(AudioClientShareMode shareMode, AudioClientStreamFlags streamFlags, long hnsBufferDuration, long hnsPeriodicity, [In] IntPtr format, [In] ref Guid audioSessionGuid);
 
         /// <summary>
         /// Retrieves the size (maximum capacity) of the audio buffer associated with the endpoint.
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// Indicates whether the audio endpoint device supports a particular stream format.
         /// </summary>
         /// <param name="shareMode">The sharing mode for the stream format.</param>
-        /// <param name="pFormat">Pointer to the specified stream format.</param>
+        /// <param name="format">Pointer to the specified stream format.</param>
         /// <param name="closestMatchFormat">
         /// A pointer variable into which the method writes the address of a WAVEFORMATEX or WAVEFORMATEXTENSIBLE
         /// structure. This structure specifies the supported format that is closest to the format that the client
@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// </param>
         /// <returns>An HRESULT return code.</returns>
         [PreserveSig]
-        int IsFormatSupported(AudioClientShareMode shareMode, [In] IntPtr pFormat, out IntPtr closestMatchFormat);
+        int IsFormatSupported(AudioClientShareMode shareMode, [In] IntPtr format, out IntPtr closestMatchFormat);
 
         /// <summary>
         /// Retrieves the stream format that the audio engine uses for its internal processing of shared-mode streams.

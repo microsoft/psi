@@ -23,7 +23,7 @@ namespace Test.Psi.Data
             var serializerSettings = new JsonSerializerSettings()
             {
                 Context = new StreamingContext(StreamingContextStates.File, rootFile),
-                Converters = new[] { new RelativePathConverter() }
+                Converters = new[] { new RelativePathConverter() },
             };
 
             var sb = new StringBuilder();
@@ -84,7 +84,7 @@ namespace Test.Psi.Data
             var serializerSettings = new JsonSerializerSettings()
             {
                 Context = new StreamingContext(StreamingContextStates.File, rootFile),
-                Converters = new[] { new RelativePathConverter() }
+                Converters = new[] { new RelativePathConverter() },
             };
 
             var serializer = JsonSerializer.Create(serializerSettings);

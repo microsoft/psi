@@ -6,12 +6,12 @@ namespace Microsoft.Psi.Media
     using Microsoft.Psi.Media_Interop;
 
     /// <summary>
-    /// Encapsulates configuration for Mpeg4Writer component
+    /// Encapsulates configuration for Mpeg4Writer component.
     /// </summary>
     public class Mpeg4WriterConfiguration
     {
         /// <summary>
-        /// Default configuration
+        /// Default configuration.
         /// </summary>
         public static readonly Mpeg4WriterConfiguration Default = new Mpeg4WriterConfiguration()
         {
@@ -24,11 +24,11 @@ namespace Microsoft.Psi.Media
             ContainsAudio = true,
             AudioBitsPerSample = 16,
             AudioSamplesPerSecond = 48000,
-            AudioChannels = 2
+            AudioChannels = 2,
         };
 
         /// <summary>
-        /// Gets or sets a value indicating output image width of the .mp4 file
+        /// Gets or sets a value indicating output image width of the .mp4 file.
         /// </summary>
         public uint ImageWidth
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value indicating output image height of the .mp4 file
+        /// Gets or sets a value indicating output image height of the .mp4 file.
         /// </summary>
         public uint ImageHeight
         {
@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines the image format expected for input images
+        /// Gets or sets a value that defines the image format expected for input images.
         /// </summary>
         public Imaging.PixelFormat PixelFormat
         {
@@ -76,7 +76,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines the output frame rate's numerator
+        /// Gets or sets a value that defines the output frame rate's numerator.
         /// </summary>
         public uint FrameRateNumerator
         {
@@ -92,7 +92,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines the output frame rate's denominator
+        /// Gets or sets a value that defines the output frame rate's denominator.
         /// </summary>
         public uint FrameRateDenominator
         {
@@ -108,7 +108,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines the output bitrate
+        /// Gets or sets a value that defines the output bitrate.
         /// </summary>
         public uint TargetBitrate
         {
@@ -124,7 +124,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the .mp4 files contains an audio stream
+        /// Gets or sets a value indicating whether the .mp4 files contains an audio stream.
         /// </summary>
         public bool ContainsAudio
         {
@@ -140,7 +140,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines the number of bits per audio sample (typically 16)
+        /// Gets or sets a value that defines the number of bits per audio sample (typically 16).
         /// </summary>
         public uint AudioBitsPerSample
         {
@@ -156,7 +156,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines the number of audio samples per second
+        /// Gets or sets a value that defines the number of audio samples per second.
         /// </summary>
         public uint AudioSamplesPerSecond
         {
@@ -172,7 +172,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets a value that defines number of audio channels in the output file (should be set to 1 or 2)
+        /// Gets or sets a value that defines number of audio channels in the output file (should be set to 1 or 2).
         /// </summary>
         public uint AudioChannels
         {
@@ -188,7 +188,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets or sets the native MP4Writer's configuration object
+        /// Gets or sets the native MP4Writer's configuration object.
         /// </summary>
         internal MP4WriterConfiguration Config { get; set; } = new MP4WriterConfiguration();
     }

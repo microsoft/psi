@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Remoting
 {
     using System;
-    using Psi.Common;
+    using Microsoft.Psi.Common;
 
     /// <summary>
     /// Interface representing network transport.

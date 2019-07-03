@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Serialization
     /// <summary>
     /// Generates efficient code to serialize and deserialize an IEnumerable.
     /// </summary>
-    /// <typeparam name="T">The type of objects this serializer knows how to handle</typeparam>
+    /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal sealed class EnumerableSerializer<T> : ISerializer<IEnumerable<T>>
     {
         private const int Version = 2;

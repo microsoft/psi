@@ -9,28 +9,28 @@ namespace Microsoft.Psi.Imaging
     using System.Drawing;
 
     /// <summary>
-    /// Sampling mode used by various imaging operators
+    /// Sampling mode used by various imaging operators.
     /// </summary>
     public enum SamplingMode
     {
         /// <summary>
-        /// Sampling mode using nearest neighbor interpolation
+        /// Sampling mode using nearest neighbor interpolation.
         /// </summary>
         Point,
 
         /// <summary>
-        /// Sampling mode using bilinear interpolation
+        /// Sampling mode using bilinear interpolation.
         /// </summary>
         Bilinear,
 
         /// <summary>
-        /// Sampling mode using bicubic interpolation
+        /// Sampling mode using bicubic interpolation.
         /// </summary>
-        Bicubic
+        Bicubic,
     }
 
     /// <summary>
-    /// Thresholding modes
+    /// Thresholding modes.
     /// </summary>
     public enum Threshold
     {
@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Axis along which to flip an image
+    /// Axis along which to flip an image.
     /// </summary>
     public enum FlipMode
     {
@@ -88,20 +88,20 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Flips image along the vertical axis
         /// </summary>
-        AlongVerticalAxis
+        AlongVerticalAxis,
     }
 
     /// <summary>
-    /// Various imaging operators
+    /// Various imaging operators.
     /// </summary>
     public static partial class Operators
     {
         /// <summary>
-        /// Flips an image along a specified axis
+        /// Flips an image along a specified axis.
         /// </summary>
-        /// <param name="image">Image to flip</param>
-        /// <param name="mode">Axis along which to flip</param>
-        /// <returns>A new flipped image</returns>
+        /// <param name="image">Image to flip.</param>
+        /// <param name="mode">Axis along which to flip.</param>
+        /// <returns>A new flipped image.</returns>
         public static Shared<Image> Flip(this Image image, FlipMode mode)
         {
             if (image.PixelFormat == PixelFormat.Gray_16bpp)
@@ -178,16 +178,16 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Resizes an image by the specified scale factors using the specified sampling mode
+        /// Resizes an image by the specified scale factors using the specified sampling mode.
         /// </summary>
-        /// <param name="image">Image to resize</param>
-        /// <param name="xScale">Scale factor to apply in X direction</param>
-        /// <param name="yScale">Scale factor to apply in Y direction</param>
-        /// <param name="mode">Sampling mode for sampling of pixels</param>
-        /// <returns>Returns a new image scaled by the specified scale factors</returns>
-        public static Shared<Image> Scale(this Image image, float xScale, float yScale, SamplingMode mode)
+        /// <param name="image">Image to resize.</param>
+        /// <param name="scaleX">Scale factor to apply in X direction.</param>
+        /// <param name="scaleY">Scale factor to apply in Y direction.</param>
+        /// <param name="mode">Sampling mode for sampling of pixels.</param>
+        /// <returns>Returns a new image scaled by the specified scale factors.</returns>
+        public static Shared<Image> Scale(this Image image, float scaleX, float scaleY, SamplingMode mode)
         {
-            if (xScale == 0.0 || yScale == 0.0)
+            if (scaleX == 0.0 || scaleY == 0.0)
             {
                 throw new System.Exception("Unexpected scale factors");
             }
@@ -199,8 +199,8 @@ namespace Microsoft.Psi.Imaging
                     "Convert to a supported format such as color or 8bpp grayscale first.");
             }
 
-            int dstWidth = (int)(image.Width * xScale);
-            int dstHeight = (int)(image.Height * yScale);
+            int dstWidth = (int)(image.Width * scaleX);
+            int dstHeight = (int)(image.Height * scaleY);
             using (var bitmap = new Bitmap(dstWidth, dstHeight))
             {
                 using (var graphics = Graphics.FromImage(bitmap))
@@ -230,7 +230,7 @@ namespace Microsoft.Psi.Imaging
                             break;
                     }
 
-                    graphics.ScaleTransform(xScale, yScale);
+                    graphics.ScaleTransform(scaleX, scaleY);
 
                     using (var managedimg = image.ToManagedImage())
                     {
@@ -243,12 +243,12 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Rotates an image
+        /// Rotates an image.
         /// </summary>
-        /// <param name="image">Image to rotate</param>
-        /// <param name="angleInDegrees">Number of degrees to rotate in counter clockwise direction</param>
-        /// <param name="mode">Pixel resampling method</param>
-        /// <returns>Rotated image</returns>
+        /// <param name="image">Image to rotate.</param>
+        /// <param name="angleInDegrees">Number of degrees to rotate in counter clockwise direction.</param>
+        /// <param name="mode">Pixel resampling method.</param>
+        /// <returns>Rotated image.</returns>
         public static Shared<Image> Rotate(this Image image, float angleInDegrees, SamplingMode mode)
         {
             float ca = (float)System.Math.Cos(angleInDegrees * System.Math.PI / 180.0f);
@@ -375,17 +375,17 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Set of operators used for drawing on an image
+    /// Set of operators used for drawing on an image.
     /// </summary>
     public static partial class Operators
     {
         /// <summary>
-        /// Draws a rectangle at the specified pixel coordinates on the image
+        /// Draws a rectangle at the specified pixel coordinates on the image.
         /// </summary>
-        /// <param name="image">Image to draw on</param>
-        /// <param name="rect">Pixel coordinates for rectangle</param>
-        /// <param name="color">Color to use for drawing</param>
-        /// <param name="width">Width of line</param>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="rect">Pixel coordinates for rectangle.</param>
+        /// <param name="color">Color to use for drawing.</param>
+        /// <param name="width">Width of line.</param>
         public static void DrawRectangle(this Image image, Rectangle rect, Color color, int width)
         {
             using (Bitmap bm = image.ToManagedImage(false))
@@ -402,13 +402,13 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Draws a line from point p0 to p1 in pixel coordinates on the image
+        /// Draws a line from point p0 to p1 in pixel coordinates on the image.
         /// </summary>
-        /// <param name="image">Image to draw on</param>
-        /// <param name="p0">Pixel coordinates for start of line</param>
-        /// <param name="p1">Pixel coordinates for end of line</param>
-        /// <param name="color">Color to use for drawing</param>
-        /// <param name="width">Width of line</param>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="p0">Pixel coordinates for start of line.</param>
+        /// <param name="p1">Pixel coordinates for end of line.</param>
+        /// <param name="color">Color to use for drawing.</param>
+        /// <param name="width">Width of line.</param>
         public static void DrawLine(this Image image, Point p0, Point p1, Color color, int width)
         {
             using (Bitmap bm = image.ToManagedImage(false))
@@ -425,13 +425,13 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Draws a circle centered at the specified pixel (p0) with the specified radius
+        /// Draws a circle centered at the specified pixel (p0) with the specified radius.
         /// </summary>
-        /// <param name="image">Image to draw on</param>
-        /// <param name="p0">Pixel coordinates for center of circle</param>
-        /// <param name="radius">Radius of the circle</param>
-        /// <param name="color">Color to use for drawing</param>
-        /// <param name="width">Width of line</param>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="p0">Pixel coordinates for center of circle.</param>
+        /// <param name="radius">Radius of the circle.</param>
+        /// <param name="color">Color to use for drawing.</param>
+        /// <param name="width">Width of line.</param>
         public static void DrawCircle(this Image image, Point p0, int radius, Color color, int width)
         {
             using (Bitmap bm = image.ToManagedImage(false))
@@ -448,11 +448,11 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Renders text on the image at the specified pixel (p0)
+        /// Renders text on the image at the specified pixel (p0).
         /// </summary>
-        /// <param name="image">Image to draw on</param>
-        /// <param name="str">Text to render</param>
-        /// <param name="p0">Pixel coordinates for center of circle</param>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="str">Text to render.</param>
+        /// <param name="p0">Pixel coordinates for center of circle.</param>
         public static void DrawText(this Image image, string str, Point p0)
         {
             using (Bitmap bm = image.ToManagedImage(false))
@@ -476,7 +476,7 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Set of transforms for copying image data
+    /// Set of transforms for copying image data.
     /// </summary>
     public static partial class Operators
     {
@@ -485,9 +485,9 @@ namespace Microsoft.Psi.Imaging
         /// Only pixels in the source image whose corresponding mask image pixels are > 0
         /// are copied to the destination image.
         /// </summary>
-        /// <param name="srcImage">Source image</param>
-        /// <param name="dstImage">Destination image</param>
-        /// <param name="maskImage">Masking image</param>
+        /// <param name="srcImage">Source image.</param>
+        /// <param name="dstImage">Destination image.</param>
+        /// <param name="maskImage">Masking image.</param>
         public static void CopyTo(this Image srcImage, Image dstImage, Image maskImage)
         {
             if (srcImage.Width != dstImage.Width || srcImage.Height != dstImage.Height)
@@ -506,9 +506,9 @@ namespace Microsoft.Psi.Imaging
         /// are copied to the destination image. Only pixels from the srcRect are copied
         /// to the destination rect.
         /// </summary>
-        /// <param name="srcImage">Source image</param>
-        /// <param name="dstImage">Destination image</param>
-        /// <param name="rect">Rectangle to copy</param>
+        /// <param name="srcImage">Source image.</param>
+        /// <param name="dstImage">Destination image.</param>
+        /// <param name="rect">Rectangle to copy.</param>
         public static void CopyTo(this Image srcImage, Image dstImage, Rectangle rect)
         {
             if (srcImage.Width != dstImage.Width || srcImage.Height != dstImage.Height)
@@ -525,10 +525,10 @@ namespace Microsoft.Psi.Imaging
         /// are copied to the destination image. Only pixels from the srcRect are copied
         /// to the destination rect.
         /// </summary>
-        /// <param name="srcImage">Source image</param>
-        /// <param name="srcRect">Source rectangle to copy from</param>
-        /// <param name="dstImage">Destination image</param>
-        /// <param name="dstRect">Destunatuin rectangle to copy to</param>
+        /// <param name="srcImage">Source image.</param>
+        /// <param name="srcRect">Source rectangle to copy from.</param>
+        /// <param name="dstImage">Destination image.</param>
+        /// <param name="dstRect">Destunatuin rectangle to copy to.</param>
         public static void CopyTo(this Image srcImage, Rectangle srcRect, Image dstImage, Rectangle dstRect)
         {
             if (srcImage.Width != dstImage.Width || srcImage.Height != dstImage.Height)
@@ -545,11 +545,11 @@ namespace Microsoft.Psi.Imaging
         /// are copied to the destination image. Only pixels from the srcRect are copied
         /// to the destination rect.
         /// </summary>
-        /// <param name="srcImage">Source image</param>
-        /// <param name="srcRect">Source rectangle to copy from</param>
-        /// <param name="dstImage">Destination image</param>
-        /// <param name="dstRect">Destination rectangle to copy to</param>
-        /// <param name="maskImage">Masking image</param>
+        /// <param name="srcImage">Source image.</param>
+        /// <param name="srcRect">Source rectangle to copy from.</param>
+        /// <param name="dstImage">Destination image.</param>
+        /// <param name="dstRect">Destination rectangle to copy to.</param>
+        /// <param name="maskImage">Masking image.</param>
         public static void CopyTo(this Image srcImage, Rectangle srcRect, Image dstImage, Rectangle dstRect, Image maskImage)
         {
             if (srcRect.Width != dstRect.Width || srcRect.Height != dstRect.Height)
@@ -697,15 +697,15 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Basic color transforms on images
+    /// Basic color transforms on images.
     /// </summary>
     public static partial class Operators
     {
         /// <summary>
         /// Inverts an image.
         /// </summary>
-        /// <param name="image">Image to invert</param>
-        /// <returns>Returns the inverted image</returns>
+        /// <param name="image">Image to invert.</param>
+        /// <returns>Returns the inverted image.</returns>
         public static Shared<Image> Invert(this Image image)
         {
             Shared<Image> dstImage = ImagePool.GetOrCreate(image.Width, image.Height, image.PixelFormat);
@@ -766,8 +766,8 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Clears an image.
         /// </summary>
-        /// <param name="image">Image to clear</param>
-        /// <param name="clr">Color to clear to</param>
+        /// <param name="image">Image to clear.</param>
+        /// <param name="clr">Color to clear to.</param>
         public static void Clear(this Image image, Color clr)
         {
             unsafe
@@ -820,9 +820,9 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Extracts a single channel from the image and returns it as a gray scale image.
         /// </summary>
-        /// <param name="image">Image to extract from</param>
-        /// <param name="channel">Index of channel to extract from</param>
-        /// <returns>Returns a new grayscale image containing the color from the specified channel in the original source image</returns>
+        /// <param name="image">Image to extract from.</param>
+        /// <param name="channel">Index of channel to extract from.</param>
+        /// <returns>Returns a new grayscale image containing the color from the specified channel in the original source image.</returns>
         public static Shared<Image> ExtractChannel(this Image image, int channel /* 0=red, 1=green, 2=blue, 3=alpha */)
         {
             if (image.PixelFormat != PixelFormat.BGRA_32bpp &&
@@ -867,18 +867,18 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Imaging math operators
+    /// Imaging math operators.
     /// </summary>
     public static partial class Operators
     {
         /// <summary>
-        /// Performs per channel thresholding on the image
+        /// Performs per channel thresholding on the image.
         /// </summary>
-        /// <param name="image">Image to be thresholded</param>
-        /// <param name="threshold">Threshold value</param>
-        /// <param name="maxvalue">Maximum value</param>
-        /// <param name="type">Type of thresholding to perform</param>
-        /// <returns>The thresholded image</returns>
+        /// <param name="image">Image to be thresholded.</param>
+        /// <param name="threshold">Threshold value.</param>
+        /// <param name="maxvalue">Maximum value.</param>
+        /// <param name="type">Type of thresholding to perform.</param>
+        /// <returns>The thresholded image.</returns>
         public static Shared<Image> Threshold(this Image image, int threshold, int maxvalue, Threshold type)
         {
             Shared<Image> dstImage = ImagePool.GetOrCreate(image.Width, image.Height, image.PixelFormat);
@@ -1028,9 +1028,9 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Computes the absolute difference between two images.
         /// </summary>
-        /// <param name="imageA">First image</param>
-        /// <param name="imageB">Second image</param>
-        /// <returns>Difference image</returns>
+        /// <param name="imageA">First image.</param>
+        /// <param name="imageB">Second image.</param>
+        /// <returns>Difference image.</returns>
         public static Shared<Image> AbsDiff(this Image imageA, Image imageB)
         {
             if (imageA.Width != imageB.Width || imageA.Height != imageB.Height || imageA.PixelFormat != imageB.PixelFormat)

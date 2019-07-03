@@ -230,7 +230,7 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Gets a value indicating whether the stream is bound to a data source
+        /// Gets a value indicating whether the stream is bound to a data source.
         /// </summary>
         public bool IsBound => !string.IsNullOrWhiteSpace(this.StoreName) && !string.IsNullOrWhiteSpace(this.StorePath);
 
@@ -241,7 +241,7 @@ namespace Microsoft.Psi.Visualization.Data
         private string StreamAdapterTypeName { get; set; }
 
         /// <summary>
-        /// Gets or sets the SimpleReader type name
+        /// Gets or sets the SimpleReader type name.
         /// </summary>
         [DataMember]
         private string SimpleReaderTypeName { get; set; }
@@ -253,10 +253,10 @@ namespace Microsoft.Psi.Visualization.Data
         private string SummarizerTypeName { get; set; }
 
         /// <summary>
-        /// Updates a stream binding in response to a session being opened or closed
+        /// Updates a stream binding in response to a session being opened or closed.
         /// </summary>
-        /// <param name="session">The session to attempt to bind to</param>
-        /// <returns>The result of the binding update operation</returns>
+        /// <param name="session">The session to attempt to bind to.</param>
+        /// <returns>The result of the binding update operation.</returns>
         public StreamBindingResult Update(Session session)
         {
             // If there's no session, then we have nothing to bind to

@@ -68,7 +68,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a WaveFormat object representing 1-channel 16-bit PCM audio sampled at 16000 Hz.
         /// </summary>
-        /// <returns>The WaveFormat object</returns>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat Create16kHz1Channel16BitPcm()
         {
             return Create16BitPcm(16000, 1);
@@ -77,9 +77,9 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a WaveFormat object representing 16-bit PCM audio.
         /// </summary>
-        /// <param name="samplingRate">The sampling frequency</param>
-        /// <param name="channels">The number of audio channels</param>
-        /// <returns>The WaveFormat object</returns>
+        /// <param name="samplingRate">The sampling frequency.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat Create16BitPcm(int samplingRate, int channels)
         {
             return CreatePcm(samplingRate, 16, channels);
@@ -88,10 +88,10 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a WaveFormat object representing PCM audio.
         /// </summary>
-        /// <param name="samplingRate">The sampling frequency</param>
-        /// <param name="bitsPerSample">The number of bits per channel sample</param>
-        /// <param name="channels">The number of audio channels</param>
-        /// <returns>The WaveFormat object</returns>
+        /// <param name="samplingRate">The sampling frequency.</param>
+        /// <param name="bitsPerSample">The number of bits per channel sample.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat CreatePcm(int samplingRate, int bitsPerSample, int channels)
         {
             ushort blockAlign = (ushort)(channels * (bitsPerSample / 8));
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a WaveFormat object representing 1-channel 32-bit IEEE float audio sampled at 16000 Hz.
         /// </summary>
-        /// <returns>The WaveFormat object</returns>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat Create16kHz1ChannelIeeeFloat()
         {
             return CreateIeeeFloat(16000, 1);
@@ -110,9 +110,9 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a WaveFormat object representing 32-bit IEEE float audio.
         /// </summary>
-        /// <param name="samplingRate">The sampling frequency</param>
-        /// <param name="channels">The number of audio channels</param>
-        /// <returns>The WaveFormat object</returns>
+        /// <param name="samplingRate">The sampling frequency.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat CreateIeeeFloat(int samplingRate, int channels)
         {
             ushort blockAlign = (ushort)(channels * 4); // 32-bit float = 4 bytes
@@ -122,13 +122,13 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a new instance of the <see cref="WaveFormat"/> class.
         /// </summary>
-        /// <param name="formatTag">The format tag</param>
-        /// <param name="samplingRate">The sampling frequency</param>
-        /// <param name="bitsPerSample">The number of bits per channel sample</param>
-        /// <param name="channels">The number of audio channels</param>
-        /// <param name="blockAlign">The block alignment</param>
-        /// <param name="avgBytesPerSecond">The average number of bytes per second</param>
-        /// <returns>The WaveFormat object</returns>
+        /// <param name="formatTag">The format tag.</param>
+        /// <param name="samplingRate">The sampling frequency.</param>
+        /// <param name="bitsPerSample">The number of bits per channel sample.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="blockAlign">The block alignment.</param>
+        /// <param name="avgBytesPerSecond">The average number of bytes per second.</param>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat Create(WaveFormatTag formatTag, int samplingRate, int bitsPerSample, int channels, int blockAlign, int avgBytesPerSecond)
         {
             return new WaveFormat()
@@ -138,15 +138,15 @@ namespace Microsoft.Psi.Audio
                 BitsPerSample = (ushort)bitsPerSample,
                 Channels = (ushort)channels,
                 BlockAlign = (ushort)blockAlign,
-                AvgBytesPerSec = (uint)avgBytesPerSecond
+                AvgBytesPerSec = (uint)avgBytesPerSecond,
             };
         }
 
         /// <summary>
         /// Creates a copy of an existing <see cref="WaveFormat"/>.
         /// </summary>
-        /// <param name="other">The <see cref="WaveFormat"/> to copy</param>
-        /// <returns>The WaveFormat object</returns>
+        /// <param name="other">The <see cref="WaveFormat"/> to copy.</param>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormat Create(WaveFormat other)
         {
             if (other == null)
@@ -224,7 +224,7 @@ namespace Microsoft.Psi.Audio
                         ExtraSize = waveFormat.ExtraSize,
 
                         // Read in the extended format extra bytes
-                        ExtraInfo = reader.ReadBytes(waveFormat.ExtraSize)
+                        ExtraInfo = reader.ReadBytes(waveFormat.ExtraSize),
                     };
                 }
             }

@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
@@ -37,7 +36,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private Message<TData>? currentValue;
 
         /// <summary>
-        /// Gets or sets the epsilon around the cursor for which we show the instant visualization
+        /// Gets or sets the epsilon around the cursor for which we show the instant visualization.
         /// </summary>
         private RelativeTimeInterval cursorEpsilon;
 
@@ -118,7 +117,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                         {
                             // If the new value is null, we need to ensure that the current value is properly
                             // disposed so that the shared object is released and potentially recycled.
-                            ((IDisposable)this.currentValue.Value.Data).Dispose();
+                            ((IDisposable)this.currentValue.Value.Data)?.Dispose();
                             this.currentValue = null;
                         }
                     }
@@ -183,7 +182,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets a value indicating whether the visualization object is currenty bound to a datasource
+        /// Gets a value indicating whether the visualization object is currenty bound to a datasource.
         /// </summary>
         [Browsable(true)]
         [IgnoreDataMember]
@@ -200,12 +199,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public override bool IsSnappedToStream => this.Container.SnapToVisualizationObject == this;
 
         /// <summary>
-        /// Gets the text to display in the snap to stream menu item
+        /// Gets the text to display in the snap to stream menu item.
         /// </summary>
         public string SnapToStreamCommandText => this.IsSnappedToStream ? "Unsnap From Stream" : "Snap To Stream";
 
         /// <summary>
-        /// Gets how to interpolate values at times that are between messages
+        /// Gets how to interpolate values at times that are between messages.
         /// </summary>
         protected virtual InterpolationStyle InterpolationStyle
         {
@@ -265,10 +264,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Returns the timestamp of the Message that's closest to currentTime.  Used by the "Snap To Stream" functionality.
         /// </summary>
-        /// <param name="currentTime">The time underneath the mouse cursor</param>
+        /// <param name="currentTime">The time underneath the mouse cursor.</param>
         /// <param name="count">Number of entries to search within.</param>
         /// <param name="timeAtIndex">Function that returns an index given a time.</param>
-        /// <returns>The timestamp of the message that's temporally closest to currentTime</returns>
+        /// <returns>The timestamp of the message that's temporally closest to currentTime.</returns>
         public DateTime? GetTimeOfNearestMessage(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
         {
             int index = this.GetIndexForTime(currentTime, count, timeAtIndex, InterpolationStyle.Direct);
@@ -293,21 +292,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             return this.GetIndexForTime(currentTime, count, timeAtIndex, this.InterpolationStyle);
         }
 
-        /// <inheritdoc />
-        protected override void InitNew()
+        /// <inheritdoc/>
+        protected override void OnConfigurationChanged()
         {
-            base.InitNew();
             this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs), TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs));
+            base.OnConfigurationChanged();
         }
 
         /// <inheritdoc />
         protected override void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.OnConfigurationPropertyChanged(sender, e);
             if (e.PropertyName == nameof(StreamVisualizationObjectConfiguration.CursorEpsilonMs))
             {
                 this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs), TimeSpan.FromMilliseconds(this.Configuration.CursorEpsilonMs));
             }
+
+            base.OnConfigurationPropertyChanged(sender, e);
         }
 
         /// <inheritdoc />
@@ -339,10 +339,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        protected override void OnDisconnect()
+        protected override void OnRemoveFromPanel()
         {
             this.OnStreamUnbound();
-            base.OnDisconnect();
+            base.OnRemoveFromPanel();
         }
 
         /// <summary>

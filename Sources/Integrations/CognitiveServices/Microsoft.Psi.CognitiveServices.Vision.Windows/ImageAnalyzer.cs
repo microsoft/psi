@@ -3,108 +3,57 @@
 
 namespace Microsoft.Psi.CognitiveServices.Vision
 {
-    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
-    using Microsoft.ProjectOxford.Vision;
-    using Microsoft.ProjectOxford.Vision.Contract;
+    using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+    using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
     using Microsoft.Psi;
-    using Microsoft.Psi.Components;
     using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// Component that performs image analysis via <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>.
     /// </summary>
     /// <remarks>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
-    /// subscription key is required to use this component. For more information, see the full direct API for
+    /// subscription key is required to use this component. For more information, see the full direct API for.
     /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></remarks>
     public sealed class ImageAnalyzer
     {
-        /// <summary>
-        /// The client that communicates with the cloud image analyzer service.
-        /// </summary>
-        private VisionServiceClient visionServiceClient;
-
-        /// <summary>
-        /// The configuration to use for this component
-        /// </summary>
-        private ImageAnalyzerConfiguration configuration;
+        private readonly ComputerVisionClient computerVisionClient;
+        private readonly ImageAnalyzerConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageAnalyzer"/> class.
         /// </summary>
-        /// <param name="pipeline">The Psi pipeline.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The image analyzer configuration.</param>
         public ImageAnalyzer(Pipeline pipeline, ImageAnalyzerConfiguration configuration = null)
         {
             this.configuration = configuration ?? new ImageAnalyzerConfiguration();
-            this.Out = pipeline.CreateEmitter<AnalysisResult>(this, nameof(this.Out));
+            this.Out = pipeline.CreateEmitter<ImageAnalysis>(this, nameof(this.Out));
             this.In = pipeline.CreateAsyncReceiver<Shared<Image>>(this, this.ReceiveAsync, nameof(this.In));
 
-            this.Description = pipeline.CreateEmitter<Description>(this, nameof(this.Description));
-            this.Tags = pipeline.CreateEmitter<Tag[]>(this, nameof(this.Tags));
-            this.Adult = pipeline.CreateEmitter<Adult>(this, nameof(this.Adult));
-            this.Categories = pipeline.CreateEmitter<Category[]>(this, nameof(this.Categories));
-            this.Color = pipeline.CreateEmitter<Color>(this, nameof(this.Color));
-            this.Faces = pipeline.CreateEmitter<Face[]>(this, nameof(this.Faces));
-            this.ImageType = pipeline.CreateEmitter<ImageType>(this, nameof(this.ImageType));
-
-            this.visionServiceClient = this.CreateVisionServiceClient();
+            this.computerVisionClient = this.CreateClient();
         }
 
         /// <summary>
-        /// Gets the input stream of images
+        /// Gets the input stream of images.
         /// </summary>
         public Receiver<Shared<Image>> In { get; }
 
         /// <summary>
-        /// Gets the output stream of analysis results
+        /// Gets the output stream of analysis results.
         /// </summary>
-        public Emitter<AnalysisResult> Out { get; }
-
-        /// <summary>
-        /// Gets the output stream with the image description/caption
-        /// </summary>
-        public Emitter<Description> Description { get; }
-
-        /// <summary>
-        /// Gets the output stream for the list of tags
-        /// </summary>
-        public Emitter<Tag[]> Tags { get; }
-
-        /// <summary>
-        /// Gets the output stream for the adult content analysis
-        /// </summary>
-        public Emitter<Adult> Adult { get; }
-
-        /// <summary>
-        /// Gets the output stream for the image categories
-        /// </summary>
-        public Emitter<Category[]> Categories { get; }
-
-        /// <summary>
-        /// Gets the output stream of the image's primary colors
-        /// </summary>
-        public Emitter<Color> Color { get; }
-
-        /// <summary>
-        /// Gets the output stream for the detected faces (with gender+age)
-        /// </summary>
-        public Emitter<Face[]> Faces { get; }
-
-        /// <summary>
-        /// Gets the output stream for the image type
-        /// </summary>
-        public Emitter<ImageType> ImageType { get; }
+        public Emitter<ImageAnalysis> Out { get; }
 
         #region Static methods for parsing results to strings
 
         /// <summary>
-        /// Parse Analysis Result into a string
+        /// Parse Analysis Result into a string.
         /// </summary>
-        /// <param name="result">Analysis Result</param>
-        /// <returns>Returns a string corresponding to the analysis result</returns>
-        internal static string AnalysisResultToString(AnalysisResult result)
+        /// <param name="result">Analysis Result.</param>
+        /// <returns>Returns a string corresponding to the analysis result.</returns>
+        internal static string AnalysisResultToString(ImageAnalysis result)
         {
             string resultString = string.Empty;
 
@@ -124,11 +73,11 @@ namespace Microsoft.Psi.CognitiveServices.Vision
             return resultString;
         }
 
-        private static string FacesToString(Face[] faces)
+        private static string FacesToString(IList<FaceDescription> faces)
         {
             string resultString = string.Empty;
 
-            if (faces != null && faces.Length > 0)
+            if (faces != null && faces.Count > 0)
             {
                 resultString = "Faces : \n";
                 foreach (var face in faces)
@@ -140,7 +89,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
             return resultString;
         }
 
-        private static string TagsToString(Tag[] tags)
+        private static string TagsToString(IList<ImageTag> tags)
         {
             string resultString = string.Empty;
 
@@ -156,11 +105,11 @@ namespace Microsoft.Psi.CognitiveServices.Vision
             return resultString;
         }
 
-        private static string CategoriesToString(Category[] categories)
+        private static string CategoriesToString(IList<Category> categories)
         {
             string resultString = string.Empty;
 
-            if (categories != null && categories.Length > 0)
+            if (categories != null && categories.Count > 0)
             {
                 resultString = $"Categories : \n";
                 foreach (var category in categories)
@@ -220,7 +169,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
             return resultString;
         }
 
-        private static string AdultToString(Adult adult)
+        private static string AdultToString(AdultInfo adult)
         {
             string resultString = string.Empty;
 
@@ -233,7 +182,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
             return resultString;
         }
 
-        private static string DescriptionToString(Description description)
+        private static string DescriptionToString(ImageDescriptionDetails description)
         {
             string resultString = string.Empty;
 
@@ -257,7 +206,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
             return resultString;
         }
 
-        private static string ColorToString(Color color)
+        private static string ColorToString(ColorInfo color)
         {
             string resultString = string.Empty;
 
@@ -267,7 +216,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
                 resultString = $"{resultString}Dominant Color Background : {color.DominantColorBackground}\n";
                 resultString = $"{resultString}Dominant Color Foreground : {color.DominantColorForeground}\n";
 
-                if (color.DominantColors != null && color.DominantColors.Length > 0)
+                if (color.DominantColors != null && color.DominantColors.Count > 0)
                 {
                     string colors = "Dominant Colors : ";
                     foreach (var c in color.DominantColors)
@@ -286,50 +235,37 @@ namespace Microsoft.Psi.CognitiveServices.Vision
 
         private async Task ReceiveAsync(Shared<Image> data, Envelope e)
         {
-            if (data == null)
+            var analysisResult = default(ImageAnalysis);
+
+            if (data != null)
             {
-                return;
+                using (Stream imageFileStream = new MemoryStream())
+                {
+                    // convert image to a stream and send to service
+                    data.Resource.ToManagedImage(false).Save(imageFileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    imageFileStream.Seek(0, SeekOrigin.Begin);
+                    try
+                    {
+                        analysisResult = await this.computerVisionClient?.AnalyzeImageInStreamAsync(imageFileStream, this.configuration.VisualFeatures);
+                    }
+                    catch
+                    {
+                        // automatically swallow exceptions
+                    }
+                }
             }
 
-            using (Stream imageFileStream = new MemoryStream())
-            {
-                // convert image to a Stream and send to Cog Services
-                data.Resource.ToManagedImage(false).Save(imageFileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                imageFileStream.Seek(0, SeekOrigin.Begin);
-                AnalysisResult analysisResult = null;
-                try
-                {
-                    analysisResult = await this.visionServiceClient?.AnalyzeImageAsync(imageFileStream, this.configuration.VisualFeatures);
-                }
-                catch
-                {
-                    // swallow exceptions - we will post null
-                }
-
-                this.Out.Post(analysisResult, e.OriginatingTime);
-
-                if (analysisResult != null)
-                {
-                    this.Description.Post(analysisResult.Description, e.OriginatingTime);
-                    this.Adult.Post(analysisResult.Adult, e.OriginatingTime);
-                    this.ImageType.Post(analysisResult.ImageType, e.OriginatingTime);
-                    this.Tags.Post(analysisResult.Tags, e.OriginatingTime);
-                    this.Categories.Post(analysisResult.Categories, e.OriginatingTime);
-                    this.Color.Post(analysisResult.Color, e.OriginatingTime);
-                    this.Faces.Post(analysisResult.Faces, e.OriginatingTime);
-                }
-            }
+            this.Out.Post(analysisResult, e.OriginatingTime);
         }
 
-        /// <summary>
-        /// Creates a new vision service client.
-        /// </summary>
-        /// <returns>A new speech recognition client object.</returns>
-        private VisionServiceClient CreateVisionServiceClient()
+        private ComputerVisionClient CreateClient()
         {
-            // Leftover: Make the Endpoint configurable as well?
-            VisionServiceClient client = new VisionServiceClient(this.configuration.SubscriptionKey, "https://westus.api.cognitive.microsoft.com/vision/v1.0");
-            return client;
+            return new ComputerVisionClient(
+                new ApiKeyServiceClientCredentials(this.configuration.SubscriptionKey),
+                new System.Net.Http.DelegatingHandler[] { })
+            {
+                Endpoint = "https://westus.api.cognitive.microsoft.com/",
+            };
         }
     }
 }

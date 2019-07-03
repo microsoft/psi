@@ -5,9 +5,10 @@ namespace Microsoft.Psi
 {
     using System;
     using System.Collections.Concurrent;
+    using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Extension methods that simplify operator usage
+    /// Extension methods that simplify operator usage.
     /// </summary>
     public static partial class Operators
     {
@@ -38,28 +39,27 @@ namespace Microsoft.Psi
             /// <param name="deliveryPolicy">An optional delivery policy.</param>
             public StreamObservable(IProducer<T> stream, DeliveryPolicy deliveryPolicy = null)
             {
-                stream.Out.Pipeline.PipelineCompleted += (_, args) =>
-                {
-                    foreach (var obs in this.observers)
-                    {
-                        foreach (var err in args.Errors)
-                        {
-                            obs.Value.OnError(err);
-                        }
-
-                        obs.Value.OnCompleted();
-                    }
-                };
-
-                stream.Do(
-                    x =>
+                var processor = new Processor<T, T>(
+                    stream.Out.Pipeline,
+                    (d, e, s) =>
                     {
                         foreach (var obs in this.observers)
                         {
-                            obs.Value.OnNext(x.DeepClone());
+                            obs.Value.OnNext(d.DeepClone());
                         }
-                    },
-                    deliveryPolicy);
+
+                        s.Post(d, e.OriginatingTime);
+                    });
+
+                stream.Out.PipeTo(processor, deliveryPolicy);
+
+                processor.In.Unsubscribed += _ =>
+                {
+                    foreach (var obs in this.observers)
+                    {
+                        obs.Value.OnCompleted();
+                    }
+                };
             }
 
             /// <summary>

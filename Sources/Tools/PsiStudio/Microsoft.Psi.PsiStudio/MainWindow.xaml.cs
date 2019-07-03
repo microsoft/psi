@@ -12,11 +12,12 @@ namespace Microsoft.Psi.PsiStudio
     using System.Windows.Input;
     using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.ViewModels;
+    using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Win32;
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -53,6 +54,8 @@ namespace Microsoft.Psi.PsiStudio
             }
 
             this.DataContext = this.context;
+
+            PipelineDiagnosticsVisualizationModel.RegisterKnownSerializationTypes(); // necessary for .NET Core types
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

@@ -15,8 +15,8 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioPlayerConfiguration"/> class.
         /// </summary>
-        /// <param name="name">Device name (e.g. "plughw:0,0")</param>
-        /// <param name="format">Wave format</param>
+        /// <param name="name">Device name (e.g. "plughw:0,0").</param>
+        /// <param name="format">Wave format.</param>
         public AudioPlayerConfiguration(string name, WaveFormat format)
         {
             this.DeviceName = name;
@@ -26,8 +26,8 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioPlayerConfiguration"/> class.
         /// </summary>
-        /// <remarks>Defaults to 16kHz, 1 channel, 16-bit PCM</remarks>
-        /// <param name="name">Device name (e.g. "plughw:0,0")</param>
+        /// <remarks>Defaults to 16kHz, 1 channel, 16-bit PCM.</remarks>
+        /// <param name="name">Device name (e.g. "plughw:0,0").</param>
         public AudioPlayerConfiguration(string name)
             : this(name, WaveFormat.Create16kHz1Channel16BitPcm())
         {
@@ -36,7 +36,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioPlayerConfiguration"/> class.
         /// </summary>
-        /// <remarks>Defaults to 16kHz, 1 channel, 16-bit PCM</remarks>
+        /// <remarks>Defaults to 16kHz, 1 channel, 16-bit PCM.</remarks>
         public AudioPlayerConfiguration()
             : this("plughw:0,0", WaveFormat.Create16kHz1Channel16BitPcm())
         {

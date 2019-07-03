@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Visualization.Views
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Interaction logic for XYZVisualizationPanelView.xaml
+    /// Interaction logic for XYZVisualizationPanelView.xaml.
     /// </summary>
     public partial class XYZVisualizationPanelView : UserControl
     {

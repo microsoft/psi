@@ -18,8 +18,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexDefinition"/> class.
         /// </summary>
-        /// <param name="count">The count of possible values for an index</param>
-        /// <param name="elementStride">The spacing between consecutive index values</param>
+        /// <param name="count">The count of possible values for an index.</param>.
+        /// <param name="elementStride">The spacing between consecutive index values.</param>
         public IndexDefinition(int count, int elementStride)
         {
             this.count = count;
@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Arrays
         }
 
         /// <summary>
-        /// Gets the count of possible values of the index
+        /// Gets the count of possible values of the index.
         /// </summary>
         public int Count => this.count;
 
@@ -53,37 +53,37 @@ namespace Microsoft.Psi.Arrays
         /// Example: if the index definition consists of a set of values {128, 256, 1024}, then index[1] == 256.
         /// Note: the returned value needs to be multiplied by <see cref="ElementStride"/> to obtain an absolute value.
         /// </summary>
-        /// <param name="index">The index value to use</param>
-        /// <returns>The domain-relative value</returns>
+        /// <param name="index">The index value to use.</param>
+        /// <returns>The domain-relative value.</returns>
         public abstract int this[int index] { get; }
 
         /// <summary>
         /// Takes a subset of the current index definition, expressed as a relative range within the [0, Count-1] range.
         /// </summary>
-        /// <param name="subRange">The range of relative index values to take. Must be a subset of [0, Count-1]</param>
-        /// <returns>An index definition for the specified range</returns>
+        /// <param name="subRange">The range of relative index values to take. Must be a subset of [0, Count-1].</param>
+        /// <returns>An index definition for the specified range.</returns>
         public abstract IndexDefinition Slice(Range subRange);
 
         /// <summary>
         /// Takes a subset of the current index definition, expressed as a discrete set of relative values in [0, Count-1] range.
         /// </summary>
-        /// <param name="values">The set of relative index values to take. The values must be in the [0, Count-1] range</param>
-        /// <returns>An index definition for the specified range</returns>
+        /// <param name="values">The set of relative index values to take. The values must be in the [0, Count-1] range.</param>
+        /// <returns>An index definition for the specified range.</returns>
         public abstract IndexDefinition Take(params int[] values);
 
         /// <summary>
         /// Takes a subset of the current index definition, expressed as a relative range within the [0, Count-1] range.
         /// </summary>
-        /// <param name="start">The start of the range of relative index values to take. Must be a in [0, Count-1]</param>
-        /// <param name="end">The end of the range of relative index values to take. Must be a in [0, Count-1]</param>
-        /// <returns>An index definition for the specified range</returns>
+        /// <param name="start">The start of the range of relative index values to take. Must be a in [0, Count-1].</param>
+        /// <param name="end">The end of the range of relative index values to take. Must be a in [0, Count-1].</param>
+        /// <returns>An index definition for the specified range.</returns>
         public IndexDefinition Slice(int start, int end) => this.Slice(new Range(start, end));
 
         /// <summary>
         /// Merges two index definitions into one dicontinuous index. The two are assumed to belong to the same dimension.
         /// </summary>
-        /// <param name="other">The other definition</param>
-        /// <returns>A combined definition</returns>
+        /// <param name="other">The other definition.</param>
+        /// <returns>A combined definition.</returns>
         public virtual IndexDefinition Merge(IndexDefinition other)
         {
             if (this.ElementStride != other.ElementStride)
@@ -98,9 +98,9 @@ namespace Microsoft.Psi.Arrays
         /// Attempts to combine this index definition with a subdimension definition.
         /// This is an optimization for range indexes, see <see cref="RangeIndexDefinition.TryReduce(IndexDefinition, out IndexDefinition)"/>.
         /// </summary>
-        /// <param name="subdimension">A subdimension of the current index</param>
-        /// <param name="combinedDefinition">The resulting combined definition, if any</param>
-        /// <returns>True if the two dimensions can be combined, false otherwise</returns>
+        /// <param name="subdimension">A subdimension of the current index.</param>
+        /// <param name="combinedDefinition">The resulting combined definition, if any.</param>
+        /// <returns>True if the two dimensions can be combined, false otherwise.</returns>
         internal virtual bool TryReduce(IndexDefinition subdimension, out IndexDefinition combinedDefinition)
         {
             combinedDefinition = null;

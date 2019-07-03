@@ -168,7 +168,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         }
 
         /// <summary>
-        /// Closes the connection to the service
+        /// Closes the connection to the service.
         /// </summary>
         /// <returns>A Task representing the asynchronous operation.</returns>
         private async Task CloseConnectionAsync()

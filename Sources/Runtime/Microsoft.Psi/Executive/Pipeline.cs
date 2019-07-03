@@ -11,6 +11,7 @@ namespace Microsoft.Psi
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Psi.Components;
+    using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.Executive;
     using Microsoft.Psi.Scheduling;
 
@@ -20,17 +21,20 @@ namespace Microsoft.Psi
     public class Pipeline : IDisposable
     {
         private static int lastStreamId = 0;
-        private static int nextElementId;
+        private static int lastReceiverId = -1;
+        private static int lastElementId = -1;
+        private static int lastPipelineId = -1;
 
+        private readonly int id;
         private readonly string name;
 
         /// <summary>
-        /// This event becomes set once the pipeline is done
+        /// This event becomes set once the pipeline is done.
         /// </summary>
         private readonly ManualResetEvent completed = new ManualResetEvent(false);
 
         /// <summary>
-        /// This event becomes set when the first source component is done
+        /// This event becomes set when the first source component is done.
         /// </summary>
         private readonly ManualResetEvent anyCompleted = new ManualResetEvent(false);
 
@@ -39,7 +43,7 @@ namespace Microsoft.Psi
         private readonly DeliveryPolicy deliveryPolicy;
 
         /// <summary>
-        /// If set, indicates that the pipeline is in replay mode
+        /// If set, indicates that the pipeline is in replay mode.
         /// </summary>
         private ReplayDescriptor replayDescriptor;
 
@@ -48,23 +52,32 @@ namespace Microsoft.Psi
         private TimeInterval proposedOriginatingTimeInterval;
 
         /// <summary>
-        /// The list of components
+        /// The list of components.
         /// </summary>
         private ConcurrentQueue<PipelineElement> components = new ConcurrentQueue<PipelineElement>();
 
         /// <summary>
-        /// The list of source components
+        /// The list of completable components.
         /// </summary>
-        private List<PipelineElement> finiteSourceComponents = new List<PipelineElement>();
+        private List<PipelineElement> completableComponents = new List<PipelineElement>();
 
         private bool finiteSourcePreviouslyCompleted = false;
 
         private Scheduler scheduler;
+
+        // the context on which message delivery is scheduled
+        private SchedulerContext schedulerContext;
+
+        // the context used exclusively for activating components
+        private SchedulerContext activationContext;
+
         private List<Exception> errors = new List<Exception>();
 
         private State state;
 
         private bool enableExceptionHandling;
+
+        private Emitter<PipelineDiagnostics> diagnosticsEmitter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
@@ -73,10 +86,16 @@ namespace Microsoft.Psi
         /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
-        public Pipeline(string name, DeliveryPolicy deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads)
-            : this(name, deliveryPolicy)
+        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
+        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        public Pipeline(string name, DeliveryPolicy deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads, bool enableDiagnostics = false, TimeSpan diagnosticsInterval = default(TimeSpan))
+            : this(name, deliveryPolicy, enableDiagnostics ? new DiagnosticsCollector() : null, diagnosticsInterval)
         {
             this.scheduler = new Scheduler(this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
+            this.schedulerContext = new SchedulerContext();
+
+            // stop the scheduler when the main pipeline completes
+            this.PipelineCompleted += (sender, args) => this.scheduler.Stop(args.AbandonedPendingWorkitems);
         }
 
         /// <summary>
@@ -85,10 +104,14 @@ namespace Microsoft.Psi
         /// <param name="name">Pipeline name.</param>
         /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="scheduler">Scheduler to be used.</param>
-        public Pipeline(string name, DeliveryPolicy deliveryPolicy, Scheduler scheduler)
-            : this(name, deliveryPolicy)
+        /// <param name="schedulerContext">The scheduler context.</param>
+        /// <param name="diagnosticsCollector">Collector with which to gather diagnostic information.</param>
+        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics information.</param>
+        internal Pipeline(string name, DeliveryPolicy deliveryPolicy, Scheduler scheduler, SchedulerContext schedulerContext, DiagnosticsCollector diagnosticsCollector, TimeSpan diagnosticsInterval)
+            : this(name, deliveryPolicy, diagnosticsCollector, diagnosticsInterval)
         {
             this.scheduler = scheduler;
+            this.schedulerContext = schedulerContext;
         }
 
         /// <summary>
@@ -96,13 +119,25 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="name">Pipeline name.</param>
         /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
-        private Pipeline(string name, DeliveryPolicy deliveryPolicy)
+        /// <param name="diagnosticsCollector">Collector with which to gather diagnostic information.</param>
+        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        private Pipeline(string name, DeliveryPolicy deliveryPolicy, DiagnosticsCollector diagnosticsCollector, TimeSpan diagnosticsInterval)
         {
+            this.id = Interlocked.Increment(ref lastPipelineId);
             this.name = name ?? "default";
             this.deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
             this.enableExceptionHandling = false;
+            this.LatestSourceCompletionTime = DateTime.MinValue;
             this.FinalOriginatingTime = DateTime.MinValue;
             this.state = State.Initial;
+            this.activationContext = new SchedulerContext();
+            this.DiagnosticsInterval = diagnosticsInterval;
+            this.DiagnosticsCollector = diagnosticsCollector;
+            this.DiagnosticsCollector?.PipelineCreate(this);
+            if (!(this is Subpipeline))
+            {
+                this.Diagnostics = new DiagnosticsSampler(this, this.DiagnosticsCollector, diagnosticsInterval).Diagnostics;
+            }
         }
 
         /// <summary>
@@ -121,6 +156,16 @@ namespace Microsoft.Psi
         public event EventHandler<ComponentCompletedEventArgs> ComponentCompleted;
 
         /// <summary>
+        /// Event that is raised when one or more unhandled exceptions occur in the pipeline. If a handler is attached
+        /// to this event, any unhandled exceptions during pipeline execution will not be thrown, and will instead
+        /// be handled by the attached handler. If no handler is attached, unhandled exceptions will be thrown within
+        /// the execution context in which the exception occurred if the pipeline was run asynchronously via one of the
+        /// RunAsync methods. This could cause the application to terminate abruptly. If the pipeline was run synchronously
+        /// via one of the Run methods, an AggregateException will be thrown from the Run method (which may be caught).
+        /// </summary>
+        public event EventHandler<PipelineExceptionNotHandledEventArgs> PipelineExceptionNotHandled;
+
+        /// <summary>
         /// Enumeration of pipeline states.
         /// </summary>
         private enum State
@@ -129,8 +174,13 @@ namespace Microsoft.Psi
             Starting,
             Running,
             Stopping,
-            Completed
+            Completed,
         }
+
+        /// <summary>
+        /// Gets pipeline ID.
+        /// </summary>
+        public int Id => this.id;
 
         /// <summary>
         /// Gets pipeline name.
@@ -143,9 +193,32 @@ namespace Microsoft.Psi
         public ReplayDescriptor ReplayDescriptor => this.replayDescriptor;
 
         /// <summary>
+        /// Gets emitter producing diagnostics information (must be enabled when running pipeline).
+        /// </summary>
+        public Emitter<PipelineDiagnostics> Diagnostics
+        {
+            get
+            {
+                if (this is Subpipeline)
+                {
+                    throw new InvalidOperationException("Diagnostics is not supported directly on Subpipelines.");
+                }
+
+                return this.diagnosticsEmitter;
+            }
+
+            private set
+            {
+                this.diagnosticsEmitter = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the pipeline-level delivery policy.
         /// </summary>
         public DeliveryPolicy DeliveryPolicy => this.deliveryPolicy;
+
+        internal bool IsInitial => this.state == State.Initial;
 
         internal bool IsStarting => this.state == State.Starting;
 
@@ -157,11 +230,24 @@ namespace Microsoft.Psi
 
         internal Scheduler Scheduler => this.scheduler;
 
+        internal SchedulerContext ActivationContext => this.activationContext;
+
+        internal SchedulerContext SchedulerContext => this.schedulerContext;
+
         internal Clock Clock => this.scheduler.Clock;
 
         internal KeyValueStore ConfigurationStore => this.configStore;
 
         internal ConcurrentQueue<PipelineElement> Components => this.components;
+
+        internal DiagnosticsCollector DiagnosticsCollector { get; set; }
+
+        internal TimeSpan DiagnosticsInterval { get; set; }
+
+        /// <summary>
+        /// Gets or sets the completion time of the latest completed source component.
+        /// </summary>
+        protected DateTime LatestSourceCompletionTime { get; set; }
 
         /// <summary>
         /// Gets or sets originating time of final message scheduled.
@@ -169,9 +255,13 @@ namespace Microsoft.Psi
         protected DateTime FinalOriginatingTime { get; set; }
 
         /// <summary>
-        /// Gets pipeline completion wait handle.
+        /// Gets an <see cref="AutoResetEvent"/> that signals when there are no remaining completable components.
         /// </summary>
-        protected ManualResetEvent Completed => this.completed;
+        /// <remarks>
+        /// This is an <see cref="AutoResetEvent"/> rather than a <see cref="ManualResetEvent"/> as we need the
+        /// event to trigger one and only one action when signalled.
+        /// </remarks>
+        protected AutoResetEvent NoRemainingCompletableComponents { get; } = new AutoResetEvent(false);
 
         /// <summary>
         /// Create pipeline.
@@ -180,19 +270,35 @@ namespace Microsoft.Psi
         /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
+        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
+        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
         /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(string name = null, DeliveryPolicy deliveryPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false)
+        public static Pipeline Create(string name = null, DeliveryPolicy deliveryPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, bool enableDiagnostics = false, TimeSpan diagnosticsInterval = default(TimeSpan))
         {
-            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads);
+            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads, enableDiagnostics, diagnosticsInterval);
         }
 
         /// <summary>
-        /// Add component to pipeline.
+        /// Create pipeline.
         /// </summary>
-        /// <param name="stateObject">Initial state object.</param>
-        public void AddComponent(object stateObject)
+        /// <param name="name">Pipeline name.</param>
+        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
+        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        /// <returns>Created pipeline.</returns>
+        public static Pipeline Create(string name, bool enableDiagnostics, TimeSpan diagnosticsInterval = default(TimeSpan))
         {
-            this.GetOrCreateNode(stateObject);
+            return Create(name, null, 0, false, enableDiagnostics, diagnosticsInterval);
+        }
+
+        /// <summary>
+        /// Create pipeline.
+        /// </summary>
+        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
+        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        /// <returns>Created pipeline.</returns>
+        public static Pipeline Create(bool enableDiagnostics, TimeSpan diagnosticsInterval = default(TimeSpan))
+        {
+            return Create(null, enableDiagnostics, diagnosticsInterval);
         }
 
         /// <summary>
@@ -219,13 +325,13 @@ namespace Microsoft.Psi
         /// <summary>
         /// Creates an input receiver associated with the specified component object.
         /// </summary>
-        /// <typeparam name="T">The type of messages accepted by this receiver</typeparam>
+        /// <typeparam name="T">The type of messages accepted by this receiver.</typeparam>
         /// <param name="owner">The component that owns the receiver. This is usually the state object that the receiver operates on.
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
-        /// <param name="name">The debug name of the receiver</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle)</param>
-        /// <returns>A new receiver</returns>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
+        /// <returns>A new receiver.</returns>
         public Receiver<T> CreateReceiver<T>(object owner, Action<T, Envelope> action, string name, bool autoClone = false)
         {
             return this.CreateReceiver<T>(owner, m => action(m.Data, m.Envelope), name, autoClone);
@@ -234,13 +340,13 @@ namespace Microsoft.Psi
         /// <summary>
         /// Creates an input receiver associated with the specified component object.
         /// </summary>
-        /// <typeparam name="T">The type of messages accepted by this receiver</typeparam>
+        /// <typeparam name="T">The type of messages accepted by this receiver.</typeparam>
         /// <param name="owner">The component that owns the receiver. This is usually the state object that the receiver operates on.
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
-        /// <param name="name">The debug name of the receiver</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle)</param>
-        /// <returns>A new receiver</returns>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
+        /// <returns>A new receiver.</returns>
         public Receiver<T> CreateReceiver<T>(object owner, Action<T> action, string name, bool autoClone = false)
         {
             return this.CreateReceiver<T>(owner, m => action(m.Data), name, autoClone);
@@ -249,17 +355,17 @@ namespace Microsoft.Psi
         /// <summary>
         /// Creates an input receiver associated with the specified component object.
         /// </summary>
-        /// <typeparam name="T">The type of messages accepted by this receiver</typeparam>
+        /// <typeparam name="T">The type of messages accepted by this receiver.</typeparam>
         /// <param name="owner">The component that owns the receiver. This is usually the state object that the receiver operates on.
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
-        /// <param name="name">The debug name of the receiver</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle)</param>
-        /// <returns>A new receiver</returns>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
+        /// <returns>A new receiver.</returns>
         public Receiver<T> CreateReceiver<T>(object owner, Action<Message<T>> action, string name, bool autoClone = false)
         {
             PipelineElement node = this.GetOrCreateNode(owner);
-            var receiver = new Receiver<T>(owner, action, node.SyncContext, this, autoClone);
+            var receiver = new Receiver<T>(Interlocked.Increment(ref lastReceiverId), name, node, owner, action, node.SyncContext, this, autoClone);
             node.AddInput(name, receiver);
             return receiver;
         }
@@ -268,13 +374,13 @@ namespace Microsoft.Psi
         /// Creates an input receiver associated with the specified component object, connected to an async message processing function.
         /// The expected signature of the message processing delegate is: <code>async void Receive(<typeparamref name="T"/> message, Envelope env);</code>
         /// </summary>
-        /// <typeparam name="T">The type of messages accepted by this receiver</typeparam>
+        /// <typeparam name="T">The type of messages accepted by this receiver.</typeparam>
         /// <param name="owner">The component that owns the receiver. This is usually the state object that the receiver operates on.
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
-        /// <param name="name">The debug name of the receiver</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle)</param>
-        /// <returns>A new receiver</returns>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
+        /// <returns>A new receiver.</returns>
         public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<T, Envelope, Task> action, string name, bool autoClone = false)
         {
             return this.CreateReceiver<T>(owner, m => action(m.Data, m.Envelope).Wait(), name, autoClone);
@@ -284,13 +390,13 @@ namespace Microsoft.Psi
         /// Creates an input receiver associated with the specified component object, connected to an async message processing function.
         /// The expected signature of the message processing delegate is: <code>async void Receive(<typeparamref name="T"/> message);</code>
         /// </summary>
-        /// <typeparam name="T">The type of messages accepted by this receiver</typeparam>
+        /// <typeparam name="T">The type of messages accepted by this receiver.</typeparam>
         /// <param name="owner">The component that owns the receiver. This is usually the state object that the receiver operates on.
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
-        /// <param name="name">The debug name of the receiver</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle)</param>
-        /// <returns>A new receiver</returns>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
+        /// <returns>A new receiver.</returns>
         public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<T, Task> action, string name, bool autoClone = false)
         {
             return this.CreateReceiver<T>(owner, m => action(m.Data).Wait(), name, autoClone);
@@ -300,13 +406,13 @@ namespace Microsoft.Psi
         /// Creates an input receiver associated with the specified component object, connected to an async message processing function.
         /// The expected signature of the message processing delegate is: <code>async void Receive(Message{<typeparamref name="T"/>} message);</code>
         /// </summary>
-        /// <typeparam name="T">The type of messages accepted by this receiver</typeparam>
+        /// <typeparam name="T">The type of messages accepted by this receiver.</typeparam>
         /// <param name="owner">The component that owns the receiver. This is usually the state object that the receiver operates on.
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
-        /// <param name="name">The debug name of the receiver</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle)</param>
-        /// <returns>A new receiver</returns>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
+        /// <returns>A new receiver.</returns>
         public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<Message<T>, Task> action, string name, bool autoClone = false)
         {
             return this.CreateReceiver<T>(owner, m => action(m).Wait(), name, autoClone);
@@ -321,10 +427,7 @@ namespace Microsoft.Psi
         /// <returns>Created emitter.</returns>
         public Emitter<T> CreateEmitter<T>(object owner, string name)
         {
-            PipelineElement node = this.GetOrCreateNode(owner);
-            var emitter = new Emitter<T>(Interlocked.Increment(ref lastStreamId), owner, node.SyncContext, this);
-            node.AddOutput(name, emitter);
-            return emitter;
+            return this.CreateEmitterWithFixedStreamId<T>(owner, name, Interlocked.Increment(ref lastStreamId));
         }
 
         /// <summary>
@@ -334,9 +437,7 @@ namespace Microsoft.Psi
         /// <returns>Success.</returns>
         public bool WaitAll(int millisecondsTimeout = Timeout.Infinite)
         {
-            bool result = this.completed.WaitOne(millisecondsTimeout);
-            this.ThrowIfError();
-            return result;
+            return this.completed.WaitOne(millisecondsTimeout);
         }
 
         /// <summary>
@@ -346,27 +447,29 @@ namespace Microsoft.Psi
         /// <returns>Success.</returns>
         public bool WaitAny(int millisecondsTimeout = Timeout.Infinite)
         {
-            bool result = this.anyCompleted.WaitOne(millisecondsTimeout);
-            this.ThrowIfError();
-            return result;
+            return this.anyCompleted.WaitOne(millisecondsTimeout);
         }
 
         /// <inheritdoc />
         public virtual void Dispose()
         {
             this.Dispose(false);
+            this.DiagnosticsCollector?.PipelineDisposed(this);
         }
 
         /// <summary>
         /// Run pipeline (synchronously).
         /// </summary>
         /// <param name="descriptor">Replay descriptor.</param>
-        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
-        public void Run(ReplayDescriptor descriptor, bool enableExceptionHandling = false)
+        public void Run(ReplayDescriptor descriptor)
         {
-            this.enableExceptionHandling = enableExceptionHandling;
+            this.enableExceptionHandling = true; // suppress exceptions while running
             this.RunAsync(descriptor);
             this.WaitAll();
+            this.enableExceptionHandling = false;
+
+            // throw any exceptions if running synchronously and there is no PipelineException handler
+            this.ThrowIfError();
         }
 
         /// <summary>
@@ -376,10 +479,9 @@ namespace Microsoft.Psi
         /// <param name="useOriginatingTime">Whether to use originating time.</param>
         /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
         /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
-        public void Run(TimeInterval replayInterval = null, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1, bool enableExceptionHandling = false)
+        public void Run(TimeInterval replayInterval = null, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
         {
-            this.Run(new ReplayDescriptor(replayInterval, useOriginatingTime, enforceReplayClock, replaySpeedFactor), enableExceptionHandling);
+            this.Run(new ReplayDescriptor(replayInterval, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
         }
 
         /// <summary>
@@ -389,10 +491,9 @@ namespace Microsoft.Psi
         /// <param name="useOriginatingTime">Whether to use originating time.</param>
         /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
         /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
-        public void Run(DateTime replayStartTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1, bool enableExceptionHandling = false)
+        public void Run(DateTime replayStartTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
         {
-            this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, useOriginatingTime, enforceReplayClock, replaySpeedFactor), enableExceptionHandling);
+            this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
         }
 
         /// <summary>
@@ -403,25 +504,28 @@ namespace Microsoft.Psi
         /// <param name="useOriginatingTime">Whether to use originating time.</param>
         /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
         /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
-        public void Run(DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1, bool enableExceptionHandling = false)
+        public void Run(DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
         {
-            this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, useOriginatingTime, enforceReplayClock, replaySpeedFactor), enableExceptionHandling);
+            this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
         }
 
         /// <summary>
         /// Run pipeline (synchronously).
         /// </summary>
         /// <param name="duration">Duration (time span) to replay.</param>
-        /// <param name="enableExceptionHandling">Whether to enable exception handling.</param>
-        public void Run(TimeSpan duration, bool enableExceptionHandling = false)
+        public void Run(TimeSpan duration)
         {
-            this.enableExceptionHandling = enableExceptionHandling;
+            this.enableExceptionHandling = true; // suppress exceptions while running
             this.RunAsync();
             if (!this.WaitAll((int)duration.TotalMilliseconds))
             {
-                this.Stop();
+                this.Stop(this.GetCurrentTime());
             }
+
+            this.enableExceptionHandling = false;
+
+            // throw any exceptions if running synchronously and there is no PipelineException handler
+            this.ThrowIfError();
         }
 
         /// <summary>
@@ -553,10 +657,9 @@ namespace Microsoft.Psi
                 return;
             }
 
-            this.Stop(abandonPendingWorkItems);
+            this.Stop(this.GetCurrentTime(), abandonPendingWorkItems);
             this.DisposeComponents();
             this.components = null;
-            this.ThrowIfError();
         }
 
         internal void AddComponent(PipelineElement pe)
@@ -573,12 +676,30 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="component">Component which has completed.</param>
         /// <param name="finalOriginatingTime">Originating time of final message.</param>
-        /// <returns>Indication of whether only infinite components remain (Subpipelines use this to notify that they themselves are infinite).</returns>
-        internal virtual bool NotifyCompletionTime(PipelineElement component, DateTime finalOriginatingTime)
+        internal virtual void NotifyCompletionTime(PipelineElement component, DateTime finalOriginatingTime)
+        {
+            this.CompleteComponent(component, finalOriginatingTime);
+
+            if (this.NoRemainingCompletableComponents.WaitOne(0))
+            {
+                // stop the pipeline once all finite sources have completed
+                if (this.finiteSourcePreviouslyCompleted)
+                {
+                    ThreadPool.QueueUserWorkItem(_ => this.Stop(this.LatestSourceCompletionTime));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Mark the component as completed and update the final message originating time of the pipeline.
+        /// </summary>
+        /// <param name="component">Component which has completed.</param>
+        /// <param name="finalOriginatingTime">Originating time of final message.</param>
+        internal void CompleteComponent(PipelineElement component, DateTime finalOriginatingTime)
         {
             if (!component.IsSource)
             {
-                return false;
+                return;
             }
 
             // MaxValue is special; meaning the component was *never* a finite source
@@ -591,20 +712,20 @@ namespace Microsoft.Psi
 
             bool lastRemainingCompletable = false;
 
-            lock (this.finiteSourceComponents)
+            lock (this.completableComponents)
             {
-                if (!this.finiteSourceComponents.Contains(component))
+                if (!this.completableComponents.Contains(component))
                 {
                     // the component was already removed (e.g. because the pipeline is stopping)
-                    return false;
+                    return;
                 }
 
-                this.finiteSourceComponents.Remove(component);
-                lastRemainingCompletable = this.finiteSourceComponents.Count == 0;
+                this.completableComponents.Remove(component);
+                lastRemainingCompletable = this.completableComponents.Count == 0;
 
-                if (finiteCompletion && finalOriginatingTime > this.FinalOriginatingTime)
+                if (finiteCompletion && finalOriginatingTime > this.LatestSourceCompletionTime)
                 {
-                    this.FinalOriginatingTime = finalOriginatingTime;
+                    this.LatestSourceCompletionTime = finalOriginatingTime;
                 }
             }
 
@@ -617,19 +738,9 @@ namespace Microsoft.Psi
 
             if (lastRemainingCompletable)
             {
-                if (this.finiteSourcePreviouslyCompleted)
-                {
-                    // stop once all finite source components have stopped, assuming no infinite sources
-                    ThreadPool.QueueUserWorkItem(_ => this.Stop());
-                    return false;
-                }
-                else
-                {
-                    return true; // only infinite remaining
-                }
+                // signal completion of all completable components
+                this.NoRemainingCompletableComponents.Set();
             }
-
-            return false;
         }
 
         /// <summary>
@@ -647,35 +758,49 @@ namespace Microsoft.Psi
             this.completed.Reset();
             if (clock == null)
             {
+                // this is the main pipeline (subpipelines inherit the parent clock)
                 clock =
                     this.replayDescriptor.Interval.Left != DateTime.MinValue ?
                     new Clock(this.replayDescriptor.Start, 1 / this.replayDescriptor.ReplaySpeedFactor) :
                     new Clock(default(TimeSpan), 1 / this.replayDescriptor.ReplaySpeedFactor);
+
+                // start the scheduler
+                this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);
             }
 
-            this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);
+            this.DiagnosticsCollector?.PipelineStart(this);
 
             // raise the event prior to starting the components
             this.PipelineRun?.Invoke(this, new PipelineRunEventArgs(this.Clock.GetCurrentTime()));
 
             this.state = State.Running;
 
-            // keep track of finite source components
+            // keep track of completable source components
             foreach (var component in this.components)
             {
                 if (component.IsSource)
                 {
-                    lock (this.finiteSourceComponents)
+                    lock (this.completableComponents)
                     {
-                        this.finiteSourceComponents.Add(component);
+                        this.completableComponents.Add(component);
                     }
                 }
             }
 
+            // Start scheduling for component activation only - startup of source components will be scheduled, but
+            // any other work (e.g. delivery of messages) will be deferred until the schedulerContext is started.
+            this.scheduler.StartScheduling(this.activationContext);
+
             foreach (var component in this.components)
             {
-                component.Start(this.replayDescriptor);
+                component.Activate();
             }
+
+            // wait for component activation to finish
+            this.scheduler.PauseForQuiescence(this.activationContext);
+
+            // now start scheduling work on the main scheduler context
+            this.scheduler.StartScheduling(this.schedulerContext);
 
             return this;
         }
@@ -683,14 +808,10 @@ namespace Microsoft.Psi
         /// <summary>
         /// Signal pipeline completion.
         /// </summary>
-        /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
+        /// <param name="abandonPendingWorkitems">Abandons the pending work items.</param>
         internal void Complete(bool abandonPendingWorkitems)
         {
-            if (this.PipelineCompleted != null && this.Scheduler != null)
-            {
-                this.PipelineCompleted(this, new PipelineCompletedEventArgs(this.Clock.GetCurrentTime(), abandonPendingWorkitems, this.errors));
-            }
-
+            this.PipelineCompleted?.Invoke(this, new PipelineCompletedEventArgs(this.Clock.GetCurrentTime(), abandonPendingWorkitems, this.errors));
             this.state = State.Completed;
         }
 
@@ -712,25 +833,41 @@ namespace Microsoft.Psi
         /// </summary>
         internal void PauseForQuiescence()
         {
-            this.ForThisPipelineAndAllDescendentSubpipelines(p => p.scheduler.PauseForQuiescence());
-            this.ForThisPipelineAndAllDescendentSubpipelines(p => p.scheduler.ResumeAfterQuiescence());
+            this.ForThisPipelineAndAllDescendentSubpipelines(p => p.scheduler.PauseForQuiescence(p.schedulerContext));
         }
 
-        /// <summary>
-        /// Stop all active components.
-        /// </summary>
-        /// <returns>Number of components stopped</returns>
-        protected int StopComponents()
+        internal PipelineElement GetOrCreateNode(object component)
         {
-            return this.ForEachComponent(c => c.Stop(), true);
+            PipelineElement node = this.components.FirstOrDefault(c => c.StateObject == component);
+            if (node == null)
+            {
+                var id = Interlocked.Increment(ref lastElementId);
+                var name = component.GetType().Name;
+                var fullName = $"{id}.{name}";
+                node = new PipelineElement(id, fullName, component);
+                this.AddComponent(node);
+
+                if (this.IsRunning && node.IsSource && !(component is Subpipeline))
+                {
+                    throw new InvalidOperationException($"Source component added when pipeline already running. Consider using Subpipeline.");
+                }
+
+                this.DiagnosticsCollector?.PipelineElementCreate(this, node, component);
+            }
+
+            return node;
         }
 
         /// <summary>
         /// Stops the pipeline by disabling message passing between the pipeline components.
         /// The pipeline configuration is not changed and the pipeline can be restarted later.
         /// </summary>
-        /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
-        protected virtual void Stop(bool abandonPendingWorkitems = false)
+        /// <param name="finalOriginatingTime">
+        /// The final originating time of the pipeline. Delivery of messages with originating times
+        /// later than the final originating time will no longer be guaranteed.
+        /// </param>
+        /// <param name="abandonPendingWorkitems">Abandons the pending work items.</param>
+        internal virtual void Stop(DateTime finalOriginatingTime, bool abandonPendingWorkitems = false)
         {
             if (this.IsCompleted)
             {
@@ -745,129 +882,28 @@ namespace Microsoft.Psi
 
             this.state = State.Stopping;
 
-            this.scheduler.NotifyPipelineFinalizing(this.FinalOriginatingTime == DateTime.MinValue ? this.GetCurrentTime() : this.FinalOriginatingTime);
+            // use the supplied final originating time, unless the pipeline has already seen a later source completion time
+            this.NotifyPipelineFinalizing(finalOriginatingTime > this.LatestSourceCompletionTime ? finalOriginatingTime : this.LatestSourceCompletionTime);
 
-            // stop all started components, to disable the streaming of new messages
-            var stopped = false;
+            // deactivate all components, to disable the generation of new messages from source components
+            int count;
             do
             {
-                stopped = this.StopComponents() > 0;
+                count = 0;
+                this.ForThisPipelineAndAllDescendentSubpipelines(p => count += p.DeactivateComponents());
                 this.PauseForQuiescence();
             }
-            while (stopped);
+            while (count > 0);
 
             // final call for components to post and cease
             this.FinalizeComponents();
+            this.DiagnosticsCollector?.PipelineStopped(this);
 
             // block until all messages in the pipeline are fully processed
-            this.scheduler.Stop(abandonPendingWorkitems);
+            this.Scheduler.StopScheduling(this.SchedulerContext);
+
             this.completed.Set();
             this.Complete(abandonPendingWorkitems);
-        }
-
-        /// <summary>
-        /// Finalize child components.
-        /// </summary>
-        protected void FinalizeComponents()
-        {
-            IList<PipelineElement> nodes = GatherActiveNodes(this).ToList(); // all non-finalized node within pipeline and subpipelines
-            while (nodes.Count() > 0)
-            {
-                nodes = GatherActiveNodes(this).ToList(); // all non-finalized node within pipeline and subpipelines
-                this.PauseForQuiescence();
-
-                // build emitter ID -> node and connector node mappings
-                var emitterNodes = new Dictionary<int, PipelineElement>(); // used to traverse up emitter edge
-                var inputConnectors = new Dictionary<object, PipelineElement>(); // used to find the input side of a pipeline-bridging Connector (two nodes; one in each pipeline)
-                foreach (var node in nodes)
-                {
-                    foreach (var output in node.Outputs)
-                    {
-                        emitterNodes.Add(output.Value.Id, node);
-                    }
-
-                    if (node.Inputs.Count > 0 && IsConnector(node))
-                    {
-                        inputConnectors.Add(node.StateObject, node);
-                    }
-                }
-
-                // finalize eligible nodes with no active receivers
-                var finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, false, false));
-
-                if (finalizable.Count() == 0)
-                {
-                    // try eliminating direct cycles first (nodes receiving only from themselves - these are completely safe)
-                    finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, true, true));
-                }
-
-                if (finalizable.Count() == 0)
-                {
-                    // try eliminating indirect cycles (nodes indirectly from themselves - these finalize in arbitrary order!)
-                    finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, true, false));
-#if DEBUG
-                    if (finalizable.Count() > 0)
-                    {
-                        Debug.WriteLine("FINALIZING INDIRECT CYCLES (UNSAFE ARBITRARY FINALIZATION ORDER)");
-                        foreach (var node in finalizable)
-                        {
-                            Debug.WriteLine($"  FINALIZING {node.Name} {node.StateObject} {node.StateObject.GetType()}");
-                        }
-                    }
-#endif
-                }
-
-                if (finalizable.Count() == 0)
-                {
-                    // finally, eliminate all remaining (cycles and nodes with only cycles upstream - these finalize in semi-arbitrary order!)
-                    // finalize remaining nodes in order of number of active outputs (most to least; e.g. terminal nodes last) as a heuristic
-                    finalizable = nodes.OrderBy(n => -n.Outputs.Where(o => o.Value.HasSubscribers).Count());
-#if DEBUG
-                    if (finalizable.Count() > 0)
-                    {
-                        Debug.WriteLine("ONLY SEPARATED CYCLES REMAINING (UNSAFE ARBITRARY FINALIZATION ORDER)");
-                        foreach (var node in finalizable)
-                        {
-                            Debug.WriteLine($"  FINALIZING {node.Name} {node.StateObject} {node.StateObject.GetType()}");
-                        }
-                    }
-#endif
-                }
-
-                foreach (var node in finalizable)
-                {
-                    node.Final();
-                    this.PauseForQuiescence();
-
-                    foreach (var emitter in node.Outputs.Values)
-                    {
-                        emitter.Close(this.FinalOriginatingTime == DateTime.MinValue ? this.GetCurrentTime() : this.FinalOriginatingTime);
-                    }
-
-                    this.PauseForQuiescence();
-                }
-
-                nodes = GatherActiveNodes(this).ToList(); // all non-finalized node within pipeline and subpipelines
-            }
-        }
-
-        /// <summary>
-        /// Error handler function.
-        /// </summary>
-        /// <param name="e">Exception to handle.</param>
-        /// <returns>Whether exception handled.</returns>
-        protected bool ErrorHandler(Exception e)
-        {
-            lock (this.errors)
-            {
-                this.errors.Add(e);
-                if (!this.IsStopping)
-                {
-                    ThreadPool.QueueUserWorkItem(_ => this.Stop());
-                }
-            }
-
-            return this.enableExceptionHandling || this.PipelineCompleted != null; // let the exception bubble up
         }
 
         /// <summary>
@@ -879,9 +915,9 @@ namespace Microsoft.Psi
         {
             foreach (var node in pipeline.components.Where(c => !c.IsFinalized))
             {
-                if (node.StateObject is Subpipeline)
+                if (node.StateObject is Subpipeline subpipeline)
                 {
-                    var subnodes = GatherActiveNodes((Subpipeline)node.StateObject);
+                    var subnodes = GatherActiveNodes(subpipeline);
                     if (subnodes.Count() > 0)
                     {
                         foreach (var sub in subnodes)
@@ -902,15 +938,11 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Determine whether a node is a Connector component
+        /// Determine whether a node is a Connector component.
         /// </summary>
         /// <param name="node">Element for which to determine whether it represents a Connector component.</param>
         /// <returns>Indication of whether the element represents a Connector component.</returns>
-        private static bool IsConnector(PipelineElement node)
-        {
-            var typ = node.StateObject.GetType();
-            return typ.IsGenericType && typ.GetGenericTypeDefinition() == typeof(Connector<>);
-        }
+        private static bool IsConnector(PipelineElement node) => node.StateObject is IConnector;
 
         /// <summary>
         /// Pipeline-bridging Connectors create two nodes; one with inputs in one pipeline and one with outputs in the other.
@@ -923,11 +955,11 @@ namespace Microsoft.Psi
         private static bool TryGetConnectorBridge(PipelineElement node, Dictionary<object, PipelineElement> inputConnectors, out PipelineElement bridge)
         {
             bridge = null;
-            return IsConnector(node) && inputConnectors.TryGetValue(node.StateObject, out bridge);
+            return node.IsConnector && inputConnectors.TryGetValue(node.StateObject, out bridge);
         }
 
         /// <summary>
-        /// Determine whether a node has *only* cyclic inputs (back to origin; not including upstream independent cycles)
+        /// Determine whether a node has *only* cyclic inputs (back to origin; not including upstream independent cycles).
         /// </summary>
         /// <param name="node">Node for which to determine whether it has only cyclic inputs.</param>
         /// <param name="origin">Node from which a potential cycle may originate.</param>
@@ -994,7 +1026,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Determine whether a node is eligible for finalization (has no inputs from unfinalized node or else only cycles back to self)
+        /// Determine whether a node is eligible for finalization (has no inputs from unfinalized node or else only cycles back to self).
         /// </summary>
         /// <param name="node">Node for which to determine eligibility.</param>
         /// <param name="emitterNodes">Mapping of emitter IDs to corresponding nodes.</param>
@@ -1036,6 +1068,10 @@ namespace Microsoft.Psi
                                 return false; // has as least one active non-cyclic source
                             }
                         }
+                        else
+                        {
+                            return false; // has inactive source but has not finished unsubscribing
+                        }
                     }
                 }
             }
@@ -1051,29 +1087,13 @@ namespace Microsoft.Psi
             return true;
         }
 
-        private PipelineElement GetOrCreateNode(object component)
+        /// <summary>
+        /// Deactivates all active components.
+        /// </summary>
+        /// <returns>Number of components deactivated.</returns>
+        private int DeactivateComponents()
         {
-            PipelineElement node = this.components.FirstOrDefault(c => c.StateObject == component);
-            if (node == null)
-            {
-                var id = nextElementId++;
-                var name = component.GetType().Name;
-                var fullName = $"{id}.{name}";
-                node = new PipelineElement(fullName, component);
-                this.AddComponent(node);
-
-                if (this.IsRunning && node.IsSource && !(component is Subpipeline))
-                {
-                    throw new InvalidOperationException($"Source component added when pipeline already running. Consider using Subpipeline.");
-                }
-            }
-
-            return node;
-        }
-
-        private int ForEachComponent(Action<PipelineElement> action, bool activeOnly)
-        {
-            // to avoid deadlocks resulting from component calls to NotifyCompleted, copy and empty the list before calling each source component
+            // to avoid deadlocks resulting from component calls to NotifyCompleted, copy the list before calling each source component
             PipelineElement[] components;
             lock (this.components)
             {
@@ -1083,9 +1103,14 @@ namespace Microsoft.Psi
             var count = 0;
             foreach (var component in components)
             {
-                if (!activeOnly || component.IsActive || (component.StateObject is Subpipeline && !component.IsStopped))
+                if (component.IsActivated)
                 {
-                    action(component);
+                    component.Deactivate(this.FinalOriginatingTime);
+                    count++;
+                }
+                else if (component.IsDeactivating)
+                {
+                    // continue to hold the pipeline open pending deactivation
                     count++;
                 }
             }
@@ -1093,19 +1118,141 @@ namespace Microsoft.Psi
             return count;
         }
 
+        /// <summary>
+        /// Finalize child components.
+        /// </summary>
+        private void FinalizeComponents()
+        {
+            IList<PipelineElement> nodes = GatherActiveNodes(this).ToList(); // all non-finalized node within pipeline and subpipelines
+            while (nodes.Count() > 0)
+            {
+                // build emitter ID -> node and connector node mappings
+                var emitterNodes = new Dictionary<int, PipelineElement>(); // used to traverse up emitter edge
+                var inputConnectors = new Dictionary<object, PipelineElement>(); // used to find the input side of a pipeline-bridging Connector (two nodes; one in each pipeline)
+                foreach (var node in nodes)
+                {
+                    foreach (var output in node.Outputs)
+                    {
+                        emitterNodes.Add(output.Value.Id, node);
+                    }
+
+                    if (node.Inputs.Count > 0 && IsConnector(node))
+                    {
+                        inputConnectors.Add(node.StateObject, node);
+                    }
+                }
+
+                // finalize eligible nodes with no active receivers
+                var finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, false, false));
+                if (finalizable.Count() == 0)
+                {
+                    // try letting messages drain, then look for finalizable nodes again (there may have been closing messages in-flight)
+                    this.PauseForQuiescence();
+                    finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, false, false));
+                }
+
+                if (finalizable.Count() == 0)
+                {
+                    // try eliminating direct cycles first (nodes receiving only from themselves - these are completely safe)
+                    finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, true, true));
+                }
+
+                if (finalizable.Count() == 0)
+                {
+                    // try eliminating indirect cycles (nodes indirectly from themselves - these finalize in arbitrary order!)
+                    finalizable = nodes.Where(n => IsNodeFinalizable(n, emitterNodes, inputConnectors, true, false));
+#if DEBUG
+                    if (finalizable.Count() > 0)
+                    {
+                        Debug.WriteLine("FINALIZING INDIRECT CYCLES (UNSAFE ARBITRARY FINALIZATION ORDER)");
+                        foreach (var node in finalizable)
+                        {
+                            Debug.WriteLine($"  FINALIZING {node.Name} {node.StateObject} {node.StateObject.GetType()}");
+                        }
+                    }
+#endif
+                }
+
+                if (finalizable.Count() == 0)
+                {
+                    // finally, eliminate all remaining (cycles and nodes with only cycles upstream - these finalize in semi-arbitrary order!)
+                    // finalize remaining nodes in order of number of active outputs (most to least; e.g. terminal nodes last) as a heuristic
+                    finalizable = nodes.OrderBy(n => -n.Outputs.Where(o => o.Value.HasSubscribers).Count());
+#if DEBUG
+                    if (finalizable.Count() > 0)
+                    {
+                        Debug.WriteLine("ONLY SEPARATED CYCLES REMAINING (UNSAFE ARBITRARY FINALIZATION ORDER)");
+                        foreach (var node in finalizable)
+                        {
+                            Debug.WriteLine($"  FINALIZING {node.Name} {node.StateObject} {node.StateObject.GetType()}");
+                        }
+                    }
+#endif
+                }
+
+                foreach (var node in finalizable)
+                {
+                    node.Final(this.FinalOriginatingTime);
+                }
+
+                nodes = GatherActiveNodes(this).ToList(); // all non-finalized node within pipeline and subpipelines
+            }
+        }
+
+        /// <summary>
+        /// Error handler function.
+        /// </summary>
+        /// <param name="e">Exception to handle.</param>
+        /// <returns>Whether exception handled.</returns>
+        private bool ErrorHandler(Exception e)
+        {
+            lock (this.errors)
+            {
+                this.errors.Add(e);
+                if (!this.IsStopping)
+                {
+                    ThreadPool.QueueUserWorkItem(_ => this.Stop(this.GetCurrentTime()));
+                }
+            }
+
+            // raise the exception event
+            this.PipelineExceptionNotHandled?.Invoke(this, new PipelineExceptionNotHandledEventArgs(e));
+
+            // suppress the exception if there is a handler attached or enableExceptionHandling flag is set
+            return this.PipelineExceptionNotHandled != null || this.enableExceptionHandling;
+        }
+
+        private void NotifyPipelineFinalizing(DateTime finalOriginatingTime)
+        {
+            this.FinalOriginatingTime = finalOriginatingTime;
+            this.schedulerContext.FinalizeTime = finalOriginatingTime;
+
+            // propagate the final originating time to all descendent subpipelines and their respective scheduler contexts
+            foreach (var sub in this.components.Where(c => c.StateObject is Subpipeline && !c.IsFinalized).Select(c => c.StateObject as Subpipeline))
+            {
+                // if subpipeline is already stopping then don't override its final originating time
+                if (!sub.IsStopping)
+                {
+                    sub.FinalOriginatingTime = finalOriginatingTime;
+                    sub.schedulerContext.FinalizeTime = finalOriginatingTime;
+                }
+            }
+        }
+
         private void DisposeComponents()
         {
             foreach (var component in this.components)
             {
+                this.DiagnosticsCollector?.PipelineElementDisposed(this, component);
                 component.Dispose();
             }
         }
 
         private void ThrowIfError()
         {
-            if (this.PipelineCompleted != null && !this.enableExceptionHandling)
+            if (this.PipelineExceptionNotHandled != null)
             {
-                // if completion event is hooked, only throw if exception handling is explicitly enabled
+                // if exception event is hooked, do not throw the exception
                 return;
             }
 

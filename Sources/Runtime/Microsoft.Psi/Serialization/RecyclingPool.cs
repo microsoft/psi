@@ -16,9 +16,9 @@ namespace Microsoft.Psi
         /// <summary>
         /// Creates an appropriate recycling pool for the specified type.
         /// </summary>
-        /// <param name="debugTrace">An optional debug trace to capture for debugging purposes</param>
-        /// <typeparam name="T">The type of objects to store in the recycling pool</typeparam>
-        /// <returns>A new recycling pool</returns>
+        /// <param name="debugTrace">An optional debug trace to capture for debugging purposes.</param>
+        /// <typeparam name="T">The type of objects to store in the recycling pool.</typeparam>
+        /// <returns>A new recycling pool.</returns>
         public static IRecyclingPool<T> Create<T>(StackTrace debugTrace = null)
         {
             if (!Serializer.IsImmutableType<T>())
@@ -33,7 +33,7 @@ namespace Microsoft.Psi
         /// Maintains a cache of unused instances that can be use as cloning or deserialization targets.
         /// This class is not thread safe.
         /// </summary>
-        /// <typeparam name="T">The type of instances that can be cached by this cloner</typeparam>
+        /// <typeparam name="T">The type of instances that can be cached by this cloner.</typeparam>
         private class Cloner<T> : IRecyclingPool<T>
         {
             private const int MaxAllocationsWithoutRecycling = 100;
@@ -65,7 +65,7 @@ namespace Microsoft.Psi
             /// <summary>
             /// Returns the next available cached object.
             /// </summary>
-            /// <returns>An unused cached object that can be reused as a target for cloning or deserialization</returns>
+            /// <returns>An unused cached object that can be reused as a target for cloning or deserialization.</returns>
             public T Get()
             {
                 T clone;
@@ -124,7 +124,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Used for immutable types.
         /// </summary>
-        /// <typeparam name="T">The immutable type</typeparam>
+        /// <typeparam name="T">The immutable type.</typeparam>
         private class FakeCloner<T> : IRecyclingPool<T>
         {
             public static readonly IRecyclingPool<T> Default = new FakeCloner<T>();

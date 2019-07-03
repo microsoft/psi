@@ -21,6 +21,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// Communications
         /// </summary>
-        Communications
+        Communications,
     }
 }

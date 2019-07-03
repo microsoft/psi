@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Text;
 
     /// <summary>
-    /// IMFSample COM interface (defined in Mfobjects.h)
+    /// IMFSample COM interface (defined in Mfobjects.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMFSampleIIDString)]

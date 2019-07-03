@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Initializes a new instance of the <see cref="WaveDataWriterClass"/> class.
         /// </summary>
-        /// <param name="stream">Stream to which to write</param>
+        /// <param name="stream">Stream to which to write.</param>
         /// <param name="format">The audio format.</param>
         public WaveDataWriterClass(Stream stream, WaveFormat format)
         {

@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for EncodedImageVisualizationObjectView.xaml
+    /// Interaction logic for EncodedImageVisualizationObjectView.xaml.
     /// </summary>
     public partial class EncodedImageVisualizationObjectView : UserControl
     {

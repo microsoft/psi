@@ -23,11 +23,11 @@ namespace Microsoft.Psi
         /// Creates a new multi-stream store and returns an <see cref="Exporter"/> instance
         /// which can be used to write streams to this store.
         /// </summary>
-        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="Exporter"/></param>
-        /// <param name="name">The name of the store to create</param>
+        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="Exporter"/>.</param>
+        /// <param name="name">The name of the store to create.</param>
         /// <param name="rootPath">The path to use. If null, an in-memory store is created.</param>
         /// <param name="createSubdirectory">Indicates whether to create a numbered subdirectory for each execution of the pipeline.</param>
-        /// <param name="serializers">An optional collection of custom serializers to use instead of the default ones</param>
+        /// <param name="serializers">An optional collection of custom serializers to use instead of the default ones.</param>
         /// <returns>An <see cref="Exporter"/> instance that can be used to write streams.</returns>
         /// <remarks>
         /// The Exporter maintains a collection of serializers it knows about, which it uses to serialize
@@ -47,8 +47,8 @@ namespace Microsoft.Psi
         /// which can be used to inspect the store and open the streams.
         /// The store metadata is available immediately after this call (before the pipeline is running) via the <see cref="Importer.AvailableStreams"/> property.
         /// </summary>
-        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="Importer"/></param>
-        /// <param name="name">The name of the store to open (the same as the catalog file name)</param>
+        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="Importer"/>.</param>
+        /// <param name="name">The name of the store to open (the same as the catalog file name).</param>
         /// <param name="rootPath">
         /// The path to the store.
         /// This can be one of:
@@ -82,13 +82,13 @@ namespace Microsoft.Psi
         /// <summary>
         /// Writes the specified stream to a multi-stream store.
         /// </summary>
-        /// <typeparam name="TIn">The type of messages in the stream</typeparam>
-        /// <param name="source">The source stream to write</param>
+        /// <typeparam name="TIn">The type of messages in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
         /// <param name="name">The name of the persisted stream.</param>
-        /// <param name="writer">The store writer, created by e.g. <see cref="Store.Create(Pipeline, string, string, bool, KnownSerializers)"/></param>
+        /// <param name="writer">The store writer, created by e.g. <see cref="Store.Create(Pipeline, string, string, bool, KnownSerializers)"/>.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>The input stream</returns>
+        /// <returns>The input stream.</returns>
         public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, Exporter writer, bool largeMessages = false, DeliveryPolicy deliveryPolicy = null)
         {
             writer.Write(source.Out, name, largeMessages, deliveryPolicy);
@@ -204,10 +204,10 @@ namespace Microsoft.Psi
         /// <summary>
         /// Returns the metadata associated with the specified stream, if the stream is persisted to a store.
         /// </summary>
-        /// <typeparam name="T">The type of stream messages</typeparam>
-        /// <param name="source">The stream to retrieve metadata about</param>
-        /// <param name="metadata">Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted</param>
-        /// <returns>True if the stream is persisted to a store, false otherwise</returns>
+        /// <typeparam name="T">The type of stream messages.</typeparam>
+        /// <param name="source">The stream to retrieve metadata about.</param>
+        /// <param name="metadata">Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted.</param>
+        /// <returns>True if the stream is persisted to a store, false otherwise.</returns>
         public static bool TryGetMetadata<T>(IProducer<T> source, out PsiStreamMetadata metadata)
         {
             return Store.TryGetMetadata(source.Out.Pipeline, source.Out.Name, out metadata);
@@ -216,10 +216,10 @@ namespace Microsoft.Psi
         /// <summary>
         /// Returns the metadata associated with the specified stream, if the stream is persisted to a store.
         /// </summary>
-        /// <param name="pipeline">The current pipeline</param>
-        /// <param name="streamName">The name of the stream to retrieve metadata about</param>
-        /// <param name="metadata">Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted</param>
-        /// <returns>True if the stream is persisted to a store, false otherwise</returns>
+        /// <param name="pipeline">The current pipeline.</param>
+        /// <param name="streamName">The name of the stream to retrieve metadata about.</param>
+        /// <param name="metadata">Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted.</param>
+        /// <returns>True if the stream is persisted to a store, false otherwise.</returns>
         public static bool TryGetMetadata(Pipeline pipeline, string streamName, out PsiStreamMetadata metadata)
         {
             if (string.IsNullOrEmpty(streamName))
@@ -229,37 +229,6 @@ namespace Microsoft.Psi
             }
 
             return pipeline.ConfigurationStore.TryGet(StreamMetadataNamespace, streamName, out metadata);
-        }
-
-        /// <summary>
-        /// Serializes the source stream, preserving the envelope.
-        /// </summary>
-        /// <typeparam name="T">The type of data to serialize</typeparam>
-        /// <param name="source">The source stream generating the data to serialize</param>
-        /// <param name="serializers">An optional collection of known types to use</param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>A stream of Message{Message{BufferReader}}, where the inner Message object preserves the original envelope of the message received by this operator.</returns>
-        public static IProducer<Message<BufferReader>> Serialize<T>(this IProducer<T> source, KnownSerializers serializers = null, DeliveryPolicy deliveryPolicy = null)
-        {
-            var serializer = new SerializerComponent<T>(source.Out.Pipeline, serializers ?? KnownSerializers.Default);
-            source.PipeTo(serializer.In, deliveryPolicy);
-            return serializer.Out;
-        }
-
-        /// <summary>
-        /// Deserializes data from a stream of Message{BufferReader}.
-        /// </summary>
-        /// <typeparam name="T">The type of data expected after deserialization</typeparam>
-        /// <param name="source">The stream containing the serialized data</param>
-        /// <param name="serializers">An optional collection of known types to use</param>
-        /// <param name="reusableInstance">An optional preallocated instance ot use as a buffer. This parameter is required when deserializing <see cref="Shared{T}"/> instances if the deserializer is expected to use a <see cref="SharedPool{T}"/></param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>A stream of messages of type T, with their original envelope</returns>
-        public static IProducer<T> Deserialize<T>(this IProducer<Message<BufferReader>> source, KnownSerializers serializers = null, T reusableInstance = default(T), DeliveryPolicy deliveryPolicy = null)
-        {
-            var deserializer = new DeserializerComponent<T>(source.Out.Pipeline, serializers ?? KnownSerializers.Default, reusableInstance);
-            source.PipeTo(deserializer, deliveryPolicy);
-            return deserializer.Out;
         }
     }
 }

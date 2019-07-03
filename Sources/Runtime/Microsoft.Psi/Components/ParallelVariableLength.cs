@@ -11,8 +11,8 @@ namespace Microsoft.Psi.Components
     /// Creates and applies a sub-pipeline to each element in the input array. The input array can have variable length.
     /// The sub-pipelines have index affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same index in the array.
     /// </summary>
-    /// <typeparam name="TIn">The input message type</typeparam>
-    /// <typeparam name="TOut">The result type</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
+    /// <typeparam name="TOut">The result type.</typeparam>
     public class ParallelVariableLength<TIn, TOut> : IConsumer<TIn[]>, IProducer<TOut[]>
     {
         private readonly List<Emitter<TIn>> branches = new List<Emitter<TIn>>();

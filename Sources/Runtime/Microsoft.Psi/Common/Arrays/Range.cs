@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Arrays
     public struct Range
     {
         /// <summary>
-        /// An empty range
+        /// An empty range.
         /// </summary>
         public static Range Empty = new Range(0, -1);
 
@@ -37,12 +37,12 @@ namespace Microsoft.Psi.Arrays
         }
 
         /// <summary>
-        /// Gets the first value in the range
+        /// Gets the first value in the range.
         /// </summary>
         public int Start => this.start;
 
         /// <summary>
-        /// Gets the last value in the range
+        /// Gets the last value in the range.
         /// </summary>
         public int End => this.end;
 
@@ -52,17 +52,17 @@ namespace Microsoft.Psi.Arrays
         public bool IsIncreasing => this.end >= this.start;
 
         /// <summary>
-        /// Gets a value indicating whether the range consists of a single value or not. Same as Size == 0;
+        /// Gets a value indicating whether the range consists of a single value or not. Same as Size == 0;.
         /// </summary>
         public bool IsSingleValued => this.end == this.start;
 
         /// <summary>
-        /// Gets the size of the range, computed as <code>Math.Abs(end-start) + 1</code>
+        /// Gets the size of the range, computed as Math.Abs(end-start) + 1.
         /// </summary>
         public int Size => Math.Abs(this.end - this.start) + 1;
 
         /// <summary>
-        /// Converts a tuple to a range
+        /// Converts a tuple to a range.
         /// </summary>
         /// <param name="def">The tuple to convert to a range.</param>
         public static implicit operator Range((int start, int end) def)
@@ -73,8 +73,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Equality comparer. Returns true if the two ranges have the same start and end, false otherwise.
         /// </summary>
-        /// <param name="first">The first value to compare</param>
-        /// <param name="second">The second value to compare</param>
+        /// <param name="first">The first value to compare.</param>
+        /// <param name="second">The second value to compare.</param>
         /// <returns>True if the two ranges have the same start and end, false otherwise.</returns>
         public static bool operator ==(Range first, Range second)
         {
@@ -84,8 +84,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Inequality comparer. Returns true if the two ranges have a different start and/or end, false otherwise.
         /// </summary>
-        /// <param name="first">The first value to compare</param>
-        /// <param name="second">The second value to compare</param>
+        /// <param name="first">The first value to compare.</param>
+        /// <param name="second">The second value to compare.</param>
         /// <returns>True if the two ranges have a different start and/or end, false otherwise.</returns>
         public static bool operator !=(Range first, Range second)
         {
@@ -95,7 +95,7 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Equality comparer. Returns true if the current range have the same start and end as the specified range, false otherwise.
         /// </summary>
-        /// <param name="obj">The value to compare to</param>
+        /// <param name="obj">The value to compare to.</param>
         /// <returns>True if the two ranges have the same start and end, false otherwise.</returns>
         public override bool Equals(object obj)
         {

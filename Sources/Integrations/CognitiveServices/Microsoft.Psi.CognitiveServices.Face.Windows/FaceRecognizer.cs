@@ -19,7 +19,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
     /// <remarks>The component takes in a stream of images and produces a stream of messages containing the distribution over the possible identities of the
     /// person in the image. A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
     /// subscription key is required to use this component. In addition, a person group needs to be created ahead of time, and the id of the person group
-    /// passed to the component via the configuration. For more information, and to see how to create person groups, see the full direct API for
+    /// passed to the component via the configuration. For more information, and to see how to create person groups, see the full direct API for.
     /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
     /// </remarks>
     public sealed class FaceRecognizer : AsyncConsumerProducer<Shared<Image>, Dictionary<string, double>>, IDisposable
@@ -30,12 +30,12 @@ namespace Microsoft.Psi.CognitiveServices.Face
         private FaceServiceClient faceServiceClient;
 
         /// <summary>
-        /// The configuration to use for this component
+        /// The configuration to use for this component.
         /// </summary>
         private FaceRecognizerConfiguration configuration;
 
         /// <summary>
-        /// The group of persons from the cognitive services API
+        /// The group of persons from the cognitive services API.
         /// </summary>
         private Task<Microsoft.ProjectOxford.Face.Contract.Person[]> persons;
 

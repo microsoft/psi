@@ -4,17 +4,17 @@
 namespace Microsoft.Psi.PsiStudio.Common
 {
     /// <summary>
-    /// The various drag operations that can be performed
+    /// The various drag operations that can be performed.
     /// </summary>
     internal class DragDropOperation
     {
         /// <summary>
-        /// A panel in the Visualization Container View is being dragged to reorder it
+        /// A panel in the Visualization Container View is being dragged to reorder it.
         /// </summary>
         public const string ReorderPanel = "ReorderPanel";
 
         /// <summary>
-        /// A stream is being dragged from the tree view into the Visualization Container
+        /// A stream is being dragged from the tree view into the Visualization Container.
         /// </summary>
         public const string DragDropStream = "DragDropStream";
     }

@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="BufferWriter"/> class.
         /// </summary>
-        /// <param name="size">The initial size of the underlying buffer</param>
+        /// <param name="size">The initial size of the underlying buffer.</param>
         public BufferWriter(int size)
             : this(new byte[size])
         {
@@ -78,8 +78,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes the specified number of bytes from the specified address.
         /// </summary>
-        /// <param name="source">The pointer to the memory to copy into the buffer</param>
-        /// <param name="lenghtInBytes">The number of bytes to copy</param>
+        /// <param name="source">The pointer to the memory to copy into the buffer.</param>
+        /// <param name="lenghtInBytes">The number of bytes to copy.</param>
         public unsafe void Write(void* source, int lenghtInBytes)
         {
             int start = this.MoveCurrentPosition(lenghtInBytes);
@@ -95,7 +95,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of bytes to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array of bytes to read from</param>
+        /// <param name="source">The array of bytes to read from.</param>
         public void Write(byte[] source)
         {
             unsafe
@@ -110,9 +110,9 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a portion of an array of bytes to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array of bytes to read from</param>
-        /// <param name="start">The index into the source array to start reading from</param>
-        /// <param name="count">The count of bytes to write</param>
+        /// <param name="source">The array of bytes to read from.</param>
+        /// <param name="start">The index into the source array to start reading from.</param>
+        /// <param name="count">The count of bytes to write.</param>
         public void WriteEx(byte[] source, int start, int count)
         {
             unsafe
@@ -137,7 +137,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type SByte to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(sbyte[] source)
         {
             unsafe
@@ -152,7 +152,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type Bool to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(bool[] source)
         {
             unsafe
@@ -167,7 +167,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type Double to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(double[] source)
         {
             unsafe
@@ -182,7 +182,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type Single to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(float[] source)
         {
             unsafe
@@ -197,7 +197,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type Int16 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(short[] source)
         {
             unsafe
@@ -212,7 +212,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type Int32 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(int[] source)
         {
             unsafe
@@ -227,7 +227,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type Int64 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(long[] source)
         {
             unsafe
@@ -242,7 +242,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type char to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(char[] source)
         {
             unsafe
@@ -257,7 +257,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type UInt16 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(ushort[] source)
         {
             unsafe
@@ -272,7 +272,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type UInt32 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(uint[] source)
         {
             unsafe
@@ -287,7 +287,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes an array of values of type UInt64 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The array to read from</param>
+        /// <param name="source">The array to read from.</param>
         public void Write(ulong[] source)
         {
             unsafe
@@ -302,7 +302,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type byte to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(byte source)
         {
             unsafe
@@ -314,7 +314,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type sbyte to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(sbyte source)
         {
             unsafe
@@ -326,7 +326,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type bool to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(bool source)
         {
             unsafe
@@ -338,7 +338,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Int16 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(short source)
         {
             unsafe
@@ -350,7 +350,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type UInt16 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(ushort source)
         {
             unsafe
@@ -362,7 +362,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Int32 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(int source)
         {
             unsafe
@@ -374,7 +374,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type UInt32 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(uint source)
         {
             unsafe
@@ -386,7 +386,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Int64 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(long source)
         {
             unsafe
@@ -398,7 +398,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type UInt64 to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(ulong source)
         {
             unsafe
@@ -410,7 +410,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Single to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(float source)
         {
             unsafe
@@ -422,7 +422,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Double to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(double source)
         {
             unsafe
@@ -434,7 +434,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type DateTime to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(DateTime source)
         {
             unsafe
@@ -446,7 +446,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Char to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(char source)
         {
             unsafe
@@ -458,7 +458,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type String to the underlying buffer.
         /// </summary>
-        /// <param name="source">The value to write</param>
+        /// <param name="source">The value to write.</param>
         public void Write(string source)
         {
             unsafe
@@ -486,7 +486,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a value of type Envelope to the underlying buffer.
         /// </summary>
-        /// <param name="envelope">The value to write</param>
+        /// <param name="envelope">The value to write.</param>
         public void Write(Envelope envelope)
         {
             unsafe

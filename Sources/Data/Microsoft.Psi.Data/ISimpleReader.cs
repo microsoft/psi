@@ -32,15 +32,15 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Opens the specified store.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="serializers">Optional set of serialization configuration (known types, serializers, known assemblies)</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="serializers">Optional set of serialization configuration (known types, serializers, known assemblies).</param>
         void OpenStore(string name, string path, KnownSerializers serializers = null);
 
         /// <summary>
         /// Creates a new reader for the same store, without reloading the index and metadata files.
         /// </summary>
-        /// <returns>A new reader for the same store</returns>
+        /// <returns>A new reader for the same store.</returns>
         ISimpleReader OpenNew();
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <typeparam name="T">The type of messages in stream.</typeparam>
         /// <param name="streamName">The name of the storage stream to open.</param>
-        /// <param name="target">The function to call with the index of every message in this storage stream</param>
-        /// <returns>The metadata describing the opened storage stream</returns>
+        /// <param name="target">The function to call with the index of every message in this storage stream.</param>
+        /// <returns>The metadata describing the opened storage stream.</returns>
         IStreamMetadata OpenStreamIndex<T>(string streamName, Action<IndexEntry, Envelope> target);
 
         /// <summary>

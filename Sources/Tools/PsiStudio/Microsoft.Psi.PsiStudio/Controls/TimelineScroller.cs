@@ -39,8 +39,8 @@ namespace Microsoft.Psi.Visualization.Controls
         /// <inheritdoc />
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            // Only move the cursor if we're currently paused
-            if (this.Navigator.CursorMode == CursorMode.Manual)
+            // Only move the cursor if we're currently paused and if the cursor is currently following the mouse
+            if (this.Navigator.CursorMode == CursorMode.Manual && this.Navigator.CursorFollowsMouse)
             {
                 DateTime time = this.GetTimeAtMousePointer(e);
                 DateTime? snappedTime = null;

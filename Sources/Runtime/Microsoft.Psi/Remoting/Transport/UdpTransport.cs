@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Remoting
     using System.IO;
     using System.Net;
     using System.Net.Sockets;
-    using Common;
+    using Microsoft.Psi.Common;
 
     /// <summary>
     /// UDP network transport.

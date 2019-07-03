@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IAudioCaptureClient COM interface (defined in Audioclient.h)
+    /// IAudioCaptureClient COM interface (defined in Audioclient.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IAudioCaptureClientIIDString)]

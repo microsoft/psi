@@ -740,7 +740,7 @@ namespace Test.Psi
             // pipeline terminated normally so store should be valid
             Assert.IsTrue(Store.IsClosed(name, this.path));
 
-            // now generate an invalid store 
+            // now generate an invalid store
             var p2 = Pipeline.Create("write2");
             var invalidStore = Store.Create(p2, name, this.path);
             string tempFolder = Path.Combine(this.path, Guid.NewGuid().ToString());
@@ -760,7 +760,7 @@ namespace Test.Psi
                 seq2.Select(i => i.ToString()).Write("seqString", invalidStore);
 
                 // run the pipeline with exception handling enabled
-                p2.Run(new ReplayDescriptor(new DateTime(1), true, false), true);
+                p2.Run(new ReplayDescriptor(new DateTime(1), true, false));
             }
             catch
             {

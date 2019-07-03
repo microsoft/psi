@@ -54,7 +54,7 @@ namespace Microsoft.Psi.Data.Annotations
         /// Creates and adds a new annotation schema value to the current annotation schema.
         /// </summary>
         /// <param name="value">The value of the annotation schema value.</param>
-        /// <param name="color">The color to use when displaying annotations of this value</param>
+        /// <param name="color">The color to use when displaying annotations of this value.</param>
         /// <param name="description">The description of this annotation schema value.</param>
         /// <returns>The newly added annotation schema value.</returns>
         public AnnotationSchemaValue AddSchemaValue(string value, Color color, string description = null)

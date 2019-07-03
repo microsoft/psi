@@ -6,13 +6,13 @@
     <Company>Microsoft Corporation</Company>
     <Owners>microsoft,psi</Owners>
     <Authors>Microsoft</Authors>
-    <AssemblyVersion>0.7.57.2</AssemblyVersion>
+    <AssemblyVersion>0.8.32.1</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)-beta</Version>
     <SignAssembly>false</SignAssembly>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>http://github.com/microsoft/psi/</RepositoryUrl>
-    <PackageProjectUrl>http://microsoft.github.io/psi/</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/microsoft/psi/wiki</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>Psi;Microsoft</PackageTags>
@@ -20,6 +20,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <!-- Workaround for arbitrary value in AssemblyInformationalVersionAttribute until it is fixed in VS 16 https://github.com/Microsoft/visualfsharp/issues/4822 -->
     <NoWarn>FS2003</NoWarn>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <!-- Support for building in Visual Studio versions 15.9 and up -->

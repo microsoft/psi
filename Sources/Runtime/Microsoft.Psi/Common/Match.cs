@@ -25,7 +25,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// No suitable match result found due to lack of data.
         /// </summary>
-        InsufficientData
+        InsufficientData,
     }
 
     /// <summary>
@@ -270,114 +270,6 @@ namespace Microsoft.Psi
         public static Interpolator<T> BestOrDefault<T>(TimeSpan tolerance)
         {
             return NearestValue<T>(new RelativeTimeInterval(-tolerance, tolerance), true, true);
-        }
-
-        /// <summary>
-        /// Match that takes the value with an originating time nearest to the match time (see remarks),
-        /// within an infinite window which looks both forward and backward in time.
-        /// </summary>
-        /// <typeparam name="T">The message type.</typeparam>
-        /// <remarks>
-        /// The next value at or after the match time *is not* required for a matched value to be created.
-        /// This *does not* ensure correctness regardless of execution timing.
-        /// </remarks>
-        /// <returns>The interpolator for the match.</returns>
-        public static Interpolator<T> Any<T>()
-        {
-            return NearestValue<T>(RelativeTimeInterval.Infinite, false, false);
-        }
-
-        /// <summary>
-        /// Match that takes the value with an originating time nearest to the match
-        /// time (see remarks), within a window which looks both forward and backward in time.
-        /// </summary>
-        /// <typeparam name="T">The message type.</typeparam>
-        /// <param name="window">
-        /// The window within which to search for the message that is closest to the match time.
-        /// May extend up to TimeSpan.MinValue and TimeSpan.MaxValue relative to the match time.
-        /// </param>
-        /// <remarks>
-        /// The next value at or after the match time *is not* required for a matched value to be created.
-        /// This *does not* ensure correctness regardless of execution timing.
-        /// </remarks>
-        /// <returns>The interpolator for the match.</returns>
-        public static Interpolator<T> Any<T>(RelativeTimeInterval window)
-        {
-            return NearestValue<T>(window, false, false);
-        }
-
-        /// <summary>
-        /// Match that takes the value with an originating time nearest to the match
-        /// time (see remarks), within a window which looks both forward and backward in time.
-        /// </summary>
-        /// <typeparam name="T">The message type.</typeparam>
-        /// <param name="tolerance">
-        /// The tolerance within which to search for the message that is closest to the match time.
-        /// </param>
-        /// <remarks>
-        /// The next value at or after the match time *is not* required for a matched value to be created.
-        /// This *does not* ensure correctness regardless of execution timing.
-        /// </remarks>
-        /// <returns>The interpolator for the match.</returns>
-        public static Interpolator<T> Any<T>(TimeSpan tolerance)
-        {
-            return NearestValue<T>(new RelativeTimeInterval(-tolerance, tolerance), false, false);
-        }
-
-        /// <summary>
-        /// Match that takes the value with an originating time nearest to the match
-        /// time (see remarks), within an infinite window which looks both forward and backward in time.
-        /// If no message is available, it returns the default(T) value.
-        /// </summary>
-        /// <typeparam name="T">The message type.</typeparam>
-        /// <remarks>
-        /// The next value at or after the match time *is not* required for a matched value to be created.
-        /// This *does not* ensure correctness regardless of execution timing.
-        /// </remarks>
-        /// <returns>The interpolator for the match.</returns>
-        public static Interpolator<T> AnyOrDefault<T>()
-        {
-            return NearestValue<T>(RelativeTimeInterval.Infinite, false, true);
-        }
-
-        /// <summary>
-        /// Match that takes the value with an originating time nearest to the match
-        /// time (see remarks), within a window which looks both forward and backward in time.
-        /// If no message is available in that specified window, it returns the default(T) value.
-        /// </summary>
-        /// <typeparam name="T">The message type.</typeparam>
-        /// <param name="window">
-        /// The window within which to search for the message that is closest to the match time.
-        /// May extend up to TimeSpan.MinValue and TimeSpan.MaxValue relative to the match time.
-        /// </param>
-        /// <remarks>
-        /// The next value at or after the match time *is not* required for a matched value to be created.
-        /// This *does not* ensure correctness regardless of execution timing.
-        /// </remarks>
-        /// <returns>The interpolator for the match.</returns>
-        public static Interpolator<T> AnyOrDefault<T>(RelativeTimeInterval window)
-        {
-            return NearestValue<T>(window, false, true);
-        }
-
-        /// <summary>
-        /// Match that takes the value with an originating time nearest to the match
-        /// time (see remarks), within a window which looks both forward and backward in time.
-        /// If no message is available, it returns the default(T) value.
-        /// </summary>
-        /// <typeparam name="T">The message type.</typeparam>
-        /// <param name="tolerance">
-        /// The tolerance within which to search for the message that is closest to the match time.
-        /// May extend up to TimeSpan.MinValue and TimeSpan.MaxValue relative to the match time.
-        /// </param>
-        /// <remarks>
-        /// The next value at or after the match time *is not* required for a matched value to be created.
-        /// This *does not* ensure correctness regardless of execution timing.
-        /// </remarks>
-        /// <returns>The interpolator for the match.</returns>
-        public static Interpolator<T> AnyOrDefault<T>(TimeSpan tolerance)
-        {
-            return NearestValue<T>(new RelativeTimeInterval(-tolerance, tolerance), false, true);
         }
 
         private static Interpolator<T> NearestValue<T>(RelativeTimeInterval window, bool requireNextValue, bool orDefault)

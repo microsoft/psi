@@ -58,11 +58,11 @@ namespace Microsoft.Psi
         /// <summary>
         /// Publishes the specified stream to the debug partition, allowing debugging visualizers to display the data.
         /// </summary>
-        /// <typeparam name="T">The type of data in the stream</typeparam>
-        /// <param name="source">The stream to visualize</param>
-        /// <param name="name">The name to use when visualizing the stream</param>
+        /// <typeparam name="T">The type of data in the stream.</typeparam>
+        /// <param name="source">The stream to visualize.</param>
+        /// <param name="name">The name to use when visualizing the stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>The debug name of the stream, either as provided or the generated one if one was not specified</returns>
+        /// <returns>The debug name of the stream, either as provided or the generated one if one was not specified.</returns>
         public static string DebugView<T>(this IProducer<T> source, string name = null, DeliveryPolicy deliveryPolicy = null)
         {
             var debugName = name ?? source.Out.Name ?? source.Out.Id.ToString();
@@ -83,9 +83,9 @@ namespace Microsoft.Psi
 
         /// <summary>
         /// Generates a .dgml file that can be opened in Visual Studio to visualize the pipeline structure.
-        /// See https://msdn.microsoft.com/en-us/library/ee842619.aspx
+        /// See https://msdn.microsoft.com/en-us/library/ee842619.aspx.
         /// </summary>
-        /// <param name="pipeline">The pipeline to dump</param>
+        /// <param name="pipeline">The pipeline to dump.</param>
         /// <param name="fileName">The name (and path) of the new file to generate.</param>
         public static void DumpStructure(this Pipeline pipeline, string fileName)
         {

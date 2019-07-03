@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Speech
         private readonly BufferedAudioStream inputAudioStream;
 
         /// <summary>
-        /// Queue of input message originating times;
+        /// Queue of input message originating times.
         /// </summary>
         private readonly Queue<DateTime> messageOriginatingTimes;
 
@@ -186,7 +186,7 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <summary>
-        /// Creates a new speech recognition engine
+        /// Creates a new speech recognition engine.
         /// </summary>
         /// <returns>A new speech recognition engine object.</returns>
         private SpeechRecognitionEngine CreateSpeechRecognitionEngine()

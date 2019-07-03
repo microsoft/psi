@@ -9,12 +9,15 @@ namespace Microsoft.Psi.Samples.WpfSample
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
         private Pipeline pipeline;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             this.InitializeComponent();
@@ -26,12 +29,14 @@ namespace Microsoft.Psi.Samples.WpfSample
             this.SetupPsi();
         }
 
-        // Define a property that exposes our DisplayImage so that WPF can access it.
+        /// <summary>
+        /// Gets or sets DisplayImage so that WPF can access it.
+        /// </summary>
         public DisplayImage DispImage { get; set; }
 
         /// <summary>
         /// SetupPsi() is called at application startup. It is responsible for
-        /// building and starting the Psi pipeline
+        /// building and starting the Psi pipeline.
         /// </summary>
         public void SetupPsi()
         {
@@ -39,7 +44,7 @@ namespace Microsoft.Psi.Samples.WpfSample
             this.pipeline = Pipeline.Create();
 
             // Next register an event handler to catch pipeline errors
-            this.pipeline.PipelineCompleted += this.Pipeline_PipelineCompleted;
+            this.pipeline.PipelineExceptionNotHandled += this.Pipeline_PipelineException;
 
             // Create our webcam
             Media.MediaCapture webcam = new Media.MediaCapture(this.pipeline, 1920, 1080, 30, true);
@@ -82,16 +87,13 @@ namespace Microsoft.Psi.Samples.WpfSample
         }
 
         /// <summary>
-        /// <see cref="Pipeline_PipelineCompleted"/> is called when the pipeline finishes running
+        /// <see cref="Pipeline_PipelineException"/> is called to handle exceptions thrown during pipeline execution.
         /// </summary>
-        /// <param name="sender">Object that sent this event</param>
-        /// <param name="e">Pipeline event arguments. Primarily used to get any pipeline errors back.</param>
-        private void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
+        /// <param name="sender">Object that sent this event.</param>
+        /// <param name="e">Pipeline exception event arguments. Primarily used to get any pipeline errors back.</param>
+        private void Pipeline_PipelineException(object sender, PipelineExceptionNotHandledEventArgs e)
         {
-            if (e.Errors.Count > 0)
-            {
-                MessageBox.Show("Error! " + e.Errors[0].Message);
-            }
+            MessageBox.Show("Error! " + e.Exception.Message);
         }
     }
 }

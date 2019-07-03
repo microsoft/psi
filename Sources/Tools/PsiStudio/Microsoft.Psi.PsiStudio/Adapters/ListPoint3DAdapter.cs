@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of lists of MathNet.Spatial.Eudlidean.Point3Ds into lists of System.Windows.Media.Media32.Point3Ds
+    /// Used to adapt streams of lists of MathNet.Spatial.Eudlidean.Point3Ds into lists of System.Windows.Media.Media32.Point3Ds.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class ListPoint3DAdapter : StreamAdapter<List<Point3D>, List<System.Windows.Media.Media3D.Point3D>>

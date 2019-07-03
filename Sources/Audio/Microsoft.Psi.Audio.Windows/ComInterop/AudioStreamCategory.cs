@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Audio.ComInterop
 {
     /// <summary>
-    /// Audio stream categories enumeration (defined in AudioSessionTypes.h)
+    /// Audio stream categories enumeration (defined in AudioSessionTypes.h).
     /// </summary>
     internal enum AudioStreamCategory
     {
@@ -66,6 +66,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// Music, Streaming audio
         /// </summary>
-        Media = 11
+        Media = 11,
     }
 }

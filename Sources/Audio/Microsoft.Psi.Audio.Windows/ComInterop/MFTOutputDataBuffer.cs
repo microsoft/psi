@@ -6,28 +6,28 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// MFT_OUTPUT_DATA_BUFFER structure (defined in Mftransform.h)
+    /// MFT_OUTPUT_DATA_BUFFER structure (defined in Mftransform.h).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct MFTOutputDataBuffer
     {
         /// <summary>
-        /// dwStreamID
+        /// dwStreamID.
         /// </summary>
         internal int StreamID;
 
         /// <summary>
-        /// pSample
+        /// pSample.
         /// </summary>
         internal IMFSample Sample;
 
         /// <summary>
-        /// dwStatus
+        /// dwStatus.
         /// </summary>
         internal int Status;
 
         /// <summary>
-        /// pEvents
+        /// pEvents.
         /// </summary>
         internal IMFCollection Events;
     }

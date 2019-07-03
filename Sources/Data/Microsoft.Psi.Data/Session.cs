@@ -142,7 +142,7 @@ namespace Microsoft.Psi.Data
         /// <param name="overwrite">Flag indicating whether the partition should be overwritten. Default is false.</param>
         /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
         /// <param name="outputPartitionPath">The path of the output partition. Default is null.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us</param>
+        /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
         /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
@@ -291,10 +291,10 @@ namespace Microsoft.Psi.Data
         /// Due to the runtime's asynchronous behaviour, we may try to
         /// delete our test directory before the runtime has finished
         /// messing with it.  This method will keep trying to delete
-        /// the directory until the runtime shuts down
+        /// the directory until the runtime shuts down.
         /// </summary>
-        /// <param name="path">The path to the Directory to be deleted</param>
-        /// <param name="recursive">Delete all subdirectories and files</param>
+        /// <param name="path">The path to the Directory to be deleted.</param>
+        /// <param name="recursive">Delete all subdirectories and files.</param>
         private void SafeDirectoryDelete(string path, bool recursive)
         {
             for (int iteration = 0; iteration < 10; iteration++)

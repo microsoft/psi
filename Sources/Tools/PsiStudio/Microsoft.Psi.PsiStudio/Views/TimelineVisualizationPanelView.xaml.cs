@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Visualization.Views
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Interaction logic for TimelineVisualizationPanelView.xaml
+    /// Interaction logic for TimelineVisualizationPanelView.xaml.
     /// </summary>
     public partial class TimelineVisualizationPanelView : UserControl
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Visualization.Views
         {
             None,
             PanelReorder,
-            TimelineScroll
+            TimelineScroll,
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Psi.Visualization.Views
         private TimelineVisualizationPanel VisualizationPanel => this.DataContext as TimelineVisualizationPanel;
 
         /// <summary>
-        /// Signals to the panel that a drag and drop operation it may have initiated has been completed
+        /// Signals to the panel that a drag and drop operation it may have initiated has been completed.
         /// </summary>
         public void FinishDragDrop()
         {
@@ -93,6 +93,7 @@ namespace Microsoft.Psi.Visualization.Views
             else
             {
                 this.currentDragOperation = DragOperation.None;
+                this.Cursor = Cursors.Arrow;
             }
 
             this.lastMousePosition = mousePosition;
@@ -105,7 +106,7 @@ namespace Microsoft.Psi.Visualization.Views
             // operation, otherwise we'll begin a Visualization Panel reorder operation
             if (this.IsHorizontalDrag(mousePosition))
             {
-                // Only drag the timeline of the navigator is currently paused
+                // Only drag the timeline if the navigator is currently paused
                 if (PsiStudioContext.Instance.VisualizationContainer.Navigator.CursorMode == CursorMode.Manual)
                 {
                     this.currentDragOperation = DragOperation.TimelineScroll;

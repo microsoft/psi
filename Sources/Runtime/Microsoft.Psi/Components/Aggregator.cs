@@ -8,9 +8,9 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// A stateful transform.
     /// </summary>
-    /// <typeparam name="TState">The state type</typeparam>
-    /// <typeparam name="TIn">The input message type</typeparam>
-    /// <typeparam name="TOut">The output message type</typeparam>
+    /// <typeparam name="TState">The state type.</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
+    /// <typeparam name="TOut">The output message type.</typeparam>
     public class Aggregator<TState, TIn, TOut> : ConsumerProducer<TIn, TOut>, IDisposable
     {
         private Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator;

@@ -75,7 +75,7 @@ namespace Microsoft.Psi.Data
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.Auto,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 });
             using (var jsonFile = File.OpenText(filename))
             using (var jsonReader = new JsonTextReader(jsonFile))
@@ -152,7 +152,7 @@ namespace Microsoft.Psi.Data
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.Auto,
-                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 });
             using (var jsonFile = File.CreateText(filename))
             using (var jsonWriter = new JsonTextWriter(jsonFile))
@@ -223,7 +223,7 @@ namespace Microsoft.Psi.Data
         /// <param name="overwrite">Flag indicating whether the partition should be overwritten. Default is false.</param>
         /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
         /// <param name="outputStorePath">The path of the output data store. Default is null.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us</param>
+        /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync(
@@ -254,7 +254,7 @@ namespace Microsoft.Psi.Data
         /// <param name="overwrite">Flag indicating whether the partition should be overwritten.</param>
         /// <param name="outputStoreName">The name of the output data store.</param>
         /// <param name="outputPathFunction">A function to determine output path from the given Session.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us</param>
+        /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
         /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
@@ -290,7 +290,7 @@ namespace Microsoft.Psi.Data
         /// <param name="overwrite">Flag indicating whether the partition should be overwritten.</param>
         /// <param name="outputStoreName">The name of the output data store.</param>
         /// <param name="outputPathFunction">A function to determine output path from the given Session.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us</param>
+        /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
         /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
@@ -332,7 +332,7 @@ namespace Microsoft.Psi.Data
         /// <param name="overwrite">Flag indicating whether the partition should be overwritten. Default is false.</param>
         /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
         /// <param name="outputStorePath">The path of the output data store. Default is null.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us</param>
+        /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync<TParameter>(

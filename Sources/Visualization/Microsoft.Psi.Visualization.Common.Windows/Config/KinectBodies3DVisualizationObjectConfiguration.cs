@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to show tracking billboards
+        /// Gets or sets a value indicating whether to show tracking billboards.
         /// </summary>
         [DataMember]
         public bool ShowTrackingBillboards

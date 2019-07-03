@@ -15,21 +15,21 @@ namespace Microsoft.Psi.Visualization.Extensions
     public static class VisualizationExtensions
     {
         /// <summary>
-        /// Converts stream of enumerables of T to a stream of arrays of T,
+        /// Converts stream of enumerables of T to a stream of arrays of T.
         /// </summary>
         /// <typeparam name="T">The type of enumerable elements.</typeparam>
-        /// <typeparam name="EnumerableT">The type of enumerable.</typeparam>
+        /// <typeparam name="TEnumerable">The type of enumerable.</typeparam>
         /// <param name="source">The stream of enumerables of T.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted array of T.</returns>
-        public static IProducer<T[]> ToArray<T, EnumerableT>(this IProducer<EnumerableT> source, DeliveryPolicy deliveryPolicy = null)
-            where EnumerableT : IEnumerable<T>
+        public static IProducer<T[]> ToArray<T, TEnumerable>(this IProducer<TEnumerable> source, DeliveryPolicy deliveryPolicy = null)
+            where TEnumerable : IEnumerable<T>
         {
             return source.Select(s => s.ToArray(), deliveryPolicy);
         }
 
         /// <summary>
-        /// Converts stream of dictionarys of TKey and TValue to a stream of collections of TValue
+        /// Converts stream of dictionarys of TKey and TValue to a stream of collections of TValue.
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <typeparam name="TValue">The type of dictionary values.</typeparam>
@@ -42,7 +42,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Converts stream of dictionarys of 2d points to a stream of list of named points
+        /// Converts stream of dictionarys of 2d points to a stream of list of named points.
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <param name="source">The stream of dictionarys of 2d points.</param>
@@ -54,7 +54,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Converts stream of dictionarys of rectangles to a stream of list of named rectangles
+        /// Converts stream of dictionarys of rectangles to a stream of list of named rectangles.
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <param name="source">The stream of dictionarys of rectangles.</param>

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Converters
 
     /// <summary>
     /// Provides a way to apply custom logic to a binding.
-    /// Specifically, converting from a <see cref="ScatterRectangleVisualizationObject"/> to a <see cref="SolidColorBrush"/>
+    /// Specifically, converting from a <see cref="ScatterRectangleVisualizationObject"/> to a <see cref="SolidColorBrush"/>.
     /// </summary>
     public class VisualizationObjectToColorConverter : IValueConverter
     {

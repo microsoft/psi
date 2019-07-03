@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Audio.ComInterop
 {
     /// <summary>
-    /// MF_ATTRIBUTES_MATCH_TYPE enum (defined in mfobjects.h)
+    /// MF_ATTRIBUTES_MATCH_TYPE enum (defined in mfobjects.h).
     /// </summary>
     internal enum MFAttributesMatchType
     {

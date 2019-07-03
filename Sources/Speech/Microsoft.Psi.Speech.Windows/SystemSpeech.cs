@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Speech
                 intentList.Add(new Intent()
                 {
                     Value = semanticValue.Value.ToString(),
-                    Score = semanticValue.Confidence
+                    Score = semanticValue.Confidence,
                 });
             }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Speech
                 intentList.Add(new Intent()
                 {
                     Value = entry.Key,
-                    Score = entry.Value.Confidence
+                    Score = entry.Value.Confidence,
                 });
             }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Psi.Speech
             return new IntentData()
             {
                 Intents = intentList.ToArray(),
-                Entities = entityList.ToArray()
+                Entities = entityList.ToArray(),
             };
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Psi.Speech
                 {
                     Grammar grammar = new Grammar(grammarInfo.FileName)
                     {
-                        Name = grammarInfo.Name
+                        Name = grammarInfo.Name,
                     };
                     recognizer.LoadGrammar(grammar);
                 }
@@ -98,7 +98,7 @@ namespace Microsoft.Psi.Speech
                     {
                         Type = entry.Key,
                         Value = (string)entry.Value.Value,
-                        Score = entry.Value.Confidence
+                        Score = entry.Value.Confidence,
                     });
                 }
                 else

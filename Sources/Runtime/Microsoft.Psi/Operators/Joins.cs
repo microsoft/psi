@@ -9,7 +9,7 @@ namespace Microsoft.Psi
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Extension methods that simplify operator usage
+    /// Extension methods that simplify operator usage.
     /// </summary>
     public static partial class Operators
     {
@@ -42,7 +42,7 @@ namespace Microsoft.Psi
                 primary,
                 new[] { secondary },
                 interpolator,
-                (m, sArr) => outputCreator(m, sArr[0]),
+                (m, secondaryArray) => outputCreator(m, secondaryArray[0]),
                 primaryDeliveryPolicy,
                 secondaryDeliveryPolicy,
                 pipeline);
@@ -601,7 +601,6 @@ namespace Microsoft.Psi
         /// <summary>
         /// Join with values from a secondary stream.
         /// </summary>
-        /// <remarks>Uses `Match.Exact` interpolator.</remarks>
         /// <typeparam name="TPrimaryItem1">Type of item 1 of primary messages.</typeparam>
         /// <typeparam name="TPrimaryItem2">Type of item 2 of primary messages.</typeparam>
         /// <typeparam name="TPrimaryItem3">Type of item 3 of primary messages.</typeparam>
@@ -626,7 +625,7 @@ namespace Microsoft.Psi
             return Join(
                 primary,
                 secondary,
-                Match.Exact<TSecondary>(),
+                Match.Best<TSecondary>(matchTolerance),
                 (p, s) => ValueTuple.Create(p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s),
                 primaryDeliveryPolicy,
                 secondaryDeliveryPolicy,
@@ -1535,10 +1534,10 @@ namespace Microsoft.Psi
                     inputs.First(),
                     inputs.Skip(1),
                     interpolator,
-                    (m, sArr) =>
+                    (m, secondaryArray) =>
                     {
                         buffer[0] = m;
-                        Array.Copy(sArr, 0, buffer, 1, count - 1);
+                        Array.Copy(secondaryArray, 0, buffer, 1, count - 1);
                         return buffer;
                     },
                     primaryDeliveryPolicy,

@@ -15,22 +15,22 @@ namespace Microsoft.Psi.Visualization.Config
         /// <summary>
         /// Height of rectangle.
         /// </summary>
-        private float height;
+        private float height = 1080;
 
         /// <summary>
         /// The color of the line to draw.
         /// </summary>
-        private Color color;
+        private Color color = Color.FromArgb(255, 70, 85, 198);
 
         /// <summary>
         /// Stroke thickness to draw data stream with.
         /// </summary>
-        private double lineWidth;
+        private double lineWidth = 1;
 
         /// <summary>
         /// Width of rectangle.
         /// </summary>
-        private float width;
+        private float width = 1920;
 
         /// <summary>
         /// Gets or sets the height.

@@ -1331,6 +1331,6 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Extensible WAVEFORMATEX structure (see <see cref="WaveFormatEx"/>).
         /// </summary>
-        WAVE_FORMAT_EXTENSIBLE = 0xFFFE // Microsoft
+        WAVE_FORMAT_EXTENSIBLE = 0xFFFE, // Microsoft
     }
 }

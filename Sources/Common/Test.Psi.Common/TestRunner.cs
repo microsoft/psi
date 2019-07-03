@@ -12,13 +12,16 @@ namespace Test.Psi.Common
     using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Test runner.
+    /// </summary>
     public class TestRunner
     {
         /// <summary>
         /// Runs the specified test cases , or all the tests in the current assembly if no arguments are specified.
         /// It can also run static methods that are not marked with the TestMethod attribute, if the method name is prefixed with "!" in the argument string (the "!" is dropped before searching for the method).
         /// </summary>
-        /// <param name="args">Command-line arguments (e.g. individual test names)</param>
+        /// <param name="args">Command-line arguments (e.g. individual test names).</param>
         public static void RunAll(string[] args)
         {
             if (args.Length > 0)
@@ -38,9 +41,9 @@ namespace Test.Psi.Common
         }
 
         /// <summary>
-        /// Runs all the tests, just like the Test Explorer
+        /// Runs all the tests, just like the Test Explorer.
         /// </summary>
-        /// <param name="nameSubstring">If specified, only the test suites containing this substring are executed</param>
+        /// <param name="nameSubstring">If specified, only the test suites containing this substring are executed.</param>
         public static void RunAll(string nameSubstring = "")
         {
             int passed = 0;
@@ -195,10 +198,10 @@ namespace Test.Psi.Common
         /// Due to the runtime's asynchronous behaviour, we may try to
         /// delete our test directory before the runtime has finished
         /// messing with it.  This method will keep trying to delete
-        /// the directory until the runtime shuts down
+        /// the directory until the runtime shuts down.
         /// </summary>
-        /// <param name="path">The path to the Directory to be deleted</param>
-        /// <param name="recursive">Delete all subdirectories and files</param>
+        /// <param name="path">The path to the Directory to be deleted.</param>
+        /// <param name="recursive">Delete all subdirectories and files.</param>
         public static void SafeDirectoryDelete(string path, bool recursive)
         {
             for (int iteration = 0; iteration < 10; iteration++)
@@ -224,7 +227,7 @@ namespace Test.Psi.Common
         /// runtime, we may try to delete our test files before they have finished closing.
         /// This method will keep trying to delete the file for a limited number of attempts.
         /// </summary>
-        /// <param name="path">The path to the file to be deleted</param>
+        /// <param name="path">The path to the file to be deleted.</param>
         public static void SafeFileDelete(string path)
         {
             for (int iteration = 0; iteration < 10; iteration++)

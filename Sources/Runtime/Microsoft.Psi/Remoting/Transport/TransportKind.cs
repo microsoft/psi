@@ -24,6 +24,6 @@ namespace Microsoft.Psi.Remoting
         /// Named Pipes protocol.
         /// </summary>
         /// <remarks>No packet loss. Supports security.</remarks>
-        NamedPipes
+        NamedPipes,
     }
 }

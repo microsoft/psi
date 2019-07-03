@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Arrays
         /// Initializes a new instance of the <see cref="RangeIndexDefinition"/> class.
         /// </summary>
         /// <param name="size">The size of the 0-based range.</param>
-        /// <param name="elementStride">The spacing between consecutive cvalues of the index</param>
+        /// <param name="elementStride">The spacing between consecutive cvalues of the index.</param>
         public RangeIndexDefinition(int size, int elementStride = 1)
             : this(new Range(0, size - 1), elementStride)
         {
@@ -27,8 +27,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="RangeIndexDefinition"/> class.
         /// </summary>
-        /// <param name="range">The possible range of values</param>
-        /// <param name="elementStride">The spacing between consecutive cvalues of the index</param>
+        /// <param name="range">The possible range of values.</param>
+        /// <param name="elementStride">The spacing between consecutive cvalues of the index.</param>
         public RangeIndexDefinition(Range range, int elementStride = 1)
             : base(range.Size, elementStride)
         {
@@ -36,12 +36,12 @@ namespace Microsoft.Psi.Arrays
         }
 
         /// <summary>
-        /// Gets the first valid value in the range
+        /// Gets the first valid value in the range.
         /// </summary>
         public int Start => this.range.Start;
 
         /// <summary>
-        /// Gets the last valid value in the range
+        /// Gets the last valid value in the range.
         /// </summary>
         public int End => this.range.End;
 
@@ -62,8 +62,8 @@ namespace Microsoft.Psi.Arrays
         /// Example: if the index definition is [100-200], then index[1] == 101.
         /// Note: the returned value needs to be multiplied by <see cref="IndexDefinition.ElementStride"/> to obtain an absolute value.
         /// </summary>
-        /// <param name="index">The index value to use</param>
-        /// <returns>The domain-relative value</returns>
+        /// <param name="index">The index value to use.</param>
+        /// <returns>The domain-relative value.</returns>
         public override int this[int index]
         {
             get
@@ -80,8 +80,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Takes a subset of the current index definition, expressed as a relative range within the [0, Count-1] range.
         /// </summary>
-        /// <param name="subRange">The range of relative index values to take. Must be a subset of [0, Count-1]</param>
-        /// <returns>An index definition for the specified range</returns>
+        /// <param name="subRange">The range of relative index values to take. Must be a subset of [0, Count-1].</param>
+        /// <returns>An index definition for the specified range.</returns>
         public override IndexDefinition Slice(Range subRange)
         {
             if (subRange == Range.All)
@@ -102,8 +102,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Takes a subset of the current index definition, expressed as a discrete set of relative values in [0, Count-1] range.
         /// </summary>
-        /// <param name="values">The set of relative index values to take. The values must be in the [0, Count-1] range</param>
-        /// <returns>An index definition for the specified range</returns>
+        /// <param name="values">The set of relative index values to take. The values must be in the [0, Count-1] range.</param>
+        /// <returns>An index definition for the specified range.</returns>
         public override IndexDefinition Take(params int[] values)
         {
             int sign = this.range.IsIncreasing ? 1 : -1;
@@ -127,9 +127,9 @@ namespace Microsoft.Psi.Arrays
         /// - the subdimension size is the same as the stride of this definition, and
         /// - the two definitions have the same direction.
         /// </summary>
-        /// <param name="subdimension">A subdimension of the current index</param>
-        /// <param name="combinedDefinition">The resulting combined definition, if any</param>
-        /// <returns>True if the two dimensions can be combined, false otherwise</returns>
+        /// <param name="subdimension">A subdimension of the current index.</param>
+        /// <param name="combinedDefinition">The resulting combined definition, if any.</param>
+        /// <returns>True if the two dimensions can be combined, false otherwise.</returns>
         internal override bool TryReduce(IndexDefinition subdimension, out IndexDefinition combinedDefinition)
         {
             if (subdimension == null && this.ElementStride == 1)

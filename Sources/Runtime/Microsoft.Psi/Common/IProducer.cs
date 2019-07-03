@@ -4,9 +4,9 @@
 namespace Microsoft.Psi
 {
     /// <summary>
-    /// Components that implement this interface are simple, single output generators
+    /// Components that implement this interface are simple, single output generators.
     /// </summary>
-    /// <typeparam name="TOut">The type of the component output</typeparam>
+    /// <typeparam name="TOut">The type of the component output.</typeparam>
     public interface IProducer<TOut>
     {
         /// <summary>

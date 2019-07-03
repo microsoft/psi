@@ -13,9 +13,9 @@ namespace Microsoft.Psi.Interop.Serialization
         /// <summary>
         /// Serialize single message with originating time stamp.
         /// </summary>
-        /// <param name="message">Message of any type</param>
-        /// <param name="originatingTime">Originating time of message</param>
-        /// <returns>Serialized bytes, index and count</returns>
+        /// <param name="message">Message of any type.</param>
+        /// <param name="originatingTime">Originating time of message.</param>
+        /// <returns>Serialized bytes, index and count.</returns>
         (byte[], int, int) SerializeMessage(dynamic message, DateTime originatingTime);
     }
 }

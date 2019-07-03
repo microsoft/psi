@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Audio
     internal static class LinuxAudioInterop
     {
         /// <summary>
-        /// Audio device mode
+        /// Audio device mode.
         /// </summary>
         internal enum Mode
         {
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Audio device access
+        /// Audio device access.
         /// </summary>
         internal enum Access
         {
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Audio device format
+        /// Audio device format.
         /// </summary>
         internal enum Format
         {
@@ -300,7 +300,7 @@ namespace Microsoft.Psi.Audio
         /// Only 8-, 16- and 32-bit PCM and 32- or 64-bit float are supported.
         /// </remarks>
         /// <param name="configFormat">Audio format.</param>
-        /// <returns>Converted interop `Format`</returns>
+        /// <returns>Converted interop `Format`.</returns>
         internal static Format ConvertFormat(WaveFormat configFormat)
         {
             switch (configFormat.FormatTag)
@@ -337,13 +337,13 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Open audio device.
         /// </summary>
-        /// <param name="name">Device name (e.g. "plughw:0,0")</param>
-        /// <param name="mode">Device mode</param>
-        /// <param name="rate">Data block rate (Hz)</param>
-        /// <param name="channels">Number of channels</param>
-        /// <param name="format">Data format</param>
-        /// <param name="access">Device access</param>
-        /// <returns>Device handle</returns>
+        /// <param name="name">Device name (e.g. "plughw:0,0").</param>
+        /// <param name="mode">Device mode.</param>
+        /// <param name="rate">Data block rate (Hz).</param>
+        /// <param name="channels">Number of channels.</param>
+        /// <param name="format">Data format.</param>
+        /// <param name="access">Device access.</param>
+        /// <returns>Device handle.</returns>
         internal static unsafe AudioDevice Open(string name, Mode mode, int rate = 44100, int channels = 1, Format format = Format.S16LE, Access access = Access.Interleaved)
         {
             void* handle;
@@ -404,9 +404,9 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Read block from device.
         /// </summary>
-        /// <param name="device">Device handle</param>
-        /// <param name="buffer">Buffer into which to read</param>
-        /// <param name="blockSize">Block size</param>
+        /// <param name="device">Device handle.</param>
+        /// <param name="buffer">Buffer into which to read.</param>
+        /// <param name="blockSize">Block size.</param>
         internal static unsafe void Read(AudioDevice device, byte[] buffer, int blockSize)
         {
             fixed (void* bufferPtr = buffer)
@@ -430,11 +430,11 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Write block to device.
         /// </summary>
-        /// <param name="device">Device handle</param>
-        /// <param name="buffer">Buffer to be written</param>
-        /// <param name="blockSize">Block size</param>
-        /// <param name="offset">Offset into buffer from which to start writing data</param>
-        /// <returns>Number of frames (1 frame=1 sample from each channel) written</returns>
+        /// <param name="device">Device handle.</param>
+        /// <param name="buffer">Buffer to be written.</param>
+        /// <param name="blockSize">Block size.</param>
+        /// <param name="offset">Offset into buffer from which to start writing data.</param>
+        /// <returns>Number of frames (1 frame=1 sample from each channel) written.</returns>
         internal static unsafe int Write(AudioDevice device, byte[] buffer, int blockSize, int offset = 0)
         {
             long err = 0;
@@ -461,7 +461,7 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Close device.
         /// </summary>
-        /// <param name="device">Device handle</param>
+        /// <param name="device">Device handle.</param>
         internal static unsafe void Close(AudioDevice device)
         {
             if (CloseHandle(device.Handle) != 0)
@@ -521,7 +521,7 @@ namespace Microsoft.Psi.Audio
             /// <summary>
             /// Initializes a new instance of the <see cref="AudioDevice"/> class.
             /// </summary>
-            /// <param name="handle">Device handle pointer</param>
+            /// <param name="handle">Device handle pointer.</param>
             public unsafe AudioDevice(void* handle)
             {
                 this.Handle = handle;

@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// IPropertyStore COM interface (defined in Propsys.h)
+    /// IPropertyStore COM interface (defined in Propsys.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IPropertyStoreIIDString)]

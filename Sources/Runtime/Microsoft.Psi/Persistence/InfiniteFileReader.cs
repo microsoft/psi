@@ -102,13 +102,13 @@ namespace Microsoft.Psi.Persistence
         /// If false, use <see cref="IsMoreDataExpected"/> to determine if there could ever be more data
         /// (i.e. if a writer is still active).
         /// </summary>
-        /// <returns>True if more data is present, false if no more data is available</returns>
+        /// <returns>True if more data is present, false if no more data is available.</returns>
         public bool HasMoreData() => this.mappedFile == null || this.remainingBlockSize != 0 || *(int*)(this.startPointer + this.currentPosition) != 0;
 
         /// <summary>
-        /// Prepares to read the next message if one is present
+        /// Prepares to read the next message if one is present.
         /// </summary>
-        /// <returns>True if a message exists, false if no message is present</returns>
+        /// <returns>True if a message exists, false if no message is present.</returns>
         public bool MoveNext()
         {
             if (this.startPointer == null)

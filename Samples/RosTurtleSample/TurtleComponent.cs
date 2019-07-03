@@ -7,14 +7,21 @@ namespace TurtleROSSample
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
+    /// <summary>
+    /// Turtle ROS bridge component.
+    /// </summary>
     public class TurtleComponent : ISourceComponent
     {
         private readonly Pipeline pipeline;
         private readonly Turtle turtle;
 
-        private Action<DateTime> notifyCompletionTime;
         private bool stopped;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TurtleComponent"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which component belongs.</param>
+        /// <param name="turtle">Turtle ROS bridge instance.</param>
         public TurtleComponent(Pipeline pipeline, Turtle turtle)
         {
             this.pipeline = pipeline;
@@ -23,23 +30,37 @@ namespace TurtleROSSample
             this.PoseChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PoseChanged));
         }
 
+        /// <summary>
+        /// Gets velocity receiver.
+        /// </summary>
         public Receiver<Tuple<float, float>> Velocity { get; private set; }
 
+        /// <summary>
+        /// Gets pose changed emitter.
+        /// </summary>
         public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
 
+        /// <inheritdoc/>
         public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.notifyCompletionTime = notifyCompletionTime;
+            notifyCompletionTime(DateTime.MaxValue);
             this.turtle.Connect();
             this.turtle.PoseChanged += this.OnPoseChanged;
         }
 
-        public void Stop()
+        /// <inheritdoc/>
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
-            this.stopped = true;
-            this.turtle.Disconnect();
-            this.turtle.PoseChanged -= this.OnPoseChanged;
-            this.notifyCompletionTime(this.pipeline.GetCurrentTime());
+            try
+            {
+                this.stopped = true;
+                this.turtle.Disconnect();
+                this.turtle.PoseChanged -= this.OnPoseChanged;
+            }
+            finally
+            {
+                notifyCompleted();
+            }
         }
 
         private void OnPoseChanged(object sender, Tuple<float, float, float> pose)

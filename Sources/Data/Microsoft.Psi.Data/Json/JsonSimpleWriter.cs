@@ -21,9 +21,9 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSimpleWriter"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store.</param>
         /// <param name="extension">The extension for the underlying file.</param>
         public JsonSimpleWriter(string name, string path, bool createSubdirectory = true, string extension = JsonStoreBase.DefaultExtension)
             : this(extension)
@@ -114,7 +114,7 @@ namespace Microsoft.Psi.Data.Json
             {
                 foreach (var streamWriter in streamWriters)
                 {
-                    var(hasData, data, envelope) = streamWriter();
+                    var (hasData, data, envelope) = streamWriter();
                     if (hasData)
                     {
                         this.Writer.Write(data, envelope);

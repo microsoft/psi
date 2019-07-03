@@ -17,9 +17,9 @@ namespace Microsoft.Psi
     {
         private Pipeline parent;
         private Action<DateTime> notifyCompletionTime;
+        private Action notifyCompleted;
         private bool hasSourceComponents;
-        private bool stopping = false;
-        private bool finalizeComponents = false;
+        private bool completed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Subpipeline"/> class.
@@ -28,12 +28,12 @@ namespace Microsoft.Psi
         /// <param name="name">Subpipeline name (inherits "Sub<Parent>" name if unspecified)</Parent>.</param>
         /// <param name="deliveryPolicy">Pipeline-level delivery policy (inherits from parent if unspecified).</param>
         public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
-            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, new Scheduler(parent.Scheduler))
+            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, parent.Scheduler, new SchedulerContext(), parent.DiagnosticsCollector, parent.DiagnosticsInterval)
         {
             this.parent = parent;
 
             // ensures that the subpipeline is registered with the parent
-            parent.AddComponent(this);
+            this.parent.GetOrCreateNode(this);
         }
 
         /// <summary>
@@ -53,19 +53,25 @@ namespace Microsoft.Psi
         /// </summary>
         /// <remarks>This is called by the parent subpipeline, if any.</remarks>
         /// <param name="notifyCompletionTime">Delegate to call to notify of completion time.</param>
-        public void Start(Action<DateTime> notifyCompletionTime)
+        void ISourceComponent.Start(Action<DateTime> notifyCompletionTime)
         {
             this.notifyCompletionTime = notifyCompletionTime;
+            this.InitializeCompletionTimes();
 
             // start the subpipeline
-            this.RunAsync(this.parent.ReplayDescriptor);
-            this.InitializeCompletionTimes();
+            this.RunAsync(this.parent.ReplayDescriptor, this.parent.Clock);
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        void ISourceComponent.Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
-            this.StopComponents();
+            this.notifyCompleted = notifyCompleted;
+
+            // If this subpipeline has no source components or all sources have completed, notify parent.
+            if (!this.hasSourceComponents || this.completed)
+            {
+                this.notifyCompleted();
+            }
         }
 
         /// <summary>
@@ -88,87 +94,63 @@ namespace Microsoft.Psi
         /// <returns>Disposable used to terminate pipeline.</returns>
         public override IDisposable RunAsync(ReplayDescriptor descriptor)
         {
-            return this.RunAsync(descriptor, this.parent.Clock);
+            var node = this.parent.GetOrCreateNode(this);
+            node.Activate();
+
+            // We are starting this subpipeline by activating its associated node in
+            // the parent pipeline. Wait for activation to finish before returning.
+            this.Scheduler.PauseForQuiescence(this.parent.ActivationContext);
+
+            return this;
         }
 
         /// <summary>
-        /// Stop subpipeline.
+        /// Creates an input connector for a subpipeline.
         /// </summary>
-        /// <param name="finalOriginatingTime">Originating time of final message scheduled.</param>
-        public void Stop(DateTime finalOriginatingTime)
+        /// <typeparam name="T">The type of messages for the input connector.</typeparam>
+        /// <param name="fromPipeline">The pipeline from which the input connector receives data.</param>
+        /// <param name="name">The name of the input connector.</param>
+        /// <returns>The newly created input connector.</returns>
+        public Connector<T> CreateInputConnectorFrom<T>(Pipeline fromPipeline, string name)
         {
-            if (finalOriginatingTime > this.FinalOriginatingTime)
+            if (fromPipeline == this)
             {
-                this.FinalOriginatingTime = finalOriginatingTime;
+                throw new ArgumentException("Input connections cannot be formed from self.");
             }
 
-            this.Final();
+            return new Connector<T>(fromPipeline, this, name);
         }
 
         /// <summary>
-        /// Finalize subpipeline.
+        /// Creates an output connector for a subpipeline.
         /// </summary>
-        public void Final()
+        /// <typeparam name="T">The type of messages for the output connector.</typeparam>
+        /// <param name="toPipeline">The pipeline to which the output connector sends data.</param>
+        /// <param name="name">The name of the output connector.</param>
+        /// <returns>The newly created output connector.</returns>
+        public Connector<T> CreateOutputConnectorTo<T>(Pipeline toPipeline, string name)
         {
-            this.finalizeComponents = true;
-            this.Stop(false);
-            this.Complete(true);
+            if (this == toPipeline)
+            {
+                throw new ArgumentException("Output connections cannot be formed to self.");
+            }
+
+            return new Connector<T>(this, toPipeline, name);
         }
 
-        internal override bool NotifyCompletionTime(PipelineElement component, DateTime finalOriginatingTime)
+        internal override void NotifyCompletionTime(PipelineElement component, DateTime finalOriginatingTime)
         {
-            var onlyInfiniteRemaining = base.NotifyCompletionTime(component, finalOriginatingTime);
-            if (onlyInfiniteRemaining)
+            this.CompleteComponent(component, finalOriginatingTime);
+
+            if (this.NoRemainingCompletableComponents.WaitOne(0))
             {
-                // only infinite children remain, notify that subpipeline itself is infinite
-                this.notifyCompletionTime(DateTime.MaxValue);
+                // no more components pending completion - notify the parent pipeline of the subpipeline's completion time
+                this.notifyCompletionTime(this.LatestSourceCompletionTime > DateTime.MinValue ? this.LatestSourceCompletionTime : DateTime.MaxValue);
+                this.completed = true;
+
+                // additionally notify completed if we have already been requested by the pipeline to stop
+                this.notifyCompleted?.Invoke();
             }
-
-            return onlyInfiniteRemaining;
-        }
-
-        /// <summary>
-        /// Stops the pipeline by disabling message passing between the pipeline components.
-        /// The pipeline configuration is not changed and the pipeline can be restarted later.
-        /// </summary>
-        /// <param name="abandonPendingWorkitems">Abandons the pending work items</param>
-        protected override void Stop(bool abandonPendingWorkitems = false)
-        {
-            if (this.stopping)
-            {
-                this.Completed.WaitOne();
-                return;
-            }
-
-            this.stopping = true;
-
-            if (this.finalizeComponents)
-            {
-                this.Scheduler.NotifyPipelineFinalizing(this.FinalOriginatingTime == DateTime.MinValue ? this.GetCurrentTime() : this.FinalOriginatingTime);
-            }
-
-            // stop components
-            var stopped = false;
-            do
-            {
-                stopped = this.StopComponents() > 0;
-                this.PauseForQuiescence();
-            }
-            while (stopped);
-
-            if (this.finalizeComponents)
-            {
-                this.FinalizeComponents();
-                this.PauseForQuiescence();
-                this.Scheduler.Stop(abandonPendingWorkitems);
-            }
-
-            if (this.hasSourceComponents)
-            {
-                this.notifyCompletionTime(this.GetCurrentTime());
-            }
-
-            this.Completed.Set();
         }
 
         private void InitializeCompletionTimes()

@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Imaging
         /// This method sets the compression method which will be used by
         /// Serialize/Deserialize.
         /// </summary>
-        /// <param name="method">Type of compression to use</param>
+        /// <param name="method">Type of compression to use.</param>
         public void Initialize(Image.CustomSerializer.CompressionMethod method)
         {
             this.compressionMethod = method;
@@ -28,11 +28,11 @@ namespace Microsoft.Psi.Imaging
 
         /// <summary>
         /// Given an image and stream, this method will compress the image using
-        /// the compression method set in Initialize()
+        /// the compression method set in Initialize().
         /// </summary>
-        /// <param name="writer">Stream to write compressed image to</param>
-        /// <param name="instance">Image to be compressed</param>
-        /// <param name="context">Serialization context</param>
+        /// <param name="writer">Stream to write compressed image to.</param>
+        /// <param name="instance">Image to be compressed.</param>
+        /// <param name="context">Serialization context.</param>
         public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
         {
             BitmapEncoder encoder = null;
@@ -55,11 +55,11 @@ namespace Microsoft.Psi.Imaging
 
         /// <summary>
         /// Given an serialization stream, this method will decompress
-        /// an image from the stream and return the image via 'target'
+        /// an image from the stream and return the image via 'target'.
         /// </summary>
-        /// <param name="reader">Stream to read compressed image from</param>
-        /// <param name="target">Returns the decompressed image</param>
-        /// <param name="context">Serialization context</param>
+        /// <param name="reader">Stream to read compressed image from.</param>
+        /// <param name="target">Returns the decompressed image.</param>
+        /// <param name="context">Serialization context.</param>
         public void Deserialize(BufferReader reader, ref Image target, SerializationContext context)
         {
             Shared<EncodedImage> encodedImage = null;

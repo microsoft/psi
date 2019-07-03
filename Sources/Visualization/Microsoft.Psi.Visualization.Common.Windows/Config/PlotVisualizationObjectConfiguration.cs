@@ -16,61 +16,61 @@ namespace Microsoft.Psi.Visualization.Config
     public class PlotVisualizationObjectConfiguration : TimelineVisualizationObjectConfiguration
     {
         /// <summary>
-        /// The color of the line to draw
+        /// The color of the line to draw.
         /// </summary>
-        private Color color;
+        private Color color = Colors.LightGray;
 
         /// <summary>
         /// Stroke thickness to draw data stream with.
         /// </summary>
-        private double lineWidth;
+        private double lineWidth = 1;
 
         /// <summary>
-        /// How lines in the plot are interpolated from the points
+        /// How lines in the plot are interpolated from the points.
         /// </summary>
-        private InterpolationStyle interpolationStyle;
+        private InterpolationStyle interpolationStyle = InterpolationStyle.Direct;
 
         /// <summary>
-        /// The color of the marker to draw
+        /// The color of the marker to draw.
         /// </summary>
-        private Color markerColor;
+        private Color markerColor = Colors.LightGray;
 
         /// <summary>
-        /// The size of the marker to draw
+        /// The size of the marker to draw.
         /// </summary>
-        private double markerSize;
+        private double markerSize = 4;
 
         /// <summary>
-        /// The style of the marker to draw
+        /// The style of the marker to draw.
         /// </summary>
-        private MarkerStyle markerStyle;
+        private MarkerStyle markerStyle = MarkerStyle.None;
 
         /// <summary>
         /// The color in which to draw the data range.
         /// </summary>
-        private Color rangeColor;
+        private Color rangeColor = Colors.LightGray;
 
         /// <summary>
         /// Stroke thickness with which to draw the data range.
         /// </summary>
-        private double rangeWidth;
+        private double rangeWidth = 1;
 
         /// <summary>
-        /// The mode for the y axis
+        /// The mode for the y axis.
         /// </summary>
-        private AxisComputeMode yAxisComputeMode;
+        private AxisComputeMode yAxisComputeMode = AxisComputeMode.Auto;
 
         /// <summary>
-        /// The max value for the y axis
+        /// The max value for the y axis.
         /// </summary>
-        [DataMember] // serialize YMax property via its backing field
-        private double yMax;
+        [DataMember]
+        private double yMax = 0;
 
         /// <summary>
-        /// The min value for the y axis
+        /// The min value for the y axis.
         /// </summary>
-        [DataMember] // serialize YMin property via its backing field
-        private double yMin;
+        [DataMember]
+        private double yMin = 0;
 
         /// <summary>
         /// Gets or sets the line color.
@@ -123,7 +123,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the marker style
+        /// Gets or sets the marker style.
         /// </summary>
         [DataMember]
         public MarkerStyle MarkerStyle
@@ -153,7 +153,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the y axis compute mode
+        /// Gets or sets the y axis compute mode.
         /// </summary>
         [DataMember]
         public AxisComputeMode YAxisComputeMode
@@ -163,7 +163,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the y max value
+        /// Gets or sets the y max value.
         /// </summary>
         [IgnoreDataMember] // property has side effects so serialize its backing field instead
         public double YMax
@@ -177,7 +177,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the y min value
+        /// Gets or sets the y min value.
         /// </summary>
         [IgnoreDataMember] // property has side effects so serialize its backing field instead
         public double YMin

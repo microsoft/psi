@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Text;
 
     /// <summary>
-    /// IMFMediaType COM interface (defined in Mfobjects.h)
+    /// IMFMediaType COM interface (defined in Mfobjects.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMFMediaTypeIIDString)]

@@ -12,15 +12,15 @@ namespace Microsoft.Psi.Interop.Transport
     /// <summary>
     /// Persisted file source component.
     /// </summary>
-    /// <typeparam name="T">Message type</typeparam>
+    /// <typeparam name="T">Message type.</typeparam>
     public class FileSource<T> : Generator<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileSource{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs</param>
-        /// <param name="filename">File name to which to persist</param>
-        /// <param name="deserializer">Format serializer with which messages are deserialized</param>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="filename">File name to which to persist.</param>
+        /// <param name="deserializer">Format serializer with which messages are deserialized.</param>
         public FileSource(Pipeline pipeline, string filename, IPersistentFormatDeserializer deserializer)
             : base(pipeline, EnumerateFile(pipeline, filename, deserializer))
         {

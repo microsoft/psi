@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Interop.Serialization
         /// Deserialize stream of messages and originating time stamps.
         /// </summary>
         /// <param name="stream">Stream of serialized message data.</param>
-        /// <returns>Sequence of dynamic of primitive or IEnumerable/ExpandoObject of primitive as well as originating time stamp</returns>
+        /// <returns>Sequence of dynamic of primitive or IEnumerable/ExpandoObject of primitive as well as originating time stamp.</returns>
         IEnumerable<(dynamic, DateTime)> DeserializeRecords(Stream stream);
     }
 }

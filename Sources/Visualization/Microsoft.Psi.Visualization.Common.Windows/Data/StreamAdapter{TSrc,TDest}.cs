@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamAdapter{TSrc, TDest}"/> class.
         /// </summary>
-        /// <param name="adapter">Adapter function</param>
+        /// <param name="adapter">Adapter function.</param>
         protected StreamAdapter(Func<TSrc, Envelope, TDest> adapter)
         {
             this.adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));

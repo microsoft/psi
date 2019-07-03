@@ -9,8 +9,8 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// A simple transform component.
     /// </summary>
-    /// <typeparam name="TIn">The input message type</typeparam>
-    /// <typeparam name="TOut">The output message type</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
+    /// <typeparam name="TOut">The output message type.</typeparam>
     public abstract class AsyncConsumerProducer<TIn, TOut> : IConsumerProducer<TIn, TOut>
     {
         /// <summary>

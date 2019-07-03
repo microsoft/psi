@@ -61,8 +61,8 @@ namespace Microsoft.Psi.Data.Annotations
         /// </summary>
         protected override void InitNew()
         {
-            base.InitNew();
             this.Reader = new AnnotationSimpleReader(this.StoreName, this.StorePath);
+            base.InitNew();
         }
     }
 }

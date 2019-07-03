@@ -13,12 +13,5 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public abstract class ImageVisualizationObjectBase<TData> : InstantVisualizationObject<TData, ImageVisualizationObjectBaseConfiguration>
     {
-        /// <inheritdoc />
-        protected override void InitNew()
-        {
-            base.InitNew();
-            this.Configuration.HorizontalFlip = false;
-            this.Configuration.StretchToFit = true;
-        }
     }
 }

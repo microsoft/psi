@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Windows
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for LoadingDatasetWindow.xaml
+    /// Interaction logic for LoadingDatasetWindow.xaml.
     /// </summary>
     public partial class LoadingDatasetWindow : Window
     {

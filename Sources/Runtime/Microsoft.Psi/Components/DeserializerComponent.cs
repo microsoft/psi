@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Deserializer optimized for streaming scenarios, where buffers and instances can be cached.
     /// </summary>
-    /// <typeparam name="T">The type of messages to serialize</typeparam>
+    /// <typeparam name="T">The type of messages to serialize.</typeparam>
     public sealed class DeserializerComponent<T> : ConsumerProducer<Message<BufferReader>, T>
     {
         private readonly SerializationContext context;
@@ -21,8 +21,8 @@ namespace Microsoft.Psi.Components
         /// Initializes a new instance of the <see cref="DeserializerComponent{T}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
-        /// <param name="serializers">A set of known serializers, or KnownSerializers.Default</param>
-        /// <param name="reusableInstance">An instance of type T to use as a deserialization buffer, or null / default(T) to let the component allocate one</param>
+        /// <param name="serializers">A set of known serializers, or KnownSerializers.Default.</param>
+        /// <param name="reusableInstance">An instance of type T to use as a deserialization buffer, or null / default(T) to let the component allocate one.</param>
         public DeserializerComponent(Pipeline pipeline, KnownSerializers serializers, T reusableInstance)
             : base(pipeline)
         {
@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Deserializes and instance from the specified reader.
         /// </summary>
-        /// <param name="msg">The byte data to deserialize</param>
+        /// <param name="msg">The byte data to deserialize.</param>
         /// <param name="envelope">The envelope of the message.</param>
         protected override void Receive(Message<BufferReader> msg, Envelope envelope)
         {

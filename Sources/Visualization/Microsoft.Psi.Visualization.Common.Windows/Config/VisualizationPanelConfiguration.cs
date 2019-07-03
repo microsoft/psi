@@ -10,34 +10,25 @@ namespace Microsoft.Psi.Visualization.Config
     /// Represents a base class for visualization panel configuraions.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    public class VisualizationPanelConfiguration : ObservableObject
+    public abstract class VisualizationPanelConfiguration : ObservableObject
     {
         /// <summary>
-        /// The height of the panel
+        /// The height of the panel.
         /// </summary>
-        private double height;
+        private double height = 400;
 
         /// <summary>
-        /// The name of the visualization panel
+        /// The name of the visualization panel.
         /// </summary>
-        private string name;
+        private string name = "Visualization Panel";
 
         /// <summary>
-        /// The width of the panel
+        /// The width of the panel.
         /// </summary>
-        private double width;
+        private double width = 100;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VisualizationPanelConfiguration"/> class.
-        /// </summary>
-        public VisualizationPanelConfiguration()
-        {
-            this.height = 400;
-            this.width = 100;
-        }
-
-        /// <summary>
-        /// Gets or sets the height of the panel
+        /// Gets or sets the height of the panel.
         /// </summary>
         [DataMember]
         public double Height
@@ -47,7 +38,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the name of the visualization panel name
+        /// Gets or sets the name of the visualization panel name.
         /// </summary>
         [DataMember]
         public string Name
@@ -57,7 +48,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the width of the panel
+        /// Gets or sets the width of the panel.
         /// </summary>
         [DataMember]
         public double Width

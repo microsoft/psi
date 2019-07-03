@@ -33,10 +33,10 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Initializes a new instance of the <see cref="StoreReader"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="metadataUpdateHandler">Delegate to call</param>
-        /// <param name="autoOpenAllStreams">Automatically open all streams</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="metadataUpdateHandler">Delegate to call.</param>
+        /// <param name="autoOpenAllStreams">Automatically open all streams.</param>
         public StoreReader(string name, string path, Action<IEnumerable<Metadata>, RuntimeInfo> metadataUpdateHandler, bool autoOpenAllStreams = false)
         {
             this.name = name;
@@ -73,12 +73,12 @@ namespace Microsoft.Psi.Persistence
         public IEnumerable<PsiStreamMetadata> AvailableStreams => this.metadataCache.Resource.AvailableStreams;
 
         /// <summary>
-        /// Gets the name of the store
+        /// Gets the name of the store.
         /// </summary>
         public string Name => this.name;
 
         /// <summary>
-        /// Gets the path to the store (this is the path to the directory containing the data, index and catalog files)
+        /// Gets the path to the store (this is the path to the directory containing the data, index and catalog files).
         /// </summary>
         public string Path => this.path;
 
@@ -123,14 +123,14 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Indicates whether this store is still being written to by an active writer.
         /// </summary>
-        /// <returns>True if an active writer is still writing to this store, false otherwise</returns>
+        /// <returns>True if an active writer is still writing to this store, false otherwise.</returns>
         public bool IsMoreDataExpected() => this.messageReader.IsMoreDataExpected();
 
         /// <summary>
         /// Opens the specified logical storage stream for reading.
         /// </summary>
         /// <param name="name">The name of the storage stream to open.</param>
-        /// <returns>The metadata describing the opened storage stream</returns>
+        /// <returns>The metadata describing the opened storage stream.</returns>
         public PsiStreamMetadata OpenStream(string name)
         {
             var meta = this.GetMetadata(name);
@@ -142,7 +142,7 @@ namespace Microsoft.Psi.Persistence
         /// Opens the specified logical storage stream for reading.
         /// </summary>
         /// <param name="id">The id of the storage stream to open.</param>
-        /// <returns>The metadata describing the opened storage stream</returns>
+        /// <returns>The metadata describing the opened storage stream.</returns>
         public PsiStreamMetadata OpenStream(int id)
         {
             var meta = this.GetMetadata(id);
@@ -198,7 +198,7 @@ namespace Microsoft.Psi.Persistence
         /// Checks whether the specified storage stream exist in this store.
         /// </summary>
         /// <param name="streamName">The name of the storage stream to look for.</param>
-        /// <returns>True if a storage stream with the specified name exists, false otherwise</returns>
+        /// <returns>True if a storage stream with the specified name exists, false otherwise.</returns>
         public bool Contains(string streamName)
         {
             PsiStreamMetadata meta;
@@ -208,7 +208,7 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Returns a metadata descriptor for the specified storage stream.
         /// </summary>
-        /// <param name="streamName">The name of the storage stream</param>
+        /// <param name="streamName">The name of the storage stream.</param>
         /// <returns>The metadata describing the specified stream.</returns>
         public PsiStreamMetadata GetMetadata(string streamName)
         {
@@ -224,7 +224,7 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Returns a metadata descriptor for the specified storage stream.
         /// </summary>
-        /// <param name="id">The id of the storage stream</param>
+        /// <param name="id">The id of the storage stream.</param>
         /// <returns>The metadata describing the specified stream.</returns>
         public PsiStreamMetadata GetMetadata(int id)
         {
@@ -251,8 +251,8 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Moves the reader to the start of the specified interval and restricts the read to messages within the interval.
         /// </summary>
-        /// <param name="interval">The interval for reading data</param>
-        /// <param name="useOriginatingTime">Indicates whether the interval refers to originating times or creation times</param>
+        /// <param name="interval">The interval for reading data.</param>
+        /// <param name="useOriginatingTime">Indicates whether the interval refers to originating times or creation times.</param>
         public void Seek(TimeInterval interval, bool useOriginatingTime = false)
         {
             this.replayInterval = interval;
@@ -262,7 +262,7 @@ namespace Microsoft.Psi.Persistence
         }
 
         /// <summary>
-        /// Gets the current temporal extents of the store by time and originating time
+        /// Gets the current temporal extents of the store by time and originating time.
         /// </summary>
         /// <returns>A pair of TimeInterval objects that represent the times and originating times of the first and last messages currently in the store.</returns>
         public (TimeInterval, TimeInterval) GetLiveStoreExtents()
@@ -273,11 +273,15 @@ namespace Microsoft.Psi.Persistence
             this.Seek(new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true);
             DateTime firstMessageTime = DateTime.MinValue;
             DateTime firstMessageOriginatingTime = DateTime.MinValue;
+            DateTime lastMessageTime = DateTime.MinValue;
+            DateTime lastMessageOriginatingTime = DateTime.MinValue;
             if (this.messageReader.MoveNext())
             {
                 envelope = this.messageReader.Current;
                 firstMessageTime = envelope.Time;
                 firstMessageOriginatingTime = envelope.OriginatingTime;
+                lastMessageTime = envelope.Time;
+                lastMessageOriginatingTime = envelope.OriginatingTime;
             }
 
             // Get the last Index Entry from the cache and seek to it
@@ -285,8 +289,6 @@ namespace Microsoft.Psi.Persistence
             this.Seek(new TimeInterval(indexEntry.OriginatingTime, DateTime.MaxValue), true);
 
             // Find the last message in the extent
-            DateTime lastMessageTime = DateTime.MinValue;
-            DateTime lastMessageOriginatingTime = DateTime.MinValue;
             while (this.messageReader.MoveNext())
             {
                 envelope = this.messageReader.Current;
@@ -302,8 +304,8 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Positions the reader to the next message from any one of the enabled streams.
         /// </summary>
-        /// <param name="envelope">The envelope associated with the message read</param>
-        /// <returns>True if there are more messages, false if no more messages are available</returns>
+        /// <param name="envelope">The envelope associated with the message read.</param>
+        /// <returns>True if there are more messages, false if no more messages are available.</returns>
         public bool MoveNext(out Envelope envelope)
         {
             envelope = default(Envelope);
@@ -361,7 +363,7 @@ namespace Microsoft.Psi.Persistence
         /// Reads the next message from any one of the enabled streams (in serialized form) into the specified buffer.
         /// </summary>
         /// <param name="buffer">A buffer to read into.</param>
-        /// <returns>Number of bytes read into the specified buffer</returns>
+        /// <returns>Number of bytes read into the specified buffer.</returns>
         public int Read(ref byte[] buffer)
         {
             var streamId = this.messageReader.Current.SourceId;
@@ -388,9 +390,9 @@ namespace Microsoft.Psi.Persistence
         /// Reads the message from the specified position, without changing the current cursor position.
         /// Cannot be used together with MoveNext/Read.
         /// </summary>
-        /// <param name="indexEntry">The position to read from</param>
+        /// <param name="indexEntry">The position to read from.</param>
         /// <param name="buffer">A buffer to read into.</param>
-        /// <returns>Number of bytes read into the specified buffer</returns>
+        /// <returns>Number of bytes read into the specified buffer.</returns>
         public int ReadAt(IndexEntry indexEntry, ref byte[] buffer)
         {
             if (indexEntry.ExtentId < 0)
@@ -409,7 +411,7 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Returns the position of the next message from any one of the enabled streams.
         /// </summary>
-        /// <returns>The position of the message, excluding the envelope</returns>
+        /// <returns>The position of the message, excluding the envelope.</returns>
         public IndexEntry ReadIndex()
         {
             IndexEntry indexEntry;

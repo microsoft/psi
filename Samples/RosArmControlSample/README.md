@@ -2,7 +2,7 @@
 
 This sample demonstrates leveraging existing ROS packages with \psi, using the [uArm Metal](http://ufactory.cc/#/en/uarm1).
 The sample itself will run under the Core CLR (Mac/Linux/Windows), but depends on ROS running under Linux.
-An overview of ROS and our ROS bridge is [covered in a separate document](https://microsoft.github.io/psi/topics/InDepth.PsiROSIntegration).
+An overview of ROS and our ROS bridge is [covered in a separate document](https://github.com/microsoft/psi/wiki/ROS-Integration).
 
 First we will build a simple class to talk to the uArm, then we'll expose this as a \psi component and will write a small app making use of it.
 
@@ -518,6 +518,8 @@ private void OnPositionChanged(object sender, Tuple<float, float, float> positio
 Finally, we'll make our component an `ISourceComponent` and `Connect()`/`Disconnect()` the arm in the interface's `Start()`/`Stop()` methods.
 
 Note the call to `notifyCompletionTime` at the beginning of `Start` which informs the pipeline that this component is an infinite source, in the sense that it does not have the notion of a pre-determined completion time.
+
+For more information please see the documentation on [writing components](https://github.com/microsoft/psi/wiki/Writing-Components).
 
 `Start` is called by the pipeline to start the component while `Stop` is called when the pipeline is shutting down. It is _very_ important to ensure that nothing is `Post`ed when a component is not running (before `Start` or after `Stop`).
 

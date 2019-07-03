@@ -21,9 +21,9 @@ namespace Microsoft.Psi.Interop.Transport
         /// <summary>
         /// Initializes a new instance of the <see cref="NetMQWriter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs</param>
-        /// <param name="address">Connection string</param>
-        /// <param name="serializer">Format serializer with which messages are serialized</param>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="address">Connection string.</param>
+        /// <param name="serializer">Format serializer with which messages are serialized.</param>
         public NetMQWriter(Pipeline pipeline, string address, IFormatSerializer serializer)
         {
             this.pipeline = pipeline;
@@ -35,12 +35,12 @@ namespace Microsoft.Psi.Interop.Transport
         /// <summary>
         /// Add topic receiver.
         /// </summary>
-        /// <param name="topic">Topic name</param>
-        /// <typeparam name="U">Message type</typeparam>
+        /// <param name="topic">Topic name.</param>
+        /// <typeparam name="T">Message type.</typeparam>
         /// <returns>Receiver to which to pipe messages.</returns>
-        public Receiver<U> AddTopic<U>(string topic)
+        public Receiver<T> AddTopic<T>(string topic)
         {
-            return this.pipeline.CreateReceiver<U>(this, (m, e) => this.Receive<U>(m, e, topic), topic);
+            return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, topic), topic);
         }
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Microsoft.Psi.Interop.Transport
             }
         }
 
-        private void Receive<U>(U message, Envelope envelope, string topic)
+        private void Receive<T>(T message, Envelope envelope, string topic)
         {
             var (bytes, index, length) = this.serializer.SerializeMessage(message, envelope.OriginatingTime);
             if (index != 0)

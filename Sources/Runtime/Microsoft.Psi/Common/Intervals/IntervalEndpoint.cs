@@ -4,17 +4,17 @@
 namespace Microsoft.Psi
 {
     /// <summary>
-    /// Represents a bounded/unbounded, inclusive/exclusive interval endpoint value
+    /// Represents a bounded/unbounded, inclusive/exclusive interval endpoint value.
     /// </summary>
-    /// <typeparam name="TPoint">Type of point value</typeparam>
+    /// <typeparam name="TPoint">Type of point value.</typeparam>
     public class IntervalEndpoint<TPoint> : IIntervalEndpoint<TPoint>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IntervalEndpoint{TPoint}"/> class.
         /// </summary>(arbitrary)
-        /// <remarks>This is a bounded instance</remarks>
-        /// <param name="point">Point value</param>
-        /// <param name="inclusive">Whether the point itself is included</param>
+        /// <remarks>This is a bounded instance.</remarks>
+        /// <param name="point">Point value.</param>
+        /// <param name="inclusive">Whether the point itself is included.</param>
         public IntervalEndpoint(TPoint point, bool inclusive)
         {
             this.Bounded = true;
@@ -25,7 +25,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Initializes a new instance of the <see cref="IntervalEndpoint{TPoint}"/> class.
         /// </summary>
-        /// <remarks>This is an unbounded instance with a min/max point value</remarks>
+        /// <remarks>This is an unbounded instance with a min/max point value.</remarks>
         /// <param name="minOrMax">Min/max point value (e.g. DateTime.MinValue, double.MinValue, ...)</param>
         public IntervalEndpoint(TPoint minOrMax)
             : this(minOrMax, false)
@@ -34,7 +34,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Gets a value indicating whether the endpoint is bounded
+        /// Gets a value indicating whether the endpoint is bounded.
         /// </summary>
         public bool Bounded
         {
@@ -42,7 +42,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Gets a value indicating whether the endpoint is inclusive
+        /// Gets a value indicating whether the endpoint is inclusive.
         /// </summary>
         public bool Inclusive
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Gets the point value
+        /// Gets the point value.
         /// </summary>
         public TPoint Point
         {

@@ -30,8 +30,8 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaSource"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
-        /// <param name="filename">Name of media file to play</param>
+        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="filename">Name of media file to play.</param>
         public MediaSource(Pipeline pipeline, string filename)
             : base(pipeline)
         {
@@ -45,32 +45,33 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Gets the emitter that generates images from the media
+        /// Gets the emitter that generates images from the media.
         /// </summary>
         public Emitter<Shared<Image>> Image { get; private set; }
 
         /// <summary>
-        /// Gets the emitter that generates audio from the media
+        /// Gets the emitter that generates audio from the media.
         /// </summary>
         public Emitter<AudioBuffer> Audio { get; private set; }
 
         /// <summary>
-        /// Releases the media player
+        /// Releases the media player.
         /// </summary>
         public void Dispose()
         {
             if (!this.disposed)
             {
-                this.Stop();
+                this.sourceReader.Dispose();
+                MediaManager.Shutdown();
                 this.disposed = true;
             }
         }
 
         /// <summary>
-        /// GenerateNext is called by the Generator base class when the next sample should be read
+        /// GenerateNext is called by the Generator base class when the next sample should be read.
         /// </summary>
-        /// <param name="previous">Time of previous sample</param>
-        /// <returns>Time for current sample</returns>
+        /// <param name="previous">Time of previous sample.</param>
+        /// <returns>Time for current sample.</returns>
         protected override DateTime GenerateNext(DateTime previous)
         {
             DateTime originatingTime = default(DateTime);
@@ -126,7 +127,7 @@ namespace Microsoft.Psi.Media
         }
 
         /// <summary>
-        /// Called by the ctor to configure the media playback component
+        /// Called by the ctor to configure the media playback component.
         /// </summary>
         private void InitializeMediaPipeline()
         {

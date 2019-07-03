@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Remoting
 {
     using System;
-    using Common;
 
     /// <summary>
     /// Interface representing a connected transport client.

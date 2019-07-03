@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Calibration
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
-    /// CameraIntrinsics defines the intrinsic properties for a given camera
+    /// CameraIntrinsics defines the intrinsic properties for a given camera.
     /// </summary>
     public class CameraIntrinsics : ICameraIntrinsics
     {
@@ -80,16 +80,18 @@ namespace Microsoft.Psi.Calibration
         /// Build is used to create our camera's intrinsic matrix. This matrix
         /// converts from camera space coordinates into pixel coordinates.
         /// </summary>
-        /// <param name="principalPoint">Image planes principal point</param>
-        /// <param name="imageWidth">Width in pixels of image plane</param>
-        /// <param name="imageHeight">Height in pixels of image plane</param>
-        /// <param name="focalLength">focal length of the camera in mm</param>
-        /// <param name="skew">Skew factor to account for non-perpendicular image plane axis</param>
-        /// <param name="xscale">Scale factor to apply to X axis (pixels per mm)</param>
-        /// <param name="yscale">Scale factor to apply to Y axis (pixels per mm)</param>
-        /// <returns>Returns a new IntrinsicData object</returns>
+        /// <param name="principalPoint">Image planes principal point.</param>
+        /// <param name="imageWidth">Width in pixels of image plane.</param>
+        /// <param name="imageHeight">Height in pixels of image plane.</param>
+        /// <param name="focalLength">focal length of the camera in mm.</param>
+        /// <param name="skew">Skew factor to account for non-perpendicular image plane axis.</param>
+        /// <param name="xscale">Scale factor to apply to X axis (pixels per mm).</param>
+        /// <param name="yscale">Scale factor to apply to Y axis (pixels per mm).</param>
+        /// <returns>Returns a new IntrinsicData object.</returns>
         public static CameraIntrinsics Build(Point2D principalPoint, int imageWidth, int imageHeight, double focalLength, double skew, double xscale, double yscale)
         {
+            // Set up our projection matrix (converts from camera coordinates into NDC)
+            // For more details, see Hartley & Zisserman's "Multiple View Geometry in Computer Vision", page 157.
             var transform = Matrix<double>.Build.Dense(4, 4);
             transform[0, 0] = focalLength * xscale;
             transform[0, 1] = skew;

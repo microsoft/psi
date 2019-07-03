@@ -9,6 +9,9 @@ namespace Test.Psi.Audio
     using Microsoft.Psi.Audio;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Wave format tests.
+    /// </summary>
     [TestClass]
     public class WaveFormatTests
     {
@@ -25,7 +28,7 @@ namespace Test.Psi.Audio
                 0x10, 0xb1, 0x02, 0x00, // AvgBytesPerSec = 176400
                 0x04, 0x00, // BlockAlign = 4
                 0x10, 0x00, // BitsPerSample = 16
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object
@@ -48,7 +51,7 @@ namespace Test.Psi.Audio
                 0x00, 0x7d, 0x00, 0x00, // AvgBytesPerSec = 32000
                 0x02, 0x00, // BlockAlign = 2
                 0x10, 0x00, // BitsPerSample = 16
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object
@@ -71,7 +74,7 @@ namespace Test.Psi.Audio
                 0x20, 0x62, 0x05, 0x00, // AvgBytesPerSec = 352800
                 0x08, 0x00, // BlockAlign = 8
                 0x20, 0x00, // BitsPerSample = 32
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object
@@ -94,7 +97,7 @@ namespace Test.Psi.Audio
                 0x00, 0xfa, 0x00, 0x00, // AvgBytesPerSec = 64800
                 0x04, 0x00, // BlockAlign = 4
                 0x20, 0x00, // BitsPerSample = 32
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object
@@ -117,7 +120,7 @@ namespace Test.Psi.Audio
                 0x00, 0xdc, 0x05, 0x00, // AvgBytesPerSec = 384000
                 0x08, 0x00, // BlockAlign = 8
                 0x20, 0x00, // BitsPerSample = 32
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object
@@ -141,7 +144,7 @@ namespace Test.Psi.Audio
                 0x08, 0x00, // BlockAlign = 8
                 0x20, 0x00, // BitsPerSample = 32
                 0x16, 0x00, // ExtraSize = 22
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 // ExtraInfo
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, // ExtraInfo
             };
 
             // Create equivalent managed WaveFormat object
@@ -317,7 +320,7 @@ namespace Test.Psi.Audio
                 0x08, 0x00, // BlockAlign = 8
                 0x20, 0x00, // BitsPerSample = 32
                 0x01, 0x00, // ExtraSize = 1
-                0x42 // ExtraInfo
+                0x42, // ExtraInfo
             };
 
             // Create equivalent managed WaveFormat object
@@ -341,7 +344,7 @@ namespace Test.Psi.Audio
                 0x00, 0xdc, 0x05, 0x00, // AvgBytesPerSec = 384000
                 0x08, 0x00, // BlockAlign = 8
                 0x20, 0x00, // BitsPerSample = 32
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object
@@ -365,7 +368,7 @@ namespace Test.Psi.Audio
                 0x00, 0xdc, 0x05, 0x00, // AvgBytesPerSec = 384000
                 0x08, 0x00, // BlockAlign = 8
                 0x20, 0x00, // BitsPerSample = 32
-                0x00, 0x00 // ExtraSize = 0
+                0x00, 0x00, // ExtraSize = 0
             };
 
             // Create equivalent managed WaveFormat object

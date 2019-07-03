@@ -11,7 +11,7 @@ namespace Test.Psi
     /// Runs a series of tests for stream generators.
     /// </summary>
     [TestClass]
-    class GeneratorsTests
+    public class GeneratorsTests
     {
         [TestMethod]
         [Timeout(60000)]

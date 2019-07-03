@@ -6,18 +6,18 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System;
 
     /// <summary>
-    /// Metadata object for live streams
+    /// Metadata object for live streams.
     /// </summary>
     internal class PsiLiveStreamMetadata : IStreamMetadata
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PsiLiveStreamMetadata"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="id">The id of the data stream</param>
-        /// <param name="typeName">The type of data of this stream</param>
-        /// <param name="partitionName">The name of th partition</param>
-        /// <param name="partitionPath">The path of the partition</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="id">The id of the data stream.</param>
+        /// <param name="typeName">The type of data of this stream.</param>
+        /// <param name="partitionName">The name of th partition.</param>
+        /// <param name="partitionPath">The path of the partition.</param>
         public PsiLiveStreamMetadata(string name, int id, string typeName, string partitionName, string partitionPath)
         {
             this.Name = name;

@@ -4,15 +4,15 @@
 namespace Microsoft.Psi.PsiStudio.ViewModels
 {
     /// <summary>
-    /// Information about a PsiStudio layout file
+    /// Information about a PsiStudio layout file.
     /// </summary>
     public class LayoutInfo
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LayoutInfo"/> class.
         /// </summary>
-        /// <param name="name">The name of the layout</param>
-        /// <param name="path">The path to the layout file</param>
+        /// <param name="name">The name of the layout.</param>
+        /// <param name="path">The path to the layout file.</param>
         public LayoutInfo(string name, string path)
         {
             this.Name = name;
@@ -27,12 +27,12 @@ namespace Microsoft.Psi.PsiStudio.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets the name of the layout
+        /// Gets or sets the name of the layout.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to the layout file
+        /// Gets or sets the path to the layout file.
         /// </summary>
         public string Path { get; set; }
 

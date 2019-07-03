@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Base class for visualization objects
+    /// Base class for visualization objects.
     /// </summary>
     public abstract class VisualizationObject : ObservableObject
     {
@@ -27,6 +27,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         public VisualizationObject()
         {
+            this.PropertyChanging += this.OnPropertyChanging;
+            this.PropertyChanged += this.OnPropertyChanged;
             this.InitNew();
         }
 
@@ -68,53 +70,53 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public Navigator Navigator => this.panel?.Container.Navigator;
 
         /// <summary>
-        /// Gets the path to the visualization object's icon
+        /// Gets the path to the visualization object's icon.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public virtual string IconSource => IconSourcePath.Stream;
 
         /// <summary>
-        /// Gets a value indicating whether this visualization object can use the snap to stream functionality
+        /// Gets a value indicating whether this visualization object can use the snap to stream functionality.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public virtual bool CanSnapToStream => false;
 
         /// <summary>
-        /// Gets a value indicating whether this visualization object is currently the one being snapped to
+        /// Gets a value indicating whether this visualization object is currently the one being snapped to.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public virtual bool IsSnappedToStream => false;
 
         /// <summary>
-        /// Gets a value indicating whether this visualization object is an audio stream
+        /// Gets a value indicating whether this visualization object is an audio stream.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public virtual bool IsAudioStream => false;
 
         /// <summary>
-        /// Gets a value indicating whether this visualization object is connected to a panel
+        /// Gets a value indicating whether this visualization object is connected to a panel.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public bool IsConnected => this.panel != null;
 
         /// <summary>
-        /// Snaps or unsnaps the parent container to this stream
+        /// Snaps or unsnaps the parent container to this stream.
         /// </summary>
-        /// <param name="snapToStream">true if this object should be snapped, otherwise false</param>
+        /// <param name="snapToStream">true if this object should be snapped, otherwise false.</param>
         [Browsable(false)]
         public virtual void SnapToStream(bool snapToStream)
         {
         }
 
         /// <summary>
-        /// Disconnect from the panel.
+        /// Removes the visualization object from the parent panel.
         /// </summary>
-        internal void Disconnect()
+        internal void RemoveFromPanel()
         {
             // if this visualization object has already been disconnected, throw an exception
             if (this.Panel == null)
@@ -122,24 +124,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 throw new InvalidOperationException("This visualization object is already disconnected.");
             }
 
-            this.OnDisconnect();
+            this.OnRemoveFromPanel();
             this.Panel = null;
         }
 
         /// <summary>
-        /// Connect to the panel.
+        /// Add the visualization object to a specified panel.
         /// </summary>
-        /// <param name="panel">Panel to connect this visualization object to.</param>
-        internal void ConnectToPanel(VisualizationPanel panel)
+        /// <param name="panel">Panel to add this visualization object to.</param>
+        internal void AddToPanel(VisualizationPanel panel)
         {
             // if this visualization object is already connected to a different panel, throw an exception
             if (this.panel != null)
             {
-                throw new InvalidOperationException("This visualization object is already connected into a panel.");
+                throw new InvalidOperationException("This visualization object is already connected to a panel.");
             }
 
             this.Panel = panel;
-            this.OnConnect();
+            this.OnAddToPanel();
         }
 
         /// <summary>
@@ -152,7 +154,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Notifies the visualization object that the cursor mode has changed
+        /// Notifies the visualization object that the cursor mode has changed.
         /// </summary>
         /// <param name="sender">The object that triggered the change event.</param>
         /// <param name="cursorModeEventArgs">The old and new cursor modes.</param>
@@ -161,41 +163,43 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Overridable method to allow derived VisualzationObject to initialize properties as part of object construction or after deserialization.
+        /// Initialize properties for visualization objects as part of object construction or after deserialization.
         /// </summary>
         protected virtual void InitNew()
         {
         }
 
         /// <summary>
-        /// Overridable method to allow derived VisualizationObject to react whenever the Configuration property has changed.
+        /// Implements a response to a notification that a property of the visualization object is changing.
         /// </summary>
-        protected virtual void OnConfigurationChanged()
+        /// <param name="sender">The sender of the notification.</param>
+        /// <param name="e">The details of the notification.</param>
+        protected virtual void OnPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
         }
 
         /// <summary>
-        /// Overridable method to allow derived VisualizationObject to react whenever a property on the Configuration property has changed.
+        /// Implements a response to a notification that a property of the visualization object has changed.
         /// </summary>
-        /// <param name="sender">The sender that triggered the change event.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <param name="sender">The sender of the notification.</param>
+        /// <param name="e">The details of the notification.</param>
+        protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
         }
 
         /// <summary>
-        /// Overideable method to allow derived VisualizationObjects to react to being loaded.
+        /// Implements a response to a notification the visualization object has been added to a panel.
         /// </summary>
-        protected virtual void OnConnect()
+        protected virtual void OnAddToPanel()
         {
             this.Navigator.CursorChanged += this.OnCursorChanged;
             this.Navigator.CursorModeChanged += this.OnCursorModeChanged;
         }
 
         /// <summary>
-        /// Overideable method to allow derived VisualizationObjects to react to being unloaded.
+        /// Implements a response to a notification the visualization object has been removed from the panel.
         /// </summary>
-        protected virtual void OnDisconnect()
+        protected virtual void OnRemoveFromPanel()
         {
             this.Navigator.CursorChanged -= this.OnCursorChanged;
             this.Navigator.CursorModeChanged -= this.OnCursorModeChanged;

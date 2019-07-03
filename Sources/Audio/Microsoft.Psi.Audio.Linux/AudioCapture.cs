@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Audio
         private readonly Emitter<AudioBuffer> audioBuffers;
 
         /// <summary>
-        /// The audio capture device
+        /// The audio capture device.
         /// </summary>
         private LinuxAudioInterop.AudioDevice audioDevice;
 
@@ -153,7 +153,13 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
+        {
+            this.Stop();
+            notifyCompleted();
+        }
+
+        private void Stop()
         {
             var audioDevice = Interlocked.Exchange(ref this.audioDevice, null);
             if (audioDevice != null)

@@ -5,7 +5,7 @@ namespace Microsoft.Psi
 {
     using System;
     using System.Collections.Generic;
-    using Common;
+    using Microsoft.Psi.Common;
 
     /// <summary>
     /// Specifies custom flags for Psi data streams.

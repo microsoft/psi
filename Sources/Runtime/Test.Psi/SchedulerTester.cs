@@ -4,6 +4,7 @@
 namespace Test.Psi
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -20,10 +21,180 @@ namespace Test.Psi
         public void StartStopTest()
         {
             var scheduler = new Scheduler(error => { throw new AggregateException(error); });
+            var context = new SchedulerContext();
             scheduler.Start(new Clock(), false);
-            scheduler.PauseForQuiescence();
-            scheduler.ResumeAfterQuiescence();
-            scheduler.Stop();
+            scheduler.StartScheduling(context);
+            scheduler.PauseForQuiescence(context);
+            scheduler.StopScheduling(context);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StartStopOrderingTest()
+        {
+            // Run test for a range of scheduler thread counts, including 1. This prevents the
+            // output from appearing in the correct order by fluke due to concurrent scheduling.
+            for (int maxThreads = Environment.ProcessorCount * 2; maxThreads > 0; maxThreads >>= 1)
+            {
+                var cLog = new ConcurrentQueue<string>();
+
+                using (var p = Pipeline.Create("P", null, maxThreads))
+                {
+                    var a = new TestSourceComponent(p, "A", cLog);
+                    var b = new TestSourceComponent(p, "B", cLog);
+                    var c = new TestSourceComponent(p, "C", cLog);
+
+                    a.Emitter.Do(m => cLog.Enqueue(m));
+                    b.Emitter.Do(m => cLog.Enqueue(m));
+                    c.Emitter.Do(m => cLog.Enqueue(m));
+
+                    Generators.Repeat(p, "PGen", 10).Do(m => cLog.Enqueue(m));
+
+                    p.Run();
+                }
+
+                var log = cLog.ToList();
+                log.ForEach(m => Console.WriteLine(m));
+
+                // all components should have started
+                Assert.IsTrue(log.Contains("AStart"));
+                Assert.IsTrue(log.Contains("BStart"));
+                Assert.IsTrue(log.Contains("CStart"));
+
+                // messages should only be delivered after all components have started
+                int latestStartIndex = new[] { log.IndexOf("AStart"), log.IndexOf("BStart"), log.IndexOf("CStart") }.Max();
+                Assert.IsTrue(latestStartIndex < log.IndexOf("APostFromStart"));
+                Assert.IsTrue(latestStartIndex < log.IndexOf("BPostFromStart"));
+                Assert.IsTrue(latestStartIndex < log.IndexOf("CPostFromStart"));
+                Assert.IsTrue(latestStartIndex < log.IndexOf("PGen"));
+
+                // all components should be stopped after they were started
+                Assert.IsTrue(log.IndexOf("AStart") < log.IndexOf("AStop"));
+                Assert.IsTrue(log.IndexOf("BStart") < log.IndexOf("BStop"));
+                Assert.IsTrue(log.IndexOf("CStart") < log.IndexOf("CStop"));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StartStopOrderingTestWithSubpipelines()
+        {
+            // Run test for a range of scheduler thread counts, including 1. This prevents the
+            // output from appearing in the correct order by fluke due to concurrent scheduling.
+            for (int maxThreads = Environment.ProcessorCount * 2; maxThreads > 0; maxThreads >>= 1)
+            {
+                var cLog = new ConcurrentQueue<string>();
+
+                using (var p = Pipeline.Create("P", null, maxThreads))
+                using (var q = Subpipeline.Create(p, "Q"))
+                using (var r = Subpipeline.Create(q, "R"))
+                {
+                    var a = new TestSourceComponent(p, "A", cLog);
+                    var b = new TestSourceComponent(p, "B", cLog);
+                    var c = new TestSourceComponent(p, "C", cLog);
+                    var d = new TestSourceComponent(q, "D", cLog);
+                    var e = new TestSourceComponent(q, "E", cLog);
+                    var f = new TestSourceComponent(q, "F", cLog);
+                    var g = new TestSourceComponent(r, "G", cLog);
+                    var h = new TestSourceComponent(r, "H", cLog);
+                    var i = new TestSourceComponent(r, "I", cLog);
+
+                    a.Emitter.Do(m => cLog.Enqueue(m));
+                    b.Emitter.Do(m => cLog.Enqueue(m));
+                    c.Emitter.Do(m => cLog.Enqueue(m));
+                    d.Emitter.Do(m => cLog.Enqueue(m));
+                    e.Emitter.Do(m => cLog.Enqueue(m));
+                    f.Emitter.Do(m => cLog.Enqueue(m));
+                    g.Emitter.Do(m => cLog.Enqueue(m));
+                    h.Emitter.Do(m => cLog.Enqueue(m));
+                    i.Emitter.Do(m => cLog.Enqueue(m));
+
+                    Generators.Repeat(p, "PGen", 10).Do(m => cLog.Enqueue(m));
+                    Generators.Repeat(q, "QGen", 10).Do(m => cLog.Enqueue(m));
+                    Generators.Repeat(r, "RGen", 10).Do(m => cLog.Enqueue(m));
+
+                    p.Run();
+                }
+
+                var log = cLog.ToList();
+                log.ForEach(m => Console.WriteLine(m));
+
+                // all components should have started
+                Assert.IsTrue(log.Contains("AStart"));
+                Assert.IsTrue(log.Contains("BStart"));
+                Assert.IsTrue(log.Contains("CStart"));
+                Assert.IsTrue(log.Contains("DStart"));
+                Assert.IsTrue(log.Contains("EStart"));
+                Assert.IsTrue(log.Contains("FStart"));
+                Assert.IsTrue(log.Contains("GStart"));
+                Assert.IsTrue(log.Contains("HStart"));
+                Assert.IsTrue(log.Contains("IStart"));
+
+                int pLatestStartIndex = new[] { log.IndexOf("AStart"), log.IndexOf("BStart"), log.IndexOf("CStart") }.Max();
+                int qLatestStartIndex = new[] { log.IndexOf("DStart"), log.IndexOf("EStart"), log.IndexOf("FStart") }.Max();
+                int rLatestStartIndex = new[] { log.IndexOf("GStart"), log.IndexOf("HStart"), log.IndexOf("IStart") }.Max();
+
+                // messages should only be delivered after all components have started within their respective pipelines
+                Assert.IsTrue(pLatestStartIndex < log.IndexOf("APostFromStart"));
+                Assert.IsTrue(pLatestStartIndex < log.IndexOf("BPostFromStart"));
+                Assert.IsTrue(pLatestStartIndex < log.IndexOf("CPostFromStart"));
+                Assert.IsTrue(pLatestStartIndex < log.IndexOf("PGen"));
+                Assert.IsTrue(qLatestStartIndex < log.IndexOf("DPostFromStart"));
+                Assert.IsTrue(qLatestStartIndex < log.IndexOf("EPostFromStart"));
+                Assert.IsTrue(qLatestStartIndex < log.IndexOf("FPostFromStart"));
+                Assert.IsTrue(qLatestStartIndex < log.IndexOf("QGen"));
+                Assert.IsTrue(rLatestStartIndex < log.IndexOf("GPostFromStart"));
+                Assert.IsTrue(rLatestStartIndex < log.IndexOf("HPostFromStart"));
+                Assert.IsTrue(rLatestStartIndex < log.IndexOf("IPostFromStart"));
+                Assert.IsTrue(rLatestStartIndex < log.IndexOf("RGen"));
+
+                // all components should be stopped after they were started
+                Assert.IsTrue(log.IndexOf("AStart") < log.IndexOf("AStop"));
+                Assert.IsTrue(log.IndexOf("BStart") < log.IndexOf("BStop"));
+                Assert.IsTrue(log.IndexOf("CStart") < log.IndexOf("CStop"));
+                Assert.IsTrue(log.IndexOf("DStart") < log.IndexOf("DStop"));
+                Assert.IsTrue(log.IndexOf("EStart") < log.IndexOf("EStop"));
+                Assert.IsTrue(log.IndexOf("FStart") < log.IndexOf("FStop"));
+                Assert.IsTrue(log.IndexOf("GStart") < log.IndexOf("GStop"));
+                Assert.IsTrue(log.IndexOf("HStart") < log.IndexOf("HStop"));
+                Assert.IsTrue(log.IndexOf("IStart") < log.IndexOf("IStop"));
+            }
+        }
+
+        // Test source component that posts from its start method
+        private class TestSourceComponent : ISourceComponent
+        {
+            private readonly Pipeline pipeline;
+            private readonly string name;
+            private readonly ConcurrentQueue<string> log;
+
+            public TestSourceComponent(Pipeline pipeline, string name, ConcurrentQueue<string> log)
+            {
+                this.pipeline = pipeline;
+                this.name = name;
+                this.log = log;
+                this.Emitter = pipeline.CreateEmitter<string>(this, $"{name}Emitter");
+            }
+
+            public Emitter<string> Emitter { get; private set; }
+
+            public void Start(Action<DateTime> notifyCompletionTime)
+            {
+                var startTime = this.pipeline.GetCurrentTime();
+                this.log.Enqueue($"{this.name}Start");
+                this.Emitter.Post($"{this.name}PostFromStart", startTime);
+
+                // Component doesn't post anything (other than the PostFromStart message), so we can
+                // notify its completion time as the originating time of the PostFromStart message.
+                // This also ensures that the pipeline is kept running until this message is delivered.
+                notifyCompletionTime(startTime);
+            }
+
+            public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
+            {
+                this.log.Enqueue($"{this.name}Stop");
+                notifyCompleted();
+            }
         }
 
         [TestMethod]
@@ -94,7 +265,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 Generators.Return(p, 1).Select(i => i / 0);
-                p.Run(enableExceptionHandling: true);
+                p.Run();
             }
         }
 
@@ -104,7 +275,7 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create())
             {
-                p.PipelineCompleted += (o, e) => Console.WriteLine("Error handled");
+                p.PipelineExceptionNotHandled += (o, e) => Console.WriteLine("Error handled");
                 Generators.Return(p, 1).Select(i => i / 0); // shouldn't throw because of completion event handler
                 p.RunAsync();
             }
@@ -122,7 +293,7 @@ namespace Test.Psi
                     try
                     {
                         Generators.Return(p, 1).Select(i => i / 0);
-                        p.Run(enableExceptionHandling: true);
+                        p.Run();
                     }
                     catch (AggregateException exception)
                     {
@@ -193,8 +364,9 @@ namespace Test.Psi
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
         }
     }
 }

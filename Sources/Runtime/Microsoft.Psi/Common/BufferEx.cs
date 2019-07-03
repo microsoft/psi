@@ -20,10 +20,10 @@ namespace Microsoft.Psi.Common
         /// The method is equivalent to:
         /// <code>target = *(T*)(&amp;source + index)</code>
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to read</typeparam>
-        /// <param name="source">The buffer to read from</param>
-        /// <param name="index">The byte offset in the buffer where the instance to read starts</param>
-        /// <returns>The value read from the buffer</returns>
+        /// <typeparam name="T">The type of the simple value type to read.</typeparam>
+        /// <param name="source">The buffer to read from.</param>
+        /// <param name="index">The byte offset in the buffer where the instance to read starts.</param>
+        /// <returns>The value read from the buffer.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T Read<T>(byte[] source, int index)
             where T : struct
@@ -42,9 +42,9 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Reads a simple value type from the beginning of the buffer.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to read</typeparam>
-        /// <param name="source">The buffer to read from</param>
-        /// <returns>The value read from the buffer</returns>
+        /// <typeparam name="T">The type of the simple value type to read.</typeparam>
+        /// <param name="source">The buffer to read from.</param>
+        /// <returns>The value read from the buffer.</returns>
         public static T Read<T>(IntPtr source)
             where T : struct
             => MemoryAccess.ReadValue<T>(source);
@@ -52,10 +52,10 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a simple value type to a buffer at the specified byte offset.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to write</typeparam>
-        /// <param name="value">The value to write</param>
-        /// <param name="target">The buffer to write to</param>
-        /// <param name="index">The byte offset in the buffer where the specified value will be written</param>
+        /// <typeparam name="T">The type of the simple value type to write.</typeparam>
+        /// <param name="value">The value to write.</param>
+        /// <param name="target">The buffer to write to.</param>
+        /// <param name="index">The byte offset in the buffer where the specified value will be written.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Write<T>(T value, byte[] target, int index)
             where T : struct
@@ -74,9 +74,9 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Writes a simple value type to buffer at the specified byte offset.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to write</typeparam>
-        /// <param name="value">The value to write</param>
-        /// <param name="target">The buffer to write to</param>
+        /// <typeparam name="T">The type of the simple value type to write.</typeparam>
+        /// <param name="value">The value to write.</param>
+        /// <param name="target">The buffer to write to.</param>
         public static void Write<T>(T value, IntPtr target)
             where T : struct
             => MemoryAccess.WriteValue(value, target);
@@ -85,12 +85,12 @@ namespace Microsoft.Psi.Common
         /// Copies a specified number of items from a buffer starting at a particular offset to a destination array starting at a particular index.
         /// Similar to <see cref="System.Buffer.BlockCopy(Array, int, Array, int, int)"/>, but works for any simple struct, not just primitive types.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to copy</typeparam>
+        /// <typeparam name="T">The type of the simple value type to copy.</typeparam>
         /// <param name="src">The source buffer to copy from.</param>
         /// <param name="srcIndex">The zero-based byte offset into src from which copying begins.</param>
         /// <param name="dest">The one-dimensional destination array.</param>
         /// <param name="destIndex">The zero-based index in the destination array at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Copy<T>(byte[] src, int srcIndex, T[] dest, int destIndex, int length)
             where T : struct
@@ -115,12 +115,12 @@ namespace Microsoft.Psi.Common
         /// Copies a specified number of items from a buffer starting at a particular offset to a destination array starting at a particular index.
         /// Similar to <see cref="System.Buffer.BlockCopy(Array, int, Array, int, int)"/>, but works for any simple struct, not just primitive types.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to copy</typeparam>
+        /// <typeparam name="T">The type of the simple value type to copy.</typeparam>
         /// <param name="src">The source buffer to copy from.</param>
         /// <param name="srcIndex">The zero-based byte offset into src from which copying begins.</param>
         /// <param name="dest">The one-dimensional destination array.</param>
         /// <param name="destIndex">The zero-based index in the destination array at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         public static void Copy<T>(IntPtr src, int srcIndex, T[] dest, int destIndex, int length)
             where T : struct
             => MemoryAccess.CopyToArray((IntPtr)src + srcIndex, dest, destIndex, length);
@@ -129,12 +129,12 @@ namespace Microsoft.Psi.Common
         /// Copies a specified number of items from a array starting at a particular index into a destination buffer starting at a particular offset.
         /// Similar to <see cref="System.Buffer.BlockCopy(Array, int, Array, int, int)"/>, but works for any simple struct, not just primitive types.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to copy</typeparam>
+        /// <typeparam name="T">The type of the simple value type to copy.</typeparam>
         /// <param name="src">The source array to copy from.</param>
         /// <param name="srcIndex">The zero-based byte index into src from which copying begins.</param>
         /// <param name="dest">The destination buffer.</param>
         /// <param name="destIndex">The zero-based offset in the destination buffer at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Copy<T>(T[] src, int srcIndex, byte[] dest, int destIndex, int length)
             where T : struct
@@ -154,12 +154,12 @@ namespace Microsoft.Psi.Common
         /// Copies a specified number of items from a array starting at a particular index into a destination buffer starting at a particular offset.
         /// Similar to <see cref="System.Buffer.BlockCopy(Array, int, Array, int, int)"/>, but works for any simple struct, not just primitive types.
         /// </summary>
-        /// <typeparam name="T">The type of the simple value type to copy</typeparam>
+        /// <typeparam name="T">The type of the simple value type to copy.</typeparam>
         /// <param name="src">The source array to copy from.</param>
         /// <param name="srcIndex">The zero-based byte index into src from which copying begins.</param>
         /// <param name="dest">The destination buffer.</param>
         /// <param name="destIndex">The zero-based offset in the destination buffer at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         public static void Copy<T>(T[] src, int srcIndex, IntPtr dest, int destIndex, int length)
             where T : struct
             => MemoryAccess.CopyFromArray(src, srcIndex, (IntPtr)dest + destIndex, length * MemoryAccess.SizeOf<T>(), length);

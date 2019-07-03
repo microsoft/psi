@@ -21,9 +21,9 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="text">The recognized text of this result.</param>
         /// <param name="confidence"> The confidence score of the result.</param>
-        /// <param name="alternates"> The list of alternates for this result, as text strings</param>
-        /// <param name="audio"> The audio buffer that formed this result</param>
-        /// <param name="duration"> The duration of the audio that produced this recognition result</param>
+        /// <param name="alternates"> The list of alternates for this result, as text strings.</param>
+        /// <param name="audio"> The audio buffer that formed this result.</param>
+        /// <param name="duration"> The duration of the audio that produced this recognition result.</param>
         public SpeechRecognitionResult(string text, double? confidence = null, IEnumerable<SpeechRecognitionAlternate> alternates = null, AudioBuffer? audio = null, TimeSpan? duration = null)
         {
             this.Text = text;

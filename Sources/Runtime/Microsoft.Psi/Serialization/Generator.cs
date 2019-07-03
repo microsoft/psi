@@ -61,12 +61,12 @@ namespace Microsoft.Psi.Serialization
         }
 
         /// <summary>
-        /// Generates a dynamic method with the same signature as the specified method prototype
+        /// Generates a dynamic method with the same signature as the specified method prototype.
         /// </summary>
-        /// <param name="prototype">the method whose signature to copy</param>
-        /// <param name="delegateType">A delegate type that matches the method signature</param>
-        /// <param name="emit">The IL emitter that knows how to populate the method body</param>
-        /// <returns>The new delegate</returns>
+        /// <param name="prototype">the method whose signature to copy.</param>
+        /// <param name="delegateType">A delegate type that matches the method signature.</param>
+        /// <param name="emit">The IL emitter that knows how to populate the method body.</param>
+        /// <returns>The new delegate.</returns>
         internal static Delegate GenerateMethodFromPrototype(MethodInfo prototype, Type delegateType, Action<ILGenerator> emit)
         {
             var method = new DynamicMethod(prototype.Name, prototype.ReturnType, prototype.GetParameters().Select(p => p.ParameterType).ToArray(), typeof(Serializer), true);
@@ -174,7 +174,7 @@ namespace Microsoft.Psi.Serialization
         }
 
         /// <summary>
-        /// Deerializes a simple struct array from a continuous byte blob, without any packing (one memcpy operation).
+        /// Deserializes a simple struct array from a continuous byte blob, without any packing (one memcpy operation).
         /// The generated code is equivalent to:
         /// fixed (void* parray = array)
         /// {
@@ -184,10 +184,10 @@ namespace Microsoft.Psi.Serialization
         /// where bufferReader is <see cref="BufferReader"/>.
         ///
         /// The common usage is;
-        /// deserializeFn = Generator.GenerateDeserializeMethod{T[]}(il => Generator.EmitPrimitiveArrayDeserialize(typeof(T), il));
+        /// deserializeFn = Generator.GenerateDeserializeMethod{T[]}(il => Generator.EmitPrimitiveArrayDeserialize(typeof(T), il));.
         /// </summary>
-        /// <param name="type">The element type</param>
-        /// <param name="il">The IL generator (typically the body of a method being generated)</param>
+        /// <param name="type">The element type.</param>
+        /// <param name="il">The IL generator (typically the body of a method being generated).</param>
         internal static void EmitPrimitiveArrayDeserialize(Type type, ILGenerator il)
         {
             if (!IsSimpleValueType(type))
@@ -292,9 +292,9 @@ namespace Microsoft.Psi.Serialization
         ///
         /// where bufferWriter is <see cref="BufferWriter"/>.
         /// </summary>
-        /// <param name="type">The type of object to serialize (must be a simple value type)</param>
-        /// <param name="il">The IL generator of a method taking a BufferWriter as first argument and the value type to serialize as the second argument</param>
-        /// <remarks>We don't have to pin the argument, since we expect a simple struct</remarks>
+        /// <param name="type">The type of object to serialize (must be a simple value type).</param>
+        /// <param name="il">The IL generator of a method taking a BufferWriter as first argument and the value type to serialize as the second argument.</param>
+        /// <remarks>We don't have to pin the argument, since we expect a simple struct.</remarks>
         internal static void EmitPrimitiveSerialize(Type type, ILGenerator il)
         {
             if (!IsSimpleValueType(type))
@@ -321,10 +321,10 @@ namespace Microsoft.Psi.Serialization
         /// where bufferWriter is <see cref="BufferWriter"/>.
         ///
         /// The common usage is;
-        /// SerializeFn = Generator.GenerateSerializeMethod{T[]}(il => Generator.EmitPrimitiveArraySerialize(typeof(T), il));
+        /// SerializeFn = Generator.GenerateSerializeMethod{T[]}(il => Generator.EmitPrimitiveArraySerialize(typeof(T), il));.
         /// </summary>
-        /// <param name="type">The element type</param>
-        /// <param name="il">The IL generator (typically the body of a method being generated)</param>
+        /// <param name="type">The element type.</param>
+        /// <param name="il">The IL generator (typically the body of a method being generated).</param>
         internal static void EmitPrimitiveArraySerialize(Type type, ILGenerator il)
         {
             if (!IsSimpleValueType(type))
@@ -469,7 +469,7 @@ namespace Microsoft.Psi.Serialization
         /// as a cloning or deserialization target.
         /// </summary>
         /// <param name="type">The type to check.</param>
-        /// <param name="serializers">A registry of known serializers</param>
+        /// <param name="serializers">A registry of known serializers.</param>
         /// <returns>true if the type requires clearing prior to reuse; otherwise, false.</returns>
         internal static bool IsClearRequired(Type type, KnownSerializers serializers)
         {

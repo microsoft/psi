@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for PlotVisualizationObjectView.xaml
+    /// Interaction logic for PlotVisualizationObjectView.xaml.
     /// </summary>
     public partial class SpeechRecognitionVisualizationObjectView : UserControl
     {

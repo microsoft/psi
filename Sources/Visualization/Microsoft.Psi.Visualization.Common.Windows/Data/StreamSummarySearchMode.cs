@@ -21,6 +21,6 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Specifies a search mode that will return the next value in the stream summary, if an exact match was not found.
         /// </summary>
-        Next
+        Next,
     }
 }

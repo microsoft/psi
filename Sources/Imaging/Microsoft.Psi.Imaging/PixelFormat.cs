@@ -9,70 +9,70 @@ namespace Microsoft.Psi.Imaging
     using System;
 
     /// <summary>
-    /// PixelFormat defines
+    /// PixelFormat defines.
     /// </summary>
     public enum PixelFormat
     {
         /// <summary>
-        /// Used when the pixel format isn't defined
+        /// Used when the pixel format isn't defined.
         /// </summary>
         Undefined,
 
         /// <summary>
-        /// Defines an grayscale image where each pixel is 8 bits
+        /// Defines an grayscale image where each pixel is 8 bits.
         /// </summary>
         Gray_8bpp,
 
         /// <summary>
-        /// Defines an grayscale image where each pixel is 16 bits
+        /// Defines an grayscale image where each pixel is 16 bits.
         /// </summary>
         Gray_16bpp,
 
         /// <summary>
         /// Defines an color image format where each red/green/blue component is 8 bits.
-        /// The byte order in memory is: bb gg rr
+        /// The byte order in memory is: bb gg rr.
         /// </summary>
         BGR_24bpp,
 
         /// <summary>
         /// Defines an color image format where each red/green/blue component is 8 bits.
-        /// The byte order in memory is: bb gg rr xx
+        /// The byte order in memory is: bb gg rr xx.
         /// </summary>
         BGRX_32bpp,
 
         /// <summary>
         /// Defines an color image format where each red/green/blue/alpha component is 8 bits.
-        /// The byte order in memory is: bb gg rr aa
+        /// The byte order in memory is: bb gg rr aa.
         /// </summary>
         BGRA_32bpp,
 
         /// <summary>
         /// Defines an color image format where each red/green/blue/alpha component is 16 bits.
-        /// The byte order in memory is: rrrr gggg bbbb aaaa
+        /// The byte order in memory is: rrrr gggg bbbb aaaa.
         /// </summary>
-        RGBA_64bpp
+        RGBA_64bpp,
     }
 
     /// <summary>
-    /// Defines a set of extensions for getting info about a PixelFormat
+    /// Defines a set of extensions for getting info about a PixelFormat.
     /// </summary>
     public static class PixelFormatExtensions
     {
         /// <summary>
-        /// Returns the number of bits per pixel for a given pixel format
+        /// Returns the number of bits per pixel for a given pixel format.
         /// </summary>
-        /// <param name="pixelFormat">Pixel format for which to find bits per pixel</param>
-        /// <returns>Number of bits per pixel for the given pixel format</returns>
+        /// <param name="pixelFormat">Pixel format for which to find bits per pixel.</param>
+        /// <returns>Number of bits per pixel for the given pixel format.</returns>
         public static int GetBitsPerPixel(this PixelFormat pixelFormat)
         {
             return PixelFormatHelper.GetBytesPerPixel(pixelFormat) * 8;
         }
 
         /// <summary>
-        /// Returns the number of bytes per pixel for a given pixel format
+        /// Returns the number of bytes per pixel for a given pixel format.
         /// </summary>
-        /// <param name="pixelFormat">Pixel format for which to find bytes per pixel</param>
-        /// <returns>Number of bytes per pixel for the given pixel format</returns>
+        /// <param name="pixelFormat">Pixel format for which to find bytes per pixel.</param>
+        /// <returns>Number of bytes per pixel for the given pixel format.</returns>
         public static int GetBytesPerPixel(this PixelFormat pixelFormat)
         {
             return PixelFormatHelper.GetBytesPerPixel(pixelFormat);
@@ -80,15 +80,15 @@ namespace Microsoft.Psi.Imaging
     }
 
     /// <summary>
-    /// Set of static functions for manipulating pixel formats
+    /// Set of static functions for manipulating pixel formats.
     /// </summary>
     public static class PixelFormatHelper
     {
         /// <summary>
-        /// Converts from a system pixel format into a Psi.Imaging pixel format
+        /// Converts from a system pixel format into a Psi.Imaging pixel format.
         /// </summary>
-        /// <param name="pf">System pixel format to be converted</param>
-        /// <returns>Psi.Imaging pixel format that matches the specified system pixel format</returns>
+        /// <param name="pf">System pixel format to be converted.</param>
+        /// <returns>Psi.Imaging pixel format that matches the specified system pixel format.</returns>
         public static PixelFormat FromSystemPixelFormat(System.Drawing.Imaging.PixelFormat pf)
         {
             if (pf == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
@@ -125,10 +125,10 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Converts from a Psi.Imaging PixelFormat to a System.Drawing.Imaging.PixelFormat
+        /// Converts from a Psi.Imaging PixelFormat to a System.Drawing.Imaging.PixelFormat.
         /// </summary>
-        /// <param name="pf">Pixel format to convert</param>
-        /// <returns>The system pixel format that corresponds to the Psi.Imaging pixel format</returns>
+        /// <param name="pf">Pixel format to convert.</param>
+        /// <returns>The system pixel format that corresponds to the Psi.Imaging pixel format.</returns>
         public static System.Drawing.Imaging.PixelFormat ToSystemPixelFormat(PixelFormat pf)
         {
             switch (pf)
@@ -157,20 +157,20 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Returns number of bits/pixel for the specified pixel format
+        /// Returns number of bits/pixel for the specified pixel format.
         /// </summary>
-        /// <param name="pixelFormat">Pixel format for which to detemine number of bits/pxiel</param>
-        /// <returns>Number of bits per pixel in specified format</returns>
+        /// <param name="pixelFormat">Pixel format for which to detemine number of bits/pxiel.</param>
+        /// <returns>Number of bits per pixel in specified format.</returns>
         public static int GetBitsPerPixel(PixelFormat pixelFormat)
         {
             return GetBytesPerPixel(pixelFormat) * 8;
         }
 
         /// <summary>
-        /// Returns number of bytes/pixel for the specified pixel format
+        /// Returns number of bytes/pixel for the specified pixel format.
         /// </summary>
-        /// <param name="pixelFormat">Pixel format for which to determine number of bytes</param>
-        /// <returns>Number of bytes in each pixel of the specified format</returns>
+        /// <param name="pixelFormat">Pixel format for which to determine number of bytes.</param>
+        /// <returns>Number of bytes in each pixel of the specified format.</returns>
         public static int GetBytesPerPixel(PixelFormat pixelFormat)
         {
             switch (pixelFormat)

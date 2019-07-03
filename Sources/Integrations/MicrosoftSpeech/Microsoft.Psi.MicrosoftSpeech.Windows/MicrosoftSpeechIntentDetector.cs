@@ -81,7 +81,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         public Receiver<string[]> ReceiveGrammarNames { get; }
 
         /// <summary>
-        /// Gets the output stream of load grammar completed events
+        /// Gets the output stream of load grammar completed events.
         /// </summary>
         public Emitter<LoadGrammarCompletedEventArgs> LoadGrammarCompleted { get; }
 
@@ -106,9 +106,9 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <summary>
-        /// Enable all the grammars indicated by name, disabling all others
+        /// Enable all the grammars indicated by name, disabling all others.
         /// </summary>
-        /// <param name="grammarNames">Speech grammars</param>
+        /// <param name="grammarNames">Speech grammars.</param>
         public void EnableGrammars(Message<string[]> grammarNames)
         {
             foreach (var g in this.speechRecognitionEngine.Grammars)
@@ -154,8 +154,9 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
         }
 
         /// <inheritdoc/>
@@ -177,7 +178,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <summary>
-        /// Creates a new speech recognition engine
+        /// Creates a new speech recognition engine.
         /// </summary>
         /// <returns>A new speech recognition engine object.</returns>
         private SpeechRecognitionEngine CreateSpeechRecognitionEngine()

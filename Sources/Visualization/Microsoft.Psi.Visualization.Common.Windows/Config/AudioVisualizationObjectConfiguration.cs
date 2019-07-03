@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Config
     public class AudioVisualizationObjectConfiguration : PlotVisualizationObjectConfiguration
     {
         /// <summary>
-        /// The audio channel to plot
+        /// The audio channel to plot.
         /// </summary>
         private short channel;
 

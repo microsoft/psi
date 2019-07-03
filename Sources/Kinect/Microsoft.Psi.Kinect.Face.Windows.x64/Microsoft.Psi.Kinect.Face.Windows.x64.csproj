@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <Description>Provides APIs and components for using Microsoft Kinect Face APIs.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.Kinect.Face</RootNamespace>
@@ -28,9 +28,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" PrivateAssets="All" />
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.7.0" />
-    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0-beta05" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.8.1" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
     <PackageReference Include="Microsoft.Kinect" Version="2.0.1410.19000" />
     <PackageReference Include="Microsoft.Kinect.Face.x64" Version="2.0.1410.19000" />
   </ItemGroup> 

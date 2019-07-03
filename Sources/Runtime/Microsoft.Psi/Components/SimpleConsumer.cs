@@ -4,9 +4,9 @@
 namespace Microsoft.Psi.Components
 {
     /// <summary>
-    /// A simple consumer
+    /// A simple consumer.
     /// </summary>
-    /// <typeparam name="TIn">The input message type</typeparam>
+    /// <typeparam name="TIn">The input message type.</typeparam>
     public abstract class SimpleConsumer<TIn> : IConsumer<TIn>
     {
         /// <summary>

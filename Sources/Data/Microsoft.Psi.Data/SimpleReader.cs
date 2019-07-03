@@ -32,9 +32,9 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleReader"/> class.
         /// </summary>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store</param>
-        /// <param name="serializers">Optional set of serialization configuration (known types, serializers, known assemblies)</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="serializers">Optional set of serialization configuration (known types, serializers, known assemblies).</param>
         public SimpleReader(string name, string path, KnownSerializers serializers = null)
         {
             this.serializers = serializers;
@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Data
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleReader"/> class.
-        /// This version expects to have Open called after construction
+        /// This version expects to have Open called after construction.
         /// </summary>
         public SimpleReader()
         {
@@ -69,7 +69,7 @@ namespace Microsoft.Psi.Data
         public string Path => this.reader.Path;
 
         /// <summary>
-        /// Gets the set of serializers used to read and deserialize the messages in this store
+        /// Gets the set of serializers used to read and deserialize the messages in this store.
         /// </summary>
         public KnownSerializers Serializers => this.serializers;
 
@@ -118,7 +118,7 @@ namespace Microsoft.Psi.Data
         /// Checks whether the specified storage stream exist in this store.
         /// </summary>
         /// <param name="streamName">The name of the storage stream to look for.</param>
-        /// <returns>True if a storage stream with the specified name exists, false otherwise</returns>
+        /// <returns>True if a storage stream with the specified name exists, false otherwise.</returns>
         public bool Contains(string streamName) => this.reader.Contains(streamName);
 
         /// <inheritdoc />

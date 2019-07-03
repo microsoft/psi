@@ -5,6 +5,7 @@ namespace Microsoft.Psi
 {
     using System;
     using System.Collections.Generic;
+    using Microsoft.Psi.Common;
     using Microsoft.Psi.Executive;
     using Microsoft.Psi.Scheduling;
     using Microsoft.Psi.Serialization;
@@ -20,14 +21,18 @@ namespace Microsoft.Psi
     /// In other words, the Receiver simply schedules itself, and there will be only one workitem present in the scheduler queue for any given Receiver.
     /// This guarantees message delivery order regardless of the kind of scheduling used by the scheduler.
     /// </remarks>
-    /// <typeparam name="T">The type of messages that can be received</typeparam>
+    /// <typeparam name="T">The type of messages that can be received.</typeparam>
     [Serializer(typeof(Receiver<>.NonSerializer))]
     public class Receiver<T> : IReceiver, IConsumer<T>
     {
         private readonly Action<Message<T>> onReceived;
+        private readonly int id;
+        private readonly string name;
+        private readonly PipelineElement element;
         private readonly object owner;
         private readonly Pipeline pipeline;
         private readonly Scheduler scheduler;
+        private readonly SchedulerContext schedulerContext;
         private readonly SynchronizationLock syncContext;
         private readonly IRecyclingPool<T> cloner;
         private readonly bool enforceIsolation;
@@ -37,11 +42,16 @@ namespace Microsoft.Psi
         private DeliveryQueue<T> awaitingDelivery;
         private IPerfCounterCollection<ReceiverCounters> counters;
         private DeliveryPolicy policy;
+        private Func<T, int> computeDataSize = null;
 
-        internal Receiver(object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = false)
+        internal Receiver(int id, string name, PipelineElement element, object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = false)
         {
             this.scheduler = pipeline.Scheduler;
+            this.schedulerContext = pipeline.SchedulerContext;
             this.onReceived = PipelineElement.TrackStateObjectOnContext<Message<T>>(onReceived, owner, pipeline);
+            this.id = id;
+            this.name = name;
+            this.element = element;
             this.owner = owner;
             this.syncContext = context;
             this.enforceIsolation = enforceIsolation;
@@ -73,6 +83,15 @@ namespace Microsoft.Psi
 
         /// <inheritdoc />
         IEmitter IReceiver.Source => this.source;
+
+        /// <inheritdoc />
+        public int Id => this.id;
+
+        /// <inheritdoc />
+        public string Name => this.name;
+
+        /// <inheritdoc />
+        public Type Type => typeof(T);
 
         /// <inheritdoc />
         public object Owner => this.owner;
@@ -143,7 +162,7 @@ namespace Microsoft.Psi
                     Tuple.Create(ReceiverCounters.MaxQueueSize, "Max queue size", "The maximum number of messages ever waiting at the same time in the delivery queue", PerfCounterType.NumberOfItems32),
                     Tuple.Create(ReceiverCounters.ThrottlingRequests, "Throttling requests / second", "The number of throttling requests issued due to queue full, per second", PerfCounterType.RateOfCountsPerSecond32),
                     Tuple.Create(ReceiverCounters.OutstandingUnrecycled, "Unrecycled messages", "The number of messages that are still in use by the component", PerfCounterType.NumberOfItems32),
-                    Tuple.Create(ReceiverCounters.AvailableRecycled, "Recycled messages", "The number of messages that are available for recycling", PerfCounterType.NumberOfItems32)
+                    Tuple.Create(ReceiverCounters.AvailableRecycled, "Recycled messages", "The number of messages that are available for recycling", PerfCounterType.NumberOfItems32),
                 });
 #pragma warning restore SA1118 // Parameter must not span multiple lines
 
@@ -163,10 +182,15 @@ namespace Microsoft.Psi
                 throw new InvalidOperationException("Attempting to connect a receiver to an emitter while pipeline is already running. Make all connections before running the pipeline.");
             }
 
+            if (source.Pipeline != this.pipeline)
+            {
+                throw new InvalidOperationException("Receiver cannot subscribe to an emitter from a different pipeline. Use a Connector if you need to connect emitters and receivers from different pipelines.");
+            }
+
             this.source = source;
             this.policy = policy;
-
-            this.awaitingDelivery = new DeliveryQueue<T>(policy, this.cloner);
+            this.awaitingDelivery = new DeliveryQueue<T>(this.pipeline, this.element, this, policy, this.cloner);
+            this.pipeline.DiagnosticsCollector?.PipelineElementReceiverSubscribe(this.pipeline, this.element, this, source);
         }
 
         internal void OnUnsubscribe()
@@ -204,9 +228,10 @@ namespace Microsoft.Psi
                 // however, if this thread already has a lock on the owner it means some other receiver is in our call stack (we have a delivery loop),
                 // so bail out because executing the delegate would break the exclusive execution promise of the receivers
                 // An existing lock can also indicate that a downstream component wants us to slow down (throttle)
-                bool delivered = this.scheduler.TryExecute(this.syncContext, this.onReceived, message, message.OriginatingTime);
+                bool delivered = this.scheduler.TryExecute(this.syncContext, this.onReceived, message, message.OriginatingTime, this.schedulerContext);
                 if (delivered)
                 {
+                    this.pipeline.DiagnosticsCollector?.MessageProcessedSynchronously(this.pipeline, this.element, this, this.awaitingDelivery.Count, message.Envelope, this.ComputeDataSize(message.Data));
                     return;
                 }
             }
@@ -220,10 +245,10 @@ namespace Microsoft.Psi
 
             this.awaitingDelivery.Enqueue(message, out QueueTransition stateTransition);
 
-            // if the queue was empty, we need to schedule delivery
-            if (stateTransition.ToNotEmpty)
+            // if the queue was empty or if the next message is a closing message, we need to schedule delivery
+            if (stateTransition.ToNotEmpty || stateTransition.ToClosing)
             {
-                this.scheduler.Schedule(this.syncContext, this.DeliverNext, message.OriginatingTime);
+                this.scheduler.Schedule(this.syncContext, this.DeliverNext, message.OriginatingTime, this.schedulerContext);
             }
 
             // if queue is full (as decided between local policy and global policy), lock the emitter.syncContext (which we might already own) until we make more room
@@ -231,6 +256,7 @@ namespace Microsoft.Psi
             {
                 this.counters?.Increment(ReceiverCounters.ThrottlingRequests);
                 this.source.Pipeline.Scheduler.Freeze(this.source.SyncContext);
+                this.pipeline.DiagnosticsCollector?.PipelineElementReceiverThrottle(this.pipeline, this.element, this, true);
             }
         }
 
@@ -241,6 +267,7 @@ namespace Microsoft.Psi
                 if (stateTransition.ToStopThrottling)
                 {
                     this.source.Pipeline.Scheduler.Thaw(this.source.SyncContext);
+                    this.pipeline.DiagnosticsCollector?.PipelineElementReceiverThrottle(this.pipeline, this.element, this, false);
                 }
 
                 if (message.SequenceId == int.MaxValue)
@@ -258,7 +285,9 @@ namespace Microsoft.Psi
                 }
 
                 DateTime start = (this.counters != null) ? Time.GetCurrentTime() : default(DateTime);
+                this.pipeline.DiagnosticsCollector?.MessageProcessStart(this.pipeline, this.element, this, this.awaitingDelivery.Count, message.Envelope, this.ComputeDataSize(message.Data));
                 this.onReceived(message);
+                this.pipeline.DiagnosticsCollector?.MessageProcessComplete(this.pipeline, this.element, this, message.Envelope);
 
                 if (this.counters != null)
                 {
@@ -277,18 +306,46 @@ namespace Microsoft.Psi
 
                 if (!stateTransition.ToEmpty)
                 {
-                    this.scheduler.Schedule(this.syncContext, this.DeliverNext, this.awaitingDelivery.NextMessageTime);
+                    this.scheduler.Schedule(this.syncContext, this.DeliverNext, this.awaitingDelivery.NextMessageTime, this.schedulerContext);
                 }
             }
         }
 
         private void OnUnsubscribed(DateTime lastOriginatingTime)
         {
-            this.source = null;
+            this.pipeline.DiagnosticsCollector?.PipelineElementReceiverUnsubscribe(this.pipeline, this.element, this, this.source);
             foreach (var handler in this.unsubscribedHandlers)
             {
-                this.scheduler.Schedule(this.syncContext, PipelineElement.TrackStateObjectOnContext(() => handler(lastOriginatingTime), this.Owner, this.pipeline), lastOriginatingTime, false, true);
+                PipelineElement.TrackStateObjectOnContext(() => handler(lastOriginatingTime), this.Owner, this.pipeline).Invoke();
             }
+
+            // clear the source only after all handlers have run to avoid this node being finalized prematurely
+            this.source = null;
+        }
+
+        /// <summary>
+        /// Computes data size by running through serialization.
+        /// </summary>
+        /// <param name="data">Message data.</param>
+        /// <returns>Data size (bytes).</returns>
+        private int ComputeDataSize(T data)
+        {
+            if (this.computeDataSize == null)
+            {
+                var serializers = KnownSerializers.Default;
+                var context = new SerializationContext(serializers);
+                var handler = serializers.GetHandler<T>();
+                var writer = new BufferWriter(16);
+                this.computeDataSize = m =>
+                {
+                    writer.Reset();
+                    context.Reset();
+                    handler.Serialize(writer, m, context);
+                    return writer.Position;
+                };
+            }
+
+            return this.computeDataSize(data);
         }
 
         private class NonSerializer : NonSerializer<Receiver<T>>

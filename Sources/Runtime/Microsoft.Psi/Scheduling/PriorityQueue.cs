@@ -7,9 +7,9 @@ namespace Microsoft.Psi.Scheduling
     using System.Threading;
 
     /// <summary>
-    /// A generic ordered queue that sorts items based on the specified Comparer
+    /// A generic ordered queue that sorts items based on the specified Comparer.
     /// </summary>
-    /// <typeparam name="T">Type of item in the list</typeparam>
+    /// <typeparam name="T">Type of item in the list.</typeparam>
     public abstract class PriorityQueue<T>
     {
         // the head of the ordered work item list is always empty
@@ -143,7 +143,7 @@ namespace Microsoft.Psi.Scheduling
         /// </summary>
         /// <remarks>
         /// Enqueuing is O(n), but since we re-enqueue the oldest originating time many times as it is processed by the pipeline,
-        /// the dominant operation is to enqueue at the beginning of the queue
+        /// the dominant operation is to enqueue at the beginning of the queue.
         /// </remarks>
         /// <param name="workitem">Work item to enqueue.</param>
         public void Enqueue(T workitem)
@@ -202,7 +202,7 @@ namespace Microsoft.Psi.Scheduling
                     Tuple.Create(PriorityQueueCounters.EnqueueingRetries, "Enqueuing retry average", "The number of retries per work item enqueue operation.", PerfCounterType.AverageCount64),
                     Tuple.Create(PriorityQueueCounters.EnqueueingCount, "Enqueue count", "The base counter for computing the work item enqueuing retry count.", PerfCounterType.AverageBase),
                     Tuple.Create(PriorityQueueCounters.DequeuingRetries, "Dequeuing retry average", "The number of retries per work item dequeue operation.", PerfCounterType.AverageCount64),
-                    Tuple.Create(PriorityQueueCounters.DequeueingCount, "Dequeue count", "The base counter for computing the work item enqueuing retry count.", PerfCounterType.AverageBase)
+                    Tuple.Create(PriorityQueueCounters.DequeueingCount, "Dequeue count", "The base counter for computing the work item enqueuing retry count.", PerfCounterType.AverageBase),
                 });
 #pragma warning restore SA1118 // Parameter must not span multiple lines
 

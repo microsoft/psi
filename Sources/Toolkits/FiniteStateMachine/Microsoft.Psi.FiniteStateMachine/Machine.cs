@@ -59,8 +59,8 @@ namespace Microsoft.Psi.FiniteStateMachine
         /// <summary>
         /// Report state changes.
         /// </summary>
-        /// <param name="state">Current state name</param>
-        /// <param name="context">Current context</param>
+        /// <param name="state">Current state name.</param>
+        /// <param name="context">Current context.</param>
         protected virtual void ContextUpdated(string state, TContext context)
         {
         }

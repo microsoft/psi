@@ -11,13 +11,16 @@ namespace Microsoft.Psi.Samples.OpenCV
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Media;
 
+    /// <summary>
+    /// OpenCV operations.
+    /// </summary>
     public static class OpenCV
     {
         /// <summary>
-        /// Helper to wrap a Psi Image into an ImageBuffer suitable for passing to our C++ interop layer
+        /// Helper to wrap a Psi Image into an ImageBuffer suitable for passing to our C++ interop layer.
         /// </summary>
-        /// <param name="source">Image to wrap</param>
-        /// <returns>A Psi image wrapped as an ImageBuffer</returns>
+        /// <param name="source">Image to wrap.</param>
+        /// <returns>A Psi image wrapped as an ImageBuffer.</returns>
         public static ImageBuffer ToImageBuffer(this Shared<Image> source)
         {
             return new ImageBuffer(source.Resource.Width, source.Resource.Height, source.Resource.ImageData, source.Resource.Stride);
@@ -27,8 +30,8 @@ namespace Microsoft.Psi.Samples.OpenCV
         /// Here we define an Psi extension. This extension will take a stream of images (source)
         /// and create a new stream of converted images.
         /// </summary>
-        /// <param name="source">Our source producer (source stream of image samples)</param>
-        /// <param name="deliveryPolicy">Our delivery policy (null means use the default)</param>
+        /// <param name="source">Our source producer (source stream of image samples).</param>
+        /// <param name="deliveryPolicy">Our delivery policy (null means use the default).</param>
         /// <returns>The new stream of converted images.</returns>
         public static IProducer<Shared<Image>> ToGrayViaOpenCV(this IProducer<Shared<Image>> source, DeliveryPolicy deliveryPolicy = null)
         {
@@ -54,13 +57,16 @@ namespace Microsoft.Psi.Samples.OpenCV
     }
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
         // Define our Psi Pipeline object
         private Pipeline pipeline;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             this.InitializeComponent();
@@ -73,14 +79,19 @@ namespace Microsoft.Psi.Samples.OpenCV
             this.SetupPsi();
         }
 
-        // Define a property that exposes our DisplayImage so that WPF can access it.
+        /// <summary>
+        /// Gets or sets DisplayImage so that WPF can access it.
+        /// </summary>
         public DisplayImage DispImage { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to convert.
+        /// </summary>
         public bool DoConvert { get; set; }
 
         /// <summary>
         /// SetupPsi() is called at application startup. It is responsible for
-        /// building and starting the Psi pipeline
+        /// building and starting the Psi pipeline.
         /// </summary>
         public void SetupPsi()
         {
@@ -88,7 +99,7 @@ namespace Microsoft.Psi.Samples.OpenCV
             this.pipeline = Pipeline.Create();
 
             // Next register an event handler to catch pipeline errors
-            this.pipeline.PipelineCompleted += this.Pipeline_PipelineCompleted;
+            this.pipeline.PipelineExceptionNotHandled += this.Pipeline_PipelineException;
 
             // Create our webcam
             MediaCapture webcam = new MediaCapture(this.pipeline, 1280, 720, 30);
@@ -118,23 +129,20 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// <see cref="Pipeline_PipelineCompleted"/> is called when the pipeline finishes running
+        /// <see cref="Pipeline_PipelineException"/> is called to handle exceptions thrown during pipeline execution.
         /// </summary>
-        /// <param name="sender">Object that sent this event</param>
-        /// <param name="e">Pipeline event arguments. Primarily used to get any pipeline errors back.</param>
-        private void Pipeline_PipelineCompleted(object sender, PipelineCompletedEventArgs e)
+        /// <param name="sender">Object that sent this event.</param>
+        /// <param name="e">Pipeline exception event arguments. Primarily used to get any pipeline errors back.</param>
+        private void Pipeline_PipelineException(object sender, PipelineExceptionNotHandledEventArgs e)
         {
-            if (e.Errors.Count > 0)
-            {
-                MessageBox.Show("Error! " + e.Errors[0].Message);
-            }
+            MessageBox.Show("Error! " + e.Exception.Message);
         }
 
         /// <summary>
-        /// Button_Click is the callback from WPF for handling when the user clicks the "ToRGB"/"ToGray" button
+        /// Button_Click is the callback from WPF for handling when the user clicks the "ToRGB"/"ToGray" button.
         /// </summary>
-        /// <param name="sender">Object that sent this event</param>
-        /// <param name="e">Event arguments (unused)</param>
+        /// <param name="sender">Object that sent this event.</param>
+        /// <param name="e">Event arguments (unused).</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.DoConvert = !this.DoConvert;
@@ -142,10 +150,10 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// Called when main window is closed
+        /// Called when main window is closed.
         /// </summary>
-        /// <param name="sender">window that we are closing</param>
-        /// <param name="e">args for closing event</param>
+        /// <param name="sender">window that we are closing.</param>
+        /// <param name="e">args for closing event.</param>
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Dispose of the pipeline to shut it down and exit clean

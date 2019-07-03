@@ -215,6 +215,12 @@ namespace Microsoft.Psi.Audio
         /// </param>
         public void AppendAudio(byte[] audioBuffer, bool overwritePending = false)
         {
+            if (this.audioBufferStream == null)
+            {
+                // component has been stopped
+                return;
+            }
+
             if (overwritePending)
             {
                 this.audioBufferStream.Write(audioBuffer, 0, audioBuffer.Length);

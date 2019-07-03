@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     /// <summary>
     /// Used to adapt streams of any type into tuples of originating and message times.
     /// </summary>
-    /// <typeparam name="T">Message type</typeparam>
+    /// <typeparam name="T">Message type.</typeparam>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class LatencyAdapter<T> : StreamAdapter<T, Tuple<DateTime, DateTime>>
     {

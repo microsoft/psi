@@ -24,7 +24,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Metadata usied in storing the schema definitions used when serializing and deserializing a type in a Psi Store.
         /// </summary>
-        TypeSchema = 2
+        TypeSchema = 2,
     }
 
     /// <summary>

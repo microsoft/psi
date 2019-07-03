@@ -9,8 +9,8 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Combines the input messages from multiple inputs; invoking given lambda for each.
     /// </summary>
-    /// <typeparam name="TIn">The message type</typeparam>
-    /// <typeparam name="TKey">The key type to use to identify the inputs</typeparam>
+    /// <typeparam name="TIn">The message type.</typeparam>
+    /// <typeparam name="TKey">The key type to use to identify the inputs.</typeparam>
     public class Merger<TIn, TKey>
     {
         private readonly Dictionary<TKey, Receiver<TIn>> inputs = new Dictionary<TKey, Receiver<TIn>>();

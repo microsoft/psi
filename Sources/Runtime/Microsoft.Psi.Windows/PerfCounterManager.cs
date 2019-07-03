@@ -11,22 +11,22 @@ namespace Microsoft.Psi
     using System.Security.Principal;
 
     /// <summary>
-    /// Provides methods for creating and updating the performance counters
+    /// Provides methods for creating and updating the performance counters.
     /// </summary>
     internal static class PerfCounterManager
     {
         /// <summary>
-        /// The counter categories we know about
+        /// The counter categories we know about.
         /// </summary>
         private static Dictionary<string, Dictionary<int, CounterCreationData>> categories = new Dictionary<string, Dictionary<int, CounterCreationData>>();
 
         /// <summary>
-        /// The runtime counters created in the process
+        /// The runtime counters created in the process.
         /// </summary>
         private static Dictionary<string, Dictionary<string, Dictionary<int, PerformanceCounter>>> counters = new Dictionary<string, Dictionary<string, Dictionary<int, PerformanceCounter>>>();
 
         /// <summary>
-        /// The process name used to name the counter instances so that multiple processes can each have their own counters
+        /// The process name used to name the counter instances so that multiple processes can each have their own counters.
         /// </summary>
         private static string processName;
 
@@ -43,9 +43,9 @@ namespace Microsoft.Psi
         /// <summary>
         /// Installs the performance counters. Requires admin privileges.
         /// </summary>
-        /// <param name="categoryName">The name of the category to create</param>
-        /// <param name="counterDefinitions">The set of counter definitions</param>
-        /// <returns>True if the counters were installed</returns>
+        /// <param name="categoryName">The name of the category to create.</param>
+        /// <param name="counterDefinitions">The set of counter definitions.</param>
+        /// <returns>True if the counters were installed.</returns>
         public static bool TrySetupCounters(string categoryName, Dictionary<int, CounterCreationData> counterDefinitions)
         {
             bool found = false;
@@ -113,10 +113,10 @@ namespace Microsoft.Psi
         /// <summary>
         /// Creates all the counters for the specified instance.
         /// </summary>
-        /// <param name="categoryName">Name of the group to add an instance to</param>
-        /// <param name="instanceName">The name of the instance to add</param>
-        /// <returns>The counters for the specified instance</returns>
-        /// <typeparam name="T">An enum type to use for identifying the counters</typeparam>
+        /// <param name="categoryName">Name of the group to add an instance to.</param>
+        /// <param name="instanceName">The name of the instance to add.</param>
+        /// <returns>The counters for the specified instance.</returns>
+        /// <typeparam name="T">An enum type to use for identifying the counters.</typeparam>
         internal static Dictionary<T, PerformanceCounter> AddInstance<T>(string categoryName, string instanceName)
             where T : struct
         {
@@ -143,12 +143,12 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Retrieves the counters based on instance name
+        /// Retrieves the counters based on instance name.
         /// </summary>
-        /// <param name="categoryName">Name of the group to add an instance to</param>
-        /// <param name="instanceName">The name of the counter instance</param>
-        /// <returns>The corresponding counters</returns>
-        /// <typeparam name="T">An enum type to use in identifying the counters</typeparam>
+        /// <param name="categoryName">Name of the group to add an instance to.</param>
+        /// <param name="instanceName">The name of the counter instance.</param>
+        /// <returns>The corresponding counters.</returns>
+        /// <typeparam name="T">An enum type to use in identifying the counters.</typeparam>
         internal static Dictionary<T, PerformanceCounter> GetCounters<T>(string categoryName, string instanceName)
             where T : struct
         {
@@ -177,10 +177,10 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Appends the process ID to the instance name
+        /// Appends the process ID to the instance name.
         /// </summary>
-        /// <param name="instanceName">The counter instance name</param>
-        /// <returns>A unique instance name to be used when setting up the counters</returns>
+        /// <param name="instanceName">The counter instance name.</param>
+        /// <returns>A unique instance name to be used when setting up the counters.</returns>
         private static string GetProcessQualifiedInstanceName(string instanceName)
         {
             return string.Format("{0} ({1})", instanceName, processName);

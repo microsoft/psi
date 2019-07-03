@@ -129,6 +129,11 @@ namespace Test.Psi
 #endif
             Environment.CurrentDirectory = Path.GetDirectoryName(fileName);
             var server = Process.Start(procInfo);
+
+            // ensure that the stdout/stderr streams don't fill up (this causes the server to block)
+            server.BeginOutputReadLine();
+            server.BeginErrorReadLine();
+
             return server;
         }
 

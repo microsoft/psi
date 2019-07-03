@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for TimelineSegmentView.xaml
+    /// Interaction logic for TimelineSegmentView.xaml.
     /// </summary>
     public partial class TimelineSegmentView : UserControl
     {

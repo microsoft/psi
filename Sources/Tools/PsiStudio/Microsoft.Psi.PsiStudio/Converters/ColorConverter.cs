@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Converters
     using System.Windows.Media;
 
     /// <summary>
-    /// Provides a way to apply custom logic to a binding. Specifically, converting from a color to a <see cref="SolidColorBrush"/>
+    /// Provides a way to apply custom logic to a binding. Specifically, converting from a color to a <see cref="SolidColorBrush"/>.
     /// </summary>
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class ColorConverter : IValueConverter

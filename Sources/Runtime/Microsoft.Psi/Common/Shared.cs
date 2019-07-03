@@ -27,9 +27,9 @@ namespace Microsoft.Psi
         /// When the returned <see cref="Shared{T}"/> is disposed, resource's reference count is decremented.
         /// When the reference count reaches 0, the wrapped resource is released and disposed.
         /// </remarks>
-        /// <typeparam name="T">The type of resource being wrapped</typeparam>
+        /// <typeparam name="T">The type of resource being wrapped.</typeparam>
         /// <param name="resource">The resource to wrap. Usually a large memory allocation.</param>
-        /// <returns>A <see cref="Shared{T}"/> instance wrapping the specified resource</returns>
+        /// <returns>A <see cref="Shared{T}"/> instance wrapping the specified resource.</returns>
         public static Shared<T> Create<T>(T resource)
             where T : class
         {
@@ -42,7 +42,7 @@ namespace Microsoft.Psi
     /// Follow the Cloning pattern and use the Shared.DeepClone extension method instead of direct assignment
     /// to create long-lived references to the same shared resource.
     /// </summary>
-    /// <typeparam name="T">The type of data held by this container</typeparam>
+    /// <typeparam name="T">The type of data held by this container.</typeparam>
     /// <remarks>
     /// The .Net model of delayed memory management via garbage collection is ill suited for frequent large allocations.
     /// The memory allocated for an object can only reused after the object is garbage collected.

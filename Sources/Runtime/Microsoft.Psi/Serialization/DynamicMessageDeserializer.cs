@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Serialization
         /// Initializes a new instance of the <see cref="DynamicMessageDeserializer"/> class.
         /// </summary>
         /// <param name="typeName">Type name of message.</param>
-        /// <param name="schemas">Collection of known TypeSchemas</param>
+        /// <param name="schemas">Collection of known TypeSchemas.</param>
         public DynamicMessageDeserializer(string typeName, IDictionary<string, TypeSchema> schemas)
         {
             this.rootTypeName = typeName;
@@ -35,8 +35,8 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Deserialize message bytes to dynamic.
         /// </summary>
-        /// <param name="reader">BufferReader of message bytes</param>
-        /// <returns>dynamic (primitive or ExpandoObject)</returns>
+        /// <param name="reader">BufferReader of message bytes.</param>
+        /// <returns>dynamic (primitive or ExpandoObject).</returns>
         public dynamic Deserialize(BufferReader reader)
         {
             var message = this.Read(this.rootTypeName, reader);

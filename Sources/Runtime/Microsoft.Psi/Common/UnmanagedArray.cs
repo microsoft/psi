@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Common
     /// The simple value types supported by this class can only contain fields of primitive types or other simple value types.
     /// For efficient reading and writing of complex types, see the <see cref="Serialization"/> namespace.
     /// </summary>
-    /// <typeparam name="T">The element type. Must be a blitable, simple value type (a struct with no reference-type fields)</typeparam>
+    /// <typeparam name="T">The element type. Must be a blitable, simple value type (a struct with no reference-type fields).</typeparam>
     [Serializer(typeof(UnmanagedArray<>.CustomSerializer))]
     public unsafe class UnmanagedArray<T> : IList<T>, IDisposable
         where T : struct
@@ -35,8 +35,8 @@ namespace Microsoft.Psi.Common
         /// Initializes a new instance of the <see cref="UnmanagedArray{T}"/> class from an existing allocation.
         /// </summary>
         /// <param name="buffer">The unmanaged buffer to wrap.</param>
-        /// <param name="size">The size, in bytes, of the unmanaged memory allocation</param>
-        /// <param name="isReadOnly">True if the array should be read-only</param>
+        /// <param name="size">The size, in bytes, of the unmanaged memory allocation.</param>
+        /// <param name="isReadOnly">True if the array should be read-only.</param>
         public UnmanagedArray(IntPtr buffer, int size, bool isReadOnly = false)
         {
             if (!Generator.IsSimpleValueType(typeof(T)))
@@ -53,7 +53,7 @@ namespace Microsoft.Psi.Common
         /// Initializes a new instance of the <see cref="UnmanagedArray{T}"/> class.
         /// </summary>
         /// <param name="length">The array length (in number of elements) to allocate.</param>
-        /// <param name="zeroMemory">Indicates whether the allocated array should be set to 0 before returning</param>
+        /// <param name="zeroMemory">Indicates whether the allocated array should be set to 0 before returning.</param>
         public UnmanagedArray(int length, bool zeroMemory = true)
             : this(Marshal.AllocHGlobal(length * ElementSize), length * ElementSize)
         {
@@ -74,22 +74,22 @@ namespace Microsoft.Psi.Common
         }
 
         /// <summary>
-        /// Gets the pointer to the underlying memory
+        /// Gets the pointer to the underlying memory.
         /// </summary>
         public IntPtr Data => this.isReadOnly ? this.data : throw new InvalidOperationException("The array is read-only.");
 
         /// <summary>
-        /// Gets the number of elements in the array
+        /// Gets the number of elements in the array.
         /// </summary>
         public int Length => this.length;
 
         /// <summary>
-        /// Gets the number of elements in the array
+        /// Gets the number of elements in the array.
         /// </summary>
         int ICollection<T>.Count => this.length;
 
         /// <summary>
-        /// Gets the size of the allocated memory, in bytes
+        /// Gets the size of the allocated memory, in bytes.
         /// </summary>
         public int Size => this.length * ElementSize;
 
@@ -101,8 +101,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Gets or sets the value of the element at the specified index.
         /// </summary>
-        /// <param name="index">The index of the element to set</param>
-        /// <returns>The value of the element at the specified index</returns>
+        /// <param name="index">The index of the element to set.</param>
+        /// <returns>The value of the element at the specified index.</returns>
         public T this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -135,8 +135,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Gets the value at the specified index, without performing bounds checking.
         /// </summary>
-        /// <param name="index">Index of the element to get</param>
-        /// <returns>The value at the specified index</returns>
+        /// <param name="index">Index of the element to get.</param>
+        /// <returns>The value at the specified index.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T UncheckedGet(int index)
             => MemoryAccess.ReadValue<T>(this.data + (index * ElementSize));
@@ -144,8 +144,8 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Sets a value at the specified index, without performing bounds checking.
         /// </summary>
-        /// <param name="index">Index of the element to set</param>
-        /// <param name="value">the value to set the element to</param>
+        /// <param name="index">Index of the element to set.</param>
+        /// <param name="value">the value to set the element to.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UncheckedSet(int index, T value)
             => MemoryAccess.WriteValue(value, this.data + (index * ElementSize));
@@ -219,7 +219,7 @@ namespace Microsoft.Psi.Common
         /// <param name="destination">The one-dimensional array that is the destination of the elements copied from the current array.</param>
         /// <param name="srcIndex">The index in the source array at which copying begins.</param>
         /// <param name="destIndex">The index in the destination array at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         public void CopyTo(T[] destination, int srcIndex, int destIndex, int length)
         {
             if (srcIndex < 0)
@@ -270,7 +270,7 @@ namespace Microsoft.Psi.Common
         /// <param name="destination">The one-dimensional array that is the destination of the elements copied from the current array.</param>
         /// <param name="srcIndex">The index in the source array at which copying begins.</param>
         /// <param name="destIndex">The index in the destination array at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         public void CopyTo(UnmanagedArray<T> destination, int srcIndex, int destIndex, int length)
         {
             if (srcIndex < 0)
@@ -321,7 +321,7 @@ namespace Microsoft.Psi.Common
         /// <param name="source">The source one-dimensional array.</param>
         /// <param name="srcIndex">The index in the source array at which copying begins.</param>
         /// <param name="destIndex">The index in the destination array at which copying begins.</param>
-        /// <param name="length">The number of elements to copy</param>
+        /// <param name="length">The number of elements to copy.</param>
         public void Copy(T[] source, int srcIndex, int destIndex, int length)
         {
             if (this.isReadOnly)
@@ -375,7 +375,7 @@ namespace Microsoft.Psi.Common
         /// Resizes the underlying buffer, preserving the existing data.
         /// </summary>
         /// <param name="length">The new length, in count of elements.</param>
-        /// <param name="zeroMemory">Indicates whether the trailing end of the new allocation should be set to 0 before returning</param>
+        /// <param name="zeroMemory">Indicates whether the trailing end of the new allocation should be set to 0 before returning.</param>
         public unsafe void Resize(int length, bool zeroMemory = true)
         {
             if (this.length == length)
@@ -413,7 +413,7 @@ namespace Microsoft.Psi.Common
         }
 
         /// <summary>
-        /// Frees the underlying memory
+        /// Frees the underlying memory.
         /// </summary>
         public void Dispose()
         {

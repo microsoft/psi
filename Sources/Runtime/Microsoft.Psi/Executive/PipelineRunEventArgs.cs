@@ -13,15 +13,15 @@ namespace Microsoft.Psi
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineRunEventArgs"/> class.
         /// </summary>
-        /// <param name="runDateTime">The time the pipeline started running.</param>
-        internal PipelineRunEventArgs(DateTime runDateTime)
+        /// <param name="startOriginatingTime">The time the pipeline started running.</param>
+        internal PipelineRunEventArgs(DateTime startOriginatingTime)
         {
-            this.RunDateTime = runDateTime;
+            this.StartOriginatingTime = startOriginatingTime;
         }
 
         /// <summary>
         /// Gets the time when the pipeline started running.
         /// </summary>
-        public DateTime RunDateTime { get; private set; }
+        public DateTime StartOriginatingTime { get; private set; }
     }
 }

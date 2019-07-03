@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Psi.PsiStudio</RootNamespace>
     <AssemblyName>Microsoft.Psi.PsiStudio</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -45,7 +45,7 @@
     <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Debug\Microsoft.Psi.PsiStudio.xml</DocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -56,7 +56,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\Microsoft.Psi.PsiStudio.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -78,15 +78,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -101,7 +95,6 @@
     <Compile Include="Adapters\LatencyAdapter{T}.cs" />
     <Compile Include="Adapters\ListPoint3DAdapter.cs" />
     <Compile Include="Adapters\ListRectangleAdapter.cs" />
-    <Compile Include="Adapters\MessageAdapter{T}.cs" />
     <Compile Include="Adapters\NullablePoint2DToScatterPlotAdapter.cs" />
     <Compile Include="Adapters\NullablePoint3DAdapter.cs" />
     <Compile Include="Adapters\PointArrayToScatterPlotAdapter.cs" />
@@ -109,7 +102,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PsiSettings.cs" />
+    <Compile Include="Adapters\ObjectAdapter.cs" />
+    <Compile Include="PsiStudioSettings.cs" />
     <Compile Include="Collections\ObservableDataCollection{T}.cs" />
     <Compile Include="Collections\ObservableDataItem{T}.cs" />
     <Compile Include="Common\ContextMenuName.cs" />
@@ -140,6 +134,7 @@
     <Compile Include="PsiStudioTemplateSelector.cs" />
     <Compile Include="Converters\LeftMarginMultiplierConverter.cs" />
     <Compile Include="Summarizers\AudioSummarizer.cs" />
+    <Compile Include="Summarizers\ObjectSummarizer.cs" />
     <Compile Include="Summarizers\RangeSummarizer.cs" />
     <Compile Include="Summarizers\TimeIntervalSummarizer.cs" />
     <Compile Include="TypeKeyedActionCommand{TKey,TParam}.cs" />
@@ -176,7 +171,15 @@
     <Compile Include="Views\Visuals2D\AudioVisualizationObjectView.xaml.cs">
       <DependentUpon>AudioVisualizationObjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Visuals2D\PlotVisualizationObjectView{TTimelineVisualizationObject,TConfig}.cs" />
+    <Compile Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationModel.cs" />
+    <Compile Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml.cs">
+      <DependentUpon>PipelineDiagnosticsVisualizationObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationPresenter.cs" />
+    <Compile Include="Views\Visuals2D\MessageVisualizationObjectView.xaml.cs">
+      <DependentUpon>MessageVisualizationObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Visuals2D\PlotVisualizationObjectView{TPlotVisualizationObject,TData,TConfig}.cs" />
     <Compile Include="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml.cs">
       <DependentUpon>TimeIntervalHistoryVisualizationObjectView.xaml</DependentUpon>
     </Compile>
@@ -212,10 +215,7 @@
     <Compile Include="Views\Visuals3D\KinectDepthVisual.cs" />
     <Compile Include="Views\Visuals3D\PieSliceArrowsVisual3D.cs" />
     <Compile Include="Views\Visuals3D\PointsVisual.cs" />
-    <Compile Include="Views\Visuals3D\ScatterCoordinateSystemVisual.cs" />
-    <Compile Include="Views\Visuals3D\ScatterLine3DVisual.cs" />
     <Compile Include="Views\Visuals3D\ScatterPlanarDirectionVisual.cs" />
-    <Compile Include="Views\Visuals3D\ScatterRect3DVisual.cs" />
     <Compile Include="Views\Visuals3D\SpriteVisual.xaml.cs">
       <DependentUpon>SpriteVisual.xaml</DependentUpon>
     </Compile>
@@ -231,6 +231,8 @@
     <Compile Include="VisualizationObjects\AnimatedModel3DVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\AnnotatedEventVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\AudioVisualizationObject.cs" />
+    <Compile Include="VisualizationObjects\PipelineDiagnosticsVisualizationObject.cs" />
+    <Compile Include="VisualizationObjects\MessageVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\TimeIntervalHistoryVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\EncodedImageVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ImageVisualizationObject.cs" />
@@ -238,11 +240,8 @@
     <Compile Include="VisualizationObjects\KinectDepth3DVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\PlotVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\Points3DVisualizationObject.cs" />
-    <Compile Include="VisualizationObjects\ScatterCoordinateSystemsVisualizationObject.cs" />
-    <Compile Include="VisualizationObjects\ScatterLine3DVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ScatterPlanarDirectionVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ScatterPlotVisualizationObject.cs" />
-    <Compile Include="VisualizationObjects\ScatterRect3DVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\ScatterRectangleVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\SpeechRecognitionVisualizationObject.cs" />
     <Compile Include="VisualizationObjects\Sprite3DVisualizationObject.cs" />
@@ -271,16 +270,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj">
-      <Project>{80c75a20-920a-4b30-b05e-970be844456a}</Project>
-      <Name>Microsoft.Psi.Audio.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj">
       <Project>{AC5745DA-570C-4E57-9AE4-D1974F629428}</Project>
       <Name>Microsoft.Psi.Audio</Name>
@@ -305,13 +297,13 @@
       <Project>{04147400-0ab0-4f07-9975-d4b7e58150db}</Project>
       <Name>Microsoft.Psi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Speech\Microsoft.Psi.Speech.Windows\Microsoft.Psi.Speech.Windows.csproj">
-      <Project>{3fb6cd31-0941-4372-9bdb-9e6830385dd4}</Project>
-      <Name>Microsoft.Psi.Speech.Windows</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj">
       <Project>{c048e3fb-cdc4-4577-a40e-8c9b1b7cedf1}</Project>
       <Name>Microsoft.Psi.Speech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Visualization\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj">
+      <Project>{f1d041e0-ddb2-41b8-97ee-5539b10d91be}</Project>
+      <Name>Microsoft.Msagl.WpfGraphControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Visualization\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj">
       <Project>{d69636ba-cce9-4a85-845e-a378a2b03d62}</Project>
@@ -403,6 +395,14 @@
     <Page Include="Views\Visuals2D\AudioVisualizationObjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Visuals2D\MessageVisualizationObjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1529,25 +1529,31 @@
       <Version>3.1.0</Version>
     </PackageReference>
     <PackageReference Include="HelixToolkit.Wpf">
-      <Version>2.3.0</Version>
+      <Version>2.8.0</Version>
     </PackageReference>
     <PackageReference Include="MathNet.Numerics.Signed">
-      <Version>4.7.0</Version>
+      <Version>4.8.1</Version>
     </PackageReference>
     <PackageReference Include="MathNet.Spatial.Signed">
-      <Version>0.5.0-beta05</Version>
+      <Version>0.5.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Kinect">
       <Version>2.0.1410.19000</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Msagl">
+      <Version>1.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Msagl.Drawing">
+      <Version>1.1.3</Version>
+    </PackageReference>
     <PackageReference Include="MvvmLightLibs">
-      <Version>5.4.1</Version>
+      <Version>5.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.2</Version>
+      <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers">
-      <Version>1.0.2</Version>
+      <Version>1.1.118</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -1555,7 +1561,7 @@
       <Version>1.5.0</Version>
     </PackageReference>
     <PackageReference Include="System.Drawing.Common">
-      <Version>4.5.0</Version>
+      <Version>4.5.1</Version>
     </PackageReference>
     <PackageReference Include="System.Windows.Interactivity.WPF">
       <Version>2.0.20525</Version>
@@ -1602,6 +1608,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\audio-unbound_x4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\cursor-follows-mouse_x4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PipelineDiagnosticsBack.png" />
+    <Resource Include="Resources\PipelineDiagnosticsExpandView.png" />
+    <Resource Include="Resources\PipelineDiagnosticsHome.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

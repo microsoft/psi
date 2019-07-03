@@ -19,6 +19,7 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Annotations;
+    using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Persistence;
@@ -35,6 +36,7 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.ViewModels;
+    using Microsoft.Psi.Visualization.Views.Visuals3D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Microsoft.Psi.Visualization.Windows;
@@ -73,6 +75,7 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand increasePlaySpeedCommand;
         private RelayCommand decreasePlaySpeedCommand;
         private RelayCommand toggleLiveModeCommand;
+        private RelayCommand toggleCursorFollowsMouseComand;
         ////private RelayCommand showSettingsWindowComand;
         private RelayCommand exitCommand;
 
@@ -86,18 +89,18 @@ namespace Microsoft.Psi.PsiStudio
         private LayoutInfo currentLayout = null;
 
         /// <summary>
-        /// The currently selected node in the Datasets tree view
+        /// The currently selected node in the Datasets tree view.
         /// </summary>
         private object selectedDatasetObject;
 
         /// <summary>
-        /// The currently selected node in the Visualizations tree view
+        /// The currently selected node in the Visualizations tree view.
         /// </summary>
         private object selectedVisualization;
 
         /// <summary>
         /// The object whose properties are currently being displayed in the Properties view.
-        /// This is always either the selectedDatasetObject or the selectedVisualization
+        /// This is always either the selectedDatasetObject or the selectedVisualization.
         /// </summary>
         private object selectedPropertiesObject;
 
@@ -111,7 +114,7 @@ namespace Microsoft.Psi.PsiStudio
             this.InitVisualizeStreamCommands();
 
             // Load the application settings
-            this.AppSettings = new PsiSettings();
+            this.AppSettings = new PsiStudioSettings();
 
             var booleanSchema = new AnnotationSchema("Boolean");
             booleanSchema.AddSchemaValue(null, System.Drawing.Color.Gray);
@@ -135,12 +138,12 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the name of this application for use when constructing paths etc
+        /// Gets the name of this application for use when constructing paths etc.
         /// </summary>
         public static string ApplicationName => "PsiStudio";
 
         /// <summary>
-        /// Gets the path to the PsiStudio data in the MyDocuments folder
+        /// Gets the path to the PsiStudio data in the MyDocuments folder.
         /// </summary>
         public static string PsiStudioDocumentsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
@@ -150,12 +153,12 @@ namespace Microsoft.Psi.PsiStudio
         public static PsiStudioContext Instance { get; private set; }
 
         /// <summary>
-        /// Gets the settings for the application
+        /// Gets the settings for the application.
         /// </summary>
-        public PsiSettings AppSettings { get; private set; }
+        public PsiStudioSettings AppSettings { get; private set; }
 
         /// <summary>
-        /// Gets or sets the thing
+        /// Gets or sets the thing.
         /// </summary>
         public List<LayoutInfo> AvailableLayouts
         {
@@ -171,7 +174,7 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets or sets the current layout
+        /// Gets or sets the current layout.
         /// </summary>
         public LayoutInfo CurrentLayout
         {
@@ -278,7 +281,7 @@ namespace Microsoft.Psi.PsiStudio
                             OpenFileDialog dlg = new OpenFileDialog
                             {
                                 DefaultExt = ".psi",
-                                Filter = "Psi Store (.psi)|*.psi"
+                                Filter = "Psi Store (.psi)|*.psi",
                             };
 
                             bool? result = dlg.ShowDialog();
@@ -730,6 +733,25 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
+        /// Gets the toggle cursor follows mouse command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ToggleCursorFollowsMouseComand
+        {
+            get
+            {
+                if (this.toggleCursorFollowsMouseComand == null)
+                {
+                    this.toggleCursorFollowsMouseComand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.CursorFollowsMouse = !this.VisualizationContainer.Navigator.CursorFollowsMouse);
+                }
+
+                return this.toggleCursorFollowsMouseComand;
+            }
+        }
+
+        /// <summary>
         /// Gets the selected visualzation changed command.
         /// </summary>
         [Browsable(false)]
@@ -789,7 +811,7 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the command that executes after the user clicks on either the datasets or the visualizations tree views
+        /// Gets the command that executes after the user clicks on either the datasets or the visualizations tree views.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -856,7 +878,7 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets or sets the current object shown in the properties window
+        /// Gets or sets the current object shown in the properties window.
         /// </summary>
         public object SelectedPropertiesObject
         {
@@ -865,12 +887,12 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the  image to display on the Play/Pause button
+        /// Gets the  image to display on the Play/Pause button.
         /// </summary>
         public string PlayPauseButtonImage => this.VisualizationContainer.Navigator.IsCursorModePlayback ? @"Icons\stop_x4.png" : @"Icons\play_x4.png";
 
         /// <summary>
-        /// Gets the  image to display on the Play/Pause button
+        /// Gets the  image to display on the Play/Pause button.
         /// </summary>
         public string PlayPauseButtonToolTip => this.VisualizationContainer.Navigator.IsCursorModePlayback ? @"Stop" : @"Play";
 
@@ -929,7 +951,7 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// Opens a previously persisted layout file.
         /// </summary>
-        /// <param name="layoutInfo">The layout to open</param>
+        /// <param name="layoutInfo">The layout to open.</param>
         public void OpenLayout(LayoutInfo layoutInfo)
         {
             // Clear the current layout
@@ -957,10 +979,10 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the message type for a stream
+        /// Gets the message type for a stream.
         /// </summary>
-        /// <param name="streamTreeNode">The stream tree node</param>
-        /// <returns>The type of messages in the stream</returns>
+        /// <param name="streamTreeNode">The stream tree node.</param>
+        /// <returns>The type of messages in the stream.</returns>
         public Type GetStreamType(IStreamTreeNode streamTreeNode)
         {
             return Type.GetType(streamTreeNode.TypeName, this.AssemblyResolver, null) ?? Type.GetType(streamTreeNode.TypeName.Split(',')[0], this.AssemblyResolver, null);
@@ -1085,7 +1107,7 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Toggle into or out of live mode
+        /// Toggle into or out of live mode.
         /// </summary>
         private void ToggleLiveMode()
         {
@@ -1238,9 +1260,11 @@ namespace Microsoft.Psi.PsiStudio
             this.AddVisualizeStreamCommand<Shared<Image>>(ContextMenuName.Visualize, (s) => this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(s, true));
             this.AddVisualizeStreamCommand<Shared<EncodedImage>>(ContextMenuName.Visualize, (s) => this.Show2D<EncodedImageVisualizationObject, Shared<EncodedImage>, ImageVisualizationObjectBaseConfiguration>(s, true));
             this.AddVisualizeStreamCommand<IStreamingSpeechRecognitionResult>(ContextMenuName.Visualize, (s) => this.Show<SpeechRecognitionVisualizationObject, IStreamingSpeechRecognitionResult, SpeechRecognitionVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<CoordinateSystem>>(ContextMenuName.Visualize, (s) => this.Show3D<ScatterCoordinateSystemsVisualizationObject, List<CoordinateSystem>, ScatterCoordinateSystemsVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<CoordinateSystem>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<CoordinateSystemView3D, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>(s, false, typeof(CoordinateSystemAdapter)));
+            this.AddVisualizeStreamCommand<IEnumerable<CoordinateSystem>>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<EnumerableView3D<CoordinateSystemView3D, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>, IEnumerable<CoordinateSystem>, CoordinateSystemVisualizationObjectConfiguration>, IEnumerable<CoordinateSystem>, CoordinateSystemVisualizationObjectConfiguration>(s, false));
             this.AddVisualizeStreamCommand<List<CoordinateSystem>>(ContextMenuName.VisualizeAsPlanarDirection, (s) => this.Show3D<ScatterPlanarDirectionVisualizationObject, List<CoordinateSystem>, ScatterPlanarDirectionVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<CoordinateSystem>(ContextMenuName.Visualize, (s) => this.Show3D<ScatterCoordinateSystemsVisualizationObject, List<CoordinateSystem>, ScatterCoordinateSystemsVisualizationObjectConfiguration>(s, false, typeof(CoordinateSystemAdapter)));
+            this.AddVisualizeStreamCommand<System.Windows.Media.Media3D.Rect3D>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<RectangleView3D, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<IEnumerable<System.Windows.Media.Media3D.Rect3D>>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<EnumerableView3D<RectangleView3D, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>, IEnumerable<System.Windows.Media.Media3D.Rect3D>, Rectangle3DVisualizationObjectConfiguration>, IEnumerable<System.Windows.Media.Media3D.Rect3D>, Rectangle3DVisualizationObjectConfiguration>(s, false));
             this.AddVisualizeStreamCommand<Point[]>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(PointArrayToScatterPlotAdapter)));
             this.AddVisualizeStreamCommand<List<Tuple<Point, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false));
             this.AddVisualizeStreamCommand<Point2D?>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(NullablePoint2DToScatterPlotAdapter)));
@@ -1252,8 +1276,8 @@ namespace Microsoft.Psi.PsiStudio
             this.AddVisualizeStreamCommand<List<Tuple<System.Drawing.Rectangle, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false));
             this.AddVisualizeStreamCommand<List<System.Drawing.Rectangle>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false, typeof(ListRectangleAdapter)));
             this.AddVisualizeStreamCommand<List<KinectBody>>(ContextMenuName.Visualize, (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>>(ContextMenuName.Visualize, (s) => this.Show3D<ScatterRect3DVisualizationObject, List<(CoordinateSystem, System.Windows.Media.Media3D.Rect3D)>, ScatterRect3DVisualizationObjectConfiguration>(s, false));
             this.AddVisualizeStreamCommand<TimeIntervalHistory>(ContextMenuName.Visualize, (s) => this.Show<TimeIntervalHistoryVisualizationObject, TimeIntervalHistory, TimeIntervalHistoryVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<PipelineDiagnostics>(ContextMenuName.Visualize, (s) => this.Show2D<PipelineDiagnosticsVisualizationObject, PipelineDiagnostics, DiagnosticsVisualizationObjectConfiguration>(s, false));
         }
 
         private void AddVisualizeStreamCommand<TKey>(string displayName, Action<IStreamTreeNode> action)
@@ -1389,8 +1413,8 @@ namespace Microsoft.Psi.PsiStudio
 
         private void VisualizeMessages<TData>(IStreamTreeNode streamTreeNode, bool newPanel = false)
         {
-            var visObj = this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(
-                streamTreeNode, newPanel, typeof(MessageAdapter<TData>), typeof(RangeSummarizer));
+            var visObj = this.Show<TimelineVisualizationPanel, MessageVisualizationObject, object, PlotVisualizationObjectConfiguration>(
+                streamTreeNode, newPanel, typeof(ObjectAdapter<TData>), typeof(ObjectSummarizer<object>));
             visObj.Configuration.MarkerSize = 4;
             visObj.Configuration.MarkerStyle = Visualization.Common.MarkerStyle.Circle;
             visObj.Configuration.Name = streamTreeNode.StreamName + " (Messages)";

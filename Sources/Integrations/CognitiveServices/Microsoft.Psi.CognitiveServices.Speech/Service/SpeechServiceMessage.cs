@@ -88,7 +88,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// <summary>
         /// Gets a byte array representation of the message.
         /// </summary>
-        /// <returns>A byte array representation of the message</returns>
+        /// <returns>A byte array representation of the message.</returns>
         public abstract byte[] GetBytes();
 
         /// <summary>

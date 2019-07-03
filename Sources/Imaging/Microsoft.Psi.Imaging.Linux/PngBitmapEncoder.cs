@@ -14,8 +14,8 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Encode image to stream.
         /// </summary>
-        /// <param name="image">Image to be encoded</param>
-        /// <param name="stream">Stream to which to encode</param>
+        /// <param name="image">Image to be encoded.</param>
+        /// <param name="stream">Stream to which to encode.</param>
         public void Encode(Image image, Stream stream)
         {
             var data = SKData.Create(image.ImageData, image.Size);

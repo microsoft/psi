@@ -5,7 +5,7 @@ namespace Microsoft.Psi.Remoting
 {
     using System;
     using System.IO;
-    using Common;
+    using Microsoft.Psi.Common;
 
     /// <summary>
     /// Network transport utility functions.

@@ -51,7 +51,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether we are only showing the final results
+        /// Gets or sets a value indicating whether we are only showing the final results.
         /// </summary>
         [DataMember]
         public bool ShowFinal

@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexerNd"/> class.
         /// </summary>
-        /// <param name="dimensions">The index dimensions, from most significant to least significant</param>
+        /// <param name="dimensions">The index dimensions, from most significant to least significant.</param>
         public IndexerNd(params IndexDefinition[] dimensions)
             : base(dimensions.Aggregate(1, (c, d) => c * d.Count))
         {
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexerNd"/> class.
         /// </summary>
-        /// <param name="dimensions">The index dimensions, from most significant to least significant</param>
+        /// <param name="dimensions">The index dimensions, from most significant to least significant.</param>
         public IndexerNd(params int[] dimensions)
             : base(dimensions.Aggregate(1, (c, d) => c * d))
         {
@@ -130,7 +130,7 @@ namespace Microsoft.Psi.Arrays
         /// Creates an indexer based on a rectangular slice of the index domain.
         /// </summary>
         /// <param name="ranges">The slice in each dimension.</param>
-        /// <returns>A new indexer over the specified rectangular slice</returns>
+        /// <returns>A new indexer over the specified rectangular slice.</returns>
         public Indexer Slice(params Range[] ranges)
         {
             if (this.dimensions.Length != ranges.Length)

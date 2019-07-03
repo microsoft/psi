@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public string TypeName { get; protected set; }
 
         /// <summary>
-        /// Gets the brush for drawing text
+        /// Gets the brush for drawing text.
         /// </summary>
         public Brush TextBrush => this.Partition.SessionViewModel.DatasetViewModel.CurrentSessionViewModel == this.Partition.SessionViewModel ? ViewModelBrushes.SelectedBrush : ViewModelBrushes.StandardBrush;
 
@@ -116,7 +116,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets the path to the stream's icon
+        /// Gets the path to the stream's icon.
         /// </summary>
         [Browsable(false)]
         public virtual string IconSource

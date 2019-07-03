@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Audio
         private bool overwrite;
 
         /// <summary>
-        /// The audio render device
+        /// The audio render device.
         /// </summary>
         private WasapiRender wasapiRender;
 
@@ -132,7 +132,7 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public void Dispose()
         {
-            this.Stop();
+            this.StopRendering();
             this.wasapiRender.Dispose();
             this.wasapiRender = null;
         }
@@ -165,7 +165,13 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
+        {
+            this.StopRendering();
+            notifyCompleted();
+        }
+
+        private void StopRendering()
         {
             this.wasapiRender.StopRendering();
 

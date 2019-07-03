@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.Views
     using Microsoft.Psi.Visualization.Navigation;
 
     /// <summary>
-    /// Interaction logic for TimelineView.xaml
+    /// Interaction logic for TimelineView.xaml.
     /// </summary>
     public partial class TimelineView : UserControl
     {
@@ -52,7 +52,7 @@ namespace Microsoft.Psi.Visualization.Views
             { new TickZoomLevelDescriptor { TickZoomLevel = TickZoomLevel.Hour, DurationInTicks = TimeSpan.FromHours(1).Ticks, StringFormat = "mm-dd.hh" } },
             { new TickZoomLevelDescriptor { TickZoomLevel = TickZoomLevel.SixHours, DurationInTicks = TimeSpan.FromHours(1).Ticks * 6, StringFormat = "mm-dd.hh" } },
             { new TickZoomLevelDescriptor { TickZoomLevel = TickZoomLevel.Day, DurationInTicks = TimeSpan.FromDays(1).Ticks, StringFormat = "yyyy-mm-dd" } },
-            { new TickZoomLevelDescriptor { TickZoomLevel = TickZoomLevel.Week, DurationInTicks = TimeSpan.FromDays(1).Ticks * 7, StringFormat = "yyyy-mm-dd" } }
+            { new TickZoomLevelDescriptor { TickZoomLevel = TickZoomLevel.Week, DurationInTicks = TimeSpan.FromDays(1).Ticks * 7, StringFormat = "yyyy-mm-dd" } },
         };
 
         private TickZoomLevel tickZoomLevelMajor = TickZoomLevel.None;
@@ -145,7 +145,7 @@ namespace Microsoft.Psi.Visualization.Views
             /// <summary>
             /// Week time zoom level.
             /// </summary>
-            Week
+            Week,
         }
 
         /// <summary>

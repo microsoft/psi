@@ -20,9 +20,9 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <summary>
         /// Initializes a new instance of the <see cref="FaceRecognizerConfiguration"/> class.
         /// </summary>
-        /// <param name="subscriptionKey">The subscription key to use</param>
-        /// <param name="subscriptionPoint">The subscription point to use</param>
-        /// <param name="personGroupId">The person group id</param>
+        /// <param name="subscriptionKey">The subscription key to use.</param>
+        /// <param name="subscriptionPoint">The subscription point to use.</param>
+        /// <param name="personGroupId">The person group id.</param>
         public FaceRecognizerConfiguration(string subscriptionKey, string subscriptionPoint, Guid personGroupId)
         {
             this.SubscriptionKey = subscriptionKey;

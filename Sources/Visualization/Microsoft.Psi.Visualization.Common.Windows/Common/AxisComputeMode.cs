@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Visualization.Common
 {
     /// <summary>
-    /// Defines computation modes
+    /// Defines computation modes.
     /// </summary>
     public enum AxisComputeMode
     {
@@ -16,6 +16,6 @@ namespace Microsoft.Psi.Visualization.Common
         /// <summary>
         /// Manually computes the axis
         /// </summary>
-        Manual
+        Manual,
     }
 }

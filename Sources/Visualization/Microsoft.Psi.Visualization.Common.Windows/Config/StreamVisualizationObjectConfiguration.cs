@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.Config
     public class StreamVisualizationObjectConfiguration : VisualizationObjectConfiguration
     {
         /// <summary>
-        /// Gets or sets the epsilon around the cursor for which we show the instant visualization
+        /// Gets or sets the epsilon around the cursor for which we show the instant visualization.
         /// </summary>
         private int cursorEpsilonMs = 500;
 
@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the epsilon around the cursor for which we show the instant visualization
+        /// Gets or sets the epsilon around the cursor for which we show the instant visualization.
         /// </summary>
         [DataMember]
         public int CursorEpsilonMs

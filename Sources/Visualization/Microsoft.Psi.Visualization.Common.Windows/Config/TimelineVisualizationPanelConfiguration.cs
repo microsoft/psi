@@ -24,6 +24,15 @@ namespace Microsoft.Psi.Visualization.Config
         private bool showTimeTicks = false;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TimelineVisualizationPanelConfiguration"/> class.
+        /// </summary>
+        public TimelineVisualizationPanelConfiguration()
+        {
+            this.Name = "Timeline Panel";
+            this.Height = 70;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the legend should be shown.
         /// </summary>
         [DataMember]

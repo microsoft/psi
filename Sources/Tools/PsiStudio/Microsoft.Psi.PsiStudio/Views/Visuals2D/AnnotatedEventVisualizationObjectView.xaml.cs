@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for AnnotatedEventVisualizationObjectView.xaml
+    /// Interaction logic for AnnotatedEventVisualizationObjectView.xaml.
     /// </summary>
     public partial class AnnotatedEventVisualizationObjectView : UserControl
     {
@@ -59,7 +59,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             None,
             MoveStart,
             MoveEnd,
-            MoveEvent
+            MoveEvent,
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     Fill = (schemaValue != null) ? schemaValue.Color.ToMediaBrush() : System.Drawing.Color.Black.ToMediaBrush(),
                     Stroke = Brushes.Black,
                     StrokeThickness = 1,
-                    Tag = annotation
+                    Tag = annotation,
                 };
 
                 this.textBlock = new TextBlock()
@@ -537,7 +537,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     Padding = new Thickness(5),
                     Text = annotation,
                     TextAlignment = TextAlignment.Center,
-                    TextWrapping = TextWrapping.Wrap
+                    TextWrapping = TextWrapping.Wrap,
                 };
 
                 // create context menu items

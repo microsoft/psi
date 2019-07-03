@@ -36,8 +36,8 @@ namespace Microsoft.Psi.Data
         /// Initializes a new instance of the <see cref="Importer"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline that owns this instance.</param>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files</param>
-        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to open a volatile data store</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to open a volatile data store.</param>
         public Importer(Pipeline pipeline, string name, string path)
         {
             this.reader = new StoreReader(name, path, this.LoadMetadata);
@@ -97,9 +97,10 @@ namespace Microsoft.Psi.Data
         }
 
         /// <inheritdoc />
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             this.stopping = true;
+            notifyCompleted();
         }
 
         /// <summary>
@@ -113,22 +114,22 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Returns the metadata for a specified storage stream.
         /// </summary>
-        /// <param name="streamName">The name of the storage stream</param>
-        /// <returns>The metadata associated with the storage stream</returns>
+        /// <param name="streamName">The name of the storage stream.</param>
+        /// <returns>The metadata associated with the storage stream.</returns>
         public PsiStreamMetadata GetMetadata(string streamName) => this.reader.GetMetadata(streamName);
 
         /// <summary>
         /// Indicates whether the store contains the specified storage stream.
         /// </summary>
-        /// <param name="streamName">The name of the storage stream</param>
+        /// <param name="streamName">The name of the storage stream.</param>
         /// <returns>True if the store contains a storage stream with the specified name, false otherwise.</returns>
         public bool Contains(string streamName) => this.reader.Contains(streamName);
 
         /// <summary>
         /// Copies the specified storage stream to an exporter without deserializing the data.
         /// </summary>
-        /// <param name="streamName">The name of the storage stream to copy</param>
-        /// <param name="writer">The store to copy to</param>
+        /// <param name="streamName">The name of the storage stream to copy.</param>
+        /// <param name="writer">The store to copy to.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         public void CopyStream(string streamName, Exporter writer, DeliveryPolicy deliveryPolicy = null)
         {
@@ -148,8 +149,8 @@ namespace Microsoft.Psi.Data
         /// which is useful for saving streams from a sensor and then calling this
         /// method to play them back as if they were an attached device.
         /// </summary>
-        /// <typeparam name="T">Type of object through which to expose the streams as emitters</typeparam>
-        /// <returns>Newly constructed object of type T</returns>
+        /// <typeparam name="T">Type of object through which to expose the streams as emitters.</typeparam>
+        /// <returns>Newly constructed object of type T.</returns>
         public T OpenAs<T>()
         {
             var target = (T)System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(T));
@@ -179,8 +180,8 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <typeparam name="T">The expected type of the storage stream to open.
         /// This type will be used to deserialize the stream messages.</typeparam>
-        /// <param name="streamName">The name of the storage stream to open</param>
-        /// <param name="reusableInstance">An optional instance to reuse (as a buffer) when deserializing the data</param>
+        /// <param name="streamName">The name of the storage stream to open.</param>
+        /// <param name="reusableInstance">An optional instance to reuse (as a buffer) when deserializing the data.</param>
         /// <returns>A stream that publishes the data read from the store.</returns>
         public IProducer<T> OpenStream<T>(string streamName, T reusableInstance = default(T))
         {
@@ -192,7 +193,7 @@ namespace Microsoft.Psi.Data
         /// The returned stream will publish data read from the store once the pipeline is running.
         /// </summary>
         /// <remarks>Messages are deserialized as dynamic primitives and/or ExpandoObject of dynamic.</remarks>
-        /// <param name="streamName">The name of the storage stream to open</param>
+        /// <param name="streamName">The name of the storage stream to open.</param>
         /// <returns>A stream of dynamic that publishes the data read from the store.</returns>
         public IProducer<dynamic> OpenDynamicStream(string streamName)
         {
@@ -228,8 +229,8 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Attempts to move the reader to the next message (across all logical storage streams).
         /// </summary>
-        /// <param name="moreDataPromised">Indicates whether an absence of messages should be reported as the end of the store</param>
-        /// <param name="env">The envelope of the last message we read</param>
+        /// <param name="moreDataPromised">Indicates whether an absence of messages should be reported as the end of the store.</param>
+        /// <param name="env">The envelope of the last message we read.</param>
         private void Next(bool moreDataPromised, Envelope env)
         {
             if (this.stopping)
@@ -268,9 +269,9 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Initializes the serialization subsystem with the metadata from the store
+        /// Initializes the serialization subsystem with the metadata from the store.
         /// </summary>
-        /// <param name="metadata">The collection of metadata entries from the store catalog</param>
+        /// <param name="metadata">The collection of metadata entries from the store catalog.</param>
         /// <param name="runtimeVersion">The version of the runtime that produced the store.</param>
         private void LoadMetadata(IEnumerable<Metadata> metadata, RuntimeInfo runtimeVersion)
         {

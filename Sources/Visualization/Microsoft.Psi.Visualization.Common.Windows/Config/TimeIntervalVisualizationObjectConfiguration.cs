@@ -13,32 +13,32 @@ namespace Microsoft.Psi.Visualization.Config
     public class TimeIntervalVisualizationObjectConfiguration : TimelineVisualizationObjectConfiguration
     {
         /// <summary>
-        /// The color of the marker to draw
+        /// The color of the marker to draw.
         /// </summary>
         private Color color = Colors.Gray;
 
         /// <summary>
-        /// The color of the marker to draw
+        /// The color of the marker to draw.
         /// </summary>
         private Color thresholdColor = Colors.Orange;
 
         /// <summary>
-        /// The size of the marker to draw
+        /// The size of the marker to draw.
         /// </summary>
         private double markerSize = 3;
 
         /// <summary>
-        /// The threshold for the latency visualizer
+        /// The threshold for the latency visualizer.
         /// </summary>
         private double threshold = 50;
 
         /// <summary>
-        /// The total number of tracks on which time intervals are shown in the current panel
+        /// The total number of tracks on which time intervals are shown in the current panel.
         /// </summary>
         private int trackCount = 1;
 
         /// <summary>
-        /// The index in the track at which to show the time interval
+        /// The index in the track at which to show the time interval.
         /// </summary>
         private int trackIndex = 0;
 

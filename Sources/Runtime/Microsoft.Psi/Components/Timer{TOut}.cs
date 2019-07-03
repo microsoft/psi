@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// A simple producer component that wakes up on a predefined interval and publishes one message.
     /// </summary>
-    /// <typeparam name="TOut">The type of messages published by the generator</typeparam>
+    /// <typeparam name="TOut">The type of messages published by the generator.</typeparam>
     public class Timer<TOut> : Timer, IProducer<TOut>
     {
         private Func<DateTime, TimeSpan, TOut> generator;
@@ -32,8 +32,8 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Generate timer message from current and elapsed time.
         /// </summary>
-        /// <param name="absoluteTime">The current (virtual) time</param>
-        /// <param name="relativeTime">The time elapsed since the generator was started</param>
+        /// <param name="absoluteTime">The current (virtual) time.</param>
+        /// <param name="relativeTime">The time elapsed since the generator was started.</param>
         protected override void Generate(DateTime absoluteTime, TimeSpan relativeTime)
         {
             var value = this.generator(absoluteTime, relativeTime);

@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Interop.Transport
     /// <summary>
     /// File persistence component.
     /// </summary>
-    /// <typeparam name="T">Message type</typeparam>
+    /// <typeparam name="T">Message type.</typeparam>
     public class FileWriter<T> : IConsumer<T>, IDisposable
     {
         private FileStream file;
@@ -20,9 +20,9 @@ namespace Microsoft.Psi.Interop.Transport
         /// <summary>
         /// Initializes a new instance of the <see cref="FileWriter{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs</param>
-        /// <param name="filename">File name to which to persist</param>
-        /// <param name="serializer">Format serializer with which messages are serialized</param>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="filename">File name to which to persist.</param>
+        /// <param name="serializer">Format serializer with which messages are serialized.</param>
         public FileWriter(Pipeline pipeline, string filename, IPersistentFormatSerializer serializer)
         {
             this.file = File.Create(filename);

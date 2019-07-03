@@ -10,8 +10,8 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Implements an index-based windowing component.
     /// </summary>
-    /// <typeparam name="TInput">The type of input messages</typeparam>
-    /// <typeparam name="TOutput">The type of output messages</typeparam>
+    /// <typeparam name="TInput">The type of input messages.</typeparam>
+    /// <typeparam name="TOutput">The type of output messages.</typeparam>
     public class RelativeIndexWindow<TInput, TOutput> : ConsumerProducer<TInput, TOutput>
     {
         private readonly IRecyclingPool<Message<TInput>> recycler = RecyclingPool.Create<Message<TInput>>();
@@ -21,8 +21,8 @@ namespace Microsoft.Psi.Components
         private readonly int trimRight;
         private readonly Func<IEnumerable<Message<TInput>>, TOutput> selector;
 
-        private int anchorMessageIndex = 0;
-        private Queue<Message<TInput>> buffer = new Queue<Message<TInput>>();
+        private readonly int anchorMessageIndex = 0;
+        private readonly Queue<Message<TInput>> buffer = new Queue<Message<TInput>>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeIndexWindow{TInput, TOutput}"/> class.

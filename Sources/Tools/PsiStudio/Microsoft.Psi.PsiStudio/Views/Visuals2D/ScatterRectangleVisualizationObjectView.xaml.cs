@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Interaction logic for ScatterRectangleVisualizationObjectView.xaml
+    /// Interaction logic for ScatterRectangleVisualizationObjectView.xaml.
     /// </summary>
     public partial class ScatterRectangleVisualizationObjectView : UserControl
     {

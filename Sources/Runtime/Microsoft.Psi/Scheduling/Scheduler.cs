@@ -29,7 +29,6 @@ namespace Microsoft.Psi.Scheduling
         private ThreadLocal<DateTime> currentWorkitemTime = new ThreadLocal<DateTime>(() => DateTime.MaxValue);
         private Clock clock;
         private bool delayFutureWorkitemsUntilDue;
-        private DateTime finalizeTime = DateTime.MaxValue;
         private bool started = false;
         private bool completed = false;
 
@@ -81,15 +80,16 @@ namespace Microsoft.Psi.Scheduling
         /// <summary>
         /// Attempts to execute the delegate immediately, on the calling thread, without scheduling.
         /// </summary>
-        /// <typeparam name="T">Action argument type</typeparam>
-        /// <param name="synchronizationObject">Synchronization object</param>
-        /// <param name="action">Action to execute</param>
-        /// <param name="argument">Action argument</param>
-        /// <param name="startTime">Scheduled start time</param>
-        /// <returns>Success flag</returns>
-        public bool TryExecute<T>(SynchronizationLock synchronizationObject, Action<T> action, T argument, DateTime startTime)
+        /// <typeparam name="T">Action argument type.</typeparam>
+        /// <param name="synchronizationObject">Synchronization object.</param>
+        /// <param name="action">Action to execute.</param>
+        /// <param name="argument">Action argument.</param>
+        /// <param name="startTime">Scheduled start time.</param>
+        /// <param name="context">The scheduler context on which to execute the action.</param>
+        /// <returns>Success flag.</returns>
+        public bool TryExecute<T>(SynchronizationLock synchronizationObject, Action<T> action, T argument, DateTime startTime, SchedulerContext context)
         {
-            if (this.forcedShutdownRequested || startTime > this.finalizeTime)
+            if (this.forcedShutdownRequested || startTime > context.FinalizeTime)
             {
                 return true;
             }
@@ -107,13 +107,18 @@ namespace Microsoft.Psi.Scheduling
 
             // try to acquire a lock on the sync context
             // however, if this thread already has the lock, we have to give up to keep the no-reentrancy guarantee
-            if (!TryGetExclusiveLock(synchronizationObject))
+            if (!synchronizationObject.TryLock())
             {
                 return false;
             }
 
             try
             {
+                // Unlike ExecuteAndRelease, which assumes that the context has already been entered (e.g.
+                // when the work item was first created), we need to explicitly enter the context prior to
+                // running the action. The context will be exited in the finally clause.
+                context.Enter();
+
                 action(argument);
                 this.counters?.Increment(SchedulerCounters.WorkitemsPerSecond);
 
@@ -124,7 +129,8 @@ namespace Microsoft.Psi.Scheduling
             }
             finally
             {
-                ReleaseExclusiveLock(synchronizationObject);
+                synchronizationObject.Release();
+                context.Exit();
             }
 
             return true;
@@ -133,13 +139,14 @@ namespace Microsoft.Psi.Scheduling
         /// <summary>
         /// Attempts to execute the delegate immediately, on the calling thread, without scheduling.
         /// </summary>
-        /// <param name="synchronizationObject">Synchronization object</param>
-        /// <param name="action">Action to execute</param>
-        /// <param name="startTime">Scheduled start time</param>
-        /// <returns>Success flag</returns>
-        public bool TryExecute(SynchronizationLock synchronizationObject, Action action, DateTime startTime)
+        /// <param name="synchronizationObject">Synchronization object.</param>
+        /// <param name="action">Action to execute.</param>
+        /// <param name="startTime">Scheduled start time.</param>
+        /// <param name="context">The scheduler context on which to execute the action.</param>
+        /// <returns>Success flag.</returns>
+        public bool TryExecute(SynchronizationLock synchronizationObject, Action action, DateTime startTime, SchedulerContext context)
         {
-            if (this.forcedShutdownRequested || startTime > this.finalizeTime)
+            if (this.forcedShutdownRequested || startTime > context.FinalizeTime)
             {
                 return true;
             }
@@ -157,92 +164,45 @@ namespace Microsoft.Psi.Scheduling
 
             // try to acquire a lock
             // however, if this thread already has the lock, we have to give up to keep the no-reentrancy guarantee
-            if (!TryGetExclusiveLock(synchronizationObject))
+            if (!synchronizationObject.TryLock())
             {
                 return false;
             }
 
-            this.ExecuteAndRelease(synchronizationObject, action);
+            // ExecuteAndRelease assumes that the context has already been entered, so we must explicitly
+            // enter it here. The context will be exited just prior to returning from ExecuteAndRelease.
+            context.Enter();
+            this.ExecuteAndRelease(synchronizationObject, action, context);
             this.counters?.Increment(SchedulerCounters.ImmediateWorkitemsPerSecond);
             return true;
         }
 
         /// <summary>
-        /// Enqueues a workitem and, if possible, kicks off a worker thread to pick it up
+        /// Enqueues a workitem and, if possible, kicks off a worker thread to pick it up.
         /// </summary>
-        /// <param name="synchronizationObject">Synchronization object</param>
-        /// <param name="action">Action to execute</param>
-        /// <param name="startTime">Scheduled start time</param>
-        /// <param name="asContinuation">Flag whether to execute once current operation completes</param>
+        /// <param name="synchronizationObject">Synchronization object.</param>
+        /// <param name="action">Action to execute.</param>
+        /// <param name="startTime">Scheduled start time.</param>
+        /// <param name="context">The scheduler context on which to schedule the action.</param>
+        /// <param name="asContinuation">Flag whether to execute once current operation completes.</param>
         /// <param name="allowSchedulingPastFinalization">Allow scheduling past finalization time.</param>
-        public void Schedule(SynchronizationLock synchronizationObject, Action action, DateTime startTime, bool asContinuation = true, bool allowSchedulingPastFinalization = false)
+        public void Schedule(SynchronizationLock synchronizationObject, Action action, DateTime startTime, SchedulerContext context, bool asContinuation = true, bool allowSchedulingPastFinalization = false)
         {
-            if (this.forcedShutdownRequested || (startTime > this.finalizeTime && !allowSchedulingPastFinalization) || this.completed)
-            {
-                return;
-            }
-
-            if (synchronizationObject == null || action == null)
+            if (synchronizationObject == null || action == null || context == null)
             {
                 throw new ArgumentNullException();
             }
 
-            WorkItem wi = new WorkItem() { SyncLock = synchronizationObject, Callback = action, StartTime = startTime };
-
-            // if the workitem not yet due, add it to the future workitem queue
-            if ((startTime > this.clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue) || !this.started)
-            {
-                this.futureWorkitems.Enqueue(wi);
-                this.futureAdded.Set();
-                return;
-            }
-
-            // try to kick off another thread now, without going through the global queue
-            if (TryGetExclusiveLock(synchronizationObject))
-            {
-                if (this.threadSemaphore.TryEnter())
-                {
-                    // there are threads available, which means the items in the global queue, if any, are locked
-                    // start a thread to do the work
-                    this.counters?.Increment(SchedulerCounters.ImmediateWorkitemsPerSecond);
-                    ThreadPool.QueueUserWorkItem(this.Run, wi);
-                    return;
-                }
-
-                ReleaseExclusiveLock(synchronizationObject);
-            }
-
-            // try to schedule on the local thread, to be executed once the current operation finishes, as long as the new workitem time is the same or less as the current one
-            if (asContinuation && this.isSchedulerThread.Value && this.nextWorkitem.Value == null && wi.StartTime <= this.currentWorkitemTime.Value)
-            {
-                // we own the thread, so schedule the work in the local queue
-                this.nextWorkitem.Value = wi;
-                this.counters?.Increment(SchedulerCounters.LocalQueueCount);
-                return;
-            }
-
-            // last resort, add the workitem to the global queue
-            this.globalWorkitems.Enqueue(wi);
-
-            // if a thread became available, it might have missed the workitem being enqueued, so retry to make sure
-            if (this.threadSemaphore.TryEnter())
-            {
-                if (this.globalWorkitems.TryDequeue(out wi))
-                {
-                    this.counters?.Increment(SchedulerCounters.GlobalWorkitemsPerSecond);
-                    ThreadPool.QueueUserWorkItem(this.Run, wi);
-                }
-                else
-                {
-                    this.threadSemaphore.Exit();
-                }
-            }
+            // Enter the context to track this new work item. The context will be exited
+            // only after the work item has been successfully executed (or dropped).
+            context.Enter();
+            this.Schedule(new WorkItem() { SyncLock = synchronizationObject, Callback = action, StartTime = startTime, SchedulerContext = context });
         }
 
         /// <summary>
         /// Prevent further scheduling.
         /// </summary>
-        /// <param name="synchronizationObject">Synchronization object</param>
+        /// <param name="synchronizationObject">Synchronization object.</param>
         public void Freeze(SynchronizationLock synchronizationObject)
         {
             synchronizationObject.Hold();
@@ -251,14 +211,15 @@ namespace Microsoft.Psi.Scheduling
         /// <summary>
         /// Allow further scheduling.
         /// </summary>
-        /// <param name="synchronizationObject">Synchronization object</param>
+        /// <param name="synchronizationObject">Synchronization object.</param>
         public void Thaw(SynchronizationLock synchronizationObject)
         {
             synchronizationObject.Release();
         }
 
         /// <summary>
-        /// Start scheduler.
+        /// Starts the scheduler. This sets the scheduler clock and a flag indicating whether work items
+        /// should be scheduled only when they are due based on the clock time or as soon as possible.
         /// </summary>
         /// <param name="clock">Scheduler clock.</param>
         /// <param name="delayFutureWorkitemsUntilDue">Delay future workitems until scheduled time.</param>
@@ -281,7 +242,7 @@ namespace Microsoft.Psi.Scheduling
         /// Reject any new scheduling and block until running threads finish their current work.
         /// </summary>
         /// <remarks>Assumes source components have been shut down.</remarks>
-        /// <param name="abandonPendingWorkitems">Whether to abandon queued/future workitems</param>
+        /// <param name="abandonPendingWorkitems">Whether to abandon queued/future workitems.</param>
         public void Stop(bool abandonPendingWorkitems = false)
         {
             if (this.stopped.WaitOne(0))
@@ -295,6 +256,26 @@ namespace Microsoft.Psi.Scheduling
             this.clock = new Clock(DateTime.MinValue, 0);
             this.completed = true;
             this.delayFutureWorkitemsUntilDue = true;
+        }
+
+        /// <summary>
+        /// Starts scheduling work on the given context.
+        /// </summary>
+        /// <param name="context">The context on which scheduling should start.</param>
+        public void StartScheduling(SchedulerContext context)
+        {
+            context.Start(this.Clock);
+        }
+
+        /// <summary>
+        /// Stops scheduling further work items on the given context.
+        /// </summary>
+        /// <param name="context">The context on which scheduling should cease.</param>
+        public void StopScheduling(SchedulerContext context)
+        {
+            // wait for already scheduled work to finish
+            this.PauseForQuiescence(context);
+            context.Stop();
         }
 
         /// <summary>
@@ -322,7 +303,7 @@ namespace Microsoft.Psi.Scheduling
                     Tuple.Create(SchedulerCounters.GlobalWorkitemsPerSecond, "Global workitems / second", "The number of workitems from the global queue executed per second", PerfCounterType.RateOfCountsPerSecond32),
                     Tuple.Create(SchedulerCounters.LocalWorkitemsPerSecond, "Local workitems / second", "The number of workitems from the thread-local queues executed per second", PerfCounterType.RateOfCountsPerSecond32),
                     Tuple.Create(SchedulerCounters.ImmediateWorkitemsPerSecond, "Immediate workitems / second", "The number of workitems executed synchronously without enqueuing, per second", PerfCounterType.RateOfCountsPerSecond32),
-                    Tuple.Create(SchedulerCounters.ActiveThreads, "Active threads", "The count of active threads", PerfCounterType.NumberOfItems32)
+                    Tuple.Create(SchedulerCounters.ActiveThreads, "Active threads", "The count of active threads", PerfCounterType.NumberOfItems32),
                 });
 #pragma warning restore SA1118 // Parameter must not span multiple lines
 
@@ -330,61 +311,124 @@ namespace Microsoft.Psi.Scheduling
         }
 
         /// <summary>
-        /// Pause scheduler until all queues have drained.
+        /// Pause scheduler until all scheduled work items on the given context have completed.
         /// </summary>
-        internal void PauseForQuiescence()
+        /// <param name="context">The scheduler context on which to wait.</param>
+        internal void PauseForQuiescence(SchedulerContext context)
         {
-            if (this.stopped.WaitOne(0) || !this.started || this.completed)
+            if (context.Empty.WaitOne(0) || !this.started || this.completed)
             {
                 return;
             }
 
-            // let queues drain
-            this.stopped.Set();
-            try
+            if (!this.isSchedulerThread.Value && !this.allowSchedulingOnExternalThreads)
             {
-                this.futuresThread.Join();
+                // this is not a scheduler thread, so just wait for the context to empty and return
+                context.Empty.WaitOne();
+                return;
             }
-            catch (ThreadStateException)
+
+            // continue executing work items on this scheduler thread while waiting for the context to empty
+            while (!this.forcedShutdownRequested && !context.Empty.WaitOne(0))
             {
-                // thread never started?
+                WorkItem wi;
+
+                if (this.nextWorkitem.Value != null)
+                {
+                    // if there is a queued local work item, try to run it first
+                    wi = (WorkItem)this.nextWorkitem.Value;
+                    this.nextWorkitem.Value = null;
+                    this.counters?.Decrement(SchedulerCounters.LocalQueueCount);
+                    if (wi.SyncLock.TryLock())
+                    {
+                        this.counters?.Increment(SchedulerCounters.LocalWorkitemsPerSecond);
+                        goto ExecuteWorkItem;
+                    }
+                    else
+                    {
+                        // it's locked, so let someone else have it
+                        this.Schedule(wi, false);
+                        this.counters?.Increment(SchedulerCounters.LocalToGlobalPromotions);
+                    }
+                }
+
+                // try to get another item from the global queue
+                if (!this.globalWorkitems.TryDequeue(out wi))
+                {
+                    // no work left
+                    continue;
+                }
+
+                this.counters?.Increment(SchedulerCounters.GlobalWorkitemsPerSecond);
+
+            ExecuteWorkItem:
+                this.currentWorkitemTime.Value = wi.StartTime;
+                this.ExecuteAndRelease(wi.SyncLock, wi.Callback, wi.SchedulerContext);
             }
         }
 
         /// <summary>
-        /// Resume scheduler after having paused for quiescence.
+        /// Enqueues a workitem and, if possible, kicks off a worker thread to pick it up.
         /// </summary>
-        internal void ResumeAfterQuiescence()
+        /// <param name="wi">The work item to schedule.</param>
+        /// <param name="asContinuation">Flag whether to execute once current operation completes.</param>
+        /// <param name="allowSchedulingPastFinalization">Allow scheduling past finalization time.</param>
+        private void Schedule(WorkItem wi, bool asContinuation = true, bool allowSchedulingPastFinalization = false)
         {
-            if (this.stopped.WaitOne(0) && this.started && !this.completed)
+            if (this.forcedShutdownRequested || (wi.StartTime > wi.SchedulerContext.FinalizeTime && !allowSchedulingPastFinalization) || this.completed)
             {
-                this.stopped.Reset();
-                this.StartFuturesThread();
+                wi.SchedulerContext.Exit();
+                return;
             }
-        }
 
-        /// <summary>
-        /// Notify scheduler of latest message time enqueued or scheduled.
-        /// </summary>
-        /// <param name="finalizeTime">Originating time after which messages will no longer be scheduled.</param>
-        internal void NotifyPipelineFinalizing(DateTime finalizeTime)
-        {
-            this.finalizeTime = finalizeTime;
-        }
+            // if the workitem not yet due, add it to the future workitem queue
+            if ((wi.StartTime > wi.SchedulerContext.Clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue) || !this.started || !wi.SchedulerContext.Started)
+            {
+                this.futureWorkitems.Enqueue(wi);
+                this.futureAdded.Set();
+                return;
+            }
 
-        private static bool TryGetExclusiveLock(SynchronizationLock syncLock)
-        {
-            return syncLock.TryLock();
-        }
+            // try to kick off another thread now, without going through the global queue
+            if (wi.SyncLock.TryLock())
+            {
+                if (this.threadSemaphore.TryEnter())
+                {
+                    // there are threads available, which means the items in the global queue, if any, are locked
+                    // start a thread to do the work
+                    this.counters?.Increment(SchedulerCounters.ImmediateWorkitemsPerSecond);
+                    ThreadPool.QueueUserWorkItem(this.Run, wi);
+                    return;
+                }
 
-        private static bool TryGetExclusiveLock(WorkItem wi)
-        {
-            return TryGetExclusiveLock(wi.SyncLock);
-        }
+                wi.SyncLock.Release();
+            }
 
-        private static void ReleaseExclusiveLock(SynchronizationLock synchronizationObject)
-        {
-            synchronizationObject.Release();
+            // try to schedule on the local thread, to be executed once the current operation finishes, as long as the new workitem time is the same or less as the current one
+            if (asContinuation && this.isSchedulerThread.Value && this.nextWorkitem.Value == null && wi.StartTime <= this.currentWorkitemTime.Value)
+            {
+                // we own the thread, so schedule the work in the local queue
+                this.nextWorkitem.Value = wi;
+                this.counters?.Increment(SchedulerCounters.LocalQueueCount);
+                return;
+            }
+
+            // last resort, add the workitem to the global queue
+            this.globalWorkitems.Enqueue(wi);
+
+            // if a thread became available, it might have missed the workitem being enqueued, so retry to make sure
+            if (this.threadSemaphore.TryEnter())
+            {
+                if (this.globalWorkitems.TryDequeue(out wi))
+                {
+                    this.counters?.Increment(SchedulerCounters.GlobalWorkitemsPerSecond);
+                    ThreadPool.QueueUserWorkItem(this.Run, wi);
+                }
+                else
+                {
+                    this.threadSemaphore.Exit();
+                }
+            }
         }
 
         private void StartFuturesThread()
@@ -426,7 +470,7 @@ namespace Microsoft.Psi.Scheduling
                 while (!this.forcedShutdownRequested)
                 {
                     this.currentWorkitemTime.Value = wi.StartTime;
-                    this.ExecuteAndRelease(wi.SyncLock, wi.Callback);
+                    this.ExecuteAndRelease(wi.SyncLock, wi.Callback, wi.SchedulerContext);
 
                     // process the next local wi, if one is present
                     if (this.nextWorkitem.Value != null)
@@ -441,7 +485,7 @@ namespace Microsoft.Psi.Scheduling
                         }
 
                         // it's locked, so let someone else have it
-                        this.Schedule(wi.SyncLock, wi.Callback, wi.StartTime, false);
+                        this.Schedule(wi, false);
                         this.counters?.Increment(SchedulerCounters.LocalToGlobalPromotions);
                     }
 
@@ -474,7 +518,7 @@ namespace Microsoft.Psi.Scheduling
             }
         }
 
-        private void ExecuteAndRelease(SynchronizationLock synchronizationObject, Action action)
+        private void ExecuteAndRelease(SynchronizationLock synchronizationObject, Action action, SchedulerContext context)
         {
             try
             {
@@ -486,7 +530,8 @@ namespace Microsoft.Psi.Scheduling
             }
             finally
             {
-                ReleaseExclusiveLock(synchronizationObject);
+                synchronizationObject.Release();
+                context.Exit();
             }
         }
 
@@ -529,7 +574,7 @@ namespace Microsoft.Psi.Scheduling
                 WorkItem wi;
                 while (this.futureWorkitems.TryDequeue(out wi, false))
                 {
-                    this.Schedule(wi.SyncLock, wi.Callback, wi.StartTime, false);
+                    this.Schedule(wi, false);
                 }
 
                 if (this.futureWorkitems.TryPeek(out wi))

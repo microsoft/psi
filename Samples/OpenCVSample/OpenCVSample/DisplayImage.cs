@@ -20,6 +20,9 @@ namespace Microsoft.Psi.Samples.OpenCV
         private FrameCounter receivedFrames = new FrameCounter();
         private WriteableBitmap image;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayImage"/> class.
+        /// </summary>
         public DisplayImage()
             : base()
         {
@@ -61,7 +64,7 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// Gets or sets the WriteableBitmap that we will display in a WPF control
+        /// Gets or sets the WriteableBitmap that we will display in a WPF control.
         /// </summary>
         public WriteableBitmap Image
         {
@@ -91,10 +94,10 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// Callback for handling of dispatch timer that will drive our UI update
+        /// Callback for handling of dispatch timer that will drive our UI update.
         /// </summary>
-        /// <param name="sender">Timer that triggered this callback</param>
-        /// <param name="e">Event args for the callback</param>
+        /// <param name="sender">Timer that triggered this callback.</param>
+        /// <param name="e">Event args for the callback.</param>
         private void Dt_Tick(object sender, EventArgs e)
         {
             if (this.psiImage != null && this.psiImage.Resource != null)
@@ -142,7 +145,7 @@ namespace Microsoft.Psi.Samples.OpenCV
         }
 
         /// <summary>
-        /// Helper function for firing an event when the image property changes
+        /// Helper function for firing an event when the image property changes.
         /// </summary>
         /// <param name="propertyName">The name of the property that changed.</param>
         private void OnPropertyChanged(string propertyName)

@@ -13,12 +13,12 @@ namespace Microsoft.Psi.Visualization.Config
     public class VisualizationObjectConfiguration : ObservableObject
     {
         /// <summary>
-        /// The name of the visualization object
+        /// The name of the visualization object.
         /// </summary>
         private string name;
 
         /// <summary>
-        /// Indicated whether the visualization object is visible
+        /// Indicated whether the visualization object is visible.
         /// </summary>
         private bool visible;
 
@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets the name of the visualization object
+        /// Gets or sets the name of the visualization object.
         /// </summary>
         [DataMember]
         public string Name
@@ -41,7 +41,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the visualization object is visible
+        /// Gets or sets a value indicating whether the visualization object is visible.
         /// </summary>
         [DataMember]
         public bool Visible

@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Kinect
     using System.IO;
 
     /// <summary>
-    /// Defines a class for performing Levenberg-Marquardt optimization
+    /// Defines a class for performing Levenberg-Marquardt optimization.
     /// </summary>
     internal class LevenbergMarquardt
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="LevenbergMarquardt"/> class.
         /// </summary>
-        /// <param name="function">Cost function</param>
+        /// <param name="function">Cost function.</param>
         public LevenbergMarquardt(Function function)
             : this(function, new NumericalDifferentiation(function).Jacobian)
         {
@@ -34,8 +34,8 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="LevenbergMarquardt"/> class.
         /// </summary>
-        /// <param name="function">Cost function</param>
-        /// <param name="jacobianFunction">Jacobian</param>
+        /// <param name="function">Cost function.</param>
+        /// <param name="jacobianFunction">Jacobian.</param>
         public LevenbergMarquardt(Function function, Jacobian jacobianFunction)
         {
             this.function = function;
@@ -43,21 +43,21 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// y_i - f(x_i, parameters) as column vector
+        /// y_i - f(x_i, parameters) as column vector.
         /// </summary>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>Matrix</returns>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>Matrix.</returns>
         public delegate Matrix Function(Matrix parameters);
 
         /// <summary>
-        /// J_ij, ith error from function, jth parameter
+        /// J_ij, ith error from function, jth parameter.
         /// </summary>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>Matrix</returns>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>Matrix.</returns>
         public delegate Matrix Jacobian(Matrix parameters);
 
         /// <summary>
-        /// States for optimization
+        /// States for optimization.
         /// </summary>
         public enum States
         {
@@ -65,12 +65,12 @@ namespace Microsoft.Psi.Kinect
             Running,
             MaximumIterations,
             LambdaTooLarge,
-            ReductionStepTooSmall
+            ReductionStepTooSmall,
 #pragma warning restore SA1602 // Enumeration items must be documented
         }
 
         /// <summary>
-        /// Gets the RMS error
+        /// Gets the RMS error.
         /// </summary>
         public double RMSError
         {
@@ -78,7 +78,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Gets the optimization state
+        /// Gets the optimization state.
         /// </summary>
         public States State
         {
@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Performs unit test
+        /// Performs unit test.
         /// </summary>
         public static void Test()
         {
@@ -135,10 +135,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Minimizes function
+        /// Minimizes function.
         /// </summary>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>Returns the RMS</returns>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>Returns the RMS.</returns>
         public double Minimize(Matrix parameters)
         {
             this.state = States.Running;
@@ -156,10 +156,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Writes the specified matrix to the specified file
+        /// Writes the specified matrix to the specified file.
         /// </summary>
-        /// <param name="matA">Matrix to write</param>
-        /// <param name="filename">Name of output file</param>
+        /// <param name="matA">Matrix to write.</param>
+        /// <param name="filename">Name of output file.</param>
         public void WriteMatrixToFile(Matrix matA, string filename)
         {
             var file = new StreamWriter(filename);
@@ -177,10 +177,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Single step of the optimization
+        /// Single step of the optimization.
         /// </summary>
-        /// <param name="parameters">Parameters</param>
-        /// <returns>Returns the error</returns>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>Returns the error.</returns>
         public double MinimizeOneStep(Matrix parameters)
         {
             // initial value of the function; callee knows the size of the returned vector
@@ -293,7 +293,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Class for doing numerical differentiation
+        /// Class for doing numerical differentiation.
         /// </summary>
         public class NumericalDifferentiation
         {
@@ -302,7 +302,7 @@ namespace Microsoft.Psi.Kinect
             /// <summary>
             /// Initializes a new instance of the <see cref="NumericalDifferentiation"/> class.
             /// </summary>
-            /// <param name="function">Cost function</param>
+            /// <param name="function">Cost function.</param>
             public NumericalDifferentiation(Function function)
             {
                 this.function = function;
@@ -310,10 +310,10 @@ namespace Microsoft.Psi.Kinect
 
             /// <summary>
             /// Returns the Jacobian
-            /// J_ij, ith error from function, jth parameter
+            /// J_ij, ith error from function, jth parameter.
             /// </summary>
-            /// <param name="parameters">Parameters</param>
-            /// <returns>Returns Jacobian</returns>
+            /// <param name="parameters">Parameters.</param>
+            /// <returns>Returns Jacobian.</returns>
             public Matrix Jacobian(Matrix parameters)
             {
                 const double deltaFactor = 1.0e-6;

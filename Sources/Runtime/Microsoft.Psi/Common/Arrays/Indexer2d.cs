@@ -17,8 +17,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="Indexer2d"/> class.
         /// </summary>
-        /// <param name="rows">The row definition (most significant dimension)</param>
-        /// <param name="columns">The column definition (least significant dimension)</param>
+        /// <param name="rows">The row definition (most significant dimension).</param>
+        /// <param name="columns">The column definition (least significant dimension).</param>
         public Indexer2d(IndexDefinition rows, IndexDefinition columns)
             : base(rows.Count * columns.Count)
         {
@@ -29,8 +29,8 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="Indexer2d"/> class.
         /// </summary>
-        /// <param name="rows">The count of rows (most significant dimension)</param>
-        /// <param name="columns">The count of columns (least significant dimension)</param>
+        /// <param name="rows">The count of rows (most significant dimension).</param>
+        /// <param name="columns">The count of columns (least significant dimension).</param>
         public Indexer2d(int rows, int columns)
             : this(rows, columns, columns)
         {
@@ -39,9 +39,9 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Initializes a new instance of the <see cref="Indexer2d"/> class.
         /// </summary>
-        /// <param name="rows">The count of rows (most significant dimension)</param>
-        /// <param name="columns">The count of columns (least significant dimension)</param>
-        /// <param name="stride">The spacing between rows. Must be greater than the column count</param>
+        /// <param name="rows">The count of rows (most significant dimension).</param>
+        /// <param name="columns">The count of columns (least significant dimension).</param>
+        /// <param name="stride">The spacing between rows. Must be greater than the column count.</param>
         public Indexer2d(int rows, int columns, int stride)
             : base(rows * columns)
         {
@@ -90,9 +90,9 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Returns the absolute value of the index given the row and column values.
         /// </summary>
-        /// <param name="row">The row index</param>
-        /// <param name="column">The column index</param>
-        /// <returns>The absolute value, computed as row *stride + column</returns>
+        /// <param name="row">The row index.</param>
+        /// <param name="column">The column index.</param>
+        /// <returns>The absolute value, computed as row *stride + column.</returns>
         public int this[int row, int column]
         {
             get
@@ -104,9 +104,9 @@ namespace Microsoft.Psi.Arrays
         /// <summary>
         /// Creates an indexer based on a rectangular slice of the index domain.
         /// </summary>
-        /// <param name="rowRange">The set of rows to include</param>
-        /// <param name="columnRange">The set of columns to include</param>
-        /// <returns>A new indexer over the specified rectangular slice</returns>
+        /// <param name="rowRange">The set of rows to include.</param>
+        /// <param name="columnRange">The set of columns to include.</param>
+        /// <returns>A new indexer over the specified rectangular slice.</returns>
         public Indexer2d Slice(Range rowRange, Range columnRange)
         {
             return new Indexer2d(this.rowIndexDef.Slice(rowRange), this.columnIndexDef.Slice(columnRange));
@@ -116,7 +116,7 @@ namespace Microsoft.Psi.Arrays
         /// Creates an indexer based on a rectangular slice of the index domain.
         /// </summary>
         /// <param name="ranges">The row and column ranges to include.</param>
-        /// <returns>A new indexer over the specified rectangular slice</returns>
+        /// <returns>A new indexer over the specified rectangular slice.</returns>
         Indexer IIndexer.Slice(params Range[] ranges)
         {
             if (ranges.Length != 2)

@@ -21,6 +21,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <summary>
         /// In dictation mode, users recite longer utterances to the application for further processing.
         /// </summary>
-        Dictation
+        Dictation,
     }
 }

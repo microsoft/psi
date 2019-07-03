@@ -25,7 +25,7 @@ namespace Microsoft.Psi.Visualization.Helpers
 
             var context = new ParserContext
             {
-                XamlTypeMapper = new XamlTypeMapper(new string[0])
+                XamlTypeMapper = new XamlTypeMapper(new string[0]),
             };
             context.XamlTypeMapper.AddMappingProcessingInstruction("vm", viewModelType.Namespace, viewModelType.Assembly.FullName);
             context.XamlTypeMapper.AddMappingProcessingInstruction("v", viewType.Namespace, viewType.Assembly.FullName);

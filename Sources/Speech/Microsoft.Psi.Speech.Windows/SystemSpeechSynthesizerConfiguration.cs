@@ -60,13 +60,13 @@ namespace Microsoft.Psi.Speech
 
         /// <summary>
         /// Gets or sets the prosody pitch for the speech. Possible values: x-low, low, medium, high, x-high, or default
-        /// Todo: make this an enum
+        /// Todo: make this an enum.
         /// </summary>
         public string ProsodyPitch { get; set; }
 
         /// <summary>
         /// Gets or sets the prosody volume for the speech. Possible values: silent, x-soft, soft, medium, loud, x-loud, or default
-        /// Todo: make this an enum
+        /// Todo: make this an enum.
         /// </summary>
         public string ProsodyVolume { get; set; }
 

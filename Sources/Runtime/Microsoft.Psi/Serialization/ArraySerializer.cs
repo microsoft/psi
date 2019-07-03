@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Serialization
     /// <summary>
     /// Generates efficient code to serialize and deserialize instances of an array.
     /// </summary>
-    /// <typeparam name="T">The type of objects this serializer knows how to handle</typeparam>
+    /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal sealed class ArraySerializer<T> : ISerializer<T[]>
     {
         private const int Version = 2;

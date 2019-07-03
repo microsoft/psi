@@ -14,14 +14,14 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="SerializerAttribute"/> class.
         /// </summary>
-        /// <param name="serializerType">he type of serializer to use when serializing instances of the class or struct annotated with this attribute</param>
+        /// <param name="serializerType">he type of serializer to use when serializing instances of the class or struct annotated with this attribute.</param>
         public SerializerAttribute(Type serializerType)
         {
             this.SerializerType = serializerType;
         }
 
         /// <summary>
-        /// Gets the type of serializer to use when serializing instances of the class or struct annotated with this attribute
+        /// Gets the type of serializer to use when serializing instances of the class or struct annotated with this attribute.
         /// </summary>
         public Type SerializerType { get; }
     }

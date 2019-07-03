@@ -10,18 +10,18 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// Implements a time-based windowing component.
     /// </summary>
-    /// <typeparam name="TInput">The type of input messages</typeparam>
-    /// <typeparam name="TOutput">The type of output messages</typeparam>
+    /// <typeparam name="TInput">The type of input messages.</typeparam>
+    /// <typeparam name="TOutput">The type of output messages.</typeparam>
     public class RelativeTimeWindow<TInput, TOutput> : ConsumerProducer<TInput, TOutput>
     {
         private readonly IRecyclingPool<Message<TInput>> recycler = RecyclingPool.Create<Message<TInput>>();
         private readonly RelativeTimeInterval relativeTimeInterval;
         private readonly Func<IEnumerable<Message<TInput>>, TOutput> selector;
+        private readonly Queue<Message<TInput>> buffer = new Queue<Message<TInput>>();
 
         private int anchorMessageSequenceId = -1;
         private DateTime anchorMessageOriginatingTime = DateTime.MinValue;
         private bool initialBuffer = true; // constructing first initial buffer
-        private Queue<Message<TInput>> buffer = new Queue<Message<TInput>>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeTimeWindow{TInput, TOutput}"/> class.
@@ -48,23 +48,23 @@ namespace Microsoft.Psi.Components
             {
                 var clone = this.buffer.DeepClone();
                 this.buffer.Enqueue(message);
-                if (this.CheckRemoval(message.OriginatingTime))
+                if (this.CheckRemoval())
                 {
                     this.initialBuffer = false;
                     this.ProcessWindow(clone, false, this.Out);
-                    this.ProcessRemoval(message.OriginatingTime);
+                    this.ProcessRemoval();
                     this.ProcessWindow(this.buffer, false, this.Out);
                 }
             }
             else
             {
                 this.buffer.Enqueue(message);
-                this.ProcessRemoval(message.OriginatingTime);
+                this.ProcessRemoval();
                 this.ProcessWindow(this.buffer, false, this.Out);
             }
         }
 
-        private bool RemoveCondition(Message<TInput> message, DateTime currentTime)
+        private bool RemoveCondition(Message<TInput> message)
         {
             if (this.initialBuffer)
             {
@@ -123,14 +123,14 @@ namespace Microsoft.Psi.Components
             this.recycler?.Recycle(free);
         }
 
-        private bool CheckRemoval(DateTime originatingTime)
+        private bool CheckRemoval()
         {
-            return this.buffer.Count > 0 && this.RemoveCondition(this.buffer.Peek(), originatingTime);
+            return this.buffer.Count > 0 && this.RemoveCondition(this.buffer.Peek());
         }
 
-        private void ProcessRemoval(DateTime originatingTime)
+        private void ProcessRemoval()
         {
-            while (this.CheckRemoval(originatingTime))
+            while (this.CheckRemoval())
             {
                 this.DequeueBuffer();
             }
@@ -142,9 +142,9 @@ namespace Microsoft.Psi.Components
             while (this.buffer.Count > 0)
             {
                 this.ProcessWindow(this.buffer, true, this.Out);
-                if (this.CheckRemoval(DateTime.MaxValue))
+                if (this.CheckRemoval())
                 {
-                    this.ProcessRemoval(DateTime.MaxValue);
+                    this.ProcessRemoval();
                     this.ProcessWindow(this.buffer, true, this.Out);
                 }
 

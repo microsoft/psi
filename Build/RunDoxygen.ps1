@@ -29,7 +29,7 @@ try {
             Write-Host "Installing Doxygen to " $doxygenInstallDir
             $WebClient = New-Object System.Net.WebClient
             Write-Host "Downloading Doxygen to '" + $doxygenZip + "'"
-            $WebClient.DownloadFile("http://ftp.stack.nl/pub/users/dimitri/doxygen-1.8.14.windows.x64.bin.zip", $doxygenZip)
+            $WebClient.DownloadFile("http://doxygen.nl/files/doxygen-1.8.15.windows.x64.bin.zip", $doxygenZip)
             Add-Type -AssemblyName System.IO.Compression.FileSystem
             Write-Host "Unzipping Doxygen to '" + $doxygenInstallDir + "'"
             [System.IO.Compression.ZipFile]::ExtractToDirectory($doxygenZip, $doxygenInstallDir);

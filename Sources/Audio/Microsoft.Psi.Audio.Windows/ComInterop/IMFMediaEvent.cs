@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System.Text;
 
     /// <summary>
-    /// IMFMediaEvent COM interface (defined in Mfobjects.h)
+    /// IMFMediaEvent COM interface (defined in Mfobjects.h).
     /// </summary>
     [ComImport]
     [Guid(Guids.IMFMediaEventIIDString)]
@@ -280,9 +280,9 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// Retrieves an HRESULT that specifies the event status.
         /// </summary>
-        /// <param name="hrStatus">The event status.</param>
+        /// <param name="status">The event status.</param>
         /// <returns>An HRESULT return code.</returns>
-        int GetStatus(out int hrStatus);
+        int GetStatus(out int status);
 
         /// <summary>
         /// Retrieves the value associated with the event.

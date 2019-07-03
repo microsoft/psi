@@ -110,7 +110,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     .Select(s => s.OriginatingTimeInterval));
 
         /// <summary>
-        /// Gets or sets a value indicating whether the tree view item is expanded
+        /// Gets or sets a value indicating whether the tree view item is expanded.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -245,9 +245,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Sets a session to be the currrent session being visualized
+        /// Sets a session to be the currrent session being visualized.
         /// </summary>
-        /// <param name="sessionViewModel">The SessionViewModel to visualize</param>
+        /// <param name="sessionViewModel">The SessionViewModel to visualize.</param>
         public void VisualizeSession(SessionViewModel sessionViewModel)
         {
             VisualizationContainer visualizationContainer = PsiStudioContext.Instance.VisualizationContainer;
@@ -346,7 +346,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Checks all partitions in the session to determine whether they have an active writer attached and updates their IsLivePartition property
+        /// Checks all partitions in the session to determine whether they have an active writer attached and updates their IsLivePartition property.
         /// </summary>
         internal void UpdateLivePartitionStatuses()
         {

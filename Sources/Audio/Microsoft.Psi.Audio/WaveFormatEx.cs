@@ -49,14 +49,14 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Creates a new instance of the <see cref="WaveFormatEx"/> class.
         /// </summary>
-        /// <param name="formatTag">The format tag</param>
-        /// <param name="samplingRate">The sampling frequency</param>
-        /// <param name="bitsPerSample">The number of bits per channel sample</param>
-        /// <param name="channels">The number of audio channels</param>
-        /// <param name="blockAlign">The block alignment</param>
-        /// <param name="avgBytesPerSecond">The average number of bytes per second</param>
-        /// <param name="extraInfo">An array containing extra format-specific information</param>
-        /// <returns>The WaveFormat object</returns>
+        /// <param name="formatTag">The format tag.</param>
+        /// <param name="samplingRate">The sampling frequency.</param>
+        /// <param name="bitsPerSample">The number of bits per channel sample.</param>
+        /// <param name="channels">The number of audio channels.</param>
+        /// <param name="blockAlign">The block alignment.</param>
+        /// <param name="avgBytesPerSecond">The average number of bytes per second.</param>
+        /// <param name="extraInfo">An array containing extra format-specific information.</param>
+        /// <returns>The WaveFormat object.</returns>
         public static WaveFormatEx Create(WaveFormatTag formatTag, int samplingRate, int bitsPerSample, int channels, int blockAlign, int avgBytesPerSecond, byte[] extraInfo = null)
         {
             return new WaveFormatEx()
@@ -68,7 +68,7 @@ namespace Microsoft.Psi.Audio
                 BlockAlign = (ushort)blockAlign,
                 AvgBytesPerSec = (uint)avgBytesPerSecond,
                 ExtraSize = (ushort)(extraInfo?.Length ?? 0),
-                ExtraInfo = extraInfo
+                ExtraInfo = extraInfo,
             };
         }
 

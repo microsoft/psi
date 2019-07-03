@@ -62,31 +62,6 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void JoinRepeatPipeline()
-        {
-            using (var p = Pipeline.Create("JoinRepeatPipeline"))
-            {
-                // create a generator that will produce a finite sequence
-                var generator = Generators.Sequence(p, 1, x => x + 1, count: 100);
-
-                var some = generator.Where(x => x % 10 == 0);
-
-                var join = Operators.Join(
-                        generator.Out,
-                        some.Out,
-                        Match.Any<int>(RelativeTimeInterval.RightBounded(TimeSpan.Zero)),
-                        (all, _) => all);
-
-                // var output = join.Do(x => Console.WriteLine(x));
-                var check = join.Do((d, e) => Assert.AreEqual(d, e.SequenceId + 9));
-
-                // start and run the pipeline
-                p.Run();
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
         public void RepeaterPipeline()
         {
             using (var p = Pipeline.Create("RepeaterPipeline"))
@@ -112,6 +87,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        [ExpectedException(typeof(DivideByZeroException))]
         public void ExceptionHandling()
         {
             using (var p = Pipeline.Create(nameof(this.ExceptionHandling)))
@@ -120,10 +96,58 @@ namespace Test.Psi
                 var sin = source.Select(t => t / 0); // trigger an exception
                 try
                 {
-                    p.Run(enableExceptionHandling: true);
+                    p.Run();
                 }
-                catch (AggregateException)
+                catch (AggregateException e)
                 {
+                    // exceptions from within the pipeline (including subpipelines) are wrapped in an AggregateException
+                    throw e.InnerException;
+                }
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void ExceptionFromPipelineRunHandler()
+        {
+            using (var p = Pipeline.Create("pipeline"))
+            {
+                var source = Generators.Sequence(p, 1, x => x + 1, 100);
+                p.PipelineRun += (s, e) =>
+                {
+                    int x = 0;
+                    x /= 0; // trigger an exception
+                };
+
+                p.Run();
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void ExceptionFromSubpipelineRunHandler()
+        {
+            using (var p = Pipeline.Create("pipeline"))
+            {
+                var sub = new Subpipeline(p, "subpipeline");
+                var generator = Generators.Sequence(p, 1, x => x + 1, 100);
+
+                sub.PipelineRun += (s, e) =>
+                {
+                    int x = 0;
+                    x /= 0; // trigger an exception
+                };
+
+                try
+                {
+                    p.Run();
+                }
+                catch (AggregateException e)
+                {
+                    // exceptions from within the pipeline (including subpipelines) are wrapped in an AggregateException
+                    throw e.InnerException;
                 }
             }
         }

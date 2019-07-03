@@ -31,15 +31,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private ObservableKeyedCache<DateTime, IntervalData<TData>>.ObservableKeyedView summaryData;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimelineVisualizationObject{TData, TConfig}"/> class.
-        /// </summary>
-        public TimelineVisualizationObject()
-        {
-            this.PropertyChanging += this.TimelineVisualizationObject_PropertyChanging;
-            this.PropertyChanged += this.TimelineVisualizationObject_PropertyChanged;
-        }
-
-        /// <summary>
         /// Gets or sets the summary data view.
         /// </summary>
         [Browsable(false)]
@@ -64,10 +55,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public virtual Color LegendColor => Colors.White;
 
         /// <summary>
-        /// Gets the value to display in the legend. By default the current value is returned
+        /// Gets the value to display in the live legend. By default a formatted version of the current value is returned.
         /// </summary>
         [IgnoreDataMember]
-        public virtual string LegendValue => this.CurrentValue.HasValue ? this.CurrentValue.Value.Data.ToString() : string.Empty;
+        public virtual string LegendValue
+        {
+            get
+            {
+                if (this.CurrentValue.HasValue)
+                {
+                    var format = $"{{0:{this.Configuration.LegendFormat}}}";
+                    return string.Format(format, this.CurrentValue.Value.Data.ToString());
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the visualization object is using summarization.
@@ -103,16 +108,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        protected override void OnConnect()
+        protected override void OnAddToPanel()
         {
-            base.OnConnect();
+            base.OnAddToPanel();
             this.Panel.PropertyChanged += this.OnPanelPropertyChanged;
         }
 
         /// <inheritdoc />
-        protected override void OnDisconnect()
+        protected override void OnRemoveFromPanel()
         {
-            base.OnDisconnect();
+            base.OnRemoveFromPanel();
             this.Panel.PropertyChanged -= this.OnPanelPropertyChanged;
         }
 
@@ -134,30 +139,48 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.SummaryData = null;
         }
 
-        /// <summary>
-        /// Invoked when a <see cref="TimelineVisualizationObject{TData, TConfig}"/> property is changing.
-        /// </summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The PropertyChangingEventArgs</param>
-        protected void TimelineVisualizationObject_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
+            base.OnPropertyChanging(sender, e);
+
             if (e.PropertyName == nameof(this.CurrentValue))
             {
                 this.RaisePropertyChanging(nameof(this.LegendValue));
             }
         }
 
-        /// <summary>
-        /// Invoked when a <see cref="TimelineVisualizationObject{TData, TConfig}"/> property changes.
-        /// </summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The PropertyChangingEventArgs</param>
-        protected void TimelineVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.CurrentValue))
             {
                 this.RaisePropertyChanged(nameof(this.LegendValue));
             }
+
+            base.OnPropertyChanged(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnConfigurationPropertyChanging(object sender, PropertyChangingEventArgs e)
+        {
+            base.OnConfigurationPropertyChanging(sender, e);
+
+            if (e.PropertyName == nameof(this.Configuration.LegendFormat))
+            {
+                this.RaisePropertyChanging(nameof(this.LegendValue));
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Configuration.LegendFormat))
+            {
+                this.RaisePropertyChanged(nameof(this.LegendValue));
+            }
+
+            base.OnConfigurationPropertyChanged(sender, e);
         }
 
         /// <summary>

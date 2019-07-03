@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Audio
     using Microsoft.Psi.Audio.ComInterop;
 
     /// <summary>
-    /// Native methods
+    /// Native methods.
     /// </summary>
     internal class NativeMethods
     {

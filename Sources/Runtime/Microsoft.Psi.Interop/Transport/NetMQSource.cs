@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Interop.Transport
     /// <summary>
     /// NetMQ (ZeroMQ) subscriber component.
     /// </summary>
-    /// <typeparam name="T">Message type</typeparam>
+    /// <typeparam name="T">Message type.</typeparam>
     public class NetMQSource<T> : IProducer<T>, ISourceComponent, IDisposable
     {
         private readonly string topic;
@@ -25,10 +25,10 @@ namespace Microsoft.Psi.Interop.Transport
         /// <summary>
         /// Initializes a new instance of the <see cref="NetMQSource{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs</param>
-        /// <param name="topic">Topic name</param>
-        /// <param name="address">Connection string</param>
-        /// <param name="deserializer">Format deserializer with which messages are deserialized</param>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="topic">Topic name.</param>
+        /// <param name="address">Connection string.</param>
+        /// <param name="deserializer">Format deserializer with which messages are deserialized.</param>
         public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer)
         {
             this.topic = topic;
@@ -62,7 +62,13 @@ namespace Microsoft.Psi.Interop.Transport
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
+        {
+            this.Stop();
+            notifyCompleted();
+        }
+
+        private void Stop()
         {
             if (this.socket != null)
             {

@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="data">
         /// The data to apply the Hanning window to. This must be of the same size as the kernel.
         /// </param>
-        /// <returns>The computed hannign window over the data</returns>
+        /// <returns>The computed hannign window over the data.</returns>
         public float[] Apply(float[] data)
         {
             if (data.Length != this.output.Length)

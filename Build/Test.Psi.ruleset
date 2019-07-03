@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Microsoft Psi Test Project Rules" Description="These rules are used for Psi test projects." ToolsVersion="10.0">
+<RuleSet Name="Microsoft Psi Test Project Rules" Description="These rules are used for Psi test projects." ToolsVersion="16.0">
   <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
     <Name Resource="MinimumRecommendedRules_Name" />
     <Description Resource="MinimumRecommendedRules_Description" />
@@ -69,14 +69,15 @@
     <Rule Id="CA2242" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
     <Rule Id="SA1008" Action="None" />
     <Rule Id="SA1009" Action="None" />
     <Rule Id="SA1124" Action="None" />
     <Rule Id="SA1305" Action="Warning" />
     <Rule Id="SA1401" Action="None" />
+    <Rule Id="SA1402" Action="None" />
     <Rule Id="SA1407" Action="None" />
     <Rule Id="SA1504" Action="None" />
     <Rule Id="SA1652" Action="None" />
-    <Rule Id="SA1402" Action="None" />
   </Rules>
 </RuleSet>

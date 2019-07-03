@@ -40,8 +40,8 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of</param>
-        /// <param name="configurationFilename">Name of configuration file</param>
+        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="configurationFilename">Name of configuration file.</param>
         public KinectSensor(Pipeline pipeline, string configurationFilename)
         : this(pipeline)
         {
@@ -52,8 +52,8 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of</param>
-        /// <param name="configuration">Configuration to use</param>
+        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="configuration">Configuration to use.</param>
         public KinectSensor(Pipeline pipeline, KinectSensorConfiguration configuration)
         : this(pipeline)
         {
@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of</param>
+        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
         private KinectSensor(Pipeline pipeline)
         {
             this.pipeline = pipeline;
@@ -84,32 +84,32 @@ namespace Microsoft.Psi.Kinect
         // While kinect always seems to output 6 bodies (including untracked ones), this stream only publishes the tracked bodies
 
         /// <summary>
-        /// Gets the list of bodies from the Kinect
+        /// Gets the list of bodies from the Kinect.
         /// </summary>
         public Emitter<List<KinectBody>> Bodies { get; private set; }
 
         /// <summary>
-        /// Gets the current image from the color camera
+        /// Gets the current image from the color camera.
         /// </summary>
         public Emitter<Shared<Image>> ColorImage { get; private set; }
 
         /// <summary>
-        /// Gets the current color+depth image
+        /// Gets the current color+depth image.
         /// </summary>
         public Emitter<Shared<Image>> RGBDImage { get; private set; }
 
         /// <summary>
-        /// Gets the current image from the depth camera
+        /// Gets the current image from the depth camera.
         /// </summary>
         public Emitter<Shared<Image>> DepthImage { get; private set; }
 
         /// <summary>
-        /// Gets the current image from the infrared camera
+        /// Gets the current image from the infrared camera.
         /// </summary>
         public Emitter<Shared<Image>> InfraredImage { get; private set; }
 
         /// <summary>
-        /// Gets the current long exposure image from the infrared camera
+        /// Gets the current long exposure image from the infrared camera.
         /// </summary>
         public Emitter<Shared<Image>> LongExposureInfraredImage { get; private set; }
 
@@ -119,32 +119,32 @@ namespace Microsoft.Psi.Kinect
         public Emitter<PointF[]> DepthFrameToCameraSpaceTable { get; private set; }
 
         /// <summary>
-        /// Gets the Kinect's calibration object
+        /// Gets the Kinect's calibration object.
         /// </summary>
         public Emitter<IKinectCalibration> Calibration { get; private set; }
 
         /// <summary>
-        /// Gets the emitter that returns the Kinect's audio samples
+        /// Gets the emitter that returns the Kinect's audio samples.
         /// </summary>
         public Emitter<AudioBuffer> Audio { get; private set; }
 
         /// <summary>
-        /// Gets the KinectAudioBeamInfo which returns information about the Kinect's audio beam
+        /// Gets the KinectAudioBeamInfo which returns information about the Kinect's audio beam.
         /// </summary>
         public Emitter<KinectAudioBeamInfo> AudioBeamInfo { get; private set; }
 
         /// <summary>
-        /// Gets??
+        /// Gets audio body correlations.
         /// </summary>
         public Emitter<IList<ulong>> AudioBodyCorrelations { get; private set; }
 
         /// <summary>
-        /// Gets a emitter that maps color points to camera space points
+        /// Gets a emitter that maps color points to camera space points.
         /// </summary>
         public Emitter<CameraSpacePoint[]> ColorToCameraMapper { get; private set; }
 
         /// <summary>
-        /// Gets the underlying Kinect sensor device
+        /// Gets the underlying Kinect sensor device.
         /// </summary>
         public Microsoft.Kinect.KinectSensor KinectDevice => this.kinectSensor;
 
@@ -153,7 +153,7 @@ namespace Microsoft.Psi.Kinect
         private int DisplayHeight => this.kinectSensor.ColorFrameSource.FrameDescription.Height;
 
         /// <summary>
-        /// Called to release the sensor
+        /// Called to release the sensor.
         /// </summary>
         public void Dispose()
         {
@@ -176,9 +176,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             this.kinectSensor?.Close();
+            notifyCompleted();
         }
 
         private void StartKinect()

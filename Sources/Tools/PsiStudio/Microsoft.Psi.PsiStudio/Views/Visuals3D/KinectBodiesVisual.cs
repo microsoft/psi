@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 var bodyPart = new SphereVisual3D()
                 {
                     ThetaDiv = SphereDiv,
-                    PhiDiv = SphereDiv
+                    PhiDiv = SphereDiv,
                 };
 
                 joints.Add(bodyPart);
@@ -102,7 +102,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 { Tuple.Create(JointType.SpineBase, JointType.HipLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } },
                 { Tuple.Create(JointType.HipLeft, JointType.KneeLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } },
                 { Tuple.Create(JointType.KneeLeft, JointType.AnkleLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } },
-                { Tuple.Create(JointType.AnkleLeft, JointType.FootLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } }
+                { Tuple.Create(JointType.AnkleLeft, JointType.FootLeft), new PipeVisual3D() { ThetaDiv = PipeDiv } },
             };
             var bonesTracked = new Dictionary<Tuple<JointType, JointType>, bool>
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 { Tuple.Create(JointType.SpineBase, JointType.HipLeft), true },
                 { Tuple.Create(JointType.HipLeft, JointType.KneeLeft), true },
                 { Tuple.Create(JointType.KneeLeft, JointType.AnkleLeft), true },
-                { Tuple.Create(JointType.AnkleLeft, JointType.FootLeft), true }
+                { Tuple.Create(JointType.AnkleLeft, JointType.FootLeft), true },
             };
 
             foreach (var b in bones)
@@ -146,7 +146,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 Background = Brushes.Gray,
                 Foreground = new SolidColorBrush(Colors.White),
                 Padding = new System.Windows.Thickness(5),
-                Text = $"Kinect Id: {this.numBodies++}"
+                Text = $"Kinect Id: {this.numBodies++}",
             };
             this.trackingIdBillboards.Add(trackingId, billboard);
             this.Children.Add(billboard);

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Kinect
 #pragma warning disable SA1600
 
     /// <summary>
-    /// Defines a Matrix class
+    /// Defines a Matrix class.
     /// </summary>
     internal class Matrix
     {
@@ -36,8 +36,8 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix"/> class.
         /// </summary>
-        /// <param name="m">Number of rows in matrix</param>
-        /// <param name="n">Number of columns in matrix</param>
+        /// <param name="m">Number of rows in matrix.</param>
+        /// <param name="n">Number of columns in matrix.</param>
         public Matrix(int m, int n)
         {
             this.m = m;
@@ -49,7 +49,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix"/> class.
         /// </summary>
-        /// <param name="mat">Matrix to copy from</param>
+        /// <param name="mat">Matrix to copy from.</param>
         public Matrix(Matrix mat)
         {
             this.m = mat.m;
@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Gets or sets a column of values in the matrix
+        /// Gets or sets a column of values in the matrix.
         /// </summary>
         public double[][] ValuesByColumn
         {
@@ -102,7 +102,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Gets number of rows in the matrix
+        /// Gets number of rows in the matrix.
         /// </summary>
         public int Rows
         {
@@ -110,7 +110,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Gets number of columns in the matrix
+        /// Gets number of columns in the matrix.
         /// </summary>
         public int Cols
         {
@@ -118,7 +118,7 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Gets the total number of elements in the matrix
+        /// Gets the total number of elements in the matrix.
         /// </summary>
         public int Size
         {
@@ -126,11 +126,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Indexer into the matrix
+        /// Indexer into the matrix.
         /// </summary>
-        /// <param name="i">Row to access</param>
-        /// <param name="j">Column to access</param>
-        /// <returns>The entry at specified row/column</returns>
+        /// <param name="i">Row to access.</param>
+        /// <param name="j">Column to access.</param>
+        /// <returns>The entry at specified row/column.</returns>
         public double this[int i, int j]
         {
             get { return this.data[(i * this.n) + j]; }
@@ -138,10 +138,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Indexer that treats the matrix as a flat array
+        /// Indexer that treats the matrix as a flat array.
         /// </summary>
-        /// <param name="i">Index to access</param>
-        /// <returns>Value at Ith element in the matrix</returns>
+        /// <param name="i">Index to access.</param>
+        /// <returns>Value at Ith element in the matrix.</returns>
         public double this[int i]
         {
             get { return this.data[i]; }
@@ -149,11 +149,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Returns an identity matrix
+        /// Returns an identity matrix.
         /// </summary>
-        /// <param name="m">Number of rows in matrix</param>
-        /// <param name="n">Number of columns in matrix</param>
-        /// <returns>New identity matrix of size MxN</returns>
+        /// <param name="m">Number of rows in matrix.</param>
+        /// <param name="n">Number of columns in matrix.</param>
+        /// <returns>New identity matrix of size MxN.</returns>
         public static Matrix Identity(int m, int n)
         {
             var mat = new Matrix(m, n);
@@ -162,11 +162,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Returns an zero matrix
+        /// Returns an zero matrix.
         /// </summary>
-        /// <param name="m">Number of rows in matrix</param>
-        /// <param name="n">Number of columns in matrix</param>
-        /// <returns>New zero matrix of size MxN</returns>
+        /// <param name="m">Number of rows in matrix.</param>
+        /// <param name="n">Number of columns in matrix.</param>
+        /// <returns>New zero matrix of size MxN.</returns>
         public static Matrix Zero(int m, int n)
         {
             var mat = new Matrix(m, n);
@@ -175,16 +175,16 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Copies a submatrix from matA into matB
+        /// Copies a submatrix from matA into matB.
         /// </summary>
-        /// <param name="matA">Matrix to copy from</param>
-        /// <param name="ai">Row offset to start copying from</param>
-        /// <param name="aj">Column offset to start copying from</param>
-        /// <param name="m">Number of rows to copy</param>
-        /// <param name="n">Number of columns to copy</param>
-        /// <param name="matB">Matrix to copy to</param>
-        /// <param name="bi">Row offset to copy to</param>
-        /// <param name="bj">Column offset to copy to</param>
+        /// <param name="matA">Matrix to copy from.</param>
+        /// <param name="ai">Row offset to start copying from.</param>
+        /// <param name="aj">Column offset to start copying from.</param>
+        /// <param name="m">Number of rows to copy.</param>
+        /// <param name="n">Number of columns to copy.</param>
+        /// <param name="matB">Matrix to copy to.</param>
+        /// <param name="bi">Row offset to copy to.</param>
+        /// <param name="bj">Column offset to copy to.</param>
         public static void CopyRange(Matrix matA, int ai, int aj, int m, int n, Matrix matB, int bi, int bj)
         {
             for (int i = 0; i < m; i++)
@@ -197,11 +197,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Copies a single row from matA to matB
+        /// Copies a single row from matA to matB.
         /// </summary>
-        /// <param name="matA">Matrix to copy from</param>
-        /// <param name="row">Row to copy</param>
-        /// <param name="matB">Matrix to copy to</param>
+        /// <param name="matA">Matrix to copy from.</param>
+        /// <param name="row">Row to copy.</param>
+        /// <param name="matB">Matrix to copy to.</param>
         public static void CopyRow(Matrix matA, int row, Matrix matB)
         {
             for (int j = 0; j < matA.n; j++)
@@ -211,11 +211,11 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Copies a single column from matA to matB
+        /// Copies a single column from matA to matB.
         /// </summary>
-        /// <param name="matA">Matrix to copy from</param>
-        /// <param name="col">Column to copy</param>
-        /// <param name="matB">Matrix to copy to</param>
+        /// <param name="matA">Matrix to copy from.</param>
+        /// <param name="col">Column to copy.</param>
+        /// <param name="matB">Matrix to copy to.</param>
         public static void CopyCol(Matrix matA, int col, Matrix matB)
         {
             for (int i = 0; i < matA.m; i++)
@@ -225,10 +225,10 @@ namespace Microsoft.Psi.Kinect
         }
 
         /// <summary>
-        /// Copies the diagonal from matA to matB
+        /// Copies the diagonal from matA to matB.
         /// </summary>
-        /// <param name="matA">Matrix to copy from</param>
-        /// <param name="matB">Matrix to copy to</param>
+        /// <param name="matA">Matrix to copy from.</param>
+        /// <param name="matB">Matrix to copy to.</param>
         public static void CopyDiag(Matrix matA, Matrix matB)
         {
             int maxd = (matA.m > matA.n) ? matA.m : matA.n;
@@ -505,6 +505,7 @@ namespace Microsoft.Psi.Kinect
                     { // matA.n
                         sum += matA[k, i] * matB[k, j];
                     }
+
                     matC[i, j] = sum;
                 }
             });

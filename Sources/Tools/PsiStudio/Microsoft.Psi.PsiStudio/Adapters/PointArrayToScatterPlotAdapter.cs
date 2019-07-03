@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of point arrays into lists named points
+    /// Used to adapt streams of point arrays into lists named points.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class PointArrayToScatterPlotAdapter : StreamAdapter<Point[], List<Tuple<Point, string>>>

@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Speech
     public interface IStreamingSpeechRecognitionResult : ISpeechRecognitionResult
     {
         /// <summary>
-        /// Gets a value indicating whether this result is final (true), or if it is a partial hypothesis (false)
+        /// Gets a value indicating whether this result is final (true), or if it is a partial hypothesis (false).
         /// </summary>
         bool IsFinal { get; }
     }

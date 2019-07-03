@@ -8,7 +8,7 @@ namespace Microsoft.Psi
     using System.Linq;
 
     /// <summary>
-    /// Extension methods that simplify operator usage
+    /// Extension methods that simplify operator usage.
     /// </summary>
     public static partial class Operators
     {
@@ -350,7 +350,7 @@ namespace Microsoft.Psi
         /// Compute the minimum of a stream of numeric values.
         /// </summary>
         /// <typeparam name="T">The message type.</typeparam>
-        /// <param name="source">The source stream</param>
+        /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
         public static IProducer<T> Min<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
@@ -362,7 +362,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Compute the minimum of a stream of double values.
         /// </summary>
-        /// <param name="source">The source stream</param>
+        /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
         /// <remarks>
@@ -379,7 +379,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Compute the minimum of a stream of float values.
         /// </summary>
-        /// <param name="source">The source stream</param>
+        /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
         /// <remarks>
@@ -396,7 +396,7 @@ namespace Microsoft.Psi
         /// Compute the maximum of a stream of numeric values.
         /// </summary>
         /// <typeparam name="T">The message type.</typeparam>
-        /// <param name="source">The source stream</param>
+        /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
         public static IProducer<T> Max<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
@@ -408,7 +408,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Compute the maximum of a stream of double values.
         /// </summary>
-        /// <param name="source">The source stream</param>
+        /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
         /// <remarks>
@@ -424,7 +424,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Compute the maximum of a stream of float values.
         /// </summary>
-        /// <param name="source">The source stream</param>
+        /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
         /// <remarks>
@@ -449,10 +449,10 @@ namespace Microsoft.Psi
         public static IProducer<decimal> Average(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
         {
             return source.Aggregate(
-                ValueTuple.Create((long)0, (decimal)0),
+                ValueTuple.Create(0L, 0M),
                 (tuple, message) =>
                     tuple.Item1 == 0 ?
-                        ValueTuple.Create((long)1, message) :
+                        ValueTuple.Create(1L, message) :
                         ValueTuple.Create(tuple.Item1 + 1, ((tuple.Item2 * tuple.Item1) + message) / (tuple.Item1 + 1)), deliveryPolicy).Select(tuple => tuple.Item2, DeliveryPolicy.Unlimited);
         }
 
@@ -471,10 +471,10 @@ namespace Microsoft.Psi
         {
             // keeping (most common) double-specific implementation for performance
             return source.Aggregate(
-                ValueTuple.Create((long)0, (double)0),
+                ValueTuple.Create(0L, 0.0),
                 (tuple, message) =>
                     tuple.Item1 == 0 ?
-                        ValueTuple.Create((long)1, message) :
+                        ValueTuple.Create(1L, message) :
                         ValueTuple.Create(tuple.Item1 + 1, ((tuple.Item2 * tuple.Item1) + message) / (tuple.Item1 + 1)), deliveryPolicy).Select(tuple => tuple.Item2, DeliveryPolicy.Unlimited);
         }
 

@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.Summarizers
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Represents an audio summarizer that performs interval-based data summarization over a series of data values.
+    /// Represents an audio summarizer that performs interval-based data summarization over a series of audiobuffer values.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class AudioSummarizer : Summarizer<AudioBuffer, double>
@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Visualization.Summarizers
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioSummarizer"/> class.
         /// </summary>
-        /// <param name="channel">Channel to summarize</param>
+        /// <param name="channel">Channel to summarize.</param>
         public AudioSummarizer(int channel)
             : base((m, t) => Summarizer(m, t, (ushort)channel))
         {
@@ -36,7 +36,7 @@ namespace Microsoft.Psi.Visualization.Summarizers
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioSummarizer"/> class.
         /// </summary>
-        /// <param name="channel">Channel to summarize</param>
+        /// <param name="channel">Channel to summarize.</param>
         public AudioSummarizer(long channel)
             : base((m, t) => Summarizer(m, t, (ushort)channel))
         {

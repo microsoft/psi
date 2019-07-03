@@ -7,12 +7,20 @@ namespace ArmControlROSSample
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
+    /// <summary>
+    /// UArm component.
+    /// </summary>
     public class UArmComponent : ISourceComponent
     {
         private readonly UArm arm;
 
         private readonly Pipeline pipeline;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UArmComponent"/> class.
+        /// </summary>
+        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="arm">UArm instance.</param>
         public UArmComponent(Pipeline pipeline, UArm arm)
         {
             this.pipeline = pipeline;
@@ -24,14 +32,29 @@ namespace ArmControlROSSample
             this.PositionChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PositionChanged));
         }
 
+        /// <summary>
+        /// Gets receiver of beep commands.
+        /// </summary>
         public Receiver<Tuple<float, float>> Beep { get; private set; }
 
+        /// <summary>
+        /// Gets receiver of pump commands.
+        /// </summary>
         public Receiver<bool> Pump { get; private set; }
 
+        /// <summary>
+        /// Gets receiver of absolute cartesian positions.
+        /// </summary>
         public Receiver<Tuple<float, float, float>> AbsolutePosition { get; private set; }
 
+        /// <summary>
+        /// Gets receiver of relative cartesian positions.
+        /// </summary>
         public Receiver<Tuple<float, float, float>> RelativePosition { get; private set; }
 
+        /// <summary>
+        /// Gets emitter of position changes.
+        /// </summary>
         public Emitter<Tuple<float, float, float>> PositionChanged { get; private set; }
 
         /// <inheritdoc/>
@@ -45,10 +68,11 @@ namespace ArmControlROSSample
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             this.arm.Disconnect();
             this.arm.PositionChanged -= this.OnPositionChanged;
+            notifyCompleted();
         }
 
         private void OnPositionChanged(object sender, Tuple<float, float, float> position)

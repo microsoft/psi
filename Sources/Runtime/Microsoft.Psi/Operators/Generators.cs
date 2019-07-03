@@ -25,7 +25,7 @@ namespace Microsoft.Psi
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
-        /// <returns>A stream of values of type T</returns>
+        /// <returns>A stream of values of type T.</returns>
         public static IProducer<T> Sequence<T>(Pipeline pipeline, T initialValue, Func<T, T> generateNext, int count, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
             return Sequence(pipeline, Enumerate(initialValue, generateNext, count), interval, alignDateTime);
@@ -41,7 +41,7 @@ namespace Microsoft.Psi
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
-        /// <returns>A stream of values of type T</returns>
+        /// <returns>A stream of values of type T.</returns>
         public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
             var g = new Generator<T>(pipeline, enumerator, interval, alignDateTime);
@@ -58,7 +58,7 @@ namespace Microsoft.Psi
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
-        /// <returns>A stream of values of type T</returns>
+        /// <returns>A stream of values of type T.</returns>
         public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerable<T> enumerable, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
             var g = new Generator<T>(pipeline, enumerable.GetEnumerator(), interval, alignDateTime);
@@ -69,10 +69,10 @@ namespace Microsoft.Psi
         /// Generates a stream by enumerating a sequence of data and originating time pairs.
         /// When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.
         /// </summary>
-        /// <typeparam name="T">The type of data in the sequence</typeparam>
+        /// <typeparam name="T">The type of data in the sequence.</typeparam>
         /// <param name="pipeline">The pipeline that will run this generator.</param>
-        /// <param name="enumerator">An enumerator of (data, originating time) pairs</param>
-        /// <returns>A stream of values of type T</returns>
+        /// <param name="enumerator">An enumerator of (data, originating time) pairs.</param>
+        /// <returns>A stream of values of type T.</returns>
         public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerator<(T, DateTime)> enumerator)
         {
             var g = new Generator<T>(pipeline, enumerator);
@@ -83,10 +83,10 @@ namespace Microsoft.Psi
         /// Generates a stream by enumerating a sequence of data and originating time pairs.
         /// When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.
         /// </summary>
-        /// <typeparam name="T">The type of data in the sequence</typeparam>
+        /// <typeparam name="T">The type of data in the sequence.</typeparam>
         /// <param name="pipeline">The pipeline that will run this generator.</param>
-        /// <param name="enumerable">An enumerable sequence of (data, originating time) pairs</param>
-        /// <returns>A stream of values of type T</returns>
+        /// <param name="enumerable">An enumerable sequence of (data, originating time) pairs.</param>
+        /// <returns>A stream of values of type T.</returns>
         public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerable<(T, DateTime)> enumerable)
         {
             var g = new Generator<T>(pipeline, enumerable.GetEnumerator());
@@ -97,9 +97,9 @@ namespace Microsoft.Psi
         /// Generates a single message containing the specified value.
         /// </summary>
         /// <typeparam name="T">The type of value to publish.</typeparam>
-        /// <param name="pipeline">The pipeline to attach to</param>
+        /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="value">The value to publish.</param>
-        /// <returns>A stream containing one value of type T</returns>
+        /// <returns>A stream containing one value of type T.</returns>
         public static IProducer<T> Return<T>(Pipeline pipeline, T value)
         {
             return Sequence(pipeline, new[] { value });
@@ -116,7 +116,7 @@ namespace Microsoft.Psi
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
-        /// <returns>A stream of values of type T</returns>
+        /// <returns>A stream of values of type T.</returns>
         public static IProducer<T> Repeat<T>(Pipeline pipeline, T value, int count, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
             return Sequence(pipeline, Enumerable.Repeat(value, count), interval, alignDateTime);
@@ -132,7 +132,7 @@ namespace Microsoft.Psi
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
-        /// <returns>A stream of consecutive integers</returns>
+        /// <returns>A stream of consecutive integers.</returns>
         public static IProducer<int> Range(Pipeline pipeline, int start, int count, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
         {
             return Sequence(pipeline, Enumerable.Range(start, count), interval, alignDateTime);

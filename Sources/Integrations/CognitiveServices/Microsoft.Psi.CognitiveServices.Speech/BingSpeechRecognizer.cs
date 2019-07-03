@@ -45,7 +45,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         private SpeechRecognitionClient speechRecognitionClient;
 
         /// <summary>
-        /// The last partial recognition result
+        /// The last partial recognition result.
         /// </summary>
         private string lastPartialResult;
 
@@ -145,17 +145,17 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         public Emitter<IStreamingSpeechRecognitionResult> PartialRecognitionResults { get; }
 
         /// <summary>
-        /// Gets the output stream of PartialSpeechResponseEventArgs
+        /// Gets the output stream of PartialSpeechResponseEventArgs.
         /// </summary>
         public Emitter<PartialSpeechResponseEventArgs> PartialSpeechResponseEvent { get; }
 
         /// <summary>
-        /// Gets the output stream of SpeechErrorEventArgs
+        /// Gets the output stream of SpeechErrorEventArgs.
         /// </summary>
         public Emitter<SpeechErrorEventArgs> SpeechErrorEvent { get; }
 
         /// <summary>
-        /// Gets the output stream of SpeechResponseEventArgs
+        /// Gets the output stream of SpeechResponseEventArgs.
         /// </summary>
         public Emitter<SpeechResponseEventArgs> SpeechResponseEvent { get; }
 
@@ -192,15 +192,16 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            notifyCompleted();
         }
 
         /// <summary>
         /// Receiver for the combined VAD signal and audio data.
         /// </summary>
         /// <param name="data">A message containing the combined VAD signal and audio data.</param>
-        /// <param name="e">The message envelope</param>
+        /// <param name="e">The message envelope.</param>
         /// <returns>The <see cref="Task"/> representing the asynchronous operation.</returns>
         protected override async Task ReceiveAsync(ValueTuple<AudioBuffer, bool> data, Envelope e)
         {

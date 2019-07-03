@@ -11,9 +11,19 @@ namespace Microsoft.Psi
     public interface IEmitter
     {
         /// <summary>
+        /// Gets emitter ID.
+        /// </summary>
+        int Id { get; }
+
+        /// <summary>
         /// Gets emitter name.
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Gets emitter type.
+        /// </summary>
+        Type Type { get; }
 
         /// <summary>
         /// Gets emitter owner object.
@@ -24,11 +34,6 @@ namespace Microsoft.Psi
         /// Gets pipeline to which emitter belongs.
         /// </summary>
         Pipeline Pipeline { get; }
-
-        /// <summary>
-        /// Gets emitter ID.
-        /// </summary>
-        int Id { get; }
 
         /// <summary>
         /// Gets a value indicating whether emitter has subscribers.
@@ -45,7 +50,7 @@ namespace Microsoft.Psi
         /// Enables debug visualization for this stream.
         /// </summary>
         /// <param name="debugName">An optional name to use in the visualization window.</param>
-        /// <returns>The debug name of the stream, either as provided or the generated one if one was not specified</returns>
+        /// <returns>The debug name of the stream, either as provided or the generated one if one was not specified.</returns>
         string DebugView(string debugName = null);
     }
 }

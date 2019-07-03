@@ -8,9 +8,9 @@ namespace Microsoft.Psi.Remoting
     using System.Diagnostics;
     using System.Net.Sockets;
     using System.Threading;
-    using Common;
-    using Data;
-    using Persistence;
+    using Microsoft.Psi.Common;
+    using Microsoft.Psi.Data;
+    using Microsoft.Psi.Persistence;
 
     /// <summary>
     /// Importer for remoting over network transport.

@@ -139,57 +139,57 @@ namespace Microsoft.Psi.MicrosoftSpeech
         public Emitter<IntentData> IntentData { get; }
 
         /// <summary>
-        /// Gets the output stream of speech detected events
+        /// Gets the output stream of speech detected events.
         /// </summary>
         public Emitter<SpeechDetectedEventArgs> SpeechDetected { get; }
 
         /// <summary>
-        /// Gets the output stream of speech hypothesized events
+        /// Gets the output stream of speech hypothesized events.
         /// </summary>
         public Emitter<SpeechHypothesizedEventArgs> SpeechHypothesized { get; }
 
         /// <summary>
-        /// Gets the output stream of speech recognized events
+        /// Gets the output stream of speech recognized events.
         /// </summary>
         public Emitter<SpeechRecognizedEventArgs> SpeechRecognized { get; }
 
         /// <summary>
-        /// Gets the output stream of speech recognition rejected events
+        /// Gets the output stream of speech recognition rejected events.
         /// </summary>
         public Emitter<SpeechRecognitionRejectedEventArgs> SpeechRecognitionRejected { get; }
 
         /// <summary>
-        /// Gets the output stream of audio problem events
+        /// Gets the output stream of audio problem events.
         /// </summary>
         public Emitter<AudioSignalProblemOccurredEventArgs> AudioSignalProblemOccurred { get; }
 
         /// <summary>
-        /// Gets the output stream of audio state change events
+        /// Gets the output stream of audio state change events.
         /// </summary>
         public Emitter<AudioStateChangedEventArgs> AudioStateChanged { get; }
 
         /// <summary>
-        /// Gets the output stream of recognize completed events
+        /// Gets the output stream of recognize completed events.
         /// </summary>
         public Emitter<RecognizeCompletedEventArgs> RecognizeCompleted { get; }
 
         /// <summary>
-        /// Gets the output stream of audio level updated events
+        /// Gets the output stream of audio level updated events.
         /// </summary>
         public Emitter<AudioLevelUpdatedEventArgs> AudioLevelUpdated { get; }
 
         /// <summary>
-        /// Gets the output stream of emulate recognize completed completed events
+        /// Gets the output stream of emulate recognize completed completed events.
         /// </summary>
         public Emitter<EmulateRecognizeCompletedEventArgs> EmulateRecognizeCompleted { get; }
 
         /// <summary>
-        /// Gets the output stream of load grammar completed events
+        /// Gets the output stream of load grammar completed events.
         /// </summary>
         public Emitter<LoadGrammarCompletedEventArgs> LoadGrammarCompleted { get; }
 
         /// <summary>
-        /// Gets the output stream of recognizer update reached events
+        /// Gets the output stream of recognizer update reached events.
         /// </summary>
         public Emitter<RecognizerUpdateReachedEventArgs> RecognizerUpdateReached { get; }
 
@@ -214,9 +214,9 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <summary>
-        /// Enable all the grammars indicated by name, disabling all others
+        /// Enable all the grammars indicated by name, disabling all others.
         /// </summary>
-        /// <param name="grammarNames">Speech grammars</param>
+        /// <param name="grammarNames">Speech grammars.</param>
         public void EnableGrammars(Message<string[]> grammarNames)
         {
             foreach (var g in this.speechRecognitionEngine.Grammars)
@@ -266,7 +266,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <inheritdoc/>
-        public void Stop()
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             // Unregister handlers so they won't fire while disposing.
             this.speechRecognitionEngine.SpeechDetected -= this.OnSpeechDetected;
@@ -289,6 +289,8 @@ namespace Microsoft.Psi.MicrosoftSpeech
             // (OnRecognizeCompleted) before disposing of recognition engine.
             this.speechRecognitionEngine.RecognizeAsyncCancel();
             this.recognizeCompleteManualReset.WaitOne(333);
+
+            notifyCompleted();
         }
 
         /// <summary>
@@ -310,7 +312,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <summary>
-        /// Creates a new speech recognition engine
+        /// Creates a new speech recognition engine.
         /// </summary>
         /// <returns>A new speech recognition engine object.</returns>
         private SpeechRecognitionEngine CreateSpeechRecognitionEngine()
@@ -435,10 +437,10 @@ namespace Microsoft.Psi.MicrosoftSpeech
         }
 
         /// <summary>
-        /// Requested by `SetGrammars()` - now ready to update
+        /// Requested by `SetGrammars()` - now ready to update.
         /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event args (`UserToken` expected to contain grammars)</param>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event args (`UserToken` expected to contain grammars).</param>
         private void OnRecognizerUpdateReached(object sender, RecognizerUpdateReachedEventArgs e)
         {
             if (e.UserToken is IEnumerable<Grammar> grammars)

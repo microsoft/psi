@@ -72,7 +72,7 @@ namespace Test.Psi.Data
                 IntValue = 123456,
                 ListValue = new List<int>(new int[] { 4, 5, 6, 7 }),
                 StringValue = "abc",
-                TimeSpanValue = TimeSpan.Parse("1:2:3.456789")
+                TimeSpanValue = TimeSpan.Parse("1:2:3.456789"),
             };
         }
 

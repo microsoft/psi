@@ -29,6 +29,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.configuration != null)
                 {
+                    this.configuration.PropertyChanging -= this.OnConfigurationPropertyChanging;
                     this.configuration.PropertyChanged -= this.OnConfigurationPropertyChanged;
                 }
 
@@ -38,6 +39,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
                 if (this.configuration != null)
                 {
+                    this.configuration.PropertyChanging += this.OnConfigurationPropertyChanging;
                     this.configuration.PropertyChanged += this.OnConfigurationPropertyChanged;
                 }
             }
@@ -53,14 +55,39 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         protected override void InitNew()
         {
-            base.InitNew();
             this.Configuration = new TConfig();
+            base.InitNew();
         }
 
-        [OnDeserializing]
+        /// <summary>
+        /// Implements a response to a notification that the configuration for the visualization object has changed.
+        /// </summary>
+        protected virtual void OnConfigurationChanged()
+        {
+        }
+
+        /// <summary>
+        /// Implements a response to a notification that a property of the configuration of the visualization object is changing.
+        /// </summary>
+        /// <param name="sender">The sender of the notification.</param>
+        /// <param name="e">The details of the notification.</param>
+        protected virtual void OnConfigurationPropertyChanging(object sender, PropertyChangingEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Implements a response to a notification that a property of the configuration of the visualization object has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the notification.</param>
+        /// <param name="e">The details of the notification.</param>
+        protected virtual void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
+        /*[OnDeserializing]
         private void OnDeserializing(StreamingContext c)
         {
             this.InitNew();
-        }
+        }*/
     }
 }

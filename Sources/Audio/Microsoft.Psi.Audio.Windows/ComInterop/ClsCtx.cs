@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Audio.ComInterop
     using System;
 
     /// <summary>
-    /// CLSCTX enumeration (defined in WTypes.h)
+    /// CLSCTX enumeration (defined in WTypes.h).
     /// </summary>
     [Flags]
     internal enum ClsCtx : uint
@@ -139,6 +139,6 @@ namespace Microsoft.Psi.Audio.ComInterop
         /// <summary>
         /// CLSCTX_ALL
         /// </summary>
-        ALL = INPROC_HANDLER | SERVER
+        ALL = INPROC_HANDLER | SERVER,
     }
 }

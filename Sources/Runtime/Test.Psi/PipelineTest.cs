@@ -12,6 +12,7 @@ namespace Test.Psi
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Microsoft.Psi.Diagnostics;
 
     [TestClass]
     public class PipelineTest
@@ -27,7 +28,9 @@ namespace Test.Psi
                 var src = Generators.Sequence(p1, new[] { 1, 2, 3 });
                 var dest = new Processor<int, int>(p2, (i, e, o) => o.Post(i, e.OriginatingTime));
                 dest.Do(i => ready.Set());
-                src.PipeTo(dest);
+                var connector = new Connector<int>(p1, p2);
+                src.PipeTo(connector);
+                connector.PipeTo(dest);
 
                 p2.RunAsync();
                 p1.Run();
@@ -92,8 +95,8 @@ namespace Test.Psi
             public TestReactiveCompositeComponent(Pipeline parent)
                 : base(parent, "TestReactiveCompositeComponent")
             {
-                var input = parent.CreateInputConnector<int>(this, "Input");
-                var output = this.CreateOutputConnector<int>(parent, "Output");
+                var input = this.CreateInputConnectorFrom<int>(parent, "Input");
+                var output = this.CreateOutputConnectorTo<int>(parent, "Output");
                 this.In = input.In;
                 this.Out = output.Out;
                 input.Select(i => i * 2).PipeTo(output);
@@ -124,7 +127,7 @@ namespace Test.Psi
             public TestFiniteSourceCompositeComponent(Pipeline parent)
                 : base(parent, "TestFiniteSourceCompositeComponent")
             {
-                var output = this.CreateOutputConnector<int>(parent, "Output");
+                var output = this.CreateOutputConnectorTo<int>(parent, "Output");
                 this.Out = output.Out;
                 Generators.Range(this, 0, 10).Out.PipeTo(output);
             }
@@ -152,7 +155,7 @@ namespace Test.Psi
             public TestInfiniteSourceCompositeComponent(Pipeline parent)
                 : base(parent, "TestInfiniteSourceCompositeComponent")
             {
-                var output = this.CreateOutputConnector<int>(parent, "Output");
+                var output = this.CreateOutputConnectorTo<int>(parent, "Output");
                 this.Out = output.Out;
                 var timer = Timers.Timer(this, TimeSpan.FromMilliseconds(10));
                 timer.Aggregate(0, (i, _) => i + 1).PipeTo(output);
@@ -179,6 +182,95 @@ namespace Test.Psi
 
             Assert.IsTrue(completed); // note that infinite source composite-component subpipeline never completes (parent pipeline must be disposed explicitly)
             Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, results.AsEnumerable().Take(3))); // compare first few only
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineWithinSubpipeline()
+        {
+            using (var p = Pipeline.Create())
+            {
+                var subpipeline0 = Subpipeline.Create(p, "subpipeline0");
+                var connectorIn0 = subpipeline0.CreateInputConnectorFrom<int>(p, "connectorIn0");
+                var connectorOut0 = subpipeline0.CreateOutputConnectorTo<int>(p, "connectorOut0");
+
+                var subpipeline1 = Subpipeline.Create(p, "subpipeline1");
+                var connectorIn1 = subpipeline1.CreateInputConnectorFrom<int>(subpipeline0, "connectorIn1");
+                var connectorOut1 = subpipeline1.CreateOutputConnectorTo<int>(subpipeline0, "connectorOut1");
+
+                var results = new List<int>();
+                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }).PipeTo(connectorIn0.In);
+                connectorIn0.Out.PipeTo(connectorIn1.In);
+                connectorIn1.Out.PipeTo(connectorOut1.In);
+                connectorOut1.Out.PipeTo(connectorOut0.In);
+                connectorOut0.Out.Do(x => results.Add(x));
+
+                p.Run();
+
+                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, results);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineWithinSubpipelineWithFiniteSource()
+        {
+            using (var p = Pipeline.Create())
+            {
+                var subpipeline0 = Subpipeline.Create(p, "subpipeline0");
+                var connectorIn0 = subpipeline0.CreateInputConnectorFrom<int>(p, "connectorIn0");
+                var connectorOut0 = subpipeline0.CreateOutputConnectorTo<int>(p, "connectorOut0");
+
+                var subpipeline1 = Subpipeline.Create(p, "subpipeline1");
+                var connectorIn1 = subpipeline1.CreateInputConnectorFrom<int>(subpipeline0, "connectorIn1");
+                var connectorOut1 = subpipeline1.CreateOutputConnectorTo<int>(subpipeline0, "connectorOut1");
+
+                // add a dummy finite source component to each subpipeline
+                Generators.Return(subpipeline0, 0);
+                Generators.Return(subpipeline1, 1);
+
+                var results = new List<int>();
+                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }).PipeTo(connectorIn0.In);
+                connectorIn0.Out.PipeTo(connectorIn1.In);
+                connectorIn1.Out.PipeTo(connectorOut1.In);
+                connectorOut1.Out.PipeTo(connectorOut0.In);
+                connectorOut0.Out.Do(x => results.Add(x));
+
+                p.Run();
+
+                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, results);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineWithinSubpipelineWithInfiniteSource()
+        {
+            using (var p = Pipeline.Create())
+            {
+                var subpipeline0 = Subpipeline.Create(p, "subpipeline0");
+                var connectorIn0 = subpipeline0.CreateInputConnectorFrom<int>(p, "connectorIn0");
+                var connectorOut0 = subpipeline0.CreateOutputConnectorTo<int>(p, "connectorOut0");
+
+                var subpipeline1 = Subpipeline.Create(p, "subpipeline1");
+                var connectorIn1 = subpipeline1.CreateInputConnectorFrom<int>(subpipeline0, "connectorIn1");
+                var connectorOut1 = subpipeline1.CreateOutputConnectorTo<int>(subpipeline0, "connectorOut1");
+
+                // add a dummy infinite source component to each subpipeline
+                var infinite0 = new InfiniteTestComponent(subpipeline0);
+                var infinite1 = new InfiniteTestComponent(subpipeline1);
+
+                var results = new List<int>();
+                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }).PipeTo(connectorIn0.In);
+                connectorIn0.Out.PipeTo(connectorIn1.In);
+                connectorIn1.Out.PipeTo(connectorOut1.In);
+                connectorOut1.Out.PipeTo(connectorOut0.In);
+                connectorOut0.Out.Do(x => results.Add(x));
+
+                p.Run();
+
+                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, results);
+            }
         }
 
         [TestMethod]
@@ -246,9 +338,10 @@ namespace Test.Psi
                 this.started.Set();
             }
 
-            public void Stop()
+            public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
             {
                 this.started.Reset();
+                notifyCompleted();
             }
 
             public void SwitchToInfinite()
@@ -271,8 +364,9 @@ namespace Test.Psi
                 notifyCompletionTime(DateTime.MaxValue);
             }
 
-            public void Stop()
+            public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
             {
+                notifyCompleted();
             }
         }
 
@@ -354,15 +448,103 @@ namespace Test.Psi
             }
         }
 
-        private IEnumerator<(int, DateTime)> Gen()
+        // A generator that provides a periodic stream with a configurable artificial latency
+        public class GeneratorWithLatency : Generator
         {
-            DateTime now = DateTime.UtcNow;
-            int i = 0;
-            while (true)
+            private readonly TimeSpan interval;
+            private readonly TimeSpan latency;
+
+            public Emitter<int> Out { get; }
+
+            public GeneratorWithLatency(Pipeline pipeline, TimeSpan interval, TimeSpan latency)
+                : base(pipeline, isInfiniteSource: true)
             {
-                yield return (i, now);
-                i++;
-                now = now + TimeSpan.FromMilliseconds(5);
+                this.interval = interval;
+                this.latency = latency;
+                this.Out = pipeline.CreateEmitter<int>(this, nameof(this.Out));
+            }
+
+            protected override DateTime GenerateNext(DateTime previous)
+            {
+                // introduce a delay (in wall-clock time) to artificially slow down the generator
+                Thread.Sleep(this.latency);
+
+                this.Out.Post(0, previous);
+                return previous + this.interval;
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PipelineShutdownWithLatency()
+        {
+            using (var p = Pipeline.Create("root"))
+            {
+                // input sequence
+                var generator = Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, TimeSpan.FromMilliseconds(50));
+
+                // use a generator (with artificial latency) as the clock for densification
+                // increase the latency TimeSpan value to cause the test to fail when shutdown doesn't account for slow sources
+                var clock = new GeneratorWithLatency(p, TimeSpan.FromMilliseconds(25), TimeSpan.FromMilliseconds(50));
+
+                // the densified stream which should contain two of every input value, except for the last value
+                var densified = clock.Out.Join(generator.Out, RelativeTimeInterval.Past()).Select(x => x.Item2);
+                var seq = densified.ToObservable().ToListObservable();
+
+                // specify a start time to synchronize the two generators
+                p.Run(DateTime.UtcNow);
+
+                var results = seq.AsEnumerable().ToArray();
+                CollectionAssert.AreEqual(new[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10 }, results);
+            }
+        }
+
+        // A composite component which contains a GeneratorWithLatency used to densify an input stream
+        public class TestSourceComponentWithGenerator : Subpipeline
+        {
+            public Receiver<int> In { get; }
+
+            public Emitter<int> Out { get; }
+
+            public TestSourceComponentWithGenerator(Pipeline parent, TimeSpan interval, TimeSpan latency)
+                : base(parent, "sub")
+            {
+                var input = this.CreateInputConnectorFrom<int>(parent, "Input");
+                var output = this.CreateOutputConnectorTo<int>(parent, "Output");
+                this.In = input.In;
+                this.Out = output.Out;
+
+                // create a clock stream (with artificial latency) for densification of the input stream
+                var clock = new GeneratorWithLatency(this, interval, latency);
+
+                // densify the input stream by joining the clock stream with it
+                var densified = clock.Out.Join(input.Out, RelativeTimeInterval.Past()).Select(x => x.Item2);
+                densified.PipeTo(output.In);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SubpipelineShutdownWithLatency()
+        {
+            using (var p = Pipeline.Create("root"))
+            {
+                // input sequence
+                var generator = Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, TimeSpan.FromMilliseconds(50));
+
+                // use a generator (with artificial latency) as the clock for densification
+                // increase the latency TimeSpan value to cause the test to fail when shutdown doesn't account for slow sources
+                var densifier = new TestSourceComponentWithGenerator(p, TimeSpan.FromMilliseconds(25), TimeSpan.FromMilliseconds(50));
+                generator.PipeTo(densifier.In);
+
+                // the densified stream which should contain two of every input value, except for the last value
+                var seq = densifier.Out.ToObservable().ToListObservable();
+
+                // specify a start time to synchronize the two generators
+                p.Run(DateTime.UtcNow);
+
+                var results = seq.AsEnumerable().ToArray();
+                CollectionAssert.AreEqual(new[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10 }, results);
             }
         }
 
@@ -673,7 +855,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 /*
-                *          ..................
+                 *         ..................
                  *  =---=  . =---=    =---= .  =---=
                  *  | A |--->| B |--->| C |--->| D |---+
                  *  =---=  . =---=    =---= .  =---=   |
@@ -760,6 +942,130 @@ namespace Test.Psi
 
             Assert.IsFalse(log.Contains("DReceiverY Unsubscribed"));
             Assert.IsFalse(log.Contains("DReceiverZ Unsubscribed"));
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void FinalizationTestWithNestedSubpipelines()
+        {
+            // this exercises message traversal and pipeline shutdown across nested subpipelines
+
+            var log = new List<string>();
+            using (var p = Pipeline.Create("pipeline"))
+            {
+                /*
+                 *         ...........................
+                 *         .        .........        .
+                 *  =---=  . =---=  . =---= .  =---= .  =---=
+                 *  | A |--->| B |--->| C |--->| D |--->| E |
+                 *  =---=  . =---=  . =---= .  =---= .  =---=
+                 *         .        .........        .
+                 *         ...........................
+                 *
+                 *  With B & D in subpipeline1 and C in subpipeline2
+                 */
+                var sub1 = new Subpipeline(p, "subpipeline1");
+                var cIn1 = new Connector<int>(p, sub1);
+                var cOut1 = new Connector<int>(sub1, p);
+                var sub2 = new Subpipeline(sub1, "subpipeline2");
+                var cIn2 = new Connector<int>(sub1, sub2);
+                var cOut2 = new Connector<int>(sub2, sub1);
+                var e = new FinalizationTestComponent(p, "E", log);
+                var d = new FinalizationTestComponent(sub1, "D", log);
+                var c = new FinalizationTestComponent(sub2, "C", log);
+                var b = new FinalizationTestComponent(sub1, "B", log);
+                var a = new FinalizationTestComponent(p, "A", log);
+                a.Generator.PipeTo(cIn1.In);
+                cIn1.In.Unsubscribed += time => sub1.Stop(time);
+                cIn1.Out.PipeTo(b.ReceiverX);
+                b.RelayFromX.PipeTo(cIn2.In);
+                cIn2.In.Unsubscribed += time => sub2.Stop(time);
+                cIn2.Out.PipeTo(c.ReceiverX);
+                c.RelayFromX.PipeTo(cOut2.In);
+                cOut2.Out.PipeTo(d.ReceiverX);
+                d.RelayFromX.PipeTo(cOut1.In);
+                cOut1.Out.PipeTo(e.ReceiverX);
+                p.Run();
+            }
+
+            // all emitters should have closed
+            Assert.IsTrue(log.Contains("AEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("AEmitterX Closed"));
+            Assert.IsTrue(log.Contains("AEmitterY Closed"));
+            Assert.IsTrue(log.Contains("AEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("AEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("BEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("BEmitterX Closed"));
+            Assert.IsTrue(log.Contains("BEmitterY Closed"));
+            Assert.IsTrue(log.Contains("BEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("BEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("CEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("CEmitterX Closed"));
+            Assert.IsTrue(log.Contains("CEmitterY Closed"));
+            Assert.IsTrue(log.Contains("CEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("CEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("DEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("DEmitterX Closed"));
+            Assert.IsTrue(log.Contains("DEmitterY Closed"));
+            Assert.IsTrue(log.Contains("DEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("DEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("EEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("EEmitterX Closed"));
+            Assert.IsTrue(log.Contains("EEmitterY Closed"));
+            Assert.IsTrue(log.Contains("EEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("EEmitterGen Closed"));
+
+            // Emitters should have closed in A to E order
+            Assert.IsTrue(log.IndexOf("DEmitterAny Closed") < log.IndexOf("EEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterX Closed") < log.IndexOf("EEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterY Closed") < log.IndexOf("EEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterZ Closed") < log.IndexOf("EEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterGen Closed") < log.IndexOf("EEmitterGen Closed"));
+
+            Assert.IsTrue(log.IndexOf("CEmitterAny Closed") < log.IndexOf("DEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterX Closed") < log.IndexOf("DEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterY Closed") < log.IndexOf("DEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterZ Closed") < log.IndexOf("DEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterGen Closed") < log.IndexOf("DEmitterGen Closed"));
+
+            Assert.IsTrue(log.IndexOf("BEmitterAny Closed") < log.IndexOf("CEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterX Closed") < log.IndexOf("CEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterY Closed") < log.IndexOf("CEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterZ Closed") < log.IndexOf("CEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterGen Closed") < log.IndexOf("CEmitterGen Closed"));
+
+            Assert.IsTrue(log.IndexOf("AEmitterAny Closed") < log.IndexOf("BEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterX Closed") < log.IndexOf("BEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterY Closed") < log.IndexOf("BEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterZ Closed") < log.IndexOf("BEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterGen Closed") < log.IndexOf("BEmitterGen Closed"));
+
+            // subscribed receivers should have been unsubscribed
+            Assert.IsTrue(log.Contains("BReceiverX Unsubscribed"));
+            Assert.IsTrue(log.Contains("CReceiverX Unsubscribed"));
+            Assert.IsTrue(log.Contains("DReceiverX Unsubscribed"));
+            Assert.IsTrue(log.Contains("EReceiverX Unsubscribed"));
+
+            // non-subscribed receivers should have done *nothing*
+            Assert.IsFalse(log.Contains("AReceiverX Unsubscribed"));
+            Assert.IsFalse(log.Contains("AReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("AReceiverZ Unsubscribed"));
+
+            Assert.IsFalse(log.Contains("BReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("BReceiverZ Unsubscribed"));
+
+            Assert.IsFalse(log.Contains("CReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("CReceiverZ Unsubscribed"));
+
+            Assert.IsFalse(log.Contains("DReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("DReceiverZ Unsubscribed"));
+
+            Assert.IsFalse(log.Contains("EReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("EReceiverZ Unsubscribed"));
         }
 
         [TestMethod]
@@ -898,9 +1204,9 @@ namespace Test.Psi
                  *    |        |
                  *    +--------+
                  */
-                var c = new FinalizationTestComponent(p, "C", log); // finalized last, though constructed first
-                var b = new FinalizationTestComponent(p, "B", log); // finalized 2nd
-                var a = new FinalizationTestComponent(p, "A", log); // finalized 1st, though constructed last
+                var c = new FinalizationTestComponent(p, "C", log);
+                var b = new FinalizationTestComponent(p, "B", log); // finalized 1st, though constructed second
+                var a = new FinalizationTestComponent(p, "A", log);
                 a.Generator.PipeTo(b.ReceiverX);
                 b.RelayFromX.PipeTo(a.ReceiverX);
                 b.RelayFromX.PipeTo(c.ReceiverX);
@@ -926,18 +1232,18 @@ namespace Test.Psi
             Assert.IsTrue(log.Contains("CEmitterZ Closed"));
             Assert.IsTrue(log.Contains("CEmitterGen Closed"));
 
-            // Emitters should have closed in (A | B) then C order
+            // Emitters should have closed in B then (A | C) order
             Assert.IsTrue(log.IndexOf("BEmitterAny Closed") < log.IndexOf("CEmitterAny Closed"));
             Assert.IsTrue(log.IndexOf("BEmitterX Closed") < log.IndexOf("CEmitterX Closed"));
             Assert.IsTrue(log.IndexOf("BEmitterY Closed") < log.IndexOf("CEmitterY Closed"));
             Assert.IsTrue(log.IndexOf("BEmitterZ Closed") < log.IndexOf("CEmitterZ Closed"));
             Assert.IsTrue(log.IndexOf("BEmitterGen Closed") < log.IndexOf("CEmitterGen Closed"));
 
-            Assert.IsTrue(log.IndexOf("AEmitterAny Closed") < log.IndexOf("CEmitterAny Closed"));
-            Assert.IsTrue(log.IndexOf("AEmitterX Closed") < log.IndexOf("CEmitterX Closed"));
-            Assert.IsTrue(log.IndexOf("AEmitterY Closed") < log.IndexOf("CEmitterY Closed"));
-            Assert.IsTrue(log.IndexOf("AEmitterZ Closed") < log.IndexOf("CEmitterZ Closed"));
-            Assert.IsTrue(log.IndexOf("AEmitterGen Closed") < log.IndexOf("CEmitterGen Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterAny Closed") < log.IndexOf("AEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterX Closed") < log.IndexOf("AEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterY Closed") < log.IndexOf("AEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterZ Closed") < log.IndexOf("AEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterGen Closed") < log.IndexOf("AEmitterGen Closed"));
 
             // subscribed receivers should have been unsubscribed
             Assert.IsTrue(log.Contains("AReceiverX Unsubscribed"));
@@ -1216,6 +1522,233 @@ namespace Test.Psi
             Assert.IsFalse(log.Contains("DReceiverZ Unsubscribed"));
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void FinalizationTestUnsubscribedHandler()
+        {
+            // Tests delayed posting of messages during finalization
+
+            var log = new List<string>();
+            var collector = new List<(int data, Envelope env)>();
+            var sequence = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            using (var p = Pipeline.Create())
+            {
+                // receiver collects received messages in a list but doesn't post them until it is unsubscribed
+                var receiver = p.CreateReceiver<int>(collector, (d, e) => collector.Add((d, e)), "Receiver");
+                var emitter = p.CreateEmitter<int>(collector, "Emitter");
+
+                // on unsubscribe, post collected messages (with an artificial latency to slow them down)
+                receiver.Unsubscribed += _ => collector.ForEach(m => { Thread.Sleep(33); emitter.Post(m.data, m.env.OriginatingTime); });
+
+                // log posted messages
+                emitter.Do((d, e) => log.Add($"{e.OriginatingTime.TimeOfDay}:{d}"));
+
+                // generate a sequence of inputs to the receiver
+                var generator = Generators.Sequence(p, sequence, TimeSpan.FromMilliseconds(10));
+                generator.PipeTo(receiver);
+
+                p.Run();
+            }
+
+            // all collected values should have been posted on unsubscribe
+            CollectionAssert.AreEqual(collector.Select(m => string.Format($"{m.env.OriginatingTime.TimeOfDay}:{m.data}")).ToArray(), log);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void FinalizationTestStopFromHandler()
+        {
+            // Tests stopping a subpipeline from an unsubscribed handler during finalization
+
+            // run test for a range of max worker thread counts
+            for (int maxThreads = Environment.ProcessorCount * 2; maxThreads > 0; maxThreads >>= 1)
+            {
+                maxThreads = 1;
+                var collector = new List<int>();
+                var sequence = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+                using (var p = Pipeline.Create(null, null, maxThreads)) // should not block even if there is only a single worker thread
+                {
+                    var sub = Subpipeline.Create(p);
+                    var cIn = new Connector<int>(p, sub);
+                    var generator = Generators.Sequence(p, sequence);
+                    var receiver = sub.CreateReceiver<int>(collector, (d, e) => collector.Add(d), "Receiver");
+                    generator.PipeTo(cIn.In);
+                    cIn.Out.PipeTo(receiver);
+                    cIn.In.Unsubscribed += time => sub.Stop(time);
+                    p.Run();
+                }
+
+                CollectionAssert.AreEqual(sequence, collector);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void FinalizationTestConcurrentShutdown()
+        {
+            // This tests shutting down a subpipeline via an unsubscribed handler on either inputs from A or B.
+            // Either (or both) may trigger shutdown of the subpipeline, while the main pipeline is also in the
+            // process of shutting down.
+
+            var log = new List<string>();
+            using (var p = Pipeline.Create())
+            {
+                /*
+                 *  =---=
+                 *  | A |--  ...........................
+                 *  =---=  \ . =---=                   .
+                 *          -->|   |    =---=    =---= .
+                 *           . | C |--->| D |--->| E | .
+                 *          -->|   |    =---=    =---= .
+                 *  =---=  / . =---=                   .
+                 *  | B |--  ...........................
+                 *  =---=
+                 *
+                 *  With C, D and E in subpipeline, which will be stopped upon unsubscribing either of its two input connectors
+                 */
+                var sub = new Subpipeline(p);
+                var cInA = new Connector<int>(p, sub);
+                var cInB = new Connector<int>(p, sub);
+                var e = new FinalizationTestComponent(sub, "E", log);
+                var d = new FinalizationTestComponent(sub, "D", log);
+                var c = new FinalizationTestComponent(sub, "C", log);
+                var b = new FinalizationTestComponent(p, "B", log);
+                var a = new FinalizationTestComponent(p, "A", log);
+                a.Generator.PipeTo(cInA.In);
+                cInA.In.Unsubscribed += time => sub.Stop(time);
+                cInA.Out.PipeTo(c.ReceiverX);
+                c.RelayFromX.PipeTo(d.ReceiverX);
+                d.RelayFromX.PipeTo(e.ReceiverX);
+                b.Generator.PipeTo(cInB.In);
+                cInB.In.Unsubscribed += time => sub.Stop(time);
+                cInB.Out.PipeTo(c.ReceiverY);
+                c.RelayFromY.PipeTo(d.ReceiverY);
+                d.RelayFromY.PipeTo(e.ReceiverY);
+                p.Run();
+            }
+
+            // all emitters should have closed
+            Assert.IsTrue(log.Contains("AEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("AEmitterX Closed"));
+            Assert.IsTrue(log.Contains("AEmitterY Closed"));
+            Assert.IsTrue(log.Contains("AEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("AEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("BEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("BEmitterX Closed"));
+            Assert.IsTrue(log.Contains("BEmitterY Closed"));
+            Assert.IsTrue(log.Contains("BEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("BEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("CEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("CEmitterX Closed"));
+            Assert.IsTrue(log.Contains("CEmitterY Closed"));
+            Assert.IsTrue(log.Contains("CEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("CEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("DEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("DEmitterX Closed"));
+            Assert.IsTrue(log.Contains("DEmitterY Closed"));
+            Assert.IsTrue(log.Contains("DEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("DEmitterGen Closed"));
+
+            Assert.IsTrue(log.Contains("EEmitterAny Closed"));
+            Assert.IsTrue(log.Contains("EEmitterX Closed"));
+            Assert.IsTrue(log.Contains("EEmitterY Closed"));
+            Assert.IsTrue(log.Contains("EEmitterZ Closed"));
+            Assert.IsTrue(log.Contains("EEmitterGen Closed"));
+
+            // Emitters should have closed in (A | B), then C to E order
+            Assert.IsTrue(log.IndexOf("DEmitterAny Closed") < log.IndexOf("EEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterX Closed") < log.IndexOf("EEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterY Closed") < log.IndexOf("EEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterZ Closed") < log.IndexOf("EEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("DEmitterGen Closed") < log.IndexOf("EEmitterGen Closed"));
+
+            Assert.IsTrue(log.IndexOf("CEmitterAny Closed") < log.IndexOf("DEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterX Closed") < log.IndexOf("DEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterY Closed") < log.IndexOf("DEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterZ Closed") < log.IndexOf("DEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("CEmitterGen Closed") < log.IndexOf("DEmitterGen Closed"));
+
+            Assert.IsTrue(log.IndexOf("BEmitterAny Closed") < log.IndexOf("CEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterX Closed") < log.IndexOf("CEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterY Closed") < log.IndexOf("CEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterZ Closed") < log.IndexOf("CEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("BEmitterGen Closed") < log.IndexOf("CEmitterGen Closed"));
+
+            Assert.IsTrue(log.IndexOf("AEmitterAny Closed") < log.IndexOf("CEmitterAny Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterX Closed") < log.IndexOf("CEmitterX Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterY Closed") < log.IndexOf("CEmitterY Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterZ Closed") < log.IndexOf("CEmitterZ Closed"));
+            Assert.IsTrue(log.IndexOf("AEmitterGen Closed") < log.IndexOf("CEmitterGen Closed"));
+
+            // subscribed receivers should have been unsubscribed
+            Assert.IsTrue(log.Contains("CReceiverX Unsubscribed"));
+            Assert.IsTrue(log.Contains("CReceiverY Unsubscribed"));
+            Assert.IsTrue(log.Contains("DReceiverX Unsubscribed"));
+            Assert.IsTrue(log.Contains("DReceiverY Unsubscribed"));
+            Assert.IsTrue(log.Contains("EReceiverX Unsubscribed"));
+            Assert.IsTrue(log.Contains("EReceiverY Unsubscribed"));
+
+            // non-subscribed receivers should have done *nothing*
+            Assert.IsFalse(log.Contains("AReceiverX Unsubscribed"));
+            Assert.IsFalse(log.Contains("AReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("AReceiverZ Unsubscribed"));
+
+            Assert.IsFalse(log.Contains("BReceiverX Unsubscribed"));
+            Assert.IsFalse(log.Contains("BReceiverY Unsubscribed"));
+            Assert.IsFalse(log.Contains("BReceiverZ Unsubscribed"));
+
+            Assert.IsFalse(log.Contains("CReceiverZ Unsubscribed"));
+            Assert.IsFalse(log.Contains("DReceiverZ Unsubscribed"));
+            Assert.IsFalse(log.Contains("EReceiverZ Unsubscribed"));
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DiagnosticsTest()
+        {
+            var log = new List<string>();
+            PipelineDiagnostics graph = null;
+
+            using (var p = Pipeline.Create(true, TimeSpan.FromMilliseconds(1)))
+            {
+                /*
+                 *         .........
+                 *  =---=  . =---= .  =---=
+                 *  | A |--->| B |--->| D |---+
+                 *  =---=  . =---= .  =---=   |
+                 *    ^    .........          |
+                 *    |                       |
+                 *    +-----------------------+
+                 */
+                var sub = new Subpipeline(p);
+                var cIn = new Connector<int>(p, sub);
+                var cOut = new Connector<int>(sub, p);
+                var d = new FinalizationTestComponent(p, "C", log);
+                var b = new FinalizationTestComponent(sub, "B", log);
+                var a = new FinalizationTestComponent(p, "A", log);
+                var timer = Generators.Range(p, 0, 100, TimeSpan.FromMilliseconds(10));
+                timer.PipeTo(cIn.In);
+                cIn.Out.PipeTo(b.ReceiverX);
+                b.RelayFromX.PipeTo(cOut.In);
+                cOut.Out.PipeTo(d.ReceiverX);
+
+                p.Diagnostics.Do(diag => graph = graph ?? diag);
+
+                p.RunAsync();
+                while (graph == null) Thread.Sleep(10);
+            }
+
+            Assert.AreEqual("default", graph.Name);
+            Assert.IsTrue(graph.IsPipelineRunning);
+            Assert.AreEqual(8, graph.PipelineElements.Count);
+            Assert.AreEqual(1, graph.Subpipelines.Count);
+        }
+
         private class FinalizationTestComponent : ISourceComponent
         {
             private readonly Pipeline pipeline;
@@ -1245,16 +1778,17 @@ namespace Test.Psi
                 this.ReceiverX = pipeline.CreateReceiver<int>(this, this.ReceiveX, $"{name}ReceiverX");
                 this.ReceiverX.Unsubscribed += _ => this.Log($"{this.name}ReceiverX Unsubscribed");
                 this.ReceiverY = pipeline.CreateReceiver<int>(this, this.ReceiveY, $"{name}ReceiverY");
-                this.ReceiverY.Unsubscribed +=_ => this.Log($"{this.name}ReceiverY Unsubscribed");
+                this.ReceiverY.Unsubscribed += _ => this.Log($"{this.name}ReceiverY Unsubscribed");
                 this.ReceiverZ = pipeline.CreateReceiver<int>(this, this.ReceiveZ, $"{name}ReceiverZ");
                 this.ReceiverZ.Unsubscribed += _ => this.Log($"{this.name}ReceiverZ Unsubscribed");
             }
 
             public void Start(Action<DateTime> notifyCompletionTime)
             {
+                this.notifyCompletionTime = notifyCompletionTime;
+
                 if (this.Generator.HasSubscribers)
                 {
-                    this.notifyCompletionTime = notifyCompletionTime;
                     this.timer = new System.Timers.Timer(1) { Enabled = true };
                     this.timer.Elapsed += this.Elapsed;
                 }
@@ -1264,12 +1798,14 @@ namespace Test.Psi
                 }
             }
 
-            public void Stop()
+            public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
             {
                 if (timer != null)
                 {
                     this.timer.Elapsed -= this.Elapsed;
                 }
+
+                notifyCompleted();
             }
 
             public override string ToString()

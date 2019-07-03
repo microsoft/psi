@@ -95,7 +95,7 @@ namespace Microsoft.Psi.Visualization.Config
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether we're showing the labels
+        /// Gets or sets a value indicating whether we're showing the labels.
         /// </summary>
         [DataMember]
         public bool ShowLabels

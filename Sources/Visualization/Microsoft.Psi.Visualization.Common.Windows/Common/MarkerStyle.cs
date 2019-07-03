@@ -4,53 +4,53 @@
 namespace Microsoft.Psi.Visualization.Common
 {
     /// <summary>
-    /// Defines various line styles
+    /// Defines various line styles.
     /// </summary>
     public enum MarkerStyle
     {
         /// <summary>
-        /// Represents no marker
+        /// Represents no marker.
         /// </summary>
         None,
 
         /// <summary>
-        /// Represents a circle marker style
+        /// Represents a circle marker style.
         /// </summary>
         Circle,
 
         /// <summary>
-        /// Represents a square marker style
+        /// Represents a square marker style.
         /// </summary>
         Square,
 
         /// <summary>
-        /// Represents an up triangle marker style
+        /// Represents an up triangle marker style.
         /// </summary>
         UpTriangle,
 
         /// <summary>
-        /// Represents a down triangle marker style
+        /// Represents a down triangle marker style.
         /// </summary>
         DownTriangle,
 
         /// <summary>
-        /// Represents a diamond marker style
+        /// Represents a diamond marker style.
         /// </summary>
         Diamond,
 
         /// <summary>
-        /// Represents a plus marker style
+        /// Represents a plus marker style.
         /// </summary>
         Plus,
 
         /// <summary>
-        /// Represents a cross marker style
+        /// Represents a cross marker style.
         /// </summary>
         Cross,
 
         /// <summary>
-        /// Represents an asterisk marker style
+        /// Represents an asterisk marker style.
         /// </summary>
-        Asterisk
+        Asterisk,
     }
 }
