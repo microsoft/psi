@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['interpolationstyle',['InterpolationStyle',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973',1,'Microsoft::Psi::Visualization::Common']]]
+  ['graphlayoutdirection',['GraphLayoutDirection',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#af0453690850546736e6826d07435e251',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]]
 ];

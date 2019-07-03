@@ -14,6 +14,7 @@ var searchData=
   ['converters',['Converters',['../namespace_microsoft_1_1_psi_1_1_data_1_1_converters.html',1,'Microsoft.Psi.Data.Converters'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_converters.html',1,'Microsoft.Psi.Visualization.Converters']]],
   ['data',['Data',['../namespace_microsoft_1_1_psi_1_1_data.html',1,'Microsoft.Psi.Data'],['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html',1,'Microsoft.Psi.Visualization.Data']]],
   ['datatypes',['DataTypes',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data_types.html',1,'Microsoft::Psi::Visualization']]],
+  ['diagnostics',['Diagnostics',['../namespace_microsoft_1_1_psi_1_1_diagnostics.html',1,'Microsoft::Psi']]],
   ['executive',['Executive',['../namespace_microsoft_1_1_psi_1_1_executive.html',1,'Microsoft::Psi']]],
   ['extensions',['Extensions',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_extensions.html',1,'Microsoft::Psi::Visualization']]],
   ['face',['Face',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_face.html',1,'Microsoft.Psi.CognitiveServices.Face'],['../namespace_microsoft_1_1_psi_1_1_kinect_1_1_face.html',1,'Microsoft.Psi.Kinect.Face']]],
@@ -30,6 +31,7 @@ var searchData=
   ['media_5finterop',['Media_Interop',['../namespace_microsoft_1_1_psi_1_1_media___interop.html',1,'Microsoft::Psi']]],
   ['microsoft',['Microsoft',['../namespace_microsoft.html',1,'']]],
   ['microsoftspeech',['MicrosoftSpeech',['../namespace_microsoft_1_1_psi_1_1_microsoft_speech.html',1,'Microsoft::Psi']]],
+  ['msagl',['Msagl',['../namespace_microsoft_1_1_msagl.html',1,'Microsoft']]],
   ['navigation',['Navigation',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_navigation.html',1,'Microsoft::Psi::Visualization']]],
   ['persistence',['Persistence',['../namespace_microsoft_1_1_psi_1_1_persistence.html',1,'Microsoft::Psi']]],
   ['psi',['Psi',['../namespace_microsoft_1_1_psi.html',1,'Microsoft']]],
@@ -47,5 +49,7 @@ var searchData=
   ['visualizationobjects',['VisualizationObjects',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects.html',1,'Microsoft::Psi::Visualization']]],
   ['visualizationpanels',['VisualizationPanels',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels.html',1,'Microsoft::Psi::Visualization']]],
   ['visuals2d',['Visuals2D',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals2_d.html',1,'Microsoft::Psi::Visualization::Views']]],
-  ['windows',['Windows',['../namespace_microsoft_1_1_psi_1_1_real_sense_1_1_windows.html',1,'Microsoft::Psi::RealSense']]]
+  ['visuals3d',['Visuals3D',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals3_d.html',1,'Microsoft::Psi::Visualization::Views']]],
+  ['windows',['Windows',['../namespace_microsoft_1_1_psi_1_1_real_sense_1_1_windows.html',1,'Microsoft::Psi::RealSense']]],
+  ['wpfgraphcontrol',['WpfGraphControl',['../namespace_microsoft_1_1_msagl_1_1_wpf_graph_control.html',1,'Microsoft::Msagl']]]
 ];

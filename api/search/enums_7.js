@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['receivercounters',['ReceiverCounters',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15',1,'Microsoft::Psi']]],
-  ['recognitionstatus',['RecognitionStatus',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]]
+  ['managedcameracontrolproperty',['ManagedCameraControlProperty',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942',1,'Microsoft::Psi::Media_Interop']]],
+  ['managedcameracontrolpropertyflags',['ManagedCameraControlPropertyFlags',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#ad399b73fcf49e4a6579b5a3f3d51a8ed',1,'Microsoft::Psi::Media_Interop']]],
+  ['markerstyle',['MarkerStyle',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833',1,'Microsoft::Psi::Visualization::Common']]],
+  ['matchresulttype',['MatchResultType',['../namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581',1,'Microsoft::Psi']]],
+  ['metadatakind',['MetadataKind',['../namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41c',1,'Microsoft::Psi']]]
 ];

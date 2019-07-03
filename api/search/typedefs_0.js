@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['euclidean',['euclidean',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_extensions.html#a06287b242f1d031ebf2b8c5019ca8b28',1,'Microsoft::Psi::Visualization::Extensions']]]
+  ['drawingedge',['DrawingEdge',['../namespace_microsoft_1_1_msagl_1_1_wpf_graph_control.html#a42f74a1bd80585b0a1717f664baed80b',1,'Microsoft::Msagl::WpfGraphControl']]]
 ];

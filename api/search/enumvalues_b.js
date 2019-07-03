@@ -4,5 +4,6 @@ var searchData=
   ['maxqueuesize',['MaxQueueSize',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a37c0ae6fb9df1404fc1f7da5f625a89b',1,'Microsoft::Psi']]],
   ['messagecount',['MessageCount',['../namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111baf66ae126720689f8a0d0061f7573b5d9',1,'Microsoft::Psi']]],
   ['messagelatency',['MessageLatency',['../namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111ba89785865515bd6d75367711c697aff24',1,'Microsoft::Psi']]],
+  ['messagesize',['MessageSize',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#a932ca905baddef6ce01868785394d1eaa8204af76b950716b42154e1abdc3f817',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
   ['mjpeg',['MJPEG',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a0a5417ce14732e9bdb402be642ebe9ea',1,'Microsoft::Psi::Media']]]
 ];

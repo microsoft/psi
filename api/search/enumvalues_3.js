@@ -11,5 +11,6 @@ var searchData=
   ['doesnotexist',['DoesNotExist',['../namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581ac47c93cf49de211bba5d62d65225f128',1,'Microsoft::Psi']]],
   ['downtriangle',['DownTriangle',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833a72cc410c61952cf31f5bf275d2c65232',1,'Microsoft::Psi::Visualization::Common']]],
   ['dropped',['Dropped',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a74339e8d9916761b9b69183a081076c6',1,'Microsoft::Psi']]],
+  ['droppedcount',['DroppedCount',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#a932ca905baddef6ce01868785394d1eaa4d5d62a1c71b598fbac939eb9e4a6796',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
   ['dv',['DV',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a58d6a88f13e2db7f5059c41047876f00',1,'Microsoft::Psi::Media']]]
 ];

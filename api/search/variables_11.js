@@ -32,5 +32,6 @@ var searchData=
   ['stride',['Stride',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3d1254e12d69f48a1c5acd4ac0d2dee1',1,'Microsoft::Psi::Imaging::Image']]],
   ['subtype',['subType',['../struct_microsoft_1_1_psi_1_1_media___interop_1_1_capture_format.html#a9f5031674c7b5c05daf1607573606d7c',1,'Microsoft::Psi::Media_Interop::CaptureFormat']]],
   ['summarizertype',['SummarizerType',['../class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_summary.html#a5e8a6de6455d4502206b9f7302a7879d',1,'Microsoft::Psi::Visualization::Data::StreamSummary']]],
-  ['symboliclink',['SymbolicLink',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a7ca326fcf8d5e015bea1492ae54d9c80',1,'Microsoft::Psi::Media_Interop::MediaCaptureDevice']]]
+  ['symboliclink',['SymbolicLink',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#a7ca326fcf8d5e015bea1492ae54d9c80',1,'Microsoft::Psi::Media_Interop::MediaCaptureDevice']]],
+  ['system',['System',['../namespace_microsoft_1_1_msagl_1_1_wpf_graph_control.html#a3393472f5094b67f08c39ab51d331322',1,'Microsoft::Msagl::WpfGraphControl']]]
 ];

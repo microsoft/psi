@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rangechanged',['RangeChanged',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator_range.html#a4298c9fe6ea449c79d84c668ef124aaf',1,'Microsoft::Psi::Visualization::Navigation::NavigatorRange']]]
+  ['iscollapsedchanged',['IsCollapsedChanged',['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_v_node.html#a9ae881fee9bcb61ea51c85042325b315',1,'Microsoft::Msagl::WpfGraphControl::VNode']]]
 ];

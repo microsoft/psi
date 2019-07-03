@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['threshold',['Threshold',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a8ac7547d7f33146fdc7a9059744b0243',1,'Microsoft::Psi::Imaging']]],
-  ['transportkind',['TransportKind',['../namespace_microsoft_1_1_psi_1_1_remoting.html#aae712dfab44dbddf329b3374e906bc4f',1,'Microsoft::Psi::Remoting']]],
-  ['typeflags',['TypeFlags',['../namespace_microsoft_1_1_psi_1_1_serialization.html#a5842aa46de28baf53885b3e7accaacaa',1,'Microsoft::Psi::Serialization']]]
+  ['receivercounters',['ReceiverCounters',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15',1,'Microsoft::Psi']]],
+  ['recognitionstatus',['RecognitionStatus',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service.html#a6eaec0e202b99eb54ec2a3f818459106',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]]
 ];

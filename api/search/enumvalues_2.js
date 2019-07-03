@@ -5,6 +5,7 @@ var searchData=
   ['closed',['Closed',['../namespace_microsoft_1_1_psi.html#a8192f981f9fde5c384321d307ce627f5a03f4a47830f97377a35321051685071e',1,'Microsoft::Psi']]],
   ['colorenable',['ColorEnable',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13ab3961eeff6ca12b4cf6bddbf063c4363',1,'Microsoft::Psi::Media_Interop']]],
   ['connected',['Connected',['../class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6ea2ec0d16e4ca169baedb9b2d50ec5c6d7',1,'Microsoft::Psi::Data::Exporter']]],
+  ['connector',['Connector',['../class_microsoft_1_1_psi_1_1_diagnostics_1_1_pipeline_diagnostics_1_1_pipeline_element_diagnostics.html#a2a60e244405355b75f66e3534e87bfa8aedf21d7ecb364e8210ddd3dfaeca6fbf',1,'Microsoft::Psi::Diagnostics::PipelineDiagnostics::PipelineElementDiagnostics']]],
   ['contrast',['Contrast',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a227740027adc7cc09a960e0c21ee2f13ac63ecd19a0ca74c22dfcf3063c9805d2',1,'Microsoft::Psi::Media_Interop']]],
   ['conversation',['Conversation',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech.html#abc432aee3ab213195bfdafbafdbb1c2ca9c84e2b9302627e683f348e57fd14e6b',1,'Microsoft::Psi::CognitiveServices::Speech']]],
   ['created',['Created',['../namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581a0eceeb45861f9585dd7a97a3e36f85c6',1,'Microsoft::Psi']]],

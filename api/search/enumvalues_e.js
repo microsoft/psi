@@ -14,6 +14,7 @@ var searchData=
   ['previous',['Previous',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html#a5c213f55a58615e54b8bd55b1eabd80badd1f775e443ff3b9a89270713580a51b',1,'Microsoft::Psi::Visualization::Data']]],
   ['privacy',['Privacy',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942ac5f29bb36f9158d2e00f5d4dc213a0ff',1,'Microsoft::Psi::Media_Interop']]],
   ['processed',['Processed',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15ae6f641ae8ac72385a9556588b0cac77c',1,'Microsoft::Psi']]],
+  ['processing',['Processing',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#a932ca905baddef6ce01868785394d1eaa643562a9ae7099c8aabfdc93478db117',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
   ['processingdelay',['ProcessingDelay',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a17ca31c0b77f3031c24469778d32501e',1,'Microsoft::Psi']]],
   ['processingtime',['ProcessingTime',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a53529170f6c21ea21a3447c5d0a785aa',1,'Microsoft::Psi']]],
   ['pwc1',['PWC1',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a7bee6f20f0105a947c89f1010ba57ca3',1,'Microsoft::Psi::Media']]],

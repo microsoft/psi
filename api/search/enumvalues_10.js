@@ -2,6 +2,7 @@ var searchData=
 [
   ['rateofcountspersecond32',['RateOfCountsPerSecond32',['../namespace_microsoft_1_1_psi.html#a25628d2fb5fd2aa0a1a8ab1efde041f3abfcba681927bd83c5bed074ba5d0ee13',1,'Microsoft::Psi']]],
   ['raw',['Raw',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba65e65c8ab0d8609ce12fc68a03cb8e00',1,'Microsoft::Psi::Media']]],
+  ['reactive',['Reactive',['../class_microsoft_1_1_psi_1_1_diagnostics_1_1_pipeline_diagnostics_1_1_pipeline_element_diagnostics.html#a2a60e244405355b75f66e3534e87bfa8ac0d2be90914e0cb1d969da682299d7f7',1,'Microsoft::Psi::Diagnostics::PipelineDiagnostics::PipelineElementDiagnostics']]],
   ['rec709',['REC709',['../namespace_microsoft_1_1_psi_1_1_media.html#adaf6a1a90c55f4bb855cb25adc68825ba1a0cab81bacc707af4ed79e1f5725812',1,'Microsoft::Psi::Media']]],
   ['rgb24',['RGB24',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a08415b81fed4feed7d982c9919ac08ee',1,'Microsoft::Psi::Media']]],
   ['rgb32',['RGB32',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7ace70a5db6685e6d210c3f905a8fa7d4c',1,'Microsoft::Psi::Media']]],
@@ -12,6 +13,7 @@ var searchData=
   ['rgb565',['RGB565',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a3b73e4d15701467ed72f157ffaff680a',1,'Microsoft::Psi::Media']]],
   ['rgb565x',['RGB565X',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7ab9244b588d15759206ab3157be14ddb4',1,'Microsoft::Psi::Media']]],
   ['rgba_5f64bpp',['RGBA_64bpp',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafba917afbd44820c06cb1b8b4f1ecd26e59',1,'Microsoft::Psi::Imaging']]],
+  ['righttoleft',['RightToLeft',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#af0453690850546736e6826d07435e251ab7b0ea3028791689ea070674776855e2',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
   ['roll',['Roll',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942a25b5eb3bbef15385b5f5ff3abe46f342',1,'Microsoft::Psi::Media_Interop']]],
   ['rollrelative',['RollRelative',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942a3d2848098ad6ea135695c4f14dc731f5',1,'Microsoft::Psi::Media_Interop']]],
   ['runtimeinfo',['RuntimeInfo',['../namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41cae7d1e5f8a784711d7d80e1968136c28e',1,'Microsoft::Psi']]]

@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['latencyatemitter',['LatencyAtEmitter',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#a932ca905baddef6ce01868785394d1eaa8db1784b21f1f8a162c2f177a5ee2ba5',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
+  ['latencyatreceiver',['LatencyAtReceiver',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#a932ca905baddef6ce01868785394d1eaaff9554e542dc02449ff674c4dd4bd893',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
+  ['lefttoright',['LeftToRight',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_diagnostics_visualization_object_configuration.html#af0453690850546736e6826d07435e251ad1e80c506f4c89e3c4fb1c1b4867a03c',1,'Microsoft::Psi::Visualization::Config::DiagnosticsVisualizationObjectConfiguration']]],
   ['live',['Live',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_navigation.html#a078489a82b219f7e200893b93bb47c03a955ad3298db330b5ee880c2c9e6f23a0',1,'Microsoft::Psi::Visualization::Navigation']]],
   ['localqueuecount',['LocalQueueCount',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86a3c7e4ac61ef76426fe6aed5364dc9a36',1,'Microsoft::Psi::Scheduling']]],
   ['localtoglobalpromotions',['LocalToGlobalPromotions',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#a4948517908924b5363d05397b6d61f86a6af8046885ddfbb41c87f5d6e0393557',1,'Microsoft::Psi::Scheduling']]],

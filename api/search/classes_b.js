@@ -25,6 +25,7 @@ var searchData=
   ['microsoftspeechintentdetectorconfiguration',['MicrosoftSpeechIntentDetectorConfiguration',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_intent_detector_configuration.html',1,'Microsoft::Psi::MicrosoftSpeech']]],
   ['microsoftspeechrecognizer',['MicrosoftSpeechRecognizer',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer.html',1,'Microsoft::Psi::MicrosoftSpeech']]],
   ['microsoftspeechrecognizerconfiguration',['MicrosoftSpeechRecognizerConfiguration',['../class_microsoft_1_1_psi_1_1_microsoft_speech_1_1_microsoft_speech_recognizer_configuration.html',1,'Microsoft::Psi::MicrosoftSpeech']]],
+  ['modelvisual3dvisualizationobject',['ModelVisual3DVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object.html',1,'Microsoft::Psi::Visualization::VisualizationObjects']]],
   ['mp4writer',['MP4Writer',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html',1,'Microsoft::Psi::Media_Interop']]],
   ['mp4writerconfiguration',['MP4WriterConfiguration',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_configuration.html',1,'Microsoft::Psi::Media_Interop']]],
   ['mp4writerunmanageddata',['MP4WriterUnmanagedData',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html',1,'Microsoft::Psi::Media_Interop']]],
