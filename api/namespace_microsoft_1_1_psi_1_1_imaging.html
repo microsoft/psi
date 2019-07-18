@@ -86,6 +86,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html">IBitmapEncoder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmap encoder interface.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html">IImageCompressor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface implemented by the system specific assembly. For instance, Microsoft.Psi.Imaging.Windows will define an ImageCompressor that implements this interfaces.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible as to allocate new image in unmanaged memory, as to just wrap provided pointer to unmanaged memory, where an image is stored.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,6 +128,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:a1a9b9f860738a4507a3c95f332a14b93"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93">CompressionMethod</a> </td></tr>
+<tr class="memdesc:a1a9b9f860738a4507a3c95f332a14b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines type of compression to use when serializing out an Image.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93">More...</a><br /></td></tr>
+<tr class="separator:a1a9b9f860738a4507a3c95f332a14b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf1b34586521cceaf009b6caf35a4284"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284">SamplingMode</a> </td></tr>
 <tr class="memdesc:adf1b34586521cceaf009b6caf35a4284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sampling mode used by various imaging operators.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284">More...</a><br /></td></tr>
 <tr class="separator:adf1b34586521cceaf009b6caf35a4284"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +151,38 @@ Functions</h2></td></tr>
 <tr class="separator:a2819f0265488b9a3042807f878692f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a1a9b9f860738a4507a3c95f332a14b93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a9b9f860738a4507a3c95f332a14b93">&#9670;&nbsp;</a></span>CompressionMethod</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93">Microsoft.Psi.Imaging.CompressionMethod</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Defines type of compression to use when serializing out an Image. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a907e06a16862d82ca6907a28a68d0ad6"></a>JPEG&#160;</td><td class="fielddoc"><p>Use JPEG compression </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a55505ba281b015ec31f03ccb151b2a34"></a>PNG&#160;</td><td class="fielddoc"><p>Use PNG compression </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Use no compression </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="a579b3fc93495e6cecd4fec2c7432d562"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a579b3fc93495e6cecd4fec2c7432d562">&#9670;&nbsp;</a></span>FlipMode</h2>
 

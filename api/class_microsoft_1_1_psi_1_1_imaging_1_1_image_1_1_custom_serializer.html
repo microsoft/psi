@@ -67,7 +67,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer-members.html">List of all members</a>  </div>
@@ -81,12 +80,6 @@ $(function() {
 
 <p>Inherits <a class="el" href="interface_microsoft_1_1_psi_1_1_serialization_1_1_i_serializer.html">Microsoft.Psi.Serialization.ISerializer&lt; Image &gt;</a>.</p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:aedaa83b2f8a47d8dc2df198e71d2808e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808e">CompressionMethod</a> </td></tr>
-<tr class="memdesc:aedaa83b2f8a47d8dc2df198e71d2808e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines type of compression to use when serializing out an Image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808e">More...</a><br /></td></tr>
-<tr class="separator:aedaa83b2f8a47d8dc2df198e71d2808e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adb7bcb9149393b6666008fcfad31bf48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#adb7bcb9149393b6666008fcfad31bf48">Initialize</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_known_serializers.html">KnownSerializers</a> serializers, <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html">TypeSchema</a> targetSchema)</td></tr>
@@ -135,46 +128,13 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a9b6ea9072b48ce078b9dd3a7b6f92db5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#a9b6ea9072b48ce078b9dd3a7b6f92db5">ConfigureCompression</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808e">CompressionMethod</a> method)</td></tr>
-<tr class="memdesc:a9b6ea9072b48ce078b9dd3a7b6f92db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maybe called to initialize type of compression to use. Default is no compression.  <a href="#a9b6ea9072b48ce078b9dd3a7b6f92db5">More...</a><br /></td></tr>
-<tr class="separator:a9b6ea9072b48ce078b9dd3a7b6f92db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7beb354057255b7abc601cc74326c0d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#a7beb354057255b7abc601cc74326c0d3">ConfigureCompression</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html">IImageCompressor</a> compressor)</td></tr>
+<tr class="memdesc:a7beb354057255b7abc601cc74326c0d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maybe called to initialize type of compression to use. Default is no compression.  <a href="#a7beb354057255b7abc601cc74326c0d3">More...</a><br /></td></tr>
+<tr class="separator:a7beb354057255b7abc601cc74326c0d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Custom serializer used for reading/writing images. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="aedaa83b2f8a47d8dc2df198e71d2808e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedaa83b2f8a47d8dc2df198e71d2808e">&#9670;&nbsp;</a></span>CompressionMethod</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808e">Microsoft.Psi.Imaging.Image.CustomSerializer.CompressionMethod</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Defines type of compression to use when serializing out an Image. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aedaa83b2f8a47d8dc2df198e71d2808ea907e06a16862d82ca6907a28a68d0ad6"></a>JPEG&#160;</td><td class="fielddoc"><p>Use JPEG compression </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aedaa83b2f8a47d8dc2df198e71d2808ea55505ba281b015ec31f03ccb151b2a34"></a>PNG&#160;</td><td class="fielddoc"><p>Use PNG compression </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aedaa83b2f8a47d8dc2df198e71d2808ea6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Use no compression </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a88919b806b5b3d4ced98a06842045d73"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a88919b806b5b3d4ced98a06842045d73">&#9670;&nbsp;</a></span>Clear()</h2>
 
@@ -257,8 +217,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9b6ea9072b48ce078b9dd3a7b6f92db5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b6ea9072b48ce078b9dd3a7b6f92db5">&#9670;&nbsp;</a></span>ConfigureCompression()</h2>
+<a id="a7beb354057255b7abc601cc74326c0d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7beb354057255b7abc601cc74326c0d3">&#9670;&nbsp;</a></span>ConfigureCompression()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,8 +229,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static void Microsoft.Psi.Imaging.Image.CustomSerializer.ConfigureCompression </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808e">CompressionMethod</a>&#160;</td>
-          <td class="paramname"><em>method</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html">IImageCompressor</a>&#160;</td>
+          <td class="paramname"><em>compressor</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -284,7 +244,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Maybe called to initialize type of compression to use. Default is no compression. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">method</td><td>Type of compression to use.</td></tr>
+    <tr><td class="paramname">compressor</td><td>Compressor to be used.</td></tr>
   </table>
   </dd>
 </dl>

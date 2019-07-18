@@ -8,7 +8,7 @@ var searchData=
   ['pipelineinclusivedelay',['PipelineInclusiveDelay',['../namespace_microsoft_1_1_psi.html#aff9b690c4f2861e01f592997b8cdeb15a9cafeb9ccb75172db301c1c388fa7e6e',1,'Microsoft::Psi']]],
   ['playback',['Playback',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_navigation.html#a078489a82b219f7e200893b93bb47c03a8dc55bfcd34d5dc5860d3fefba972b7c',1,'Microsoft::Psi::Visualization::Navigation']]],
   ['plus',['Plus',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833a32ba78fe43257d3e7f88e3935a8ea0d4',1,'Microsoft::Psi::Visualization::Common']]],
-  ['png',['PNG',['../class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aedaa83b2f8a47d8dc2df198e71d2808ea55505ba281b015ec31f03ccb151b2a34',1,'Microsoft::Psi::Imaging::Image::CustomSerializer']]],
+  ['png',['PNG',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93a55505ba281b015ec31f03ccb151b2a34',1,'Microsoft::Psi::Imaging']]],
   ['point',['Point',['../namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284a2a3cd5946cfd317eb99c3d32e35e2d4c',1,'Microsoft::Psi::Imaging']]],
   ['polymorphic',['Polymorphic',['../namespace_microsoft_1_1_psi.html#a8192f981f9fde5c384321d307ce627f5a16716cfb1b5ffca903f638bf29085129',1,'Microsoft::Psi']]],
   ['previous',['Previous',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_data.html#a5c213f55a58615e54b8bd55b1eabd80badd1f775e443ff3b9a89270713580a51b',1,'Microsoft::Psi::Visualization::Data']]],

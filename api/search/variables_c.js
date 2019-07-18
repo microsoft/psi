@@ -14,6 +14,8 @@ var searchData=
   ['maximum',['Maximum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#af630f2655aee1d9117a2bbab1613c51d',1,'Microsoft::Psi::Visualization::Data::IntervalData']]],
   ['maxsummaryinterval',['MaxSummaryInterval',['../class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_summary_manager.html#ab16d7df2ee30dbfb40efd632905252a1',1,'Microsoft::Psi::Visualization::Data::StreamSummaryManager']]],
   ['maxthreadcount',['MaxThreadCount',['../class_microsoft_1_1_psi_1_1_scheduling_1_1_simple_semaphore.html#ac960d4f69ab535a5f9ca55a5089c05cd',1,'Microsoft::Psi::Scheduling::SimpleSemaphore']]],
+  ['messages',['Messages',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a2f1ce918cfba011534f052574f1dc22e',1,'Microsoft::Psi::Visualization::Common::IconSourcePath']]],
+  ['messagesinpanel',['MessagesInPanel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a5a9558c8ecf8e22182f10410384b7871',1,'Microsoft::Psi::Visualization::Common::IconSourcePath']]],
   ['microseconds',['MicroSeconds',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_internal_1_1_image_frame.html#a834dee5f95b8e0fc3df89c47ed00e6b8',1,'Microsoft::Psi::Media::MediaCaptureInternal::ImageFrame']]],
   ['minimum',['Minimum',['../struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a2fd61dd4619a1aa934e58fd5fee46233',1,'Microsoft::Psi::Visualization::Data::IntervalData']]]
 ];

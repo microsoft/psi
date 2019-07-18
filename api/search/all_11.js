@@ -127,7 +127,6 @@ var searchData=
   ['removesession',['RemoveSession',['../class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#aa61510ef1f00cf12566a3aa785f97b07',1,'Microsoft::Psi::Data::Dataset']]],
   ['removesourceportedgerouting',['RemoveSourcePortEdgeRouting',['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#acae4dce06f99366d8572f386fdd3771a',1,'Microsoft::Msagl::WpfGraphControl::GraphViewer']]],
   ['removetargetportedgerouting',['RemoveTargetPortEdgeRouting',['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#aa66240f4ba83b4d807bf568eb8628907',1,'Microsoft::Msagl::WpfGraphControl::GraphViewer']]],
-  ['removevisualizationobject',['RemoveVisualizationObject',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#a934c751d6d4d862e0a648f510df80ce4',1,'Microsoft::Psi::Visualization::VisualizationPanels::VisualizationPanel']]],
   ['renderedframes',['RenderedFrames',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_display_image.html#a45baa194c9f56c7640b96253f1391a4e',1,'Microsoft::Psi::Visualization::Common::DisplayImage']]],
   ['repair',['Repair',['../class_microsoft_1_1_psi_1_1_store.html#ab7ea58fa8e610120d363e23c3eb9b812',1,'Microsoft::Psi::Store']]],
   ['repeat_3c_20t_20_3e',['Repeat&lt; T &gt;',['../class_microsoft_1_1_psi_1_1_generators.html#aff1f4a2aa36880674094fec846f3ae09',1,'Microsoft::Psi::Generators']]],

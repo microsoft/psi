@@ -208,8 +208,8 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html#a434639f838572e34d9b5f665eee7d023">Microsoft.Psi.Serialization.SerializationHandler&lt; T &gt;</a>
 </li>
 <li>Serialize()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aaf2d50f1a208c3d982d86a38b5817f6d">Microsoft.Psi.Imaging.Image.CustomSerializer</a>
-, <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_i_image_compressor.html#a45361411b81c408618702bc147189d7c">Microsoft.Psi.Imaging.Image.IImageCompressor</a>
+: <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html#a0bb2cc9d2a85f003577a6545e8c5e15d">Microsoft.Psi.Imaging.IImageCompressor</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aaf2d50f1a208c3d982d86a38b5817f6d">Microsoft.Psi.Imaging.Image.CustomSerializer</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_compressor.html#a5ec6d96b0f25d472144687033ba4fbdd">Microsoft.Psi.Imaging.ImageCompressor</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_serialization_1_1_i_serializer.html#acab03f5e90c2a846d165612c3b6f683b">Microsoft.Psi.Serialization.ISerializer&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html#a202e5a8774045f12a1d47fc65dadb9c8">Microsoft.Psi.Serialization.SerializationHandler&lt; T &gt;</a>
@@ -360,6 +360,13 @@ $(function() {
 <li>ShowTrackingBillboards
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_kinect_bodies3_d_visualization_object_configuration.html#ab554fba5cc6a898989f64fbf172454c6">Microsoft.Psi.Visualization.Config.KinectBodies3DVisualizationObjectConfiguration</a>
 </li>
+<li>ShowZoomToPanelMenuItem
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#acaaba8a731da2d33de0689517ca66e71">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
+</li>
+<li>ShowZoomToStreamMenuItem
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#a8a38fc8675c964b2bba9e7f290b57e74">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData, TConfig &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_object.html#ab8e54bc1f63ff0fee68ef62452fe528b">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject&lt; TConfig &gt;</a>
+</li>
 <li>Shutdown()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_media_capture_device.html#ad98e665a1ff41a46c078a241bff57719">Microsoft.Psi::Media_Interop::MediaCaptureDevice</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ace058037c235e211fe74447f745a49ca">Microsoft.Psi::Media_Interop::MP4Writer</a>
@@ -419,6 +426,9 @@ $(function() {
 </li>
 <li>SnapToStreamCommandText
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a34400b6e332b36e3be892669acc86a88">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
+</li>
+<li>SnapToStreamLive
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a5a252ff9e223f6f11e327932d6e63bde">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
 </li>
 <li>SnapToVisualizationObject
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a0e6db16ee4a06074d9f54d75e487c131">Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer</a>
@@ -654,7 +664,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_summary_manager.html#a992ebdc462ec74a25ae25476f487ea02">Microsoft.Psi.Visualization.Data.StreamSummaryManager</a>
 </li>
 <li>StoreReader()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_reader.html#afa925ad137681972b3a302301b617cae">Microsoft.Psi.Persistence.StoreReader</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_reader.html#ab4b2f3233bfad2d73443944ff3cb2eaf">Microsoft.Psi.Persistence.StoreReader</a>
 </li>
 <li>StoreWriter()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_writer.html#a560e5ce80c40b97e79005d6eb860f534">Microsoft.Psi.Persistence.StoreWriter</a>
@@ -672,18 +682,47 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a925f1490ae739e11f6d8e1f14ba85c83">Microsoft.Psi.Visualization.Data.StreamReader&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_summary_manager.html#ad213271afa27c1066d0e98a6144d5995">Microsoft.Psi.Visualization.Data.StreamSummaryManager</a>
 </li>
+<li>StreamAudio
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a656ffae4f74fc24843425a4522a6a639">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
+<li>StreamAudioLive
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a34ae068d6de8c2fdb0e61e8e43d46bad">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
+<li>StreamAudioMuted
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a9abc870d2bc1d45c8cec6c6da5e68f68">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
+<li>StreamAudioMutedLive
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#ad7006356fc1d1587a5022f39713cf57f">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
 <li>StreamBinding
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_stream_visualization_object_configuration.html#a8306df2b1262837571834ea6ab379b7b">Microsoft.Psi.Visualization.Config.StreamVisualizationObjectConfiguration</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a0f67747751d9153e17d1a8a9604e0a8b">Microsoft.Psi.Visualization.Data.IStreamReader</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_binding.html#af7337954a7f80ab1a84f0dc9d012c7aa">Microsoft.Psi.Visualization.Data.StreamBinding</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#afd6caa1ef6a72cf1302f85cd8eab844a">Microsoft.Psi.Visualization.Data.StreamReader&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_summary.html#a8ff074c7480bf07adb86a44c72edd4ef">Microsoft.Psi.Visualization.Data.StreamSummary&lt; TSrc, TDest &gt;</a>
+, <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a4a68e9d9a1f5aa1eb324aedbc9fb46c2">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a4575af6e0f12c1db5a2de764a4fa6ab1">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
 </li>
 <li>StreamEnumerable()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a0685619eb859aabdd4abc0e8385622f5">Microsoft.Psi.Operators.StreamEnumerable&lt; T &gt;</a>
 </li>
+<li>StreamGroup
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#ad446b544ce3885db95041097fa815892">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
+<li>StreamGroupLive
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#ad52539dacf0b08ef756c46d69762062c">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
 <li>StreamingSpeechRecognitionResult()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_streaming_speech_recognition_result.html#a6e19bf18f9de67b75970547a894d2d71">Microsoft.Psi.Speech.StreamingSpeechRecognitionResult</a>
+</li>
+<li>StreamInPanel
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#ad6eed7267d224497f1fbbfe548fa1d95">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
+<li>StreamLive
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a52d571a00831fb6399433675c3d32bd3">Microsoft.Psi.Visualization.Common.IconSourcePath</a>
+</li>
+<li>StreamMetadata
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_binding.html#a7d4fdbd07d0938888266e637b1a1389d">Microsoft.Psi.Visualization.Data.StreamBinding</a>
 </li>
 <li>StreamName
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a97d9836a33aad3e4bf40fba8f623f200">Microsoft.Psi.Visualization.Data.IStreamReader</a>
@@ -741,10 +780,10 @@ $(function() {
 : <a class="el" href="struct_microsoft_1_1_psi_1_1_media___interop_1_1_capture_format.html#a9f5031674c7b5c05daf1607573606d7c">Microsoft.Psi::Media_Interop::CaptureFormat</a>
 </li>
 <li>Sum()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ab9a200d04eb5bfd7f81d771fc6bcc812">Microsoft.Psi.Operators</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a4eddd06363da19ba8964c0015034a1da">Microsoft.Psi.Operators</a>
 </li>
 <li>Sum&lt; TSource &gt;()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#af8fc95ef14a5fea41c15997a21ac5dfa">Microsoft.Psi.Operators</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ac73d11b1f3d79598c7341b6714cff469">Microsoft.Psi.Operators</a>
 </li>
 <li>Summarize()
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_summarizer.html#af0b00d6d62ff5088f59aaff2e481d294">Microsoft.Psi.Visualization.Data.ISummarizer&lt; TSrc, TDest &gt;</a>

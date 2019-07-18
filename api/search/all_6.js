@@ -72,6 +72,7 @@ var searchData=
   ['gray_5f16bpp',['Gray_16bpp',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafbaf5ad5dffd6003ed96447ed4b75d86bcb',1,'Microsoft::Psi::Imaging']]],
   ['gray_5f8bpp',['Gray_8bpp',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafba7eeb1041642f1c01d894857db222d6e2',1,'Microsoft::Psi::Imaging']]],
   ['grey',['GREY',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7a3c551f0d1a06b4f852d1832daed357bf',1,'Microsoft::Psi::Media']]],
+  ['group',['Group',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#aa1ed205a2e9e89f123488438ca6d81d0',1,'Microsoft::Psi::Visualization::Common::IconSourcePath']]],
   ['guid',['Guid',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_video_format.html#ac6e8a5932f90246f35fe72b74933c914',1,'Microsoft::Psi::Media_Interop::VideoFormat']]],
   ['gvmouseeventargs',['GvMouseEventArgs',['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_gv_mouse_event_args.html',1,'Microsoft::Msagl::WpfGraphControl']]],
   ['gzipcompressdepthimage',['GZipCompressDepthImage',['../class_microsoft_1_1_psi_1_1_kinect_1_1_depth_extensions.html#ab31bd649109cf096832be33ba496695f',1,'Microsoft::Psi::Kinect::DepthExtensions']]],

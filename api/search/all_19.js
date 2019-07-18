@@ -11,7 +11,10 @@ var searchData=
   ['zoomout',['ZoomOut',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#af9f8c315ffe3dcda57d57ec9efdeba46',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
   ['zoomrelative',['ZoomRelative',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942ac33d5bc4decc972c5f33242bca5fe7f8',1,'Microsoft::Psi::Media_Interop']]],
   ['zoomtodatarange',['ZoomToDataRange',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#ab0c5fdf7e19edaf2f6074425867f29d8',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
+  ['zoomtopanelcommand',['ZoomToPanelCommand',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#ad625177acffd0fb128a322b6df572b55',1,'Microsoft::Psi::Visualization::VisualizationPanels::VisualizationPanel']]],
   ['zoomtorange',['ZoomToRange',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a365e9a0bcfb8f2022288891b90c01de2',1,'Microsoft::Psi::Visualization::VisualizationObjects::VisualizationContainer']]],
   ['zoomtoselection',['ZoomToSelection',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#a3fbed109452166eb9b7775f68b2615f4',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
-  ['zoomtoselectionpadding',['ZoomToSelectionPadding',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#aa66bb346b49ec974cd2fb7e5f1902b15',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]]
+  ['zoomtoselectionpadding',['ZoomToSelectionPadding',['../class_microsoft_1_1_psi_1_1_visualization_1_1_navigation_1_1_navigator.html#aa66bb346b49ec974cd2fb7e5f1902b15',1,'Microsoft::Psi::Visualization::Navigation::Navigator']]],
+  ['zoomtostream',['ZoomToStream',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_icon_source_path.html#a95cbddb899abd831dc01f6b017d3b7e0',1,'Microsoft::Psi::Visualization::Common::IconSourcePath']]],
+  ['zoomtostreamcommand',['ZoomToStreamCommand',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a4ebd26e3086f56a6ebd7afd6a7905dbb',1,'Microsoft::Psi::Visualization::VisualizationObjects::StreamVisualizationObject']]]
 ];
