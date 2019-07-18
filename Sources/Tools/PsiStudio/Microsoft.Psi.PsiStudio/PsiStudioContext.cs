@@ -28,8 +28,8 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Serialization;
     using Microsoft.Psi.Speech;
     using Microsoft.Psi.Visualization.Adapters;
-    using Microsoft.Psi.Visualization.Annotations;
     using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.DataTypes;
@@ -41,6 +41,7 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Microsoft.Psi.Visualization.Windows;
     using Microsoft.Win32;
+    using WpfControls = System.Windows.Controls;
 
     /// <summary>
     /// Data context for PsiStudio.
@@ -77,6 +78,11 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand toggleLiveModeCommand;
         private RelayCommand toggleCursorFollowsMouseComand;
         ////private RelayCommand showSettingsWindowComand;
+        private RelayCommand expandDatasetsTreeCommand;
+        private RelayCommand collapseDatasetsTreeCommand;
+        private RelayCommand expandVisualizationsTreeCommand;
+        private RelayCommand collapseVisualizationsTreeCommand;
+        private RelayCommand synchronizeTreesCommand;
         private RelayCommand exitCommand;
 
         private RelayCommand<RoutedPropertyChangedEventArgs<object>> selectedVisualizationChangedCommand;
@@ -234,7 +240,6 @@ namespace Microsoft.Psi.PsiStudio
             set
             {
                 this.Set(nameof(this.VisualizationContainer), ref this.visualizationContainer, value);
-                this.visualizationContainer.Navigator.PropertyChanged += this.Navigator_PropertyChanged;
             }
         }
 
@@ -860,6 +865,96 @@ namespace Microsoft.Psi.PsiStudio
         }*/
 
         /// <summary>
+        /// Gets the expand all command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ExpandDatasetsTreeCommand
+        {
+            get
+            {
+                if (this.expandDatasetsTreeCommand == null)
+                {
+                    this.expandDatasetsTreeCommand = new RelayCommand(() => this.ExpandDatasetsTree());
+                }
+
+                return this.expandDatasetsTreeCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collapse all command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CollapseDatasetsTreeCommand
+        {
+            get
+            {
+                if (this.collapseDatasetsTreeCommand == null)
+                {
+                    this.collapseDatasetsTreeCommand = new RelayCommand(() => this.CollapseDatasetsTree());
+                }
+
+                return this.collapseDatasetsTreeCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the expand visualizations tree command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ExpandVisualizationsTreeCommand
+        {
+            get
+            {
+                if (this.expandVisualizationsTreeCommand == null)
+                {
+                    this.expandVisualizationsTreeCommand = new RelayCommand(() => this.ExpandVisualizationsTree());
+                }
+
+                return this.expandVisualizationsTreeCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collapse visualizations tree command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CollapseVisualizationsTreeCommand
+        {
+            get
+            {
+                if (this.collapseVisualizationsTreeCommand == null)
+                {
+                    this.collapseVisualizationsTreeCommand = new RelayCommand(() => this.CollapseVisualizationsTree());
+                }
+
+                return this.collapseVisualizationsTreeCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the synchronize trees command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand SynchronizeTreesCommand
+        {
+            get
+            {
+                if (this.synchronizeTreesCommand == null)
+                {
+                    this.synchronizeTreesCommand = new RelayCommand(() => this.SynchronizeDatasetsTreeToVisualizationsTree());
+                }
+
+                return this.synchronizeTreesCommand;
+            }
+        }
+
+        /// <summary>
         /// Gets the exit command.
         /// </summary>
         [Browsable(false)]
@@ -983,7 +1078,7 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         /// <param name="streamTreeNode">The stream tree node.</param>
         /// <returns>The type of messages in the stream.</returns>
-        public Type GetStreamType(IStreamTreeNode streamTreeNode)
+        public Type GetStreamType(StreamTreeNode streamTreeNode)
         {
             return Type.GetType(streamTreeNode.TypeName, this.AssemblyResolver, null) ?? Type.GetType(streamTreeNode.TypeName.Split(',')[0], this.AssemblyResolver, null);
         }
@@ -1047,11 +1142,53 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
+        /// Gets the menu for a stream in the datasets view.
+        /// </summary>
+        /// <param name="streamTreeNode">The stream tree node.</param>
+        /// <returns>The contextmenu for the stream.</returns>
+        internal WpfControls.ContextMenu GetDatasetStreamMenu(StreamTreeNode streamTreeNode)
+        {
+            // Get the list of commands for this stream tree node
+            List<TypeKeyedActionCommand> commands = this.GetVisualizeStreamCommands(streamTreeNode);
+
+            // Create the context menu
+            WpfControls.ContextMenu contextMenu = new WpfControls.ContextMenu();
+
+            // Add menuitems for each command available
+            foreach (TypeKeyedActionCommand command in commands)
+            {
+                // Create the bitmap for the icon
+                System.Windows.Media.Imaging.BitmapImage bitmapImage = new System.Windows.Media.Imaging.BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(command.Icon, UriKind.Relative);
+                bitmapImage.EndInit();
+
+                // Create the icon
+                WpfControls.Image icon = new WpfControls.Image();
+                icon.Height = 16;
+                icon.Width = 16;
+                icon.Margin = new Thickness(4, 0, 0, 0);
+                icon.Source = bitmapImage;
+
+                // Create the menuitem
+                WpfControls.MenuItem menuItem = new WpfControls.MenuItem();
+                menuItem.Height = 25;
+                menuItem.Icon = icon;
+                menuItem.Header = command.DisplayName;
+                menuItem.Command = command;
+                menuItem.CommandParameter = streamTreeNode;
+                contextMenu.Items.Add(menuItem);
+            }
+
+            return contextMenu;
+        }
+
+        /// <summary>
         /// Gets the list of visualization stream commands for a given stream tree node.
         /// </summary>
         /// <param name="streamTreeNode">Stream tree node.</param>
         /// <returns>List of visualization stream commands.</returns>
-        internal List<TypeKeyedActionCommand> GetVisualizeStreamCommands(IStreamTreeNode streamTreeNode)
+        internal List<TypeKeyedActionCommand> GetVisualizeStreamCommands(StreamTreeNode streamTreeNode)
         {
             List<TypeKeyedActionCommand> result = new List<TypeKeyedActionCommand>();
             if (streamTreeNode != null && streamTreeNode.TypeName != null)
@@ -1065,25 +1202,25 @@ namespace Microsoft.Psi.PsiStudio
 
                     // generate generic Visualize Latency
                     var genericPlotLatency = typeof(PsiStudioContext).GetMethod(nameof(this.VisualizeLatency), BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
-                    var visualizeLatencyAction = new Action<IStreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, false }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeLatency, visualizeLatencyAction }) as TypeKeyedActionCommand);
+                    var visualizeLatencyAction = new Action<StreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, false }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(StreamTreeNode)), new object[] { ContextMenuName.VisualizeLatency, visualizeLatencyAction, IconSourcePath.Latency }) as TypeKeyedActionCommand);
 
                     // generate generic Visulize Latency in New Panel
-                    var visualizeLatencyInNewPanelAction = new Action<IStreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, true }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeLatencyInNewPanel, visualizeLatencyInNewPanelAction }) as TypeKeyedActionCommand);
+                    var visualizeLatencyInNewPanelAction = new Action<StreamTreeNode>(s => genericPlotLatency.Invoke(this, new object[] { s, true }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(StreamTreeNode)), new object[] { ContextMenuName.VisualizeLatencyInNewPanel, visualizeLatencyInNewPanelAction, IconSourcePath.LatencyInPanel }) as TypeKeyedActionCommand);
 
                     // generate generic Visualize Messages
                     var genericPlotMessages = typeof(PsiStudioContext).GetMethod(nameof(this.VisualizeMessages), BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(streamType);
-                    var visualizeMessagesAction = new Action<IStreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s, false }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeMessages, visualizeMessagesAction }) as TypeKeyedActionCommand);
+                    var visualizeMessagesAction = new Action<StreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s, false }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(StreamTreeNode)), new object[] { ContextMenuName.VisualizeMessages, visualizeMessagesAction, IconSourcePath.Messages }) as TypeKeyedActionCommand);
 
                     // generate generic Visualize Messages in New Panel
-                    var visualizeMessagesInNewPanelAction = new Action<IStreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s, true }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.VisualizeMessagesInNewPanel, visualizeMessagesInNewPanelAction }) as TypeKeyedActionCommand);
+                    var visualizeMessagesInNewPanelAction = new Action<StreamTreeNode>(s => genericPlotMessages.Invoke(this, new object[] { s, true }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(StreamTreeNode)), new object[] { ContextMenuName.VisualizeMessagesInNewPanel, visualizeMessagesInNewPanelAction, IconSourcePath.MessagesInPanel }) as TypeKeyedActionCommand);
 
                     var zoomToStreamExtents = typeof(PsiStudioContext).GetMethod("ZoomToStreamExtents", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var zoomToStreamExtentsAction = new Action<IStreamTreeNode>(s => zoomToStreamExtents.Invoke(this, new object[] { s }));
-                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(IStreamTreeNode)), new object[] { ContextMenuName.ZoomToStreamExtents, zoomToStreamExtentsAction }) as TypeKeyedActionCommand);
+                    var zoomToStreamExtentsAction = new Action<StreamTreeNode>(s => zoomToStreamExtents.Invoke(this, new object[] { s }));
+                    result.Add(Activator.CreateInstance(typeof(TypeKeyedActionCommand<,>).MakeGenericType(streamType, typeof(StreamTreeNode)), new object[] { ContextMenuName.ZoomToStreamExtents, zoomToStreamExtentsAction, IconSourcePath.ZoomToStream }) as TypeKeyedActionCommand);
                 }
             }
 
@@ -1247,42 +1384,42 @@ namespace Microsoft.Psi.PsiStudio
             KnownSerializers.Default.Register<MathNet.Numerics.LinearAlgebra.Storage.DenseColumnMajorMatrixStorage<double>>(null);
 
             ////this.AddVisualizeStreamCommand<AnnotatedEvent>(ContextMenuName.Visualize, (s) => this.ShowAnnotations(s, false));
-            this.AddVisualizeStreamCommand<double>(ContextMenuName.Plot, (s) => this.PlotDouble(s, false));
-            this.AddVisualizeStreamCommand<double>(ContextMenuName.PlotInNewPanel, (s) => this.PlotDouble(s, true));
-            this.AddVisualizeStreamCommand<float>(ContextMenuName.Plot, (s) => this.PlotFloat(s, false));
-            this.AddVisualizeStreamCommand<float>(ContextMenuName.PlotInNewPanel, (s) => this.PlotFloat(s, true));
-            this.AddVisualizeStreamCommand<TimeSpan>(ContextMenuName.PlotAsMilliseconds, (s) => this.PlotTimeSpan(s, false));
-            this.AddVisualizeStreamCommand<TimeSpan>(ContextMenuName.PlotAsMillisecondsInNewPanel, (s) => this.PlotTimeSpan(s, true));
-            this.AddVisualizeStreamCommand<int>(ContextMenuName.Plot, (s) => this.PlotInt(s, false));
-            this.AddVisualizeStreamCommand<int>(ContextMenuName.PlotInNewPanel, (s) => this.PlotInt(s, true));
-            this.AddVisualizeStreamCommand<bool>(ContextMenuName.Plot, (s) => this.PlotBool(s, false));
-            this.AddVisualizeStreamCommand<bool>(ContextMenuName.PlotInNewPanel, (s) => this.PlotBool(s, true));
-            this.AddVisualizeStreamCommand<Shared<Image>>(ContextMenuName.Visualize, (s) => this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(s, true));
-            this.AddVisualizeStreamCommand<Shared<EncodedImage>>(ContextMenuName.Visualize, (s) => this.Show2D<EncodedImageVisualizationObject, Shared<EncodedImage>, ImageVisualizationObjectBaseConfiguration>(s, true));
-            this.AddVisualizeStreamCommand<IStreamingSpeechRecognitionResult>(ContextMenuName.Visualize, (s) => this.Show<SpeechRecognitionVisualizationObject, IStreamingSpeechRecognitionResult, SpeechRecognitionVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<CoordinateSystem>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<CoordinateSystemView3D, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>(s, false, typeof(CoordinateSystemAdapter)));
-            this.AddVisualizeStreamCommand<IEnumerable<CoordinateSystem>>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<EnumerableView3D<CoordinateSystemView3D, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>, IEnumerable<CoordinateSystem>, CoordinateSystemVisualizationObjectConfiguration>, IEnumerable<CoordinateSystem>, CoordinateSystemVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<CoordinateSystem>>(ContextMenuName.VisualizeAsPlanarDirection, (s) => this.Show3D<ScatterPlanarDirectionVisualizationObject, List<CoordinateSystem>, ScatterPlanarDirectionVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<System.Windows.Media.Media3D.Rect3D>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<RectangleView3D, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<IEnumerable<System.Windows.Media.Media3D.Rect3D>>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<EnumerableView3D<RectangleView3D, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>, IEnumerable<System.Windows.Media.Media3D.Rect3D>, Rectangle3DVisualizationObjectConfiguration>, IEnumerable<System.Windows.Media.Media3D.Rect3D>, Rectangle3DVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<Point[]>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(PointArrayToScatterPlotAdapter)));
-            this.AddVisualizeStreamCommand<List<Tuple<Point, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<Point2D?>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(NullablePoint2DToScatterPlotAdapter)));
-            this.AddVisualizeStreamCommand<Point3D?>(ContextMenuName.Visualize, (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(NullablePoint3DAdapter)));
-            this.AddVisualizeStreamCommand<List<Point3D>>(ContextMenuName.Visualize, (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(ListPoint3DAdapter)));
-            this.AddVisualizeStreamCommand<byte[]>(ContextMenuName.VisualizeAs3DDepth, this.ShowDepth3D);
-            this.AddVisualizeStreamCommand<byte[]>(ContextMenuName.VisualizeAs2DDepth, this.ShowDepth2D);
-            this.AddVisualizeStreamCommand<AudioBuffer>(ContextMenuName.Visualize, this.PlotAudio);
-            this.AddVisualizeStreamCommand<List<Tuple<System.Drawing.Rectangle, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<List<System.Drawing.Rectangle>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false, typeof(ListRectangleAdapter)));
-            this.AddVisualizeStreamCommand<List<KinectBody>>(ContextMenuName.Visualize, (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<TimeIntervalHistory>(ContextMenuName.Visualize, (s) => this.Show<TimeIntervalHistoryVisualizationObject, TimeIntervalHistory, TimeIntervalHistoryVisualizationObjectConfiguration>(s, false));
-            this.AddVisualizeStreamCommand<PipelineDiagnostics>(ContextMenuName.Visualize, (s) => this.Show2D<PipelineDiagnosticsVisualizationObject, PipelineDiagnostics, DiagnosticsVisualizationObjectConfiguration>(s, false));
+            this.AddVisualizeStreamCommand<double>(ContextMenuName.Visualize, (s) => this.PlotDouble(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<double>(ContextMenuName.VisualizeInNewPanel, (s) => this.PlotDouble(s, true), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<float>(ContextMenuName.Visualize, (s) => this.PlotFloat(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<float>(ContextMenuName.VisualizeInNewPanel, (s) => this.PlotFloat(s, true), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<TimeSpan>(ContextMenuName.VisualizeAsMilliseconds, (s) => this.PlotTimeSpan(s, false), IconSourcePath.Blank);
+            this.AddVisualizeStreamCommand<TimeSpan>(ContextMenuName.VisualizeAsMillisecondsInNewPanel, (s) => this.PlotTimeSpan(s, true), IconSourcePath.Blank);
+            this.AddVisualizeStreamCommand<int>(ContextMenuName.Visualize, (s) => this.PlotInt(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<int>(ContextMenuName.VisualizeInNewPanel, (s) => this.PlotInt(s, true), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<bool>(ContextMenuName.Visualize, (s) => this.PlotBool(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<bool>(ContextMenuName.VisualizeInNewPanel, (s) => this.PlotBool(s, true), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<Shared<Image>>(ContextMenuName.Visualize, (s) => this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(s, true), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<Shared<EncodedImage>>(ContextMenuName.Visualize, (s) => this.Show2D<EncodedImageVisualizationObject, Shared<EncodedImage>, ImageVisualizationObjectBaseConfiguration>(s, true), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<IStreamingSpeechRecognitionResult>(ContextMenuName.Visualize, (s) => this.Show<SpeechRecognitionVisualizationObject, IStreamingSpeechRecognitionResult, SpeechRecognitionVisualizationObjectConfiguration>(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<CoordinateSystem>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<CoordinateSystemView3D, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>(s, false, typeof(CoordinateSystemAdapter)), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<IEnumerable<CoordinateSystem>>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<EnumerableView3D<CoordinateSystemView3D, CoordinateSystem, CoordinateSystemVisualizationObjectConfiguration>, IEnumerable<CoordinateSystem>, CoordinateSystemVisualizationObjectConfiguration>, IEnumerable<CoordinateSystem>, CoordinateSystemVisualizationObjectConfiguration>(s, false), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<List<CoordinateSystem>>(ContextMenuName.VisualizeAsPlanarDirection, (s) => this.Show3D<ScatterPlanarDirectionVisualizationObject, List<CoordinateSystem>, ScatterPlanarDirectionVisualizationObjectConfiguration>(s, false), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<System.Windows.Media.Media3D.Rect3D>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<RectangleView3D, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>(s, false), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<IEnumerable<System.Windows.Media.Media3D.Rect3D>>(ContextMenuName.Visualize, (s) => this.Show3D<ModelVisual3DVisualizationObject<EnumerableView3D<RectangleView3D, System.Windows.Media.Media3D.Rect3D, Rectangle3DVisualizationObjectConfiguration>, IEnumerable<System.Windows.Media.Media3D.Rect3D>, Rectangle3DVisualizationObjectConfiguration>, IEnumerable<System.Windows.Media.Media3D.Rect3D>, Rectangle3DVisualizationObjectConfiguration>(s, false), IconSourcePath.StreamInPanel);
+            this.AddVisualizeStreamCommand<Point[]>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(PointArrayToScatterPlotAdapter)), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<List<Tuple<Point, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<Point2D?>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterPlotVisualizationObject, List<Tuple<Point, string>>, ScatterPlotVisualizationObjectConfiguration>(s, false, typeof(NullablePoint2DToScatterPlotAdapter)), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<Point3D?>(ContextMenuName.Visualize, (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(NullablePoint3DAdapter)), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<List<Point3D>>(ContextMenuName.Visualize, (s) => this.Show3D<Points3DVisualizationObject, List<System.Windows.Media.Media3D.Point3D>, Points3DVisualizationObjectConfiguration>(s, false, typeof(ListPoint3DAdapter)), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<byte[]>(ContextMenuName.VisualizeAs3DDepth, this.ShowDepth3D, IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<byte[]>(ContextMenuName.VisualizeAs2DDepth, this.ShowDepth2D, IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<AudioBuffer>(ContextMenuName.Visualize, this.PlotAudio, IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<List<Tuple<System.Drawing.Rectangle, string>>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<List<System.Drawing.Rectangle>>(ContextMenuName.Visualize, (s) => this.Show2D<ScatterRectangleVisualizationObject, List<Tuple<System.Drawing.Rectangle, string>>, ScatterRectangleVisualizationObjectConfiguration>(s, false, typeof(ListRectangleAdapter)), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<List<KinectBody>>(ContextMenuName.Visualize, (s) => this.Show3D<KinectBodies3DVisualizationObject, List<KinectBody>, KinectBodies3DVisualizationObjectConfiguration>(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<TimeIntervalHistory>(ContextMenuName.Visualize, (s) => this.Show<TimeIntervalHistoryVisualizationObject, TimeIntervalHistory, TimeIntervalHistoryVisualizationObjectConfiguration>(s, false), IconSourcePath.Stream);
+            this.AddVisualizeStreamCommand<PipelineDiagnostics>(ContextMenuName.Visualize, (s) => this.Show2D<PipelineDiagnosticsVisualizationObject, PipelineDiagnostics, DiagnosticsVisualizationObjectConfiguration>(s, false), IconSourcePath.Diagnostics);
         }
 
-        private void AddVisualizeStreamCommand<TKey>(string displayName, Action<IStreamTreeNode> action)
+        private void AddVisualizeStreamCommand<TKey>(string displayName, Action<StreamTreeNode> action, string icon)
         {
-            this.typeVisualizerActions.Add(new TypeKeyedActionCommand<TKey, IStreamTreeNode>(displayName, action));
+            this.typeVisualizerActions.Add(new TypeKeyedActionCommand<TKey, StreamTreeNode>(displayName, action, icon));
         }
 
         private void EnsureCurrentPanel<T>(bool newPanel)
@@ -1295,14 +1432,14 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
-        private void Show<TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType = null)
+        private void Show<TVisObj, TData, TConfig>(StreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType = null)
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
             where TConfig : StreamVisualizationObjectConfiguration, new()
         {
             this.Show<TimelineVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel, streamAdapterType);
         }
 
-        private TVisObj Show<TPanel, TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType = null, Type summarizerType = null, params object[] summarizerArgs)
+        private TVisObj Show<TPanel, TVisObj, TData, TConfig>(StreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType = null, Type summarizerType = null, params object[] summarizerArgs)
             where TPanel : VisualizationPanel, new()
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
             where TConfig : StreamVisualizationObjectConfiguration, new()
@@ -1316,38 +1453,40 @@ namespace Microsoft.Psi.PsiStudio
             visObj.Configuration.StreamBinding = new StreamBinding(streamTreeNode.StreamName, streamTreeNode.Partition.Name, typeof(SimpleReader), streamAdapterType, summarizerType, summarizerArgs);
             visObj.UpdateStreamBinding(this.DatasetViewModel.CurrentSessionViewModel.Session);
 
+            this.DatasetViewModel.CurrentSessionViewModel.UpdateLivePartitionStatuses();
+
             return visObj;
         }
 
-        private void Show2D<TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void Show2D<TVisObj, TData, TConfig>(StreamTreeNode streamTreeNode, bool newPanel)
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
             where TConfig : StreamVisualizationObjectConfiguration, new()
         {
             this.Show<XYVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel);
         }
 
-        private void Show2D<TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType)
+        private void Show2D<TVisObj, TData, TConfig>(StreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType)
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
             where TConfig : StreamVisualizationObjectConfiguration, new()
         {
             this.Show<XYVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel, streamAdapterType);
         }
 
-        private void Show3D<TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void Show3D<TVisObj, TData, TConfig>(StreamTreeNode streamTreeNode, bool newPanel)
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
             where TConfig : StreamVisualizationObjectConfiguration, new()
         {
             this.Show<XYZVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel);
         }
 
-        private void Show3D<TVisObj, TData, TConfig>(IStreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType)
+        private void Show3D<TVisObj, TData, TConfig>(StreamTreeNode streamTreeNode, bool newPanel, Type streamAdapterType)
             where TVisObj : StreamVisualizationObject<TData, TConfig>, new()
             where TConfig : StreamVisualizationObjectConfiguration, new()
         {
             this.Show<XYZVisualizationPanel, TVisObj, TData, TConfig>(streamTreeNode, newPanel, streamAdapterType);
         }
 
-        /*private AnnotatedEventVisualizationObject ShowAnnotations(IStreamTreeNode streamTreeNode, bool newPanel)
+        /*private AnnotatedEventVisualizationObject ShowAnnotations(StreamTreeNode streamTreeNode, bool newPanel)
         {
             var partition = streamTreeNode.Partition;
             var visObj = new AnnotatedEventVisualizationObject();
@@ -1363,55 +1502,55 @@ namespace Microsoft.Psi.PsiStudio
             return visObj;
         }*/
 
-        private void ShowDepth2D(IStreamTreeNode streamTreeNode)
+        private void ShowDepth2D(StreamTreeNode streamTreeNode)
         {
             this.Show2D<ImageVisualizationObject, Shared<Image>, ImageVisualizationObjectBaseConfiguration>(streamTreeNode, false, typeof(CompressedImageAdapter));
         }
 
-        private void ShowDepth3D(IStreamTreeNode streamTreeNode)
+        private void ShowDepth3D(StreamTreeNode streamTreeNode)
         {
             this.Show3D<KinectDepth3DVisualizationObject, Shared<Image>, KinectDepth3DVisualizationObjectConfiguration>(
                 streamTreeNode, false, typeof(CompressedImageAdapter));
         }
 
-        private void PlotBool(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void PlotBool(StreamTreeNode streamTreeNode, bool newPanel)
         {
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(
                 streamTreeNode, newPanel, typeof(BoolAdapter), typeof(RangeSummarizer));
         }
 
-        private void PlotAudio(IStreamTreeNode streamTreeNode)
+        private void PlotAudio(StreamTreeNode streamTreeNode)
         {
             var visObj = this.Show<TimelineVisualizationPanel, AudioVisualizationObject, double, AudioVisualizationObjectConfiguration>(
                 streamTreeNode, false, null, typeof(AudioSummarizer), 0);
             visObj.Configuration.Name = streamTreeNode.StreamName;
         }
 
-        private void PlotDouble(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void PlotDouble(StreamTreeNode streamTreeNode, bool newPanel)
         {
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(
                 streamTreeNode, newPanel, null, typeof(RangeSummarizer));
         }
 
-        private void PlotFloat(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void PlotFloat(StreamTreeNode streamTreeNode, bool newPanel)
         {
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(
                 streamTreeNode, newPanel, typeof(FloatAdapter), typeof(RangeSummarizer));
         }
 
-        private void PlotInt(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void PlotInt(StreamTreeNode streamTreeNode, bool newPanel)
         {
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, newPanel, typeof(IntAdapter), typeof(RangeSummarizer));
         }
 
-        private void VisualizeLatency<TData>(IStreamTreeNode streamTreeNode, bool newPanel = false)
+        private void VisualizeLatency<TData>(StreamTreeNode streamTreeNode, bool newPanel = false)
         {
             var visObj = this.Show<TimelineVisualizationPanel, TimeIntervalVisualizationObject, Tuple<DateTime, DateTime>, TimeIntervalVisualizationObjectConfiguration>(
                 streamTreeNode, newPanel, typeof(LatencyAdapter<TData>), typeof(TimeIntervalSummarizer));
             visObj.Configuration.Name = streamTreeNode.StreamName + " (Latency)";
         }
 
-        private void VisualizeMessages<TData>(IStreamTreeNode streamTreeNode, bool newPanel = false)
+        private void VisualizeMessages<TData>(StreamTreeNode streamTreeNode, bool newPanel = false)
         {
             var visObj = this.Show<TimelineVisualizationPanel, MessageVisualizationObject, object, PlotVisualizationObjectConfiguration>(
                 streamTreeNode, newPanel, typeof(ObjectAdapter<TData>), typeof(ObjectSummarizer<object>));
@@ -1420,12 +1559,12 @@ namespace Microsoft.Psi.PsiStudio
             visObj.Configuration.Name = streamTreeNode.StreamName + " (Messages)";
         }
 
-        private void PlotTimeSpan(IStreamTreeNode streamTreeNode, bool newPanel)
+        private void PlotTimeSpan(StreamTreeNode streamTreeNode, bool newPanel)
         {
             this.Show<TimelineVisualizationPanel, PlotVisualizationObject, double, PlotVisualizationObjectConfiguration>(streamTreeNode, newPanel, typeof(TimeSpanAdapter), typeof(RangeSummarizer));
         }
 
-        private void ZoomToStreamExtents(IStreamTreeNode streamTreeNode)
+        private void ZoomToStreamExtents(StreamTreeNode streamTreeNode)
         {
             if (streamTreeNode.FirstMessageOriginatingTime.HasValue && streamTreeNode.LastMessageOriginatingTime.HasValue)
             {
@@ -1434,6 +1573,86 @@ namespace Microsoft.Psi.PsiStudio
             else
             {
                 this.VisualizationContainer.Navigator.ZoomToDataRange();
+            }
+        }
+
+        private void ExpandDatasetsTree()
+        {
+            this.UpdateDatasetsTreeView(true);
+        }
+
+        private void CollapseDatasetsTree()
+        {
+            this.UpdateDatasetsTreeView(false);
+        }
+
+        private void UpdateDatasetsTreeView(bool expand)
+        {
+            foreach (DatasetViewModel datasetViewModel in this.DatasetViewModels)
+            {
+                foreach (SessionViewModel sessionViewModel in datasetViewModel.SessionViewModels)
+                {
+                    foreach (PartitionViewModel partitionViewModel in sessionViewModel.PartitionViewModels)
+                    {
+                        if (expand)
+                        {
+                            partitionViewModel.StreamTreeRoot.ExpandAll();
+                        }
+                        else
+                        {
+                            partitionViewModel.StreamTreeRoot.CollapseAll();
+                        }
+
+                        partitionViewModel.IsTreeNodeExpanded = expand;
+                    }
+
+                    sessionViewModel.IsTreeNodeExpanded = expand;
+                }
+
+                datasetViewModel.IsTreeNodeExpanded = expand;
+            }
+        }
+
+        private void ExpandVisualizationsTree()
+        {
+            this.UpdateVisualizationTreeView(true);
+        }
+
+        private void CollapseVisualizationsTree()
+        {
+            this.UpdateVisualizationTreeView(false);
+        }
+
+        private void UpdateVisualizationTreeView(bool expand)
+        {
+            foreach (VisualizationPanel visualizationPanel in this.VisualizationContainer.Panels)
+            {
+                visualizationPanel.IsTreeNodeExpanded = expand;
+            }
+        }
+
+        private void SynchronizeDatasetsTreeToVisualizationsTree()
+        {
+            if (this.DatasetViewModel != null)
+            {
+                IStreamVisualizationObject streamVisualizationObject = this.selectedVisualization as IStreamVisualizationObject;
+                if (streamVisualizationObject != null)
+                {
+                    StreamBinding streamBinding = streamVisualizationObject.StreamBinding;
+                    foreach (SessionViewModel sessionViewModel in this.DatasetViewModel.SessionViewModels)
+                    {
+                        PartitionViewModel partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.StorePath == streamBinding.StorePath);
+                        if (partitionViewModel != null)
+                        {
+                            if (partitionViewModel.SelectStream(streamBinding.StreamName))
+                            {
+                                sessionViewModel.IsTreeNodeExpanded = true;
+                                this.DatasetViewModel.IsTreeNodeExpanded = true;
+                                return;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -1459,15 +1678,6 @@ namespace Microsoft.Psi.PsiStudio
         private bool IsDatasetLoaded()
         {
             return this.DatasetViewModel?.CurrentSessionViewModel?.PartitionViewModels.FirstOrDefault() != null;
-        }
-
-        private void Navigator_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.visualizationContainer.Navigator.IsCursorModePlayback))
-            {
-                this.RaisePropertyChanged(nameof(this.PlayPauseButtonImage));
-                this.RaisePropertyChanged(nameof(this.PlayPauseButtonToolTip));
-            }
         }
     }
 }

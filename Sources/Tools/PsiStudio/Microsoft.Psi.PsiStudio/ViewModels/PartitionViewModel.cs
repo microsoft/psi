@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Visualization.Common;
 
     /// <summary>
     /// The delegate for updating a stream's metadata.
@@ -32,25 +33,24 @@ namespace Microsoft.Psi.Visualization.ViewModels
     /// <summary>
     /// Represents a view model of a partition.
     /// </summary>
-    public class PartitionViewModel : ObservableObject, IDisposable
+    public class PartitionViewModel : ObservableTreeNodeObject, IDisposable
     {
         private const int MonitorSleepDurationMs = 100;
         private const int LiveUiUpdateFrequencyMs = 50;
 
         private IPartition partition;
-        private IStreamTreeNode streamTreeRoot;
+        private StreamTreeNode streamTreeRoot;
         private SessionViewModel sessionViewModel;
         private bool isLivePartition = false;
         private Thread monitorWorker = null;
         private bool continueMonitoring = true;
-        private bool isTreeNodeExpanded = true;
         private bool disposed;
 
         private LiveMessageReceivedDelegate liveMessageCallback = null;
         private UpdateStreamMetadataDelegate newMetadataCallback = null;
 
         // A Dictionary of streams in the Partition, keyed by stream id
-        private Dictionary<int, IStreamTreeNode> streamsById;
+        private Dictionary<int, StreamTreeNode> streamsById;
 
         private RelayCommand removePartitionCommand;
 
@@ -64,7 +64,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             this.partition = partition;
             this.sessionViewModel = sessionViewModel;
             this.sessionViewModel.DatasetViewModel.PropertyChanged += this.DatasetViewModel_PropertyChanged;
-            this.streamsById = new Dictionary<int, IStreamTreeNode>();
+            this.streamsById = new Dictionary<int, StreamTreeNode>();
             this.StreamTreeRoot = new StreamTreeNode(this);
             foreach (var stream in this.partition.AvailableStreams)
             {
@@ -79,6 +79,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 this.newMetadataCallback = new UpdateStreamMetadataDelegate(this.UpdateStreamMetadata);
                 this.MonitorLivePartition();
             }
+
+            this.IsTreeNodeExpanded = true;
         }
 
         /// <summary>
@@ -142,7 +144,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets or sets the root stream tree node of this partition.
         /// </summary>
         [Browsable(false)]
-        public IStreamTreeNode StreamTreeRoot
+        public StreamTreeNode StreamTreeRoot
         {
             get => this.streamTreeRoot;
             set => this.Set(nameof(this.StreamTreeRoot), ref this.streamTreeRoot, value);
@@ -160,28 +162,24 @@ namespace Microsoft.Psi.Visualization.ViewModels
             {
                 if (value != this.isLivePartition)
                 {
-                    this.RaisePropertyChanging(nameof(this.isLivePartition));
+                    this.RaisePropertyChanging(nameof(this.IsLivePartition));
+                    this.RaisePropertyChanging(nameof(this.IconSource));
                     this.isLivePartition = value;
-                    this.RaisePropertyChanged(nameof(this.isLivePartition));
+                    this.RaisePropertyChanged(nameof(this.IsLivePartition));
+                    this.RaisePropertyChanged(nameof(this.IconSource));
                 }
             }
         }
 
         /// <summary>
-        /// Gets the brush for drawing text.
+        /// Gets the icon to use in UI representations of this partition.
         /// </summary>
-        public Brush TextBrush => this.SessionViewModel.DatasetViewModel.CurrentSessionViewModel == this.SessionViewModel ? ViewModelBrushes.SelectedBrush : ViewModelBrushes.StandardBrush;
+        public string IconSource => this.IsLivePartition ? IconSourcePath.PartitionLive : IconSourcePath.Partition;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the tree view item is expanded.
+        /// Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.
         /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public bool IsTreeNodeExpanded
-        {
-            get => this.isTreeNodeExpanded;
-            set => this.Set(nameof(this.IsTreeNodeExpanded), ref this.isTreeNodeExpanded, value);
-        }
+        public double UiElementOpacity => this.SessionViewModel.UiElementOpacity;
 
         /// <summary>
         /// Gets the remove partition command.
@@ -207,6 +205,25 @@ namespace Microsoft.Psi.Visualization.ViewModels
         internal IPartition Partition => this.partition;
 
         /// <summary>
+        /// Finds a stream in the partition by name and selects it.
+        /// </summary>
+        /// <param name="streamName">The name of the stream to select.</param>
+        /// <returns>True if the stream was found and selected, otherwise false.</returns>
+        public bool SelectStream(string streamName)
+        {
+            if (this.StreamTreeRoot != null)
+            {
+                if (this.StreamTreeRoot.SelectNode(streamName) != null)
+                {
+                    this.IsTreeNodeExpanded = true;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Removes this partition from the session that it belongs to.
         /// </summary>
         public void RemovePartition()
@@ -229,6 +246,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             try
             {
                 this.IsLivePartition = StoreReader.IsStoreLive(this.StoreName, this.StorePath);
+                PsiStudioContext.Instance.VisualizationContainer.NotifyLivePartitionStatus(this.StorePath, this.IsLivePartition);
                 return this.isLivePartition;
             }
             catch (AbandonedMutexException)
@@ -247,7 +265,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             (TimeInterval messageTimes, TimeInterval messageOriginatingTimes) = storeReader.GetLiveStoreExtents();
 
             // HACK: Use the partition extents as the extents of all the streams that already exist
-            foreach (IStreamTreeNode streamTreeNode in this.streamsById.Values)
+            foreach (StreamTreeNode streamTreeNode in this.streamsById.Values)
             {
                 streamTreeNode.StreamMetadata.Update(messageTimes, messageOriginatingTimes);
             }
@@ -306,7 +324,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private void OnMessageWritten(Envelope envelope)
         {
             // Update the data range of the stream's metadata
-            IStreamTreeNode streamTreeNode;
+            StreamTreeNode streamTreeNode;
             if (this.streamsById.TryGetValue(envelope.SourceId, out streamTreeNode))
             {
                 streamTreeNode.StreamMetadata.Update(envelope, 0);
@@ -347,7 +365,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             if (e.PropertyName == nameof(this.SessionViewModel.DatasetViewModel.CurrentSessionViewModel))
             {
-                this.RaisePropertyChanged(nameof(this.TextBrush));
+                this.RaisePropertyChanged(nameof(this.UiElementOpacity));
             }
         }
 

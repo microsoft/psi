@@ -128,7 +128,7 @@ namespace Microsoft.Psi.Visualization.Views
 
         private void DropStream(DragEventArgs e)
         {
-            IStreamTreeNode streamTreeNode = e.Data.GetData(DragDropDataName.StreamTreeNode) as IStreamTreeNode;
+            StreamTreeNode streamTreeNode = e.Data.GetData(DragDropDataName.StreamTreeNode) as StreamTreeNode;
             if (streamTreeNode != null)
             {
                 // Get the list of Visualization Commands we can execute on this stream
@@ -147,24 +147,24 @@ namespace Microsoft.Psi.Visualization.Views
                 // the "plot in new panel" command, otherwise execute whatever plot or visualize command we can find.
                 if (this.hitTestResult != null)
                 {
-                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.Plot, streamTreeNode))
+                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.Visualize, streamTreeNode))
                     {
                         return;
                     }
 
-                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.PlotAsMilliseconds, streamTreeNode))
+                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.VisualizeAsMilliseconds, streamTreeNode))
                     {
                         return;
                     }
                 }
                 else
                 {
-                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.PlotInNewPanel, streamTreeNode))
+                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.VisualizeInNewPanel, streamTreeNode))
                     {
                         return;
                     }
 
-                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.PlotAsMillisecondsInNewPanel, streamTreeNode))
+                    if (this.ExecuteCommandIfPresent(commands, ContextMenuName.VisualizeAsMillisecondsInNewPanel, streamTreeNode))
                     {
                         return;
                     }
@@ -192,7 +192,7 @@ namespace Microsoft.Psi.Visualization.Views
             }
         }
 
-        private bool ExecuteCommandIfPresent(List<TypeKeyedActionCommand> commands, string commandName, IStreamTreeNode streamTreeNode)
+        private bool ExecuteCommandIfPresent(List<TypeKeyedActionCommand> commands, string commandName, StreamTreeNode streamTreeNode)
         {
             // Check if the command is in the list
             TypeKeyedActionCommand command = commands.Find(o => o.DisplayName.Equals(commandName, StringComparison.Ordinal));

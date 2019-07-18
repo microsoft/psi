@@ -13,6 +13,16 @@ namespace Microsoft.Psi.Kinect
             // where r rotation vector, theta = norm(r), M = skew(r/theta)
             // R = I + sin(theta) M + (1-cos(theta)) M M
             double theta = r.Norm();
+
+            var matR = new Matrix(3, 3);
+            matR.Identity();
+
+            // if there is no rotation (theta == 0) return identity
+            if (theta == 0)
+            {
+                return matR;
+            }
+
             var rn = new Matrix(3, 1);
             rn.Normalize(r);
 
@@ -26,9 +36,6 @@ namespace Microsoft.Psi.Kinect
             matM[2, 0] = -rn[1];
             matM[2, 1] = rn[0];
             matM[2, 2] = 0;
-
-            var matR = new Matrix(3, 3);
-            matR.Identity();
 
             var sinThetaM = new Matrix(3, 3);
             sinThetaM.Scale(matM, Math.Sin(theta));

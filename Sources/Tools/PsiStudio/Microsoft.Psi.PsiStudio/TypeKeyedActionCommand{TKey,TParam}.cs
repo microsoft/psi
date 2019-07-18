@@ -19,8 +19,9 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         /// <param name="displayName">Name displayed in menu.</param>
         /// <param name="action">Action to be invoked when menu is clicked.</param>
-        public TypeKeyedActionCommand(string displayName, Action<TParam> action)
-            : base (displayName, typeof(TKey))
+        /// <param name="icon">The path to the icon to display next to the menu.</param>
+        public TypeKeyedActionCommand(string displayName, Action<TParam> action, string icon)
+            : base (displayName, typeof(TKey), icon)
         {
             this.action = action;
         }

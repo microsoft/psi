@@ -68,7 +68,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public bool IsAudioPlaybackStream => this.Configuration.StreamBinding == this.Navigator.AudioPlaybackStream;
 
         /// <inheritdoc/>
-        public override string IconSource => this.Configuration.StreamBinding.IsBound ? this.IsAudioPlaybackStream ? IconSourcePath.Audio : IconSourcePath.AudioMuted : IconSourcePath.AudioUnbound;
+        public override bool CanSnapToStream => false;
+
+        /// <inheritdoc/>
+        public override string IconSource
+        {
+            get
+            {
+                if (!this.Configuration.StreamBinding.IsBound)
+                {
+                    return IconSourcePath.StreamUnbound;
+                }
+                else if (this.IsAudioPlaybackStream)
+                {
+                    return this.IsLive ? IconSourcePath.StreamAudioLive : IconSourcePath.StreamAudio;
+                }
+                else
+                {
+                    return this.IsLive ? IconSourcePath.StreamAudioMutedLive : IconSourcePath.StreamAudioMuted;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the text for the enable/mute audio playback menu item.

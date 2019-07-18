@@ -6,6 +6,7 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:converters="clr-namespace:Microsoft.Psi.PsiStudio.Converters"
+                    xmlns:behaviors="clr-namespace:Microsoft.Psi.PsiStudio.Behaviors"
                     mc:Ignorable="d">
 
     <!--#region Converters-->
@@ -2236,6 +2237,7 @@
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
         <Setter Property="IsExpanded" Value="{Binding IsTreeNodeExpanded, Mode=TwoWay}"/>
+        <Setter Property="IsSelected" Value="{Binding IsTreeNodeSelected, Mode=TwoWay}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
@@ -2314,6 +2316,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="behaviors:TreeViewItemBehavior.EnsureVisibleWhenSelected" Value="True"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="TreeViewToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Focusable" Value="False"/>

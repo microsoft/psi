@@ -14,24 +14,19 @@ namespace Microsoft.Psi.PsiStudio.Common
         public const string Visualize = "Visualize";
 
         /// <summary>
-        /// Plot.
+        /// Visualize in New Panel.
         /// </summary>
-        public const string Plot = "Plot";
+        public const string VisualizeInNewPanel = "Visualize in New Panel";
 
         /// <summary>
-        /// Plot in New Panel.
+        /// Visualize (as ms).
         /// </summary>
-        public const string PlotInNewPanel = "Plot in New Panel";
+        public const string VisualizeAsMilliseconds = "Visualize (as ms)";
 
         /// <summary>
-        /// Plot (as ms).
+        /// Visualize (as ms) in New Panel.
         /// </summary>
-        public const string PlotAsMilliseconds = "Plot (as ms)";
-
-        /// <summary>
-        /// Plot (as ms) in New Panel.
-        /// </summary>
-        public const string PlotAsMillisecondsInNewPanel = "Plot (as ms) in New Panel";
+        public const string VisualizeAsMillisecondsInNewPanel = "Visualize (as ms) in New Panel";
 
         /// <summary>
         /// Visualize as Planar Direction.

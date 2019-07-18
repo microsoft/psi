@@ -9,14 +9,14 @@ namespace Microsoft.Psi.PsiStudio.Converters
     using Microsoft.Psi.Visualization.ViewModels;
 
     /// <summary>
-    /// Converts stream tree node items to commands.
+    /// Converts a stream tree node item to a context menu.
     /// </summary>
     public class StreamTreeNodeToCommandsConverter : IValueConverter
     {
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return PsiStudioContext.Instance.GetVisualizeStreamCommands(value as IStreamTreeNode);
+            return PsiStudioContext.Instance.GetDatasetStreamMenu(value as StreamTreeNode);
         }
 
         /// <inheritdoc />

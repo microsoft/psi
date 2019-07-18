@@ -89,7 +89,7 @@ namespace Microsoft.Psi.PsiStudio
                 StackPanel treeNode = sender as StackPanel;
                 if (treeNode != null)
                 {
-                    IStreamTreeNode streamTreeNode = treeNode.DataContext as IStreamTreeNode;
+                    StreamTreeNode streamTreeNode = treeNode.DataContext as StreamTreeNode;
                     if (streamTreeNode != null && streamTreeNode.CanVisualize)
                     {
                         // Begin the Drag & Drop operation

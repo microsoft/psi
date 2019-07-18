@@ -88,6 +88,11 @@ namespace Microsoft.Psi.Visualization.Data
         public string StorePath { get; private set; }
 
         /// <summary>
+        /// Gets the metadata for the underlying stream being bound to, or null.
+        /// </summary>
+        public IStreamMetadata StreamMetadata { get; private set; }
+
+        /// <summary>
         /// Gets stream adapater.
         /// </summary>
         [IgnoreDataMember]
@@ -260,34 +265,34 @@ namespace Microsoft.Psi.Visualization.Data
         public StreamBindingResult Update(Session session)
         {
             // If there's no session, then we have nothing to bind to
-            if (session == null)
+            if (session != null)
             {
-                this.StoreName = null;
-                this.StorePath = null;
-                return StreamBindingResult.NoSourceToBindTo;
-            }
-
-            // Check that a partition with the required name exists in the session and
-            // that partition contains a stream with the same name as this binding object
-            IPartition partition = session.Partitions.FirstOrDefault(p => p.Name == this.PartitionName);
-            if ((partition != null) && (partition.AvailableStreams.FirstOrDefault(s => s.Name == this.StreamName) != null))
-            {
-                // Check if the binding has actually changed
-                if ((this.StoreName == partition.StoreName) && (this.StorePath == partition.StorePath))
+                // Check that a partition with the required name exists in the session
+                IPartition partition = session.Partitions.FirstOrDefault(p => p.Name == this.PartitionName);
+                if (partition != null)
                 {
-                    return StreamBindingResult.BindingUnchanged;
-                }
+                    // Check that the partition contains a stream with the same name as this binding object
+                    IStreamMetadata streamMetadata = partition.AvailableStreams.FirstOrDefault(s => s.Name == this.StreamName);
+                    if (streamMetadata != null)
+                    {
+                        // Check if the binding has actually changed
+                        if ((this.StoreName == partition.StoreName) && (this.StorePath == partition.StorePath) && (this.StreamMetadata == streamMetadata))
+                        {
+                            return StreamBindingResult.BindingUnchanged;
+                        }
 
-                this.StoreName = partition.StoreName;
-                this.StorePath = partition.StorePath;
-                return StreamBindingResult.BoundToNewSource;
+                        this.StoreName = partition.StoreName;
+                        this.StorePath = partition.StorePath;
+                        this.StreamMetadata = streamMetadata;
+                        return StreamBindingResult.BoundToNewSource;
+                    }
+                }
             }
-            else
-            {
-                this.StoreName = null;
-                this.StorePath = null;
-                return StreamBindingResult.NoSourceToBindTo;
-            }
+
+            this.StoreName = null;
+            this.StorePath = null;
+            this.StreamMetadata = null;
+            return StreamBindingResult.NoSourceToBindTo;
         }
     }
 }

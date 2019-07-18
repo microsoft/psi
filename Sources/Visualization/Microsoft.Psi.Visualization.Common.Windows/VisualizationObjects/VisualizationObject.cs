@@ -98,6 +98,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public virtual bool IsAudioStream => false;
 
         /// <summary>
+        /// Gets a value indicating whether to display the zoom to stream menuitem for this stream.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual bool ShowZoomToStreamMenuItem => false;
+
+        /// <summary>
         /// Gets a value indicating whether this visualization object is connected to a panel.
         /// </summary>
         [Browsable(false)]

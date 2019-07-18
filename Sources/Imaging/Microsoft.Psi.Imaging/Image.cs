@@ -108,36 +108,6 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Interface implemented by the system specific assembly.
-        /// For instance, Microsoft.Psi.Imaging.Windows will define
-        /// an ImageCompressor that implements this interfaces.
-        /// </summary>
-        public interface IImageCompressor
-        {
-            /// <summary>
-            /// Initialize compressor.
-            /// </summary>
-            /// <param name="compressionMethod">Compression method.</param>
-            void Initialize(Image.CustomSerializer.CompressionMethod compressionMethod);
-
-            /// <summary>
-            /// Serialize compressor.
-            /// </summary>
-            /// <param name="writer">Writer to which to serialize.</param>
-            /// <param name="instance">Image instance to serialize.</param>
-            /// <param name="context">Serialization context.</param>
-            void Serialize(BufferWriter writer, Image instance, SerializationContext context);
-
-            /// <summary>
-            /// Deserialize compressor.
-            /// </summary>
-            /// <param name="reader">Reader from which to deserialize.</param>
-            /// <param name="target">Target image to which to deserialize.</param>
-            /// <param name="context">Serialization context.</param>
-            void Deserialize(BufferReader reader, ref Image target, SerializationContext context);
-        }
-
-        /// <summary>
         /// Gets a pointer to image data in unmanaged memory.
         /// </summary>
         public IntPtr ImageData => this.image.Data;
@@ -815,38 +785,16 @@ namespace Microsoft.Psi.Imaging
         public class CustomSerializer : ISerializer<Image>
         {
             private const int Version = 4;
-            private static CompressionMethod compressionMethod;
+            private static IImageCompressor imageCompressor = null;
             private TypeSchema schema;
-            private IImageCompressor imageCompressor;
-
-            /// <summary>
-            /// Defines type of compression to use when serializing out an Image.
-            /// </summary>
-            public enum CompressionMethod
-            {
-                /// <summary>
-                /// Use JPEG compression
-                /// </summary>
-                JPEG,
-
-                /// <summary>
-                /// Use PNG compression
-                /// </summary>
-                PNG,
-
-                /// <summary>
-                /// Use no compression
-                /// </summary>
-                None,
-            }
 
             /// <summary>
             /// Maybe called to initialize type of compression to use. Default is no compression.
             /// </summary>
-            /// <param name="method">Type of compression to use.</param>
-            public static void ConfigureCompression(CompressionMethod method)
+            /// <param name="compressor">Compressor to be used.</param>
+            public static void ConfigureCompression(IImageCompressor compressor)
             {
-                compressionMethod = method;
+                imageCompressor = compressor;
             }
 
             /// <summary>
@@ -877,25 +825,6 @@ namespace Microsoft.Psi.Imaging
                     this.schema = targetSchema;
                 }
 
-                // Check to see if we can retrieve the custom compression serializer
-                try
-                {
-                    var assembly = System.Reflection.Assembly.Load(new System.Reflection.AssemblyName("Microsoft.Psi.Imaging.Windows"));
-                    if (assembly != null)
-                    {
-                        var ic = assembly.CreateInstance("Microsoft.Psi.Imaging.ImageCompressor");
-                        if (ic != null)
-                        {
-                            this.imageCompressor = ic as IImageCompressor;
-                            this.imageCompressor.Initialize(compressionMethod);
-                        }
-                    }
-                }
-                catch (System.IO.FileNotFoundException)
-                {
-                    this.imageCompressor = null;
-                }
-
                 return this.schema;
             }
 
@@ -907,6 +836,7 @@ namespace Microsoft.Psi.Imaging
             /// <param name="context">Serialization context.</param>
             public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
             {
+                CompressionMethod compressionMethod = (imageCompressor == null) ? CompressionMethod.None : imageCompressor.CompressionMethod;
                 Serializer.Serialize(writer, compressionMethod, context);
                 if (compressionMethod == CompressionMethod.None)
                 {
@@ -918,12 +848,7 @@ namespace Microsoft.Psi.Imaging
                 }
                 else
                 {
-                    if (this.imageCompressor == null)
-                    {
-                        throw new Exception("Unable to located compression assembly");
-                    }
-
-                    this.imageCompressor.Serialize(writer, instance, context);
+                    imageCompressor.Serialize(writer, instance, context);
                 }
             }
 
@@ -1009,7 +934,7 @@ namespace Microsoft.Psi.Imaging
                 }
                 else
                 {
-                    this.imageCompressor.Deserialize(reader, ref target, context);
+                    imageCompressor.Deserialize(reader, ref target, context);
                 }
             }
 

@@ -10,6 +10,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
+    using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.PsiStudio;
@@ -20,14 +21,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
     /// <summary>
     /// Represents a view model of a dataset.
     /// </summary>
-    public class DatasetViewModel : ObservableObject
+    public class DatasetViewModel : ObservableTreeNodeObject
     {
         private Dataset dataset;
         private string filename;
         private SessionViewModel currentSessionViewModel = null;
         private ObservableCollection<SessionViewModel> internalSessionViewModels;
         private ReadOnlyObservableCollection<SessionViewModel> sessionViewModels;
-        private bool isTreeNodeExpanded = true;
 
         private RelayCommand createSessionCommand;
         private RelayCommand createSessionFromExistingStoreCommand;
@@ -48,6 +48,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             this.currentSessionViewModel = this.internalSessionViewModels.FirstOrDefault();
+            this.IsTreeNodeExpanded = true;
         }
 
         /// <summary>
@@ -108,17 +109,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 this.sessionViewModels
                     .Where(s => s.OriginatingTimeInterval.Left > DateTime.MinValue && s.OriginatingTimeInterval.Right < DateTime.MaxValue)
                     .Select(s => s.OriginatingTimeInterval));
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tree view item is expanded.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public bool IsTreeNodeExpanded
-        {
-            get => this.isTreeNodeExpanded;
-            set => this.Set(nameof(this.IsTreeNodeExpanded), ref this.isTreeNodeExpanded, value);
-        }
 
         /// <summary>
         /// Gets the create session command.

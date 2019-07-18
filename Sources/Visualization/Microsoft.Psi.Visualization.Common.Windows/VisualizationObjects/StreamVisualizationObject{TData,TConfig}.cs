@@ -46,9 +46,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private ObservableKeyedCache<DateTime, Message<TData>>.ObservableKeyedView data;
 
         /// <summary>
+        /// Indicates whether the store that is the source of data for this visualization object is a live store.
+        /// </summary>
+        private bool isLive = false;
+
+        /// <summary>
         /// The snap to stream command.
         /// </summary>
         private RelayCommand snapToStreamCommand;
+
+        /// <summary>
+        /// The zoom to stream command.
+        /// </summary>
+        private RelayCommand zoomToStreamCommand;
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -56,7 +66,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public override bool CanSnapToStream => true;
 
         /// <summary>
-        /// Gets the delete visualization command.
+        /// Gets the snap to stream command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -90,6 +100,28 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
 
                 return this.snapToStreamCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the zoom to stream command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ZoomToStreamCommand
+        {
+            get
+            {
+                if (this.zoomToStreamCommand == null)
+                {
+                    this.zoomToStreamCommand = new RelayCommand(
+                        () =>
+                        {
+                            this.Container.Navigator.Zoom(this.StreamBinding.StreamMetadata.FirstMessageOriginatingTime, this.StreamBinding.StreamMetadata.LastMessageOriginatingTime);
+                        });
+                }
+
+                return this.zoomToStreamCommand;
             }
         }
 
@@ -181,6 +213,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <inheritdoc/>
+        public StreamBinding StreamBinding => this.Configuration.StreamBinding;
+
         /// <summary>
         /// Gets a value indicating whether the visualization object is currenty bound to a datasource.
         /// </summary>
@@ -191,7 +226,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         [Browsable(false)]
         [IgnoreDataMember]
-        public override string IconSource => this.Configuration.StreamBinding.IsBound ? this.IsSnappedToStream ? IconSourcePath.SnapToStream : base.IconSource : IconSourcePath.StreamUnbound;
+        public override string IconSource
+        {
+            get
+            {
+                if (!this.Configuration.StreamBinding.IsBound)
+                {
+                    return IconSourcePath.StreamUnbound;
+                }
+                else if (this.IsSnappedToStream)
+                {
+                    return this.IsLive ? IconSourcePath.SnapToStreamLive : IconSourcePath.SnapToStream;
+                }
+                else
+                {
+                    return this.IsLive ? IconSourcePath.StreamLive : IconSourcePath.Stream;
+                }
+            }
+        }
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -202,6 +254,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets the text to display in the snap to stream menu item.
         /// </summary>
         public string SnapToStreamCommandText => this.IsSnappedToStream ? "Unsnap From Stream" : "Snap To Stream";
+
+        /// <inheritdoc />
+        public bool IsLive
+        {
+            get => this.isLive;
+
+            set
+            {
+                if (this.isLive != value)
+                {
+                    this.RaisePropertyChanging(nameof(this.IconSource));
+                    this.isLive = value;
+                    this.RaisePropertyChanged(nameof(this.IconSource));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets how to interpolate values at times that are between messages.

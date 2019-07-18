@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.Serialization;
     using System.Windows;
     using Microsoft.Psi.Diagnostics;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
@@ -19,5 +20,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(PipelineDiagnosticsVisualizationObjectView));
+
+        /// <inheritdoc />
+        [IgnoreDataMember]
+        public override string IconSource => this.Configuration.StreamBinding.IsBound ? this.IsLive ? IconSourcePath.DiagnosticsLive : IconSourcePath.Diagnostics : IconSourcePath.StreamUnbound;
     }
 }

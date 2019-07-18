@@ -15,16 +15,19 @@ namespace Microsoft.Psi.PsiStudio
     {
         private string displayName;
         private Type typeKey;
+        private string icon;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeKeyedActionCommand"/> class.
         /// </summary>
         /// <param name="displayName">Name displayed in menu.</param>
-        /// <param name="typeKey">Type key of of command.</param>
-        public TypeKeyedActionCommand(string displayName, Type typeKey)
+        /// <param name="typeKey">Type key of the command.</param>
+        /// <param name="icon">The path to the icon to display next to the menu.</param>
+        public TypeKeyedActionCommand(string displayName, Type typeKey, string icon)
         {
             this.displayName = displayName;
             this.typeKey = typeKey;
+            this.icon = icon;
         }
 
         /// <inheritdoc />
@@ -34,6 +37,11 @@ namespace Microsoft.Psi.PsiStudio
         /// Gets the display name.
         /// </summary>
         public string DisplayName => this.displayName;
+
+        /// <summary>
+        /// Gets the icon for the command.
+        /// </summary>
+        public string Icon => this.icon;
 
         /// <summary>
         /// Gets the type key.

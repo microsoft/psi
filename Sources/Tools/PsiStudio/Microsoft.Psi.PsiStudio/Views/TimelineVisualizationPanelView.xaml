@@ -29,22 +29,22 @@
                 <MenuItem Name="ShowLegend" Header="Show/Hide legend" Command="{Binding ShowHideLegendCommand}" Height="25" />
                 <MenuItem Name="RemovePanel" Header="Remove panel" Command="{Binding RemovePanelCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0" />
+                        <Image Source="Icons\panel-remove.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Name="Clear" Header="Clear" Command="{Binding ClearPanelCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\clear-panel_x4.png" Height="16" Margin="4,0,0,0" />
+                        <Image Source="Icons\panel-clear.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Name="ZoomToSelection" Header="Zoom to Selection" Command="{Binding ZoomToSelectionCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\zoom-extents_x4.png" Height="16" Margin="4,0,0,0" />
+                        <Image Source="Icons\zoom-to-selection.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Name="ZoomToSessionExtents" Header="Zoom to Session Extents" Command="{Binding ZoomToSessionExtentsCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\zoom-extents_x4.png" Height="16" Margin="4,0,0,0" />
+                        <Image Source="Icons\zoom-to-session.png" Height="16" Margin="4,0,0,0" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>

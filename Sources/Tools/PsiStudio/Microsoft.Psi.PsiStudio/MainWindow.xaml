@@ -42,7 +42,7 @@
         <local:PsiStudioTemplateSelector x:Key="PsiStudioTemplateSelector" />
     </Window.Resources>
 
-    <Grid>
+    <Grid UseLayoutRounding="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -53,18 +53,18 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Store" Command="{Binding OpenStoreCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\open-store_x4.png" Height="16" Margin="4,0,0,0"/>
+                        <Image Source="Icons\store-open.png" Height="16" Margin="4,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Open _Dataset" Command="{Binding OpenDatasetCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\open-data_x4.png" Height="16" Margin="4,0,0,0"/>
+                        <Image Source="Icons\dataset-open.png" Height="16" Margin="4,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Save Dataset" Command="{Binding SaveDatasetCommand}" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\save-data_x4.png" Height="16" Margin="4,0,0,0"/>
+                        <Image Source="Icons\dataset-save.png" Height="16" Margin="4,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
@@ -74,87 +74,125 @@
 
         <ToolBarTray Grid.Row="1" Background="{StaticResource MediumBackgroundColorBrush}">
             <ToolBar Background="{StaticResource MediumBackgroundColorBrush}" Loaded="ToolBar_Loaded">
-                <Button Command="{Binding OpenStoreCommand}" ToolTip="Open Store">
-                    <Image Source="Icons\open-store_x4.png"/>
+                <Button Command="{Binding OpenStoreCommand}" Margin="1" ToolTip="Open Store">
+                    <Image Source="Icons\store-open.png"/>
                 </Button>
-                <Button Command="{Binding OpenDatasetCommand}" ToolTip="Open Dataset">
-                    <Image Source="Icons\open-data_x4.png"/>
+                <Button Command="{Binding OpenDatasetCommand}" Margin="1" ToolTip="Open Dataset">
+                    <Image Source="Icons\dataset-open.png"/>
                 </Button>
-                <Button Command="{Binding SaveDatasetCommand}" ToolTip="Save Dataset">
-                    <Image Source="Icons\save-data_x4.png"/>
+                <Button Command="{Binding SaveDatasetCommand}" Margin="1" ToolTip="Save Dataset">
+                    <Image Source="Icons\dataset-save.png"/>
                 </Button>
-                <Separator/>
-                <Button Command="{Binding InsertTimelinePanelCommand}" ToolTip="Insert Timeline Panel">
-                    <Image Source="Icons\timeline-panel_x4.png"/>
+                <Separator Margin="4,2,4,2"/>
+                <Button Command="{Binding InsertTimelinePanelCommand}" Margin="1" ToolTip="Insert Timeline Panel">
+                    <Image Source="Icons\panel-timeline.png"/>
                 </Button>
-                <Button Command="{Binding Insert2DPanelCommand}" ToolTip="Insert 2D Panel">
-                    <Image Source="Icons\2d-panel_x4.png"/>
+                <Button Command="{Binding Insert2DPanelCommand}" Margin="1" ToolTip="Insert 2D Panel">
+                    <Image Source="Icons\panel-2d.png"/>
                 </Button>
-                <Button Command="{Binding Insert3DPanelCommand}" ToolTip="Insert 3D Panel">
-                    <Image Source="Icons\3d-panel_x4.png"/>
+                <Button Command="{Binding Insert3DPanelCommand}" Margin="1" ToolTip="Insert 3D Panel">
+                    <Image Source="Icons\panel-3d.png"/>
                 </Button>
-                <Separator />
+                <Separator Margin="4,2,4,2"/>
                 <!--<Button Command="{Binding InsertAnnotationCommand}" ToolTip="Insert Annotation">
-                    <Image Source="Icons\add-annotations_x4.png"/>
+                    <Image Source="Icons\annotations-add.png"/>
                 </Button>
                 <Separator />-->
-                <ToggleButton Command="{Binding AbsoluteTimingCommand}" ToolTip="Absolute Timing">
-                    <Image Source="Icons\timing-absolute_x4.png"/>
+                <ToggleButton Command="{Binding AbsoluteTimingCommand}" Margin="1" ToolTip="Absolute Timing">
+                    <Image Source="Icons\timing-absolute.png"/>
                 </ToggleButton>
-                <ToggleButton Command="{Binding TimingRelativeToSessionStartCommand}" ToolTip="Timing relative to Session Start">
-                    <Image Source="Icons\timing-relative-session_x4.png"/>
+                <ToggleButton Command="{Binding TimingRelativeToSessionStartCommand}" Margin="1" ToolTip="Timing relative to Session Start">
+                    <Image Source="Icons\timing-relative-session.png"/>
                 </ToggleButton>
-                <ToggleButton Command="{Binding TimingRelativeToSelectionStartCommand}" ToolTip="Timing relative to Selection Start">
-                    <Image Source="Icons\timing-relative-selection_x4.png"/>
+                <ToggleButton Command="{Binding TimingRelativeToSelectionStartCommand}" Margin="1" ToolTip="Timing relative to Selection Start">
+                    <Image Source="Icons\timing-relative-selection.png"/>
                 </ToggleButton>
-                <Separator />
-                <Button Command="{Binding ZoomToSessionExtentsCommand}" ToolTip="Zoom to Session Extents">
-                    <Image Source="Icons\zoom-extents_x4.png"/>
+                <Separator Margin="4,2,4,2"/>
+                <Button Command="{Binding ZoomToSessionExtentsCommand}" Margin="1" ToolTip="Zoom to Session Extents">
+                    <Image Source="Icons\zoom-to-session.png"/>
                 </Button>
-                <Button Command="{Binding ZoomToSelectionCommand}" ToolTip="Zoom to Selection">
-                    <Image Source="Icons\zoom-extents_x4.png"/>
+                <Button Command="{Binding ZoomToSelectionCommand}" Margin="1" ToolTip="Zoom to Selection">
+                    <Image Source="Icons\zoom-to-selection.png"/>
                 </Button>
-                <Separator />
-                <Button Command="{Binding MoveToSelectionStartCommand}" ToolTip="Move cursor to the start of the selection">
-                    <Image Source="Icons\move-to-beginning_x4.png"/>
+                <Separator Margin="4,2,4,2"/>
+                <Button Command="{Binding MoveToSelectionStartCommand}" Margin="1" ToolTip="Move cursor to the start of the selection">
+                    <Image Source="Icons\move-to-beginning.png"/>
                 </Button>
-                <Button Command="{Binding PlayPauseCommand}" ToolTip="{Binding PlayPauseButtonToolTip}">
-                    <Image Source="{Binding PlayPauseButtonImage}"/>
+                <Button Command="{Binding PlayPauseCommand}" Margin="1">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding VisualizationContainer.Navigator.IsCursorModePlayback}" Value="True">
+                                        <Setter Property="Source" Value="Icons\stop.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding VisualizationContainer.Navigator.IsCursorModePlayback}" Value="False">
+                                        <Setter Property="Source" Value="Icons\play.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding VisualizationContainer.Navigator.IsCursorModePlayback}" Value="True">
+                                    <Setter Property="ToolTip" Value="Stop"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding VisualizationContainer.Navigator.IsCursorModePlayback}" Value="False">
+                                    <Setter Property="ToolTip" Value="Play"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
-                <ToggleButton Command="{Binding TogglePlayRepeatCommand}" ToolTip="Repeat playback">
-                    <Image Source="Icons\play-repeat_x4.png"/>
+                <ToggleButton Command="{Binding TogglePlayRepeatCommand}" Margin="1" ToolTip="Repeat playback">
+                    <Image Source="Icons\play-repeat.png"/>
                 </ToggleButton>
-                <Button Command="{Binding MoveToSelectionEndCommand}" ToolTip="Move cursor to the end of the selection">
-                    <Image Source="Icons\move-to-end_x4.png"/>
+                <Button Command="{Binding MoveToSelectionEndCommand}" Margin="1" ToolTip="Move cursor to the end of the selection">
+                    <Image Source="Icons\move-to-end.png"/>
                 </Button>
-                <Separator />
+                <Separator Margin="4,2,4,2"/>
                 <TextBlock Margin="5">Speed:</TextBlock>
-                <Button Command="{Binding DecreasePlaySpeedCommand}" ToolTip="Decrease play speed">
-                    <Image Source="Icons\reverse_x4.png"/>
+                <Button Command="{Binding DecreasePlaySpeedCommand}" Margin="1" ToolTip="Decrease play speed">
+                    <Image Source="Icons\playback-speed-decrease.png"/>
                 </Button>
                 <TextBox Grid.Column="1" HorizontalContentAlignment="Right" Text="{Binding VisualizationContainer.Navigator.PlaySpeed, Mode=OneWay}" TextAlignment="Center" Width="22" IsReadOnly="True" Foreground="LightGray" />
-                <Button Command="{Binding IncreasePlaySpeedCommand}" ToolTip="Increase play speed">
-                    <Image Source="Icons\play_x4.png"/>
+                <Button Command="{Binding IncreasePlaySpeedCommand}" Margin="1" ToolTip="Increase play speed">
+                    <Image Source="Icons\playback-speed-increase.png"/>
                 </Button>
-                <Separator />
-                <ToggleButton Command="{Binding ToggleLiveModeCommand}" IsChecked="{Binding VisualizationContainer.Navigator.IsCursorModeLive, Mode=OneWay}" Height="22" ToolTip="View head of live stream">
-                    <Image Source="Icons\live-mode_x4.png"/>
-                </ToggleButton>
-                <Separator />
-                <ComboBox Name="LayoutsCombobox" ItemsSource="{Binding AvailableLayouts}" SelectedItem="{Binding CurrentLayout, Mode=TwoWay}" Width="150" IsEditable="False" IsReadOnly="True" Background="{StaticResource WindowBackgroundBrush}" />
-                <Button Command="{Binding SaveLayoutCommand}" ToolTip="Save Layout">
-                    <Image Source="Icons\save-layout_x4.png"/>
+                <Separator Margin="4,2,4,2"/>
+                <Button Command="{Binding ToggleLiveModeCommand}" Margin="1" ToolTip="View head of live stream">
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding VisualizationContainer.Navigator.IsCursorModeLive}" Value="True">
+                                        <Setter Property="Source" Value="Icons\live-button-on.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding VisualizationContainer.Navigator.IsCursorModeLive}" Value="False">
+                                        <Setter Property="Source" Value="Icons\live-button-off.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                 </Button>
-                <Button Command="{Binding SaveLayoutAsCommand}" ToolTip="Save Layout As...">
-                    <Image Source="Icons\open-layout_x4.png"/>
+                <Separator Margin="4,2,4,2"/>
+                <ComboBox Name="LayoutsCombobox" ItemsSource="{Binding AvailableLayouts}" SelectedItem="{Binding CurrentLayout, Mode=TwoWay}" Margin="1" Width="150" IsEditable="False" IsReadOnly="True" Background="{StaticResource WindowBackgroundBrush}" />
+                <Button Command="{Binding SaveLayoutCommand}" Margin="1" ToolTip="Save Layout">
+                    <Image Source="Icons\layout-save.png"/>
                 </Button>
-                <Separator />
-                <ToggleButton Command="{Binding ToggleCursorFollowsMouseComand}" IsChecked="{Binding VisualizationContainer.Navigator.CursorFollowsMouse, Mode=OneWay}" ToolTip="Cursor Follows Mouse (Alt+F)">
-                    <Image Source="Icons\cursor-follows-mouse_x4.png"/>
+                <Button Command="{Binding SaveLayoutAsCommand}" Margin="1" ToolTip="Save Layout As...">
+                    <Image Source="Icons\layout-save-as.png"/>
+                </Button>
+                <Separator Margin="4,2,4,2"/>
+                <ToggleButton Command="{Binding ToggleCursorFollowsMouseComand}" IsChecked="{Binding VisualizationContainer.Navigator.CursorFollowsMouse, Mode=OneWay}" Margin="1" ToolTip="Cursor Follows Mouse (Alt+F)">
+                    <Image Source="Icons\cursor-follow.png"/>
                 </ToggleButton>
                 <!--Separator />
                 <Button Command="{Binding ShowSettingsWindowComand}" ToolTip="PsiStudio Settings">
-                    <Image Source="Icons\settings_x4.png"/>
+                    <Image Source="Icons\settings.png"/>
                 </Button-->
             </ToolBar>
         </ToolBarTray>
@@ -178,110 +216,112 @@
                 <TabControl Grid.Row="0" Name="DatasetsTabControl" SelectedIndex="0" Margin="4,4,0,4">
                     <TabItem Name="Datasets" Header="Datasets">
 
-                        <TreeView Grid.Row="0" Name="DatasetsTreeView" ItemsSource="{Binding DatasetViewModels}" ItemTemplateSelector="{StaticResource ResourceKey=PsiStudioTemplateSelector}">
-                            <TreeView.Resources>
-                                <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding SessionViewModels}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="Icons\data_x4.png"/>
-                                        <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Name="CreateSession" Header="Create Session" Command="{Binding CreateSessionCommand}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\create-session_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Name="CreateSessionFromExistingStore" Header="Create Session from Existing Store ..." Command="{Binding CreateSessionFromExistingStoreCommand}" Height="25"/>
-                                                    <Separator />
-                                                    <MenuItem Name="CloseDataset" Header="Close Dataset" Command="{Binding CloseDatasetCommand}" IsEnabled="False" />
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
+                        <Border Margin="0" Padding="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderThickness="0" Background="{StaticResource MediumBackgroundColorBrush}" HorizontalAlignment="Stretch">
+                                    <StackPanel Orientation="Horizontal" Background="{StaticResource MediumBackgroundColorBrush}" FlowDirection="RightToLeft" HorizontalAlignment="Stretch">
+                                        <Button Command="{Binding CollapseDatasetsTreeCommand}" Margin="4, 4, 0, 4" ToolTip="Collapse all nodes">
+                                            <Image Source="Icons\collapse-all.png"/>
+                                        </Button>
+                                        <Button Command="{Binding ExpandDatasetsTreeCommand}" Margin="4, 4, 0, 4" ToolTip="Expand all nodes">
+                                            <Image Source="Icons\expand-all.png"/>
+                                        </Button>
                                     </StackPanel>
-                                </HierarchicalDataTemplate>
+                                </Border>
+                                <TreeView Grid.Row="1" Margin="0" Name="DatasetsTreeView" ItemsSource="{Binding DatasetViewModels}" ItemTemplateSelector="{StaticResource ResourceKey=PsiStudioTemplateSelector}">
+                                    <TreeView.Resources>
+                                        <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding SessionViewModels}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="Icons\dataset.png"/>
+                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
+                                                    <TextBlock.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Name="CreateSession" Header="Create Session" Command="{Binding CreateSessionCommand}" Height="25">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="Icons\session-create.png" Height="16" Margin="4,0,0,0"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Name="CreateSessionFromExistingStore" Header="Create Session from Existing Store ..." Command="{Binding CreateSessionFromExistingStoreCommand}" Height="25">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="Icons\session-from-store.png" Height="16" Margin="4,0,0,0"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <Separator />
+                                                            <MenuItem Name="CloseDataset" Header="Close Dataset" Command="{Binding CloseDatasetCommand}" IsEnabled="False">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="Icons\dataset-remove.png" Height="16" Margin="4,0,0,0"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                        </ContextMenu>
+                                                    </TextBlock.ContextMenu>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
 
-                                <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding PartitionViewModels}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="Icons\session_x4.png"/>
-                                        <TextBlock Text="{Binding Name}" Foreground="{Binding TextBrush}" Margin="7,0,0,0">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Name="AddPartition" Header="Add Partition ..." Command="{Binding AddPartitionCommand}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\add-partition_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <Separator />
-                                                    <MenuItem Name="RemoveSession" Header="Remove Session" Command="{Binding RemoveSessionCommand}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\remove-session_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Name="VisualizeSession" Header="Visualize Session" Command="{Binding VisualizeSessionCommand}" Height="25"/>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
+                                        <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding PartitionViewModels}">
+                                            <StackPanel Orientation="Horizontal" Opacity="{Binding UiElementOpacity}">
+                                                <Image Source="Icons\session.png"/>
+                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
+                                                    <TextBlock.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Name="AddPartition" Header="Create Partition from Psi Store..." Command="{Binding AddPartitionCommand}" Height="25">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="Icons\partition-add.png" Height="16" Margin="4,0,0,0"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <Separator />
+                                                            <MenuItem Name="RemoveSession" Header="Remove" Command="{Binding RemoveSessionCommand}" Height="25">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="Icons\session-remove.png" Height="16" Margin="4,0,0,0"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Name="VisualizeSession" Header="Visualize" Command="{Binding VisualizeSessionCommand}" Height="25"/>
+                                                        </ContextMenu>
+                                                    </TextBlock.ContextMenu>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
 
-                                <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding StreamTreeRoot.Children}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="Icons\partition_x4.png"/>
-                                        <Image Source="Icons\live-partition_x4.png" Margin="4,0,0,0" Visibility="{Binding IsLivePartition, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                        <TextBlock Text="{Binding Name}" Foreground="{Binding TextBrush}" Margin="7,0,0,0">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Name="RemovePartition" Header="Remove Partition" Command="{Binding RemovePartitionCommand}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\remove-partition_x4.png" Height="16"  Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
+                                        <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding StreamTreeRoot.Children}">
+                                            <StackPanel Orientation="Horizontal" Opacity="{Binding UiElementOpacity}">
+                                                <Image Source="{Binding IconSource}"/>
+                                                <TextBlock Text="{Binding Name}" Margin="7,0,0,0">
+                                                    <TextBlock.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Name="RemovePartition" Header="Remove" Command="{Binding RemovePartitionCommand}" Height="25">
+                                                                <MenuItem.Icon>
+                                                                    <Image Source="Icons\partition-remove.png" Height="16"  Margin="4,0,0,0"/>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                        </ContextMenu>
+                                                    </TextBlock.ContextMenu>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
 
-                                <HierarchicalDataTemplate x:Key="StreamTreeNodeTemplate" ItemsSource="{Binding Children}">
-                                    <StackPanel Orientation="Horizontal" MouseMove="StreamTreeNode_MouseMove">
-                                        <Image Source="{Binding IconSource}"/>
-                                        <Image Source="Icons\live-partition_x4.png" Margin="4,0,0,0" Visibility="{Binding Partition.IsLivePartition, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                        <TextBlock Text="{Binding Name}" Foreground="{Binding TextBrush}" Margin="3,0,0,0" IsEnabled="{Binding CanShowContextMenu}">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu ItemsSource="{Binding Path=., Converter={StaticResource StreamTreeNodeToCommandsConverter}}">
-                                                    <ContextMenu.ItemContainerStyle>
-                                                        <Style TargetType="MenuItem">
-                                                            <Setter Property="Height" Value="25"/>
-                                                            <Setter Property="HeaderTemplate">
-                                                                <Setter.Value>
-                                                                    <DataTemplate>
-                                                                        <StackPanel Orientation="Horizontal">
-                                                                            <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"></TextBlock>
-                                                                        </StackPanel>
-                                                                    </DataTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                            <Setter Property="Command" Value="{Binding .}" />
-                                                            <!--The stream metadata is passed as the command parameter... and this can be obtained from the DataContext of one of the parents-->
-                                                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext}" />
-                                                        </Style>
-                                                    </ContextMenu.ItemContainerStyle>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                            </TextBlock>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </TreeView.Resources>
+                                        <HierarchicalDataTemplate x:Key="StreamTreeNodeTemplate" ItemsSource="{Binding Children}">
+                                            <StackPanel Orientation="Horizontal" Opacity="{Binding UiElementOpacity}" MouseMove="StreamTreeNode_MouseMove" ContextMenu="{Binding Path=., Converter={StaticResource StreamTreeNodeToCommandsConverter}}">
+                                                <Image Source="{Binding IconSource}"/>
+                                                <TextBlock Text="{Binding Name}" Margin="3,0,0,0" IsEnabled="{Binding CanShowContextMenu}" />
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.Resources>
 
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectedItemChanged">
-                                    <cmd:EventToCommand Command="{Binding Path=SelectedDatasetChangedCommand}" PassEventArgsToCommand="True" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseLeftButtonUp">
-                                    <cmd:EventToCommand Command="{Binding Path=TreeSelectedCommand}" CommandParameter="DatasetsTreeView" PassEventArgsToCommand="False" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TreeView>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectedItemChanged">
+                                            <cmd:EventToCommand Command="{Binding Path=SelectedDatasetChangedCommand}" PassEventArgsToCommand="True" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <cmd:EventToCommand Command="{Binding Path=TreeSelectedCommand}" CommandParameter="DatasetsTreeView" PassEventArgsToCommand="False" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TreeView>
+                            </Grid>
+                        </Border>
                     </TabItem>
                 </TabControl>
 
@@ -289,78 +329,109 @@
 
                 <TabControl Grid.Row="2" Name="VisualizationsTabControl" SelectedIndex="0" Margin="4,0,0,4">
                     <TabItem Name="Visualizations" Header="Visualizations">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" BorderThickness="0" Background="{StaticResource MediumBackgroundColorBrush}" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" Background="{StaticResource MediumBackgroundColorBrush}" FlowDirection="RightToLeft">
+                                    <Button Command="{Binding CollapseVisualizationsTreeCommand}" Margin="4, 4, 0, 4" ToolTip="Collapse all nodes">
+                                        <Image Source="Icons\collapse-all.png"/>
+                                    </Button>
+                                    <Button Command="{Binding ExpandVisualizationsTreeCommand}" Margin="4, 4, 0, 4" ToolTip="Expand all nodes">
+                                        <Image Source="Icons\expand-all.png"/>
+                                    </Button>
+                                    <Button Command="{Binding SynchronizeTreesCommand}" Margin="4, 4, 0, 4" ToolTip="Synchronize the selected stream with the source">
+                                        <Image Source="Icons\synchronize.png"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
 
-                        <TreeView Grid.Row="2" Name="VisualizationTreeView" ItemsSource="{Binding VisualizationContainer.Panels}">
-                            <TreeView.Resources>
-                                <HierarchicalDataTemplate DataType="{x:Type cvp:VisualizationPanel}" ItemsSource="{Binding VisualizationObjects}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <ContentPresenter Content="{Binding Path=.}">
-                                            <ContentPresenter.Resources>
-                                                <DataTemplate DataType="{x:Type vp:TimelineVisualizationPanel}">
-                                                    <Image Source="Icons\timeline-panel_x4.png"/>
-                                                </DataTemplate>
-                                                <DataTemplate DataType="{x:Type vp:XYVisualizationPanel}">
-                                                    <Image Source="Icons\2d-panel_x4.png"/>
-                                                </DataTemplate>
-                                                <DataTemplate DataType="{x:Type vp:XYZVisualizationPanel}">
-                                                    <Image Source="Icons\3d-panel_x4.png"/>
-                                                </DataTemplate>
-                                            </ContentPresenter.Resources>
-                                        </ContentPresenter>
-                                        <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="Delete" Command="{Binding Container.DeleteVisualizationPanelCommand}" CommandParameter="{Binding .}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
+                            <TreeView Grid.Row="1" Name="VisualizationTreeView" ItemsSource="{Binding VisualizationContainer.Panels}">
+                                <TreeView.Resources>
+                                    <HierarchicalDataTemplate DataType="{x:Type cvp:VisualizationPanel}" ItemsSource="{Binding VisualizationObjects}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentPresenter Content="{Binding Path=.}">
+                                                <ContentPresenter.Resources>
+                                                    <DataTemplate DataType="{x:Type vp:TimelineVisualizationPanel}">
+                                                        <Image Source="Icons\panel-timeline.png"/>
+                                                    </DataTemplate>
+                                                    <DataTemplate DataType="{x:Type vp:XYVisualizationPanel}">
+                                                        <Image Source="Icons\panel-2d.png"/>
+                                                    </DataTemplate>
+                                                    <DataTemplate DataType="{x:Type vp:XYZVisualizationPanel}">
+                                                        <Image Source="Icons\panel-3d.png"/>
+                                                    </DataTemplate>
+                                                </ContentPresenter.Resources>
+                                            </ContentPresenter>
+                                            <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0">
+                                                <TextBlock.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Zoom to Panel Extents" Command="{Binding ZoomToPanelCommand}" Visibility="{Binding ShowZoomToPanelMenuItem, Converter={StaticResource BoolToVisibilityConverter}}" IsEnabled="{Binding CanZoomToPanel}" Height="25">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Icons\zoom-to-panel.png" Height="16" Margin="4,0,0,0"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator Visibility="{Binding ShowZoomToPanelMenuItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                                        <MenuItem Header="Remove" Command="{Binding Container.DeleteVisualizationPanelCommand}" CommandParameter="{Binding .}" Height="25">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Icons\panel-remove.png" Height="16" Margin="4,0,0,0"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </TextBlock.ContextMenu>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
 
-                                <HierarchicalDataTemplate DataType="{x:Type cvo:VisualizationObject}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="{Binding IconSource}"/>
-                                        <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0">
-                                            <TextBlock.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="{Binding SnapToStreamCommandText}" Command="{Binding SnapToStreamCommand}" Visibility="{Binding CanSnapToStream, Converter={StaticResource BoolToVisibilityConverter}}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\snap-to-stream_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Header="{Binding EnableAudioCommandText}" Command="{Binding EnableAudioCommand}" Visibility="{Binding IsAudioStream, Converter={StaticResource BoolToVisibilityConverter}}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="{Binding AudioIconSource}" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                    <MenuItem Header="Delete" Command="{Binding Panel.DeleteVisualizationCommand}" CommandParameter="{Binding .}" Height="25">
-                                                        <MenuItem.Icon>
-                                                            <Image Source="Icons\remove-panel_x4.png" Height="16" Margin="4,0,0,0"/>
-                                                        </MenuItem.Icon>
-                                                    </MenuItem>
-                                                </ContextMenu>
-                                            </TextBlock.ContextMenu>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </TreeView.Resources>
+                                    <HierarchicalDataTemplate DataType="{x:Type cvo:VisualizationObject}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding IconSource}"/>
+                                            <TextBlock Text="{Binding Configuration.Name}" Margin="7,0,0,0">
+                                                <TextBlock.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="{Binding SnapToStreamCommandText}" Command="{Binding SnapToStreamCommand}" Visibility="{Binding CanSnapToStream, Converter={StaticResource BoolToVisibilityConverter}}" Height="25">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Icons\stream-snap.png" Height="16" Margin="4,0,0,0"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="{Binding EnableAudioCommandText}" Command="{Binding EnableAudioCommand}" Visibility="{Binding IsAudioStream, Converter={StaticResource BoolToVisibilityConverter}}" Height="25">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="{Binding AudioIconSource}" Height="16" Margin="4,0,0,0"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="Zoom to Stream Extents" Command="{Binding ZoomToStreamCommand}" Visibility="{Binding ShowZoomToStreamMenuItem, Converter={StaticResource BoolToVisibilityConverter}}" Height="25">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Icons\zoom-to-stream.png" Height="16" Margin="4,0,0,0"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <Separator/>
+                                                        <MenuItem Header="Remove" Command="{Binding Panel.DeleteVisualizationCommand}" CommandParameter="{Binding .}" Height="25">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Icons\panel-remove.png" Height="16" Margin="4,0,0,0"/>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </TextBlock.ContextMenu>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.Resources>
 
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectedItemChanged">
-                                    <cmd:EventToCommand Command="{Binding Path=SelectedVisualizationChangedCommand}" PassEventArgsToCommand="True" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseLeftButtonUp">
-                                    <cmd:EventToCommand Command="{Binding Path=TreeSelectedCommand}" CommandParameter="VisualizationTreeView" PassEventArgsToCommand="False" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TreeView>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedItemChanged">
+                                        <cmd:EventToCommand Command="{Binding Path=SelectedVisualizationChangedCommand}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <cmd:EventToCommand Command="{Binding Path=TreeSelectedCommand}" CommandParameter="VisualizationTreeView" PassEventArgsToCommand="False" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TreeView>
+                        </Grid>
                     </TabItem>
                 </TabControl>
-                
+
             </Grid>
 
             <GridSplitter Grid.Column="1" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="{StaticResource MediumBackgroundColorBrush}" />

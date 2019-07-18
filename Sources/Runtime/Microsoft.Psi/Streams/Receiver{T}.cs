@@ -340,7 +340,17 @@ namespace Microsoft.Psi
                 {
                     writer.Reset();
                     context.Reset();
-                    handler.Serialize(writer, m, context);
+                    try
+                    {
+                        handler.Serialize(writer, m, context);
+                    }
+                    catch (NotSupportedException)
+                    {
+                        // cannot serialize Type, IntPtr, UIntPtr, MemberInfo, StackTrace, ...
+                        this.computeDataSize = _ => 0; // stop trying
+                        return 0;
+                    }
+
                     return writer.Position;
                 };
             }

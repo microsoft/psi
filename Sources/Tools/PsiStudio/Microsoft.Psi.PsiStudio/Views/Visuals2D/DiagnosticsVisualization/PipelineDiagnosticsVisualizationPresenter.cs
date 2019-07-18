@@ -557,11 +557,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                         var i = c.ConnectorBridgeToPipelineElement.Receivers.Values.First();
                         if (i.Source != null && i.Source.PipelineElement.ParentPipeline == diagnostics && i.Source.PipelineElement.ConnectorBridgeToPipelineElement != null)
                         {
-                            var source = subpipelineNodes[i.Source.PipelineElement.ConnectorBridgeToPipelineElement.ParentPipeline.Id];
-                            var target = subpipelineNodes[c.ParentPipeline.Id];
-                            if (this.AddVisualEdge(source.Id, target.Id, i, graph, statsSelector))
+                            if (subpipelineNodes.TryGetValue(i.Source.PipelineElement.ConnectorBridgeToPipelineElement.ParentPipeline.Id, out PipelineDiagnostics.PipelineElementDiagnostics source) &&
+                                subpipelineNodes.TryGetValue(c.ParentPipeline.Id, out PipelineDiagnostics.PipelineElementDiagnostics target))
                             {
-                                selectedEdgeUpdated = true;
+                                if (this.AddVisualEdge(source.Id, target.Id, i, graph, statsSelector))
+                                {
+                                    selectedEdgeUpdated = true;
+                                }
                             }
                         }
                     }

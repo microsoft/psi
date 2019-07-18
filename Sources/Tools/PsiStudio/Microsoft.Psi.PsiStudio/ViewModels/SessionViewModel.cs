@@ -9,25 +9,21 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
-    using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Annotations;
-    using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.Visualization.Base;
-    using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Represents a view model of a session.
     /// </summary>
-    public class SessionViewModel : ObservableObject
+    public class SessionViewModel : ObservableTreeNodeObject
     {
         private Session session;
         private DatasetViewModel datasetViewModel;
         private ObservableCollection<PartitionViewModel> internalPartitionViewModels;
         private ReadOnlyObservableCollection<PartitionViewModel> partitionViewModels;
         private bool containsLivePartitions = false;
-        private bool isTreeNodeExpanded = true;
 
         private RelayCommand addPartitionCommand;
         private RelayCommand removeSessionCommand;
@@ -50,6 +46,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
             {
                 this.internalPartitionViewModels.Add(new PartitionViewModel(this, partition));
             }
+
+            this.IsTreeNodeExpanded = true;
         }
 
         /// <summary>
@@ -86,9 +84,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public DateTime? LastMessageOriginatingTime => this.OriginatingTimeInterval.Right;
 
         /// <summary>
-        /// Gets the brush for drawing text.
+        /// Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.
         /// </summary>
-        public Brush TextBrush => this.DatasetViewModel.CurrentSessionViewModel == this ? ViewModelBrushes.SelectedBrush : ViewModelBrushes.StandardBrush;
+        public double UiElementOpacity => this.DatasetViewModel.CurrentSessionViewModel == this ? 1.0d : 0.5d;
 
         /// <summary>
         /// Gets the orginating time interval (earliest to latest) of the messages in this session.
@@ -110,17 +108,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets a value indicating whether this session is the parent dataset's current session.
         /// </summary>
         public bool IsCurrentSession => this.DatasetViewModel.CurrentSessionViewModel == this;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the tree view item is expanded.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public bool IsTreeNodeExpanded
-        {
-            get => this.isTreeNodeExpanded;
-            set => this.Set(nameof(this.IsTreeNodeExpanded), ref this.isTreeNodeExpanded, value);
-        }
 
         /// <summary>
         /// Gets a value indicating whether this session contains live partitions.
@@ -329,7 +316,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             if (e.PropertyName == nameof(this.DatasetViewModel.CurrentSessionViewModel))
             {
-                this.RaisePropertyChanged(nameof(this.TextBrush));
+                this.RaisePropertyChanged(nameof(this.UiElementOpacity));
             }
         }
     }

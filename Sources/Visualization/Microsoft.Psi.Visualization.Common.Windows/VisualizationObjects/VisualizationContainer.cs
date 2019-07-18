@@ -303,6 +303,28 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Notifies that a partition's live status has changed.
+        /// </summary>
+        /// <param name="storePath">The path to the store whose live status has changed.</param>
+        /// <param name="isLive">True if the partition is live, otherwise false.</param>
+        public void NotifyLivePartitionStatus(string storePath, bool isLive)
+        {
+            // For every visualization object, if its source of data is
+            // storePath, then update the visualization object's IsLive value
+            foreach (VisualizationPanel panel in this.Panels)
+            {
+                foreach (VisualizationObject visualizationobject in panel.VisualizationObjects)
+                {
+                    IStreamVisualizationObject streamVisualizationObject = visualizationobject as IStreamVisualizationObject;
+                    if ((streamVisualizationObject != null) && (streamVisualizationObject.StreamBinding.StorePath == storePath))
+                    {
+                        streamVisualizationObject.IsLive = isLive;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Zoom to the spcified time interval.
         /// </summary>
         /// <param name="timeInterval">Time interval to zoom to.</param>

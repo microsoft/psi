@@ -311,12 +311,18 @@ namespace Microsoft.Psi
                     TimeSpan delta = message.OriginatingTime - matchTime;
                     TimeSpan distance = delta.Duration();
 
+                    // Determine if the message is on the right side of the window start
+                    var messageIsAfterWindowStart = (window.LeftEndpoint.Inclusive && delta >= window.Left) || (!window.LeftEndpoint.Inclusive && delta > window.Left);
+
                     // Only consider messages that occur within the lookback window.
-                    if (delta >= window.Left)
+                    if (messageIsAfterWindowStart)
                     {
-                        // We stop searching either when we reach a message that is beyond the lookahead
-                        // window or when the distance (absolute delta) exceeds the best distance.
-                        if ((delta > window.Right) || (distance > bestDistance))
+                        // Determine if the message is outside the window end
+                        var messageIsOutsideWindowEnd = (window.RightEndpoint.Inclusive && delta > window.Right) || (!window.RightEndpoint.Inclusive && delta >= window.Right);
+
+                        // We stop searching either when we reach a message that is beyond the window end
+                        // or when the distance (absolute delta) exceeds the minimum distance.
+                        if (messageIsOutsideWindowEnd || (distance > bestDistance))
                         {
                             break;
                         }

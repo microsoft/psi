@@ -12,54 +12,60 @@ namespace Microsoft.Psi.Imaging
     /// for compressing streams of images in a generic fashion. This object
     /// should not be called directly but instead if used by Microsoft.Psi.Imaging.
     /// </summary>
-    public class ImageCompressor : Image.IImageCompressor
+    public class ImageCompressor : IImageCompressor
     {
-        private Image.CustomSerializer.CompressionMethod compressionMethod = Image.CustomSerializer.CompressionMethod.PNG;
-
         /// <summary>
-        /// This method sets the compression method which will be used by
-        /// Serialize/Deserialize.
+        /// Initializes a new instance of the <see cref="ImageCompressor"/> class.
         /// </summary>
-        /// <param name="method">Type of compression to use.</param>
-        public void Initialize(Image.CustomSerializer.CompressionMethod method)
+        public ImageCompressor()
         {
-            this.compressionMethod = method;
         }
 
         /// <summary>
-        /// Given an image and stream, this method will compress the image using
-        /// the compression method set in Initialize().
+        /// Initializes a new instance of the <see cref="ImageCompressor"/> class.
         /// </summary>
-        /// <param name="writer">Stream to write compressed image to.</param>
-        /// <param name="instance">Image to be compressed.</param>
-        /// <param name="context">Serialization context.</param>
+        /// <param name="compressionMethod">Compression method to be used by compressor.</param>
+        public ImageCompressor(CompressionMethod compressionMethod)
+        {
+            this.CompressionMethod = compressionMethod;
+        }
+
+        /// <summary>
+        /// Gets or sets the compression method being used by the compressor.
+        /// </summary>
+        public CompressionMethod CompressionMethod { get; set; } = CompressionMethod.PNG;
+
+        /// <inheritdoc/>
         public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
         {
             BitmapEncoder encoder = null;
-            switch (this.compressionMethod)
+            switch (this.CompressionMethod)
             {
-                case Image.CustomSerializer.CompressionMethod.JPEG:
+                case CompressionMethod.JPEG:
                     encoder = new JpegBitmapEncoder { QualityLevel = 90 };
                     break;
-                case Image.CustomSerializer.CompressionMethod.PNG:
+                case CompressionMethod.PNG:
                     encoder = new PngBitmapEncoder();
+                    break;
+                case CompressionMethod.None:
                     break;
             }
 
-            using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
+            if (encoder != null)
             {
-                sharedEncodedImage.Resource.EncodeFrom(instance, encoder);
-                Serializer.Serialize(writer, sharedEncodedImage, context);
+                using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
+                {
+                    sharedEncodedImage.Resource.EncodeFrom(instance, encoder);
+                    Serializer.Serialize(writer, sharedEncodedImage, context);
+                }
+            }
+            else
+            {
+                Serializer.Serialize(writer, instance, context);
             }
         }
 
-        /// <summary>
-        /// Given an serialization stream, this method will decompress
-        /// an image from the stream and return the image via 'target'.
-        /// </summary>
-        /// <param name="reader">Stream to read compressed image from.</param>
-        /// <param name="target">Returns the decompressed image.</param>
-        /// <param name="context">Serialization context.</param>
+        /// <inheritdoc/>
         public void Deserialize(BufferReader reader, ref Image target, SerializationContext context)
         {
             Shared<EncodedImage> encodedImage = null;

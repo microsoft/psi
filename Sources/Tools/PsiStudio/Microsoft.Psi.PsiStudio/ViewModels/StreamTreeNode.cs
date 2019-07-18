@@ -8,8 +8,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
-    using System.Windows.Media;
     using Microsoft.Psi.Audio;
+    using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Common;
@@ -17,10 +17,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
     /// <summary>
     /// Defines a base class for nodes in a tree that hold information about data streams.
     /// </summary>
-    public class StreamTreeNode : ObservableObject, IStreamTreeNode
+    public class StreamTreeNode : ObservableTreeNodeObject
     {
-        private ObservableCollection<IStreamTreeNode> internalChildren;
-        private ReadOnlyObservableCollection<IStreamTreeNode> children;
+        private ObservableCollection<StreamTreeNode> internalChildren;
+        private ReadOnlyObservableCollection<StreamTreeNode> children;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamTreeNode"/> class.
@@ -29,78 +29,124 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public StreamTreeNode(PartitionViewModel partition)
         {
             this.Partition = partition;
+            this.Partition.PropertyChanged += this.Partition_PropertyChanged;
             this.Partition.SessionViewModel.DatasetViewModel.PropertyChanged += this.DatasetViewModel_PropertyChanged;
-            this.internalChildren = new ObservableCollection<IStreamTreeNode>();
-            this.children = new ReadOnlyObservableCollection<IStreamTreeNode>(this.internalChildren);
+            this.internalChildren = new ObservableCollection<StreamTreeNode>();
+            this.children = new ReadOnlyObservableCollection<StreamTreeNode>(this.internalChildren);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Finalizes an instance of the <see cref="StreamTreeNode"/> class.
+        /// </summary>
+        ~StreamTreeNode()
+        {
+            this.Partition.PropertyChanged -= this.Partition_PropertyChanged;
+            this.Partition.SessionViewModel.DatasetViewModel.PropertyChanged -= this.DatasetViewModel_PropertyChanged;
+        }
+
+        /// <summary>
+        /// Gets the average latency of the data stream.
+        /// </summary>
         public int? AverageLatency => this.StreamMetadata?.AverageLatency;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the average message size of the data stream.
+        /// </summary>
         public int? AverageMessageSize => this.StreamMetadata?.AverageMessageSize;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the collection of children for the this stream tree node.
+        /// </summary>
         [Browsable(false)]
-        public ReadOnlyObservableCollection<IStreamTreeNode> Children => this.children;
+        public ReadOnlyObservableCollection<StreamTreeNode> Children => this.children;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the id of the data stream.
+        /// </summary>
         public int? Id => this.StreamMetadata?.Id;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the originating time of the first message in the data stream.
+        /// </summary>
         public DateTime? FirstMessageOriginatingTime => this.StreamMetadata?.FirstMessageOriginatingTime;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the time of the first message in the data stream.
+        /// </summary>
         public DateTime? FirstMessageTime => this.StreamMetadata?.FirstMessageTime;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the originating time of the last message in the data stream.
+        /// </summary>
         public DateTime? LastMessageOriginatingTime => this.StreamMetadata?.LastMessageOriginatingTime;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the time of the last message in the data stream.
+        /// </summary>
         public DateTime? LastMessageTime => this.StreamMetadata?.LastMessageTime;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the number of messages in the data stream.
+        /// </summary>
         public int? MessageCount => this.StreamMetadata?.MessageCount;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether the node represents a stream.
+        /// </summary>
         public bool IsStream => this.StreamMetadata != null;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the name of this stream tree node.
+        /// </summary>
         public string Name { get; protected set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the partition where this stream tree node can be found.
+        /// </summary>
         [Browsable(false)]
         public PartitionViewModel Partition { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the path of the data stream.
+        /// </summary>
         public string Path { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the stream metadata of the data stream.
+        /// </summary>
         [Browsable(false)]
         public IStreamMetadata StreamMetadata { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the stream name of this stream tree node.
+        /// </summary>
         public string StreamName { get; protected set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the type of data of this stream tree node.
+        /// </summary>
         public string TypeName { get; protected set; }
 
         /// <summary>
-        /// Gets the brush for drawing text.
+        /// Gets the opacity of the stream tree node. (Opacity is lowered for all nodes in sessions that are not the current session).
         /// </summary>
-        public Brush TextBrush => this.Partition.SessionViewModel.DatasetViewModel.CurrentSessionViewModel == this.Partition.SessionViewModel ? ViewModelBrushes.SelectedBrush : ViewModelBrushes.StandardBrush;
+        public double UiElementOpacity => this.Partition.SessionViewModel.UiElementOpacity;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value indicating whether this StreamTreeNode can currently be visualized.
+        /// </summary>
         public bool CanVisualize => this.IsStream && this.Partition.SessionViewModel.IsCurrentSession;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value indicating whether this StreamTreeNode should display a context menu.
+        /// </summary>
         public bool CanShowContextMenu
         {
             get
             {
                 // Show the context menu if:
                 //  a) This node is a stream, and
-                //  b) This node is withing the session currently being visualized, and
+                //  b) This node is within the session currently being visualized, and
                 //  c) This node has some context menu items
                 if (this.CanVisualize)
                 {
@@ -125,18 +171,26 @@ namespace Microsoft.Psi.Visualization.ViewModels
             {
                 if (this.IsStream)
                 {
-                    if (PsiStudioContext.Instance.GetStreamType(this) == typeof(AudioBuffer))
+                    if (PsiStudioContext.Instance.GetStreamType(this)?.Name == nameof(PipelineDiagnostics))
                     {
-                        return IconSourcePath.AudioMuted;
+                        return this.Partition.IsLivePartition ? IconSourcePath.DiagnosticsLive : IconSourcePath.Diagnostics;
+                    }
+                    else if (this.InternalChildren.Count > 0)
+                    {
+                        return this.Partition.IsLivePartition ? IconSourcePath.StreamGroupLive : IconSourcePath.StreamGroup;
+                    }
+                    else if (PsiStudioContext.Instance.GetStreamType(this) == typeof(AudioBuffer))
+                    {
+                        return this.Partition.IsLivePartition ? IconSourcePath.StreamAudioMutedLive : IconSourcePath.StreamAudioMuted;
                     }
                     else
                     {
-                        return IconSourcePath.Stream;
+                        return this.Partition.IsLivePartition ? IconSourcePath.StreamLive : IconSourcePath.Stream;
                     }
                 }
                 else
                 {
-                    return IconSourcePath.BlankIcon;
+                    return IconSourcePath.Group;
                 }
             }
         }
@@ -167,15 +221,71 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets the internal collection of children for the this stream tree node.
         /// </summary>
         [Browsable(false)]
-        protected ObservableCollection<IStreamTreeNode> InternalChildren => this.internalChildren;
+        protected ObservableCollection<StreamTreeNode> InternalChildren => this.internalChildren;
 
-        /// <inheritdoc />
-        public IStreamTreeNode AddPath(IStreamMetadata streamMetadata)
+        /// <summary>
+        /// Adds a new store stream tree node based on the specified stream as child of this node.
+        /// </summary>
+        /// <param name="streamMetadata">The stream to add to the tree.</param>
+        /// <returns>A reference to the new stream tree node.</returns>
+        public StreamTreeNode AddPath(IStreamMetadata streamMetadata)
         {
             return this.AddPath(streamMetadata.Name.Split('.'), streamMetadata, 1);
         }
 
-        private IStreamTreeNode AddPath(string[] path, IStreamMetadata streamMetadata, int depth)
+        /// <summary>
+        /// Recursively searches for a stream with a given name, and if it is found selects it and ensures all parent nodes are expanded.
+        /// </summary>
+        /// <param name="streamName">The name of the stream to find.</param>
+        /// <returns>A stream tree node, or null if the stream was not found.</returns>
+        public StreamTreeNode SelectNode(string streamName)
+        {
+            if (this.StreamName == streamName)
+            {
+                this.IsTreeNodeSelected = true;
+                return this;
+            }
+
+            foreach (StreamTreeNode streamTreeNode in this.Children)
+            {
+                StreamTreeNode foundStream = streamTreeNode.SelectNode(streamName);
+                if (foundStream != null)
+                {
+                    this.IsTreeNodeExpanded = true;
+                    return foundStream;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Expands this node and all of its child nodes recursively.
+        /// </summary>
+        public void ExpandAll()
+        {
+            foreach (StreamTreeNode child in this.Children)
+            {
+                child.ExpandAll();
+            }
+
+            this.IsTreeNodeExpanded = true;
+        }
+
+        /// <summary>
+        /// Collapses this node and all of its child nodes recursively.
+        /// </summary>
+        public void CollapseAll()
+        {
+            this.IsTreeNodeExpanded = false;
+
+            foreach (StreamTreeNode child in this.Children)
+            {
+                child.CollapseAll();
+            }
+        }
+
+        private StreamTreeNode AddPath(string[] path, IStreamMetadata streamMetadata, int depth)
         {
             var child = this.InternalChildren.FirstOrDefault(p => p.Name == path[depth - 1]) as StreamTreeNode;
             if (child == null)
@@ -202,11 +312,19 @@ namespace Microsoft.Psi.Visualization.ViewModels
             return child.AddPath(path, streamMetadata, depth + 1);
         }
 
+        private void Partition_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Partition.IsLivePartition))
+            {
+                this.RaisePropertyChanged(nameof(this.IconSource));
+            }
+        }
+
         private void DatasetViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.Partition.SessionViewModel.DatasetViewModel.CurrentSessionViewModel))
             {
-                this.RaisePropertyChanged(nameof(this.TextBrush));
+                this.RaisePropertyChanged(nameof(this.UiElementOpacity));
                 this.RaisePropertyChanged(nameof(this.CanVisualize));
                 this.RaisePropertyChanged(nameof(this.CanShowContextMenu));
             }

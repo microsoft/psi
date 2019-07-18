@@ -28,6 +28,14 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private Point lastMouseLeftButtonDownPoint = new Point(0, 0);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TimelineVisualizationPanel"/> class.
+        /// </summary>
+        public TimelineVisualizationPanel()
+        {
+            this.VisualizationObjects.CollectionChanged += this.VisualizationObjects_CollectionChanged;
+        }
+
+        /// <summary>
         /// Gets the Mouse Position the last time the user clicked in this panel.
         /// </summary>
         public Point LastMouseLeftButtonDownPoint => this.lastMouseLeftButtonDownPoint;
@@ -139,6 +147,12 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <inheritdoc />
+        public override bool ShowZoomToPanelMenuItem => true;
+
+        /// <inheritdoc />
+        public override bool CanZoomToPanel => this.VisualizationObjects.Count > 0;
+
+        /// <inheritdoc />
         protected override DataTemplate CreateDefaultViewTemplate()
         {
             return XamlHelper.CreateTemplate(this.GetType(), typeof(TimelineVisualizationPanelView));
@@ -180,6 +194,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             }
 
             return target as TimelineScroller;
+        }
+
+        private void VisualizationObjects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.RaisePropertyChanged(nameof(this.CanZoomToPanel));
         }
     }
 }

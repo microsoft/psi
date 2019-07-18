@@ -4,14 +4,24 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Psi.Data;
+    using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
     /// Represents a stream visualization object.
     /// </summary>
     public interface IStreamVisualizationObject
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the source of the stream visualization object is live.
+        /// </summary>
+        bool IsLive { get; set; }
+
+        /// <summary>
+        /// Gets the stream binding for this visualizationobject.
+        /// </summary>
+        StreamBinding StreamBinding { get; }
+
         /// <summary>
         /// Updates the binding between a stream visualization object and a data source.
         /// </summary>

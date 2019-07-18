@@ -74,6 +74,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <inheritdoc/>
+        public override bool ShowZoomToStreamMenuItem => true;
+
         /// <summary>
         /// Gets a value indicating whether the visualization object is using summarization.
         /// </summary>

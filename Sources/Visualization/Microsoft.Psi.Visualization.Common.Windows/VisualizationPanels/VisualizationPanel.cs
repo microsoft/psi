@@ -3,14 +3,18 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Media;
     using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -18,8 +22,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     /// Represents the base class that visualization panels derive from.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
-    public abstract class VisualizationPanel : ObservableObject
+    public abstract class VisualizationPanel : ObservableTreeNodeObject
     {
+        /// <summary>
+        /// The zoom to panel command.
+        /// </summary>
+        private RelayCommand zoomToPanelCommand;
+
+        /// <summary>
+        /// The delete visualization command.
+        /// </summary>
         private RelayCommand<VisualizationObject> deleteVisualizationCommand;
 
         /// <summary>
@@ -33,11 +45,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private object visualizationObjectsLock;
 
         /// <summary>
-        /// Determines whether the visualization panel is initially expanded when shown in a tree view.
-        /// </summary>
-        private bool isTreeNodeExpanded = true;
-
-        /// <summary>
         /// The template to use when creating the view for this panel.
         /// </summary>
         private DataTemplate defaultViewTemplate = null;
@@ -48,6 +55,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         public VisualizationPanel()
         {
             this.InitNew();
+            this.IsTreeNodeExpanded = true;
         }
 
         /// <summary>
@@ -100,6 +108,20 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         public bool IsCurrentPanel => this.Container.CurrentPanel == this;
 
         /// <summary>
+        /// Gets a value indicating whether we should display the zoom to panel menuitem.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual bool ShowZoomToPanelMenuItem => false;
+
+        /// <summary>
+        /// Gets a value indicating whether or not this panel can currently be zoomed to.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual bool CanZoomToPanel => false;
+
+        /// <summary>
         /// Gets the navigator associated with this panel.
         /// </summary>
         [Browsable(false)]
@@ -114,14 +136,22 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         public ObservableCollection<VisualizationObject> VisualizationObjects { get; internal set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the visualization panel is initially expanded when shown in a tree view.
+        /// Gets the zoom to panel command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public bool IsTreeNodeExpanded
+        public RelayCommand ZoomToPanelCommand
         {
-            get => this.isTreeNodeExpanded;
-            set => this.Set(nameof(this.IsTreeNodeExpanded), ref this.isTreeNodeExpanded, value);
+            get
+            {
+                if (this.zoomToPanelCommand == null)
+                {
+                    this.zoomToPanelCommand = new RelayCommand(
+                        () => this.ZoomToPanel());
+                }
+
+                return this.zoomToPanelCommand;
+            }
         }
 
         /// <summary>
@@ -136,10 +166,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 if (this.deleteVisualizationCommand == null)
                 {
                     this.deleteVisualizationCommand = new RelayCommand<VisualizationObject>(
-                        o =>
-                        {
-                            this.RemoveVisualizationObject(o);
-                        });
+                        (o) => this.RemoveVisualizationObject(o));
                 }
 
                 return this.deleteVisualizationCommand;
@@ -164,19 +191,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Creates and adds a visualization object of the specified type.
-        /// </summary>
-        /// <typeparam name="T">The type of the visualization object to add.</typeparam>
-        /// <returns>The newly created visualization object.</returns>
-        public T AddVisualizationObject<T>()
-            where T : VisualizationObject, new()
-        {
-            T vo = new T();
-            this.AddVisualizationObject(vo);
-            return vo;
-        }
-
-        /// <summary>
         /// Brings a visualization object to the front.
         /// </summary>
         /// <param name="visualizationObject">The visualization object to bring to front.</param>
@@ -197,33 +211,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             while (this.VisualizationObjects.Count > 0)
             {
                 this.RemoveVisualizationObject(this.VisualizationObjects[0]);
-            }
-        }
-
-        /// <summary>
-        /// Removes a visualization object specified by a view model.
-        /// </summary>
-        /// <param name="visualizationObject">The visualization object to be removed.</param>
-        public void RemoveVisualizationObject(VisualizationObject visualizationObject)
-        {
-            // change the current visualization object
-            if (this.currentVisualizationObject == visualizationObject)
-            {
-                this.currentVisualizationObject = null;
-            }
-
-            // If the visualization object being deleted is the stream being snapped to, then reset the snap to stream object
-            if (visualizationObject == this.Container.SnapToVisualizationObject)
-            {
-                this.Container.SnapToVisualizationObject = null;
-            }
-
-            visualizationObject.RemoveFromPanel();
-            this.VisualizationObjects.Remove(visualizationObject);
-
-            if ((this.currentVisualizationObject == null) && (this.VisualizationObjects.Count > 0))
-            {
-                this.CurrentVisualizationObject = this.VisualizationObjects.Last();
             }
         }
 
@@ -293,6 +280,55 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <param name="e">The event arguments.</param>
         protected virtual void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+        }
+
+        private void ZoomToPanel()
+        {
+            // Get a list of time intervals for all stream visualization objects in this panel
+            List<TimeInterval> streamIntervals = new List<TimeInterval>();
+            foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
+            {
+                IStreamVisualizationObject streamVisualizationObject = visualizationObject as IStreamVisualizationObject;
+                IStreamMetadata streamMetadata = streamVisualizationObject?.StreamBinding?.StreamMetadata;
+                if (streamMetadata != null)
+                {
+                    streamIntervals.Add(new TimeInterval(streamMetadata.FirstMessageOriginatingTime, streamMetadata.LastMessageOriginatingTime));
+                }
+            }
+
+            // Zoom to the coverage of the stream visualization objects
+            if (streamIntervals.Count > 0)
+            {
+                TimeInterval panelInterval = TimeInterval.Coverage(streamIntervals);
+                this.Container.Navigator.Zoom(panelInterval.Left, panelInterval.Right);
+            }
+        }
+
+        /// <summary>
+        /// Removes a visualization object specified by a view model.
+        /// </summary>
+        /// <param name="visualizationObject">The visualization object to be removed.</param>
+        private void RemoveVisualizationObject(VisualizationObject visualizationObject)
+        {
+            // change the current visualization object
+            if (this.currentVisualizationObject == visualizationObject)
+            {
+                this.currentVisualizationObject = null;
+            }
+
+            // If the visualization object being deleted is the stream being snapped to, then reset the snap to stream object
+            if (visualizationObject == this.Container.SnapToVisualizationObject)
+            {
+                this.Container.SnapToVisualizationObject = null;
+            }
+
+            visualizationObject.RemoveFromPanel();
+            this.VisualizationObjects.Remove(visualizationObject);
+
+            if ((this.currentVisualizationObject == null) && (this.VisualizationObjects.Count > 0))
+            {
+                this.CurrentVisualizationObject = this.VisualizationObjects.Last();
+            }
         }
 
         private void Container_PropertyChanged(object sender, PropertyChangedEventArgs e)

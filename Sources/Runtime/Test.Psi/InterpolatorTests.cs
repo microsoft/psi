@@ -151,6 +151,28 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void NearestValue_OpenIntervalTest()
+        {
+            var interpolatorRightOpen = Match.Best<int>(new RelativeTimeInterval(TimeSpan.FromTicks(-6), true, TimeSpan.FromTicks(4), false));
+            var interpolatorLeftOpen = Match.Best<int>(new RelativeTimeInterval(TimeSpan.FromTicks(-4), false, TimeSpan.FromTicks(6), true));
+            var messages = new Message<int>[]
+            {
+                new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
+                new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+            };
+
+            // Interpolate should not match the right end of the interval
+            var result = interpolatorRightOpen.Match(new DateTime(26), messages, null);
+            Assert.AreEqual(this.MakeResult(messages[1]), result);
+
+            // Interpolate should not match the left end of the interval
+            result = interpolatorLeftOpen.Match(new DateTime(24), messages, null);
+            Assert.AreEqual(this.MakeResult(messages[2]), result);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void InterpolatorKinds()
         {
             var tolerance = TimeSpan.FromSeconds(1);

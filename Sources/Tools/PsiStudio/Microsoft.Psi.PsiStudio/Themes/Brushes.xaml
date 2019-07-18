@@ -25,22 +25,36 @@
     <Color x:Key="DarkBackgroundColor">#252526</Color>
     <Color x:Key="MediumBackgroundColor">#2D2D30</Color>
     <Color x:Key="LightBackgroundColor">#3F3F46</Color>
+    
     <Color x:Key="MediumBorderColor">#2D2D30</Color>
     <Color x:Key="LightBorderColor">#3F3F46</Color>
 
-    <Color x:Key="CursorColor">#B0B0B0</Color>
+    <Color x:Key="CursorColor">#2887CB</Color>
+    <Color x:Key="LiveCursorColor">#46E0FF</Color>
     <Color x:Key="SelectionStartColor">#008000</Color>
     <Color x:Key="SelectionEndColor">#DB1000</Color>
 
-    <SolidColorBrush x:Key="MediumBackgroundColorBrush" Color="{StaticResource MediumBackgroundColor}"/>
+    <Color x:Key="TimelineLightColor">#4F4F56</Color>
+    <Color x:Key="TimelineDarkColor">#323334</Color>
+    <Color x:Key="TimelineDividerColor">#C0C0C0</Color>
+
     <SolidColorBrush x:Key="DarkBackgroundColorBrush" Color="{StaticResource DarkBackgroundColor}"/>
+    <SolidColorBrush x:Key="MediumBackgroundColorBrush" Color="{StaticResource MediumBackgroundColor}"/>
+    <SolidColorBrush x:Key="LightBackgroundColorBrush" Color="{StaticResource LightBackgroundColor}"/>
+
     <SolidColorBrush x:Key="MediumBorderColorBrush" Color="{StaticResource MediumBorderColor}"/>
     <SolidColorBrush x:Key="LightBorderColorBrush" Color="{StaticResource LightBorderColor}"/>
+    
     <SolidColorBrush x:Key="DebugBrush" Color="Magenta"/>
 
     <SolidColorBrush x:Key="CursorBrush" Color="{StaticResource CursorColor}"/>
+    <SolidColorBrush x:Key="LiveCursorBrush" Color="{StaticResource LiveCursorColor}"/>
     <SolidColorBrush x:Key="SelectionStartBrush" Color="{StaticResource SelectionStartColor}"/>
     <SolidColorBrush x:Key="SelectionEndBrush" Color="{StaticResource SelectionEndColor}"/>
+
+    <SolidColorBrush x:Key="TimelineLightBrush" Color="{StaticResource TimelineLightColor}"/>
+    <SolidColorBrush x:Key="TimelineDarkBrush" Color="{StaticResource TimelineDarkColor}"/>
+    <SolidColorBrush x:Key="TimelineDividerBrush" Color="{StaticResource TimelineDividerColor}"/>
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlNormalBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlDisabledBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
