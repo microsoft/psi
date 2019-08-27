@@ -2,6 +2,7 @@ var searchData=
 [
   ['acousticfeaturesextractor',['AcousticFeaturesExtractor',['../class_microsoft_1_1_psi_1_1_audio_1_1_acoustic_features_extractor.html',1,'Microsoft::Psi::Audio']]],
   ['acousticfeaturesextractorconfiguration',['AcousticFeaturesExtractorConfiguration',['../class_microsoft_1_1_psi_1_1_audio_1_1_acoustic_features_extractor_configuration.html',1,'Microsoft::Psi::Audio']]],
+  ['adjacentvaluesinterpolator',['AdjacentValuesInterpolator',['../class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_adjacent_values_interpolator.html',1,'Microsoft::Psi::Common::Interpolators']]],
   ['aggregator',['Aggregator',['../class_microsoft_1_1_psi_1_1_components_1_1_aggregator.html',1,'Microsoft::Psi::Components']]],
   ['animatedmodel3dvisualizationobjectconfiguration',['AnimatedModel3DVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_animated_model3_d_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['annotatedevent',['AnnotatedEvent',['../class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotated_event.html',1,'Microsoft::Psi::Data::Annotations']]],
@@ -34,6 +35,7 @@ var searchData=
   ['audioresamplerconfiguration',['AudioResamplerConfiguration',['../class_microsoft_1_1_psi_1_1_audio_1_1_audio_resampler_configuration.html',1,'Microsoft::Psi::Audio']]],
   ['audiovisualizationobjectconfiguration',['AudioVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_audio_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['authentication',['Authentication',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_authentication.html',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
+  ['available',['Available',['../class_microsoft_1_1_psi_1_1_available.html',1,'Microsoft::Psi']]],
   ['axisinfo',['AxisInfo',['../class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_axis_info.html',1,'Microsoft::Psi::Visualization::Common']]],
   ['azureauthentication',['AzureAuthentication',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_service_1_1_azure_authentication.html',1,'Microsoft::Psi::CognitiveServices::Speech::Service']]],
   ['azurespeechrecognizer',['AzureSpeechRecognizer',['../class_microsoft_1_1_psi_1_1_cognitive_services_1_1_speech_1_1_azure_speech_recognizer.html',1,'Microsoft::Psi::CognitiveServices::Speech']]],

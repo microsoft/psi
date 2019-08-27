@@ -55,7 +55,6 @@ var searchData=
   ['contrast',['Contrast',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_configuration.html#a886221dc0b79ebc1507577d56186a8ba',1,'Microsoft::Psi::Media::MediaCaptureConfiguration']]],
   ['contrastinfo',['ContrastInfo',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_info.html#a9ccbd2a1b987de2192aa4e547218f30f',1,'Microsoft::Psi::Media::MediaCaptureInfo']]],
   ['coordinatesystem',['CoordinateSystem',['../class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration_1_1_camera_calibration.html#ac6b28dd92400656ba592425c675135d9',1,'Microsoft::Psi::Calibration::SystemCalibration::CameraCalibration']]],
-  ['countbytes',['CountBytes',['../class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#ae769b7cc29368bf73f4fc767219d218b',1,'Microsoft::Psi::Imaging::EncodedImage']]],
   ['currentpanel',['CurrentPanel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_visualization_container.html#a79cf454f21014ab4d4645d3375a8e5c3',1,'Microsoft::Psi::Visualization::VisualizationObjects::VisualizationContainer']]],
   ['currentscale',['CurrentScale',['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#a474b8119ee16274162981882aa542802',1,'Microsoft::Msagl::WpfGraphControl::GraphViewer']]],
   ['currentvalue',['CurrentValue',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a5a253ac3d1f1c4216ece93aff09fe356',1,'Microsoft::Psi::Visualization::VisualizationObjects::StreamVisualizationObject']]],

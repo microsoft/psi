@@ -78,7 +78,7 @@ $(function() {
 <p>Defines an encoded image.  
  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#details">More...</a></p>
 
-<p>Inherits IDisposable, and IDisposable.</p>
+<p>Inherits IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -91,66 +91,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afbf0c205227b15531106ff61e5b956db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#afbf0c205227b15531106ff61e5b956db">Dispose</a> ()</td></tr>
 <tr class="memdesc:afbf0c205227b15531106ff61e5b956db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the image.  <a href="#afbf0c205227b15531106ff61e5b956db">More...</a><br /></td></tr>
 <tr class="separator:afbf0c205227b15531106ff61e5b956db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc2448c321a811c9493ac388dcdb8d01"><td class="memItemLeft" align="right" valign="top">Stream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#abc2448c321a811c9493ac388dcdb8d01">GetStream</a> ()</td></tr>
+<tr class="memdesc:abc2448c321a811c9493ac388dcdb8d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the image data as stream.  <a href="#abc2448c321a811c9493ac388dcdb8d01">More...</a><br /></td></tr>
+<tr class="separator:abc2448c321a811c9493ac388dcdb8d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7737be9eefcabbed6035b7b34f91a848"><td class="memItemLeft" align="right" valign="top">byte []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a7737be9eefcabbed6035b7b34f91a848">GetBuffer</a> ()</td></tr>
 <tr class="memdesc:a7737be9eefcabbed6035b7b34f91a848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the image data as a byte array.  <a href="#a7737be9eefcabbed6035b7b34f91a848">More...</a><br /></td></tr>
 <tr class="separator:a7737be9eefcabbed6035b7b34f91a848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23fb34bd2cbb5b6fc47f0b61d3078b88"><td class="memItemLeft" align="right" valign="top">byte []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a23fb34bd2cbb5b6fc47f0b61d3078b88">GetBuffer</a> (int newLength)</td></tr>
-<tr class="memdesc:a23fb34bd2cbb5b6fc47f0b61d3078b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the image data as a byte array.  <a href="#a23fb34bd2cbb5b6fc47f0b61d3078b88">More...</a><br /></td></tr>
-<tr class="separator:a23fb34bd2cbb5b6fc47f0b61d3078b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10a1c00ef041d54dce5f18154cf1d7de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a10a1c00ef041d54dce5f18154cf1d7de">EncodeFrom</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> image, <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html">IBitmapEncoder</a> encoder)</td></tr>
-<tr class="memdesc:a10a1c00ef041d54dce5f18154cf1d7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compresses an image using the specified encoder.  <a href="#a10a1c00ef041d54dce5f18154cf1d7de">More...</a><br /></td></tr>
-<tr class="separator:a10a1c00ef041d54dce5f18154cf1d7de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc2b4049e83c090efcf76fe241d45b57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#abc2b4049e83c090efcf76fe241d45b57">DecodeTo</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> image)</td></tr>
-<tr class="memdesc:abc2b4049e83c090efcf76fe241d45b57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompresses the current image into another another image.  <a href="#abc2b4049e83c090efcf76fe241d45b57">More...</a><br /></td></tr>
-<tr class="separator:abc2b4049e83c090efcf76fe241d45b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75819442a8b58d54a91429be091d3799"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a75819442a8b58d54a91429be091d3799">EncodedImage</a> ()</td></tr>
-<tr class="memdesc:a75819442a8b58d54a91429be091d3799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html" title="Defines an encoded image.">EncodedImage</a> class.  <a href="#a75819442a8b58d54a91429be091d3799">More...</a><br /></td></tr>
-<tr class="separator:a75819442a8b58d54a91429be091d3799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a5b6bdca68dd226b6d535d9b244a1ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a2a5b6bdca68dd226b6d535d9b244a1ea">EncodedImage</a> (int width, int height, byte[] contents)</td></tr>
-<tr class="memdesc:a2a5b6bdca68dd226b6d535d9b244a1ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html" title="Defines an encoded image.">EncodedImage</a> class.  <a href="#a2a5b6bdca68dd226b6d535d9b244a1ea">More...</a><br /></td></tr>
-<tr class="separator:a2a5b6bdca68dd226b6d535d9b244a1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbf0c205227b15531106ff61e5b956db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#afbf0c205227b15531106ff61e5b956db">Dispose</a> ()</td></tr>
-<tr class="memdesc:afbf0c205227b15531106ff61e5b956db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the image.  <a href="#afbf0c205227b15531106ff61e5b956db">More...</a><br /></td></tr>
-<tr class="separator:afbf0c205227b15531106ff61e5b956db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7737be9eefcabbed6035b7b34f91a848"><td class="memItemLeft" align="right" valign="top">byte []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a7737be9eefcabbed6035b7b34f91a848">GetBuffer</a> ()</td></tr>
-<tr class="memdesc:a7737be9eefcabbed6035b7b34f91a848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the image data as a byte array.  <a href="#a7737be9eefcabbed6035b7b34f91a848">More...</a><br /></td></tr>
-<tr class="separator:a7737be9eefcabbed6035b7b34f91a848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23fb34bd2cbb5b6fc47f0b61d3078b88"><td class="memItemLeft" align="right" valign="top">byte []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a23fb34bd2cbb5b6fc47f0b61d3078b88">GetBuffer</a> (int newLength)</td></tr>
-<tr class="memdesc:a23fb34bd2cbb5b6fc47f0b61d3078b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the image data as a byte array.  <a href="#a23fb34bd2cbb5b6fc47f0b61d3078b88">More...</a><br /></td></tr>
-<tr class="separator:a23fb34bd2cbb5b6fc47f0b61d3078b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf3f022c109d74e9eb69a3894d62bd69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#abf3f022c109d74e9eb69a3894d62bd69">EncodeFrom</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> image, BitmapEncoder encoder)</td></tr>
-<tr class="memdesc:abf3f022c109d74e9eb69a3894d62bd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compresses an image using the specified encoder.  <a href="#abf3f022c109d74e9eb69a3894d62bd69">More...</a><br /></td></tr>
-<tr class="separator:abf3f022c109d74e9eb69a3894d62bd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab684bb8149c379170d10bc0f60f501c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">Imaging.PixelFormat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#ab684bb8149c379170d10bc0f60f501c5">GetPixelFormat</a> ()</td></tr>
-<tr class="memdesc:ab684bb8149c379170d10bc0f60f501c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pixel format of the image.  <a href="#ab684bb8149c379170d10bc0f60f501c5">More...</a><br /></td></tr>
-<tr class="separator:ab684bb8149c379170d10bc0f60f501c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc2b4049e83c090efcf76fe241d45b57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#abc2b4049e83c090efcf76fe241d45b57">DecodeTo</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> image)</td></tr>
-<tr class="memdesc:abc2b4049e83c090efcf76fe241d45b57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decompresses the current image into another another image.  <a href="#abc2b4049e83c090efcf76fe241d45b57">More...</a><br /></td></tr>
-<tr class="separator:abc2b4049e83c090efcf76fe241d45b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66ec048824a3657c9a8e0785e9cb8851"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a66ec048824a3657c9a8e0785e9cb8851">EncodeFrom</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> image, Action&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>, Stream &gt; encodeFn)</td></tr>
+<tr class="memdesc:a66ec048824a3657c9a8e0785e9cb8851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compresses an image using the specified encoder.  <a href="#a66ec048824a3657c9a8e0785e9cb8851">More...</a><br /></td></tr>
+<tr class="separator:a66ec048824a3657c9a8e0785e9cb8851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:ae7b1d8bc047d63290b1bd3509d5a9c22"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#ae7b1d8bc047d63290b1bd3509d5a9c22">Width</a><code> [get]</code></td></tr>
-<tr class="memdesc:ae7b1d8bc047d63290b1bd3509d5a9c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the width of the image in pixels.  <a href="#ae7b1d8bc047d63290b1bd3509d5a9c22">More...</a><br /></td></tr>
-<tr class="separator:ae7b1d8bc047d63290b1bd3509d5a9c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fb01247d41aae3f2c3a85b4239da343"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a5fb01247d41aae3f2c3a85b4239da343">Height</a><code> [get]</code></td></tr>
-<tr class="memdesc:a5fb01247d41aae3f2c3a85b4239da343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the image in pixels.  <a href="#a5fb01247d41aae3f2c3a85b4239da343">More...</a><br /></td></tr>
-<tr class="separator:a5fb01247d41aae3f2c3a85b4239da343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae769b7cc29368bf73f4fc767219d218b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#ae769b7cc29368bf73f4fc767219d218b">CountBytes</a><code> [get]</code></td></tr>
-<tr class="memdesc:ae769b7cc29368bf73f4fc767219d218b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets number of bytes of data in the image.  <a href="#ae769b7cc29368bf73f4fc767219d218b">More...</a><br /></td></tr>
-<tr class="separator:ae769b7cc29368bf73f4fc767219d218b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a032bf309fb3d7cbc6320457d3f593016"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a032bf309fb3d7cbc6320457d3f593016">Width</a><code> [get]</code></td></tr>
+<tr class="memdesc:a032bf309fb3d7cbc6320457d3f593016"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the width of the image in pixels.  <a href="#a032bf309fb3d7cbc6320457d3f593016">More...</a><br /></td></tr>
+<tr class="separator:a032bf309fb3d7cbc6320457d3f593016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e403cd969268861cac167a47cd4aa0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#aa8e403cd969268861cac167a47cd4aa0">Height</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa8e403cd969268861cac167a47cd4aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the image in pixels.  <a href="#aa8e403cd969268861cac167a47cd4aa0">More...</a><br /></td></tr>
+<tr class="separator:aa8e403cd969268861cac167a47cd4aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines an encoded image. </p>
-<p>Defines an encoded image. Currently only the following image formats are supported:</p>
-<ul>
-<li>PixelFormat.BGR_24bpp</li>
-<li>PixelFormat.Gray_8bpp</li>
-<li>PixelFormats.BGRX_32bpp. </li>
-</ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a75819442a8b58d54a91429be091d3799"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75819442a8b58d54a91429be091d3799">&#9670;&nbsp;</a></span>EncodedImage() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a75819442a8b58d54a91429be091d3799">&#9670;&nbsp;</a></span>EncodedImage() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,70 +133,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="a2a5b6bdca68dd226b6d535d9b244a1ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a5b6bdca68dd226b6d535d9b244a1ea">&#9670;&nbsp;</a></span>EncodedImage() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Microsoft.Psi.Imaging.EncodedImage.EncodedImage </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">byte []&#160;</td>
-          <td class="paramname"><em>contents</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html" title="Defines an encoded image.">EncodedImage</a> class. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">width</td><td>Width of image in pixels.</td></tr>
-    <tr><td class="paramname">height</td><td>Height of image in pixels.</td></tr>
-    <tr><td class="paramname">contents</td><td>Byte array used to initialize the image data.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a75819442a8b58d54a91429be091d3799"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75819442a8b58d54a91429be091d3799">&#9670;&nbsp;</a></span>EncodedImage() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Microsoft.Psi.Imaging.EncodedImage.EncodedImage </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html" title="Defines an encoded image.">EncodedImage</a> class. </p>
-
-</div>
-</div>
-<a id="a2a5b6bdca68dd226b6d535d9b244a1ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a5b6bdca68dd226b6d535d9b244a1ea">&#9670;&nbsp;</a></span>EncodedImage() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5b6bdca68dd226b6d535d9b244a1ea">&#9670;&nbsp;</a></span>EncodedImage() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,60 +177,8 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abc2b4049e83c090efcf76fe241d45b57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc2b4049e83c090efcf76fe241d45b57">&#9670;&nbsp;</a></span>DecodeTo() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Imaging.EncodedImage.DecodeTo </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
-          <td class="paramname"><em>image</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decompresses the current image into another another image. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image used to store decompressed results.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="abc2b4049e83c090efcf76fe241d45b57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc2b4049e83c090efcf76fe241d45b57">&#9670;&nbsp;</a></span>DecodeTo() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Imaging.EncodedImage.DecodeTo </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
-          <td class="paramname"><em>image</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decompresses the current image into another another image. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image used to store decompressed results.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="afbf0c205227b15531106ff61e5b956db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbf0c205227b15531106ff61e5b956db">&#9670;&nbsp;</a></span>Dispose() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afbf0c205227b15531106ff61e5b956db">&#9670;&nbsp;</a></span>Dispose()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,27 +196,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="afbf0c205227b15531106ff61e5b956db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbf0c205227b15531106ff61e5b956db">&#9670;&nbsp;</a></span>Dispose() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Imaging.EncodedImage.Dispose </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Releases the image. </p>
-
-</div>
-</div>
-<a id="a10a1c00ef041d54dce5f18154cf1d7de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10a1c00ef041d54dce5f18154cf1d7de">&#9670;&nbsp;</a></span>EncodeFrom() <span class="overload">[1/2]</span></h2>
+<a id="a66ec048824a3657c9a8e0785e9cb8851"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66ec048824a3657c9a8e0785e9cb8851">&#9670;&nbsp;</a></span>EncodeFrom()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,8 +211,8 @@ Properties</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html">IBitmapEncoder</a>&#160;</td>
-          <td class="paramname"><em>encoder</em>&#160;</td>
+          <td class="paramtype">Action&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>, Stream &gt;&#160;</td>
+          <td class="paramname"><em>encodeFn</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -396,44 +226,7 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">image</td><td>Image to compress.</td></tr>
-    <tr><td class="paramname">encoder</td><td>Encoder to use to compress.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="abf3f022c109d74e9eb69a3894d62bd69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf3f022c109d74e9eb69a3894d62bd69">&#9670;&nbsp;</a></span>EncodeFrom() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Imaging.EncodedImage.EncodeFrom </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">BitmapEncoder&#160;</td>
-          <td class="paramname"><em>encoder</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Compresses an image using the specified encoder. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to compress.</td></tr>
-    <tr><td class="paramname">encoder</td><td>Encoder to use to compress.</td></tr>
+    <tr><td class="paramname">encodeFn</td><td>Encoder to use to compress.</td></tr>
   </table>
   </dd>
 </dl>
@@ -441,7 +234,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="a7737be9eefcabbed6035b7b34f91a848"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7737be9eefcabbed6035b7b34f91a848">&#9670;&nbsp;</a></span>GetBuffer() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7737be9eefcabbed6035b7b34f91a848">&#9670;&nbsp;</a></span>GetBuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -460,14 +253,14 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a7737be9eefcabbed6035b7b34f91a848"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7737be9eefcabbed6035b7b34f91a848">&#9670;&nbsp;</a></span>GetBuffer() <span class="overload">[2/4]</span></h2>
+<a id="abc2448c321a811c9493ac388dcdb8d01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc2448c321a811c9493ac388dcdb8d01">&#9670;&nbsp;</a></span>GetStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">byte [] Microsoft.Psi.Imaging.EncodedImage.GetBuffer </td>
+          <td class="memname">Stream Microsoft.Psi.Imaging.EncodedImage.GetStream </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -475,112 +268,14 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the image data as a byte array. </p>
-<dl class="section return"><dt>Returns</dt><dd>Byte array containing the image data.</dd></dl>
-
-</div>
-</div>
-<a id="a23fb34bd2cbb5b6fc47f0b61d3078b88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23fb34bd2cbb5b6fc47f0b61d3078b88">&#9670;&nbsp;</a></span>GetBuffer() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">byte [] Microsoft.Psi.Imaging.EncodedImage.GetBuffer </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>newLength</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the image data as a byte array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">newLength</td><td>Number of bytes to return.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>/&gt; </p><dl class="section return"><dt>Returns</dt><dd>Byte array containing the image data.</dd></dl>
-
-</div>
-</div>
-<a id="a23fb34bd2cbb5b6fc47f0b61d3078b88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23fb34bd2cbb5b6fc47f0b61d3078b88">&#9670;&nbsp;</a></span>GetBuffer() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">byte [] Microsoft.Psi.Imaging.EncodedImage.GetBuffer </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>newLength</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the image data as a byte array. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">newLength</td><td>Number of bytes to return.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>/&gt; </p><dl class="section return"><dt>Returns</dt><dd>Byte array containing the image data.</dd></dl>
-
-</div>
-</div>
-<a id="ab684bb8149c379170d10bc0f60f501c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab684bb8149c379170d10bc0f60f501c5">&#9670;&nbsp;</a></span>GetPixelFormat()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">Imaging.PixelFormat</a> Microsoft.Psi.Imaging.EncodedImage.GetPixelFormat </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the pixel format of the image. </p>
-<dl class="section return"><dt>Returns</dt><dd>Returns the image's pixel format.</dd></dl>
+<p>Returns the image data as stream. </p>
+<dl class="section return"><dt>Returns</dt><dd>Stream containing the image data.</dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
-<a id="ae769b7cc29368bf73f4fc767219d218b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae769b7cc29368bf73f4fc767219d218b">&#9670;&nbsp;</a></span>CountBytes</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.Imaging.EncodedImage.CountBytes</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets number of bytes of data in the image. </p>
-
-</div>
-</div>
-<a id="a5fb01247d41aae3f2c3a85b4239da343"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5fb01247d41aae3f2c3a85b4239da343">&#9670;&nbsp;</a></span>Height</h2>
+<a id="aa8e403cd969268861cac167a47cd4aa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8e403cd969268861cac167a47cd4aa0">&#9670;&nbsp;</a></span>Height</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -603,8 +298,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="ae7b1d8bc047d63290b1bd3509d5a9c22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7b1d8bc047d63290b1bd3509d5a9c22">&#9670;&nbsp;</a></span>Width</h2>
+<a id="a032bf309fb3d7cbc6320457d3f593016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a032bf309fb3d7cbc6320457d3f593016">&#9670;&nbsp;</a></span>Width</h2>
 
 <div class="memitem">
 <div class="memproto">

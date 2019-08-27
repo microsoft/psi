@@ -1,13 +1,12 @@
 var searchData=
 [
-  ['sampler',['Sampler',['../class_microsoft_1_1_psi_1_1_components_1_1_sampler.html',1,'Microsoft::Psi::Components']]],
   ['scatterplanardirectionvisualizationobjectconfiguration',['ScatterPlanarDirectionVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_planar_direction_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['scatterplotvisualizationobjectconfiguration',['ScatterPlotVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_plot_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['scatterrectanglevisualizationobjectconfiguration',['ScatterRectangleVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_rectangle_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],
   ['scheduler',['Scheduler',['../class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html',1,'Microsoft::Psi::Scheduling']]],
   ['schedulercontext',['SchedulerContext',['../class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler_context.html',1,'Microsoft::Psi::Scheduling']]],
   ['serializationcontext',['SerializationContext',['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_context.html',1,'Microsoft::Psi::Serialization']]],
-  ['serializationhandler',['SerializationHandler',['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html',1,'Microsoft.Psi.Serialization.SerializationHandler'],['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html',1,'Microsoft.Psi.Serialization.SerializationHandler&lt; T &gt;']]],
+  ['serializationhandler',['SerializationHandler',['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html',1,'Microsoft.Psi.Serialization.SerializationHandler&lt; T &gt;'],['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html',1,'Microsoft.Psi.Serialization.SerializationHandler']]],
   ['serializationhandler_3c_20sharedcontainer_3c_20t_20_3e_20_3e',['SerializationHandler&lt; SharedContainer&lt; T &gt; &gt;',['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html',1,'Microsoft::Psi::Serialization']]],
   ['serializationhandler_3c_20t_20_3e',['SerializationHandler&lt; T &gt;',['../class_microsoft_1_1_psi_1_1_serialization_1_1_serialization_handler.html',1,'Microsoft::Psi::Serialization']]],
   ['serializer',['Serializer',['../class_microsoft_1_1_psi_1_1_serializer.html',1,'Microsoft::Psi']]],

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['obsoletetime',['ObsoleteTime',['../struct_microsoft_1_1_psi_1_1_match_result.html#aaeba45e343ccb512269ac1d25a34b55e',1,'Microsoft::Psi::MatchResult']]],
+  ['obsoletetime',['ObsoleteTime',['../struct_microsoft_1_1_psi_1_1_interpolation_result.html#aadf50ab4874d151fb5b79deb57d95a23',1,'Microsoft::Psi::InterpolationResult']]],
   ['oldcurrent',['OldCurrent',['../class_microsoft_1_1_psi_1_1_media___interop_1_1_r_g_b_camera_enumerator.html#a715a6be25d16bbbf791e21a353272b30',1,'Microsoft::Psi::Media_Interop::RGBCameraEnumerator']]],
   ['origin',['Origin',['../class_microsoft_1_1_psi_1_1_clock.html#ae78d3bf0aedcc290df90b88c26cb52d6',1,'Microsoft::Psi::Clock']]],
   ['originatinglifetime',['OriginatingLifetime',['../class_microsoft_1_1_psi_1_1_psi_stream_metadata.html#a28081738c318288e305af7c636c7c980',1,'Microsoft::Psi::PsiStreamMetadata']]],

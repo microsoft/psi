@@ -28,7 +28,6 @@ var searchData=
   ['consumerproducer_3c_20string_2c_20audiobuffer_20_3e',['ConsumerProducer&lt; string, AudioBuffer &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
   ['consumerproducer_3c_20string_2c_20intentdata_20_3e',['ConsumerProducer&lt; string, IntentData &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
   ['consumerproducer_3c_20string_2c_20string_20_3e',['ConsumerProducer&lt; string, string &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
-  ['consumerproducer_3c_20t_2c_20t_20_3e',['ConsumerProducer&lt; T, T &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
   ['consumerproducer_3c_20tinput_2c_20toutput_20_3e',['ConsumerProducer&lt; TInput, TOutput &gt;',['../class_microsoft_1_1_psi_1_1_components_1_1_consumer_producer.html',1,'Microsoft::Psi::Components']]],
   ['coordinatesystemview3d',['CoordinateSystemView3D',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals3_d_1_1_coordinate_system_view3_d.html',1,'Microsoft::Psi::Visualization::Views::Visuals3D']]],
   ['coordinatesystemvisualizationobjectconfiguration',['CoordinateSystemVisualizationObjectConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_coordinate_system_visualization_object_configuration.html',1,'Microsoft::Psi::Visualization::Config']]],

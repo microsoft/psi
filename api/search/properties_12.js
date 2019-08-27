@@ -1,6 +1,7 @@
 var searchData=
 [
   ['samplespersec',['SamplesPerSec',['../class_microsoft_1_1_psi_1_1_audio_1_1_wave_format.html#a56e5c320d27fa2996e3c554296351191',1,'Microsoft::Psi::Audio::WaveFormat']]],
+  ['samplinginterval',['SamplingInterval',['../class_microsoft_1_1_psi_1_1_diagnostics_1_1_diagnostics_configuration.html#a08e4f6539a02c6d2254f96cff28bd88d',1,'Microsoft::Psi::Diagnostics::DiagnosticsConfiguration']]],
   ['samplingticks',['SamplingTicks',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_timeline_visualization_object_configuration.html#a18fe23d387f03eb9578a0e5d0f7ea6a7',1,'Microsoft::Psi::Visualization::Config::TimelineVisualizationObjectConfiguration']]],
   ['saturation',['Saturation',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_configuration.html#a962024560782d0069d7dc11271a45ad9',1,'Microsoft::Psi::Media::MediaCaptureConfiguration']]],
   ['saturationinfo',['SaturationInfo',['../class_microsoft_1_1_psi_1_1_media_1_1_media_capture_info.html#a301094694f1f97397f380fedb5cf80b8',1,'Microsoft::Psi::Media::MediaCaptureInfo']]],

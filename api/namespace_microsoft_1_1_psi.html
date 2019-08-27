@@ -130,6 +130,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_available.html">Available</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of greedy interpolators that act on immediately available data.  <a href="class_microsoft_1_1_psi_1_1_available.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_clock.html">Clock</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents virtual time.  <a href="class_microsoft_1_1_psi_1_1_clock.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,7 +155,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the envelope of a message published to a data stream. See Message&lt;T&gt; for details.  <a href="struct_microsoft_1_1_psi_1_1_envelope.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_generators.html">Generators</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory methods for instantiating generators.  <a href="class_microsoft_1_1_psi_1_1_generators.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory methods for constructing finite stream generators.  <a href="class_microsoft_1_1_psi_1_1_generators.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_greedy_interpolator.html">GreedyInterpolator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a greedy stream interpolator.  <a href="class_microsoft_1_1_psi_1_1_greedy_interpolator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_consumer.html">IConsumer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Components that implement this interface are simple, single input consumers.  <a href="interface_microsoft_1_1_psi_1_1_i_consumer.html#details">More...</a><br /></td></tr>
@@ -165,6 +171,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_i_interval_endpoint.html">IIntervalEndpoint</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a bounded/unbounded, inclusive/exclusive interval endpoint value.  <a href="interface_microsoft_1_1_psi_1_1_i_interval_endpoint.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_interpolation_result.html">InterpolationResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of interpolation.  <a href="struct_microsoft_1_1_psi_1_1_interpolation_result.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_interpolator.html">Interpolator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a base abstract class for stream interpolators.  <a href="class_microsoft_1_1_psi_1_1_interpolator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_interval.html">Interval</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an interval with bounded/unbounded and inclusive/exclusive end points.  <a href="class_microsoft_1_1_psi_1_1_interval.html#details">More...</a><br /></td></tr>
@@ -195,12 +207,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html">KeyedSharedPool</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a pool of shared objects organized by a key. The key is used both to group interchangeable objects as well as a parameter to the object allocation function.  <a href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_match.html">Match</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of interpolators used for matching message values.  <a href="class_microsoft_1_1_psi_1_1_match.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_microsoft_1_1_psi_1_1_match_result.html">MatchResult</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of matching.  <a href="struct_microsoft_1_1_psi_1_1_match_result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_math_extensions.html">MathExtensions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension methods for certain math operations.  <a href="class_microsoft_1_1_psi_1_1_math_extensions.html#details">More...</a><br /></td></tr>
@@ -253,6 +259,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html">ReplayDescriptor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descriptor for pipeline replay.  <a href="class_microsoft_1_1_psi_1_1_replay_descriptor.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_reproducible.html">Reproducible</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of reproducible interpolators.  <a href="class_microsoft_1_1_psi_1_1_reproducible.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_reproducible_interpolator.html">ReproducibleInterpolator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a reproducible stream interpolator.  <a href="class_microsoft_1_1_psi_1_1_reproducible_interpolator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_serializer.html">Serializer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main entry point into the serialization subsystem. Provides methods to serialize, deserialize and clone objects.  <a href="class_microsoft_1_1_psi_1_1_serializer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,9 +292,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a9dd37e9fa073f5790bc39086dfe07581"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581">MatchResultType</a> </td></tr>
-<tr class="memdesc:a9dd37e9fa073f5790bc39086dfe07581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of match result.  <a href="namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581">More...</a><br /></td></tr>
-<tr class="separator:a9dd37e9fa073f5790bc39086dfe07581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91950eeb392cb1b5799925a5adf84e58"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi.html#a91950eeb392cb1b5799925a5adf84e58">InterpolationResultType</a> </td></tr>
+<tr class="memdesc:a91950eeb392cb1b5799925a5adf84e58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of interpolation result.  <a href="namespace_microsoft_1_1_psi.html#a91950eeb392cb1b5799925a5adf84e58">More...</a><br /></td></tr>
+<tr class="separator:a91950eeb392cb1b5799925a5adf84e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4daa242227fb4ad466ccbc91561b41c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41c">MetadataKind</a> : ushort </td></tr>
 <tr class="memdesc:af4daa242227fb4ad466ccbc91561b41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the kind of Metadata.  <a href="namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41c">More...</a><br /></td></tr>
 <tr class="separator:af4daa242227fb4ad466ccbc91561b41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,8 +342,8 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a9dd37e9fa073f5790bc39086dfe07581"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9dd37e9fa073f5790bc39086dfe07581">&#9670;&nbsp;</a></span>MatchResultType</h2>
+<a id="a91950eeb392cb1b5799925a5adf84e58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91950eeb392cb1b5799925a5adf84e58">&#9670;&nbsp;</a></span>InterpolationResultType</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +352,7 @@ Enumerations</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="namespace_microsoft_1_1_psi.html#a9dd37e9fa073f5790bc39086dfe07581">Microsoft.Psi.MatchResultType</a></td>
+          <td class="memname">enum <a class="el" href="namespace_microsoft_1_1_psi.html#a91950eeb392cb1b5799925a5adf84e58">Microsoft.Psi.InterpolationResultType</a></td>
         </tr>
       </table>
   </td>
@@ -350,13 +362,13 @@ Enumerations</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Type of match result. </p>
+<p>Type of interpolation result. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9dd37e9fa073f5790bc39086dfe07581ac47c93cf49de211bba5d62d65225f128"></a>DoesNotExist&#160;</td><td class="fielddoc"><p>No suitable match result found within data. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a91950eeb392cb1b5799925a5adf84e58ac47c93cf49de211bba5d62d65225f128"></a>DoesNotExist&#160;</td><td class="fielddoc"><p>No interpolation exists. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a9dd37e9fa073f5790bc39086dfe07581a0eceeb45861f9585dd7a97a3e36f85c6"></a>Created&#160;</td><td class="fielddoc"><p>Match result found. </p>
+<tr><td class="fieldname"><a id="a91950eeb392cb1b5799925a5adf84e58a0eceeb45861f9585dd7a97a3e36f85c6"></a>Created&#160;</td><td class="fielddoc"><p>An interpolation result was created based on the data. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a9dd37e9fa073f5790bc39086dfe07581a9e32e294e8358345f2b9b52b7f8b41fa"></a>InsufficientData&#160;</td><td class="fielddoc"><p>No suitable match result found due to lack of data. </p>
+<tr><td class="fieldname"><a id="a91950eeb392cb1b5799925a5adf84e58a9e32e294e8358345f2b9b52b7f8b41fa"></a>InsufficientData&#160;</td><td class="fielddoc"><p>No interpolation result can be created due to insufficient data. </p>
 </td></tr>
 </table>
 

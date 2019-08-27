@@ -24,6 +24,7 @@ var searchData=
   ['imaging',['Imaging',['../namespace_microsoft_1_1_psi_1_1_imaging.html',1,'Microsoft::Psi']]],
   ['input',['Input',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_input.html',1,'Microsoft::Psi::Visualization']]],
   ['interop',['Interop',['../namespace_microsoft_1_1_psi_1_1_interop.html',1,'Microsoft::Psi']]],
+  ['interpolators',['Interpolators',['../namespace_microsoft_1_1_psi_1_1_common_1_1_interpolators.html',1,'Microsoft::Psi::Common']]],
   ['json',['Json',['../namespace_microsoft_1_1_psi_1_1_data_1_1_json.html',1,'Microsoft::Psi::Data']]],
   ['kinect',['Kinect',['../namespace_microsoft_1_1_psi_1_1_kinect.html',1,'Microsoft::Psi']]],
   ['language',['Language',['../namespace_microsoft_1_1_psi_1_1_cognitive_services_1_1_language.html',1,'Microsoft.Psi.CognitiveServices.Language'],['../namespace_microsoft_1_1_psi_1_1_language.html',1,'Microsoft.Psi.Language']]],

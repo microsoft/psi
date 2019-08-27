@@ -86,9 +86,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a09d3fbf2bb0d44f3773bfb9e1dffa29f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f">ParallelFixedLength</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Action&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&gt; action)</td></tr>
 <tr class="memdesc:a09d3fbf2bb0d44f3773bfb9e1dffa29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class.">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.  <a href="#a09d3fbf2bb0d44f3773bfb9e1dffa29f">More...</a><br /></td></tr>
 <tr class="separator:a09d3fbf2bb0d44f3773bfb9e1dffa29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17af7641f4262138afa8e818c50b17a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a17af7641f4262138afa8e818c50b17a7">ParallelFixedLength</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transform, bool joinOrDefault)</td></tr>
-<tr class="memdesc:a17af7641f4262138afa8e818c50b17a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class.">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.  <a href="#a17af7641f4262138afa8e818c50b17a7">More...</a><br /></td></tr>
-<tr class="separator:a17af7641f4262138afa8e818c50b17a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7931835e43f651ebc602f8b4db26c091"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a7931835e43f651ebc602f8b4db26c091">ParallelFixedLength</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, int vectorSize, Func&lt; int, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TOut &gt;&gt; transform, bool outputDefaultIfDropped, TOut defaultValue=default)</td></tr>
+<tr class="memdesc:a7931835e43f651ebc602f8b4db26c091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html#a09d3fbf2bb0d44f3773bfb9e1dffa29f" title="Initializes a new instance of the ParallelFixedLength&lt;TIn, TOut&gt; class.">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.  <a href="#a7931835e43f651ebc602f8b4db26c091">More...</a><br /></td></tr>
+<tr class="separator:a7931835e43f651ebc602f8b4db26c091"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -162,8 +162,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a17af7641f4262138afa8e818c50b17a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17af7641f4262138afa8e818c50b17a7">&#9670;&nbsp;</a></span>ParallelFixedLength() <span class="overload">[2/2]</span></h2>
+<a id="a7931835e43f651ebc602f8b4db26c091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7931835e43f651ebc602f8b4db26c091">&#9670;&nbsp;</a></span>ParallelFixedLength() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,7 +190,13 @@ Properties</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>joinOrDefault</em>&#160;</td>
+          <td class="paramname"><em>outputDefaultIfDropped</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TOut&#160;</td>
+          <td class="paramname"><em>defaultValue</em> = <code>default</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -206,7 +212,8 @@ Properties</h2></td></tr>
     <tr><td class="paramname">pipeline</td><td>Pipeline to which this component belongs.</td></tr>
     <tr><td class="paramname">vectorSize</td><td>Vector size.</td></tr>
     <tr><td class="paramname">transform</td><td>Function mapping keyed input producers to output producers.</td></tr>
-    <tr><td class="paramname">joinOrDefault</td><td>Whether to do an "...OrDefault" join.</td></tr>
+    <tr><td class="paramname">outputDefaultIfDropped</td><td>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</td></tr>
+    <tr><td class="paramname">defaultValue</td><td>Default value to use when messages are dropped in processing one of the input elements.</td></tr>
   </table>
   </dd>
 </dl>

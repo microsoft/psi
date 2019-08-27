@@ -235,7 +235,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_visualization_panel.html#ae9d8b3677d9089f964482da0e4e7c024">Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel&lt; TConfig &gt;</a>
 </li>
 <li>InPrimary
-: <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_join.html#a192e184017462b5695f4735b135aae40">Microsoft.Psi.Components.Join&lt; TPrimary, TSecondary, TOut &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_fuse.html#ae886ae7350adbc39454b9aa7c0a48fec">Microsoft.Psi.Components.Fuse&lt; TPrimary, TSecondary, TInterpolation, TOut &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_pair.html#a41d352c5bdaa042a212dc718f49a04f1">Microsoft.Psi.Components.Pair&lt; TPrimary, TSecondary, TOut &gt;</a>
 </li>
 <li>Input
@@ -255,7 +255,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#a7350abf7ea3a6f88b1f3369f871880dc">Microsoft.Psi::Media_Interop::MP4WriterUnmanagedData</a>
 </li>
 <li>InSecondaries
-: <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_join.html#a5c739a2941085cee800ae2c4430ba02d">Microsoft.Psi.Components.Join&lt; TPrimary, TSecondary, TOut &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_fuse.html#a75a783aa6fc1433f71e4a1dd44c07066">Microsoft.Psi.Components.Fuse&lt; TPrimary, TSecondary, TInterpolation, TOut &gt;</a>
 </li>
 <li>InSecondary
 : <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_pair.html#a9fbbfcfffd4cf4b5279fbe30fd9e016f">Microsoft.Psi.Components.Pair&lt; TPrimary, TSecondary, TOut &gt;</a>
@@ -278,7 +278,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_instant3_d_visualization_object_configuration.html#ab199f5f76498713f709d85a4a2871667">Microsoft.Psi.Visualization.Config.Instant3DVisualizationObjectConfiguration</a>
 </li>
 <li>InsufficientData()
-: <a class="el" href="struct_microsoft_1_1_psi_1_1_match_result.html#a747da966647c7d139ba0e9ac536b8d4a">Microsoft.Psi.MatchResult&lt; T &gt;</a>
+: <a class="el" href="struct_microsoft_1_1_psi_1_1_interpolation_result.html#a49026ba3700c7e7d2ad4ae45f4f1f1a3">Microsoft.Psi.InterpolationResult&lt; T &gt;</a>
 </li>
 <li>int
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_interop_1_1_serialization_1_1_i_format_serializer.html#a54d79f5e623ec6ba26b1a18f09f813cd">Microsoft.Psi.Interop.Serialization.IFormatSerializer</a>
@@ -290,13 +290,29 @@ $(function() {
 <li>Intents
 : <a class="el" href="class_microsoft_1_1_psi_1_1_language_1_1_intent_data.html#af90c64e508cb26c5ef7f0048720a44e2">Microsoft.Psi.Language.IntentData</a>
 </li>
+<li>Interpolate()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_adjacent_values_interpolator.html#af8fd4138ba7e9ed7e194e69c13862e6e">Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator&lt; TIn, TOut &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_first_available_interpolator.html#abdb86fa5d0c4f3e949d284a22414b8a5">Microsoft.Psi.Common.Interpolators.FirstAvailableInterpolator&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_first_reproducible_interpolator.html#a8b6e4bf04b8a15eecf0173b3e470ccb9">Microsoft.Psi.Common.Interpolators.FirstReproducibleInterpolator&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_last_available_interpolator.html#a5ffcf2b5db926a2ee2eaac993b12c1c8">Microsoft.Psi.Common.Interpolators.LastAvailableInterpolator&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_last_reproducible_interpolator.html#a6b96a1d9bcc99997951043c81c379acd">Microsoft.Psi.Common.Interpolators.LastReproducibleInterpolator&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_nearest_available_interpolator.html#af90de4a41e30021f3d6e75e32c92e98f">Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_interpolators_1_1_nearest_reproducible_interpolator.html#ad5490cae730a39e0e7a4d7401efb25c0">Microsoft.Psi.Common.Interpolators.NearestReproducibleInterpolator&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_interpolator.html#a4608dcc49b53b4660166d6ef3c6cb4db">Microsoft.Psi.Interpolator&lt; TIn, TResult &gt;</a>
+</li>
+<li>Interpolate&lt; T, TClock, TInterpolation &gt;()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a8dfac337460d46ad46940d34a5768445">Microsoft.Psi.Operators</a>
+</li>
+<li>Interpolate&lt; T, TInterpolation &gt;()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#aef2330c68ce246952c60c7ec3f9c7ce2">Microsoft.Psi.Operators</a>
+</li>
 <li>InterpolationStyle
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_plot_visualization_object_configuration.html#aa3436572355aa9347557e09795c303b6">Microsoft.Psi.Visualization.Config.PlotVisualizationObjectConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_plot_visualization_object.html#ac32b155952e3feb6a1f2e716d2144ee9">Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject&lt; TData, TConfig &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ab7251961fce84d8552535322aa11385d">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData, TConfig &gt;</a>
 </li>
 <li>Interpolator()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_match_1_1_interpolator.html#a4b539246d3774bcad27ec79dfd7e1b11">Microsoft.Psi.Match.Interpolator&lt; T &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_interpolator.html#a7f6259485d1195a846dc4938cafaca0b">Microsoft.Psi.Interpolator&lt; TIn, TResult &gt;</a>
 </li>
 <li>Intersect()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_replay_descriptor.html#a5f46aa580f69b39af0dea8267d7435da">Microsoft.Psi.ReplayDescriptor</a>
@@ -316,10 +332,10 @@ $(function() {
 : <a class="el" href="struct_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_interval_data.html#a4f75ebec74797d114be120bbb39bbe01">Microsoft.Psi.Visualization.Data.IntervalData&lt; T &gt;</a>
 </li>
 <li>IntervalEndpoint()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_interval_endpoint.html#a51efb8599892715c0f7147ef593c8820">Microsoft.Psi.IntervalEndpoint&lt; TPoint &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_interval_endpoint.html#a00410851f5faeee84684054891e01503">Microsoft.Psi.IntervalEndpoint&lt; TPoint &gt;</a>
 </li>
 <li>IntInterval()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_int_interval.html#a3e626509ead18c642a140b1837faf1ef">Microsoft.Psi.IntInterval</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_int_interval.html#ad588d5b37596534410b72e3750a4256b">Microsoft.Psi.IntInterval</a>
 </li>
 <li>IntInterval??()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_int_interval.html#a1c4d362361bd941dff96e6fcce1d2d30">Microsoft.Psi.IntInterval</a>
@@ -331,7 +347,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_system_calibration_1_1_camera_calibration.html#aad0e7dbd86e12ce74c30f89607d4ed17">Microsoft.Psi.Calibration.SystemCalibration.CameraCalibration</a>
 </li>
 <li>Invalidate()
-: <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#a878d0a13fb5dff9d5f72592cc3765a5c">Microsoft.Msagl.WpfGraphControl.GraphViewer</a>
+: <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#a26cffc11820729888a316a86630b8fe2">Microsoft.Msagl.WpfGraphControl.GraphViewer</a>
 , <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_v_edge.html#a1f69666a00c44664d8cfc60a37811e79">Microsoft.Msagl.WpfGraphControl.VEdge</a>
 , <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_v_label.html#abae9897a5c2be89d0920802c8c886dcb">Microsoft.Msagl.WpfGraphControl.VLabel</a>
 , <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_v_node.html#ac2864353ad7a7ec896aa368f1d229732">Microsoft.Msagl.WpfGraphControl.VNode</a>
