@@ -160,6 +160,50 @@ module RosMessageTypes =
                                                    "velocity", VariableArrayVal (Seq.map Float64Val velocity |> Seq.toList)
                                                    "effort",   VariableArrayVal (Seq.map Float64Val effort |> Seq.toList)] |> Seq.ofList
 
+        module Image =
+            let Def = { Type   = "sensor_msgs/Image"
+                        MD5    = ""
+                        Fields = ["header",       StructDef Standard.Header.Def.Fields
+                                  "height",       UInt32Def
+                                  "width",        UInt32Def
+                                  "encoding",     StringDef
+                                  "is_bigendian", BoolDef
+                                  "step",         UInt32Def
+                                  "data",         VariableArrayDef UInt8Def] }
+            type Kind = { Header:      Standard.Header.Kind
+                          Height:      int
+                          Width:       int
+                          Encoding:    string
+                          IsBigEndian: bool
+                          Step:        int
+                          Data:        byte array }
+            let FromMessage m = m |> Seq.toList |> function ["header",       StructVal header
+                                                             "height",       UInt32Val height
+                                                             "width",        UInt32Val width
+                                                             "encoding",     StringVal encoding
+                                                             "is_bigendian", BoolVal isBigEndian
+                                                             "step",         UInt32Val step
+                                                             "data",         VariableArrayVal data] -> { Header = Standard.Header.FromMessage header
+                                                                                                         Height = int height
+                                                                                                         Width = int width
+                                                                                                         Encoding = encoding
+                                                                                                         IsBigEndian = isBigEndian
+                                                                                                         Step = int step
+                                                                                                         Data = Seq.map (function UInt8Val b -> b | _ -> malformed ()) data |> Array.ofSeq } | _ -> malformed ()
+            let ToMessage { Header      = header
+                            Height      = height
+                            Width       = width
+                            Encoding    = encoding
+                            IsBigEndian = isBigEndian
+                            Step        = step
+                            Data        = data } = ["header", StructVal (Standard.Header.ToMessage header |> Seq.toList)
+                                                    "height", UInt32Val (uint32 height)
+                                                    "width", UInt32Val (uint32 width)
+                                                    "encoding", StringVal encoding
+                                                    "is_bigendian", BoolVal isBigEndian
+                                                    "step", UInt32Val (uint32 step)
+                                                    "data", VariableArrayVal (Seq.map UInt8Val data |> List.ofSeq)] |> Seq.ofList
+
     module Geometry =
 
         module Point =

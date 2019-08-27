@@ -9,7 +9,7 @@ namespace Test.Psi
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class SamplerTests
+    public class SampleTests
     {
         [TestMethod]
         [Timeout(60000)]
@@ -19,14 +19,16 @@ namespace Test.Psi
 
             using (var p = Pipeline.Create())
             {
-                Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(100))
-                    .Sample(TimeSpan.FromTicks(50), Match.Best<int>(RelativeTimeInterval.RightBounded(TimeSpan.Zero)))
+                var source = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(50));
+                var filtered = source.Where(i => i % 2 == 0);
+                filtered
+                    .Sample(source, RelativeTimeInterval.Past())
                     .Do(results.Add);
 
                 p.Run();
             }
 
-            CollectionAssert.AreEqual(new int[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9 }, results);
+            CollectionAssert.AreEqual(new int[] { 0, 0, 2, 2, 4, 4, 6, 6, 8, 8 }, results);
         }
 
         [TestMethod]
@@ -37,8 +39,10 @@ namespace Test.Psi
 
             using (var p = Pipeline.Create())
             {
-                Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(100))
-                    .Sample(TimeSpan.FromTicks(300), Match.Best<int>(RelativeTimeInterval.RightBounded(TimeSpan.Zero)))
+                var source = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(50));
+                var filtered = source.Where(i => i % 3 == 0);
+                source
+                    .Sample(filtered, RelativeTimeInterval.Past())
                     .Do(results.Add);
 
                 p.Run();

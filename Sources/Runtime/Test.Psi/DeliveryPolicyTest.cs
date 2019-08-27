@@ -36,5 +36,29 @@ namespace Test.Psi
                 Assert.AreNotEqual(0, countA);
             }
         }
+
+        // Test to make sure the DeliveryQueue returns the latest item when using a LatestMessage policy.
+        [TestMethod]
+        [Timeout(2000)]
+        public void LatestDelivery()
+        {
+            using (var p = Pipeline.Create())
+            {
+                int loopCount = 0;
+                int lastMsg = 0;
+                var numGen = Generators.Range(p, 10, 3, TimeSpan.FromMilliseconds(100));
+                numGen.Do(m =>
+                {
+                    Thread.Sleep(500);
+                    loopCount++;
+                    lastMsg = m;
+                }, DeliveryPolicy.LatestMessage);
+
+                p.Run(TimeSpan.FromMilliseconds(700));
+
+                Assert.AreEqual(2, loopCount);
+                Assert.AreEqual(12, lastMsg);
+            }
+        }
     }
 }

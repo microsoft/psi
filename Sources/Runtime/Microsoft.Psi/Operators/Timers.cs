@@ -4,7 +4,6 @@
 namespace Microsoft.Psi
 {
     using System;
-    using System.Collections.Generic;
     using Microsoft.Psi.Components;
 
     /// <summary>
@@ -14,7 +13,7 @@ namespace Microsoft.Psi
     {
         /// <summary>
         /// Generates a stream by invoking a user-provided function at a regular time interval.
-        /// Unlike <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{T}, TimeSpan, DateTime?)"/>, <see cref="Generators.Repeat{T}(Pipeline, T, int, TimeSpan, DateTime?)"/> and <see cref="Generators.Range"/>
+        /// Unlike the generators available in the <see cref="Generators"/> class,
         /// this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load.
         /// When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time,
         /// but if the pipeline slows down, the interval between messages might not appear constant.
@@ -31,7 +30,7 @@ namespace Microsoft.Psi
 
         /// <summary>
         /// Generates a stream of <see cref="TimeSpan"/> messages indicating the time elapsed from the start of the pipeline.
-        /// Unlike <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{T}, TimeSpan, DateTime?)"/>, <see cref="Generators.Repeat{T}(Pipeline, T, int, TimeSpan, DateTime?)"/> and <see cref="Generators.Range"/>
+        /// Unlike the generators available in the <see cref="Generators"/> class,
         /// this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load.
         /// When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time,
         /// but if the pipeline slows down, the interval between messages might not appear constant.
@@ -41,7 +40,7 @@ namespace Microsoft.Psi
         /// <returns>A stream of messages representing time elapsed since the start of the pipeline.</returns>
         public static IProducer<TimeSpan> Timer(Pipeline pipeline, TimeSpan interval)
         {
-            return Timer<TimeSpan>(pipeline, interval, (_, t) => t);
+            return Timer(pipeline, interval, (_, t) => t);
         }
     }
 }

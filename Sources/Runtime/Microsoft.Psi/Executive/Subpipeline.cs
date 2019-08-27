@@ -28,7 +28,7 @@ namespace Microsoft.Psi
         /// <param name="name">Subpipeline name (inherits "Sub<Parent>" name if unspecified)</Parent>.</param>
         /// <param name="deliveryPolicy">Pipeline-level delivery policy (inherits from parent if unspecified).</param>
         public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
-            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, parent.Scheduler, new SchedulerContext(), parent.DiagnosticsCollector, parent.DiagnosticsInterval)
+            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, parent.Scheduler, new SchedulerContext(), parent.DiagnosticsCollector, parent.DiagnosticsConfiguration)
         {
             this.parent = parent;
 

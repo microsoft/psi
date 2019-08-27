@@ -13,11 +13,7 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="T">The output type.</typeparam>
     /// <remarks>
     /// The static functions provided by the <see cref="Generators"/> wrap <see cref="Generator{T}"/>
-    /// and are designed to make the common cases easier:
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{ValueTuple{T, DateTime}})"/>
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerable{T}, TimeSpan, DateTime?)"/>
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerator{ValueTuple{T, DateTime}})"/>
-    /// <see cref="Generators.Sequence{T}(Pipeline, IEnumerator{T}, TimeSpan, DateTime?)"/>.
+    /// and are designed to make the common cases easier.
     /// </remarks>
     public class Generator<T> : Generator, IProducer<T>
     {
@@ -28,11 +24,13 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="enumerator">A lazy enumerator of data.</param>
-        /// <param name="interval">An optional timespan interval used to increment time on each generated message. Defaults to 1 tick.</param>
+        /// <param name="interval">The interval used to increment time on each generated message.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
         /// is non-null, the messages will have originating times that align with the specified time.</param>
-        public Generator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval = default(TimeSpan), DateTime? alignDateTime = null)
-            : this(pipeline, CreateEnumerator(pipeline, enumerator, (interval == default(TimeSpan)) ? new TimeSpan(1) : interval, alignDateTime))
+        /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
+        /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
+        public Generator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval, DateTime? alignDateTime = null, bool isInfiniteSource = false)
+            : this(pipeline, CreateEnumerator(pipeline, enumerator, interval, alignDateTime), isInfiniteSource)
         {
         }
 
@@ -41,8 +39,10 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="enumerator">A lazy enumerator of data.</param>
-        public Generator(Pipeline pipeline, IEnumerator<ValueTuple<T, DateTime>> enumerator)
-            : base(pipeline)
+        /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
+        /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
+        public Generator(Pipeline pipeline, IEnumerator<ValueTuple<T, DateTime>> enumerator, bool isInfiniteSource = false)
+            : base(pipeline, isInfiniteSource)
         {
             this.Out = pipeline.CreateEmitter<T>(this, nameof(this.Out));
             this.enumerator = enumerator;

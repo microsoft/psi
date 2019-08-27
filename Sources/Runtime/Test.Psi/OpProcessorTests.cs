@@ -23,7 +23,7 @@ namespace Test.Psi
                 double avg = 0;
                 int count = 0;
                 Generators
-                    .Sequence(p, new[] { 100d, 50, 0 })
+                    .Sequence(p, new[] { 100d, 50, 0 }, TimeSpan.FromTicks(1))
                     .Select(v => avg = avg + (v - avg) / (++count))
                     .Do(Console.WriteLine)
                     .Do(results.Add);

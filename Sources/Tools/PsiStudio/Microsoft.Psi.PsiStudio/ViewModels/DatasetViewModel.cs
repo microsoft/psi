@@ -10,6 +10,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
@@ -146,7 +147,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                             dlg.DefaultExt = ".psi";
                             dlg.Filter = "Psi Store (.psi)|*.psi";
 
-                            bool? result = dlg.ShowDialog();
+                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
                             {
                                 var fileInfo = new FileInfo(dlg.FileName);

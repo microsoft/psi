@@ -204,9 +204,9 @@ namespace Test.Psi
 
                 source.Parallel(s => s.Select(val => val / 100), true)
                     .Do(x => resultsDefault.Add(x.DeepClone()));
-                source.Parallel(s => s.Select(val => val / 100), true, null, BranchTerminationPolicy<int, int>.AfterKeyNotPresent(1))
+                source.Parallel(s => s.Select(val => val / 100), true, branchTerminationPolicy: BranchTerminationPolicy<int, int>.AfterKeyNotPresent(1))
                     .Do(x => resultsAfterKeyNotPresentOnce.Add(x.DeepClone()));
-                source.Parallel(s => s.Select(val => val / 100), true, null, BranchTerminationPolicy<int, int>.Never())
+                source.Parallel(s => s.Select(val => val / 100), true, branchTerminationPolicy: BranchTerminationPolicy<int, int>.Never())
                     .Do(x => resultsNever.Add(x.DeepClone()));
 
                 p.Run();
@@ -363,7 +363,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void SparseVectorTestJoinOrDefault()
+        public void SparseVectorTestJoinOutputDefaultIfDropped()
         {
             // I'm generating a dictionary with 2 keys (1 and 2) that over time
             // streams like this
@@ -374,11 +374,11 @@ namespace Test.Psi
             // So with drops things look like this
             // 1: 0 . 2 . 4  .  6  .  8  .
             // 2: 0 2 4 6 8 10 12 14 16 18
-            // If parallel is using the regular Join (instead of JoinOrDefault)
+            // If parallel is using the regular Join (instead of outputDefaultIfDropped: true)
             // then we should have 5 messages out, like this
             // 1: 0 2 4  6  8
             // 2: 0 4 8 12 16
-            // When parallel operates correctly with a JoinOrDefault, we should get
+            // When parallel operates correctly with a outputDefaultIfDropped: true, we should get
             // all ten messages out, where the dropped messages are replaced with
             // default(int) which is 0, so like this.
             // 1: 0 0 2 0 4  0  6  0  8  0
@@ -442,7 +442,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void SparseVectorWithGammaCreatingHolesAndJoinOrDefault()
+        public void SparseVectorWithGammaCreatingHolesAndOutputDefaultIfDropped()
         {
             var frames =
                 new[]
@@ -484,7 +484,7 @@ namespace Test.Psi
 
                 p.RunAsync();
 
-                Action<int> step = (expected) =>
+                void step(int expected)
                 {
                     stepper.Step();
                     while (results.Count != expected)
@@ -493,7 +493,7 @@ namespace Test.Psi
                     }
 
                     Assert.AreEqual<int>(expected, results.Count);
-                };
+                }
 
                 Assert.AreEqual<int>(0, results.Count);
 

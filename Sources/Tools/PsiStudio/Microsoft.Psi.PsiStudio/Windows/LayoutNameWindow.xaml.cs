@@ -15,9 +15,11 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="LayoutNameWindow"/> class.
         /// </summary>
-        public LayoutNameWindow()
+        /// <param name="owner">The window owner.</param>
+        public LayoutNameWindow(Window owner)
         {
             this.InitializeComponent();
+            this.Owner = owner;
         }
 
         /// <summary>

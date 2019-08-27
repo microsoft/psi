@@ -74,6 +74,11 @@ namespace Microsoft.Psi.Visualization.Common
         public const string Group = @"Icons\group.png";
 
         /// <summary>
+        /// A group icon.
+        /// </summary>
+        public const string GroupLive = @"Icons\group-live.png";
+
+        /// <summary>
         /// A stream and group icon.
         /// </summary>
         public const string StreamGroup = @"Icons\stream-group.png";

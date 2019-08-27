@@ -10,12 +10,12 @@
     <RootNamespace>Microsoft.Psi.PsiStudio</RootNamespace>
     <AssemblyName>Microsoft.Psi.PsiStudio</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <PublishUrl>publish\</PublishUrl>
@@ -839,6 +839,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\diagnostics-live.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\group-live.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

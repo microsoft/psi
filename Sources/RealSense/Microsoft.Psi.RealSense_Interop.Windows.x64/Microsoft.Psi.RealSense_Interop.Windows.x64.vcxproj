@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="CheckVariable">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -126,16 +126,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="OldBuild" DependsOnTargets="$(OldBuildDependsOn)"/>
   <Target Name="CheckVariable">
     <Warning Text="In order to build this sample you must define the environment variable RealSenseSDKDir to point to your Intel RealSense SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(RealSenseSDKDir)'==''" />
-    <CreateProperty Value="" Condition="'$(RealSenseSDKDir)'==''">
-      <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
-    </CreateProperty>
-    <CreateProperty Value="false" Condition="'$(RealSenseSDKDir)'==''">
-      <Output TaskParameter="Value" PropertyName="GeneratePackageOnBuild" />
-    </CreateProperty>
-    <CreateProperty Value="" Condition="'$(RealSenseSDKDir)'==''">
-      <Output TaskParameter="Value" PropertyName="GenerateNuspecDependsOn" />
-    </CreateProperty>
+    <CallTarget Targets="OldBuild" Condition="'$(RealSenseSDKDir)'!=''"/>
   </Target>
+  <PropertyGroup>
+    <OldBuildDependsOn>$(BuildDependsOn)</OldBuildDependsOn>
+    <BuildDependsOn>CheckVariable</BuildDependsOn>
+  </PropertyGroup>
 </Project>

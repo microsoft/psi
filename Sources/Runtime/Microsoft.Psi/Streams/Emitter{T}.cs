@@ -210,9 +210,14 @@ namespace Microsoft.Psi
             if (this.lastEnvelope.SequenceId != 0 && msg.SequenceId != int.MaxValue)
             {
                 // make sure the data is consistent
-                if (msg.Envelope.OriginatingTime <= this.lastEnvelope.OriginatingTime || msg.Envelope.Time < this.lastEnvelope.Time || msg.Envelope.SequenceId <= this.lastEnvelope.SequenceId)
+                if (msg.Envelope.SequenceId <= this.lastEnvelope.SequenceId)
                 {
-                    throw new InvalidOperationException("Attempted to post a message without strictly increasing originating time or that is out of order in  wall-clock time or sequence ID: " + this.Name);
+                    throw new InvalidOperationException($"Attempted to post a message with a sequence ID that is out of order: {this.Name}\nThis may be caused by simultaneous calls to Emitter.Post() from multiple threads.");
+                }
+
+                if (msg.Envelope.OriginatingTime <= this.lastEnvelope.OriginatingTime || msg.Envelope.Time < this.lastEnvelope.Time)
+                {
+                    throw new InvalidOperationException($"Attempted to post a message without strictly increasing originating time or that is out of order in wall-clock time: {this.Name}");
                 }
             }
 

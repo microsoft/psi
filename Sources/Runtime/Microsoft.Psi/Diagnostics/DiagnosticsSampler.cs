@@ -22,12 +22,12 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="collector">Diagnostics collector.</param>
-        /// <param name="interval">Optional time interval at which to report diagnostics (default 100ms).</param>
-        public DiagnosticsSampler(Pipeline pipeline, DiagnosticsCollector collector, TimeSpan interval = default(TimeSpan))
+        /// <param name="config">Diagnostics configuration.</param>
+        public DiagnosticsSampler(Pipeline pipeline, DiagnosticsCollector collector, DiagnosticsConfiguration config)
         {
             this.pipeline = pipeline;
             this.collector = collector;
-            this.Interval = interval == default(TimeSpan) ? TimeSpan.FromMilliseconds(100) : interval;
+            this.Config = config;
             this.Diagnostics = pipeline.CreateEmitter<PipelineDiagnostics>(this, nameof(this.Diagnostics));
         }
 
@@ -49,9 +49,9 @@ namespace Microsoft.Psi.Diagnostics
         public Emitter<PipelineDiagnostics> Diagnostics { get; private set; }
 
         /// <summary>
-        /// Gets time interval at which diagnostics are reported.
+        /// Gets the diagnostics configuration.
         /// </summary>
-        public TimeSpan Interval { get; }
+        public DiagnosticsConfiguration Config { get; }
 
         /// <inheritdoc />
         public void Dispose()
@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Diagnostics
             if (this.collector != null)
             {
                 this.timerDelegate = new Time.TimerDelegate((i, m, c, d1, d2) => this.Update());
-                this.timer = Platform.Specific.TimerStart((uint)this.Interval.TotalMilliseconds, this.timerDelegate);
+                this.timer = Platform.Specific.TimerStart((uint)this.Config.SamplingInterval.TotalMilliseconds, this.timerDelegate);
                 this.running = true;
             }
         }

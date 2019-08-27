@@ -386,7 +386,7 @@ namespace Test.Psi.Data
                     (pipeline, importer, exporter, parameter) =>
                     {
                         var inputStream = importer.OpenStream<int>("Root");
-                        var derivedStream = inputStream.Sample(TimeSpan.FromMinutes(1)).Select(x => x * parameter).Write("DerivedStream", exporter);
+                        var derivedStream = inputStream.Sample(TimeSpan.FromMinutes(1), RelativeTimeInterval.Infinite).Select(x => x * parameter).Write("DerivedStream", exporter);
 
                         // add a dummy source and propose a long time interval so that the operation will block (and eventually be cancelled)
                         var generator = Generators.Repeat(pipeline, 0, int.MaxValue, TimeSpan.FromMilliseconds(1000));
@@ -424,7 +424,7 @@ namespace Test.Psi.Data
             using (var p = Pipeline.Create())
             {
                 var store = Store.Create(p, storeName, storePath);
-                var root = Generators.Sequence(p, 0, i => i + 1, 10).Write("Root", store);
+                var root = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(1)).Write("Root", store);
                 p.Run();
             }
         }

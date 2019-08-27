@@ -78,11 +78,6 @@
     <PackageReference Update="NETStandard.Library" Version="2.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Connectors\" />
-  </ItemGroup>
-
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="$(MSBuildFrameworkToolsPath)ilasm @(ILFiles) /dll /output=$(OutDir)Microsoft.Psi.IL.dll /DEBUG=OPT" />
   </Target>

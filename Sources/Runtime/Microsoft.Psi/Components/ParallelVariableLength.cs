@@ -39,17 +39,24 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault)
+        /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
+        /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
+        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped = false, TOut defaultValue = default)
         {
             this.pipeline = pipeline;
             this.parallelTransform = transform;
             this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
             this.activeBranchesEmitter = pipeline.CreateEmitter<int>(this, nameof(this.activeBranchesEmitter));
-            var interpolator = joinOrDefault ?
-                Match.BestOrDefault<TOut>(new RelativeTimeInterval(-default(TimeSpan), default(TimeSpan))) :
-                Match.Exact<TOut>();
-            this.join = Operators.Join(this.activeBranchesEmitter, Enumerable.Empty<IProducer<TOut>>(), interpolator);
+            var interpolator = outputDefaultIfDropped ? Reproducible.ExactOrDefault<TOut>(defaultValue) : Reproducible.Exact<TOut>();
+
+            this.join = new Join<int, TOut, TOut[]>(
+                pipeline,
+                interpolator,
+                (count, values) => values,
+                0,
+                count => Enumerable.Range(0, count));
+
+            this.activeBranchesEmitter.PipeTo(this.join.InPrimary);
         }
 
         /// <inheritdoc />

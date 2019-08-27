@@ -43,7 +43,7 @@ namespace Test.Psi.Data
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 0, i => i + 1, count);
+                var seq = Generators.Sequence(p, 0, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq", writeStore);
                 seq.Do((m, e) => before[m] = e);
                 p.Run();
@@ -74,7 +74,7 @@ namespace Test.Psi.Data
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 0, i => i + 1, count);
+                var seq = Generators.Sequence(p, 0, i => i + 1, count, TimeSpan.FromTicks(1));
                 var big = seq.Select(i => bytes.Select(_ => i).ToArray());
                 seq.Write("seq", writeStore);
                 big.Write("big", writeStore, largeMessages: true);

@@ -87,9 +87,9 @@ namespace Microsoft.Psi
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
-        public Pipeline(string name, DeliveryPolicy deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads, bool enableDiagnostics = false, TimeSpan diagnosticsInterval = default(TimeSpan))
-            : this(name, deliveryPolicy, enableDiagnostics ? new DiagnosticsCollector() : null, diagnosticsInterval)
+        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
+        public Pipeline(string name, DeliveryPolicy deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads, bool enableDiagnostics = false, DiagnosticsConfiguration diagnosticsConfig = null)
+            : this(name, deliveryPolicy, enableDiagnostics ? new DiagnosticsCollector() : null, diagnosticsConfig)
         {
             this.scheduler = new Scheduler(this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
             this.schedulerContext = new SchedulerContext();
@@ -106,9 +106,9 @@ namespace Microsoft.Psi
         /// <param name="scheduler">Scheduler to be used.</param>
         /// <param name="schedulerContext">The scheduler context.</param>
         /// <param name="diagnosticsCollector">Collector with which to gather diagnostic information.</param>
-        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics information.</param>
-        internal Pipeline(string name, DeliveryPolicy deliveryPolicy, Scheduler scheduler, SchedulerContext schedulerContext, DiagnosticsCollector diagnosticsCollector, TimeSpan diagnosticsInterval)
-            : this(name, deliveryPolicy, diagnosticsCollector, diagnosticsInterval)
+        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
+        internal Pipeline(string name, DeliveryPolicy deliveryPolicy, Scheduler scheduler, SchedulerContext schedulerContext, DiagnosticsCollector diagnosticsCollector, DiagnosticsConfiguration diagnosticsConfig)
+            : this(name, deliveryPolicy, diagnosticsCollector, diagnosticsConfig)
         {
             this.scheduler = scheduler;
             this.schedulerContext = schedulerContext;
@@ -120,8 +120,8 @@ namespace Microsoft.Psi
         /// <param name="name">Pipeline name.</param>
         /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="diagnosticsCollector">Collector with which to gather diagnostic information.</param>
-        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
-        private Pipeline(string name, DeliveryPolicy deliveryPolicy, DiagnosticsCollector diagnosticsCollector, TimeSpan diagnosticsInterval)
+        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
+        private Pipeline(string name, DeliveryPolicy deliveryPolicy, DiagnosticsCollector diagnosticsCollector, DiagnosticsConfiguration diagnosticsConfig)
         {
             this.id = Interlocked.Increment(ref lastPipelineId);
             this.name = name ?? "default";
@@ -131,12 +131,12 @@ namespace Microsoft.Psi
             this.FinalOriginatingTime = DateTime.MinValue;
             this.state = State.Initial;
             this.activationContext = new SchedulerContext();
-            this.DiagnosticsInterval = diagnosticsInterval;
             this.DiagnosticsCollector = diagnosticsCollector;
+            this.DiagnosticsConfiguration = diagnosticsConfig ?? DiagnosticsConfiguration.Default;
             this.DiagnosticsCollector?.PipelineCreate(this);
             if (!(this is Subpipeline))
             {
-                this.Diagnostics = new DiagnosticsSampler(this, this.DiagnosticsCollector, diagnosticsInterval).Diagnostics;
+                this.Diagnostics = new DiagnosticsSampler(this, this.DiagnosticsCollector, this.DiagnosticsConfiguration).Diagnostics;
             }
         }
 
@@ -242,7 +242,7 @@ namespace Microsoft.Psi
 
         internal DiagnosticsCollector DiagnosticsCollector { get; set; }
 
-        internal TimeSpan DiagnosticsInterval { get; set; }
+        internal DiagnosticsConfiguration DiagnosticsConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the completion time of the latest completed source component.
@@ -271,11 +271,11 @@ namespace Microsoft.Psi
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
         /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(string name = null, DeliveryPolicy deliveryPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, bool enableDiagnostics = false, TimeSpan diagnosticsInterval = default(TimeSpan))
+        public static Pipeline Create(string name = null, DeliveryPolicy deliveryPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, bool enableDiagnostics = false, DiagnosticsConfiguration diagnosticsConfig = null)
         {
-            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads, enableDiagnostics, diagnosticsInterval);
+            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads, enableDiagnostics, diagnosticsConfig);
         }
 
         /// <summary>
@@ -283,22 +283,22 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="name">Pipeline name.</param>
         /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
         /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(string name, bool enableDiagnostics, TimeSpan diagnosticsInterval = default(TimeSpan))
+        public static Pipeline Create(string name, bool enableDiagnostics, DiagnosticsConfiguration diagnosticsConfig = null)
         {
-            return Create(name, null, 0, false, enableDiagnostics, diagnosticsInterval);
+            return Create(name, null, 0, false, enableDiagnostics, diagnosticsConfig);
         }
 
         /// <summary>
         /// Create pipeline.
         /// </summary>
         /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsInterval">Time interval at which to report diagnostics.</param>
+        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
         /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(bool enableDiagnostics, TimeSpan diagnosticsInterval = default(TimeSpan))
+        public static Pipeline Create(bool enableDiagnostics, DiagnosticsConfiguration diagnosticsConfig = null)
         {
-            return Create(null, enableDiagnostics, diagnosticsInterval);
+            return Create(null, enableDiagnostics, diagnosticsConfig);
         }
 
         /// <summary>

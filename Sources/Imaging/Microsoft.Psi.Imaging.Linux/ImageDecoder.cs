@@ -3,9 +3,10 @@
 
 namespace Microsoft.Psi.Imaging
 {
+    using System.Runtime.InteropServices;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
-    using Microsoft.Psi.Imaging;
+    using SkiaSharp;
 
     /// <summary>
     /// Pipeline component for decoding an image.
@@ -22,6 +23,17 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Decodes an encoded image into the given image instance.
+        /// </summary>
+        /// <param name="encodedImage">Encoded image to decode.</param>
+        /// <param name="image">Image into which to decode.</param>
+        public static void DecodeTo(EncodedImage encodedImage, Image image)
+        {
+            var decoded = SKBitmap.Decode(encodedImage.GetStream());
+            Marshal.Copy(decoded.Bytes, 0, image.ImageData, decoded.ByteCount);
+        }
+
+        /// <summary>
         /// Pipeline callback method for decoding a sample.
         /// </summary>
         /// <param name="encodedImage">Encoded image to decode.</param>
@@ -30,7 +42,7 @@ namespace Microsoft.Psi.Imaging
         {
             using (var image = ImagePool.GetOrCreate(encodedImage.Resource.Width, encodedImage.Resource.Height, PixelFormat.BGR_24bpp))
             {
-                encodedImage.Resource.DecodeTo(image.Resource);
+                DecodeTo(encodedImage.Resource, image.Resource);
                 this.Out.Post(image, e.OriginatingTime);
             }
         }

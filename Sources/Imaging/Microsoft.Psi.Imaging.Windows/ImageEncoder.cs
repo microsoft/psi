@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
+    using System.IO;
     using System.Windows.Media.Imaging;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
@@ -27,6 +28,40 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Encodes an image in-place into the given encoded image instance using the specified encoder.
+        /// </summary>
+        /// <param name="encodedImage">Encoded image into which to encode in-place.</param>
+        /// <param name="image">Image to be encoded.</param>
+        /// <param name="encoder">Encoder to use.</param>
+        public static void EncodeFrom(EncodedImage encodedImage, Image image, BitmapEncoder encoder)
+        {
+            System.Windows.Media.PixelFormat format;
+            if (image.PixelFormat == PixelFormat.BGR_24bpp)
+            {
+                format = System.Windows.Media.PixelFormats.Bgr24;
+            }
+            else if (image.PixelFormat == PixelFormat.Gray_16bpp)
+            {
+                format = System.Windows.Media.PixelFormats.Gray16;
+            }
+            else if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                format = System.Windows.Media.PixelFormats.Gray8;
+            }
+            else
+            {
+                format = System.Windows.Media.PixelFormats.Bgr32;
+            }
+
+            encodedImage.EncodeFrom(image, (_, stream) =>
+            {
+                BitmapSource bitmapSource = BitmapSource.Create(image.Width, image.Height, 96, 96, format, null, image.ImageData, image.Stride * image.Height, image.Stride);
+                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+                encoder.Save(stream);
+            });
+        }
+
+        /// <summary>
         /// Pipeline callback function for encoding an image sample.
         /// </summary>
         /// <param name="sharedImage">Image to be encoded.</param>
@@ -38,7 +73,7 @@ namespace Microsoft.Psi.Imaging
 
             using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
             {
-                sharedEncodedImage.Resource.EncodeFrom(sharedImage.Resource, encoder);
+                EncodeFrom(sharedEncodedImage.Resource, sharedImage.Resource, encoder);
                 this.Out.Post(sharedEncodedImage, e.OriginatingTime);
             }
         }

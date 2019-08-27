@@ -3,6 +3,7 @@
 
 namespace Test.Psi
 {
+    using System;
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,7 +18,7 @@ namespace Test.Psi
             DebugExtensions.EnableDebugViews();
             using (var p = Pipeline.Create())
             {
-                var name = Generators.Sequence(p, new[] { 1, 2, 3 }).DebugView();
+                var name = Generators.Sequence(p, new[] { 1, 2, 3 }, TimeSpan.FromTicks(1)).DebugView();
                 Assert.IsNotNull(name);
             }
 

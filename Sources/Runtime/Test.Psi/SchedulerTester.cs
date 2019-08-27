@@ -48,7 +48,7 @@ namespace Test.Psi
                     b.Emitter.Do(m => cLog.Enqueue(m));
                     c.Emitter.Do(m => cLog.Enqueue(m));
 
-                    Generators.Repeat(p, "PGen", 10).Do(m => cLog.Enqueue(m));
+                    Generators.Repeat(p, "PGen", 10, TimeSpan.FromTicks(1)).Do(m => cLog.Enqueue(m));
 
                     p.Run();
                 }
@@ -109,9 +109,9 @@ namespace Test.Psi
                     h.Emitter.Do(m => cLog.Enqueue(m));
                     i.Emitter.Do(m => cLog.Enqueue(m));
 
-                    Generators.Repeat(p, "PGen", 10).Do(m => cLog.Enqueue(m));
-                    Generators.Repeat(q, "QGen", 10).Do(m => cLog.Enqueue(m));
-                    Generators.Repeat(r, "RGen", 10).Do(m => cLog.Enqueue(m));
+                    Generators.Repeat(p, "PGen", 10, TimeSpan.FromTicks(1)).Do(m => cLog.Enqueue(m));
+                    Generators.Repeat(q, "QGen", 10, TimeSpan.FromTicks(1)).Do(m => cLog.Enqueue(m));
+                    Generators.Repeat(r, "RGen", 10, TimeSpan.FromTicks(1)).Do(m => cLog.Enqueue(m));
 
                     p.Run();
                 }

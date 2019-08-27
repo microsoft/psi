@@ -14,9 +14,8 @@ namespace Microsoft.Psi.Components
     public class Pair<TPrimary, TSecondary, TOut> : IProducer<TOut>
     {
         private readonly Func<TPrimary, TSecondary, TOut> outputCreator;
-        private readonly Pipeline pipeline;
         private bool secondaryValueReady = false;
-        private TSecondary lastSecondaryValue = default(TSecondary);
+        private TSecondary lastSecondaryValue = default;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pair{TPrimary, TSecondary, TOut}"/> class.
@@ -28,7 +27,6 @@ namespace Microsoft.Psi.Components
             Func<TPrimary, TSecondary, TOut> outputCreator)
             : base()
         {
-            this.pipeline = pipeline;
             this.outputCreator = outputCreator;
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.InPrimary = pipeline.CreateReceiver<TPrimary>(this, this.ReceivePrimary, nameof(this.InPrimary));

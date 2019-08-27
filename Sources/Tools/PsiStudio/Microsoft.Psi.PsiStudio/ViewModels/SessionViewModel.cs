@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Windows;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Annotations;
@@ -141,7 +142,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                             Win32.OpenFileDialog dlg = new Win32.OpenFileDialog();
                             dlg.DefaultExt = ".psi";
                             dlg.Filter = "Psi Store (.psi)|*.psi|Psi Annotation Store (.pas)|*.pas";
-                            bool? result = dlg.ShowDialog();
+                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
                             {
                                 var fileInfo = new FileInfo(dlg.FileName);

@@ -85,6 +85,13 @@ namespace Microsoft.Psi.Streams
 
         internal int Count => this.queue.Count;
 
+        /// <summary>
+        /// Try to dequeue the oldest message that obeys the defined delivery policy.
+        /// </summary>
+        /// <param name="message">The oldest message if it exists, or default otherwise.</param>
+        /// <param name="stateTransition">Struct that describes the status of the internal queue after the dequeue.</param>
+        /// <param name="currentTime">The current time of the pipeline that is used to calculate latency.</param>
+        /// <returns>True if oldest message that satisfies the policy is found.</returns>
         public bool TryDequeue(out Message<T> message, out QueueTransition stateTransition, DateTime currentTime)
         {
             message = default(Message<T>);
@@ -92,6 +99,7 @@ namespace Microsoft.Psi.Streams
 
             lock (this.queue)
             {
+                // loop through the queue
                 while (this.queue.Count != 0)
                 {
                     var oldest = this.queue.Dequeue();
@@ -99,6 +107,9 @@ namespace Microsoft.Psi.Streams
                     // check if we have a maximum-latency policy and a message that exceeds that latency
                     if (this.policy.MaximumLatency.HasValue && (currentTime - oldest.OriginatingTime) > this.policy.MaximumLatency.Value)
                     {
+                        // Because this message has a latency that is larger than the policy allowed, we are dropping this message and
+                        // finding the next message with smaller latency.
+                        this.pipeline.DiagnosticsCollector?.MessageDropped(this.pipeline, this.element, this.receiver, this.Count, message.Envelope);
                         this.cloner.Recycle(oldest.Data);
                         this.counters?.Increment(ReceiverCounters.Dropped);
                     }
@@ -117,14 +128,20 @@ namespace Microsoft.Psi.Streams
             }
         }
 
+        /// <summary>
+        /// Enqueue the message while respecting the defined delivery policy.
+        /// </summary>
+        /// <param name="message">The new message.</param>
+        /// <param name="stateTransition">The struct describing the status of the internal queue.</param>
         public void Enqueue(Message<T> message, out QueueTransition stateTransition)
         {
             lock (this.queue)
             {
-                if (this.queue.Count > this.policy.MaximumQueueSize)
+                // If the queue size is more than the allowed size in the policy, recycle the oldest object in the queue.
+                if (this.queue.Count >= this.policy.MaximumQueueSize)
                 {
                     var item = this.queue.Dequeue(); // discard unprocessed items if the policy requires it
-                    this.pipeline.DiagnosticsCollector?.MessageDropped(this.pipeline, this.element, this.receiver, this.Count, message.Envelope);
+                    this.pipeline.DiagnosticsCollector?.MessageDropped(this.pipeline, this.element, this.receiver, this.Count, item.Envelope);
                     this.cloner.Recycle(item.Data);
                     this.counters?.Increment(ReceiverCounters.Dropped);
                 }
@@ -136,12 +153,16 @@ namespace Microsoft.Psi.Streams
                     while (this.queue.Count > 0 && this.queue.Peek().OriginatingTime > message.OriginatingTime)
                     {
                         var item = this.queue.Dequeue(); // discard unprocessed items which occur after the closing message
+                        this.pipeline.DiagnosticsCollector?.MessageDropped(this.pipeline, this.element, this.receiver, this.Count, item.Envelope);
                         this.cloner.Recycle(item.Data);
                         this.counters?.Increment(ReceiverCounters.Dropped);
                     }
                 }
 
+                // enqueue the new message
                 this.queue.Enqueue(message);
+
+                // Update a bunch of variables that helps with diagnostics and performance measurement.
                 if (this.queue.Count > this.maxQueueSize)
                 {
                     this.maxQueueSize = this.queue.Count;
@@ -153,6 +174,7 @@ namespace Microsoft.Psi.Streams
                     this.counters.RawValue(ReceiverCounters.MaxQueueSize, this.maxQueueSize);
                 }
 
+                // computes the new state that indicates the status of the internal queue and whether the queue needs to be locked and expanded.
                 stateTransition = this.UpdateState();
                 this.pipeline.DiagnosticsCollector?.MessageEnqueued(this.pipeline, this.element, this.receiver, this.Count, message.Envelope);
             }
@@ -163,16 +185,25 @@ namespace Microsoft.Psi.Streams
             this.counters = counters;
         }
 
+        /// <summary>
+        /// Updates the status of the <see cref="DeliveryQueue{T}"/> object by comparing different properties of the object (before update) with the
+        /// status of the internal Queue object.
+        /// </summary>
+        /// <returns>A <see cref="QueueTransition"/> struct that describe the current state of the <see cref="DeliveryQueue{T}"/>.</returns>
         private QueueTransition UpdateState()
         {
+            // save the previous state information locally.
             int count = this.queue.Count;
             bool wasEmpty = this.isEmpty;
             bool wasThrottling = this.isThrottling;
             bool wasClosing = this.nextMessageEnvelope.SequenceId == int.MaxValue;
+
+            // update the local variables.
             this.isEmpty = count == 0;
             this.isThrottling = this.policy.ThrottleWhenFull && count > this.policy.MaximumQueueSize;
             this.nextMessageEnvelope = (count == 0) ? default(Envelope) : this.queue.Peek().Envelope;
 
+            // create the Transition object by comparing the current and previous local state variables.
             return new QueueTransition()
             {
                 ToEmpty = !wasEmpty && this.isEmpty,

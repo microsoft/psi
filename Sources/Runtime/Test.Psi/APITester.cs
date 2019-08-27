@@ -21,7 +21,7 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create("SimplePipeline"))
             {
-                var generate = Generators.Sequence(p, new[] { 0d, 1d }, x => new[] { x[0] + 0.1, x[1] + 0.1 }, 10);
+                var generate = Generators.Sequence(p, new[] { 0d, 1d }, x => new[] { x[0] + 0.1, x[1] + 0.1 }, 10, TimeSpan.FromTicks(1));
                 var transform = new ScalarMultiplier(p, 100);
                 generate.PipeTo(transform);
                 transform.Do(a => Console.WriteLine($"[{a[0]}, {a[1]}]"));
@@ -38,7 +38,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("JoinPipeline"))
             {
                 // create a generator that will produce a finite sequence
-                var generator = Generators.Sequence(p, new[] { 0d, 1d }, x => new[] { x[0] + 0.1, x[1] + 0.1 }, count: 10);
+                var generator = Generators.Sequence(p, new[] { 0d, 1d }, x => new[] { x[0] + 0.1, x[1] + 0.1 }, 10, TimeSpan.FromTicks(1));
 
                 // instantiate our sample component
                 var multiply = new ScalarMultiplier(p, 10);
@@ -92,7 +92,7 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create(nameof(this.ExceptionHandling)))
             {
-                var source = Generators.Sequence(p, 1, x => x + 1, 100);
+                var source = Generators.Sequence(p, 1, x => x + 1, 100, TimeSpan.FromTicks(1));
                 var sin = source.Select(t => t / 0); // trigger an exception
                 try
                 {
@@ -113,7 +113,7 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create("pipeline"))
             {
-                var source = Generators.Sequence(p, 1, x => x + 1, 100);
+                var source = Generators.Sequence(p, 1, x => x + 1, 100, TimeSpan.FromTicks(1));
                 p.PipelineRun += (s, e) =>
                 {
                     int x = 0;
@@ -132,7 +132,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("pipeline"))
             {
                 var sub = new Subpipeline(p, "subpipeline");
-                var generator = Generators.Sequence(p, 1, x => x + 1, 100);
+                var generator = Generators.Sequence(p, 1, x => x + 1, 100, TimeSpan.FromTicks(1));
 
                 sub.PipelineRun += (s, e) =>
                 {

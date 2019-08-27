@@ -231,7 +231,13 @@ namespace Microsoft.Psi
                 bool delivered = this.scheduler.TryExecute(this.syncContext, this.onReceived, message, message.OriginatingTime, this.schedulerContext);
                 if (delivered)
                 {
-                    this.pipeline.DiagnosticsCollector?.MessageProcessedSynchronously(this.pipeline, this.element, this, this.awaitingDelivery.Count, message.Envelope, this.ComputeDataSize(message.Data));
+                    this.pipeline.DiagnosticsCollector?.MessageProcessedSynchronously(
+                        this.pipeline,
+                        this.element,
+                        this,
+                        this.awaitingDelivery.Count,
+                        message.Envelope,
+                        this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0);
                     return;
                 }
             }
@@ -285,7 +291,13 @@ namespace Microsoft.Psi
                 }
 
                 DateTime start = (this.counters != null) ? Time.GetCurrentTime() : default(DateTime);
-                this.pipeline.DiagnosticsCollector?.MessageProcessStart(this.pipeline, this.element, this, this.awaitingDelivery.Count, message.Envelope, this.ComputeDataSize(message.Data));
+                this.pipeline.DiagnosticsCollector?.MessageProcessStart(
+                    this.pipeline,
+                    this.element,
+                    this,
+                    this.awaitingDelivery.Count,
+                    message.Envelope,
+                    this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0);
                 this.onReceived(message);
                 this.pipeline.DiagnosticsCollector?.MessageProcessComplete(this.pipeline, this.element, this, message.Envelope);
 

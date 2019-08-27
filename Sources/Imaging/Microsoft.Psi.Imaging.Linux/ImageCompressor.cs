@@ -37,6 +37,7 @@ namespace Microsoft.Psi.Imaging
         /// <inheritdoc/>
         public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
         {
+            // Note: encoder instances are created here because they may have thread affinity.
             IBitmapEncoder encoder = null;
             switch (this.CompressionMethod)
             {
@@ -54,7 +55,7 @@ namespace Microsoft.Psi.Imaging
             {
                 using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
                 {
-                    sharedEncodedImage.Resource.EncodeFrom(instance, encoder);
+                    sharedEncodedImage.Resource.EncodeFrom(instance, encoder.Encode);
                     Serializer.Serialize(writer, sharedEncodedImage, context);
                 }
             }
@@ -71,7 +72,7 @@ namespace Microsoft.Psi.Imaging
             Serializer.Deserialize(reader, ref encodedImage, context);
             using (var image = ImagePool.GetOrCreate(encodedImage.Resource.Width, encodedImage.Resource.Height, PixelFormat.BGR_24bpp))
             {
-                encodedImage.Resource.DecodeTo(image.Resource);
+                ImageDecoder.DecodeTo(encodedImage.Resource, image.Resource);
                 target = image.Resource.DeepClone();
             }
         }

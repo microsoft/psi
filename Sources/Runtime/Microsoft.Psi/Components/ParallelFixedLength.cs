@@ -42,8 +42,9 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="vectorSize">Vector size.</param>
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
-        public ParallelFixedLength(Pipeline pipeline, int vectorSize, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault)
+        /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
+        /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
+        public ParallelFixedLength(Pipeline pipeline, int vectorSize, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped, TOut defaultValue = default)
         {
             this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
             this.branches = new Emitter<TIn>[vectorSize];
@@ -59,8 +60,8 @@ namespace Microsoft.Psi.Components
                 branchResults[i] = connectorOut;
             }
 
-            var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();
-            this.join = Operators.Join(branchResults, interpolator, pipeline: pipeline);
+            var interpolator = outputDefaultIfDropped ? Reproducible.ExactOrDefault<TOut>(defaultValue) : Reproducible.Exact<TOut>();
+            this.join = Operators.Join(branchResults, interpolator);
         }
 
         /// <inheritdoc />

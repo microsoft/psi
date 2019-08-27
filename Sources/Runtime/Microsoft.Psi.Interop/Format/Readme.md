@@ -75,39 +75,81 @@ A single `CsvFormat` class provides implementations for comma-separated-values e
 
 The first column is the originating time of the messages and is named as such.
 
-There are several limitations to the CSV format. Much of the type information is lost and hierarchical values and collection properties not (currently) allowed - such properties are merely skipped. For example a face tracker message type containing an `ID`, a `Confidence` and a `Face` property, each with a `Rect` having an `X` and `Y` location and `Width`/`Height`, would only serialize the root primitive properties; in this case only the `ID` and `Confidence` (along with originating time):
+Each message includes the header row. Deserializing these will give messages represented as an `ExpandoObject` with named `dynamic` properties for each column (except `_OriginatingTime_`).
+
+There are several limitations to the CSV format. Much of the type information is lost, hierarchical values are flattened and collection properties are ignored.
+For example a face tracker message of the following form would serialize the leaf primitive properties as peers:
+
+```
+new
+{
+	ID = 123,
+	Confidence = 0.92,
+	Face = new // child properties of Face are serialized as siblings to ID and Confidence
+	{
+		X = 213,
+		Y = 107,
+		Width = 42,
+		Height = 61
+		Points = new [] { 123, 456 } // collection property ignored
+	}
+};
+```
+
+Serializes to:
 
 ```csv
-_OriginatingTime_,ID,Confidence
-2018-09-06T00:39:19.0883965Z,123,0.92
-2018-09-06T00:39:19.0983965Z,123,0.89
+_OriginatingTime_,ID,Confidence,X,Y,Width,Height
+2018-09-06T00:39:19.0883965Z,123,0.92,213,107,42,61
 ...
 ```
 
-Given a stream of face tracker results, it is easy enough to select out a "flattened" view:
+Identically named fields at different levels in the hierarchy can become confusing. For example, if each `Face` also has a `Confidence`:
+
+```
+new
+{
+	ID = 123,
+	Confidence = 0.92,
+	Face = new
+	{
+		Confidence = 0.89, // additional Confidence property
+		X = 213,
+		Y = 107,
+		Width = 42,
+		Height = 61
+	}
+};
+```
+
+This serializes _both_ properties as adjacent columns, sharing the name "Confidence" with the outer field first:
+
+```csv
+_OriginatingTime_,ID,Confidence,Confidence,X,Y,Width,Height
+2018-09-06T00:39:19.0883965Z,123,0.92,0.89,213,107,42,61
+...
+```
+
+While serialization to this ill-advised schema will work, _deserializing_ from this CSV data will fail to construct `ExpandoObjects` because of the identically named fields.
+
+A solution is to `Select(...)` a more sane structure. Given a stream of face tracker results, it is easy enough to select out a "flattened" view with clear names of your choice (e.g. "OverallConfidence" vs. "FaceConfidence"):
 
 ```csharp
 var flattened = faces.Select(f => new { ID = f.ID,
-                                        Confidence = f.Confidence,
-                                        FaceX=f.Rect.X,
-                                        FaceY=f.Rect.Y,
-                                        FaceWidth=f.Rect.Width,
-                                        FaceHeight=f.Rect.Height });
+                                        OverallConfidence = f.Confidence,   // overall confidence
+                                        FaceConfidence = f.Face.Confidence, // face confidence
+                                        FaceX=f.Face.Rect.X,
+                                        FaceY=f.Face.Rect.Y,
+                                        FaceWidth=f.Face.Rect.Width,
+                                        FaceHeight=f.Face.Rect.Height });
 ```
 
 Serializing this would then produce a stream of messages in the form:
 
 ```csv
-_OriginatingTime_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
-2018-09-06T00:39:19.0883965Z,123,0.92,213,107,42,61
+_OriginatingTime_,ID,OverallConfidence,FaceConfidence,FaceX,FaceY,FaceWidth,FaceHeight
+2018-09-06T00:39:19.0883965Z,123,0.92,0.89,213,107,42,61
 ```
-
-```csv
-_OriginatingTime_,ID,Confidence,FaceX,FaceY,FaceWidth,FaceHeight
-2018-09-06T00:39:19.0983965Z,123,0.89,215,101,44,63
-```
-
-Notice that each message includes the header row. Deserializing these will give messages represented as an `ExpandoObject` with named `dynamic` properties for each column (except `_OriginatingTime_`).
 
 ### Simple Primitives
 

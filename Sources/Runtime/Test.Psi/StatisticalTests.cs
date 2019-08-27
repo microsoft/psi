@@ -461,50 +461,6 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsSumNullableDouble()
-        {
-            this.RunTest(Operators.Sum,
-                (
-                    new double?[] { }, // empty sequence
-                    new double?[] { } // expected output
-                ),
-                (
-                    new double?[] { null, null, null }, // null sequence
-                    new double?[] { 0, 0, 0 } // expected output
-                ),
-                (
-                    new double?[] { -1.0, -2.0, -3.0, 0.0, 1.0, 2.0 }, // real numbers only
-                    new double?[] { -1.0, -3.0, -6.0, -6.0, -5.0, -3.0 } // expected output
-                ),
-                (
-                    new double?[] { -1.0, -2.0, null, -3.0, 0.0, 1.0, null, 2.0 }, // sequence with null values
-                    new double?[] { -1.0, -3.0, -3.0, -6.0, -6.0, -5.0, -5.0, -3.0 } // expected output
-                ),
-                (
-                    new double?[] { 0.0, double.NaN, 1.0, 0.0 }, // sequence with NaN
-                    new double?[] { 0.0, double.NaN, double.NaN, double.NaN } // expected output
-                ),
-                (
-                    new double?[] { double.NaN, 0.0, 1.0, 0.0 }, // first element is NaN
-                    new double?[] { double.NaN, double.NaN, double.NaN, double.NaN } // expected output
-                ),
-                (
-                    new double?[] { 0.0, 1.0, 0.0, double.NaN }, // last element is NaN
-                    new double?[] { 0.0, 1.0, 1.0, double.NaN } // expected output
-                ),
-                (
-                    new double?[] { double.NaN, double.NaN, double.NaN, double.NaN }, // sequence contains only NaNs
-                    new double?[] { double.NaN, double.NaN, double.NaN, double.NaN } // expected output
-                ),
-                (
-                    new double?[] { double.NegativeInfinity, -1.0, double.PositiveInfinity, 1.0, double.NaN }, // sequence with +/- infinity
-                    new double?[] { double.NegativeInfinity, double.NegativeInfinity, double.NaN, double.NaN, double.NaN } // expected output
-                )
-            );
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
         public void StatisticsSumIEnumerableDouble()
         {
             this.RunTest(Operators.Sum,
@@ -576,50 +532,6 @@ namespace Test.Psi
                 (
                     new[] { float.NegativeInfinity, -1.0f, float.PositiveInfinity, 1.0f, float.NaN }, // sequence with +/- infinity
                     new[] { float.NegativeInfinity, float.NegativeInfinity, float.NaN, float.NaN, float.NaN } // expected output
-                )
-            );
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void StatisticsSumNullableFloat()
-        {
-            this.RunTest(Operators.Sum,
-                (
-                    new float?[] { }, // empty sequence
-                    new float?[] { } // expected output
-                ),
-                (
-                    new float?[] { null, null, null }, // null sequence
-                    new float?[] { 0, 0, 0 } // expected output
-                ),
-                (
-                    new float?[] { -1.0f, -2.0f, -3.0f, 0.0f, 1.0f, 2.0f }, // real numbers only
-                    new float?[] { -1.0f, -3.0f, -6.0f, -6.0f, -5.0f, -3.0f } // expected output
-                ),
-                (
-                    new float?[] { -1.0f, -2.0f, null, -3.0f, 0.0f, 1.0f, null, 2.0f }, // sequence with null values
-                    new float?[] { -1.0f, -3.0f, -3.0f, -6.0f, -6.0f, -5.0f, -5.0f, -3.0f } // expected output
-                ),
-                (
-                    new float?[] { 0.0f, float.NaN, 1.0f, 0.0f }, // sequence with NaN
-                    new float?[] { 0.0f, float.NaN, float.NaN, float.NaN } // expected output
-                ),
-                (
-                    new float?[] { float.NaN, 0.0f, 1.0f, 0.0f }, // first element is NaN
-                    new float?[] { float.NaN, float.NaN, float.NaN, float.NaN } // expected output
-                ),
-                (
-                    new float?[] { 0.0f, 1.0f, 0.0f, float.NaN }, // last element is NaN
-                    new float?[] { 0.0f, 1.0f, 1.0f, float.NaN } // expected output
-                ),
-                (
-                    new float?[] { float.NaN, float.NaN, float.NaN, float.NaN }, // sequence contains only NaNs
-                    new float?[] { float.NaN, float.NaN, float.NaN, float.NaN } // expected output
-                ),
-                (
-                    new float?[] { float.NegativeInfinity, -1.0f, float.PositiveInfinity, 1.0f, float.NaN }, // sequence with +/- infinity
-                    new float?[] { float.NegativeInfinity, float.NegativeInfinity, float.NaN, float.NaN, float.NaN } // expected output
                 )
             );
         }
@@ -874,7 +786,7 @@ namespace Test.Psi
                         new[] { double.NegativeInfinity, 2.0, -1.5, 3.0 },
                         new[] { double.PositiveInfinity, 2.0, -1.5, 3.0 }
                     },
-                    new[] { 0, double.NaN, 0.70710678118654757, 1.9311050377094112, double.NaN, double.NaN, double.NaN, double.NaN } // expected output
+                    new[] { 0, 0, 0.70710678118654757, 1.9311050377094112, double.NaN, double.NaN, double.NaN, double.NaN } // expected output
                 )
             );
         }
@@ -932,7 +844,75 @@ namespace Test.Psi
                         new[] { float.NegativeInfinity, 2.0f, -1.5f, 3.0f },
                         new[] { float.PositiveInfinity, 2.0f, -1.5f, 3.0f }
                     },
-                    new[] { 0f, float.NaN, 0.707106769f, 1.931105f, float.NaN, float.NaN, float.NaN, float.NaN } // expected output
+                    new[] { 0f, 0f, 0.707106769f, 1.931105f, float.NaN, float.NaN, float.NaN, float.NaN } // expected output
+                )
+            );
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StatisticsStdDecimal()
+        {
+            this.RunTest(Operators.Std,
+                (
+                    new decimal[] { }, // empty sequence
+                    new decimal[] { } // expected output
+                ),
+                (
+                    new[] { -1.0m, -2.0m, -3.0m, 0.0m, 1.0m, 2.0m }, // real numbers only
+                    new[] { 0.0m, 0.707106781186548m, 1m, 1.29099444873581m, 1.58113883008419m, 1.87082869338697m } // expected output
+                )
+            );
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StatisticsStdIEnumerableDecimal()
+        {
+            this.RunTest(Operators.Std,
+                (
+                    new IEnumerable<decimal>[] // sequence of enumerations
+                    {
+                        new decimal[] { },
+                        new[] { 1.0m },
+                        new[] { 1.0m, 2.0m },
+                        new[] { 1.0m, 2.0m, -1.5m, 3.0m },
+                    },
+                    new[] { 0m, 0m, 0.707106781186548m, 1.93110503770941m } // expected output
+                )
+            );
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StatisticsStdInt()
+        {
+            this.RunTest(Operators.Std,
+                (
+                    new int[] { }, // empty sequence
+                    new double[] { } // expected output
+                ),
+                (
+                    new[] { -1, -2, -3, 0, 1, 2 },
+                    new[] { double.NaN, 0.70710678118654757, 1, 1.2909944487358056, 1.5811388300841898, 1.8708286933869707 } // expected output
+                )
+            );
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StatisticsStdIEnumerableInt()
+        {
+            this.RunTest(Operators.Std,
+                (
+                    new IEnumerable<int>[] // sequence of enumerations
+                    {
+                        new int[] { },
+                        new[] { 1 },
+                        new[] { 1, 2 },
+                        new[] { 1, 2, -1, 3 },
+                    },
+                    new[] { 0, 0, 0.70710678118654757, 1.707825127659933 } // expected output
                 )
             );
         }
@@ -959,7 +939,7 @@ namespace Test.Psi
                 {
                     var output = new List<TOutput>();
                     outputs.Add(output);
-                    @operator(Generators.Sequence(p, inputSequence), null).Do(x => output.Add(x));
+                    @operator(Generators.Sequence(p, inputSequence, TimeSpan.FromTicks(1)), null).Do(x => output.Add(x));
                 }
 
                 p.Run(null, true);

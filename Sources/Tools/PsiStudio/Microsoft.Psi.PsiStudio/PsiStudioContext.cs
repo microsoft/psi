@@ -289,7 +289,7 @@ namespace Microsoft.Psi.PsiStudio
                                 Filter = "Psi Store (.psi)|*.psi",
                             };
 
-                            bool? result = dlg.ShowDialog();
+                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
@@ -320,7 +320,7 @@ namespace Microsoft.Psi.PsiStudio
                             dlg.DefaultExt = ".pds";
                             dlg.Filter = "Psi Dataset (.pds)|*.pds";
 
-                            bool? result = dlg.ShowDialog();
+                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
@@ -351,7 +351,7 @@ namespace Microsoft.Psi.PsiStudio
                             dlg.DefaultExt = ".pds";
                             dlg.Filter = "Psi Dataset (.pds)|*.pds";
 
-                            bool? result = dlg.ShowDialog();
+                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
@@ -1313,7 +1313,7 @@ namespace Microsoft.Psi.PsiStudio
 
         private void SaveLayoutAs()
         {
-            LayoutNameWindow dlg = new LayoutNameWindow();
+            LayoutNameWindow dlg = new LayoutNameWindow(Application.Current.MainWindow);
 
             bool? result = dlg.ShowDialog();
             if (result == true)

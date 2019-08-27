@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Components
         private readonly Connector<Dictionary<TKey, TIn>> inConnector;
         private readonly Connector<Dictionary<TKey, TOut>> outConnector;
         private readonly Pipeline pipeline;
-        private readonly Join<Dictionary<TKey, int>, TOut, Dictionary<TKey, TOut>> join;
+        private readonly Join<Dictionary<TKey, int>, TOut, TOut, Dictionary<TKey, TOut>> join;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelSparse{TIn, TKey, TOut}"/> class.
@@ -41,9 +41,10 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
-        /// <param name="joinOrDefault">Whether to do an "...OrDefault" join.</param>
+        /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
+        /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
-        public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transform, bool joinOrDefault, Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
+        public ParallelSparse(Pipeline pipeline, Func<TKey, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped = false, TOut defaultValue = default, Func<TKey, Dictionary<TKey, TIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null)
             : base(pipeline)
         {
             this.pipeline = pipeline;
@@ -51,7 +52,7 @@ namespace Microsoft.Psi.Components
 
             var splitter = new ParallelSplitter(this, transform, branchTerminationPolicy, o => o.PipeTo(this.join.AddInput(), true));
             this.inConnector.PipeTo(splitter);
-            var interpolator = joinOrDefault ? Match.ExactOrDefault<TOut>() : Match.Exact<TOut>();
+            var interpolator = outputDefaultIfDropped ? Reproducible.ExactOrDefault(defaultValue) : Reproducible.Exact<TOut>();
             this.join = Operators.Join(splitter.ActiveBranches, Enumerable.Empty<IProducer<TOut>>(), interpolator);
             this.outConnector = this.CreateOutputConnectorTo<Dictionary<TKey, TOut>>(pipeline, nameof(this.outConnector));
             this.join.PipeTo(this.outConnector);

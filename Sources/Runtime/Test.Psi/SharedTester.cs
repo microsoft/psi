@@ -283,7 +283,7 @@ namespace Test.Psi
             {
                 var pool = new SharedPool<int[]>(() => new int[1], 1);
                 var g = Generators
-                    .Range(p, 0, 10)
+                    .Range(p, 0, 10, TimeSpan.FromTicks(1))
                     .Process<int, Shared<int[]>>(
                     (i, e, emitter) =>
                     {
@@ -310,7 +310,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 var pool = new SharedPool<int[]>(() => new int[1], 1);
-                var g = Generators.Range(p, 0, 10);
+                var g = Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
                 var s1 = g.Process<int, Shared<int[]>>(
                     (i, e, emitter) =>
                     {

@@ -253,7 +253,6 @@ namespace Microsoft.Psi.Diagnostics
             var input = this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id];
             input.DroppedCount++;
             input.QueueSize = queueSize;
-            input.AddMessageLatencyAtEmitter(envelope);
         }
 
         /// <summary>

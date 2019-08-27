@@ -106,20 +106,26 @@ namespace Microsoft.Psi.PsiStudio
             // Load the settings XML file if it exists
             if (File.Exists(this.settingsFilename))
             {
-                XmlDocument settingsDocument = new XmlDocument();
-                settingsDocument.Load(this.settingsFilename);
-
-                // Get the list of PsiSettings
-                PropertyInfo[] properties = thisType.GetProperties();
-                foreach (PropertyInfo propertyInfo in properties)
+                try
                 {
-                    // Check if this setting has a value in the settings file
-                    XmlNode node = settingsDocument.DocumentElement.SelectSingleNode(string.Format("/{0}/{1}", thisType.Name, propertyInfo.Name));
-                    if (node != null)
+                    XmlDocument settingsDocument = new XmlDocument();
+                    settingsDocument.Load(this.settingsFilename);
+
+                    // Get the list of PsiSettings
+                    PropertyInfo[] properties = thisType.GetProperties();
+                    foreach (PropertyInfo propertyInfo in properties)
                     {
-                        // Update the setting with the value from the settings file
-                        propertyInfo.SetValue(this, node.InnerText);
+                        // Check if this setting has a value in the settings file
+                        XmlNode node = settingsDocument.DocumentElement.SelectSingleNode(string.Format("/{0}/{1}", thisType.Name, propertyInfo.Name));
+                        if (node != null)
+                        {
+                            // Update the setting with the value from the settings file
+                            propertyInfo.SetValue(this, node.InnerText);
+                        }
                     }
+                }
+                catch (XmlException)
+                {
                 }
             }
         }

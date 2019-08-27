@@ -41,8 +41,8 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create())
             {
-                // Setup a sequence with a parallel operator, with joinOrDefault = true, and ensure that
-                // the "orDefault" is correctly applied while the instance substream exists, but not outside of that existance.
+                // Setup a sequence with a parallel operator, with outputDefaultIfDropped = true, and ensure that
+                // the "outputDefaultIfDropped" is correctly applied while the instance substream exists, but not outside of that existance.
                 // This tests for making sure we are correctly tracking stream closings and the interpolator
                 // in Join is doing the right thing based on the stream closing times.
 
@@ -62,10 +62,10 @@ namespace Test.Psi
                     new Dictionary<int, int>(),
                     new Dictionary<int, int>(),
                     new Dictionary<int, int>(),
-                });
+                }, TimeSpan.FromTicks(1));
 
                 var resultsParallelOrDefault = new List<int>();
-                input.Parallel(s => s.Where(x => x != 3 && x <= 4), joinOrDefault: true).Do(d =>
+                input.Parallel(s => s.Where(x => x != 3 && x <= 4), outputDefaultIfDropped: true).Do(d =>
                 {
                     if (d.Count() > 0)
                     {
@@ -169,7 +169,7 @@ namespace Test.Psi
 
             using (var p = Pipeline.Create())
             {
-                var source = Generators.Sequence(p, 0, i => i + 1, 10);
+                var source = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(1));
                 Operators
                     .Join(new[] { source }, TimeSpan.FromTicks(5))
                     .Do(t => results.Add(t.DeepClone()));
@@ -197,7 +197,7 @@ namespace Test.Psi
                 var keyMapping = sourceA.Select(i => (i % 10 != 0) ? new Dictionary<string, int> { { "zero", 0 }, { "one", 1 } } : new Dictionary<string, int> { { "zero", 0 }, { "two", 2 } });
 
                 Operators
-                    .Join(keyMapping, new[] { sourceA, sourceB, sourceC }, TimeSpan.FromTicks(5))
+                    .Join(keyMapping, new[] { sourceA, sourceB, sourceC }, Reproducible.Nearest<int>(TimeSpan.FromTicks(5)))
                     .Do(t => results.Add(t.DeepClone()));
                 p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
             }
@@ -234,12 +234,12 @@ namespace Test.Psi
 
                 var tuples =
                     sourceA
-                        .Join(sourceB, Match.Best<string>())
-                        .Join(sourceC, Match.Best<string>())
-                        .Join(sourceD, Match.Best<string>())
-                        .Join(sourceE, Match.Best<string>())
-                        .Join(sourceF, Match.Best<string>())
-                        .Join(sourceG, Match.Best<string>())
+                        .Join(sourceB, Reproducible.Nearest<string>())
+                        .Join(sourceC, Reproducible.Nearest<string>())
+                        .Join(sourceD, Reproducible.Nearest<string>())
+                        .Join(sourceE, Reproducible.Nearest<string>())
+                        .Join(sourceF, Reproducible.Nearest<string>())
+                        .Join(sourceG, Reproducible.Nearest<string>())
                         .ToObservable().ToListObservable();
                 pipeline.Run();
 

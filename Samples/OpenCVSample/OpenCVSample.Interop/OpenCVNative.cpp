@@ -39,11 +39,9 @@ namespace Microsoft
 
 					static void SaveImage(ImageBuffer ^img, System::String ^filename)
 					{
-						std::string fn = msclr::interop::marshal_as<std::string>(filename);
-						cv::Mat matImg = WrapInMat(img);
-						IplImage *iplImg = new IplImage(matImg);
-						cvSaveImage(fn.c_str(), iplImg);
-						delete iplImg;
+                        std::string fn = msclr::interop::marshal_as<std::string>(filename);
+                        cv::Mat matImg = WrapInMat(img);
+                        cv::imwrite(fn, matImg);
 					}
 				};
 			}

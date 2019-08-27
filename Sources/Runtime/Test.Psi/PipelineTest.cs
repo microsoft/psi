@@ -25,7 +25,7 @@ namespace Test.Psi
             using (var p2 = Pipeline.Create("b"))
             {
                 var ready = new AutoResetEvent(false);
-                var src = Generators.Sequence(p1, new[] { 1, 2, 3 });
+                var src = Generators.Sequence(p1, new[] { 1, 2, 3 }, TimeSpan.FromTicks(1));
                 var dest = new Processor<int, int>(p2, (i, e, o) => o.Post(i, e.OriginatingTime));
                 dest.Do(i => ready.Set());
                 var connector = new Connector<int>(p1, p2);
@@ -78,7 +78,7 @@ namespace Test.Psi
                 using (var s = Subpipeline.Create(p, "sub"))
                 {
                     // add to sub-pipeline
-                    var seq = Generators.Sequence(s, new[] { 1, 2, 3 }).ToObservable().ToListObservable();
+                    var seq = Generators.Sequence(s, new[] { 1, 2, 3 }, TimeSpan.FromTicks(1)).ToObservable().ToListObservable();
                     p.Run(); // run parent pipeline
 
                     Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, seq.AsEnumerable()));
@@ -111,7 +111,7 @@ namespace Test.Psi
             {
                 var doubler = new TestReactiveCompositeComponent(p);
                 Assert.AreEqual(p, doubler.Out.Pipeline); // composite component shouldn't expose the fact that subpipeline is involved
-                var seq = Generators.Sequence(p, new[] { 1, 2, 3 });
+                var seq = Generators.Sequence(p, new[] { 1, 2, 3 }, TimeSpan.FromTicks(1));
                 seq.PipeTo(doubler.In);
                 var results = doubler.Out.ToObservable().ToListObservable();
                 p.Run(); // note that parent pipeline stops once sources complete (reactive composite-component subpipeline doesn't "hold open")
@@ -129,7 +129,7 @@ namespace Test.Psi
             {
                 var output = this.CreateOutputConnectorTo<int>(parent, "Output");
                 this.Out = output.Out;
-                Generators.Range(this, 0, 10).Out.PipeTo(output);
+                Generators.Range(this, 0, 10, TimeSpan.FromTicks(1)).Out.PipeTo(output);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Test.Psi
                 var connectorOut1 = subpipeline1.CreateOutputConnectorTo<int>(subpipeline0, "connectorOut1");
 
                 var results = new List<int>();
-                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }).PipeTo(connectorIn0.In);
+                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, TimeSpan.FromTicks(1)).PipeTo(connectorIn0.In);
                 connectorIn0.Out.PipeTo(connectorIn1.In);
                 connectorIn1.Out.PipeTo(connectorOut1.In);
                 connectorOut1.Out.PipeTo(connectorOut0.In);
@@ -230,7 +230,7 @@ namespace Test.Psi
                 Generators.Return(subpipeline1, 1);
 
                 var results = new List<int>();
-                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }).PipeTo(connectorIn0.In);
+                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, TimeSpan.FromTicks(1)).PipeTo(connectorIn0.In);
                 connectorIn0.Out.PipeTo(connectorIn1.In);
                 connectorIn1.Out.PipeTo(connectorOut1.In);
                 connectorOut1.Out.PipeTo(connectorOut0.In);
@@ -261,7 +261,7 @@ namespace Test.Psi
                 var infinite1 = new InfiniteTestComponent(subpipeline1);
 
                 var results = new List<int>();
-                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }).PipeTo(connectorIn0.In);
+                Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, TimeSpan.FromTicks(1)).PipeTo(connectorIn0.In);
                 connectorIn0.Out.PipeTo(connectorIn1.In);
                 connectorIn1.Out.PipeTo(connectorOut1.In);
                 connectorOut1.Out.PipeTo(connectorOut0.In);
@@ -315,7 +315,7 @@ namespace Test.Psi
             {
                 for (int i = 0; i < 1000; i++)
                 {
-                    var p = Generators.Sequence(pipeline, new int[] { });
+                    var p = Generators.Sequence(pipeline, new int[] { }, TimeSpan.FromTicks(1));
                 }
 
                 pipeline.Run();
@@ -555,12 +555,12 @@ namespace Test.Psi
         {
             using (var p = Pipeline.Create())
             {
-                var gen = Generators.Range(p, 0, 10);
+                var gen = Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
                 p.RunAsync();
                 Assert.IsFalse(p.WaitAll(0)); // running
 
                 // add generator while running
-                Generators.Range(p, 0, 10);
+                Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
             }
         }
 
@@ -1572,7 +1572,7 @@ namespace Test.Psi
                 {
                     var sub = Subpipeline.Create(p);
                     var cIn = new Connector<int>(p, sub);
-                    var generator = Generators.Sequence(p, sequence);
+                    var generator = Generators.Sequence(p, sequence, TimeSpan.FromTicks(1));
                     var receiver = sub.CreateReceiver<int>(collector, (d, e) => collector.Add(d), "Receiver");
                     generator.PipeTo(cIn.In);
                     cIn.Out.PipeTo(receiver);
@@ -1714,7 +1714,7 @@ namespace Test.Psi
             var log = new List<string>();
             PipelineDiagnostics graph = null;
 
-            using (var p = Pipeline.Create(true, TimeSpan.FromMilliseconds(1)))
+            using (var p = Pipeline.Create(true, new DiagnosticsConfiguration() { SamplingInterval = TimeSpan.FromMilliseconds(1) }))
             {
                 /*
                  *         .........
@@ -1742,6 +1742,24 @@ namespace Test.Psi
                 p.RunAsync();
                 while (graph == null) Thread.Sleep(10);
             }
+
+            Assert.AreEqual(2, graph.GetPipelineCount()); // total graphs
+            Assert.AreEqual(11, graph.GetPipelineElementCount()); // total pipeline elements
+            Assert.AreEqual(21, graph.GetEmitterCount()); // total emitters (not necessarily connected)
+            Assert.AreEqual(6, graph.GetAllEmitterDiagnostics().Where(e => e.Targets.Count != 0).Count()); // total _connected_ emitters
+            Assert.AreEqual(13, graph.GetReceiverCount()); // total receivers (not necessarily connected)
+            Assert.AreEqual(6, graph.GetAllReceiverDiagnostics().Where(r => r.Source != null).Count()); // total _connected_ receivers
+            Assert.IsTrue(graph.GetAllReceiverDiagnostics().Select(r => r.QueueSize).Sum() > 0); // usually 50+
+            Assert.AreEqual(0, graph.GetDroppedMessageCount()); // total dropped
+            Assert.AreEqual(0, graph.GetThrottledReceiverCount()); // total throttled receivers
+
+            // example complex query: average latency at emitter across reactive components in leaf subpipelines
+            var complex = graph.GetAllPipelineDiagnostics()
+                               .Where(p => p.Subpipelines.Count == 0) // leaf subpipelines
+                               .GetAllPipelineElements()
+                               .Where(e => e.Kind == PipelineDiagnostics.PipelineElementDiagnostics.PipelineElementKind.Reactive) // reactive components
+                               .GetAllReceiverDiagnostics()
+                               .Select(r => r.MessageLatencyAtEmitterHistory.AverageTime()); // average latency at emitter into each component's receivers
 
             Assert.AreEqual("default", graph.Name);
             Assert.IsTrue(graph.IsPipelineRunning);

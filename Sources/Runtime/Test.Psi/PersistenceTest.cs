@@ -127,7 +127,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i, 1); // note that this is not written to the store
+                var seq = Generators.Sequence(p, 1, i => i, 1, TimeSpan.FromTicks(1)); // note that this is not written to the store
                 p.Run();
             }
 
@@ -172,7 +172,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq", writeStore);
                 p.Run();
             }
@@ -201,7 +201,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 var mul = seq.Select(i => i * factor);
                 var tuple = seq.Select(i => (i, i.ToString()));
                 seq.Write("seq", writeStore);
@@ -328,7 +328,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i, count);
+                var seq = Generators.Sequence(p, 1, i => i, count, TimeSpan.FromTicks(1));
                 var big = seq.Select(i => bytes);
                 seq.Write("seq", writeStore);
                 big.Write("big", writeStore, largeMessages: true);
@@ -399,7 +399,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("test"))
             {
                 var writeStore = Store.Create(p, appName, this.path);
-                var source = Generators.Sequence(p, 1, i => i, 100);
+                var source = Generators.Sequence(p, 1, i => i, 100, TimeSpan.FromTicks(1));
                 source.Write(sourceName, writeStore);
                 p.Run();
             }
@@ -497,7 +497,7 @@ namespace Test.Psi
 
             var pipelineWrite = Pipeline.Create("write");
             var writeStore = Store.Create(pipelineWrite, name, relative);
-            var seq = Generators.Sequence(pipelineWrite, 0, i => i + 1, count);
+            var seq = Generators.Sequence(pipelineWrite, 0, i => i + 1, count, TimeSpan.FromTicks(1));
             seq.Write("seq", writeStore);
             seq.Do((m, e) => before[m] = e);
 
@@ -544,7 +544,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, null);
-                var seq = Generators.Sequence(p, 0, i => i + 1, 1);
+                var seq = Generators.Sequence(p, 0, i => i + 1, 1, TimeSpan.FromTicks(1));
                 seq.Write("seq", writeStore);
                 var sel = seq.Select((m, e) => m);
                 p.Run();
@@ -613,7 +613,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq", writeStore);
                 seq.Select(i => i.ToString()).Write("seqString", writeStore);
                 seq.Do((m, e) => before[m] = e);
@@ -667,7 +667,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var writeStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq", writeStore);
                 seq.Select(i => i.ToString()).Write("seqString", writeStore);
                 seq.Do((m, e) => before[m] = e);
@@ -730,7 +730,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write"))
             {
                 var validStore = Store.Create(p, name, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq", validStore);
                 seq.Select(i => i.ToString()).Write("seqString", validStore);
                 seq.Do((m, e) => valid[m] = e);
@@ -747,7 +747,7 @@ namespace Test.Psi
 
             try
             {
-                var seq2 = Generators.Sequence(p2, 1, i => i + 1, count);
+                var seq2 = Generators.Sequence(p2, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq2.Do((m, e) =>
                 {
                     if (e.OriginatingTime.Ticks >= count / 2)
@@ -902,7 +902,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write0"))
             {
                 var writeStore = Store.Create(p, name0, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq0", writeStore);
                 p.Run();
             }
@@ -910,7 +910,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write1"))
             {
                 var writeStore = Store.Create(p, name1, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq1", writeStore);
                 p.Run();
             }
@@ -918,7 +918,7 @@ namespace Test.Psi
             using (var p = Pipeline.Create("write2"))
             {
                 var writeStore = Store.Create(p, name2, this.path);
-                var seq = Generators.Sequence(p, 1, i => i + 1, count);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1));
                 seq.Write("seq2", writeStore);
                 p.Run();
             }

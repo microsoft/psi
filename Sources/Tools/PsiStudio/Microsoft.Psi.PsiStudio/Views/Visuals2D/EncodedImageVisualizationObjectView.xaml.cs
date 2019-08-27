@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
+    using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -60,9 +61,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     var resource = this.EncodedImageVisualizationObject.CurrentValue.Value.Data.Resource;
                     this.lastKnownImageWidth = resource.Width;
                     this.lastKnownImageHeight = resource.Height;
-                    this.lastKnownPixelFormat = resource.GetPixelFormat();
+                    this.lastKnownPixelFormat = ImageDecoder.GetPixelFormat(resource);
                     psiImage = new Imaging.Image(this.lastKnownImageWidth, this.lastKnownImageHeight, this.lastKnownPixelFormat);
-                    resource.DecodeTo(psiImage);
+                    ImageDecoder.DecodeTo(resource, psiImage);
                 }
                 else
                 {

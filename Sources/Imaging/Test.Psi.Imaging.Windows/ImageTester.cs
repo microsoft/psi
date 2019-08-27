@@ -30,7 +30,7 @@ namespace Test.Psi.Imaging
             // Test that the pipeline's operator Crop() works on a stream of images and random rectangles
             using (var pipeline = Pipeline.Create("CropViaOperator"))
             {
-                var generator = Generators.Sequence(pipeline, 1, x => x + 1, 100);
+                var generator = Generators.Sequence(pipeline, 1, x => x + 1, 100, TimeSpan.FromTicks(1));
                 var p = Microsoft.Psi.Operators.Process<int, (Shared<Image>, System.Drawing.Rectangle)>(
                     generator,
                     (d, e, s) =>
@@ -84,7 +84,7 @@ namespace Test.Psi.Imaging
                             },
                         100,
                         TimeSpan.FromMilliseconds(1));
-                    images.Join(rects, Match.Best<System.Drawing.Rectangle>()).Crop();
+                    images.Join(rects, Reproducible.Nearest<System.Drawing.Rectangle>()).Crop();
                     pipeline.Run();
                 }
             }
@@ -139,9 +139,9 @@ namespace Test.Psi.Imaging
         {
             // Crop a slightly different interior region of the same size and verify that the data is different (as a sanity check)
             EncodedImage encImg = new EncodedImage();
-            encImg.EncodeFrom(this.testImage, new PngBitmapEncoder());
+            ImageEncoder.EncodeFrom(encImg, this.testImage, new PngBitmapEncoder());
             Image target = new Image(this.testImage.Width, this.testImage.Height, this.testImage.Stride,  this.testImage.PixelFormat);
-            encImg.DecodeTo(target);
+            ImageDecoder.DecodeTo(encImg, target);
             this.AssertAreImagesEqual(this.testImage, target);
         }
 
@@ -151,11 +151,11 @@ namespace Test.Psi.Imaging
         {
             // Crop a slightly different interior region of the same size and verify that the data is different (as a sanity check)
             EncodedImage encImg = new EncodedImage();
-            encImg.EncodeFrom(this.testImage, new JpegBitmapEncoder());
+            ImageEncoder.EncodeFrom(encImg, this.testImage, new JpegBitmapEncoder());
             Image target = new Image(this.testImage.Width, this.testImage.Height, this.testImage.Stride, this.testImage.PixelFormat);
-            encImg.DecodeTo(target);
+            ImageDecoder.DecodeTo(encImg, target);
             Image target2 = new Image(this.testImage.Width, this.testImage.Height, this.testImage.Stride, this.testImage.PixelFormat);
-            encImg.DecodeTo(target2);
+            ImageDecoder.DecodeTo(encImg, target2);
             this.AssertAreImagesEqual(target, target2);
         }
 

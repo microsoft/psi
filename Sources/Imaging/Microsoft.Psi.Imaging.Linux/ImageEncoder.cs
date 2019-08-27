@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
+    using System.IO;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
@@ -37,7 +38,7 @@ namespace Microsoft.Psi.Imaging
 
             using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
             {
-                sharedEncodedImage.Resource.EncodeFrom(sharedImage.Resource, encoder);
+                sharedEncodedImage.Resource.EncodeFrom(sharedImage.Resource, encoder.Encode);
                 this.Out.Post(sharedEncodedImage, e.OriginatingTime);
             }
         }

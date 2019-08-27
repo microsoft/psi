@@ -220,16 +220,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
         }
 
-        private double AverageTime(IEnumerable<TimeSpan> times)
-        {
-            return times.Count() > 0 ? times.Select(t => t.TotalMilliseconds).Average() : 0;
-        }
-
-        private double AverageSize(IEnumerable<int> sizes)
-        {
-            return sizes.Count() > 0 ? sizes.Average() : 0;
-        }
-
         private void UpdateSelectedEdge(PipelineDiagnostics.ReceiverDiagnostics input, Edge edge, bool clicked)
         {
             if (clicked && this.selectedEdgeId == input.Id)
@@ -254,13 +244,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.selectedEdgeId = input.Id;
             var sb = new StringBuilder();
             sb.Append($"Type: {input.Type}" + Environment.NewLine);
-            sb.Append($"Message Size (avg): {this.AverageSize(input.MessageSizeHistory):0}" + Environment.NewLine);
+            sb.Append($"Message Size (avg): {input.MessageSizeHistory.AverageSize():0}" + Environment.NewLine);
             sb.Append($"Queue Size: {input.QueueSize}" + Environment.NewLine);
             sb.Append($"Processed Count: {input.ProcessedCount}" + Environment.NewLine);
             sb.Append($"Dropped Count: {input.DroppedCount}" + Environment.NewLine);
-            sb.Append($"Latency at Emitter (avg): {this.AverageTime(input.MessageLatencyAtEmitterHistory):0.###}ms" + Environment.NewLine);
-            sb.Append($"Latency at Receiver (avg): {this.AverageTime(input.MessageLatencyAtReceiverHistory):0.###}ms" + Environment.NewLine);
-            sb.Append($"Processing Time (avg): {this.AverageTime(input.ProcessingTimeHistory):0.###}ms" + Environment.NewLine);
+            sb.Append($"Latency at Emitter (avg): {input.MessageLatencyAtEmitterHistory.AverageTime().TotalMilliseconds:0.###}ms" + Environment.NewLine);
+            sb.Append($"Latency at Receiver (avg): {input.MessageLatencyAtReceiverHistory.AverageTime().TotalMilliseconds:0.###}ms" + Environment.NewLine);
+            sb.Append($"Processing Time (avg): {input.ProcessingTimeHistory.AverageTime().TotalMilliseconds:0.###}ms" + Environment.NewLine);
             this.SelectedEdgeDetails = sb.ToString();
             this.view.Update();
         }
@@ -272,11 +262,11 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.None:
                     return null;
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.LatencyAtEmitter:
-                    return i => this.AverageTime(i.MessageLatencyAtEmitterHistory);
+                    return i => i.MessageLatencyAtEmitterHistory.AverageTime().TotalMilliseconds;
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.LatencyAtReceiver:
-                    return i => this.AverageTime(i.MessageLatencyAtReceiverHistory);
+                    return i => i.MessageLatencyAtReceiverHistory.AverageTime().TotalMilliseconds;
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.Processing:
-                    return i => this.AverageTime(i.ProcessingTimeHistory);
+                    return i => i.ProcessingTimeHistory.AverageTime().TotalMilliseconds;
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.Throughput:
                     return i => i.ProcessedCount;
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.QueueSize:
@@ -286,7 +276,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 case Config.DiagnosticsVisualizationObjectConfiguration.HeatmapStats.MessageSize:
                     return i =>
                     {
-                        var avg = this.AverageSize(i.MessageSizeHistory);
+                        var avg = i.MessageSizeHistory.AverageSize();
                         return heatmap && avg > 0 ? Math.Log(avg) : avg;
                     };
                 default:

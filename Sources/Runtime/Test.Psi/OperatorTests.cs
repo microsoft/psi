@@ -4,6 +4,7 @@
 namespace Test.Psi
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reactive;
@@ -134,7 +135,7 @@ namespace Test.Psi
             // test simple single subscriber
             using (var pipeline = Pipeline.Create())
             {
-                var range = Generators.Range(pipeline, 0, 7);
+                var range = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
                 results0 = range.ToObservable().ToListObservable(); // terminating (given `pipeline`)
                 results1 = range.ToObservable().Take(7).ToListObservable(); // non-terminating (hence, `Take(7)`)
                 pipeline.Run();
@@ -146,7 +147,7 @@ namespace Test.Psi
             // test multiple subscribers
             using (var pipeline = Pipeline.Create())
             {
-                var range = Generators.Range(pipeline, 0, 7);
+                var range = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
                 var obs = range.ToObservable(); // single observable
                 results0 = obs.ToListObservable(); // subscribe once
                 results1 = obs.ToListObservable(); // subscribe twice
@@ -159,7 +160,7 @@ namespace Test.Psi
             // test unsubscribe
             using (var pipeline = Pipeline.Create())
             {
-                var range = Generators.Range(pipeline, 0, 7);
+                var range = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
                 var obs = range.ToObservable();
                 Assert.IsFalse(((Operators.StreamObservable<int>)obs).HasSubscribers);
                 var sub = obs.Subscribe();
@@ -176,7 +177,7 @@ namespace Test.Psi
             // test errors
             using (var pipeline = Pipeline.Create())
             {
-                var range = Generators.Range(pipeline, -5, 7); // note -5 .. +1
+                var range = Generators.Range(pipeline, -5, 7, TimeSpan.FromTicks(1)); // note -5 .. +1
                 results0 = range.ToObservable().Select(x => 10 / x).ToListObservable(); // divide by zero!
                 results1 = range.ToObservable().Select(x => 10 / x).OnErrorResumeNext(Observable.Empty<int>()).ToListObservable(); // terminate without exception
                 pipeline.Run();
@@ -202,7 +203,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var range = Generators.Range(pipeline, 0, 7);
+                var range = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
                 var simpleCount = range.Count().ToObservable().ToListObservable();
                 var conditionalCount = range.Count(x => x % 2 == 0).ToObservable().ToListObservable();
                 var simpleLongCount = range.LongCount().ToObservable().ToListObservable();
@@ -222,62 +223,42 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var intRange = Generators.Range(pipeline, 0, 7);
+                var intRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
                 var intSum = intRange.Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 5 6
                 var conditionalIntSum = intRange.Sum(x => x % 2 == 0).ToObservable().ToListObservable(); // sum 0 2 4 6
-                var nullableIntSum = intRange.Select(x => x < 5 ? x : (int?)null).Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 null null
-                var conditionalNullableIntSum = intRange.Select(x => x < 4 ? x : (int?)null).Sum(x => x % 2 == 0).ToObservable().ToListObservable(); // sum 0 2 null
 
-                var longRange = Generators.Range(pipeline, 0, 7).Select(x => (long)x);
+                var longRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (long)x);
                 var longSum = longRange.Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 5 6
                 var conditionalLongSum = longRange.Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 4 6
-                var nullableLongSum = longRange.Select(x => x < 5L ? x : (long?)null).Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 null null
-                var conditionalNullableLongSum = longRange.Select(x => x < 4L ? x : (long?)null).Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 null
 
-                var floatRange = Generators.Range(pipeline, 0, 7).Select(x => (float)x);
+                var floatRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (float)x);
                 var floatSum = floatRange.Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 5 6
                 var conditionalFloatSum = floatRange.Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 4 6
-                var nullableFloatSum = floatRange.Select(x => x < 5L ? x : (float?)null).Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 null null
-                var conditionalNullableFloatSum = floatRange.Select(x => x < 4L ? x : (float?)null).Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 null
 
-                var doubleRange = Generators.Range(pipeline, 0, 7).Select(x => (double)x);
+                var doubleRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (double)x);
                 var doubleSum = doubleRange.Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 5 6
                 var conditionalDoubleSum = doubleRange.Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 4 6
-                var nullableDoubleSum = doubleRange.Select(x => x < 5L ? x : (double?)null).Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 null null
-                var conditionalNullableDoubleSum = doubleRange.Select(x => x < 4L ? x : (double?)null).Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 null
 
-                var decimalRange = Generators.Range(pipeline, 0, 7).Select(x => (decimal)x);
+                var decimalRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (decimal)x);
                 var decimalSum = decimalRange.Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 5 6
                 var conditionalDecimalSum = decimalRange.Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 4 6
-                var nullableDecimalSum = decimalRange.Select(x => x < 5L ? x : (decimal?)null).Sum().ToObservable().ToListObservable(); // sum 0 1 2 3 4 null null
-                var conditionalNullableDecimalSum = decimalRange.Select(x => x < 4L ? x : (decimal?)null).Sum(x => x % 2L == 0L).ToObservable().ToListObservable(); // sum 0 2 null
 
                 pipeline.Run();
 
                 Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 3, 6, 10, 15, 21 }, intSum.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 2, 6, 12 }, conditionalIntSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { 0, 1, 3, 6, 10, 10, 10 }, nullableIntSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int?[] { 0, 2 }, conditionalNullableIntSum.AsEnumerable()));
 
                 Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 1, 3, 6, 10, 15, 21 }, longSum.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 0, 2, 6, 12 }, conditionalLongSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { 0, 1, 3, 6, 10, 10, 10 }, nullableLongSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new long?[] { 0, 2 }, conditionalNullableLongSum.AsEnumerable()));
 
                 Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 3, 6, 10, 15, 21 }, doubleSum.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 2, 6, 12 }, conditionalDoubleSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { 0, 1, 3, 6, 10, 10, 10 }, nullableDoubleSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new double?[] { 0, 2 }, conditionalNullableDoubleSum.AsEnumerable()));
 
                 Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 3, 6, 10, 15, 21 }, floatSum.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 2, 6, 12 }, conditionalFloatSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { 0, 1, 3, 6, 10, 10, 10 }, nullableFloatSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new float?[] { 0, 2 }, conditionalNullableFloatSum.AsEnumerable()));
 
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 3, 6, 10, 15, 21 }, decimalSum.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 2, 6, 12 }, conditionalDecimalSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { 0, 1, 3, 6, 10, 10, 10 }, nullableDecimalSum.AsEnumerable()));
-                Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { 0, 2 }, conditionalNullableDecimalSum.AsEnumerable()));
             }
         }
 
@@ -287,19 +268,19 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var intRange = Generators.Range(pipeline, 0, 7);
+                var intRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
                 var intAverage = intRange.Average().ToObservable().ToListObservable();
 
-                var longRange = Generators.Range(pipeline, 0, 7).Select(x => (long)x);
+                var longRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (long)x);
                 var longAverage = longRange.Average().ToObservable().ToListObservable();
 
-                var floatRange = Generators.Range(pipeline, 0, 7).Select(x => (float)x);
+                var floatRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (float)x);
                 var floatAverage = floatRange.Average().ToObservable().ToListObservable();
 
-                var doubleRange = Generators.Range(pipeline, 0, 7).Select(x => (double)x);
+                var doubleRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (double)x);
                 var doubleAverage = doubleRange.Average().ToObservable().ToListObservable();
 
-                var decimalRange = Generators.Range(pipeline, 0, 7).Select(x => (decimal)x);
+                var decimalRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (decimal)x);
                 var decimalAverage = decimalRange.Average().ToObservable().ToListObservable();
 
                 pipeline.Run();
@@ -309,6 +290,38 @@ namespace Test.Psi
                 Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 0.5f, 1, 1.5f, 2, 2.5f, 3 }, floatAverage.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 0.5, 1, 1.5, 2, 2.5, 3 }, doubleAverage.AsEnumerable()));
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 0.5m, 1, 1.5m, 2, 2.5m, 3 }, decimalAverage.AsEnumerable()));
+            }
+        }
+
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void AverageWithCondition()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var intRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1));
+                var intAverage = intRange.Average(i => i % 2 == 0).ToObservable().ToListObservable();
+
+                var longRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (long)x);
+                var longAverage = longRange.Average(i => i % 2 == 0).ToObservable().ToListObservable();
+
+                var floatRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (float)x);
+                var floatAverage = floatRange.Average(i => i % 2 == 0).ToObservable().ToListObservable();
+
+                var doubleRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (double)x);
+                var doubleAverage = doubleRange.Average(i => i % 2 == 0).ToObservable().ToListObservable();
+
+                var decimalRange = Generators.Range(pipeline, 0, 7, TimeSpan.FromTicks(1)).Select(x => (decimal)x);
+                var decimalAverage = decimalRange.Average(i => i % 2 == 0).ToObservable().ToListObservable();
+
+                pipeline.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 2, 3 }, intAverage.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 2, 3 }, longAverage.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new float[] { 0, 1, 2, 3 }, floatAverage.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new double[] { 0, 1, 2, 3 }, doubleAverage.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new decimal[] { 0, 1, 2, 3 }, decimalAverage.AsEnumerable()));
             }
         }
 
@@ -386,6 +399,24 @@ namespace Test.Psi
                 Assert.IsTrue(Enumerable.SequenceEqual(new decimal?[] { null, null, null, 3, 3.5m, 4, 4.5m }, nullableDecimalAverageHistByTime.AsEnumerable()));
             }
         }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void CountOverHistory()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var range = Generators.Range(pipeline, 0, 7, TimeSpan.FromMilliseconds(1));
+                var countHistoryByTime = range.Count(TimeSpan.FromMilliseconds(4)).ToObservable().ToListObservable();
+                var longCountHistoryByTime = range.LongCount(TimeSpan.FromMilliseconds(4)).ToObservable().ToListObservable();
+
+                pipeline.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3, 4, 4, 4, 4 }, countHistoryByTime.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new long[] { 1, 2, 3, 4, 4, 4, 4 }, longCountHistoryByTime.AsEnumerable()));
+            }
+        }
+
 
         [TestMethod]
         [Timeout(60000)]
@@ -639,9 +670,9 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var factorials = Generators.Range(pipeline, 1, 7).Aggregate((x, y) => x * y).ToObservable().ToListObservable();
-                var single = Generators.Range(pipeline, 1, 1).Aggregate((x, y) => x * y).ToObservable().ToListObservable();
-                var empty = Generators.Range(pipeline, 1, 0).Aggregate((x, y) => x * y).ToObservable().ToListObservable();
+                var factorials = Generators.Range(pipeline, 1, 7, TimeSpan.FromTicks(1)).Aggregate((x, y) => x * y).ToObservable().ToListObservable();
+                var single = Generators.Range(pipeline, 1, 1, TimeSpan.FromTicks(1)).Aggregate((x, y) => x * y).ToObservable().ToListObservable();
+                var empty = Generators.Range(pipeline, 1, 0, TimeSpan.FromTicks(1)).Aggregate((x, y) => x * y).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 6, 24, 120, 720, 5040 }, factorials.AsEnumerable()));
@@ -656,7 +687,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var seq = Generators.Sequence(pipeline, new int[] { 5, 6, 4, 2, 3, 1, 9 });
+                var seq = Generators.Sequence(pipeline, new int[] { 5, 6, 4, 2, 3, 1, 9 }, TimeSpan.FromTicks(1));
                 var min = seq.Min().ToObservable().ToListObservable();
                 var max = seq.Max().ToObservable().ToListObservable();
                 pipeline.Run();
@@ -668,12 +699,65 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void MinMaxWithComparer()
+        {
+            var reverseComparer = new CompareIntsReversed();
+            using (var pipeline = Pipeline.Create())
+            {
+                var seq = Generators.Sequence(pipeline, new int[] { 5, 6, 4, 2, 3, 1, 9 }, TimeSpan.FromTicks(1));
+                var min = seq.Min(reverseComparer).ToObservable().ToListObservable();
+                var max = seq.Max(reverseComparer).ToObservable().ToListObservable();
+                pipeline.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 5, 6, 6, 6, 6, 6, 9 }, min.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 5, 5, 4, 2, 2, 1, 1 }, max.AsEnumerable()));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void MinMaxWithCondition()
+        {
+            Predicate<int> isEvenCondition = i => i % 2 == 0;
+            using (var pipeline = Pipeline.Create())
+            {
+                var seq = Generators.Sequence(pipeline, new int[] { 5, 6, 4, 2, 3, 1, 8 }, TimeSpan.FromTicks(1));
+                var min = seq.Min(isEvenCondition).ToObservable().ToListObservable();
+                var max = seq.Max(isEvenCondition).ToObservable().ToListObservable();
+                pipeline.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 6, 4, 2, 2 }, min.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 6, 6, 6, 8 }, max.AsEnumerable()));
+            }
+        }
+
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void MinMaxWithConditionAndComparer()
+        {
+            Predicate<int> isEvenCondition = i => i % 2 == 0;
+            var reverseComparer = new CompareIntsReversed();
+            using (var pipeline = Pipeline.Create())
+            {
+                var seq = Generators.Sequence(pipeline, new int[] { 5, 6, 4, 2, 3, 1, 8 }, TimeSpan.FromTicks(1));
+                var min = seq.Min(isEvenCondition, reverseComparer).ToObservable().ToListObservable();
+                var max = seq.Max(isEvenCondition, reverseComparer).ToObservable().ToListObservable();
+                pipeline.Run();
+
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 6, 6, 6, 8 }, min.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 6, 4, 2, 2 }, max.AsEnumerable()));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void BufferBySize()
         {
             using (var pipeline = Pipeline.Create())
             {
-                var buffers = Generators.Range(pipeline, 0, 5).Window(0, 2).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).Window(0, 2).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
+                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Window(0, 2).ToObservable().ToListObservable();
+                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Select((_, e) => e.OriginatingTime).Window(0, 2).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var bufferResults = buffers.AsEnumerable().ToArray();
@@ -698,7 +782,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var sums = Generators.Range(pipeline, 0, 5).Window(0, 2, ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
+                var sums = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Window(0, 2, ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = sums.AsEnumerable().ToArray();
@@ -715,8 +799,8 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var buffers = Generators.Range(pipeline, 0, 5).Window(-2, 0).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5).Select((_, e) => e.OriginatingTime).Window(-2, 0).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
+                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Window(-2, 0).ToObservable().ToListObservable();
+                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Select((_, e) => e.OriginatingTime).Window(-2, 0).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var bufferResults = buffers.AsEnumerable().ToArray();
@@ -741,7 +825,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var sums = Generators.Range(pipeline, 0, 5).Window(-2, 0, ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
+                var sums = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Window(-2, 0, ms => ms.Select(m => m.Data).Sum()).ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = sums.AsEnumerable().ToArray();
@@ -952,7 +1036,7 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var windows = Generators.Sequence(pipeline, new IEnumerable<double>[] { new[] { 727.7, 1086.5, 1091.0, 1361.3, 1490.5, 1956.1 }, new double[] { } });
+                var windows = Generators.Sequence(pipeline, new IEnumerable<double>[] { new[] { 727.7, 1086.5, 1091.0, 1361.3, 1490.5, 1956.1 }, new double[] { } }, TimeSpan.FromTicks(1));
                 var std = windows.Std().ToObservable().ToListObservable();
                 pipeline.Run();
 
@@ -1006,6 +1090,14 @@ namespace Test.Psi
             public override string ToString()
             {
                 return $"{this.GenerateTimeOffsetMs}: {this.Source} -> {this.Data}:{this.OriginatingTimeOffsetMs}";
+            }
+        }
+
+        public class CompareIntsReversed : IComparer<int>
+        {
+            public int Compare(int x, int y)
+            {
+                return x == y ? 0 : x < y ? 1 : -1; // reverse ordering
             }
         }
     }

@@ -3,6 +3,8 @@
 
 namespace Microsoft.Psi.Imaging
 {
+    using System.IO;
+    using System.Windows;
     using System.Windows.Media.Imaging;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Serialization;
@@ -38,6 +40,7 @@ namespace Microsoft.Psi.Imaging
         /// <inheritdoc/>
         public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
         {
+            // Note: encoder instances are created here because they (in the case of media foundation) may have thread affinity.
             BitmapEncoder encoder = null;
             switch (this.CompressionMethod)
             {
@@ -55,7 +58,7 @@ namespace Microsoft.Psi.Imaging
             {
                 using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
                 {
-                    sharedEncodedImage.Resource.EncodeFrom(instance, encoder);
+                    ImageEncoder.EncodeFrom(sharedEncodedImage.Resource, instance, encoder);
                     Serializer.Serialize(writer, sharedEncodedImage, context);
                 }
             }
@@ -72,7 +75,7 @@ namespace Microsoft.Psi.Imaging
             Serializer.Deserialize(reader, ref encodedImage, context);
             using (var image = ImagePool.GetOrCreate(encodedImage.Resource.Width, encodedImage.Resource.Height, Imaging.PixelFormat.BGR_24bpp))
             {
-                encodedImage.Resource.DecodeTo(image.Resource);
+                ImageDecoder.DecodeTo(encodedImage.Resource, image.Resource);
                 target = image.Resource.DeepClone();
             }
 

@@ -13,9 +13,11 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="SetAnnotationValueWindow"/> class.
         /// </summary>
-        public SetAnnotationValueWindow()
+        /// <param name="owner">The window owner.</param>
+        public SetAnnotationValueWindow(Window owner)
         {
             this.InitializeComponent();
+            this.Owner = owner;
         }
 
         /// <summary>

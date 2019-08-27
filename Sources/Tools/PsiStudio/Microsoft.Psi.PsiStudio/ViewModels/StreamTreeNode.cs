@@ -190,7 +190,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 }
                 else
                 {
-                    return IconSourcePath.Group;
+                    return this.Partition.IsLivePartition ? IconSourcePath.GroupLive : IconSourcePath.Group;
                 }
             }
         }

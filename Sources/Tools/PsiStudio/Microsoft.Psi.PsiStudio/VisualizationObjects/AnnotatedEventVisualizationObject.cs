@@ -263,7 +263,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.addSchemaCommand = new RelayCommand(
                         () =>
                         {
-                            AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistryViewModel.Default.Schemas, false);
+                            AddAnnotationWindow dlg = new AddAnnotationWindow(Application.Current.MainWindow, AnnotationSchemaRegistryViewModel.Default.Schemas, false);
                             var result = dlg.ShowDialog();
                             if (result.HasValue && result.Value)
                             {
@@ -323,7 +323,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.setValueCommand = new RelayCommand<AnnotatedEvent>(
                         annotatedEvent =>
                         {
-                            SetAnnotationValueWindow dlg = new SetAnnotationValueWindow
+                            SetAnnotationValueWindow dlg = new SetAnnotationValueWindow(Application.Current.MainWindow)
                             {
                                 // Currently, only support one annotation
                                 AnnotationValue = annotatedEvent.Annotations[0],

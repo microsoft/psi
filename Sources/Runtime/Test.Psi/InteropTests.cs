@@ -37,16 +37,19 @@ namespace Test.Psi
 
         private DateTime originatingTime;
 
-        private void AssertStringSerialization(dynamic value, string expected, IFormatSerializer serializer, IFormatDeserializer deserializer)
+        private void AssertStringSerialization(dynamic value, string expected, IFormatSerializer serializer, IFormatDeserializer deserializer, bool roundTrip = true)
         {
             var serialized = serializer.SerializeMessage(value, originatingTime);
             Assert.AreEqual<string>(expected, Encoding.UTF8.GetString(serialized.Item1, serialized.Item2, serialized.Item3));
 
-            var deserialized = deserializer.DeserializeMessage(serialized.Item1, serialized.Item2, serialized.Item3);
-            Assert.AreEqual(originatingTime, deserialized.Item2);
+            if (roundTrip)
+            {
+                var deserialized = deserializer.DeserializeMessage(serialized.Item1, serialized.Item2, serialized.Item3);
+                Assert.AreEqual(originatingTime, deserialized.Item2);
 
-            var roundtrip = serializer.SerializeMessage(deserialized.Item1, originatingTime);
-            Assert.AreEqual<string>(expected, Encoding.UTF8.GetString(roundtrip.Item1, roundtrip.Item2, roundtrip.Item3));
+                var roundtrip = serializer.SerializeMessage(deserialized.Item1, originatingTime);
+                Assert.AreEqual<string>(expected, Encoding.UTF8.GetString(roundtrip.Item1, roundtrip.Item2, roundtrip.Item3));
+            }
         }
 
         private void AssertBinarySerialization(dynamic value, IFormatSerializer serializer, IFormatDeserializer deserializer)
@@ -123,11 +126,29 @@ namespace Test.Psi
                     X = 213,
                     Y = 107,
                     Width = 42,
-                    Height = 61
+                    Height = 61,
+                    Points = new [] { 123, 456 }
                 }
             };
             // notice Face is traversed but flattened - no hierarchy allowed
             AssertStringSerialization(structured, "_OriginatingTime_,ID,Confidence,X,Y,Width,Height\r\n1971-11-03T00:00:00.1234567Z,123,0.92,213,107,42,61\r\n", csv, csv);
+
+            var structuredAmbiguous = new
+            {
+                ID = 123,
+                Confidence = 0.92,
+                Face = new
+                {
+                    Confidence = 0.89,
+                    X = 213,
+                    Y = 107,
+                    Width = 42,
+                    Height = 61
+                }
+            };
+
+            // notice Face is traversed but flattened - no hierarchy allowed
+            AssertStringSerialization(structuredAmbiguous, "_OriginatingTime_,ID,Confidence,Confidence,X,Y,Width,Height\r\n1971-11-03T00:00:00.1234567Z,123,0.92,0.89,213,107,42,61\r\n", csv, csv, false);
 
             var flat = new
             {

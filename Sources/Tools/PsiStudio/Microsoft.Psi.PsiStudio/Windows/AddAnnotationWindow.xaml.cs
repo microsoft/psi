@@ -28,12 +28,14 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="AddAnnotationWindow"/> class.
         /// </summary>
+        /// <param name="owner">The window owner.</param>
         /// <param name="schemas">The current collection of annotation schemas.</param>
         /// <param name="showStorageProperties">Flag indicating whether to show the storage properties. Default is true.</param>
-        public AddAnnotationWindow(ReadOnlyObservableCollection<AnnotationSchemaViewModel> schemas, bool showStorageProperties = true)
+        public AddAnnotationWindow(Window owner, ReadOnlyObservableCollection<AnnotationSchemaViewModel> schemas, bool showStorageProperties = true)
         {
             this.InitializeComponent();
 
+            this.Owner = owner;
             this.DataContext = schemas;
             this.showStorageProperties = showStorageProperties;
             if (!this.showStorageProperties)
