@@ -74,6 +74,14 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         /// </remarks>
         public static void RunAzureSpeech()
         {
+            // Get the Device Name to record audio from
+            Console.Write("Enter Device Name (default: plughw:0,0)");
+            string deviceName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(deviceName))
+            {
+                deviceName = "plughw:0,0";
+            }
+
             // Create the pipeline object.
             using (Pipeline pipeline = Pipeline.Create())
             {
