@@ -74,12 +74,20 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         /// </remarks>
         public static void RunAzureSpeech()
         {
+            // Get the Device Name to record audio from
+            Console.Write("Enter Device Name (default: plughw:0,0)");
+            string deviceName = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(deviceName))
+            {
+                deviceName = "plughw:0,0";
+            }
+
             // Create the pipeline object.
             using (Pipeline pipeline = Pipeline.Create())
             {
                 // Create the AudioSource component to capture audio from the default device in 16 kHz 1-channel
                 // PCM format as required by both the voice activity detector and speech recognition components.
-                IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { DeviceName = "plughw:0,0", Format = WaveFormat.Create16kHz1Channel16BitPcm() });
+                IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { DeviceName = deviceName, Format = WaveFormat.Create16kHz1Channel16BitPcm() });
 
                 // Perform voice activity detection using the voice activity detector component
                 var vad = new SimpleVoiceActivityDetector(pipeline);
