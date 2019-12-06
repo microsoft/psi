@@ -87,7 +87,7 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
             {
                 // Create the AudioSource component to capture audio from the default device in 16 kHz 1-channel
                 // PCM format as required by both the voice activity detector and speech recognition components.
-                IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { DeviceName = "plughw:0,0", Format = WaveFormat.Create16kHz1Channel16BitPcm() });
+                IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { DeviceName = deviceName, Format = WaveFormat.Create16kHz1Channel16BitPcm() });
 
                 // Perform voice activity detection using the voice activity detector component
                 var vad = new SimpleVoiceActivityDetector(pipeline);
