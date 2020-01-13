@@ -162,7 +162,7 @@ module RosMessageTypes =
 
         module Image =
             let Def = { Type   = "sensor_msgs/Image"
-                        MD5    = ""
+                        MD5    = "060021388200f6f0f447d0fcd9c64743"
                         Fields = ["header",       StructDef Standard.Header.Def.Fields
                                   "height",       UInt32Def
                                   "width",        UInt32Def
