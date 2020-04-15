@@ -130,21 +130,23 @@ A message definition consists of a topic name, the MD5 hash, and a sequence of n
 The _normal_ .NET mechanism to represent a subscription is an `Event`:
 
 ```C#
-public event EventHandler<Tuple<float, float, float>> PoseChanged;
+public event EventHandler<(float, float, float)> PoseChanged;
 
 private void PoseUpdate(IEnumerable<Tuple<string, RosMessage.RosFieldVal>> position)
 {
     if (this.PoseChanged != null)
     {
-        var pos = position.Select(f => RosMessage.GetFloat32Val(f.Item2)).ToArray();
-        this.PoseChanged(this, Tuple.Create(pos[0], pos[1], pos[2])); // drop velocity info
+        dynamic pos = RosMessage.GetDynamicFieldVals(position);
+        this.PoseChanged(this, (pos.x, pos.y, pos.theta));
     }
 }
 ```
 
-Incoming ROS messages (given to `PoseUpdate(...)`) are sequences of name/`RosFieldVal` (note, not `RosFieldDef`).
-We're responsible for parsing this. It's much easier in F# with destructuring bind, but here we just pull out values by ordinal.
-Notice that we choose not to surface the velocities (`pos[3]` and `pos[4]`).
+Incoming ROS messages (given to `PoseUpdate(...)`) are sequences of name/`RosFieldVal` (note, not `RosFieldDef`), and may themselves be composite structures forming trees..
+We may parse this however we like. There are static helper functions in `RosMessage` to convert individual values
+(e.g. `GetInt32Val(...)`, `GetFixedArrayVal(...)`, `GetStructVal(...)`, ...) as well as a function to convert
+to `dynamic` (`GetDynamicVal(...)`).
+Notice that we choose not to surface the velocities (`linear_velocity`, `angular_velocity`).
 
 Outgoing ROS messages are also sequences of name/`RosFieldVal` and we're responsible for constructing the tree.
 In the case of velocity commands, they are composed of existing standard types, so we can use `ToMessage(...)` and other available helpers.
@@ -178,13 +180,13 @@ public class TurtleComponent : ISourceComponent
     {
         this.pipeline = pipeline;
         this.turtle = turtle;
-        this.Velocity = pipeline.CreateReceiver<Tuple<float, float>>(this, (c, _) => this.turtle.Velocity(c.Item1, c.Item2), nameof(this.Velocity));
-        this.PoseChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PoseChanged));
+        this.Velocity = pipeline.CreateReceiver<(float, float)>(this, (c, _) => this.turtle.Velocity(c.Item1, c.Item2), nameof(this.Velocity));
+        this.PoseChanged = pipeline.CreateEmitter<(float, float, float)>(this, nameof(this.PoseChanged));
     }
 
-    public Receiver<Tuple<float, float>> Velocity { get; private set; }
+    public Receiver<(float, float)> Velocity { get; private set; }
 
-    public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
+    public Emitter<(float, float, float)> PoseChanged { get; private set; }
 
     public void Start(Action<DateTime> notifyCompletionTime)
     {
@@ -201,7 +203,7 @@ public class TurtleComponent : ISourceComponent
         this.notifyCompletionTime(this.pipeline.GetCurrentTime());
     }
 
-    private void OnPoseChanged(object sender, Tuple<float, float, float> pose)
+    private void OnPoseChanged(object sender, (float, float, float) pose)
     {
         if (!this.stopped)
         {
@@ -240,7 +242,7 @@ class Program
 
                 var linear  = k == ConsoleKey.UpArrow   ? 1f : k == ConsoleKey.DownArrow  ? -1f : 0f;
                 var angular = k == ConsoleKey.LeftArrow ? 1f : k == ConsoleKey.RightArrow ? -1f : 0f;
-                return Tuple.Create(linear, angular);
+                return (linear, angular);
             }).Subscribe(turtle.Velocity);
             pipeline.Run();
         }

@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="frameSizeInBytes">The output frame size in bytes.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream containing the reframed audio.</returns>
-        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, int frameSizeInBytes, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, int frameSizeInBytes, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
         {
             return source.PipeTo(new Reframe(source.Out.Pipeline, frameSizeInBytes), deliveryPolicy);
         }
@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="frameDuration">The output frame duration.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream containing the reframed audio.</returns>
-        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, TimeSpan frameDuration, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, TimeSpan frameDuration, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
         {
             return source.PipeTo(new Reframe(source.Out.Pipeline, frameDuration), deliveryPolicy);
         }
@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream of audio buffers.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of byte arrays containing the raw audio.</returns>
-        public static IProducer<byte[]> ToByteArray(this IProducer<AudioBuffer> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<byte[]> ToByteArray(this IProducer<AudioBuffer> source, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
         {
             return source.Select(x => x.Data, deliveryPolicy);
         }
@@ -58,7 +58,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="audioFormat">The audio format of the raw audio contained within the byte arrays.</param>
         /// /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of audio buffers.</returns>
-        public static IProducer<AudioBuffer> ToAudioBuffer(this IProducer<byte[]> source, WaveFormat audioFormat, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<AudioBuffer> ToAudioBuffer(this IProducer<byte[]> source, WaveFormat audioFormat, DeliveryPolicy<byte[]> deliveryPolicy = null)
         {
             return source.Select(x => new AudioBuffer(x, audioFormat), deliveryPolicy);
         }
@@ -72,7 +72,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="bytesPerSec">The sampling frequency in bytes per second.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream containing the frame-shifted data.</returns>
-        public static IProducer<byte[]> FrameShift(this IProducer<byte[]> source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<byte[]> FrameShift(this IProducer<byte[]> source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, DeliveryPolicy<byte[]> deliveryPolicy = null)
         {
             return source.PipeTo(new FrameShift(source.Out.Pipeline, frameSizeInBytes, frameShiftInBytes, bytesPerSec), deliveryPolicy);
         }
@@ -84,7 +84,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="format">The audio format of the input audio.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of floating point audio sample values.</returns>
-        public static IProducer<float[]> ToFloat(this IProducer<byte[]> source, WaveFormat format, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float[]> ToFloat(this IProducer<byte[]> source, WaveFormat format, DeliveryPolicy<byte[]> deliveryPolicy = null)
         {
             return source.PipeTo(new ToFloat(source.Out.Pipeline, format), deliveryPolicy);
         }
@@ -97,7 +97,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="randomSeed">An initial random seed value.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of floating point sample values with dithering.</returns>
-        public static IProducer<float[]> Dither(this IProducer<float[]> source, float scaleFactor, int randomSeed = 0, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float[]> Dither(this IProducer<float[]> source, float scaleFactor, int randomSeed = 0, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             float[] dithered = null;
             Random random = new Random(randomSeed);
@@ -126,7 +126,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="kernelLength">The Hanning window length.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of floating point sample values with Hanning window applied.</returns>
-        public static IProducer<float[]> HanningWindow(this IProducer<float[]> source, int kernelLength, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float[]> HanningWindow(this IProducer<float[]> source, int kernelLength, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.Select<float[], float[]>(new HanningWindow(kernelLength).Apply, deliveryPolicy);
         }
@@ -139,7 +139,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="inputSize">The window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of FFTs of the input sample buffers.</returns>
-        public static IProducer<float[]> FFT(this IProducer<float[]> source, int fftSize, int inputSize, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float[]> FFT(this IProducer<float[]> source, int fftSize, int inputSize, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.PipeTo(new FFT(source.Out.Pipeline, fftSize, inputSize), deliveryPolicy);
         }
@@ -150,7 +150,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream of FFTs.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of FFT power spectra.</returns>
-        public static IProducer<float[]> FFTPower(this IProducer<float[]> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float[]> FFTPower(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.PipeTo(new FFTPower(source.Out.Pipeline), deliveryPolicy);
         }
@@ -161,7 +161,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream of floating point input sample values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of log energy values for the input samples.</returns>
-        public static IProducer<float> LogEnergy(this IProducer<float[]> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> LogEnergy(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.PipeTo(new LogEnergy(source.Out.Pipeline), deliveryPolicy);
         }
@@ -172,7 +172,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream of floating point input sample values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of zero-crossing rates for the input samples.</returns>
-        public static IProducer<float> ZeroCrossingRate(this IProducer<float[]> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> ZeroCrossingRate(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.PipeTo(new ZeroCrossingRate(source.Out.Pipeline), deliveryPolicy);
         }
@@ -185,7 +185,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="end">The index of the ending frequency of the band.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of frequency domain energy values.</returns>
-        public static IProducer<float> FrequencyDomainEnergy(this IProducer<float[]> source, int start, int end, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> FrequencyDomainEnergy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.PipeTo(new FrequencyDomainEnergy(source.Out.Pipeline, start, end), deliveryPolicy);
         }
@@ -198,7 +198,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="end">The ending frequency of the band.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of spectral entropy values.</returns>
-        public static IProducer<float> SpectralEntropy(this IProducer<float[]> source, int start, int end, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> SpectralEntropy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.PipeTo(new SpectralEntropy(source.Out.Pipeline, start, end), deliveryPolicy);
         }

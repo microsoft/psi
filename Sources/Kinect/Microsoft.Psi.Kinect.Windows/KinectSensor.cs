@@ -7,10 +7,13 @@ namespace Microsoft.Psi.Kinect
     using System.Collections.Generic;
     using System.Linq;
     using MathNet.Numerics.LinearAlgebra;
+    using MathNet.Spatial.Euclidean;
     using Microsoft.Kinect;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
+    using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Components;
+    using Microsoft.Psi.DeviceManagement;
     using Microsoft.Psi.Imaging;
 
     /// <summary>
@@ -18,12 +21,13 @@ namespace Microsoft.Psi.Kinect
     /// </summary>
     public class KinectSensor : IKinectSensor, ISourceComponent, IDisposable
     {
+        private static List<CameraDeviceInfo> allDevices = null;
         private static WaveFormat audioFormat = WaveFormat.Create16kHz1ChannelIeeeFloat();
         private readonly Pipeline pipeline;
 
         private Microsoft.Kinect.KinectSensor kinectSensor = null;
         private KinectSensorConfiguration configuration = null;
-        private IKinectCalibration kinectCalibration = null;
+        private IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo = null;
         private bool calibrationPosted = false;
         private MultiSourceFrameReader multiFrameReader = null;
         private FrameSourceTypes whichFrames = FrameSourceTypes.None;
@@ -73,7 +77,7 @@ namespace Microsoft.Psi.Kinect
             this.DepthImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.DepthImage));
             this.InfraredImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.InfraredImage));
             this.LongExposureInfraredImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.LongExposureInfraredImage));
-            this.Calibration = pipeline.CreateEmitter<IKinectCalibration>(this, nameof(this.Calibration));
+            this.DepthDeviceCalibrationInfo = pipeline.CreateEmitter<IDepthDeviceCalibrationInfo>(this, nameof(this.DepthDeviceCalibrationInfo));
             this.DepthFrameToCameraSpaceTable = pipeline.CreateEmitter<PointF[]>(this, nameof(this.DepthFrameToCameraSpaceTable));
             this.Audio = pipeline.CreateEmitter<AudioBuffer>(this, nameof(this.Audio));
             this.AudioBeamInfo = pipeline.CreateEmitter<KinectAudioBeamInfo>(this, nameof(this.AudioBeamInfo));
@@ -81,10 +85,81 @@ namespace Microsoft.Psi.Kinect
             this.ColorToCameraMapper = pipeline.CreateEmitter<CameraSpacePoint[]>(this, nameof(this.ColorToCameraMapper));
         }
 
-        // While kinect always seems to output 6 bodies (including untracked ones), this stream only publishes the tracked bodies
+        /// <summary>
+        /// Gets a list of all available capture devices.
+        /// </summary>
+        public static IEnumerable<CameraDeviceInfo> AllDevices
+        {
+            get
+            {
+                if (allDevices == null)
+                {
+                    // Kinect only supports 1 device per system
+                    allDevices = new List<CameraDeviceInfo>();
+                    CameraDeviceInfo di = new CameraDeviceInfo();
+                    di.DeviceType = "Kinect";
+                    di.FriendlyName = $"Kinect-v2";
+                    var kinectSensor = Microsoft.Kinect.KinectSensor.GetDefault();
+                    di.DeviceName = kinectSensor.UniqueKinectId;
+                    kinectSensor?.Close();
+                    di.SerialNumber = string.Empty;
+                    di.Sensors = new List<CameraDeviceInfo.Sensor>();
+                    for (int k = 0; k < 3; k++)
+                    {
+                        CameraDeviceInfo.Sensor sensor = new CameraDeviceInfo.Sensor();
+                        sensor.Modes = new List<CameraDeviceInfo.Sensor.ModeInfo>();
+                        CameraDeviceInfo.Sensor.ModeInfo mi = new CameraDeviceInfo.Sensor.ModeInfo();
+                        switch (k)
+                        {
+                            case 0: // color mode
+                                sensor.Type = CameraDeviceInfo.Sensor.SensorType.Color;
+                                mi.Format = PixelFormat.BGRA_32bpp;
+                                mi.FrameRateNumerator = 30;
+                                mi.FrameRateDenominator = 1;
+                                mi.ResolutionWidth = 1920;
+                                mi.ResolutionHeight = 1080;
+                                mi.Mode = 0;
+                                break;
+                            case 1: // depth mode
+                                sensor.Type = CameraDeviceInfo.Sensor.SensorType.Depth;
+                                mi.Format = PixelFormat.Gray_16bpp;
+                                mi.FrameRateNumerator = 30;
+                                mi.FrameRateDenominator = 1;
+                                mi.ResolutionWidth = 512;
+                                mi.ResolutionHeight = 424;
+                                mi.Mode = 0;
+                                break;
+                            case 2: // ir mode
+                                sensor.Type = CameraDeviceInfo.Sensor.SensorType.IR;
+                                mi.Format = PixelFormat.Gray_8bpp;
+                                mi.FrameRateNumerator = 30;
+                                mi.FrameRateDenominator = 1;
+                                mi.ResolutionWidth = 512;
+                                mi.ResolutionHeight = 424;
+                                mi.Mode = 0;
+                                break;
+                        }
+
+                        sensor.Modes.Add(mi);
+                        di.Sensors.Add(sensor);
+                    }
+
+                    allDevices.Add(di);
+                }
+
+                return allDevices;
+            }
+
+            private set { }
+        }
 
         /// <summary>
-        /// Gets the list of bodies from the Kinect.
+        /// Gets the sensor configuration.
+        /// </summary>
+        public KinectSensorConfiguration Configuration => this.configuration;
+
+        /// <summary>
+        /// Gets the list of bodies.
         /// </summary>
         public Emitter<List<KinectBody>> Bodies { get; private set; }
 
@@ -119,9 +194,9 @@ namespace Microsoft.Psi.Kinect
         public Emitter<PointF[]> DepthFrameToCameraSpaceTable { get; private set; }
 
         /// <summary>
-        /// Gets the Kinect's calibration object.
+        /// Gets the Kinect's calibration info object.
         /// </summary>
-        public Emitter<IKinectCalibration> Calibration { get; private set; }
+        public Emitter<IDepthDeviceCalibrationInfo> DepthDeviceCalibrationInfo { get; private set; }
 
         /// <summary>
         /// Gets the emitter that returns the Kinect's audio samples.
@@ -277,23 +352,27 @@ namespace Microsoft.Psi.Kinect
                         }
                     }
 
+                    // Kinect uses a basis under the hood that assumes Forward=Z, Left=X, Up=Y.
+                    var kinectBasis = new CoordinateSystem(default, UnitVector3D.ZAxis, UnitVector3D.XAxis, UnitVector3D.YAxis);
+
                     // Extract and create new style calibration
-                    this.kinectCalibration = new KinectCalibration(
+                    double[] colorRadialDistortion = new double[2] { kinectInternalCalibration.colorLensDistortion[0], kinectInternalCalibration.colorLensDistortion[1] };
+                    double[] colorTangentialDistortion = new double[2] { 0.0, 0.0 };
+                    double[] depthRadialDistortion = new double[2] { kinectInternalCalibration.depthLensDistortion[0], kinectInternalCalibration.depthLensDistortion[1] };
+                    double[] depthTangentialDistortion = new double[2] { 0.0, 0.0 };
+                    this.depthDeviceCalibrationInfo = new DepthDeviceCalibrationInfo(
                         this.kinectSensor.ColorFrameSource.FrameDescription.Width,
                         this.kinectSensor.ColorFrameSource.FrameDescription.Height,
                         colorCameraMatrix,
-                        kinectInternalCalibration.colorLensDistortion[0],
-                        kinectInternalCalibration.colorLensDistortion[1],
-                        0.0,
-                        0.0,
-                        depthToColorTransform,
+                        colorRadialDistortion,
+                        colorTangentialDistortion,
+                        kinectBasis.Invert() * depthToColorTransform * kinectBasis, // Convert to MathNet
                         this.kinectSensor.DepthFrameSource.FrameDescription.Width,
                         this.kinectSensor.DepthFrameSource.FrameDescription.Height,
                         depthCameraMatrix,
-                        kinectInternalCalibration.depthLensDistortion[0],
-                        kinectInternalCalibration.depthLensDistortion[1],
-                        0.0,
-                        0.0);
+                        depthRadialDistortion,
+                        depthTangentialDistortion,
+                        CoordinateSystem.CreateIdentity(4));
 
                     /* Warning about comments being preceded by blank line */
 #pragma warning disable SA1515
@@ -305,7 +384,7 @@ namespace Microsoft.Psi.Kinect
                     //                        this.kinectCalibration.ColorIntrinsics.Transform = flipY * this.kinectCalibration.ColorIntrinsics.Transform;
 #pragma warning restore SA1515
 
-                    this.Calibration.Post(this.kinectCalibration, this.pipeline.GetCurrentTime());
+                    this.DepthDeviceCalibrationInfo.Post(this.depthDeviceCalibrationInfo, this.pipeline.GetCurrentTime());
                     this.calibrationPosted = true;
                 }
             }

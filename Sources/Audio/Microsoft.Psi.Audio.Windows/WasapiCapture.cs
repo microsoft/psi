@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Audio
 {
     using System;
+    using System.IO;
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Microsoft.Psi.Audio.ComInterop;
@@ -166,6 +167,14 @@ namespace Microsoft.Psi.Audio
                     this.volume.RegisterControlChangeNotify(this.volumeCallback);
                 }
             }).Wait();
+
+            // do error checking on the main thread
+            if (this.audioDevice == null)
+            {
+                throw new IOException(string.IsNullOrEmpty(deviceDescription) ?
+                    "No default audio capture device found." :
+                    $"Audio capture device {deviceDescription} not found.");
+            }
         }
 
         /// <summary>
@@ -174,6 +183,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="targetLatencyInMs">
         /// The target maximum number of milliseconds of acceptable lag between
         /// live sound being produced and capture operation.
+        /// </param>
+        /// <param name="audioEngineBufferInMs">
+        /// The amount of audio that may be buffered by the audio engine between
+        /// reads.
         /// </param>
         /// <param name="gain">
         /// The gain to be applied to the captured audio.
@@ -184,21 +197,30 @@ namespace Microsoft.Psi.Audio
         /// <param name="speech">
         /// If true, optimizes the audio capture pipeline for speech recognition.
         /// </param>
-        public void StartCapture(int targetLatencyInMs, float gain, WaveFormat outFormat, bool speech)
+        /// <param name="eventDrivenCapture">
+        /// If true, initialize Windows audio capture in event-driven mode. The audio capture engine will call
+        /// the <see cref="AudioDataAvailableCallback"/> handler as soon as data is available, at intervals
+        /// determined by the audio engine (which may be less than the <paramref name="targetLatencyInMs"/>).
+        /// This captures audio with the lowest possible latency while still allowing for buffering up to the
+        /// amount of time specified by <paramref name="targetLatencyInMs"/> (when for example the system is
+        /// under heavy load and the capture callback is unable to service audio packets at the rate at which
+        /// the audio engine returns captured audio packets).
+        /// </param>
+        public void StartCapture(int targetLatencyInMs, int audioEngineBufferInMs, float gain, WaveFormat outFormat, bool speech, bool eventDrivenCapture)
         {
             if (this.wasapiCaptureClient != null)
             {
                 this.StopCapture();
             }
 
-            this.wasapiCaptureClient = new WasapiCaptureClient(this.audioDevice);
+            this.wasapiCaptureClient = new WasapiCaptureClient(this.audioDevice, eventDrivenCapture);
 
             // Create a callback delegate and marshal it to a function pointer. Keep a
             // reference to the delegate as a class field to prevent it from being GC'd.
             this.callbackDelegate = new AudioDataAvailableCallback(this.AudioDataAvailableCallback);
 
             // initialize the capture with the desired parameters
-            this.wasapiCaptureClient.Initialize(targetLatencyInMs, gain, outFormat, this.callbackDelegate, speech);
+            this.wasapiCaptureClient.Initialize(targetLatencyInMs, audioEngineBufferInMs, gain, outFormat, this.callbackDelegate, speech);
 
             // tell WASAPI to start capturing
             this.wasapiCaptureClient.Start();

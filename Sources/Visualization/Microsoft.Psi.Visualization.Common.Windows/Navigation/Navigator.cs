@@ -4,6 +4,8 @@
 namespace Microsoft.Psi.Visualization.Navigation
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows.Threading;
 
@@ -29,11 +31,6 @@ namespace Microsoft.Psi.Visualization.Navigation
         private CursorMode cursorMode;
 
         private Pipeline audioPlaybackPipeline = null;
-
-        /// <summary>
-        /// The current stream providing audio playback (if any).
-        /// </summary>
-        private StreamBinding audioPlaybackStream = null;
 
         // The time offset of the Cursor when in Live mode from the left hand edge of the view window
         private TimeSpan liveCursorOffsetFromViewRangeStart;
@@ -136,6 +133,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                     var original = this.cursor;
                     this.cursor = value;
                     this.CursorChanged?.Invoke(this, new NavigatorTimeChangedEventArgs(original, value));
+                    DataManager.Instance.ReadInstantData(value);
                     this.RaisePropertyChanged(nameof(this.Cursor));
                     this.RaisePropertyChanged(nameof(this.CursorRelativeToSessionStartFormatted));
                     this.RaisePropertyChanged(nameof(this.CursorRelativeToSelectionStartFormatted));
@@ -302,19 +300,9 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Gets or sets the audio stream to be played during playback.
+        /// Gets the audio stream(s) to be played during playback.
         /// </summary>
-        public StreamBinding AudioPlaybackStream
-        {
-            get => this.audioPlaybackStream;
-
-            set
-            {
-                this.audioPlaybackStream = value;
-                this.UpdateAudioPlayback();
-                this.RaisePropertyChanged(nameof(this.AudioPlaybackStream));
-            }
-        }
+        public List<StreamBinding> AudioPlaybackStreams { get; } = new List<StreamBinding>();
 
         /// <summary>
         /// Gets or sets a value indicating whether playback repeats.
@@ -339,6 +327,28 @@ namespace Microsoft.Psi.Visualization.Navigation
                 this.Cursor = this.SelectionRange.StartTime;
                 this.EnsureCursorVisible();
             }
+        }
+
+        /// <summary>
+        /// Remove an audio playback stream.
+        /// </summary>
+        /// <param name="streamBinding">Stream binding of audio playback stream to remove.</param>
+        public void RemoveAudioPlaybackStream(StreamBinding streamBinding)
+        {
+            this.AudioPlaybackStreams.Remove(streamBinding);
+            this.UpdateAudioPlayback();
+            this.RaisePropertyChanged(nameof(this.AudioPlaybackStreams));
+        }
+
+        /// <summary>
+        /// Add an audio playback stream.
+        /// </summary>
+        /// <param name="streamBinding">Stream binding of audio playback stream to add.</param>
+        public void AddAudioPlaybackStream(StreamBinding streamBinding)
+        {
+            this.AudioPlaybackStreams.Add(streamBinding);
+            this.UpdateAudioPlayback();
+            this.RaisePropertyChanged(nameof(this.AudioPlaybackStreams));
         }
 
         /// <summary>
@@ -570,18 +580,24 @@ namespace Microsoft.Psi.Visualization.Navigation
             }
 
             // If we're in playback mode, and the playback speed is 1x, and we have a bound audio stream to play back, then create the audio player
-            if ((this.CursorMode == CursorMode.Playback) && (this.audioPlaybackStream != null) && this.audioPlaybackStream.IsBound && (this.playSpeed == 1.0d))
+            if ((this.CursorMode == CursorMode.Playback) && (this.playSpeed == 1.0d) && (this.AudioPlaybackStreams.Count(s => s.IsBound) > 0))
             {
                 // Create the playback pipeline
                 this.audioPlaybackPipeline = Pipeline.Create("AudioPlayer");
 
-                // Get the audio stream to play
-                var importer = Store.Open(this.audioPlaybackPipeline, this.audioPlaybackStream.StoreName, this.audioPlaybackStream.StorePath);
-                var stream = importer.OpenStream<AudioBuffer>(this.audioPlaybackStream.StreamName);
+                foreach (var audioStream in this.AudioPlaybackStreams)
+                {
+                    if (audioStream.IsBound)
+                    {
+                        // Get the audio stream to play
+                        var importer = Store.Open(this.audioPlaybackPipeline, audioStream.StoreName, audioStream.StorePath);
+                        var stream = importer.OpenStream<AudioBuffer>(audioStream.StreamName);
 
-                // Create the audio player
-                var audioPlayer = new AudioPlayer(this.audioPlaybackPipeline, new AudioPlayerConfiguration());
-                stream.PipeTo(audioPlayer.In);
+                        // Create the audio player
+                        var audioPlayer = new AudioPlayer(this.audioPlaybackPipeline, new AudioPlayerConfiguration());
+                        stream.PipeTo(audioPlayer.In);
+                    }
+                }
 
                 // Start playing back the audio
                 this.audioPlaybackPipeline.RunAsync(new ReplayDescriptor(this.Cursor, this.SelectionRange.EndTime));
@@ -666,6 +682,11 @@ namespace Microsoft.Psi.Visualization.Navigation
             if (e.PropertyName == nameof(NavigatorRange.Duration))
             {
                 this.liveCursorOffsetFromViewRangeStart = new TimeSpan((long)(this.viewRange.Duration.Ticks * this.liveCursorViewportPosition));
+            }
+
+            if (e.PropertyName == nameof(NavigatorRange.StartTime) || e.PropertyName == nameof(NavigatorRange.EndTime))
+            {
+                DataManager.Instance.OnInstantViewRangeChanged(this.ViewRange.AsTimeInterval);
             }
         }
     }

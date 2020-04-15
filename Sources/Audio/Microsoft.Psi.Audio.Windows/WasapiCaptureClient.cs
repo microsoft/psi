@@ -25,15 +25,18 @@ namespace Microsoft.Psi.Audio
         private static Guid audioClientIID = new Guid(Guids.IAudioClientIIDString);
 
         // Core Audio Capture member variables.
-        private IMMDevice endpoint;
+        private readonly IMMDevice endpoint;
+        private readonly bool isEventDriven;
         private IAudioClient audioClient;
         private IAudioCaptureClient captureClient;
         private IMFTransform resampler;
+        private AutoResetEvent audioAvailableEvent;
 
         private AudioDataAvailableCallback dataAvailableCallback;
         private Thread captureThread;
         private ManualResetEvent shutdownEvent;
         private int engineLatencyInMs;
+        private int engineBufferInMs;
         private WaveFormat mixFormat;
         private int mixFrameSize;
         private float gain;
@@ -51,9 +54,11 @@ namespace Microsoft.Psi.Audio
         /// Initializes a new instance of the <see cref="WasapiCaptureClient"/> class.
         /// </summary>
         /// <param name="endpoint">The audio endpoint device.</param>
-        public WasapiCaptureClient(IMMDevice endpoint)
+        /// <param name="isEventDriven">If true, uses WASAPI event-driven audio capture.</param>
+        public WasapiCaptureClient(IMMDevice endpoint, bool isEventDriven)
         {
             this.endpoint = endpoint;
+            this.isEventDriven = isEventDriven;
         }
 
         /// <summary>
@@ -77,6 +82,12 @@ namespace Microsoft.Psi.Audio
             {
                 this.shutdownEvent.Close();
                 this.shutdownEvent = null;
+            }
+
+            if (this.audioAvailableEvent != null)
+            {
+                this.audioAvailableEvent.Close();
+                this.audioAvailableEvent = null;
             }
 
             if (this.audioClient != null)
@@ -128,6 +139,9 @@ namespace Microsoft.Psi.Audio
         /// <param name="engineLatency">
         /// Number of milliseconds of acceptable lag between live sound being produced and recording operation.
         /// </param>
+        /// <param name="engineBuffer">
+        /// Number of milliseconds of audio that may be buffered between reads.
+        /// </param>
         /// <param name="gain">
         /// The gain to be applied to the audio after capture.
         /// </param>
@@ -141,7 +155,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="speech">
         /// If true, sets the audio category to speech to optimize audio pipeline for speech recognition.
         /// </param>
-        public void Initialize(int engineLatency, float gain, WaveFormat outFormat, AudioDataAvailableCallback callback, bool speech)
+        public void Initialize(int engineLatency, int engineBuffer, float gain, WaveFormat outFormat, AudioDataAvailableCallback callback, bool speech)
         {
             // Create our shutdown event - we want a manual reset event that starts in the not-signaled state.
             this.shutdownEvent = new ManualResetEvent(false);
@@ -178,8 +192,9 @@ namespace Microsoft.Psi.Audio
             // Load the MixFormat. This may differ depending on the shared mode used.
             this.LoadFormat();
 
-            // Remember our configured latency
+            // Remember our configured latency and buffer size
             this.engineLatencyInMs = engineLatency;
+            this.engineBufferInMs = engineBuffer;
 
             // Set the gain
             this.gain = gain;
@@ -203,6 +218,8 @@ namespace Microsoft.Psi.Audio
                     // the audio capture client with that format and capture without resampling.
                     this.mixFormat = outFormat;
                     this.mixFrameSize = (this.mixFormat.BitsPerSample / 8) * this.mixFormat.Channels;
+
+                    this.InitializeAudioEngine();
                 }
                 else
                 {
@@ -217,8 +234,12 @@ namespace Microsoft.Psi.Audio
                         Marshal.FreeCoTaskMem(closestMatchPtr);
                     }
 
-                    this.inputBufferSize = (int)(this.engineLatencyInMs * this.mixFormat.AvgBytesPerSec / 1000);
-                    this.outputBufferSize = (int)(this.engineLatencyInMs * outFormat.AvgBytesPerSec / 1000);
+                    // initialize the audio engine first as the engine latency may be modified after initialization
+                    this.InitializeAudioEngine();
+
+                    // initialize the resampler buffers
+                    this.inputBufferSize = (int)(this.engineBufferInMs * this.mixFormat.AvgBytesPerSec / 1000);
+                    this.outputBufferSize = (int)(this.engineBufferInMs * outFormat.AvgBytesPerSec / 1000);
 
                     DeviceUtil.CreateResamplerBuffer(this.inputBufferSize, out this.inputSample, out this.inputBuffer);
                     DeviceUtil.CreateResamplerBuffer(this.outputBufferSize, out this.outputSample, out this.outputBuffer);
@@ -227,8 +248,11 @@ namespace Microsoft.Psi.Audio
                     this.resampler = DeviceUtil.CreateResampler(this.mixFormat, outFormat);
                 }
             }
-
-            this.InitializeAudioEngine();
+            else
+            {
+                // initialize the audio engine with the default mix format
+                this.InitializeAudioEngine();
+            }
 
             // Set the callback function
             this.dataAvailableCallback = callback;
@@ -281,105 +305,116 @@ namespace Microsoft.Psi.Audio
 
             mmcssHandle = NativeMethods.AvSetMmThreadCharacteristics("Audio", ref mmcssTaskIndex);
 
+            WaitHandle[] waitArray = this.isEventDriven ?
+                new WaitHandle[] { this.shutdownEvent, this.audioAvailableEvent } :
+                new WaitHandle[] { this.shutdownEvent };
+
+            int waitTimeout = this.isEventDriven ? Timeout.Infinite : this.engineLatencyInMs;
+
             while (stillPlaying)
             {
                 // We want to wait for half the desired latency in milliseconds.
                 // That way we'll wake up half way through the processing period to pull the
                 // next set of samples from the engine.
-                bool waitResult = this.shutdownEvent.WaitOne(this.engineLatencyInMs / 2);
+                int waitResult = WaitHandle.WaitAny(waitArray, waitTimeout);
 
-                if (waitResult)
+                switch (waitResult)
                 {
-                    // If shutdownEvent has been set, we're done and should exit the main capture loop.
-                    stillPlaying = false;
-                }
-                else
-                {
-                    // We need to retrieve the next buffer of samples from the audio capturer.
-                    IntPtr dataPointer;
-                    int framesAvailable;
-                    int flags;
-                    long bufferPosition;
-                    long qpcPosition;
-                    bool isEmpty = false;
-                    long lastQpcPosition = 0;
+                    case 0:
+                        // If shutdownEvent has been set, we're done and should exit the main capture loop.
+                        stillPlaying = false;
+                        break;
 
-                    // Keep fetching audio in a tight loop as long as audio device still has data.
-                    while (!isEmpty && !this.shutdownEvent.WaitOne(0))
-                    {
-                        int hr = this.captureClient.GetBuffer(out dataPointer, out framesAvailable, out flags, out bufferPosition, out qpcPosition);
-                        if (hr >= 0)
+                    default:
                         {
-                            if ((hr == AudioClientBufferEmpty) || (framesAvailable == 0))
+                            // We need to retrieve the next buffer of samples from the audio capturer.
+                            IntPtr dataPointer;
+                            int framesAvailable;
+                            int flags;
+                            long bufferPosition;
+                            long qpcPosition;
+                            bool isEmpty = false;
+                            long lastQpcPosition = 0;
+
+                            // Keep fetching audio in a tight loop as long as audio device still has data.
+                            while (!isEmpty && !this.shutdownEvent.WaitOne(0))
                             {
-                                isEmpty = true;
-                            }
-                            else
-                            {
-                                int bytesAvailable = framesAvailable * this.mixFrameSize;
-
-                                unsafe
+                                int hr = this.captureClient.GetBuffer(out dataPointer, out framesAvailable, out flags, out bufferPosition, out qpcPosition);
+                                if (hr >= 0)
                                 {
-                                    // The flags on capture tell us information about the data.
-                                    // We only really care about the silent flag since we want to put frames of silence into the buffer
-                                    // when we receive silence.  We rely on the fact that a logical bit 0 is silence for both float and int formats.
-                                    if ((flags & (int)AudioClientBufferFlags.Silent) != 0)
+                                    if ((hr == AudioClientBufferEmpty) || (framesAvailable == 0))
                                     {
-                                        // Fill 0s from the capture buffer to the output buffer.
-                                        float* ptr = (float*)dataPointer.ToPointer();
-                                        for (int i = 0; i < bytesAvailable / sizeof(float); i++)
-                                        {
-                                            *(ptr + i) = 0f;
-                                        }
+                                        isEmpty = true;
                                     }
-                                    else if (this.gain != 1.0f)
+                                    else
                                     {
-                                        // Apply gain on the raw buffer if needed, before the resampler.
-                                        // When we capture in shared mode the capture mix format is always 32-bit IEEE
-                                        // floating point, so we can safely assume float samples in the buffer.
-                                        float* ptr = (float*)dataPointer.ToPointer();
-                                        for (int i = 0; i < bytesAvailable / sizeof(float); i++)
+                                        int bytesAvailable = framesAvailable * this.mixFrameSize;
+
+                                        unsafe
                                         {
-                                            *(ptr + i) *= this.gain;
+                                            // The flags on capture tell us information about the data.
+                                            // We only really care about the silent flag since we want to put frames of silence into the buffer
+                                            // when we receive silence.  We rely on the fact that a logical bit 0 is silence for both float and int formats.
+                                            if ((flags & (int)AudioClientBufferFlags.Silent) != 0)
+                                            {
+                                                // Fill 0s from the capture buffer to the output buffer.
+                                                float* ptr = (float*)dataPointer.ToPointer();
+                                                for (int i = 0; i < bytesAvailable / sizeof(float); i++)
+                                                {
+                                                    *(ptr + i) = 0f;
+                                                }
+                                            }
+                                            else if (this.gain != 1.0f)
+                                            {
+                                                // Apply gain on the raw buffer if needed, before the resampler.
+                                                // When we capture in shared mode the capture mix format is always 32-bit IEEE
+                                                // floating point, so we can safely assume float samples in the buffer.
+                                                float* ptr = (float*)dataPointer.ToPointer();
+                                                for (int i = 0; i < bytesAvailable / sizeof(float); i++)
+                                                {
+                                                    *(ptr + i) *= this.gain;
+                                                }
+                                            }
                                         }
-                                    }
-                                }
 
-                                // Check if we need to resample
-                                if (this.resampler != null)
-                                {
-                                    // Process input to resampler
-                                    this.ProcessResamplerInput(dataPointer, bytesAvailable, flags, qpcPosition);
-
-                                    // Process output from resampler
-                                    int bytesWritten = this.ProcessResamplerOutput();
-
-                                    // Audio capture was successful, so bump the capture buffer pointer.
-                                    this.bytesCaptured += bytesWritten;
-                                }
-                                else
-                                {
-                                    // Invoke the callback directly to handle the captured samples
-                                    if (this.dataAvailableCallback != null)
-                                    {
-                                        if (qpcPosition > lastQpcPosition)
+                                        // Check if we need to resample
+                                        if (this.resampler != null)
                                         {
-                                            this.dataAvailableCallback(dataPointer, bytesAvailable, qpcPosition);
-                                            lastQpcPosition = qpcPosition;
+                                            // Process input to resampler
+                                            this.ProcessResamplerInput(dataPointer, bytesAvailable, flags, qpcPosition);
 
-                                            this.bytesCaptured += bytesAvailable;
+                                            // Process output from resampler
+                                            int bytesWritten = this.ProcessResamplerOutput();
+
+                                            // Audio capture was successful, so bump the capture buffer pointer.
+                                            this.bytesCaptured += bytesWritten;
                                         }
                                         else
                                         {
-                                            Console.WriteLine("QPC is less than last {0}", qpcPosition - lastQpcPosition);
+                                            // Invoke the callback directly to handle the captured samples
+                                            if (this.dataAvailableCallback != null)
+                                            {
+                                                if (qpcPosition > lastQpcPosition)
+                                                {
+                                                    this.dataAvailableCallback(dataPointer, bytesAvailable, qpcPosition);
+                                                    lastQpcPosition = qpcPosition;
+
+                                                    this.bytesCaptured += bytesAvailable;
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("QPC is less than last {0}", qpcPosition - lastQpcPosition);
+                                                }
+                                            }
                                         }
                                     }
+
+                                    this.captureClient.ReleaseBuffer(framesAvailable);
                                 }
                             }
-
-                            this.captureClient.ReleaseBuffer(framesAvailable);
                         }
-                    }
+
+                        break;
                 }
             }
 
@@ -474,9 +509,34 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         private void InitializeAudioEngine()
         {
+            var streamFlags = AudioClientStreamFlags.NoPersist;
+
+            if (this.isEventDriven)
+            {
+                streamFlags |= AudioClientStreamFlags.EventCallback;
+                this.audioAvailableEvent = new AutoResetEvent(false);
+            }
+            else
+            {
+                // ensure buffer is at least twice the latency (only in pull mode)
+                if (this.engineBufferInMs < 2 * this.engineLatencyInMs)
+                {
+                    this.engineBufferInMs = 2 * this.engineLatencyInMs;
+                }
+            }
+
             IntPtr mixFormatPtr = WaveFormat.MarshalToPtr(this.mixFormat);
-            this.audioClient.Initialize(AudioClientShareMode.Shared, AudioClientStreamFlags.NoPersist, this.engineLatencyInMs * 10000, 0, mixFormatPtr, Guid.Empty);
+            this.audioClient.Initialize(AudioClientShareMode.Shared, streamFlags, this.engineBufferInMs * 10000, 0, mixFormatPtr, Guid.Empty);
             Marshal.FreeHGlobal(mixFormatPtr);
+
+            if (this.isEventDriven)
+            {
+                this.audioClient.SetEventHandle(this.audioAvailableEvent.SafeWaitHandle.DangerousGetHandle());
+            }
+
+            // get the actual audio engine buffer size
+            int bufferFrames = this.audioClient.GetBufferSize();
+            this.engineBufferInMs = (int)(bufferFrames * 1000L / this.mixFormat.SamplesPerSec);
 
             object obj = this.audioClient.GetService(new Guid(Guids.IAudioCaptureClientIIDString));
             this.captureClient = (IAudioCaptureClient)obj;

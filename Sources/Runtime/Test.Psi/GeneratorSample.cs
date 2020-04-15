@@ -33,7 +33,7 @@ namespace Test.Psi
 
         // read the file line by line,
         // and post either an int value or a string value to the appropriate output stream
-        protected override DateTime GenerateNext(DateTime previous)
+        protected override DateTime GenerateNext(DateTime currentTime)
         {
             string line = this.reader.ReadLine();
             if (line == null)
@@ -55,11 +55,6 @@ namespace Test.Psi
             else
             {
                 this.OutString.Post(parts[1], originatingTime);
-            }
-
-            if (originatingTime <= previous)
-            {
-                return previous + TimeSpan.FromTicks(1);
             }
 
             return originatingTime;

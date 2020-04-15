@@ -43,7 +43,7 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="writer">The store writer, created by e.g. <see cref="Create(Pipeline, string, string, AnnotatedEventDefinition, bool)"/>.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The input stream.</returns>
-        public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, AnnotationExporter writer, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, AnnotationExporter writer, DeliveryPolicy<TIn> deliveryPolicy = null)
         {
             writer.Write(source.Out, name, deliveryPolicy);
             return source;

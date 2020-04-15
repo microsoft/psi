@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="definition">The annotated event definition used to create and validate annotated events for this store.</param>
         /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store.</param>
         internal AnnotationExporter(Pipeline pipeline, string name, string path, AnnotatedEventDefinition definition, bool createSubdirectory = true)
-            : base(pipeline, new AnnotationStoreWriter(name, path, definition, createSubdirectory))
+            : base(pipeline, name, new AnnotationStoreWriter(name, path, definition, createSubdirectory))
         {
         }
     }

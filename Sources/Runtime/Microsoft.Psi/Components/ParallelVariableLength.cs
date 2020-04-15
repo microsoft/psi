@@ -13,25 +13,31 @@ namespace Microsoft.Psi.Components
     /// </summary>
     /// <typeparam name="TIn">The input message type.</typeparam>
     /// <typeparam name="TOut">The result type.</typeparam>
-    public class ParallelVariableLength<TIn, TOut> : IConsumer<TIn[]>, IProducer<TOut[]>
+    public class ParallelVariableLength<TIn, TOut> : Subpipeline, IConsumer<TIn[]>, IProducer<TOut[]>
     {
+        private readonly Connector<TIn[]> inConnector;
+        private readonly Connector<TOut[]> outConnector;
+        private readonly Receiver<TIn[]> splitter;
         private readonly List<Emitter<TIn>> branches = new List<Emitter<TIn>>();
         private readonly Join<int, TOut, TOut[]> join;
         private readonly Emitter<int> activeBranchesEmitter;
         private readonly Func<int, IProducer<TIn>, IProducer<TOut>> parallelTransform;
         private readonly Action<int, IProducer<TIn>> parallelAction;
-        private readonly Pipeline pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelVariableLength{TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="action">Function mapping keyed input producers to output producers.</param>
-        public ParallelVariableLength(Pipeline pipeline, Action<int, IProducer<TIn>> action)
+        /// <param name="name">Name for this component (defaults to ParallelVariableLength).</param>
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy to be used by this component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
+        public ParallelVariableLength(Pipeline pipeline, Action<int, IProducer<TIn>> action, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)
+            : base(pipeline, name ?? nameof(ParallelVariableLength<TIn, TOut>), defaultDeliveryPolicy)
         {
-            this.pipeline = pipeline;
             this.parallelAction = action;
-            this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
+            this.inConnector = this.CreateInputConnectorFrom<TIn[]>(pipeline, nameof(this.inConnector));
+            this.splitter = this.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.splitter));
+            this.inConnector.PipeTo(this.splitter);
         }
 
         /// <summary>
@@ -41,29 +47,35 @@ namespace Microsoft.Psi.Components
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
         /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
         /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
-        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped = false, TOut defaultValue = default)
+        /// <param name="name">Name for this component (defaults to ParallelVariableLength).</param>
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy to be used by this component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
+        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped = false, TOut defaultValue = default, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)
+            : base(pipeline, name ?? nameof(ParallelVariableLength<TIn, TOut>), defaultDeliveryPolicy)
         {
-            this.pipeline = pipeline;
             this.parallelTransform = transform;
-            this.In = pipeline.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.In));
-            this.activeBranchesEmitter = pipeline.CreateEmitter<int>(this, nameof(this.activeBranchesEmitter));
+            this.inConnector = this.CreateInputConnectorFrom<TIn[]>(pipeline, nameof(this.inConnector));
+            this.splitter = this.CreateReceiver<TIn[]>(this, this.Receive, nameof(this.splitter));
+            this.inConnector.PipeTo(this.splitter);
+            this.activeBranchesEmitter = this.CreateEmitter<int>(this, nameof(this.activeBranchesEmitter));
             var interpolator = outputDefaultIfDropped ? Reproducible.ExactOrDefault<TOut>(defaultValue) : Reproducible.Exact<TOut>();
 
             this.join = new Join<int, TOut, TOut[]>(
-                pipeline,
+                this,
                 interpolator,
                 (count, values) => values,
                 0,
                 count => Enumerable.Range(0, count));
 
             this.activeBranchesEmitter.PipeTo(this.join.InPrimary);
+            this.outConnector = this.CreateOutputConnectorTo<TOut[]>(pipeline, nameof(this.outConnector));
+            this.join.PipeTo(this.outConnector);
         }
 
         /// <inheritdoc />
-        public Receiver<TIn[]> In { get; }
+        public Receiver<TIn[]> In => this.inConnector.In;
 
         /// <inheritdoc />
-        public Emitter<TOut[]> Out => this.join.Out;
+        public Emitter<TOut[]> Out => this.outConnector.Out;
 
         private void Receive(TIn[] message, Envelope e)
         {
@@ -71,9 +83,9 @@ namespace Microsoft.Psi.Components
             {
                 if (this.branches.Count == i)
                 {
-                    var subpipeline = Subpipeline.Create(this.pipeline, $"subpipeline{i}");
-                    var branch = this.pipeline.CreateEmitter<TIn>(this, $"branch{i}");
-                    var connectorIn = new Connector<TIn>(this.pipeline, subpipeline, $"connectorIn{i}");
+                    var subpipeline = Subpipeline.Create(this, $"subpipeline{i}");
+                    var branch = this.CreateEmitter<TIn>(this, $"branch{i}");
+                    var connectorIn = new Connector<TIn>(this, subpipeline, $"connectorIn{i}");
                     branch.PipeTo(connectorIn, true); // allows connections in running pipelines
 
                     this.branches.Add(branch);
@@ -81,7 +93,7 @@ namespace Microsoft.Psi.Components
                     if (this.parallelTransform != null)
                     {
                         var branchResult = this.parallelTransform(i, connectorIn.Out);
-                        var connectorOut = new Connector<TOut>(subpipeline, this.pipeline, $"connectorOut{i}");
+                        var connectorOut = new Connector<TOut>(subpipeline, this, $"connectorOut{i}");
                         branchResult.PipeTo(connectorOut.In, true);
                         connectorOut.Out.PipeTo(this.join.AddInput(), true);
                     }
@@ -90,7 +102,11 @@ namespace Microsoft.Psi.Components
                         this.parallelAction(i, connectorIn.Out);
                     }
 
-                    subpipeline.RunAsync(this.pipeline.ReplayDescriptor);
+                    // run the subpipeline with a start time based on the message originating time
+                    subpipeline.RunAsync(
+                        e.OriginatingTime,
+                        this.ReplayDescriptor.End,
+                        this.ReplayDescriptor.EnforceReplayClock);
                 }
 
                 this.branches[i].Post(message[i], e.OriginatingTime);

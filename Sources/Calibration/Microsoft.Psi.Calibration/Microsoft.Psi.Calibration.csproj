@@ -26,7 +26,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.8.1" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.0" />
     <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
+    <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
   </ItemGroup>
 </Project>

@@ -4,25 +4,21 @@
 namespace Microsoft.Psi.PsiStudio
 {
     using System;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
+    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Microsoft.Psi.PsiStudio.Common;
+    using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
-    using Microsoft.Win32;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PsiStudioContext context = PsiStudioContext.Instance;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
@@ -30,37 +26,31 @@ namespace Microsoft.Psi.PsiStudio
         {
             this.InitializeComponent();
 
-            // Check if the argument list includes a store to open.
-            // First arg is this exe's filename, second arg (if it exists) is the store to open
-            var args = Environment.GetCommandLineArgs();
-            string filename = null;
-            if (args.Length > 1)
-            {
-                filename = args[1];
-            }
+            // Create the context
+            MainWindowViewModel viewModel = new MainWindowViewModel();
 
-            this.Loaded += (s, e) => this.Activate();
+            // Create the visualization container and set the navigator range to an arbitrary default
+            VisualizationContext visualizationContext = VisualizationContext.Instance;
+            visualizationContext.VisualizationContainer = new VisualizationContainer();
+            visualizationContext.VisualizationContainer.Navigator.ViewRange.SetRange(DateTime.UtcNow, TimeSpan.FromSeconds(60));
 
-            this.context.VisualizationContainer = new VisualizationContainer();
-            this.context.VisualizationContainer.Navigator.ViewRange.SetRange(DateTime.UtcNow, TimeSpan.FromSeconds(60));
+            // Set the values for the timing buttons on the navigator
+            visualizationContext.VisualizationContainer.Navigator.ShowAbsoluteTiming = viewModel.AppSettings.ShowAbsoluteTiming;
+            visualizationContext.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart = viewModel.AppSettings.ShowTimingRelativeToSessionStart;
+            visualizationContext.VisualizationContainer.Navigator.ShowTimingRelativeToSelectionStart = viewModel.AppSettings.ShowTimingRelativeToSelectionStart;
 
-            // register an async handler to load the current layout once the main window has finished loading
-            this.Loaded += this.MainWindow_Loaded;
+            // Set the data context
+            this.DataContext = viewModel;
 
-            if (!string.IsNullOrWhiteSpace(filename))
-            {
-                // register an async handler to open the dataset once the main window has finished loading
-                this.Loaded += async (s, e) => await this.context.OpenDatasetAsync(filename);
-            }
-
-            this.DataContext = this.context;
-
-            PipelineDiagnosticsVisualizationModel.RegisterKnownSerializationTypes(); // necessary for .NET Core types
+            // Register the known serializers, this is necessary for some .NET Core types
+            PipelineDiagnosticsVisualizationModel.RegisterKnownSerializationTypes();
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnClosing(CancelEventArgs e)
         {
-            this.context.OpenLayout(this.context.CurrentLayout);
+            (this.DataContext as MainWindowViewModel).OnClosing();
+            base.OnClosing(e);
         }
 
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)

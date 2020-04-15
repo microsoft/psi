@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="pixelFormat">The pixel format to convert to.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The resulting stream.</returns>
-        public static IProducer<Shared<Image>> Convert(this IProducer<Shared<Image>> source, PixelFormat pixelFormat, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Convert(this IProducer<Shared<Image>> source, PixelFormat pixelFormat, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return source.PipeTo(new ToPixelFormat(source.Out.Pipeline, pixelFormat), deliveryPolicy);
         }
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="pixelFormat">Pixel format to use for converted image.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the transformed images.</returns>
-        public static IProducer<Shared<Image>> Transform(this IProducer<Shared<Image>> source, TransformDelegate transformer, PixelFormat pixelFormat, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Transform(this IProducer<Shared<Image>> source, TransformDelegate transformer, PixelFormat pixelFormat, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return source.PipeTo(new ImageTransformer(source.Out.Pipeline, transformer, pixelFormat), deliveryPolicy);
         }
@@ -43,7 +43,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="source">Source of image and rectangle samples.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer generating new cropped image samples.</returns>
-        public static IProducer<Shared<Image>> Crop(this IProducer<(Shared<Image>, Rectangle)> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Crop(this IProducer<(Shared<Image>, Rectangle)> source, DeliveryPolicy<(Shared<Image>, Rectangle)> deliveryPolicy = null)
         {
             return source.Process<(Shared<Image>, Rectangle), Shared<Image>>(
                 (rectWithImage, env, e) =>
@@ -65,7 +65,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="source">Image producer to use as source images.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Producers of grayscale images.</returns>
-        public static IProducer<Shared<Image>> ToGray(this IProducer<Shared<Image>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> ToGray(this IProducer<Shared<Image>> source, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return Convert(source, PixelFormat.Gray_8bpp, deliveryPolicy);
         }
@@ -78,7 +78,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="finalHeight">Final height of desired output.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates resized images.</returns>
-        public static IProducer<Shared<Image>> Resize(this IProducer<Shared<Image>> source, float finalWidth, float finalHeight, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Resize(this IProducer<Shared<Image>> source, float finalWidth, float finalHeight, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return source.Process<Shared<Image>, Shared<Image>>(
                 (image, env, emitter) =>
@@ -99,7 +99,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="mode">Axis about which to flip.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates flip images.</returns>
-        public static IProducer<Shared<Image>> Flip(this IProducer<Shared<Image>> source, FlipMode mode, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Flip(this IProducer<Shared<Image>> source, FlipMode mode, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             if (mode == FlipMode.None)
             {
@@ -126,7 +126,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="sources">Images to diff.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Producer that returns the difference image.</returns>
-        public static IProducer<Shared<Image>> AbsDiff(this IProducer<(Shared<Image>, Shared<Image>)> sources, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> AbsDiff(this IProducer<(Shared<Image>, Shared<Image>)> sources, DeliveryPolicy<(Shared<Image>, Shared<Image>)> deliveryPolicy = null)
         {
             return sources.Process<ValueTuple<Shared<Image>, Shared<Image>>, Shared<Image>>(
                 (images, env, e) =>
@@ -147,7 +147,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="thresholdType">Type of thresholding to perform.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Producer that returns the difference image.</returns>
-        public static IProducer<Shared<Image>> Threshold(this IProducer<Shared<Image>> image, int threshold, int maxvalue, Threshold thresholdType, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Threshold(this IProducer<Shared<Image>> image, int threshold, int maxvalue, Threshold thresholdType, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return image.Process<Shared<Image>, Shared<Image>>(
                 (srcimage, env, e) =>

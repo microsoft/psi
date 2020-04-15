@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Kinect
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Kinect;
+    using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Imaging;
 
     /// <summary>
@@ -18,6 +19,9 @@ namespace Microsoft.Psi.Kinect
     /// </summary>
     public static class KinectExtensions
     {
+        private static readonly CoordinateSystem KinectBasis = new CoordinateSystem(default, UnitVector3D.ZAxis, UnitVector3D.XAxis, UnitVector3D.YAxis);
+        private static readonly CoordinateSystem KinectBasisInverse = KinectBasis.Invert();
+
         /// <summary>
         /// Returns the position of a given joint in the body.
         /// </summary>
@@ -25,7 +29,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="jointType">The type of joint.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The joint position as a 3D point in Kinect camera space.</returns>
-        public static IProducer<Point3D> GetJointPosition(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Point3D> GetJointPosition(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy<KinectBody> deliveryPolicy = null)
         {
             return source.Select(kb => kb.Joints[jointType].Position.ToPoint3D(), deliveryPolicy);
         }
@@ -37,7 +41,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates a list of corresponding 3D points in Kinect camera space.</returns>
         public static IProducer<List<Point3D>> ProjectTo3D(
-            this IProducer<(Shared<Image>, List<Point2D>, IKinectCalibration)> source, DeliveryPolicy deliveryPolicy = null)
+            this IProducer<(Shared<Image>, List<Point2D>, IDepthDeviceCalibrationInfo)> source, DeliveryPolicy<(Shared<Image>, List<Point2D>, IDepthDeviceCalibrationInfo)> deliveryPolicy = null)
         {
             var projectTo3D = new ProjectTo3D(source.Out.Pipeline);
             source.PipeTo(projectTo3D, deliveryPolicy);
@@ -74,10 +78,18 @@ namespace Microsoft.Psi.Kinect
                 // Transform by the given coordinate system
                 kinectJointCS = kinectJointCS.TransformBy(cs);
 
+                // Convert position back to camera space point
+                if (transformed.Joints.ContainsKey(jointType))
+                {
+                    var joint = transformed.Joints[jointType];
+                    joint.Position = kinectJointCS.Origin.ToCameraSpacePoint();
+                    transformed.Joints[jointType] = joint;
+                }
+
                 // Convert rotation back to Kinect joint orientation
                 if (transformed.JointOrientations.ContainsKey(jointType))
                 {
-                    var rot = kinectJointCS.GetRotationSubMatrix();
+                    var rot = kinectJointCS.FromMathNetBasis().GetRotationSubMatrix();
                     var q = MatrixToQuaternion(rot);
                     JointOrientation jointOrientation = transformed.JointOrientations[jointType];
                     jointOrientation.Orientation.X = q.X;
@@ -86,25 +98,17 @@ namespace Microsoft.Psi.Kinect
                     jointOrientation.Orientation.W = q.W;
                     transformed.JointOrientations[jointType] = jointOrientation;
                 }
-
-                // Convert position back to camera space point
-                if (transformed.Joints.ContainsKey(jointType))
-                {
-                    var joint = transformed.Joints[jointType];
-                    joint.Position = kinectJointCS.Origin.ToCameraSpacePoint();
-                    transformed.Joints[jointType] = joint;
-                }
             }
 
             return transformed;
         }
 
         /// <summary>
-        /// Creates a CoordinateSystem from a given kinect joint.
+        /// Creates a coordinate system from a given Kinect joint.
         /// </summary>
         /// <param name="kinectBody">Kinect body containing the joint.</param>
-        /// <param name="jointType">Which joint to create a CoordinateSystem from.</param>
-        /// <returns>CoordinateSystem capturing the given joint's orientation and position.</returns>
+        /// <param name="jointType">Which joint to create a coordinate system from.</param>
+        /// <returns>Coordinate system capturing the given joint's orientation and position.</returns>
         public static CoordinateSystem GetJointCoordinateSystem(this KinectBody kinectBody, JointType jointType)
         {
             if (!kinectBody.Joints.ContainsKey(jointType))
@@ -119,7 +123,7 @@ namespace Microsoft.Psi.Kinect
             if (kinectBody.JointOrientations.ContainsKey(jointType))
             {
                 var jointOrientation = kinectBody.JointOrientations[jointType].Orientation;
-                kinectJointCS = kinectJointCS.SetRotationSubMatrix(QuaternionToMatrix(jointOrientation));
+                kinectJointCS = kinectJointCS.SetRotationSubMatrix(QuaternionToMatrix(jointOrientation)).ToMathNetBasis();
             }
 
             // Get the position as a translation
@@ -133,13 +137,13 @@ namespace Microsoft.Psi.Kinect
         /// <param name="source">A stream of tuples containing the 3D point and calibration inforamtion.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates the 2D transformed points.</returns>
-        public static IProducer<Point2D> ToColorSpace(this IProducer<(Point3D, IKinectCalibration)> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Point2D> ToColorSpace(this IProducer<(Point3D, IDepthDeviceCalibrationInfo)> source, DeliveryPolicy<(Point3D, IDepthDeviceCalibrationInfo)> deliveryPolicy = null)
         {
             return source.Select(
                 m =>
                 {
                     var (point3D, calibration) = m;
-                    if (calibration != default(IKinectCalibration))
+                    if (calibration != default(IDepthDeviceCalibrationInfo))
                     {
                         return calibration.ToColorSpace(point3D);
                     }
@@ -148,7 +152,7 @@ namespace Microsoft.Psi.Kinect
                         return default(Point2D?);
                     }
                 },
-                deliveryPolicy).Where(p => p.HasValue, deliveryPolicy).Select(p => p.Value);
+                deliveryPolicy).Where(p => p.HasValue, DeliveryPolicy.SynchronousOrThrottle).Select(p => p.Value, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -157,7 +161,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="source">A stream of points in color space.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates transformed 2D points.</returns>
-        public static IProducer<Point2D?> ToPoint2D(this IProducer<ColorSpacePoint?> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Point2D?> ToPoint2D(this IProducer<ColorSpacePoint?> source, DeliveryPolicy<ColorSpacePoint?> deliveryPolicy = null)
         {
             return source.NullableSelect(p => new Point2D(p.X, p.Y), deliveryPolicy);
         }
@@ -168,7 +172,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="source">A stream of points in color space.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates transformed 2D points.</returns>
-        public static IProducer<Point2D> ToPoint2D(this IProducer<ColorSpacePoint> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Point2D> ToPoint2D(this IProducer<ColorSpacePoint> source, DeliveryPolicy<ColorSpacePoint> deliveryPolicy = null)
         {
             return source.Select(p => new Point2D(p.X, p.Y), deliveryPolicy);
         }
@@ -180,9 +184,9 @@ namespace Microsoft.Psi.Kinect
         /// <param name="jointType">The joint to return.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates the coordinate system for the specified joint if the joint is tracked. If the joint is not tracked, no message is posted on the return stream.</returns>
-        public static IProducer<CoordinateSystem> GetTrackedJointPosition(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<CoordinateSystem> GetTrackedJointPosition(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy<KinectBody> deliveryPolicy = null)
         {
-            return source.GetTrackedJointPositionOrDefault(jointType, deliveryPolicy).Where(cs => cs != null, DeliveryPolicy.Unlimited);
+            return source.GetTrackedJointPositionOrDefault(jointType, deliveryPolicy).Where(cs => cs != null, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -192,7 +196,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="jointType">The joint to return.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates the coordinate system for the specified joint if the joint is tracker, or null otherwise.</returns>
-        public static IProducer<CoordinateSystem> GetTrackedJointPositionOrDefault(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<CoordinateSystem> GetTrackedJointPositionOrDefault(this IProducer<KinectBody> source, JointType jointType, DeliveryPolicy<KinectBody> deliveryPolicy = null)
         {
             return source.Select(
                 body =>
@@ -208,44 +212,45 @@ namespace Microsoft.Psi.Kinect
                         var quaternion = new Quaternion(jointOrientation.Orientation.W, jointOrientation.Orientation.X, jointOrientation.Orientation.Y, jointOrientation.Orientation.Z);
                         var euler = quaternion.ToEulerAngles();
                         var cs = CoordinateSystem.Rotation(euler.Gamma, euler.Beta, euler.Alpha);
-                        return cs.TransformBy(CoordinateSystem.Translation(new Vector3D(joint.Position.X, joint.Position.Y, joint.Position.Z)));
+                        return cs.TransformBy(CoordinateSystem.Translation(new Vector3D(joint.Position.X, joint.Position.Y, joint.Position.Z))).ToMathNetBasis();
                     }
                 }, deliveryPolicy);
         }
 
         /// <summary>
-        /// Converts a point from Kinect camera space to a 3D point.
+        /// Converts a point from Kinect camera space to a 3D MathNet point.
         /// </summary>
         /// <param name="cameraSpacePoint">The Kinect camera space point to convert.</param>
-        /// <returns>The corresponding 3D point.</returns>
+        /// <returns>The corresponding 3D point (in MathNet basis).</returns>
         public static Point3D ToPoint3D(this CameraSpacePoint cameraSpacePoint)
         {
-            return new Point3D(cameraSpacePoint.X, cameraSpacePoint.Y, cameraSpacePoint.Z);
+            return new Point3D(cameraSpacePoint.Z, cameraSpacePoint.X, cameraSpacePoint.Y);
         }
 
         /// <summary>
-        /// Converts points from Kinect camera space to 3D points.
+        /// Converts points from Kinect camera space to 3D MathNet points.
         /// </summary>
         /// <param name="source">Stream of Kinect camera space points.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>A producer that generates the corresponding 3D points.</returns>
-        public static IProducer<Point3D> ToPoint3D(this IProducer<CameraSpacePoint> source, DeliveryPolicy deliveryPolicy = null)
+        /// <returns>A producer that generates the corresponding 3D points (in MathNet basis).</returns>
+        public static IProducer<Point3D> ToPoint3D(this IProducer<CameraSpacePoint> source, DeliveryPolicy<CameraSpacePoint> deliveryPolicy = null)
         {
-            return source.Select(p => new Point3D(p.X, p.Y, p.Z), deliveryPolicy);
+            return source.Select(p => ToPoint3D(p), deliveryPolicy);
         }
 
         /// <summary>
-        /// Converts a 3D point to a Kinect camera space point.
+        /// Converts a 3D MathNet point to a Kinect camera space point.
         /// </summary>
         /// <param name="point">The 3D point to convert.</param>
         /// <returns>The corresponding Kinect camera space point.</returns>
         public static CameraSpacePoint ToCameraSpacePoint(this Point3D point)
         {
-            CameraSpacePoint cameraSpacePoint;
-            cameraSpacePoint.X = (float)point.X;
-            cameraSpacePoint.Y = (float)point.Y;
-            cameraSpacePoint.Z = (float)point.Z;
-            return cameraSpacePoint;
+            return new CameraSpacePoint()
+            {
+                X = (float)point.Y,
+                Y = (float)point.Z,
+                Z = (float)point.X,
+            };
         }
 
         /// <summary>
@@ -254,7 +259,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="point">Stream of 3D points to convert.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates the corresponding Kinect camera space points.</returns>
-        public static IProducer<CameraSpacePoint> ToCameraSpacePoint(this IProducer<Point3D> point, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<CameraSpacePoint> ToCameraSpacePoint(this IProducer<Point3D> point, DeliveryPolicy<Point3D> deliveryPolicy = null)
         {
             return point.Select(p => ToCameraSpacePoint(p), deliveryPolicy);
         }
@@ -265,7 +270,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="cameraSpacePoints">Stream of list of Kinect camera space points.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates a compressed byte array representation of the given Kinect camera space points.</returns>
-        public static IProducer<byte[]> GZipCompressImageProjection(this IProducer<CameraSpacePoint[]> cameraSpacePoints, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<byte[]> GZipCompressImageProjection(this IProducer<CameraSpacePoint[]> cameraSpacePoints, DeliveryPolicy<CameraSpacePoint[]> deliveryPolicy = null)
         {
             var memoryStream = new MemoryStream();
             var memoryStreamLo = new MemoryStream();
@@ -307,7 +312,7 @@ namespace Microsoft.Psi.Kinect
         /// <param name="compressedBytes">A stream containing a compressed representation of Kinect camera space points.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates the corresponding list of 3D points.</returns>
-        public static IProducer<List<Point3D>> GZipUncompressImageProjection(this IProducer<byte[]> compressedBytes, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<CameraSpacePoint[]> GZipUncompressImageProjection(this IProducer<byte[]> compressedBytes, DeliveryPolicy<byte[]> deliveryPolicy = null)
         {
             var buffer = new byte[1920 * 1080 * 12];
             return compressedBytes.Select(
@@ -321,13 +326,18 @@ namespace Microsoft.Psi.Kinect
                     var floatArray = new float[buffer.Length / 4];
                     Buffer.BlockCopy(buffer, 0, floatArray, 0, buffer.Length);
 
-                    List<Point3D> pointList = new List<Point3D>();
+                    List<CameraSpacePoint> pointList = new List<CameraSpacePoint>();
                     for (int i = 0; i < floatArray.Length; i += 3)
                     {
-                        pointList.Add(new Point3D(floatArray[i], floatArray[i + 1], floatArray[i + 2]));
+                        pointList.Add(new CameraSpacePoint()
+                        {
+                            X = floatArray[i],
+                            Y = floatArray[i + 1],
+                            Z = floatArray[i + 2],
+                        });
                     }
 
-                    return pointList;
+                    return pointList.ToArray();
                 }, deliveryPolicy);
         }
 
@@ -437,6 +447,26 @@ namespace Microsoft.Psi.Kinect
                 a20, a21, a22,
             };
             return MathNet.Numerics.LinearAlgebra.CreateMatrix.Dense(3, 3, data);
+        }
+
+        /// <summary>
+        /// Convert a given coordinate system from Kinect basis (Forward=Z, Left=X, Up=Y) to MathNet's asssumed basis (Forward=X, Left=Y, Up=Z).
+        /// </summary>
+        /// <param name="cs">Input coordinate system in Kinect basis.</param>
+        /// <returns>The coordinate system transformed into MathNet's basis.</returns>
+        internal static CoordinateSystem ToMathNetBasis(this CoordinateSystem cs)
+        {
+            return new CoordinateSystem(KinectBasisInverse * cs * KinectBasis);
+        }
+
+        /// <summary>
+        /// Convert a given coordinate system to Kinect basis (Forward=Z, Left=X, Up=Y) from MathNet's asssumed basis (Forward=X, Left=Y, Up=Z).
+        /// </summary>
+        /// <param name="cs">Input coordinate system in MathNet basis.</param>
+        /// <returns>The coordinate system transformed into Kinect's basis.</returns>
+        internal static CoordinateSystem FromMathNetBasis(this CoordinateSystem cs)
+        {
+            return new CoordinateSystem(KinectBasis * cs * KinectBasisInverse);
         }
     }
 }

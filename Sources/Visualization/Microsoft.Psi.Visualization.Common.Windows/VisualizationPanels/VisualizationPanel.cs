@@ -3,27 +3,50 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
+    using System.Windows.Controls.Primitives;
     using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Media;
-    using GalaSoft.MvvmLight.Command;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.Base;
-    using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
     /// Represents the base class that visualization panels derive from.
     /// </summary>
-    [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public abstract class VisualizationPanel : ObservableTreeNodeObject
     {
+        // The minimum height of a Visualization Panel
+        private const double MinHeight = 10;
+
+        private RelayCommand removePanelCommand;
+        private RelayCommand clearPanelCommand;
+        private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
+        private RelayCommand<DragDeltaEventArgs> resizePanelCommand;
+
+        /// <summary>
+        /// The height of the panel.
+        /// </summary>
+        private double height = 400;
+
+        /// <summary>
+        /// The height of the panel.
+        /// </summary>
+        private double width = 400;
+
+        /// <summary>
+        /// The name of the visualization panel.
+        /// </summary>
+        private string name = "Visualization Panel";
+
         /// <summary>
         /// The zoom to panel command.
         /// </summary>
@@ -45,6 +68,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private object visualizationObjectsLock;
 
         /// <summary>
+        /// The margin to use for this panel's view.
+        /// </summary>
+        private Thickness visualMargin;
+
+        /// <summary>
         /// The template to use when creating the view for this panel.
         /// </summary>
         private DataTemplate defaultViewTemplate = null;
@@ -59,11 +87,133 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the visualization container that this panel is under.
+        /// Gets the remove panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand RemovePanelCommand
+        {
+            get
+            {
+                if (this.removePanelCommand == null)
+                {
+                    this.removePanelCommand = new RelayCommand(() => this.Container.RemovePanel(this));
+                }
+
+                return this.removePanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the clear panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ClearPanelCommand
+        {
+            get
+            {
+                if (this.clearPanelCommand == null)
+                {
+                    this.clearPanelCommand = new RelayCommand(() => this.Clear());
+                }
+
+                return this.clearPanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mouse left button down command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual RelayCommand<MouseButtonEventArgs> MouseLeftButtonDownCommand
+        {
+            get
+            {
+                if (this.mouseLeftButtonDownCommand == null)
+                {
+                    this.mouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
+                        e =>
+                        {
+                            // Set the current panel on click
+                            if (!this.IsCurrentPanel)
+                            {
+                                this.Container.CurrentPanel = this;
+                            }
+                        });
+                }
+
+                return this.mouseLeftButtonDownCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the resize panel command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<DragDeltaEventArgs> ResizePanelCommand
+        {
+            get
+            {
+                if (this.resizePanelCommand == null)
+                {
+                    this.resizePanelCommand = new RelayCommand<DragDeltaEventArgs>(o => this.Height = Math.Max(this.Height + o.VerticalChange, MinHeight));
+                }
+
+                return this.resizePanelCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the visualization panel name.
+        /// </summary>
+        [DataMember]
+        [PropertyOrder(0)]
+        [Description("The name of the visualization panel.")]
+        public string Name
+        {
+            get { return this.name; }
+            set { this.Set(nameof(this.Name), ref this.name, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the height of the panel.
+        /// </summary>
+        [DataMember]
+        [PropertyOrder(1)]
+        [Description("The height of the visualization panel.")]
+        public double Height
+        {
+            get { return this.height; }
+            set { this.Set(nameof(this.Height), ref this.height, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the width of the panel.
+        /// </summary>
+        [DataMember]
+        [Browsable(false)]
+        public double Width
+        {
+            get { return this.width; }
+            set { this.Set(nameof(this.Width), ref this.width, value); }
+        }
+
+        /// <summary>
+        /// Gets the visualization panel container that contains this panel.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public VisualizationContainer Container { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the parent visualization panel (if this panel is a child of another panel).
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public VisualizationPanel ParentPanel { get; set; }
 
         /// <summary>
         /// Gets or sets the current visualization object.
@@ -95,17 +245,22 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the height of the panel.
+        /// Gets or sets the visual margin for the panel.
         /// </summary>
+        [Browsable(false)]
         [IgnoreDataMember]
-        public abstract double Height { get; }
+        public Thickness VisualMargin
+        {
+            get => this.visualMargin;
+            set { this.Set(nameof(this.VisualMargin), ref this.visualMargin, value); }
+        }
 
         /// <summary>
         /// Gets a value indicating whether or not this is the current panel.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public bool IsCurrentPanel => this.Container.CurrentPanel == this;
+        public bool IsCurrentPanel => this.Container?.CurrentPanel == this;
 
         /// <summary>
         /// Gets a value indicating whether we should display the zoom to panel menuitem.
@@ -174,20 +329,15 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the width of the panel.
-        /// </summary>
-        [IgnoreDataMember]
-        public abstract double Width { get; }
-
-        /// <summary>
         /// Add a visualization object to the panel.
         /// </summary>
         /// <param name="visualizationObject">The visualization object to be added.</param>
-        public void AddVisualizationObject(VisualizationObject visualizationObject)
+        public virtual void AddVisualizationObject(VisualizationObject visualizationObject)
         {
             visualizationObject.AddToPanel(this);
             this.VisualizationObjects.Add(visualizationObject);
             this.CurrentVisualizationObject = visualizationObject;
+            this.RaisePropertyChanged(nameof(this.VisualizationObjects));
         }
 
         /// <summary>
@@ -206,12 +356,21 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <summary>
         /// Clears the visualization panel.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             while (this.VisualizationObjects.Count > 0)
             {
                 this.RemoveVisualizationObject(this.VisualizationObjects[0]);
             }
+        }
+
+        /// <summary>
+        /// Removes a child panel of this visualization panel (only valid if this panel is a parent container panel).
+        /// </summary>
+        /// <param name="childPanel">The visualization panel to remove.</param>
+        public virtual void RemoveChildPanel(VisualizationPanel childPanel)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -231,17 +390,17 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// Called internally by the VisualizationContainer to connect the parent chain.
         /// </summary>
         /// <param name="container">Container to connect this visualization panel to.</param>
-        internal void SetParentContainer(VisualizationContainer container)
+        public virtual void SetParentContainer(VisualizationContainer container)
         {
             if (this.Container != null)
             {
-                this.Container.PropertyChanged -= this.Container_PropertyChanged;
+                this.Container.PropertyChanged -= this.OnContainerPropertyChanged;
             }
 
             this.Container = container;
             if (this.Container != null)
             {
-                this.Container.PropertyChanged += this.Container_PropertyChanged;
+                this.Container.PropertyChanged += this.OnContainerPropertyChanged;
             }
 
             foreach (var visualizationObject in this.VisualizationObjects)
@@ -267,19 +426,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         protected abstract DataTemplate CreateDefaultViewTemplate();
 
         /// <summary>
-        /// Overridable method to allow derived VisualzationObject to react whenever the Configuration property has changed.
+        /// Called when a property of the container has changed.
         /// </summary>
-        protected virtual void OnConfigurationChanged()
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnContainerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Overridable method to allow derived VisualzationObject to react whenever a property on the Configuration property has changed.
-        /// </summary>
-        /// <param name="sender">The object that triggered the configuration property change event.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+            if (e.PropertyName == nameof(this.Container.CurrentPanel))
+            {
+                this.RaisePropertyChanged(nameof(this.IsCurrentPanel));
+            }
         }
 
         private void ZoomToPanel()
@@ -329,14 +485,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             {
                 this.CurrentVisualizationObject = this.VisualizationObjects.Last();
             }
-        }
 
-        private void Container_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.Container.CurrentPanel))
-            {
-                this.RaisePropertyChanged(nameof(this.IsCurrentPanel));
-            }
+            this.RaisePropertyChanged(nameof(this.VisualizationObjects));
         }
 
         [OnDeserializing]

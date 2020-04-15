@@ -13,6 +13,8 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="T">The message type.</typeparam>
     internal sealed class MessageConnector<T> : IConsumer<T>, IProducer<Message<T>>, IConnector
     {
+        private readonly string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageConnector{T}"/> class.
         /// </summary>
@@ -23,8 +25,9 @@ namespace Microsoft.Psi.Components
         /// the envelope information from the source into the target pipeline.</remarks>
         internal MessageConnector(Pipeline from, Pipeline to, string name = null)
         {
+            this.name = name ?? $"{from.Name}→{to.Name}";
             this.In = from.CreateReceiver<T>(this, (m, e) => this.Out.Post(Message.Create(m, e), e.OriginatingTime), name);
-            this.Out = to.CreateEmitter<Message<T>>(this, name ?? $"connector-{from.Name}->{to.Name}");
+            this.Out = to.CreateEmitter<Message<T>>(this, this.name);
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to add the connector to.</param>
         /// <param name="name">The name of the connector.</param>
         internal MessageConnector(Pipeline pipeline, string name = null)
-            : this(pipeline, pipeline, name ?? $"connector-{pipeline.Name}")
+            : this(pipeline, pipeline, name ?? $"Connector-{pipeline.Name}")
         {
         }
 
@@ -46,5 +49,11 @@ namespace Microsoft.Psi.Components
         /// Gets the connector output.
         /// </summary>
         public Emitter<Message<T>> Out { get; }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

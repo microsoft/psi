@@ -24,6 +24,8 @@ namespace Microsoft.Psi
         private readonly Pipeline pipeline;
         private readonly int id;
         private readonly List<ClosedHandler> closedHandlers = new List<ClosedHandler>();
+        private readonly ValidateMessageHandler messageValidator;
+        private string name;
         private int nextSeqId;
         private SynchronizationLock syncContext;
         private Envelope lastEnvelope;
@@ -35,15 +37,19 @@ namespace Microsoft.Psi
         /// This constructor is intended to be used by the framework.
         /// </summary>
         /// <param name="id">The id of this stream.</param>
+        /// <param name="name">The name of this stream.</param>
         /// <param name="owner">The owning component.</param>
         /// <param name="syncContext">The synchronization context this emitter operates in.</param>
         /// <param name="pipeline">The pipeline to associate with.</param>
-        internal Emitter(int id, object owner, SynchronizationLock syncContext, Pipeline pipeline)
+        /// <param name="messageValidator">An optional message validator.</param>
+        internal Emitter(int id, string name, object owner, SynchronizationLock syncContext, Pipeline pipeline, ValidateMessageHandler messageValidator = null)
         {
             this.id = id;
+            this.name = name;
             this.owner = owner;
             this.syncContext = syncContext;
             this.pipeline = pipeline;
+            this.messageValidator = messageValidator;
         }
 
         /// <summary>
@@ -51,6 +57,13 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="finalOriginatingTime">Originating time of final message posted.</param>
         public delegate void ClosedHandler(DateTime finalOriginatingTime);
+
+        /// <summary>
+        /// Validate message handler.
+        /// </summary>
+        /// <param name="data">The data of the message being validated.</param>
+        /// <param name="envelope">The envelope of the message being validated.</param>
+        public delegate void ValidateMessageHandler(T data, Envelope envelope);
 
         /// <summary>
         /// Event invoked after this emitter is closed.
@@ -69,7 +82,16 @@ namespace Microsoft.Psi
         }
 
         /// <inheritdoc />
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return this.name; }
+
+            set
+            {
+                this.name = value;
+                this.pipeline.DiagnosticsCollector?.EmitterRenamed(this);
+            }
+        }
 
         /// <inheritdoc />
         public int Id => this.id;
@@ -79,6 +101,11 @@ namespace Microsoft.Psi
 
         /// <inheritdoc />
         public Pipeline Pipeline => this.pipeline;
+
+        /// <summary>
+        /// Gets the envelope of the last message posted on this emitter.
+        /// </summary>
+        public Envelope LastEnvelope => this.lastEnvelope;
 
         /// <summary>
         /// Gets a value indicating whether this emitter has subscribers.
@@ -166,7 +193,7 @@ namespace Microsoft.Psi
         /// <param name="receiver">The receiver subscribing to this emitter.</param>
         /// <param name="allowSubscribeWhileRunning"> If true, bypasses checks that subscriptions are not made while pipelines are running.</param>
         /// <param name="deliveryPolicy">The desired policy to use when delivering messages to the specified receiver.</param>
-        internal void Subscribe(Receiver<T> receiver, bool allowSubscribeWhileRunning, DeliveryPolicy deliveryPolicy)
+        internal void Subscribe(Receiver<T> receiver, bool allowSubscribeWhileRunning, DeliveryPolicy<T> deliveryPolicy)
         {
             receiver.OnSubscribe(this, allowSubscribeWhileRunning, deliveryPolicy);
 
@@ -199,6 +226,23 @@ namespace Microsoft.Psi
             this.Deliver(new Message<T>(data, e));
         }
 
+        private void Validate(T data, Envelope e)
+        {
+            // make sure the data is consistent
+            if (e.SequenceId <= this.lastEnvelope.SequenceId)
+            {
+                throw new InvalidOperationException($"Attempted to post a message with a sequence ID that is out of order: {this.Name}\nThis may be caused by simultaneous calls to Emitter.Post() from multiple threads.");
+            }
+
+            if (e.OriginatingTime <= this.lastEnvelope.OriginatingTime || e.Time < this.lastEnvelope.Time)
+            {
+                throw new InvalidOperationException($"Attempted to post a message without strictly increasing originating time or that is out of order in wall-clock time: {this.Name}");
+            }
+
+            // additional message validation checks
+            this.messageValidator?.Invoke(data, e);
+        }
+
         private void Deliver(Message<T> msg)
         {
             if (this.lastEnvelope.SequenceId == int.MaxValue)
@@ -209,16 +253,7 @@ namespace Microsoft.Psi
 
             if (this.lastEnvelope.SequenceId != 0 && msg.SequenceId != int.MaxValue)
             {
-                // make sure the data is consistent
-                if (msg.Envelope.SequenceId <= this.lastEnvelope.SequenceId)
-                {
-                    throw new InvalidOperationException($"Attempted to post a message with a sequence ID that is out of order: {this.Name}\nThis may be caused by simultaneous calls to Emitter.Post() from multiple threads.");
-                }
-
-                if (msg.Envelope.OriginatingTime <= this.lastEnvelope.OriginatingTime || msg.Envelope.Time < this.lastEnvelope.Time)
-                {
-                    throw new InvalidOperationException($"Attempted to post a message without strictly increasing originating time or that is out of order in wall-clock time: {this.Name}");
-                }
+                this.Validate(msg.Data, msg.Envelope);
             }
 
             this.lastEnvelope = msg.Envelope;

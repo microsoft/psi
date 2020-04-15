@@ -24,7 +24,6 @@ namespace Microsoft.Psi.Audio
         private readonly Pipeline pipeline;
         private readonly AudioPlayerConfiguration configuration;
         private WaveFormat currentInputFormat;
-        private bool overwrite;
 
         /// <summary>
         /// The audio render device.
@@ -121,9 +120,8 @@ namespace Microsoft.Psi.Audio
                         this.configuration.InputFormat);
                 }
 
-                // Append the audio buffer to the audio renderer, specifying whether or not to
-                // overwrite existing data or block until internal rendering queue is available.
-                this.wasapiRender.AppendAudio(audioData.Data.Data, this.overwrite);
+                // Append the audio buffer to the audio renderer
+                this.wasapiRender.AppendAudio(audioData.Data.Data, false);
             }
         }
 
@@ -144,11 +142,6 @@ namespace Microsoft.Psi.Audio
             // posts changes to the volume level of the output audio device to the AudioLevel
             // stream for as long as the component is active.
             notifyCompletionTime(DateTime.MaxValue);
-
-            // If playing back at greater than original speed (ReplaySpeedFactor < 1),
-            // overwrite queued audio since data buffers will be arriving faster than
-            // it can be rendered.
-            this.overwrite = this.pipeline.ReplayDescriptor.ReplaySpeedFactor < 1;
 
             // publish initial volume level at startup
             this.AudioLevel.Post(this.wasapiRender.AudioLevel, this.pipeline.GetCurrentTime());

@@ -8,7 +8,6 @@ namespace Microsoft.Psi.Executive
     using System.Collections.Generic;
     using System.Threading;
     using Microsoft.Psi.Components;
-    using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.Scheduling;
 
     /// <summary>
@@ -118,8 +117,28 @@ namespace Microsoft.Psi.Executive
         {
             get
             {
-                var typ = this.StateObject.GetType();
-                return typ.IsGenericType && typ.GetGenericTypeDefinition() == typeof(Connector<>);
+                return typeof(IConnector).IsAssignableFrom(this.StateObject.GetType());
+            }
+        }
+
+        /// <summary>
+        /// Gets the envelope of the last message posted on any of this node's outputs.
+        /// </summary>
+        internal Envelope LastOutputEnvelope
+        {
+            get
+            {
+                var lastEnvelope = default(Envelope);
+                foreach (var emitter in this.outputs.Values)
+                {
+                    // we define "last" as being the envelope with the latest originating time seen so far
+                    if (emitter.LastEnvelope.OriginatingTime > lastEnvelope.OriginatingTime)
+                    {
+                        lastEnvelope = emitter.LastEnvelope;
+                    }
+                }
+
+                return lastEnvelope;
             }
         }
 
@@ -335,11 +354,8 @@ namespace Microsoft.Psi.Executive
         {
             this.pipeline.NotifyCompletionTime(this, this.finalOriginatingTime);
 
-            if (this.IsDeactivating)
-            {
-                // this is confirmation that an ISourceComponent has stopped producing non-reactive source messages
-                this.state = State.Deactivated;
-            }
+            // this is confirmation that an ISourceComponent has stopped producing non-reactive source messages
+            this.state = State.Deactivated;
         }
 
         internal IEmitter GetOutput(string name)

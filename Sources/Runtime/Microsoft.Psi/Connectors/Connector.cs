@@ -11,16 +11,22 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="T">The message type.</typeparam>
     public sealed class Connector<T> : IProducer<T>, IConsumer<T>, IConnector
     {
+        private readonly string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Connector{T}"/> class.
         /// </summary>
         /// <param name="from">The source pipeline.</param>
         /// <param name="to">The target pipeline.</param>
         /// <param name="name">The name of the connector.</param>
-        public Connector(Pipeline from, Pipeline to, string name = null)
+        /// <param name="preserveEnvelope">Whether or not the source message envelopes should be preserved.</param>
+        public Connector(Pipeline from, Pipeline to, string name = null, bool preserveEnvelope = false)
         {
-            this.Out = to.CreateEmitter<T>(this, name ?? $"connector-{from.Name}->{to.Name}");
-            this.In = from.CreateReceiver<T>(this, (m, e) => this.Out.Post(m, e.OriginatingTime), name);
+            this.name = name ?? $"{from.Name}→{to.Name}";
+            this.Out = to.CreateEmitter<T>(this, this.name);
+            this.In = preserveEnvelope ?
+                from.CreateReceiver<T>(this, (m, e) => this.Out.Deliver(m, e), name) :
+                from.CreateReceiver<T>(this, (m, e) => this.Out.Post(m, e.OriginatingTime), name);
         }
 
         /// <summary>
@@ -28,8 +34,9 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to create the connector in.</param>
         /// <param name="name">The name of the connector.</param>
-        public Connector(Pipeline pipeline, string name = null)
-            : this(pipeline, pipeline, name ?? $"connector-{pipeline.Name}")
+        /// <param name="preserveEnvelope">Whether or not the source message envelopes should be preserved.</param>
+        public Connector(Pipeline pipeline, string name = null, bool preserveEnvelope = false)
+            : this(pipeline, pipeline, name ?? $"Connector-{pipeline.Name}", preserveEnvelope)
         {
         }
 
@@ -42,5 +49,11 @@ namespace Microsoft.Psi.Components
         /// Gets the connector output.
         /// </summary>
         public Emitter<T> Out { get; }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return this.name;
+        }
     }
 }

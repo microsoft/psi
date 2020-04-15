@@ -12,15 +12,21 @@ namespace Microsoft.Psi.Diagnostics
     /// </summary>
     internal class DiagnosticsCollector
     {
-        private ConcurrentDictionary<int, PipelineDiagnostics> graphs = new ConcurrentDictionary<int, PipelineDiagnostics>();
-        private ConcurrentDictionary<int, PipelineDiagnostics.EmitterDiagnostics> outputs = new ConcurrentDictionary<int, PipelineDiagnostics.EmitterDiagnostics>();
-        private ConcurrentDictionary<object, PipelineDiagnostics.PipelineElementDiagnostics> connectors = new ConcurrentDictionary<object, PipelineDiagnostics.PipelineElementDiagnostics>();
-        private ConcurrentDictionary<int, DateTime> receiverProcessingStart = new ConcurrentDictionary<int, DateTime>();
+        private readonly DiagnosticsConfiguration diagnosticsConfig;
+
+        private ConcurrentDictionary<int, PipelineDiagnosticsInternal> graphs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal>();
+        private ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics> outputs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics>();
+        private ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics> connectors = new ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics>();
+
+        public DiagnosticsCollector(DiagnosticsConfiguration diagnosticsConfig)
+        {
+            this.diagnosticsConfig = diagnosticsConfig ?? DiagnosticsConfiguration.Default;
+        }
 
         /// <summary>
         /// Gets current root graph (if any).
         /// </summary>
-        public PipelineDiagnostics CurrentRoot { get; private set; }
+        public PipelineDiagnosticsInternal CurrentRoot { get; private set; }
 
         /// <summary>
         /// Pipeline creation.
@@ -29,7 +35,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="pipeline">Pipeline being created.</param>
         public void PipelineCreate(Pipeline pipeline)
         {
-            var graph = new PipelineDiagnostics(pipeline.Id, pipeline.Name);
+            var graph = new PipelineDiagnosticsInternal(pipeline.Id, pipeline.Name);
             if (!this.graphs.TryAdd(pipeline.Id, graph))
             {
                 throw new InvalidOperationException("Failed to add created graph");
@@ -58,7 +64,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="pipeline">Pipeline being stopped.</param>
         public void PipelineStopped(Pipeline pipeline)
         {
-            this.graphs[pipeline.Id].IsPipelineRunning = true;
+            this.graphs[pipeline.Id].IsPipelineRunning = false;
         }
 
         /// <summary>
@@ -83,15 +89,15 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="component">Component associated with this pipeline element.</param>
         public void PipelineElementCreate(Pipeline pipeline, PipelineElement element, object component)
         {
-            var node = new PipelineDiagnostics.PipelineElementDiagnostics(element, this.graphs[pipeline.Id]);
-            if (node.Kind == PipelineDiagnostics.PipelineElementDiagnostics.PipelineElementKind.Subpipeline)
+            var node = new PipelineDiagnosticsInternal.PipelineElementDiagnostics(element, pipeline.Id);
+            if (node.Kind == PipelineElementKind.Subpipeline)
             {
                 node.RepresentsSubpipeline = this.graphs[((Pipeline)component).Id];
-                this.graphs[pipeline.Id].Subpipelines.Add(node.RepresentsSubpipeline.Id, node.RepresentsSubpipeline);
+                this.graphs[pipeline.Id].Subpipelines.TryAdd(node.RepresentsSubpipeline.Id, node.RepresentsSubpipeline);
             }
-            else if (node.Kind == PipelineDiagnostics.PipelineElementDiagnostics.PipelineElementKind.Connector)
+            else if (node.Kind == PipelineElementKind.Connector)
             {
-                if (this.connectors.TryGetValue(component, out PipelineDiagnostics.PipelineElementDiagnostics bridge))
+                if (this.connectors.TryGetValue(component, out PipelineDiagnosticsInternal.PipelineElementDiagnostics bridge))
                 {
                     node.ConnectorBridgeToPipelineElement = bridge;
                     bridge.ConnectorBridgeToPipelineElement = node;
@@ -105,7 +111,7 @@ namespace Microsoft.Psi.Diagnostics
                 }
             }
 
-            this.graphs[pipeline.Id].PipelineElements.Add(element.Id, node);
+            this.graphs[pipeline.Id].PipelineElements.TryAdd(element.Id, node);
         }
 
         /// <summary>
@@ -149,7 +155,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="element">Element being created.</param>
         public void PipelineElementDisposed(Pipeline pipeline, PipelineElement element)
         {
-            this.graphs[pipeline.Id].PipelineElements.Remove(element.Id);
+            this.graphs[pipeline.Id].PipelineElements.TryRemove(element.Id, out var _);
         }
 
         /// <summary>
@@ -162,12 +168,22 @@ namespace Microsoft.Psi.Diagnostics
         public void PipelineElementAddEmitter(Pipeline pipeline, PipelineElement element, IEmitter emitter)
         {
             var node = this.graphs[pipeline.Id].PipelineElements[element.Id];
-            var output = new PipelineDiagnostics.EmitterDiagnostics(emitter.Id, emitter.Name, emitter.Type.FullName, node);
-            node.Emitters.Add(output.Id, output);
+            var output = new PipelineDiagnosticsInternal.EmitterDiagnostics(emitter.Id, emitter.Name, emitter.Type.FullName, node);
+            node.Emitters.TryAdd(output.Id, output);
             if (!this.outputs.TryAdd(output.Id, output))
             {
                 throw new InvalidOperationException("Failed to add emitter/output");
             }
+        }
+
+        /// <summary>
+        /// Emitter had been renamed.
+        /// </summary>
+        /// <remarks>Called when IEmitter.Name property set post-construction.</remarks>
+        /// <param name="emitter">Emitter being renamed.</param>
+        public void EmitterRenamed(IEmitter emitter)
+        {
+            this.outputs[emitter.Id].Name = emitter.Name;
         }
 
         /// <summary>
@@ -180,7 +196,7 @@ namespace Microsoft.Psi.Diagnostics
         public void PipelineElementAddReceiver(Pipeline pipeline, PipelineElement element, IReceiver receiver)
         {
             var node = this.graphs[pipeline.Id].PipelineElements[element.Id];
-            node.Receivers.Add(receiver.Id, new PipelineDiagnostics.ReceiverDiagnostics(receiver.Id, receiver.Name, receiver.Type.FullName, node));
+            node.Receivers.TryAdd(receiver.Id, new PipelineDiagnosticsInternal.ReceiverDiagnostics(receiver.Id, receiver.Name, receiver.Type.FullName, node));
         }
 
         /// <summary>
@@ -191,12 +207,14 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="element">Element to which receiver belongs.</param>
         /// <param name="receiver">Receiver subscribing to emitter.</param>
         /// <param name="emitter">Emitter to which receiver is subscribing.</param>
-        public void PipelineElementReceiverSubscribe(Pipeline pipeline, PipelineElement element, IReceiver receiver, IEmitter emitter)
+        /// <param name="deliveryPolicyName">The name of the delivery policy used.</param>
+        public void PipelineElementReceiverSubscribe(Pipeline pipeline, PipelineElement element, IReceiver receiver, IEmitter emitter, string deliveryPolicyName)
         {
             var input = this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id];
             var output = this.outputs[emitter.Id];
             input.Source = output;
-            output.Targets.Add(input.Id, input);
+            input.DeliveryPolicyName = deliveryPolicyName;
+            output.Targets.TryAdd(input.Id, input);
         }
 
         /// <summary>
@@ -209,96 +227,112 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="emitter">Emitter from which receiver is unsubscribing.</param>
         public void PipelineElementReceiverUnsubscribe(Pipeline pipeline, PipelineElement element, IReceiver receiver, IEmitter emitter)
         {
+            this.outputs[emitter.Id].Targets.TryRemove(receiver.Id, out var _);
             this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id].Source = null;
-            var targets = this.outputs[emitter.Id].Targets.Remove(receiver.Id);
         }
 
         /// <summary>
-        /// Message enqueued by receiver.
-        /// </summary>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
-        /// <param name="element">Element to which receiver belongs.</param>
-        /// <param name="receiver">Receiver being throttled/unthrottled.</param>
-        /// <param name="throttled">Whether input is throttled.</param>
-        public void PipelineElementReceiverThrottle(Pipeline pipeline, PipelineElement element, IReceiver receiver, bool throttled)
-        {
-            this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id].Throttled = throttled;
-        }
-
-        /// <summary>
-        /// Message enqueued by receiver.
-        /// </summary>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
-        /// <param name="element">Element to which receiver belongs.</param>
-        /// <param name="receiver">Receiver being enqueued.</param>
-        /// <param name="queueSize">Awaiting delivery queue size.</param>
-        /// <param name="envelope">Message envelope.</param>
-        public void MessageEnqueued(Pipeline pipeline, PipelineElement element, IReceiver receiver, int queueSize, Envelope envelope)
-        {
-            var input = this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id];
-            input.QueueSize = queueSize;
-            input.AddMessageLatencyAtEmitter(envelope);
-        }
-
-        /// <summary>
-        /// Message dropped by receiver.
-        /// </summary>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
-        /// <param name="element">Element to which receiver belongs.</param>
-        /// <param name="receiver">Receiver being dropped.</param>
-        /// <param name="queueSize">Awaiting delivery queue size.</param>
-        /// <param name="envelope">Message envelope.</param>
-        public void MessageDropped(Pipeline pipeline, PipelineElement element, IReceiver receiver, int queueSize, Envelope envelope)
-        {
-            var input = this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id];
-            input.DroppedCount++;
-            input.QueueSize = queueSize;
-        }
-
-        /// <summary>
-        /// Message being processed by component.
-        /// </summary>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
-        /// <param name="element">Element to which receiver belongs.</param>
-        /// <param name="receiver">Receiver being processed.</param>
-        /// <param name="queueSize">Awaiting delivery queue size.</param>
-        /// <param name="envelope">Message envelope.</param>
-        /// <param name="messageSize">Message size (bytes).</param>
-        public void MessageProcessStart(Pipeline pipeline, PipelineElement element, IReceiver receiver, int queueSize, Envelope envelope, int messageSize)
-        {
-            this.receiverProcessingStart[receiver.Id] = pipeline.GetCurrentTime();
-            var input = this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id];
-            input.ProcessedCount++;
-            input.QueueSize = queueSize;
-            input.AddMessageLatencyAtReceiver(envelope);
-            input.AddMessageSize(messageSize);
-        }
-
-        /// <summary>
-        /// Message processed by component.
+        /// Get collector of diagnostics message flow statistics for a single receiver.
         /// </summary>
         /// <param name="pipeline">Pipeline to which the element belongs.</param>
         /// <param name="element">Element to which receiver belongs.</param>
         /// <param name="receiver">Receiver having completed processing.</param>
-        /// <param name="envelope">Message envelope.</param>
-        public void MessageProcessComplete(Pipeline pipeline, PipelineElement element, IReceiver receiver, Envelope envelope)
+        public ReceiverCollector GetReceiverDiagnosticsCollector(Pipeline pipeline, PipelineElement element, IReceiver receiver)
         {
-            this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id].AddProcessingTime(pipeline.GetCurrentTime() - this.receiverProcessingStart[receiver.Id]);
+            return new ReceiverCollector(this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id], this.diagnosticsConfig);
         }
 
         /// <summary>
-        /// Message processed synchronously by receiver.
+        /// Class that collects diagnostics message flow statistics for a single receiver.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
-        /// <param name="element">Element to which receiver belongs.</param>
-        /// <param name="receiver">Receiver having been processed synchronously.</param>
-        /// <param name="queueSize">Awaiting delivery queue size.</param>
-        /// <param name="envelope">Message envelope.</param>
-        /// <param name="messageSize">Message size (bytes).</param>
-        public void MessageProcessedSynchronously(Pipeline pipeline, PipelineElement element, IReceiver receiver, int queueSize, Envelope envelope, int messageSize)
+        public class ReceiverCollector
         {
-            this.MessageProcessStart(pipeline, element, receiver, queueSize, envelope, messageSize);
-            this.MessageProcessComplete(pipeline, element, receiver, envelope);
+            private readonly PipelineDiagnosticsInternal.ReceiverDiagnostics receiverDiagnostics;
+            private readonly DiagnosticsConfiguration diagnosticsConfig;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ReceiverCollector"/> class.
+            /// </summary>
+            /// <param name="receiverDiagnostics">Receiver diagnostics instance being collected.</param>
+            /// <param name="diagnosticsConfig">Diagnostics configuration.</param>
+            internal ReceiverCollector(PipelineDiagnosticsInternal.ReceiverDiagnostics receiverDiagnostics, DiagnosticsConfiguration diagnosticsConfig)
+            {
+                this.receiverDiagnostics = receiverDiagnostics;
+                this.diagnosticsConfig = diagnosticsConfig;
+            }
+
+            /// <summary>
+            /// Message enqueued by receiver.
+            /// </summary>
+            /// <param name="queueSize">Awaiting delivery queue size.</param>
+            /// <param name="envelope">Message envelope.</param>
+            public void MessageEnqueued(int queueSize, Envelope envelope)
+            {
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+            }
+
+            /// <summary>
+            /// Message dropped by receiver.
+            /// </summary>
+            /// <param name="queueSize">Awaiting delivery queue size.</param>
+            /// <param name="envelope">Message envelope.</param>
+            public void MessageDropped(int queueSize, Envelope envelope)
+            {
+                this.receiverDiagnostics.AddDroppedMessage(envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+            }
+
+            /// <summary>
+            /// Message enqueued by receiver.
+            /// </summary>
+            /// <param name="throttled">Whether input is throttled.</param>
+            public void PipelineElementReceiverThrottle(bool throttled)
+            {
+                this.receiverDiagnostics.Throttled = throttled;
+            }
+
+            /// <summary>
+            /// Message being processed by component.
+            /// </summary>
+            /// <param name="pipeline">Pipeline to which the receiver belongs.</param>
+            /// <param name="queueSize">Awaiting delivery queue size.</param>
+            /// <param name="envelope">Message envelope.</param>
+            /// <param name="messageSize">Message size (bytes).</param>
+            public DateTime MessageProcessStart(Pipeline pipeline, int queueSize, Envelope envelope, int messageSize)
+            {
+                var time = pipeline.GetCurrentTime();
+                this.receiverDiagnostics.AddProcessedMessage(envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtReceiver(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageSize(messageSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                return time;
+            }
+
+            /// <summary>
+            /// Message processed by component.
+            /// </summary>
+            /// <param name="pipeline">Pipeline to which the element belongs.</param>
+            /// <param name="startTime">Time at which message processing started - returned by MessageProcessStart().</param>
+            public void MessageProcessComplete(Pipeline pipeline, DateTime startTime)
+            {
+                var current = pipeline.GetCurrentTime();
+                this.receiverDiagnostics.AddProcessingTime(current - startTime, current, this.diagnosticsConfig.AveragingTimeSpan);
+            }
+
+            /// <summary>
+            /// Message processed synchronously by receiver.
+            /// </summary>
+            /// <param name="pipeline">Pipeline to which the element belongs.</param>
+            /// <param name="queueSize">Awaiting delivery queue size.</param>
+            /// <param name="envelope">Message envelope.</param>
+            /// <param name="messageSize">Message size (bytes).</param>
+            public void MessageProcessedSynchronously(Pipeline pipeline, int queueSize, Envelope envelope, int messageSize)
+            {
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.MessageProcessComplete(pipeline, this.MessageProcessStart(pipeline, queueSize, envelope, messageSize));
+            }
         }
     }
 }

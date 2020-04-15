@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Diagnostics
         public static IEnumerable<PipelineDiagnostics> GetAllPipelineDiagnostics(this PipelineDiagnostics pipeline)
         {
             yield return pipeline;
-            foreach (var child in pipeline.Subpipelines.Values)
+            foreach (var child in pipeline.SubpipelineDiagnostics)
             {
                 foreach (var descendant in child.GetAllPipelineDiagnostics())
                 {
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Diagnostics
         {
             foreach (var p in pipelines)
             {
-                foreach (var pe in p.PipelineElements.Values)
+                foreach (var pe in p.PipelineElements)
                 {
                     yield return pe;
                 }
@@ -64,7 +64,7 @@ namespace Microsoft.Psi.Diagnostics
         {
             foreach (var pe in pipelineElements)
             {
-                foreach (var e in pe.Emitters.Values)
+                foreach (var e in pe.Emitters)
                 {
                     yield return e;
                 }
@@ -100,7 +100,7 @@ namespace Microsoft.Psi.Diagnostics
         {
             foreach (var pe in pipelineElements)
             {
-                foreach (var r in pe.Receivers.Values)
+                foreach (var r in pe.Receivers)
                 {
                     yield return r;
                 }
@@ -176,8 +176,8 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         /// <param name="pipeline">Root pipeline diagnostics.</param>
         /// <param name="predicate">Predicate expression filtering receiver diagnostics.</param>
-        /// <returns>Queued message count.</returns>
-        public static int GetQueuedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
+        /// <returns>Average queued message count.</returns>
+        public static double GetAverageQueuedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
             return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.QueueSize).Sum();
         }
@@ -194,6 +194,17 @@ namespace Microsoft.Psi.Diagnostics
         }
 
         /// <summary>
+        /// Gets dropped message count in last averaging time span across receivers within pipeline and descendant.
+        /// </summary>
+        /// <param name="pipeline">Root pipeline diagnostics.</param>
+        /// <param name="predicate">Predicate expression filtering receiver diagnostics.</param>
+        /// <returns>Dropped message count.</returns>
+        public static int GetDroppedMessageAveragePerTimeSpan(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
+        {
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.DroppedPerTimeSpan).Sum();
+        }
+
+        /// <summary>
         /// Gets processed message count across receivers within pipeline and descendant.
         /// </summary>
         /// <param name="pipeline">Root pipeline diagnostics.</param>
@@ -202,6 +213,17 @@ namespace Microsoft.Psi.Diagnostics
         public static int GetProcessedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
             return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.ProcessedCount).Sum();
+        }
+
+        /// <summary>
+        /// Gets processed message count in last averaging time span across receivers within pipeline and descendant.
+        /// </summary>
+        /// <param name="pipeline">Root pipeline diagnostics.</param>
+        /// <param name="predicate">Predicate expression filtering receiver diagnostics.</param>
+        /// <returns>Processed message count.</returns>
+        public static int GetProcessedMessageAveragePerTimeSpan(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
+        {
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.ProcessedPerTimeSpan).Sum();
         }
 
         /// <summary>
@@ -220,9 +242,9 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         /// <param name="times">Sequence of time spans.</param>
         /// <returns>Average time (zero if empty).</returns>
-        public static TimeSpan AverageTime(this IEnumerable<TimeSpan> times)
+        public static TimeSpan AverageTime(this IEnumerable<(TimeSpan, DateTime)> times)
         {
-            return TimeSpan.FromTicks(times.Count() > 0 ? (long)times.Select(t => t.Ticks).Average() : 0L);
+            return TimeSpan.FromTicks(times.Count() > 0 ? (long)times.Select(t => t.Item1.Ticks).Average() : 0L);
         }
 
         /// <summary>
@@ -230,9 +252,9 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         /// <param name="sizes">Sequence of sizes.</param>
         /// <returns>Average size (zero if empty).</returns>
-        public static double AverageSize(this IEnumerable<int> sizes)
+        public static double AverageSize(this IEnumerable<(int, DateTime)> sizes)
         {
-            return sizes.Count() > 0 ? sizes.Average() : 0;
+            return sizes.Count() > 0 ? sizes.Average(s => s.Item1) : 0;
         }
     }
 }

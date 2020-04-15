@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.PsiStudio
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using System.Xml;
@@ -14,16 +15,13 @@ namespace Microsoft.Psi.PsiStudio
     /// </summary>
     public class PsiStudioSettings
     {
-        private readonly string settingsFilename;
+        private string settingsFilename;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PsiStudioSettings"/> class.
         /// </summary>
         public PsiStudioSettings()
         {
-            // Set the path to the Settings file
-            this.settingsFilename = Path.Combine(PsiStudioContext.PsiStudioDocumentsPath, "PsiStudioSettings.xml");
-
             // Set defaults for all settings
             this.WindowPositionLeft = "100";
             this.WindowPositionTop = "100";
@@ -33,10 +31,11 @@ namespace Microsoft.Psi.PsiStudio
             this.TreeViewPanelWidth = "300";
             this.PropertiesPanelWidth = "300";
             this.DatasetsTabHeight = "400";
+            this.ShowAbsoluteTiming = false;
+            this.ShowTimingRelativeToSessionStart = false;
+            this.ShowTimingRelativeToSelectionStart = false;
             this.CurrentLayoutName = null;
-
-            // Update the settings with those from the file on disk
-            this.LoadFromFile();
+            this.AdditionalAssemblies = null;
         }
 
         /// <summary>
@@ -44,6 +43,11 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         ~PsiStudioSettings()
         {
+            if (string.IsNullOrWhiteSpace(this.settingsFilename))
+            {
+                throw new InvalidOperationException("Coould not save the settings to file because PsiStudioSettings.Load() was not previously called to set the filepath.");
+            }
+
             using (var writer = XmlWriter.Create(this.settingsFilename, new XmlWriterSettings() { Indent = true }))
             {
                 var xmlSerializer = new XmlSerializer(typeof(PsiStudioSettings));
@@ -97,10 +101,64 @@ namespace Microsoft.Psi.PsiStudio
         public string CurrentLayoutName { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the show absolute timing button should be pressed.
+        /// </summary>
+        public bool ShowAbsoluteTiming { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the show timing relative to session start button should be pressed.
+        /// </summary>
+        public bool ShowTimingRelativeToSessionStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the show timing relative to selection start button should be pressed.
+        /// </summary>
+        public bool ShowTimingRelativeToSelectionStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of add-in assemblies.
+        /// </summary>
+        public string AdditionalAssemblies { get; set; }
+
+        /// <summary>
+        /// Gets the list of add-in components.
+        /// </summary>
+        [XmlIgnore]
+        public List<string> AdditionalAssembliesList { get; private set; }
+
+        /// <summary>
+        /// Loads the settings from file.
+        /// </summary>
+        /// <param name="settingsFilename">The full name and path of the settings file.</param>
+        /// <returns>The psi studio settings object that was loaded.</returns>
+        public static PsiStudioSettings Load(string settingsFilename)
+        {
+            // Create the settings instance
+            PsiStudioSettings settings = new PsiStudioSettings();
+
+            // Update the settings with those from the file on disk
+            settings.LoadFromFile(settingsFilename);
+
+            // Generate the additional assemblies list
+            settings.AdditionalAssembliesList = new List<string>();
+            if (!string.IsNullOrWhiteSpace(settings.AdditionalAssemblies))
+            {
+                foreach (string additionalAssembly in settings.AdditionalAssemblies.Split(';'))
+                {
+                    settings.AdditionalAssembliesList.Add(additionalAssembly.Trim());
+                }
+            }
+
+            return settings;
+        }
+
+        /// <summary>
         /// Loads settings from the xml settings file.
         /// </summary>
-        private void LoadFromFile()
+        private void LoadFromFile(string settingsFilename)
         {
+            this.settingsFilename = settingsFilename;
+
             Type thisType = this.GetType();
 
             // Load the settings XML file if it exists
@@ -108,8 +166,10 @@ namespace Microsoft.Psi.PsiStudio
             {
                 try
                 {
-                    XmlDocument settingsDocument = new XmlDocument();
-                    settingsDocument.Load(this.settingsFilename);
+                    XmlDocument settingsDocument = new XmlDocument() { XmlResolver = null };
+                    TextReader textReader = new StreamReader(this.settingsFilename);
+                    XmlReader reader = XmlReader.Create(textReader, new XmlReaderSettings() { XmlResolver = null });
+                    settingsDocument.Load(reader);
 
                     // Get the list of PsiSettings
                     PropertyInfo[] properties = thisType.GetProperties();
@@ -120,7 +180,7 @@ namespace Microsoft.Psi.PsiStudio
                         if (node != null)
                         {
                             // Update the setting with the value from the settings file
-                            propertyInfo.SetValue(this, node.InnerText);
+                            propertyInfo.SetValue(this, Convert.ChangeType(node.InnerText, propertyInfo.PropertyType));
                         }
                     }
                 }

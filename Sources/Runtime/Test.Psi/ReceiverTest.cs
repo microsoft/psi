@@ -23,7 +23,7 @@ namespace Test.Psi
             List<SimpleMsg> receivedValues = new List<SimpleMsg>(iter);
             using (Pipeline p = Pipeline.Create())
             {
-                var emitter = new Emitter<SimpleMsg>(0, this, null, p);
+                var emitter = new Emitter<SimpleMsg>(0, null, this, null, p);
                 var receiver = new Receiver<SimpleMsg>(0, string.Empty, null, this, t => { receivedValues.Add(t.Data); }, new SynchronizationLock(null), p, true);
                 emitter.PipeTo(receiver, DeliveryPolicy.Unlimited);
                 p.RunAsync();

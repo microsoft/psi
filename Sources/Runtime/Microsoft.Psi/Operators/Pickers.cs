@@ -18,7 +18,7 @@ namespace Microsoft.Psi
         /// <param name="condition">Predicate function by which to filter messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Where<T>(this IProducer<T> source, Func<T, Envelope, bool> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Where<T>(this IProducer<T> source, Func<T, Envelope, bool> condition, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return Process<T, T>(
                 source,
@@ -40,9 +40,22 @@ namespace Microsoft.Psi
         /// <param name="condition">Predicate function by which to filter messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Where<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Where<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return Where(source, (d, e) => condition(d), deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Filter stream to the first n messages.
+        /// </summary>
+        /// <typeparam name="T">Type of source/output messages.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="number">Number of messages.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<T> First<T>(this IProducer<T> source, int number, DeliveryPolicy<T> deliveryPolicy = null)
+        {
+            return source.Where(v => number-- > 0, deliveryPolicy);
         }
 
         /// <summary>
@@ -52,23 +65,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> First<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> First<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
-            bool first = true;
-            return source.Where(
-                v =>
-                {
-                    if (first)
-                    {
-                        first = false;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                },
-                deliveryPolicy);
+            return First(source, 1, deliveryPolicy);
         }
     }
 }

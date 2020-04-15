@@ -38,13 +38,17 @@ namespace PsiStoreTool
             Console.WriteLine($"Platform for Situated Intelligence Store Tool");
             try
             {
-                return Parser.Default.ParseArguments<Verbs.List, Verbs.Info, Verbs.Messages, Verbs.Save, Verbs.Send>(args)
+                return Parser.Default.ParseArguments<Verbs.ListStreams, Verbs.Info, Verbs.Messages, Verbs.Save, Verbs.Send, Verbs.Concat, Verbs.Crop, Verbs.ListTasks, Verbs.Exec>(args)
                     .MapResult(
-                        (Verbs.List opts) => Utility.ListStreams(opts.Store, opts.Path),
+                        (Verbs.ListStreams opts) => Utility.ListStreams(opts.Store, opts.Path),
                         (Verbs.Info opts) => Utility.DisplayStreamInfo(opts.Stream, opts.Store, opts.Path),
                         (Verbs.Messages opts) => Utility.DisplayStreamMessages(opts.Stream, opts.Store, opts.Path, opts.Number),
                         (Verbs.Save opts) => Utility.SaveStreamMessages(opts.Stream, opts.Store, opts.Path, opts.File, opts.Format),
                         (Verbs.Send opts) => Utility.SendStreamMessages(opts.Stream, opts.Store, opts.Path, opts.Topic, opts.Address, opts.Format),
+                        (Verbs.Concat opts) => Utility.ConcatenateStores(opts.Store, opts.Path, opts.Output),
+                        (Verbs.Crop opts) => Utility.CropStore(opts.Store, opts.Path, opts.Output, opts.Start, opts.Length),
+                        (Verbs.ListTasks opts) => Utility.ListTasks(opts.Assemblies),
+                        (Verbs.Exec opts) => Utility.ExecuteTask(opts.Stream, opts.Store, opts.Path, opts.Name, opts.Assemblies, opts.Arguments),
                         DisplayParseErrors);
             }
             catch (Exception ex)

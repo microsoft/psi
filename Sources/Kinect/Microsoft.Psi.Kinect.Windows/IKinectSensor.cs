@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Kinect
     using System.Collections.Generic;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
+    using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Imaging;
 
     /// <summary>
@@ -14,22 +15,22 @@ namespace Microsoft.Psi.Kinect
     public interface IKinectSensor
     {
         /// <summary>
-        /// Gets and emitter that emits a stream of KinectBody samples.
+        /// Gets an emitter that emits a stream of KinectBody samples.
         /// </summary>
         Emitter<List<KinectBody>> Bodies { get; }
 
         /// <summary>
-        /// Gets and emitter that emits a stream of image samples for the Kinect's color camera.
+        /// Gets an emitter that emits a stream of image samples for the Kinect's color camera.
         /// </summary>
         Emitter<Shared<Image>> ColorImage { get; }
 
         /// <summary>
-        /// Gets and emitter that emits a stream of image samples for the Kinect's depth camera.
+        /// Gets an emitter that emits a stream of image samples for the Kinect's depth camera.
         /// </summary>
         Emitter<Shared<Image>> DepthImage { get; }
 
         /// <summary>
-        /// Gets and emitter that emits a stream of image samples for the Kinect's infrared feed.
+        /// Gets an emitter that emits a stream of image samples for the Kinect's infrared feed.
         /// </summary>
         Emitter<Shared<Image>> InfraredImage { get; }
 
@@ -39,22 +40,22 @@ namespace Microsoft.Psi.Kinect
         Emitter<Shared<Image>> LongExposureInfraredImage { get; }
 
         /// <summary>
-        /// Gets calibration emits a stream of IKinectCalibration samples from the Kinect.
+        /// Gets an emitter that emits a stream of depth device calibration info objects for the Kinect.
         /// </summary>
-        Emitter<IKinectCalibration> Calibration { get; }
+        Emitter<IDepthDeviceCalibrationInfo> DepthDeviceCalibrationInfo { get; }
 
         /// <summary>
-        /// Gets and emitter that emits a stream of AudioBuffer samples from the Kinect.
+        /// Gets an emitter that emits a stream of AudioBuffer samples from the Kinect.
         /// </summary>
         Emitter<AudioBuffer> Audio { get; }
 
         /// <summary>
-        /// Gets and emitter that emits a stream of KinectAudioBeamInfo samples from the Kinect.
+        /// Gets an emitter that emits a stream of KinectAudioBeamInfo samples from the Kinect.
         /// </summary>
         Emitter<KinectAudioBeamInfo> AudioBeamInfo { get; }
 
         /// <summary>
-        /// Gets and emitter that emits a stream of IList.ulong samples from the Kinect.
+        /// Gets an emitter that emits a stream of IList.ulong samples from the Kinect.
         /// </summary>
         Emitter<IList<ulong>> AudioBodyCorrelations { get; }
     }

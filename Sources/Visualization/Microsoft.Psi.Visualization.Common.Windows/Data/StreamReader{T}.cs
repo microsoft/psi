@@ -8,10 +8,12 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Linq;
+    using System.Reflection;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.Visualization.Collections;
+    using Microsoft.Psi.Visualization.Navigation;
 
     /// <summary>
     /// Represents an object used to read streams.
@@ -32,16 +34,46 @@ namespace Microsoft.Psi.Visualization.Data
         private List<IndexEntry> indexBuffer;
         private ObservableKeyedCache<DateTime, Message<T>> data;
         private ObservableKeyedCache<DateTime, IndexEntry> index;
+
+        /// <summary>
+        /// The view of the index used by instant stream readers.
+        /// </summary>
+        private ObservableKeyedCache<DateTime, IndexEntry>.ObservableKeyedView instantIndexView = null;
+
+        /// <summary>
+        /// The view range of the above instant index view.
+        /// </summary>
+        private NavigatorRange currentIndexViewRange = new NavigatorRange(DateTime.MinValue, DateTime.MinValue);
+
+        /// <summary>
+        /// The collection of readers supporting instant visualization objects.
+        /// </summary>
+        private List<EpsilonInstantStreamReader<T>> instantStreamReaders;
+
+        /// <summary>
+        /// The stream adapter to convert data from the stream into the type required by clients of the stream reader.
+        /// </summary>
+        private IStreamAdapter streamAdapter;
+
         private IPool pool;
         private bool isCanceled = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamReader{T}"/> class.
         /// </summary>
-        /// <param name="streamBinding">Stream binding used to indentify stream.</param>
-        public StreamReader(StreamBinding streamBinding)
+        /// <param name="streamName">the name of the stream to read.</param>
+        /// <param name="streamAdapter">the stream adapter to convert data from the stream into the type required by clients of this stream reader.</param>
+        public StreamReader(string streamName, IStreamAdapter streamAdapter)
         {
-            this.StreamBinding = streamBinding;
+            if (string.IsNullOrWhiteSpace(streamName))
+            {
+                throw new ArgumentNullException(nameof(streamName));
+            }
+
+            this.StreamName = streamName;
+            this.streamAdapter = streamAdapter;
+            this.StreamAdapterType = streamAdapter?.GetType();
+
             this.pool = PoolManager.Instance.GetPool<T>();
 
             this.readRequestsInternal = new List<ReadRequest>();
@@ -56,6 +88,10 @@ namespace Microsoft.Psi.Visualization.Data
 
             this.data = new ObservableKeyedCache<DateTime, Message<T>>(null, itemComparer, m => m.OriginatingTime);
             this.index = new ObservableKeyedCache<DateTime, IndexEntry>(null, indexComarer, ie => ie.OriginatingTime);
+
+            this.instantIndexView = null;
+
+            this.instantStreamReaders = new List<EpsilonInstantStreamReader<T>>();
 
             if (this.needsDisposing)
             {
@@ -88,19 +124,78 @@ namespace Microsoft.Psi.Visualization.Data
         public IReadOnlyList<ReadRequest> ReadRequests => this.readRequests;
 
         /// <inheritdoc />
-        public Type StreamAdapterType => this.StreamBinding.StreamAdapterType;
+        public Type StreamAdapterType { get; private set; }
 
         /// <inheritdoc />
-        public StreamBinding StreamBinding { get; }
+        public string StreamName { get; private set; }
+
+        /// <inheritdoc/>
+        public bool HasInstantStreamReaders => this.instantStreamReaders.Count > 0;
 
         /// <inheritdoc />
-        public string StreamName => this.StreamBinding.StreamName;
+        public void RegisterInstantDataTarget<TTarget>(InstantDataTarget target, TimeInterval viewRange)
+        {
+            this.InternalRegisterInstantDataTarget<TTarget>(target);
+
+            // Create the index view if one does not already exist
+            if (this.instantIndexView == null)
+            {
+                this.OnInstantViewRangeChanged(viewRange);
+            }
+        }
 
         /// <inheritdoc />
-        public string StoreName => this.StreamBinding.StoreName;
+        public void UnregisterInstantDataTarget(Guid registrationToken)
+        {
+            this.InternalUnregisterInstantDataTarget(registrationToken);
+        }
 
         /// <inheritdoc />
-        public string StorePath => this.StreamBinding.StorePath;
+        public void UpdateInstantDataTargetEpsilon(Guid registrationToken, RelativeTimeInterval epsilon)
+        {
+            // Unregister and retrieve the old instant data target
+            InstantDataTarget target = this.InternalUnregisterInstantDataTarget(registrationToken);
+
+            if (target != null)
+            {
+                // Update the Ccursor epsilon
+                target.CursorEpsilon = epsilon;
+
+                // Create the internal register method
+                MethodInfo method = this.GetType().GetMethod(nameof(this.InternalRegisterInstantDataTarget), BindingFlags.NonPublic | BindingFlags.Instance);
+                MethodInfo genericMethod = method.MakeGenericMethod(target.StreamAdapter.DestinationType);
+
+                // Re-register the instant data target
+                genericMethod.Invoke(this, new object[] { target });
+            }
+        }
+
+        /// <inheritdoc/>
+        public void OnInstantViewRangeChanged(TimeInterval viewRange)
+        {
+            // Check if the navigator view range exceeds the current range of the data index
+            if (viewRange.Left < this.currentIndexViewRange.StartTime || viewRange.Right > this.currentIndexViewRange.EndTime)
+            {
+                // Set a new data index range thats extends to the left and right of the navigator view by the navigator view
+                // duration so that we're not constantly needing to initiate an index read every time the navigator moves.
+                TimeSpan viewDuration = viewRange.Span;
+                this.currentIndexViewRange.SetRange(
+                    viewRange.Left > DateTime.MinValue + viewDuration ? viewRange.Left - viewDuration : DateTime.MinValue,
+                    viewRange.Right < DateTime.MaxValue - viewDuration ? viewRange.Right + viewDuration : DateTime.MaxValue);
+
+                this.instantIndexView = this.ReadIndex(this.currentIndexViewRange.StartTime, this.currentIndexViewRange.EndTime);
+            }
+        }
+
+        /// <inheritdoc />
+        public void ReadInstantData(ISimpleReader reader, DateTime cursorTime)
+        {
+            // Forward the call to all the instant stream readers
+            foreach (EpsilonInstantStreamReader<T> instantStreamReader in this.GetInstantStreamReaderList())
+            {
+                instantStreamReader.ReadInstantData(reader, cursorTime, this.index);
+            }
+        }
 
         /// <inheritdoc />
         public void Cancel()
@@ -170,7 +265,7 @@ namespace Microsoft.Psi.Visualization.Data
                 this.pool?.Dispose();
                 this.pool = null;
 
-                this.StreamBinding.StreamAdapter?.Dispose();
+                this.streamAdapter?.Dispose();
             }
         }
 
@@ -184,7 +279,7 @@ namespace Microsoft.Psi.Visualization.Data
 
             if (readIndicesOnly)
             {
-                if (this.StreamBinding.StreamAdapter == null)
+                if (this.streamAdapter == null)
                 {
                     reader.OpenStreamIndex<T>(this.StreamName, this.OnReceiveIndex);
                 }
@@ -192,43 +287,23 @@ namespace Microsoft.Psi.Visualization.Data
                 {
                     var genericOpenStreamIndex = typeof(ISimpleReader)
                         .GetMethod("OpenStreamIndex", new Type[] { typeof(string), typeof(Action<IndexEntry, Envelope>) })
-                        .MakeGenericMethod(this.StreamBinding.StreamAdapter.SourceType);
+                        .MakeGenericMethod(this.streamAdapter.SourceType);
                     var receiver = new Action<IndexEntry, Envelope>(this.OnReceiveIndex);
                     genericOpenStreamIndex.Invoke(reader, new object[] { this.StreamName, receiver });
                 }
             }
             else
             {
-                if (this.StreamBinding.StreamAdapter == null)
+                if (this.streamAdapter == null)
                 {
                     reader.OpenStream<T>(this.StreamName, this.OnReceiveData, this.Allocator);
                 }
                 else
                 {
-                    dynamic dynStreamAdapter = this.StreamBinding.StreamAdapter;
+                    dynamic dynStreamAdapter = this.streamAdapter;
                     dynamic dynAdaptedReceiver = dynStreamAdapter.AdaptReceiver(new Action<T, Envelope>(this.OnReceiveData));
                     reader.OpenStream(this.StreamName, dynAdaptedReceiver, dynStreamAdapter.Allocator);
                 }
-            }
-        }
-
-        /// <inheritdoc />
-        public TDest Read<TDest>(ISimpleReader reader, IndexEntry indexEntry)
-        {
-            if (this.StreamBinding.StreamAdapter == null)
-            {
-                return reader.Read<TDest>(indexEntry);
-            }
-            else
-            {
-                var genericRead = typeof(ISimpleReader)
-                    .GetMethod("Read", new Type[] { typeof(IndexEntry) })
-                    .MakeGenericMethod(this.StreamBinding.StreamAdapter.SourceType);
-                var src = genericRead.Invoke(reader, new object[] { indexEntry });
-                var adaptData = typeof(StreamAdapter<,>)
-                    .MakeGenericType(this.StreamBinding.StreamAdapter.SourceType, this.StreamBinding.StreamAdapter.DestinationType)
-                    .GetMethod("AdaptData");
-                return (TDest)adaptData.Invoke(this.StreamBinding.StreamAdapter, new object[] { src } );
             }
         }
 
@@ -328,6 +403,78 @@ namespace Microsoft.Psi.Visualization.Data
             }
 
             return newReadRequests;
+        }
+
+        private void InternalRegisterInstantDataTarget<TTarget>(InstantDataTarget target)
+        {
+            // Get the instant stream reader with the required cursor epsilon
+            EpsilonInstantStreamReader<T> instantStreamReader = this.GetInstantStreamReader(target.CursorEpsilon, true);
+
+            // Register the instant visualization object with the instant stream reader
+            instantStreamReader.RegisterInstantDataTarget<TTarget>(target);
+        }
+
+        private InstantDataTarget InternalUnregisterInstantDataTarget(Guid registrationToken)
+        {
+            lock (this.instantStreamReaders)
+            {
+                for (int index = this.instantStreamReaders.Count - 1; index >= 0; index--)
+                {
+                    // Unregister the target from the instant stream reader
+                    InstantDataTarget target = this.instantStreamReaders[index].UnregisterInstantDataTarget(registrationToken);
+
+                    if (target != null)
+                    {
+                        // If the instant stream reader now has no data providers, remove it from the collection
+                        if (!this.instantStreamReaders[index].HasAdaptingDataProviders)
+                        {
+                            this.instantStreamReaders.RemoveAt(index);
+                        }
+
+                        // If there's no instant stream readers, remove the index view
+                        if (this.instantStreamReaders.Count <= 0)
+                        {
+                            this.instantIndexView = null;
+                        }
+
+                        return target;
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        private List<EpsilonInstantStreamReader<T>> GetInstantStreamReaderList()
+        {
+            lock (this.instantStreamReaders)
+            {
+                return this.instantStreamReaders.ToList();
+            }
+        }
+
+        private EpsilonInstantStreamReader<T> GetInstantStreamReader(RelativeTimeInterval cursorEpsilon, bool createIfNecessary)
+        {
+            // Check if we have a registration for this instant stream reader
+            lock (this.instantStreamReaders)
+            {
+                EpsilonInstantStreamReader<T> instantStreamReader = this.instantStreamReaders.FirstOrDefault(isr => isr.CursorEpsilon.Equals(cursorEpsilon));
+                if (instantStreamReader == default)
+                {
+                    if (createIfNecessary)
+                    {
+                        // Create the instant stream reader
+                        instantStreamReader = new EpsilonInstantStreamReader<T>(cursorEpsilon);
+                        this.instantStreamReaders.Add(instantStreamReader);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("The instant stream reader is not registered.");
+                    }
+                }
+
+                return instantStreamReader;
+            }
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

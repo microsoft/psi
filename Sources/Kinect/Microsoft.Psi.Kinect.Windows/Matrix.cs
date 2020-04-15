@@ -4,9 +4,7 @@
 namespace Microsoft.Psi.Kinect
 {
     using System;
-    using System.IO;
     using System.Threading.Tasks;
-    using System.Xml.Serialization;
     using MathNet.Numerics.LinearAlgebra;
 
 #pragma warning disable SA1600
@@ -842,30 +840,6 @@ namespace Microsoft.Psi.Kinect
             z0 = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(tau * u2);
             z1 = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(tau * u2);
             return (z0 * sigma) + mu;
-        }
-
-        public static void Test()
-        {
-            Matrix matA = new Matrix(2, 2);
-            matA[0, 0] = 1.0;
-            matA[0, 1] = 2.0;
-            matA[1, 0] = 3.0;
-            matA[1, 1] = 4.0;
-
-            Console.WriteLine(matA.ToString());
-
-            // test serialization
-            XmlSerializer serializer = new XmlSerializer(typeof(Matrix));
-            TextWriter writer = new StreamWriter("test.xml");
-
-            serializer.Serialize(writer, matA);
-            writer.Close();
-
-            XmlSerializer deserializer = new XmlSerializer(typeof(Matrix));
-            TextReader reader = new StreamReader("test.xml");
-            Matrix matA2 = (Matrix)deserializer.Deserialize(reader);
-
-            Console.WriteLine(matA2);
         }
 
         public static void MultAAT(Matrix matA, Matrix matB, Matrix matC)

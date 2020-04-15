@@ -44,6 +44,9 @@ The general usage pattern is to create an instance of `RosNode.Node` to join the
 Using this, you may create a `RosPublisher.IPublisher` using `CreatePublisher(messageDef, topic, latching)`, to which you can then `Publish(...)` messages.
 You may also create a `RosSubscriber.ISubscriber` using `Subscribe(messageDef, topic, callback)` or similarly a `RosServiceClient.IServiceClient` with `CreateServiceClient(serviceDef, topic, latching)`.
 
+Note that when running a distributed ROS system in which nodes are running on machines other than the ROS master, then hostname/IP mappings for these must be added (e.g. `RosDns.add("my-hostname", "10.1.2.3")`).
+Without such a mapping, the IP address of the master is assumed.
+
 A parameter server client (`ParamClient`) is available on the node as well (via `Node.Param`).
 This allows `Set(key, value)`, `Get(key)`, `Delete(key)`, etc. as well as `Search(key)`, enumerating with `GetNames()` and `Subscribe(key)/Unsubscribe(key)` for notifications.
 

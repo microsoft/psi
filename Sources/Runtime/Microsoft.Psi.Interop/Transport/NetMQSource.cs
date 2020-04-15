@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Interop.Transport
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Interop.Serialization;
     using NetMQ;
@@ -18,6 +19,8 @@ namespace Microsoft.Psi.Interop.Transport
         private readonly string topic;
         private readonly string address;
         private readonly IFormatDeserializer deserializer;
+        private readonly Pipeline pipeline;
+        private readonly bool useReceivedTimes;
 
         private SubscriberSocket socket;
         private NetMQPoller poller;
@@ -29,8 +32,11 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="topic">Topic name.</param>
         /// <param name="address">Connection string.</param>
         /// <param name="deserializer">Format deserializer with which messages are deserialized.</param>
-        public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer)
+        /// <param name="useReceivedTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
+        public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useReceivedTimes = true)
         {
+            this.pipeline = pipeline;
+            this.useReceivedTimes = useReceivedTimes;
             this.topic = topic;
             this.address = address;
             this.deserializer = deserializer;
@@ -80,11 +86,27 @@ namespace Microsoft.Psi.Interop.Transport
 
         private void ReceiveReady(object sender, NetMQSocketEventArgs e)
         {
-            while (this.socket.TryReceiveFrameString(out var ignoreTopicName))
+            var frames = new List<byte[]>();
+            while (this.socket.TryReceiveMultipartBytes(ref frames, 2))
             {
-                var bytes = this.socket.ReceiveFrameBytes();
-                var (message, originatingTime) = this.deserializer.DeserializeMessage(bytes, 0, bytes.Length);
-                this.Out.Post(message, originatingTime);
+                var receivedTopic = System.Text.Encoding.Default.GetString(frames[0]);
+                if (receivedTopic != this.topic)
+                {
+                    throw new Exception($"Unexpected topic name received in NetMQSource. Expected {this.topic} but received {receivedTopic}");
+                }
+
+                if (frames.Count < 2)
+                {
+                    throw new Exception($"No payload message received for topic: {this.topic}");
+                }
+
+                if (frames.Count > 2)
+                {
+                    throw new Exception($"Multiple interleaved messages received on topic: {this.topic}. Is the sender on the other side sending messages on multiple threads? You may need to add a lock over there.");
+                }
+
+                var (message, originatingTime) = this.deserializer.DeserializeMessage(frames[1], 0, frames[1].Length);
+                this.Out.Post(message, this.useReceivedTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
         }
     }

@@ -6,6 +6,7 @@ namespace Microsoft.Psi
     using System;
     using System.Collections.Generic;
     using Microsoft.Psi.Common;
+    using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.Executive;
     using Microsoft.Psi.Scheduling;
     using Microsoft.Psi.Serialization;
@@ -26,37 +27,39 @@ namespace Microsoft.Psi
     public class Receiver<T> : IReceiver, IConsumer<T>
     {
         private readonly Action<Message<T>> onReceived;
-        private readonly int id;
-        private readonly string name;
         private readonly PipelineElement element;
-        private readonly object owner;
         private readonly Pipeline pipeline;
         private readonly Scheduler scheduler;
         private readonly SchedulerContext schedulerContext;
         private readonly SynchronizationLock syncContext;
-        private readonly IRecyclingPool<T> cloner;
         private readonly bool enforceIsolation;
         private readonly List<UnsubscribedHandler> unsubscribedHandlers = new List<UnsubscribedHandler>();
+        private readonly Lazy<DiagnosticsCollector.ReceiverCollector> receiverDiagnosticsCollector;
 
-        private Emitter<T> source;
+        private Envelope lastEnvelope;
         private DeliveryQueue<T> awaitingDelivery;
         private IPerfCounterCollection<ReceiverCounters> counters;
-        private DeliveryPolicy policy;
         private Func<T, int> computeDataSize = null;
 
         internal Receiver(int id, string name, PipelineElement element, object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = false)
         {
             this.scheduler = pipeline.Scheduler;
             this.schedulerContext = pipeline.SchedulerContext;
-            this.onReceived = PipelineElement.TrackStateObjectOnContext<Message<T>>(onReceived, owner, pipeline);
-            this.id = id;
-            this.name = name;
+            this.lastEnvelope = default;
+            this.onReceived = m =>
+            {
+                this.lastEnvelope = m.Envelope;
+                PipelineElement.TrackStateObjectOnContext(onReceived, owner, pipeline)(m);
+            };
+            this.Id = id;
+            this.Name = name;
             this.element = element;
-            this.owner = owner;
+            this.Owner = owner;
             this.syncContext = context;
             this.enforceIsolation = enforceIsolation;
-            this.cloner = RecyclingPool.Create<T>();
+            this.Recycler = RecyclingPool.Create<T>();
             this.pipeline = pipeline;
+            this.receiverDiagnosticsCollector = new Lazy<DiagnosticsCollector.ReceiverCollector>(() => this.pipeline.DiagnosticsCollector?.GetReceiverDiagnosticsCollector(pipeline, element, this), true);
         }
 
         /// <summary>
@@ -82,29 +85,39 @@ namespace Microsoft.Psi
         }
 
         /// <inheritdoc />
-        IEmitter IReceiver.Source => this.source;
+        IEmitter IReceiver.Source => this.Source;
 
         /// <inheritdoc />
-        public int Id => this.id;
+        public int Id { get; }
 
         /// <inheritdoc />
-        public string Name => this.name;
+        public string Name { get; }
 
         /// <inheritdoc />
         public Type Type => typeof(T);
 
         /// <inheritdoc />
-        public object Owner => this.owner;
+        public object Owner { get; }
+
+        /// <summary>
+        /// Gets the delivery policy for this receiver.
+        /// </summary>
+        public DeliveryPolicy<T> DeliveryPolicy { get; private set; }
 
         /// <summary>
         /// Gets receiver message recycler.
         /// </summary>
-        public IRecyclingPool<T> Recycler => this.cloner;
+        public IRecyclingPool<T> Recycler { get; }
+
+        /// <summary>
+        /// Gets the envelope of the last message delivered.
+        /// </summary>
+        public Envelope LastEnvelope => this.lastEnvelope;
 
         /// <inheritdoc />
         Receiver<T> IConsumer<T>.In => this;
 
-        internal Emitter<T> Source => this.source;
+        internal Emitter<T> Source { get; private set; }
 
         /// <inheritdoc />
         public void Dispose()
@@ -127,7 +140,7 @@ namespace Microsoft.Psi
         /// <param name="item">Item to recycle.</param>
         public void Recycle(T item)
         {
-            this.cloner.Recycle(item);
+            this.Recycler.Recycle(item);
         }
 
         /// <summary>
@@ -170,9 +183,9 @@ namespace Microsoft.Psi
             this.awaitingDelivery.EnablePerfCounters(this.counters);
         }
 
-        internal void OnSubscribe(Emitter<T> source, bool allowSubscribeWhileRunning, DeliveryPolicy policy)
+        internal void OnSubscribe(Emitter<T> source, bool allowSubscribeWhileRunning, DeliveryPolicy<T> policy)
         {
-            if (this.source != null)
+            if (this.Source != null)
             {
                 throw new InvalidOperationException("This receiver is already connected to a source emitter.");
             }
@@ -187,17 +200,17 @@ namespace Microsoft.Psi
                 throw new InvalidOperationException("Receiver cannot subscribe to an emitter from a different pipeline. Use a Connector if you need to connect emitters and receivers from different pipelines.");
             }
 
-            this.source = source;
-            this.policy = policy;
-            this.awaitingDelivery = new DeliveryQueue<T>(this.pipeline, this.element, this, policy, this.cloner);
-            this.pipeline.DiagnosticsCollector?.PipelineElementReceiverSubscribe(this.pipeline, this.element, this, source);
+            this.Source = source;
+            this.DeliveryPolicy = policy;
+            this.awaitingDelivery = new DeliveryQueue<T>(policy, this.Recycler);
+            this.pipeline.DiagnosticsCollector?.PipelineElementReceiverSubscribe(this.pipeline, this.element, this, source, this.DeliveryPolicy.Name);
         }
 
         internal void OnUnsubscribe()
         {
-            if (this.source != null)
+            if (this.Source != null)
             {
-                this.source = null;
+                this.Source = null;
                 this.OnUnsubscribed(this.pipeline.GetCurrentTime());
             }
         }
@@ -211,18 +224,18 @@ namespace Microsoft.Psi
                 this.counters.Increment(ReceiverCounters.Total);
                 this.counters.RawValue(ReceiverCounters.IngestTime, (Time.GetCurrentTime() - messageTimeReal).Ticks / 10);
                 this.counters.RawValue(ReceiverCounters.PipelineExclusiveDelay, (message.Time - messageOriginatingTimeReal).Ticks / 10);
-                this.counters.RawValue(ReceiverCounters.OutstandingUnrecycled, this.cloner.OutstandingAllocationCount);
-                this.counters.RawValue(ReceiverCounters.AvailableRecycled, this.cloner.AvailableAllocationCount);
+                this.counters.RawValue(ReceiverCounters.OutstandingUnrecycled, this.Recycler.OutstandingAllocationCount);
+                this.counters.RawValue(ReceiverCounters.AvailableRecycled, this.Recycler.AvailableAllocationCount);
             }
 
             // First, only clone the message if the component requires isolation, to allow for clone-free operation on the fast path
             // Optimization is release-only, to make sure the cloning path is exercised in tests
             if (this.enforceIsolation)
             {
-                message.Data = message.Data.DeepClone(this.cloner);
+                message.Data = message.Data.DeepClone(this.Recycler);
             }
 
-            if (this.policy.AttemptSynchronous && this.awaitingDelivery.IsEmpty && message.SequenceId != int.MaxValue)
+            if (this.DeliveryPolicy.AttemptSynchronousDelivery && this.awaitingDelivery.IsEmpty && message.SequenceId != int.MaxValue)
             {
                 // fast path - try to deliver synchronously for as long as we can
                 // however, if this thread already has a lock on the owner it means some other receiver is in our call stack (we have a delivery loop),
@@ -231,10 +244,8 @@ namespace Microsoft.Psi
                 bool delivered = this.scheduler.TryExecute(this.syncContext, this.onReceived, message, message.OriginatingTime, this.schedulerContext);
                 if (delivered)
                 {
-                    this.pipeline.DiagnosticsCollector?.MessageProcessedSynchronously(
+                    this.receiverDiagnosticsCollector.Value?.MessageProcessedSynchronously(
                         this.pipeline,
-                        this.element,
-                        this,
                         this.awaitingDelivery.Count,
                         message.Envelope,
                         this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0);
@@ -246,36 +257,23 @@ namespace Microsoft.Psi
             // we need to clone the message before queuing, but only if we didn't already
             if (!this.enforceIsolation)
             {
-                message.Data = message.Data.DeepClone(this.cloner);
+                message.Data = message.Data.DeepClone(this.Recycler);
             }
 
-            this.awaitingDelivery.Enqueue(message, out QueueTransition stateTransition);
+            this.awaitingDelivery.Enqueue(message, out QueueTransition stateTransition, this.receiverDiagnosticsCollector.Value, this.StartThrottling);
 
             // if the queue was empty or if the next message is a closing message, we need to schedule delivery
             if (stateTransition.ToNotEmpty || stateTransition.ToClosing)
             {
-                this.scheduler.Schedule(this.syncContext, this.DeliverNext, message.OriginatingTime, this.schedulerContext);
-            }
-
-            // if queue is full (as decided between local policy and global policy), lock the emitter.syncContext (which we might already own) until we make more room
-            if (stateTransition.ToStartThrottling)
-            {
-                this.counters?.Increment(ReceiverCounters.ThrottlingRequests);
-                this.source.Pipeline.Scheduler.Freeze(this.source.SyncContext);
-                this.pipeline.DiagnosticsCollector?.PipelineElementReceiverThrottle(this.pipeline, this.element, this, true);
+                // allow scheduling past finalization when throttling to ensure that we get a chance to unthrottle
+                this.scheduler.Schedule(this.syncContext, this.DeliverNext, message.OriginatingTime, this.schedulerContext, true, this.awaitingDelivery.IsThrottling);
             }
         }
 
         internal void DeliverNext()
         {
-            if (this.awaitingDelivery.TryDequeue(out Message<T> message, out QueueTransition stateTransition, this.scheduler.Clock.GetCurrentTime()))
+            if (this.awaitingDelivery.TryDequeue(out Message<T> message, out QueueTransition stateTransition, this.scheduler.Clock.GetCurrentTime(), this.receiverDiagnosticsCollector.Value, this.StopThrottling))
             {
-                if (stateTransition.ToStopThrottling)
-                {
-                    this.source.Pipeline.Scheduler.Thaw(this.source.SyncContext);
-                    this.pipeline.DiagnosticsCollector?.PipelineElementReceiverThrottle(this.pipeline, this.element, this, false);
-                }
-
                 if (message.SequenceId == int.MaxValue)
                 {
                     // emitter was closed
@@ -287,19 +285,17 @@ namespace Microsoft.Psi
                 var data = message.Data;
                 if (this.enforceIsolation)
                 {
-                    message.Data = message.Data.DeepClone(this.cloner);
+                    message.Data = message.Data.DeepClone(this.Recycler);
                 }
 
                 DateTime start = (this.counters != null) ? Time.GetCurrentTime() : default(DateTime);
-                this.pipeline.DiagnosticsCollector?.MessageProcessStart(
+                var processStartTime = this.receiverDiagnosticsCollector.Value?.MessageProcessStart(
                     this.pipeline,
-                    this.element,
-                    this,
                     this.awaitingDelivery.Count,
                     message.Envelope,
                     this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0);
                 this.onReceived(message);
-                this.pipeline.DiagnosticsCollector?.MessageProcessComplete(this.pipeline, this.element, this, message.Envelope);
+                this.receiverDiagnosticsCollector.Value?.MessageProcessComplete(this.pipeline, processStartTime.Value);
 
                 if (this.counters != null)
                 {
@@ -314,25 +310,47 @@ namespace Microsoft.Psi
                 }
 
                 // recycle the item we dequeued
-                this.cloner.Recycle(data);
+                this.Recycler.Recycle(data);
 
                 if (!stateTransition.ToEmpty)
                 {
-                    this.scheduler.Schedule(this.syncContext, this.DeliverNext, this.awaitingDelivery.NextMessageTime, this.schedulerContext);
+                    // allow scheduling past finalization when throttling to ensure that we get a chance to unthrottle
+                    this.scheduler.Schedule(this.syncContext, this.DeliverNext, this.awaitingDelivery.NextMessageTime, this.schedulerContext, true, this.awaitingDelivery.IsThrottling);
                 }
+            }
+        }
+
+        private void StartThrottling(QueueTransition stateTransition)
+        {
+            // if queue is full (as decided between local policy and global policy), lock the emitter.syncContext (which we might already own) until we make more room
+            if (stateTransition.ToStartThrottling)
+            {
+                this.counters?.Increment(ReceiverCounters.ThrottlingRequests);
+                this.Source.Pipeline.Scheduler.Freeze(this.Source.SyncContext);
+                this.receiverDiagnosticsCollector.Value?.PipelineElementReceiverThrottle(true);
+            }
+        }
+
+        private void StopThrottling(QueueTransition stateTransition)
+        {
+            if (stateTransition.ToStopThrottling)
+            {
+                this.Source.Pipeline.Scheduler.Thaw(this.Source.SyncContext);
+                this.receiverDiagnosticsCollector.Value?.PipelineElementReceiverThrottle(false);
             }
         }
 
         private void OnUnsubscribed(DateTime lastOriginatingTime)
         {
-            this.pipeline.DiagnosticsCollector?.PipelineElementReceiverUnsubscribe(this.pipeline, this.element, this, this.source);
+            this.pipeline.DiagnosticsCollector?.PipelineElementReceiverUnsubscribe(this.pipeline, this.element, this, this.Source);
+            this.lastEnvelope = new Envelope(DateTime.MaxValue, DateTime.MaxValue, this.Id, int.MaxValue);
             foreach (var handler in this.unsubscribedHandlers)
             {
                 PipelineElement.TrackStateObjectOnContext(() => handler(lastOriginatingTime), this.Owner, this.pipeline).Invoke();
             }
 
             // clear the source only after all handlers have run to avoid this node being finalized prematurely
-            this.source = null;
+            this.Source = null;
         }
 
         /// <summary>

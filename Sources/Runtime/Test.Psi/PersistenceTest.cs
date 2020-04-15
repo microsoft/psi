@@ -7,9 +7,9 @@ namespace Test.Psi
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
-    using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Test.Psi.Common;
@@ -473,8 +473,8 @@ namespace Test.Psi
 
                 // verify that the replay descriptor corresponds only to the range of the opened stream
                 var replayDesc = p.ReplayDescriptor;
-                Assert.AreEqual(sourceInfo1.ActiveLifetime.Left, replayDesc.Start);
-                Assert.AreEqual(sourceInfo1.ActiveLifetime.Right, replayDesc.End);
+                Assert.AreEqual(sourceInfo1.OriginatingLifetime.Left, replayDesc.Start);
+                Assert.AreEqual(sourceInfo1.OriginatingLifetime.Right, replayDesc.End);
 
                 // verify that all the messages on the stream were read
                 Assert.AreEqual(sourceInfo1.MessageCount, output.Count);
@@ -560,45 +560,127 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void TypeRegistrationTest()
+        {
+            // create a store and write a stream of V1 type
+            var name = nameof(this.TypeRegistrationTest);
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                Generators.Return(p, new TestTypeV1 { IntProperty = 1, StringProperty = "string" }).Write("data", writeStore);
+                p.Run();
+            }
+
+            // now open the store and read the stream as V2 type
+            TestTypeV2 value = null;
+            using (var p = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p, name, this.path);
+
+                // explicitly register compatible V2 type handler for the V1 stream type
+                var meta = readStore.GetMetadata("data");
+                readStore.Serializers.Register<TestTypeV2>(meta.TypeName);
+
+                // read the V1 stream as a stream of type V2
+                readStore.OpenStream<TestTypeV2>("data").Do(x => value = x);
+                p.Run();
+            }
+
+            Assert.AreEqual(1, value.IntProperty);
+            Assert.AreEqual("string", value.StringProperty);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [ExpectedException(typeof(SerializationException))]
+        public void IncompatibleTypeTest()
+        {
+            // create a store and write a stream of V1 type
+            var name = nameof(this.IncompatibleTypeTest);
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                Generators.Return(p, new TestTypeV1 { IntProperty = 1, StringProperty = "string" }).Write("data", writeStore);
+                p.Run();
+            }
+
+            // now open the store and read the stream as V3 type
+            TestTypeV3 value = null;
+            using (var p = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p, name, this.path);
+
+                // attempt to read the V1 stream as a stream of type V3 (incompatible)
+                readStore.OpenStream<TestTypeV3>("data").Do(x => value = x); // should throw
+                p.Run();
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DataContractTypeTest()
+        {
+            // create a store and write a stream of V1 type
+            var name = nameof(this.DataContractTypeTest);
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                Generators.Return(p, new DataContractTypeV1 { IntProperty = 1, StringProperty = "string" }).Write("data", writeStore);
+                p.Run();
+            }
+
+            // now open the store and read the stream as V2 type
+            DataContractTypeV2 value = null;
+            using (var p = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p, name, this.path);
+
+                // read the V1 stream as a stream of type V2 (different versions of the same data contract)
+                readStore.OpenStream<DataContractTypeV2>("data").Do(x => value = x);
+                p.Run();
+            }
+
+            Assert.AreEqual(1, value.IntProperty);
+            Assert.AreEqual("string", value.StringProperty);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void RealTimePlayback()
         {
-            var factors = new[] { 1f, 0.25f, 2f };
-            foreach (var factor in factors)
+            var count = 10;
+            var spacing = TimeSpan.FromMilliseconds(5);
+            var name = nameof(this.RealTimePlayback);
+            using (var p = Pipeline.Create("write"))
             {
-                var count = 10;
-                var spacing = TimeSpan.FromMilliseconds(5);
-                var name = nameof(this.RealTimePlayback);
-                using (var p = Pipeline.Create("write"))
-                {
-                    var writeStore = Store.Create(p, name, this.path);
-                    var seq = Generators.Sequence(p, 1, i => i + 1, count, spacing);
-                    seq.Write("seq", writeStore);
-                    p.Run();
-                }
-
-                // now replay the contents and verify we get something
-                int replayCount = 0;
-                bool spaced = true;
-                using (var p2 = Pipeline.Create("read"))
-                {
-                    var readStore = Store.Open(p2, name, this.path);
-                    var playbackInterval = readStore.ActiveTimeInterval;
-                    var seq2 = readStore.OpenStream<int>("seq");
-                    var verifier = seq2.Do(
-                        (s, e) =>
-                        {
-                            var now = Time.GetCurrentTime();
-                            var realTimeDelta = (now - p2.Clock.RealTimeOrigin).Ticks;
-                            var messageDelta = (e.Time - p2.Clock.Origin).Ticks;
-                            spaced = spaced && realTimeDelta >= messageDelta / factor;
-                            replayCount++;
-                        });
-                    p2.Run(playbackInterval, false, true, factor);
-                }
-
-                Assert.IsTrue(spaced);
-                Assert.AreEqual(count, replayCount);
+                var writeStore = Store.Create(p, name, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, spacing);
+                seq.Write("seq", writeStore);
+                p.Run();
             }
+
+            // now replay the contents and verify we get something
+            int replayCount = 0;
+            bool spaced = true;
+            using (var p2 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p2, name, this.path);
+                var playbackInterval = readStore.OriginatingTimeInterval;
+                var seq2 = readStore.OpenStream<int>("seq");
+                var verifier = seq2.Do(
+                    (s, e) =>
+                    {
+                        var now = Time.GetCurrentTime();
+                        var realTimeDelta = (now - p2.Clock.RealTimeOrigin).Ticks;
+                        var messageDelta = (e.Time - p2.Clock.Origin).Ticks;
+                        spaced = spaced && realTimeDelta >= messageDelta;
+                        replayCount++;
+                    });
+                p2.Run(playbackInterval, true);
+            }
+
+            Assert.IsTrue(spaced);
+            Assert.AreEqual(count, replayCount);
         }
 
         [TestMethod]
@@ -671,11 +753,11 @@ namespace Test.Psi
                 seq.Write("seq", writeStore);
                 seq.Select(i => i.ToString()).Write("seqString", writeStore);
                 seq.Do((m, e) => before[m] = e);
-                p.Run(new ReplayDescriptor(new DateTime(1), true, false));
+                p.Run(new ReplayDescriptor(new DateTime(1), false));
             }
 
             // crop a range to a second store
-            Store.Crop(name, this.path, name, this.path, new TimeInterval(new DateTime(5), new DateTime(count - 5)));
+            Store.Crop((name, this.path), (name, this.path), new TimeInterval(new DateTime(5), new DateTime(count - 5)));
 
             // now read the cropped store
             bool intStreamCorrect = true;
@@ -734,7 +816,7 @@ namespace Test.Psi
                 seq.Write("seq", validStore);
                 seq.Select(i => i.ToString()).Write("seqString", validStore);
                 seq.Do((m, e) => valid[m] = e);
-                p.Run(new ReplayDescriptor(new DateTime(1), true, false));
+                p.Run(new ReplayDescriptor(new DateTime(1), false));
             }
 
             // pipeline terminated normally so store should be valid
@@ -752,31 +834,34 @@ namespace Test.Psi
                 {
                     if (e.OriginatingTime.Ticks >= count / 2)
                     {
-                        // Throw an exception in the middle of the stream to abruptly
-                        // terminate the pipeline, leaving the store in an invalid state.
+                        // Simulate abrupt termination of the pipeline by copying the store files
+                        // while the pipeline is running, resulting in a store in an invalid state.
+
+                        // at this point the store should still be open
+                        Assert.IsFalse(Store.IsClosed(name, this.path));
+
+                        // We need to temporarily save the invalid store before disposing the pipeline,
+                        // since the store will be rendered valid when the pipeline is terminated.
+                        Directory.CreateDirectory(tempFolder);
+
+                        // copy the store files to the temp folder - we will restore them later
+                        foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
+                        {
+                            var fileInfo = new FileInfo(file);
+                            File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
+                        }
+
+                        // throw an exception and terminate the pipeline
                         throw new Exception();
                     }
                 }).Write("seq", invalidStore);
                 seq2.Select(i => i.ToString()).Write("seqString", invalidStore);
 
                 // run the pipeline with exception handling enabled
-                p2.Run(new ReplayDescriptor(new DateTime(1), true, false));
+                p2.Run(new ReplayDescriptor(new DateTime(1), false));
             }
             catch
             {
-                // pipeline terminated abruptly so store should be in an invalid state now
-                Assert.IsFalse(Store.IsClosed(name, this.path));
-
-                // We need to temporarily save the invalid store before disposing the pipeline,
-                // since the store will be rendered valid when the pipeline is disposed.
-                Directory.CreateDirectory(tempFolder);
-
-                // copy the invalid store files to the temp folder - we will restore them later
-                foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
-                {
-                    var fileInfo = new FileInfo(file);
-                    File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
-                }
             }
             finally
             {
@@ -953,6 +1038,235 @@ namespace Test.Psi
             Assert.AreEqual(count * (count + 1) / 2, sum0);
             Assert.AreEqual(count * (count + 1) / 2, sum1);
             Assert.AreEqual(count * (count + 1) / 2, sum2);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void WriteWithLosslessDeliveryPolicy()
+        {
+            int count = 100;
+            string name = nameof(this.WriteWithLosslessDeliveryPolicy);
+            byte[] data = new byte[1024];
+
+            // initialize the pipeline with a default lossy delivery policy to test for explicit override
+            using (var p = Pipeline.Create("write", deliveryPolicy: DeliveryPolicy.LatestMessage))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+
+                // Generate a stream of messages at a very high frequency such that messages
+                // will be generated faster than they can be written to the store.
+                var seq = Generators.Repeat(p, data, count, TimeSpan.FromTicks(1));
+
+                // verify that exporter overrides pipeline delivery policy with a lossless delivery policy if none is specified
+                seq.Write("seq", writeStore);
+
+                p.Run();
+            }
+
+            // now replay the contents and verify we get something
+            using (var p2 = Pipeline.Create("read"))
+            {
+                int readCount = 0;
+                var readStore = Store.Open(p2, name, this.path);
+
+                // read back the stream from the store
+                var seq = readStore.OpenStream<byte[]>("seq").Do(_ => readCount++);
+                p2.Run();
+
+                // verify that no messages were dropped
+                Assert.AreEqual(count, readCount);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void WriteWithLossyDeliveryPolicy()
+        {
+            int count = 100;
+            string name = nameof(this.WriteWithLossyDeliveryPolicy);
+            byte[] data = new byte[1024];
+
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+
+                // Generate a stream of messages at a very high frequency such that messages
+                // will be generated faster than they can be written to the store.
+                var seq = Generators.Repeat(p, data, count, TimeSpan.FromTicks(1));
+
+                // write the stream to the store with a delivery policy that drops messages
+                seq.Write("seq", writeStore, false, DeliveryPolicy.LatestMessage);
+
+                p.Run();
+            }
+
+            // now replay the contents and verify we get something
+            using (var p2 = Pipeline.Create("read"))
+            {
+                int readCount = 0;
+                var readStore = Store.Open(p2, name, this.path);
+
+                // read back the stream from the store
+                var seq = readStore.OpenStream<byte[]>("seq").Do(_ => readCount++);
+                p2.Run();
+
+                // verify that messages were dropped
+                Assert.IsTrue(readCount < count);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StoreClosingTest()
+        {
+            var name = nameof(this.StoreClosingTest);
+            DateTime finalOriginatingTime;
+
+            var data = new List<(int, DateTime)>();
+            var startTime = DateTime.UtcNow;
+            for (int i = 0; i < 100; i++)
+            {
+                data.Add((i, startTime + TimeSpan.FromMilliseconds(i)));
+            }
+
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+
+                // last parameter holds pipeline open until explicitly terminated
+                var seq = Generators.Sequence(p, data, new DateTime(0), keepOpen: true);
+                seq.Write("seq", writeStore);
+
+                // replay at full speed
+                p.RunAsync(startTime, false);
+
+                // wait a while to ensure all messages got written to the store
+                Thread.Sleep(100);
+
+                // now terminate the pipeline with an originating time at the midpoint of the data
+                p.Stop(startTime.AddMilliseconds(50));
+
+                finalOriginatingTime = p.FinalOriginatingTime;
+                Assert.AreEqual(startTime.AddMilliseconds(50), finalOriginatingTime);
+            }
+
+            // now replay the contents
+            using (var p2 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p2, name, this.path);
+                var seq2 = readStore.OpenStream<int>("seq");
+
+                // capture the last observed value on the stream
+                (int value, DateTime time) last = default;
+                seq2.Do((m, e) => last = (m, e.OriginatingTime));
+
+                // verify metadata reflects the stream closing time
+                Assert.IsTrue(Store.TryGetMetadata(seq2, out var meta));
+                Assert.AreEqual(finalOriginatingTime, meta.Closed);
+
+                // replay at full speed
+                p2.Run(startTime, false);
+
+                // verify the value and time of the last message
+                Assert.AreEqual(50, last.value);
+                Assert.AreEqual(finalOriginatingTime, last.time);
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StoreProgressTest()
+        {
+            var progress = new List<double>();
+            var name = nameof(this.StoreProgressTest);
+
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, 100, TimeSpan.FromTicks(1)).Write("seq", writeStore);
+                p.Run();
+            }
+
+            // now replay the contents and verify we get something
+            using (var p2 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p2, name, this.path);
+                var readStream = readStore.OpenStream<int>("seq");
+
+                // increase report frequency for testing purposes
+                p2.ProgressReportInterval = TimeSpan.FromMilliseconds(50);
+
+                // read from stream and simulate a range of processing delays
+                readStream.Do(_ => Thread.Sleep(1));
+                readStream.Do(_ => Thread.Sleep(2));
+                readStream.Do(_ => Thread.Sleep(5));
+                readStream.Do(_ => Thread.Sleep(10));
+
+                // replay as fast as possible from store
+                p2.RunAsync(TimeInterval.Infinite, false, new Progress<double>(x => progress.Add(x)));
+                p2.WaitAll();
+            }
+
+            // Progress<T>.Report() is invoked on the thread-pool since this is a non-UI app,
+            // so wait for a bit to ensure that the last progress report action completes.
+            Thread.Sleep(100);
+
+            double lastValue = 0;
+            foreach (double value in progress)
+            {
+                Console.WriteLine($"Progress: {value * 100}%");
+
+                // verify progress increases
+                Assert.IsTrue(value >= lastValue);
+                lastValue = value;
+            }
+
+            // verify final progress is 1.0
+            Assert.AreEqual(1.0, lastValue);
+        }
+
+        [DataContract(Name = "TestDataContract")]
+        private class DataContractTypeV1
+        {
+            [DataMember]
+            public int IntProperty { get; set; }
+
+            [DataMember]
+            public string StringProperty { get; set; }
+        }
+
+        [DataContract(Name = "TestDataContract")]
+        private class DataContractTypeV2
+        {
+            [DataMember]
+            public double DoubleProperty { get; set; }
+
+            [DataMember]
+            public string StringProperty { get; set; }
+
+            [DataMember]
+            public int IntProperty { get; set; }
+        }
+
+        private class TestTypeV1
+        {
+            public int IntProperty { get; set; }
+
+            public string StringProperty { get; set; }
+        }
+
+        private class TestTypeV2
+        {
+            public string StringProperty { get; set; }
+
+            public int IntProperty { get; set; }
+        }
+
+        private class TestTypeV3
+        {
+            public double DoubleProperty { get; set; }
+
+            public int IntProperty { get; set; }
         }
     }
 }

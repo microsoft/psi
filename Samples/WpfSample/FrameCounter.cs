@@ -54,7 +54,7 @@ namespace Microsoft.Psi.Samples.WpfSample
             long elapsedTicks = currentTicks - this.lastTicks;
             this.lastTicks = currentTicks;
             float blendFactor = 0.1f;
-            this.averageTicksPerFrame = (long)(this.averageTicksPerFrame * (1 - blendFactor) + elapsedTicks * blendFactor);
+            this.averageTicksPerFrame = (long)((this.averageTicksPerFrame * (1 - blendFactor)) + (elapsedTicks * blendFactor));
             this.Rate = (int)(Stopwatch.Frequency / this.averageTicksPerFrame);
         }
 

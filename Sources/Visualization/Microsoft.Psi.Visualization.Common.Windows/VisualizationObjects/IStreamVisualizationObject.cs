@@ -18,9 +18,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         bool IsLive { get; set; }
 
         /// <summary>
-        /// Gets the stream binding for this visualizationobject.
+        /// Gets or sets the name of the stream visualization object.
         /// </summary>
-        StreamBinding StreamBinding { get; }
+        string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stream binding for this visualizationobject.
+        /// </summary>
+        StreamBinding StreamBinding { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this object is the selected one when it is in a visual collection.
+        /// </summary>
+        bool IsTreeNodeSelected { get; set; }
 
         /// <summary>
         /// Updates the binding between a stream visualization object and a data source.

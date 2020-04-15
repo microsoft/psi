@@ -116,7 +116,7 @@ namespace Test.Psi.Data.Annotations
                     .Select((p) => Tuple.Create(p.First(), p.Last(), this.ComputeTransition(p.First().Item1, p.Last().Item1)))
                     .Where((t) => t.Item3 != Transitions.None)
                     .Window(-1, 0)
-                    .Process<IEnumerable<Tuple<Tuple<double, DateTime>, Tuple<double, DateTime>, Transitions>>, AnnotatedEvent>((t, env, s) =>
+                    .Process<Tuple<Tuple<double, DateTime>, Tuple<double, DateTime>, Transitions>[], AnnotatedEvent>((t, env, s) =>
                     {
                         var first = t.First();
                         var second = t.Last();
@@ -128,7 +128,8 @@ namespace Test.Psi.Data.Annotations
                         }
                     })
                     .Write("Range", store);
-                pipeline.Run(TimeSpan.FromSeconds(10));
+                pipeline.RunAsync();
+                pipeline.WaitAll(TimeSpan.FromSeconds(10));
             }
 
             // delete store

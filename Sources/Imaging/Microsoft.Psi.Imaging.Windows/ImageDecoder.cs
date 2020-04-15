@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
-    using System.IO;
     using System.Windows;
     using System.Windows.Media.Imaging;
     using Microsoft.Psi;
@@ -15,6 +14,8 @@ namespace Microsoft.Psi.Imaging
     /// </summary>
     public class ImageDecoder : ConsumerProducer<Shared<EncodedImage>, Shared<Image>>
     {
+        private PixelFormat imagePixelFormat = PixelFormat.Undefined;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageDecoder"/> class.
         /// </summary>
@@ -82,7 +83,12 @@ namespace Microsoft.Psi.Imaging
         /// <param name="e">Pipeline information about the sample.</param>
         protected override void Receive(Shared<EncodedImage> encodedImage, Envelope e)
         {
-            using (var image = ImagePool.GetOrCreate(encodedImage.Resource.Width, encodedImage.Resource.Height, Imaging.PixelFormat.BGR_24bpp))
+            if (this.imagePixelFormat == PixelFormat.Undefined)
+            {
+                this.imagePixelFormat = GetPixelFormat(encodedImage.Resource);
+            }
+
+            using (var image = ImagePool.GetOrCreate(encodedImage.Resource.Width, encodedImage.Resource.Height, this.imagePixelFormat))
             {
                 DecodeTo(encodedImage.Resource, image.Resource);
                 this.Out.Post(image, e.OriginatingTime);

@@ -22,6 +22,7 @@ namespace Microsoft.Msagl.WpfGraphControl
     using Microsoft.Msagl.Layout.LargeGraphLayout;
     using Microsoft.Msagl.Miscellaneous;
     using Microsoft.Msagl.Miscellaneous.LayoutEditing;
+    using Microsoft.Msagl.Prototype.LayoutEditing;
     using DrawingEdge = Microsoft.Msagl.Drawing.Edge;
     using Edge = Microsoft.Msagl.Core.Layout.Edge;
     using Ellipse = System.Windows.Shapes.Ellipse;
@@ -497,10 +498,10 @@ namespace Microsoft.Msagl.WpfGraphControl
         /// <param name="text">Text to measure.</param>
         /// <param name="family">Font family.</param>
         /// <param name="size">Font size.</param>
+        /// <param name="visual">Visual element used to determine pixels per density-independent-pixel.</param>
         /// <returns>Text size.</returns>
-        public static Size MeasureText(string text, FontFamily family, double size)
+        public static Size MeasureText(string text, FontFamily family, double size, Visual visual)
         {
-#pragma warning disable CS0618 // Type or member is obsolete
             FormattedText formattedText = new FormattedText(
                 text,
                 System.Globalization.CultureInfo.CurrentCulture,
@@ -508,10 +509,80 @@ namespace Microsoft.Msagl.WpfGraphControl
                 new Typeface(family, default(System.Windows.FontStyle), FontWeights.Regular, FontStretches.Normal),
                 size,
                 Brushes.Black,
-                null);
-#pragma warning restore CS0618 // Type or member is obsolete
-
+                VisualTreeHelper.GetDpi(visual).PixelsPerDip);
             return new Size(formattedText.Width, formattedText.Height);
+        }
+
+        /// <summary>
+        /// Update graph being viewed in place (assuming structure hasn't changed, otherwise triggers full re-layout).
+        /// </summary>
+        /// <remarks>
+        /// This updates only the labels and color attributes, unless a structural change is detected.
+        /// </remarks>
+        /// <param name="graph">Graph being viewed.</param>
+        public void UpdateGraphInPlace(Graph graph)
+        {
+            //// Here we attempt to update graph visuals in-place. This includes the labels and color attributes on nodes and edges.
+            //// If the graph has changed structurally then we fall back to rebuilding everything by setting the `Graph` property.
+
+            if (this.drawingGraph == null)
+            {
+                // First update? Build
+                this.Graph = graph;
+                return;
+            }
+
+            if (this.drawingGraph.NodeCount != graph.NodeCount)
+            {
+                // Nodes changed? Rebuild
+                this.Graph = graph;
+                return;
+            }
+
+            var nodeDict = this.drawingGraph.Nodes.ToDictionary(n => n.Id);
+            foreach (var n in graph.Nodes)
+            {
+                if (!nodeDict.ContainsKey(n.Id))
+                {
+                    // New node? Rebuild
+                    this.Graph = graph;
+                    return;
+                }
+
+                var m = nodeDict[n.Id];
+                if (n.Edges.Count() != m.Edges.Count())
+                {
+                    // Edges changed? Rebuild
+                    this.Graph = graph;
+                    return;
+                }
+
+                // Get node drawing object and update label TextBlock and Path in-place
+                var nodeDrawingObj = this.drawingObjectsToIViewerObjects[m] as VNode;
+                (nodeDrawingObj.FrameworkElementOfNodeForLabel as TextBlock).Foreground = Common.BrushFromMsaglColor(n.Label.FontColor);
+                nodeDrawingObj.BoundaryPath.Stroke = Common.BrushFromMsaglColor(n.Attr.Color);
+                nodeDrawingObj.BoundaryPath.Fill = Common.BrushFromMsaglColor(n.Attr.FillColor);
+
+                foreach (var e in n.Edges)
+                {
+                    var f = m.Edges.Where(x => x.Source == e.Source && x.Target == e.Target).FirstOrDefault();
+                    if (f == null)
+                    {
+                        // New edge? Rebuild
+                        this.Graph = graph;
+                        return;
+                    }
+
+                    // Get edge drawing object and update label TextBlock and Paths in-place
+                    var edgeDrawingObj = this.drawingObjectsToIViewerObjects[f] as VEdge;
+                    var edgeColor = Common.BrushFromMsaglColor(e.Attr.Color);
+                    edgeDrawingObj.CurvePath.Stroke = edgeColor;
+                    edgeDrawingObj.TargetArrowHeadPath.Stroke = edgeColor;
+                    edgeDrawingObj.TargetArrowHeadPath.Fill = edgeColor;
+                    edgeDrawingObj.CurvePath.StrokeThickness = e.Attr.LineWidth;
+                    (edgeDrawingObj.VLabel.FrameworkElement as TextBlock).Text = e.LabelText;
+                }
+            }
         }
 
         /// <summary>
@@ -1046,6 +1117,17 @@ namespace Microsoft.Msagl.WpfGraphControl
         }
 
         /// <summary>
+        /// Clear graph viewer.
+        /// </summary>
+        public void ClearGraphViewer()
+        {
+            this.ClearGraphCanvasChildren();
+
+            this.drawingObjectsToIViewerObjects.Clear();
+            this.drawingObjectsToFrameworkElements.Clear();
+        }
+
+        /// <summary>
         /// Create MSAGL mouse event args.
         /// </summary>
         /// <param name="e">Mouse event args.</param>
@@ -1062,10 +1144,11 @@ namespace Microsoft.Msagl.WpfGraphControl
         /// <returns>Text block.</returns>
         private static TextBlock CreateTextBlock(Label drawingLabel)
         {
+            var (text, _) = VNode.GetLabelTextAndToolTip(drawingLabel.Text);
             var textBlock = new TextBlock
             {
                 Tag = drawingLabel,
-                Text = drawingLabel.Text,
+                Text = text,
                 FontFamily = new FontFamily(drawingLabel.FontName),
                 FontSize = drawingLabel.FontSize,
                 Foreground = Common.BrushFromMsaglColor(drawingLabel.FontColor),
@@ -1543,14 +1626,6 @@ namespace Microsoft.Msagl.WpfGraphControl
             this.SetInitialTransform();
         }
 
-        private void ClearGraphViewer()
-        {
-            this.ClearGraphCanvasChildren();
-
-            this.drawingObjectsToIViewerObjects.Clear();
-            this.drawingObjectsToFrameworkElements.Clear();
-        }
-
         private void ClearGraphCanvasChildren()
         {
             if (this.graphCanvas.Dispatcher.CheckAccess())
@@ -1956,7 +2031,7 @@ namespace Microsoft.Msagl.WpfGraphControl
             }
             else
             {
-                var size = MeasureText(node.LabelText, new FontFamily(node.Label.FontName), node.Label.FontSize);
+                var size = MeasureText(node.LabelText, new FontFamily(node.Label.FontName), node.Label.FontSize, this.graphCanvas);
                 width = size.Width;
                 height = size.Height;
             }

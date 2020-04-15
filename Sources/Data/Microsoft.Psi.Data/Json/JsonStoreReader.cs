@@ -213,7 +213,7 @@ namespace Microsoft.Psi.Data.Json
                     return false;
                 }
 
-                var messageTime = this.descriptor.UseOriginatingTime ? envelope.OriginatingTime : envelope.Time;
+                var messageTime = envelope.OriginatingTime;
 
                 // read data
                 this.hasMoreData = this.ReadData(out this.data);
@@ -284,7 +284,7 @@ namespace Microsoft.Psi.Data.Json
                         throw new InvalidDataException("Messages must be an ordered object: {\"Envelope\": <Envelope>, \"Data\": <Data>}. Deserialization needs to read the envelope before the data to know what type of data to deserialize.");
                     }
 
-                    if (this.descriptor.Interval.Left < (descriptor.UseOriginatingTime ? this.envelope.OriginatingTime : this.envelope.Time))
+                    if (this.descriptor.Interval.Left < this.envelope.OriginatingTime)
                     {
                         // found start of interval
                         break;

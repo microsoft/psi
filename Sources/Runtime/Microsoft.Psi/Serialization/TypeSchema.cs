@@ -10,6 +10,11 @@ namespace Microsoft.Psi.Serialization
     using System.Runtime.Serialization;
     using Microsoft.Psi.Common;
 
+    /// <summary>
+    /// Defines the delegate for a <see cref="SchemaGenerator"/>.
+    /// </summary>
+    /// <param name="type">The type for which to generate the <see cref="TypeSchema"/>.</param>
+    /// <returns>The generated <see cref="TypeSchema"/>.</returns>
     public delegate TypeSchema SchemaGenerator(Type type);
 
     /// <summary>

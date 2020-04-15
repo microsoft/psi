@@ -40,7 +40,7 @@ namespace MultiModalSpeechDetection
         /// <param name="decay">Speed at which signal decays.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns true if signal is on, false otherwise.</returns>
-        public static IProducer<bool> Hold(this IProducer<double> source, double threshold, double decay = 0.2, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<bool> Hold(this IProducer<double> source, double threshold, double decay = 0.2, DeliveryPolicy<double> deliveryPolicy = null)
         {
             double maxValue = 0;
 
@@ -53,7 +53,7 @@ namespace MultiModalSpeechDetection
                     }
                     else
                     {
-                        maxValue = maxValue * (1 - decay) + newValue * decay;
+                        maxValue = (maxValue * (1 - decay)) + (newValue * decay);
                     }
 
                     return maxValue >= threshold;

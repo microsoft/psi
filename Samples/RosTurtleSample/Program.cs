@@ -30,7 +30,7 @@ namespace TurtleROSSample
                 {
                     var linear = k == ConsoleKey.UpArrow ? 1f : k == ConsoleKey.DownArrow ? -1f : 0f;
                     var angular = k == ConsoleKey.LeftArrow ? 1f : k == ConsoleKey.RightArrow ? -1f : 0f;
-                    return Tuple.Create(linear, angular);
+                    return (linear, angular);
                 }).PipeTo(turtle.Velocity);
                 pipeline.Run();
             }

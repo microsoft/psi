@@ -15,7 +15,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
     /// <summary>
     /// Provides a client for the Cognitive Services Speech service.
     /// </summary>
-    public class SpeechRecognitionClient : IDisposable
+    internal sealed class SpeechRecognitionClient : IDisposable
     {
         private ClientWebSocket webSocket;
         private IAuthentication authentication;
@@ -74,7 +74,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// <inheritdoc/>
         public void Dispose()
         {
-            this.webSocket.Dispose();
             this.authentication.Dispose();
             this.semaphore.Dispose();
         }
@@ -93,15 +92,16 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// </summary>
         /// <param name="audioBytes">The raw audio.</param>
         /// <param name="token">A task cancellation token.</param>
+        /// <param name="forceReconnect">Indicates whether a new connection should be opened.</param>
         /// <returns>A Task representing the asynchronous operation.</returns>
-        public async Task SendAudioAsync(byte[] audioBytes, CancellationToken token)
+        public async Task SendAudioAsync(byte[] audioBytes, CancellationToken token, bool forceReconnect = false)
         {
             await this.semaphore.WaitAsync();
             try
             {
                 int offset = 0;
 
-                if (this.webSocket.State != WebSocketState.Open)
+                if (forceReconnect || this.webSocket.State != WebSocketState.Open)
                 {
                     await this.InitializeConnectionAsync(token);
                 }
@@ -170,13 +170,14 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         /// <summary>
         /// Closes the connection to the service.
         /// </summary>
+        /// <param name="webSocket">The WebSocket to close.</param>
         /// <returns>A Task representing the asynchronous operation.</returns>
-        private async Task CloseConnectionAsync()
+        private async Task CloseConnectionAsync(WebSocket webSocket)
         {
             await this.semaphore.WaitAsync();
             try
             {
-                await this.webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Close requested", CancellationToken.None);
+                await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Close requested", CancellationToken.None);
             }
             finally
             {
@@ -207,12 +208,12 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
             else
             {
                 await webSocket.ConnectAsync(
-            new Uri(
-                "wss://speech.platform.bing.com" +
-                $"/speech/recognition/{this.recognitionMode.ToString().ToLower()}/cognitiveservices/v1" +
-                "?format=detailed" +
-                "&language=" + this.language),
-            token);
+                    new Uri(
+                        "wss://speech.platform.bing.com" +
+                        $"/speech/recognition/{this.recognitionMode.ToString().ToLower()}/cognitiveservices/v1" +
+                        "?format=detailed" +
+                        "&language=" + this.language),
+                    token);
             }
 
             return webSocket;
@@ -278,10 +279,18 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
                 // Read incoming message into a MemoryStream (potentially in multiple chunks)
                 do
                 {
-                    result = await webSocket.ReceiveAsync(buffer, token);
+                    try
+                    {
+                        result = await webSocket.ReceiveAsync(buffer, token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        continue;
+                    }
+
                     stream.Write(buffer.Array, buffer.Offset, result.Count);
                 }
-                while (!result.EndOfMessage);
+                while (result != null && !result.EndOfMessage);
 
                 token.ThrowIfCancellationRequested();
 
@@ -338,18 +347,16 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
                     }
                     else if (speechServiceMessage is SpeechHypothesisMessage)
                     {
-                        string partialResponse = ((SpeechHypothesisMessage)speechServiceMessage).Text;
+                        PartialRecognitionResult partialResponse = new PartialRecognitionResult((SpeechHypothesisMessage)speechServiceMessage);
                         this.OnPartialResponseReceived?.Invoke(this, new PartialSpeechResponseEventArgs(partialResponse));
                     }
                     else if (speechServiceMessage is SpeechFragmentMessage)
                     {
-                        string partialResponse = ((SpeechFragmentMessage)speechServiceMessage).Text;
+                        PartialRecognitionResult partialResponse = new PartialRecognitionResult((SpeechFragmentMessage)speechServiceMessage);
                         this.OnPartialResponseReceived?.Invoke(this, new PartialSpeechResponseEventArgs(partialResponse));
                     }
                     else if (speechServiceMessage is TurnEndMessage || speechServiceMessage == null)
                     {
-                        await this.CloseConnectionAsync();
-
                         // End of turn - stop listening
                         break;
                     }
@@ -364,7 +371,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
             }
             finally
             {
-                webSocket.Dispose();
+                await this.CloseConnectionAsync(webSocket);
             }
         }
 

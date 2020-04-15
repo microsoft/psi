@@ -14,6 +14,24 @@ namespace Microsoft.Psi.Speech
     public class GrammarInfo
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="GrammarInfo"/> class.
+        /// </summary>
+        public GrammarInfo()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GrammarInfo"/> class.
+        /// </summary>
+        /// <param name="name">The name of the grammar.</param>
+        /// <param name="fileName">The path to the grammar file.</param>
+        public GrammarInfo(string name, string fileName)
+        {
+            this.Name = name;
+            this.FileName = fileName;
+        }
+
+        /// <summary>
         /// Gets or sets the name of the grammar.
         /// </summary>
         [XmlAttribute("name")]

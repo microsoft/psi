@@ -63,7 +63,7 @@ namespace Microsoft.Psi
         /// <param name="name">The name to use when visualizing the stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The debug name of the stream, either as provided or the generated one if one was not specified.</returns>
-        public static string DebugView<T>(this IProducer<T> source, string name = null, DeliveryPolicy deliveryPolicy = null)
+        public static string DebugView<T>(this IProducer<T> source, string name = null, DeliveryPolicy<T> deliveryPolicy = null)
         {
             var debugName = name ?? source.Out.Name ?? source.Out.Id.ToString();
 

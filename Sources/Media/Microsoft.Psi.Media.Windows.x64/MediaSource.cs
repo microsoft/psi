@@ -36,7 +36,7 @@ namespace Microsoft.Psi.Media
             : base(pipeline)
         {
             FileInfo info = new FileInfo(filename);
-            pipeline.ProposeReplayTime(new TimeInterval(info.CreationTime, DateTime.MaxValue), new TimeInterval(info.CreationTime, DateTime.MaxValue));
+            pipeline.ProposeReplayTime(new TimeInterval(info.CreationTime, DateTime.MaxValue));
             this.start = info.CreationTime;
             this.filename = filename;
             this.Image = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Image));
@@ -70,9 +70,9 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// GenerateNext is called by the Generator base class when the next sample should be read.
         /// </summary>
-        /// <param name="previous">Time of previous sample.</param>
-        /// <returns>Time for current sample.</returns>
-        protected override DateTime GenerateNext(DateTime previous)
+        /// <param name="currentTime">The originating time that triggered the current call.</param>
+        /// <returns>The originating time at which to capture the next sample.</returns>
+        protected override DateTime GenerateNext(DateTime currentTime)
         {
             DateTime originatingTime = default(DateTime);
             int streamIndex = 0;
@@ -110,11 +110,6 @@ namespace Microsoft.Psi.Media
             if (flags == SourceReaderFlags.Endofstream)
             {
                 return DateTime.MaxValue; // Used to indicated there is no more data
-            }
-
-            if (originatingTime <= previous)
-            {
-                return previous + TimeSpan.FromTicks(1); // To enforce strictly increasing times for the generator
             }
 
             return originatingTime;

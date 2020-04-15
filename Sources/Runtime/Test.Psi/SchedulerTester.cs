@@ -231,7 +231,7 @@ namespace Test.Psi
             {
                 var generator = Generators.Sequence(p, 0, i => i++, 10, delay)
                     .Do((i, e) => results.Add(p.GetCurrentTime().Ticks - e.OriginatingTime.Ticks));
-                p.Run();
+                p.Run(null, enforceReplayClock: true);
             }
 
             Assert.IsTrue(results.Count == 10);
@@ -250,7 +250,7 @@ namespace Test.Psi
                 Generators.Range(p, 0, 2, TimeSpan.FromSeconds(10)); // hold pipeline open
                 var generator = Generators.Sequence(p, 0, i => i++, 10, delay)
                     .Do((i, e) => results.Add(p.GetCurrentTime().Ticks - e.OriginatingTime.Ticks));
-                p.Run(enforceReplayClock: false);
+                p.Run(null, enforceReplayClock: false);
             }
 
             Assert.IsTrue(results.Count == 10);

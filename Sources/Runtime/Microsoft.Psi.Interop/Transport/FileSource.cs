@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Interop.Transport
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Interop.Serialization;
 
@@ -22,11 +23,11 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="filename">File name to which to persist.</param>
         /// <param name="deserializer">Format serializer with which messages are deserialized.</param>
         public FileSource(Pipeline pipeline, string filename, IPersistentFormatDeserializer deserializer)
-            : base(pipeline, EnumerateFile(pipeline, filename, deserializer))
+            : base(pipeline, EnumerateFile(filename, deserializer), GetStartTimeFromFile(filename, deserializer))
         {
         }
 
-        private static IEnumerator<(T, DateTime)> EnumerateFile(Pipeline pipeline, string filename, IPersistentFormatDeserializer deserializer)
+        private static IEnumerator<(T, DateTime)> EnumerateFile(string filename, IPersistentFormatDeserializer deserializer)
         {
             using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -34,6 +35,16 @@ namespace Microsoft.Psi.Interop.Transport
                 {
                     yield return ((T)record.Item1, record.Item2);
                 }
+            }
+        }
+
+        private static DateTime GetStartTimeFromFile(string filename, IPersistentFormatDeserializer deserializer)
+        {
+            DateTime startTime;
+            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                (_, startTime) = deserializer.DeserializeRecords(stream).First();
+                return startTime;
             }
         }
     }

@@ -4,11 +4,14 @@
     <OpenCVIncludes>$(OpenCVDir_V4)\build\include</OpenCVIncludes>
     <OpenCVLibs Condition="'$(Configuration)'=='Debug'">$(OpenCVDir_V4)\build\x64\vc15\lib\opencv_world411d.lib</OpenCVLibs>
     <OpenCVLibs Condition="'$(Configuration)'=='Release'">$(OpenCVDir_V4)\build\x64\vc15\lib\opencv_world411.lib</OpenCVLibs>
+    <OpenCVDlls Condition="'$(Configuration)'=='Debug'">$(OpenCVDir_V4)\build\x64\vc15\bin\opencv_world411d.dll</OpenCVDlls>
+    <OpenCVDlls Condition="'$(Configuration)'=='Release'">$(OpenCVDir_V4)\build\x64\vc15\bin\opencv_world411.dll</OpenCVDlls>
     <OpenCVDefines>SUPPORT_OPENCV</OpenCVDefines>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OpenCVDir_V4)'==''">
     <OpenCVIncludes />
     <OpenCVLibs />
+    <OpenCVDlls />
     <OpenCVDefines />
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
@@ -94,7 +97,7 @@
     <PostBuildEvent>
       <Command>if not exist $(OutDir)..\..\..\OpenCVSample\bin\Debug (mkdir $(OutDir)..\..\..\OpenCVSample\bin\Debug)
 copy $(OutDir)$(TargetName)$(TargetExt) $(OutDir)..\..\..\OpenCVSample\bin\Debug\$(TargetName)$(TargetExt)
-copy $(OpenCVLibs) $(OutDir)..\..\..\OpenCVSample\bin\Debug</Command>
+copy $(OpenCVDlls) $(OutDir)..\..\..\OpenCVSample\bin\Debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -119,7 +122,7 @@ copy $(OpenCVLibs) $(OutDir)..\..\..\OpenCVSample\bin\Debug</Command>
     <PostBuildEvent>
       <Command>if not exist $(OutDir)..\..\..\OpenCVSample\bin\Release (mkdir $(OutDir)..\..\..\OpenCVSample\bin\Release)
 copy $(OutDir)$(TargetName)$(TargetExt) $(OutDir)..\..\..\OpenCVSample\bin\Release\$(TargetName)$(TargetExt)
-copy $(OpenCVLibs) $(OutDir)..\..\..\OpenCVSample\bin\Release</Command>
+copy $(OpenCVDlls) $(OutDir)..\..\..\OpenCVSample\bin\Release</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Windows;
-    using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -15,13 +14,11 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// </summary>
     /// <typeparam name="TTimelineVisualizationObject">The type of timeline visualization object.</typeparam>
     /// <typeparam name="TData">The type of data.</typeparam>
-    /// <typeparam name="TConfig">The type of visualization object configuration.</typeparam>
-    public class TimelineCanvasVisualizationObjectView<TTimelineVisualizationObject, TData, TConfig> : CanvasVisualizationObjectView<TTimelineVisualizationObject, TData, TConfig>
-        where TTimelineVisualizationObject : TimelineVisualizationObject<TData, TConfig>, new()
-        where TConfig : TimelineVisualizationObjectConfiguration, new()
+    public class TimelineCanvasVisualizationObjectView<TTimelineVisualizationObject, TData> : CanvasVisualizationObjectView<TTimelineVisualizationObject, TData>
+        where TTimelineVisualizationObject : TimelineVisualizationObject<TData>, new()
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimelineCanvasVisualizationObjectView{TVisualizationObject, TData, TConfig}"/> class.
+        /// Initializes a new instance of the <see cref="TimelineCanvasVisualizationObjectView{TVisualizationObject, TData}"/> class.
         /// </summary>
         public TimelineCanvasVisualizationObjectView()
         {

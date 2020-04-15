@@ -9,7 +9,7 @@ namespace Microsoft.Psi
     /// <summary>
     /// Represents a TimeSpan interval with bounded/unbounded and inclusive/exclusive end points.
     /// </summary>
-    public class RelativeTimeInterval : Interval<TimeSpan, TimeSpan, IntervalEndpoint<TimeSpan>, RelativeTimeInterval>
+    public class RelativeTimeInterval : Interval<TimeSpan, TimeSpan, IntervalEndpoint<TimeSpan>, RelativeTimeInterval>, IEquatable<RelativeTimeInterval>
     {
         /// <summary>
         /// Canonical infinite interval (unbounded on both ends).
@@ -123,6 +123,22 @@ namespace Microsoft.Psi
         {
             get { return TimeSpan.MaxValue; }
         }
+
+        /// <summary>
+        /// Equality operator that returns true if the operands are equal, false otherwise.
+        /// </summary>
+        /// <param name="x">The first operand.</param>
+        /// <param name="y">The second operand.</param>
+        /// <returns>A value indicating whether the operands are equal.</returns>
+        public static bool operator ==(RelativeTimeInterval x, RelativeTimeInterval y) => Equals(x, y);
+
+        /// <summary>
+        /// Inequality operator that returns true if the operands are not equal, false otherwise.
+        /// </summary>
+        /// <param name="x">The first operand.</param>
+        /// <param name="y">The second operand.</param>
+        /// <returns>A value indicating whether the operands are not equal.</returns>
+        public static bool operator !=(RelativeTimeInterval x, RelativeTimeInterval y) => !(x == y);
 
         /// <summary>
         /// Construct TimeInterval relative to an origin (DateTime).
@@ -262,6 +278,29 @@ namespace Microsoft.Psi
         {
             return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            return (obj is RelativeTimeInterval other) && this.Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(RelativeTimeInterval other)
+        {
+            return
+                (this.LeftEndpoint.Point, this.LeftEndpoint.Inclusive, this.LeftEndpoint.Bounded, this.RightEndpoint.Point, this.RightEndpoint.Inclusive, this.RightEndpoint.Bounded) ==
+                (other.LeftEndpoint.Point, other.LeftEndpoint.Inclusive, other.LeftEndpoint.Bounded, other.RightEndpoint.Point, other.RightEndpoint.Inclusive, other.RightEndpoint.Bounded);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => (
+            this.LeftEndpoint.Point,
+            this.LeftEndpoint.Inclusive,
+            this.LeftEndpoint.Bounded,
+            this.RightEndpoint.Point,
+            this.RightEndpoint.Inclusive,
+            this.RightEndpoint.Bounded).GetHashCode();
 
         /// <summary>
         /// Scale a span by a given factor.

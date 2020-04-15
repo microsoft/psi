@@ -4,6 +4,7 @@
 namespace Test.Psi
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -114,6 +115,56 @@ namespace Test.Psi
 
             Assert.AreEqual(result.Value, 123);
             Assert.AreEqual(result.Reference, c); // we expect the same instance
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ValidateMessages()
+        {
+            var results = new List<int>();
+
+            using (var p = Pipeline.Create())
+            {
+                // create an emitter with a user-supplied validator
+                var validatingEmitter = p.CreateEmitter<int>(
+                    this,
+                    "validatingEmitter",
+                    (msg, env) =>
+                    {
+                        if (msg > 5)
+                        {
+                            throw new ArgumentOutOfRangeException("Maximum value exceeded!");
+                        }
+                    });
+
+                // receiver that posts whatever it receives on the validating emitter
+                var receiver = p.CreateReceiver<int>(
+                    this,
+                    (msg, env) =>
+                    {
+                        validatingEmitter.Post(msg, env.OriginatingTime);
+                    },
+                    "receiver");
+
+                // drive the test with a sequence of increasing integers
+                Generators.Sequence(p, 0, i => i + 1, new TimeSpan(1)).PipeTo(receiver);
+
+                // capture output from the validatingEmitter
+                validatingEmitter.Do(msg => results.Add(msg));
+
+                try
+                {
+                    p.Run();
+                    Assert.Fail("Expected exception was not thrown.");
+                }
+                catch (AggregateException errors)
+                {
+                    // expecting an ArgumentOutOfRangeException wrapped in an AggregateException
+                    Assert.AreEqual(1, errors.InnerExceptions.Count);
+                    Assert.IsInstanceOfType(errors.InnerException, typeof(ArgumentOutOfRangeException));
+                    CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5 }, results);
+                }
+            }
         }
 
 #if DEBUG

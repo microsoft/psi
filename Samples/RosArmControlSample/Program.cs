@@ -91,20 +91,20 @@ namespace ArmControlROSSample
                 var keys = Timers.Timer(pipeline, TimeSpan.FromMilliseconds(10), (dt, ts) => Console.ReadKey(true).Key);
                 var pump = false;
                 keys.Where(k => k == ConsoleKey.P).Select(_ => pump = !pump).PipeTo(arm.Pump);
-                keys.Where(k => k == ConsoleKey.B).Select(_ => Tuple.Create(500f, 0.1f)).PipeTo(arm.Beep);
+                keys.Where(k => k == ConsoleKey.B).Select(_ => (500f, 0.1f)).PipeTo(arm.Beep);
                 keys.Select(k =>
                 {
                     switch (k)
                     {
-                        case ConsoleKey.U: return Tuple.Create(0f, 0f, -10f);
-                        case ConsoleKey.D: return Tuple.Create(0f, 0f, 10f);
-                        case ConsoleKey.LeftArrow: return Tuple.Create(0f, -10f, 0f);
-                        case ConsoleKey.RightArrow: return Tuple.Create(0f, 10f, 0f);
-                        case ConsoleKey.UpArrow: return Tuple.Create(-10f, 0f, 0f);
-                        case ConsoleKey.DownArrow: return Tuple.Create(10f, 0f, 0f);
-                        default: return null;
+                        case ConsoleKey.U: return (0f, 0f, -10f);
+                        case ConsoleKey.D: return (0f, 0f, 10f);
+                        case ConsoleKey.LeftArrow: return (0f, -10f, 0f);
+                        case ConsoleKey.RightArrow: return (0f, 10f, 0f);
+                        case ConsoleKey.UpArrow: return (-10f, 0f, 0f);
+                        case ConsoleKey.DownArrow: return (10f, 0f, 0f);
+                        default: return (0f, 0f, 0f);
                     }
-                }).Where(p => p != null).PipeTo(arm.RelativePosition);
+                }).PipeTo(arm.RelativePosition);
                 arm.PositionChanged.Do(p => Console.WriteLine($"Position: x={p.Item1} y={p.Item2} z={p.Item3}"));
                 var quit = false;
                 keys.Where(k => k == ConsoleKey.Q).Do(_ => quit = true);

@@ -36,6 +36,11 @@ namespace Microsoft.Psi
         Pipeline Pipeline { get; }
 
         /// <summary>
+        /// Gets the envelope of the last message posted on this emitter.
+        /// </summary>
+        Envelope LastEnvelope { get; }
+
+        /// <summary>
         /// Gets a value indicating whether emitter has subscribers.
         /// </summary>
         bool HasSubscribers { get; }

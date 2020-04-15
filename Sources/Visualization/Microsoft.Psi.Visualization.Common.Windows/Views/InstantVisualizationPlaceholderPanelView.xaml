@@ -1,0 +1,52 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<views:VisualizationPanelViewBase
+    x:Class="Microsoft.Psi.Visualization.Views.InstantVisualizationPlaceholderPanelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+    xmlns:views="clr-namespace:Microsoft.Psi.Visualization.Views"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    Width="{Binding Width}"
+    Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
+    IsHitTestVisible="True">
+
+    <Grid Name="Root" Margin="{Binding VisualMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Border BorderThickness="1">
+            <Border.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCurrentPanel}" Value="False">
+                            <Setter Property="Control.BorderBrush" Value="{StaticResource LightBorderColorBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsCurrentPanel}" Value="True">
+                            <Setter Property="Control.BorderBrush" Value="{StaticResource CursorBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
+        <Control Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Control.Template>
+                <ControlTemplate>
+                    <TextBlock Text="-Empty-" FontSize="18" FontWeight="Bold" Foreground="{StaticResource LightBorderColorBrush}" Opacity="0.75"/>
+                </ControlTemplate>
+            </Control.Template>
+        </Control>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </Grid>
+</views:VisualizationPanelViewBase>

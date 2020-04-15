@@ -5,7 +5,6 @@ namespace Microsoft.Psi.Speech
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Speech.AudioFormat;
@@ -42,10 +41,12 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         private readonly BufferedAudioStream inputAudioStream;
 
-        /// <summary>
-        /// The last originating time that was recorded for each output stream.
-        /// </summary>
-        private readonly Dictionary<IEmitter, DateTime> lastPostedOriginatingTimes;
+        // A mapping from emitter to originating time consistency-check group. All emitters in any given
+        // group enforce monotonically increasing originating times across the group when posting.
+        private readonly Dictionary<IEmitter, EmitterGroup> originatingTimeConsistencyCheckGroup = new Dictionary<IEmitter, EmitterGroup>();
+
+        // The last originating time that was recorded for each output stream group.
+        private readonly Dictionary<EmitterGroup, DateTime> lastPostedOriginatingTimes = new Dictionary<EmitterGroup, DateTime>();
 
         /// <summary>
         /// The System.Speech speech recognition engine.
@@ -75,25 +76,32 @@ namespace Microsoft.Psi.Speech
             // create receiver of grammar updates
             this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars), true);
 
+            // assign the default Out emitter to the RecognitionResults group
+            this.originatingTimeConsistencyCheckGroup.Add(this.Out, EmitterGroup.RecognitionResults);
+
             // create the additional output streams
-            this.PartialRecognitionResults = pipeline.CreateEmitter<IStreamingSpeechRecognitionResult>(this, nameof(this.PartialRecognitionResults));
-            this.IntentData = pipeline.CreateEmitter<IntentData>(this, nameof(this.IntentData));
+            this.PartialRecognitionResults = this.CreateEmitterInGroup<IStreamingSpeechRecognitionResult>(pipeline, nameof(this.PartialRecognitionResults), EmitterGroup.RecognitionResults);
+            this.IntentData = this.CreateEmitterInGroup<IntentData>(pipeline, nameof(this.IntentData), EmitterGroup.IntentData);
 
-            // create output streams for all the event args
-            this.SpeechDetected = pipeline.CreateEmitter<SpeechDetectedEventArgs>(this, nameof(this.SpeechDetected));
-            this.SpeechHypothesized = pipeline.CreateEmitter<SpeechHypothesizedEventArgs>(this, nameof(this.SpeechHypothesized));
-            this.SpeechRecognized = pipeline.CreateEmitter<SpeechRecognizedEventArgs>(this, nameof(this.SpeechRecognized));
-            this.SpeechRecognitionRejected = pipeline.CreateEmitter<SpeechRecognitionRejectedEventArgs>(this, nameof(this.SpeechRecognitionRejected));
-            this.AudioSignalProblemOccurred = pipeline.CreateEmitter<AudioSignalProblemOccurredEventArgs>(this, nameof(this.AudioSignalProblemOccurred));
-            this.AudioStateChanged = pipeline.CreateEmitter<AudioStateChangedEventArgs>(this, nameof(this.AudioStateChanged));
-            this.RecognizeCompleted = pipeline.CreateEmitter<RecognizeCompletedEventArgs>(this, nameof(this.RecognizeCompleted));
-            this.AudioLevelUpdated = pipeline.CreateEmitter<AudioLevelUpdatedEventArgs>(this, nameof(this.AudioLevelUpdated));
-            this.EmulateRecognizeCompleted = pipeline.CreateEmitter<EmulateRecognizeCompletedEventArgs>(this, nameof(this.EmulateRecognizeCompleted));
-            this.LoadGrammarCompleted = pipeline.CreateEmitter<LoadGrammarCompletedEventArgs>(this, nameof(this.LoadGrammarCompleted));
-            this.RecognizerUpdateReached = pipeline.CreateEmitter<RecognizerUpdateReachedEventArgs>(this, nameof(this.RecognizerUpdateReached));
+            // create output streams for speech event args
+            this.SpeechDetected = this.CreateEmitterInGroup<SpeechDetectedEventArgs>(pipeline, nameof(this.SpeechDetected), EmitterGroup.SpeechEvents);
+            this.SpeechHypothesized = this.CreateEmitterInGroup<SpeechHypothesizedEventArgs>(pipeline, nameof(this.SpeechHypothesized), EmitterGroup.SpeechEvents);
+            this.SpeechRecognized = this.CreateEmitterInGroup<SpeechRecognizedEventArgs>(pipeline, nameof(this.SpeechRecognized), EmitterGroup.SpeechEvents);
+            this.SpeechRecognitionRejected = this.CreateEmitterInGroup<SpeechRecognitionRejectedEventArgs>(pipeline, nameof(this.SpeechRecognitionRejected), EmitterGroup.SpeechEvents);
+            this.RecognizeCompleted = this.CreateEmitterInGroup<RecognizeCompletedEventArgs>(pipeline, nameof(this.RecognizeCompleted), EmitterGroup.SpeechEvents);
+            this.EmulateRecognizeCompleted = this.CreateEmitterInGroup<EmulateRecognizeCompletedEventArgs>(pipeline, nameof(this.EmulateRecognizeCompleted), EmitterGroup.SpeechEvents);
 
-            // create table of last stream originating times
-            this.lastPostedOriginatingTimes = new Dictionary<IEmitter, DateTime>();
+            // create output streams for audio state event args
+            this.AudioSignalProblemOccurred = this.CreateEmitterInGroup<AudioSignalProblemOccurredEventArgs>(pipeline, nameof(this.AudioSignalProblemOccurred), EmitterGroup.AudioEvents);
+            this.AudioStateChanged = this.CreateEmitterInGroup<AudioStateChangedEventArgs>(pipeline, nameof(this.AudioStateChanged), EmitterGroup.AudioEvents);
+            this.AudioLevelUpdated = this.CreateEmitterInGroup<AudioLevelUpdatedEventArgs>(pipeline, nameof(this.AudioLevelUpdated), EmitterGroup.AudioEvents);
+
+            // create output stream for the grammar event args
+            this.LoadGrammarCompleted = this.CreateEmitterInGroup<LoadGrammarCompletedEventArgs>(pipeline, nameof(this.LoadGrammarCompleted), EmitterGroup.StateUpdateEvents);
+            this.RecognizerUpdateReached = this.CreateEmitterInGroup<RecognizerUpdateReachedEventArgs>(pipeline, nameof(this.RecognizerUpdateReached), EmitterGroup.StateUpdateEvents);
+
+            // create table of last stream group originating times
+            this.lastPostedOriginatingTimes = new Dictionary<EmitterGroup, DateTime>();
 
             // Create a BufferedAudioStream with an internal buffer large enough
             // to accommodate the specified number of milliseconds of audio data.
@@ -116,6 +124,18 @@ namespace Microsoft.Psi.Speech
                 pipeline,
                 (configurationFilename == null) ? new SystemSpeechRecognizerConfiguration() : new ConfigurationHelper<SystemSpeechRecognizerConfiguration>(configurationFilename).Configuration)
         {
+        }
+
+        /// <summary>
+        /// An enumerable for emitter groups.
+        /// </summary>
+        private enum EmitterGroup
+        {
+            RecognitionResults,
+            IntentData,
+            SpeechEvents,
+            AudioEvents,
+            StateUpdateEvents,
         }
 
         /// <summary>
@@ -271,10 +291,10 @@ namespace Microsoft.Psi.Speech
         {
             this.inputAudioStream.Write(audio.Data, 0, audio.Length);
 
-            // Compute the implied start time based on the latest originating time,
-            // less the total number of bytes written less overruns. This will be
-            // the time that the audio stream "thinks" it started, and can thus be
-            // used to compute originating time from RecognizedAudio.AudioPosition.
+            // Compute the implied start time based on the latest originating time, less the total number of bytes
+            // written less overruns. This will be the originating time at the beginning of the audio input stream
+            // seen by the recognizer, and can thus be used to compute the originating time of any recognizer event
+            // from its reported AudioPosition.
             this.streamStartTime = e.OriginatingTime -
                 TimeSpan.FromSeconds((double)(this.inputAudioStream.BytesWritten - this.inputAudioStream.BytesOverrun) /
                     this.Configuration.InputFormat.AvgBytesPerSec);
@@ -314,6 +334,11 @@ namespace Microsoft.Psi.Speech
 
             // Specify the input stream and audio format
             recognizer.SetInputToAudioStream(this.inputAudioStream, formatInfo);
+
+            recognizer.InitialSilenceTimeout = TimeSpan.FromMilliseconds(this.Configuration.InitialSilenceTimeoutMs);
+            recognizer.BabbleTimeout = TimeSpan.FromMilliseconds(this.Configuration.BabbleTimeoutMs);
+            recognizer.EndSilenceTimeout = TimeSpan.FromMilliseconds(this.Configuration.EndSilenceTimeoutMs);
+            recognizer.EndSilenceTimeoutAmbiguous = TimeSpan.FromMilliseconds(this.Configuration.EndSilenceTimeoutAmbiguousMs);
 
             return recognizer;
         }
@@ -458,6 +483,23 @@ namespace Microsoft.Psi.Speech
         }
 
         /// <summary>
+        /// Creates an emitter and assigns it to the specified originating time consistency check group such
+        /// that all streams in any given group will contain post messages with strictly monotonically increasing
+        /// originating times.
+        /// </summary>
+        /// <typeparam name="T">The type of the output stream.</typeparam>
+        /// <param name="pipeline">The pipeline in which this component was created.</param>
+        /// <param name="name">The name of the stream.</param>
+        /// <param name="consistencyCheckGroup">The group in which to create the stream.</param>
+        /// <returns>The newly created emitter for the stream.</returns>
+        private Emitter<T> CreateEmitterInGroup<T>(Pipeline pipeline, string name, EmitterGroup consistencyCheckGroup)
+        {
+            var emitter = pipeline.CreateEmitter<T>(this, name);
+            this.originatingTimeConsistencyCheckGroup[emitter] = consistencyCheckGroup;
+            return emitter;
+        }
+
+        /// <summary>
         /// Posts a message to a stream while ensuring the consistency of the supplied originating time
         /// such that it cannot be before the originating time of the last posted message on the stream.
         /// If so, it will be adjusted accordingly.
@@ -472,8 +514,10 @@ namespace Microsoft.Psi.Speech
         /// <param name="originatingTime">The originating time of the data.</param>
         private void PostWithOriginatingTimeConsistencyCheck<T>(Emitter<T> stream, T data, DateTime originatingTime)
         {
+            var group = this.originatingTimeConsistencyCheckGroup[stream];
+
             // Get the last posted originating time on this stream
-            this.lastPostedOriginatingTimes.TryGetValue(stream, out DateTime lastPostedOriginatingTime);
+            this.lastPostedOriginatingTimes.TryGetValue(group, out DateTime lastPostedOriginatingTime);
 
             // Enforce monotonically increasing originating time
             if (originatingTime <= lastPostedOriginatingTime)
@@ -483,7 +527,7 @@ namespace Microsoft.Psi.Speech
 
             // Post the message and update the originating time for this stream
             stream.Post(data, originatingTime);
-            this.lastPostedOriginatingTimes[stream] = originatingTime;
+            this.lastPostedOriginatingTimes[group] = originatingTime;
         }
 
         /// <summary>

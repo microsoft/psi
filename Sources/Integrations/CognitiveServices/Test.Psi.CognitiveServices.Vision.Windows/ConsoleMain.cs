@@ -7,7 +7,7 @@ namespace Test.Psi.CognitiveServices.Vision
     using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
     using Microsoft.Psi;
     using Microsoft.Psi.CognitiveServices.Vision;
-    using Microsoft.Psi.Kinect;
+    using Microsoft.Psi.Media;
 
     /// <summary>
     /// Test runner to make debugging easier and faster.
@@ -22,10 +22,10 @@ namespace Test.Psi.CognitiveServices.Vision
         {
             using (var pipeline = Pipeline.Create())
             {
-                var kinectSensor = new KinectSensor(pipeline, KinectSensorConfiguration.Default);
-                var kinectJpeg = kinectSensor.ColorImage;
+                var webcam = new MediaCapture(pipeline, 640, 480);
+                var webcamJpeg = webcam.Out;
                 var imageAnalyzer = new ImageAnalyzer(pipeline, new ImageAnalyzerConfiguration(null, null, VisualFeatureTypes.Description, VisualFeatureTypes.Faces, VisualFeatureTypes.Categories, VisualFeatureTypes.Tags));
-                kinectJpeg.Sample(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(1)).PipeTo(imageAnalyzer.In);
+                webcamJpeg.Sample(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(1)).PipeTo(imageAnalyzer.In);
                 imageAnalyzer.Out.Do(result =>
                 {
                     Console.Clear();

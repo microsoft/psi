@@ -391,7 +391,7 @@ namespace Test.Psi.Data
                         // add a dummy source and propose a long time interval so that the operation will block (and eventually be cancelled)
                         var generator = Generators.Repeat(pipeline, 0, int.MaxValue, TimeSpan.FromMilliseconds(1000));
                         var replayTimeInterval = TimeInterval.LeftBounded(importer.OriginatingTimeInterval.Left);
-                        pipeline.ProposeReplayTime(replayTimeInterval, replayTimeInterval);
+                        pipeline.ProposeReplayTime(replayTimeInterval);
                     },
                     multiplier,
                     "Partition_1",

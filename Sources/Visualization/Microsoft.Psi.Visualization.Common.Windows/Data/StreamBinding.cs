@@ -5,10 +5,8 @@ namespace Microsoft.Psi.Visualization.Data
 {
     using System;
     using System.Linq;
-    using System.Reflection;
     using System.Runtime.Serialization;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Represents information needed to uniquely identify and open a stream.
@@ -126,7 +124,7 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.streamAdapterType == null && this.StreamAdapterTypeName != null)
                 {
-                    this.streamAdapterType = TypeResolutionHelper.FindType(this.StreamAdapterTypeName);
+                    this.streamAdapterType = TypeResolutionHelper.GetVerifiedType(this.StreamAdapterTypeName);
                 }
 
                 return this.streamAdapterType;
@@ -157,7 +155,7 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.simpleReaderType == null && this.SimpleReaderTypeName != null)
                 {
-                    this.simpleReaderType = Type.GetType(this.SimpleReaderTypeName);
+                    this.simpleReaderType = TypeResolutionHelper.GetVerifiedType(this.SimpleReaderTypeName);
                 }
 
                 return this.simpleReaderType;
@@ -179,6 +177,12 @@ namespace Microsoft.Psi.Visualization.Data
                 this.SimpleReaderTypeName = this.simpleReaderType?.AssemblyQualifiedName;
             }
         }
+
+        /// <summary>
+        /// Gets  the SimpleReader type name.
+        /// </summary>
+        [DataMember]
+        public string SimpleReaderTypeName { get; private set; }
 
         /// <summary>
         /// Gets summarizer.
@@ -220,7 +224,7 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.summarizerType == null && this.SummarizerTypeName != null)
                 {
-                    this.summarizerType = TypeResolutionHelper.FindType(this.SummarizerTypeName);
+                    this.summarizerType = TypeResolutionHelper.GetVerifiedType(this.SummarizerTypeName);
                 }
 
                 return this.summarizerType;
@@ -237,6 +241,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Gets a value indicating whether the stream is bound to a data source.
         /// </summary>
+        [IgnoreDataMember]
         public bool IsBound => !string.IsNullOrWhiteSpace(this.StoreName) && !string.IsNullOrWhiteSpace(this.StorePath);
 
         /// <summary>
@@ -244,12 +249,6 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         [DataMember]
         private string StreamAdapterTypeName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SimpleReader type name.
-        /// </summary>
-        [DataMember]
-        private string SimpleReaderTypeName { get; set; }
 
         /// <summary>
         /// Gets or sets summarizer type name.

@@ -68,7 +68,7 @@ namespace ArmControlROSSample
         /// <summary>
         /// Position changed event.
         /// </summary>
-        public event EventHandler<Tuple<float, float, float>> PositionChanged;
+        public event EventHandler<(float, float, float)> PositionChanged;
 
         /// <summary>
         /// Connect to ROS.
@@ -145,27 +145,11 @@ namespace ArmControlROSSample
 
         private void PositionUpdate(IEnumerable<Tuple<string, RosMessage.RosFieldVal>> position)
         {
-            foreach (var p in position)
-            {
-                var name = p.Item1;
-                var val = RosMessage.GetFloat32Val(p.Item2);
-                switch (name)
-                {
-                    case "x":
-                        this.x = val;
-                        break;
-
-                    case "y":
-                        this.y = val;
-                        break;
-
-                    case "z":
-                        this.z = val;
-                        break;
-                }
-            }
-
-            this.PositionChanged?.Invoke(this, Tuple.Create(this.x, this.y, this.z));
+            dynamic pos = RosMessage.GetDynamicFieldVals(position);
+            this.x = pos.x;
+            this.y = pos.y;
+            this.z = pos.z;
+            this.PositionChanged?.Invoke(this, (this.x, this.y, this.z));
         }
 
         private Tuple<string, RosMessage.RosFieldVal>[] PositionMessage(float x, float y, float z)

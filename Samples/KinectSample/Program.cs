@@ -18,8 +18,6 @@ namespace MultiModalSpeechDetection
     public class Program
     {
         // Variables related to Psi
-        private const int Width = 1920;
-        private const int Height = 1080;
         private const string ApplicationName = "KinectSample";
         private static TimeSpan hundredMs = TimeSpan.FromSeconds(0.1);
 
@@ -71,10 +69,12 @@ namespace MultiModalSpeechDetection
                 pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Next create our Kinect sensor. We will be using the color images, face tracking, and audio from the Kinect sensor
-                var kinectSensorConfig = new KinectSensorConfiguration();
-                kinectSensorConfig.OutputColor = true;
-                kinectSensorConfig.OutputAudio = true;
-                kinectSensorConfig.OutputBodies = true; // In order to detect faces using Kinect you must also enable detection of bodies
+                var kinectSensorConfig = new KinectSensorConfiguration
+                {
+                    OutputColor = true,
+                    OutputAudio = true,
+                    OutputBodies = true, // In order to detect faces using Kinect you must also enable detection of bodies
+                };
                 var kinectSensor = new KinectSensor(pipeline, kinectSensorConfig);
                 var kinectFaceDetector = new Microsoft.Psi.Kinect.Face.KinectFaceDetector(pipeline, kinectSensor, Microsoft.Psi.Kinect.Face.KinectFaceDetectorConfiguration.Default);
 

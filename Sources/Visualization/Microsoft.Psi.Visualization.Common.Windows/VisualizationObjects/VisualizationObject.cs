@@ -11,12 +11,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationPanels;
+    using Newtonsoft.Json.Serialization;
+    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
     /// Base class for visualization objects.
     /// </summary>
-    public abstract class VisualizationObject : ObservableObject
+    public abstract class VisualizationObject : ObservableTreeNodeObject
     {
+        /// <summary>
+        /// The name of the visualization object.
+        /// </summary>
+        private string name;
+
+        /// <summary>
+        /// Indicated whether the visualization object is visible.
+        /// </summary>
+        private bool visible = true;
+
         /// <summary>
         /// The visualization panel this visualization object is parented under.
         /// </summary>
@@ -30,6 +42,28 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.PropertyChanging += this.OnPropertyChanging;
             this.PropertyChanged += this.OnPropertyChanged;
             this.InitNew();
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the visualization object.
+        /// </summary>
+        [DataMember]
+        [Description("The name of the visualization object.")]
+        public string Name
+        {
+            get { return this.name; }
+            set { this.Set(nameof(this.Name), ref this.name, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the visualization object is visible.
+        /// </summary>
+        [DataMember]
+        [Description("The visibility of the visualization object.")]
+        public bool Visible
+        {
+            get { return this.visible; }
+            set { this.Set(nameof(this.Visible), ref this.visible, value); }
         }
 
         /// <summary>
@@ -112,11 +146,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public bool IsConnected => this.panel != null;
 
         /// <summary>
-        /// Snaps or unsnaps the parent container to this stream.
+        /// Gets the contract resolver. Default is null.
         /// </summary>
-        /// <param name="snapToStream">true if this object should be snapped, otherwise false.</param>
         [Browsable(false)]
-        public virtual void SnapToStream(bool snapToStream)
+        [IgnoreDataMember]
+        protected virtual IContractResolver ContractResolver => null;
+
+        /// <summary>
+        /// Snaps or unsnaps the navigation cursor to the visualization object.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void ToggleSnapToStream()
         {
         }
 

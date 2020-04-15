@@ -6,6 +6,7 @@ namespace Test.Psi
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
@@ -53,6 +54,30 @@ namespace Test.Psi
             this.ValueTypeSerializeTest(stringAsObjectValue, buf);
             this.ValueTypeSerializeTest(doubleValue, buf);
             this.ValueTypeSerializeTest(floatValue, buf);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Enumerables()
+        {
+            try
+            {
+                using (var p = Pipeline.Create())
+                {
+                    var store = Store.Create(p, "Store", null);
+                    Generators.Return(p, new double[] { 1, 2, 3 }).Select(l => l.Select(d => d + 1)).Write("Test", store);
+                    p.Run();
+                }
+            }
+            catch (AggregateException ex)
+            {
+                Assert.AreEqual(1, ex.InnerExceptions.Count);
+                Assert.IsTrue(ex.InnerExceptions[0].GetType() == typeof(NotSupportedException));
+                Assert.IsTrue(ex.InnerExceptions[0].Message.StartsWith("Cannot serialize Func"));
+                return;
+            }
+
+            Assert.Fail("Should have thrown above");
         }
 
         [TestMethod]
@@ -333,7 +358,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void SerializeEmitter()
         {
-            var emitter = new Emitter<int>(0, null, null, null);
+            var emitter = new Emitter<int>(0, null, null, null, null);
             var clonedEmitter = emitter.DeepClone();
             Assert.AreEqual(emitter.Name, clonedEmitter.Name);
         }

@@ -21,7 +21,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of counts.</returns>
-        public static IProducer<int> Count<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Count<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Aggregate(0, (count, _) => count + 1, deliveryPolicy);
         }
@@ -34,11 +34,11 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each element for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of counts.</returns>
-        public static IProducer<int> Count<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Count<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null)
         {
             checked
             {
-                return source.Where(condition, deliveryPolicy).Count(DeliveryPolicy.Unlimited);
+                return source.Where(condition, deliveryPolicy).Count(DeliveryPolicy.SynchronousOrThrottle);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of counts.</returns>
-        public static IProducer<long> LongCount<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> LongCount<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Aggregate(0L, (count, _) => count + 1, deliveryPolicy);
         }
@@ -62,11 +62,11 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each element for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of counts.</returns>
-        public static IProducer<long> LongCount<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> LongCount<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null)
         {
             checked
             {
-                return source.Where(condition, deliveryPolicy).LongCount(DeliveryPolicy.Unlimited);
+                return source.Where(condition, deliveryPolicy).LongCount(DeliveryPolicy.SynchronousOrThrottle);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<int> Sum(this IProducer<int> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Sum(this IProducer<int> source, DeliveryPolicy<int> deliveryPolicy = null)
         {
             checked
             {
@@ -94,9 +94,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<int> Sum(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Sum(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<long> Sum(this IProducer<long> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Sum(this IProducer<long> source, DeliveryPolicy<long> deliveryPolicy = null)
         {
             checked
             {
@@ -120,9 +120,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<long> Sum(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Sum(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Microsoft.Psi
         /// of NaN is encountered on the source stream, the corresponding output value and all
         /// subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<float> Sum(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Sum(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
             checked
             {
@@ -151,9 +151,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<float> Sum(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Sum(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Microsoft.Psi
         /// of NaN is encountered on the source stream, the corresponding output value and all
         /// subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<double> Sum(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Sum(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             checked
             {
@@ -182,9 +182,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<double> Sum(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Sum(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<decimal> Sum(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Sum(this IProducer<decimal> source, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             checked
             {
@@ -208,9 +208,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sums.</returns>
-        public static IProducer<decimal> Sum(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Sum(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
 #endregion // `Sum`
@@ -224,7 +224,7 @@ namespace Microsoft.Psi
         /// <param name="comparer">Comparer used to compare values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
-        public static IProducer<T> Min<T>(this IProducer<T> source, IComparer<T> comparer, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Min<T>(this IProducer<T> source, IComparer<T> comparer, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Aggregate((x, y) => comparer.Compare(x, y) < 0 ? x : y, deliveryPolicy);
         }
@@ -236,7 +236,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
-        public static IProducer<T> Min<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Min<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Min(Comparer<T>.Default, deliveryPolicy);
         }
@@ -250,7 +250,7 @@ namespace Microsoft.Psi
         /// <param name="comparer">Comparer used to compare values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
-        public static IProducer<T> Min<T>(this IProducer<T> source, Predicate<T> condition, IComparer<T> comparer, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Min<T>(this IProducer<T> source, Predicate<T> condition, IComparer<T> comparer, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Min(comparer, deliveryPolicy);
         }
@@ -263,7 +263,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
-        public static IProducer<T> Min<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Min<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Min(condition, Comparer<T>.Default, deliveryPolicy);
         }
@@ -279,7 +279,7 @@ namespace Microsoft.Psi
         /// value of NaN is encountered on the source stream, the corresponding output value and all
         /// subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<double> Min(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Min(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             // special case commonly used `double` for performance
             return source.Aggregate(Math.Min, deliveryPolicy);
@@ -296,7 +296,7 @@ namespace Microsoft.Psi
         /// value of NaN is encountered on the source stream, the corresponding output value and all
         /// subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<float> Min(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Min(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
             // special case commonly used `float` for performance
             return source.Aggregate(Math.Min, deliveryPolicy);
@@ -310,7 +310,7 @@ namespace Microsoft.Psi
         /// <param name="comparer">Comparer used to compare values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
-        public static IProducer<T> Max<T>(this IProducer<T> source, IComparer<T> comparer, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Max<T>(this IProducer<T> source, IComparer<T> comparer, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Aggregate((x, y) => comparer.Compare(x, y) > 0 ? x : y, deliveryPolicy);
         }
@@ -322,7 +322,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
-        public static IProducer<T> Max<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Max<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Max(Comparer<T>.Default, deliveryPolicy);
         }
@@ -336,7 +336,7 @@ namespace Microsoft.Psi
         /// <param name="comparer">Comparer used to compare values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
-        public static IProducer<T> Max<T>(this IProducer<T> source, Predicate<T> condition, IComparer<T> comparer, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Max<T>(this IProducer<T> source, Predicate<T> condition, IComparer<T> comparer, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Max(comparer, deliveryPolicy);
         }
@@ -349,7 +349,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
-        public static IProducer<T> Max<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Max<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Max(condition, Comparer<T>.Default, deliveryPolicy);
         }
@@ -365,7 +365,7 @@ namespace Microsoft.Psi
         /// value of NaN is encountered on the source stream, the corresponding output value and all
         /// subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<double> Max(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Max(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             // special case commonly used `double` for performance
             return source.Aggregate(Math.Max, deliveryPolicy);
@@ -382,7 +382,7 @@ namespace Microsoft.Psi
         /// value of NaN is encountered on the source stream, the corresponding output value and all
         /// subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<float> Max(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Max(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
             // special case commonly used `float` for performance
             return source.Aggregate(Math.Max, deliveryPolicy);
@@ -397,9 +397,9 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<int> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<int> source, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Select(i => (double)i, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return source.Select(i => (double)i, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average values.</returns>
-        public static IProducer<double> Average(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Average(deliveryPolicy);
         }
@@ -420,9 +420,9 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<long> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<long> source, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Select(i => (double)i, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return source.Select(i => (double)i, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average values.</returns>
-        public static IProducer<double> Average(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Average(deliveryPolicy);
         }
@@ -448,9 +448,9 @@ namespace Microsoft.Psi
         /// Consequently, once a value of NaN is encountered on the source stream, the corresponding
         /// output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<float> Average(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Average(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Select(f => (double)f, deliveryPolicy).Average(DeliveryPolicy.Unlimited).Select(d => (float)d, DeliveryPolicy.Unlimited);
+            return source.Select(f => (double)f, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle).Select(d => (float)d, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average values.</returns>
-        public static IProducer<float> Average(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Average(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Average(deliveryPolicy);
         }
@@ -476,7 +476,7 @@ namespace Microsoft.Psi
         /// Consequently, once a value of NaN is encountered on the source stream, the corresponding
         /// output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<double> Average(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             // keeping (most common) double-specific implementation for performance
             return source.Aggregate(
@@ -484,7 +484,7 @@ namespace Microsoft.Psi
                 (tuple, message) =>
                     tuple.Item1 == 0 ?
                         ValueTuple.Create(1L, message) :
-                        ValueTuple.Create(tuple.Item1 + 1, ((tuple.Item2 * tuple.Item1) + message) / (tuple.Item1 + 1)), deliveryPolicy).Select(tuple => tuple.Item2, DeliveryPolicy.Unlimited);
+                        ValueTuple.Create(tuple.Item1 + 1, ((tuple.Item2 * tuple.Item1) + message) / (tuple.Item1 + 1)), deliveryPolicy).Select(tuple => tuple.Item2, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average values.</returns>
-        public static IProducer<double> Average(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Average(deliveryPolicy);
         }
@@ -505,14 +505,14 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average values.</returns>
-        public static IProducer<decimal> Average(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Average(this IProducer<decimal> source, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             return source.Aggregate(
                 ValueTuple.Create(0L, 0M),
                 (tuple, message) =>
                     tuple.Item1 == 0 ?
                         ValueTuple.Create(1L, message) :
-                        ValueTuple.Create(tuple.Item1 + 1, ((tuple.Item2 * tuple.Item1) + message) / (tuple.Item1 + 1)), deliveryPolicy).Select(tuple => tuple.Item2, DeliveryPolicy.Unlimited);
+                        ValueTuple.Create(tuple.Item1 + 1, ((tuple.Item2 * tuple.Item1) + message) / (tuple.Item1 + 1)), deliveryPolicy).Select(tuple => tuple.Item2, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -522,7 +522,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average values.</returns>
-        public static IProducer<decimal> Average(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Average(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Average(deliveryPolicy);
         }
@@ -536,7 +536,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<int> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<int> source, DeliveryPolicy<int> deliveryPolicy = null)
         {
             long count = 0;
             double mean = 0, q = 0;
@@ -561,7 +561,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Std(deliveryPolicy);
         }
@@ -572,7 +572,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<long> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<long> source, DeliveryPolicy<long> deliveryPolicy = null)
         {
             long count = 0;
             double mean = 0, q = 0;
@@ -597,7 +597,7 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Std(deliveryPolicy);
         }
@@ -613,7 +613,7 @@ namespace Microsoft.Psi
         /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
         /// corresponding output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<float> Std(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Std(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
             long count = 0;
             double mean = 0, q = 0;
@@ -642,7 +642,7 @@ namespace Microsoft.Psi
         /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
         /// corresponding output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<float> Std(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Std(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Std(deliveryPolicy);
         }
@@ -658,7 +658,7 @@ namespace Microsoft.Psi
         /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
         /// corresponding output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<double> Std(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             long count = 0;
             double mean = 0, q = 0;
@@ -687,7 +687,7 @@ namespace Microsoft.Psi
         /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
         /// corresponding output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<double> Std(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Std(deliveryPolicy);
         }
@@ -698,7 +698,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation (decimal) values (0m for single first value).</returns>
-        public static IProducer<decimal> Std(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Std(this IProducer<decimal> source, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             long count = 0;
             decimal mean = 0, q = 0;
@@ -727,7 +727,7 @@ namespace Microsoft.Psi
         /// to be NaN. Consequently, once a value of NaN is encountered on the source stream, the
         /// corresponding output value and all subsequent output values will be NaN.
         /// </remarks>
-        public static IProducer<decimal> Std(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Std(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             return source.Where(condition, deliveryPolicy).Std(deliveryPolicy);
         }
@@ -742,7 +742,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of count values.</returns>
-        public static IProducer<int> Count<TSource>(this IProducer<IEnumerable<TSource>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Count<TSource>(this IProducer<TSource[]> source, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Count(), deliveryPolicy);
         }
@@ -754,7 +754,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of long count values.</returns>
-        public static IProducer<long> LongCount<TSource>(this IProducer<IEnumerable<TSource>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> LongCount<TSource>(this IProducer<TSource[]> source, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.LongCount(), deliveryPolicy);
         }
@@ -765,7 +765,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<int> Sum(this IProducer<IEnumerable<int>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Sum(this IProducer<int[]> source, DeliveryPolicy<int[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -778,7 +778,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (int) values.</returns>
-        public static IProducer<int> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, int> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -789,7 +789,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<int?> Sum(this IProducer<IEnumerable<int?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Sum(this IProducer<int?[]> source, DeliveryPolicy<int?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -802,7 +802,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable int) values.</returns>
-        public static IProducer<int?> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, int?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -813,7 +813,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<long> Sum(this IProducer<IEnumerable<long>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Sum(this IProducer<long[]> source, DeliveryPolicy<long[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -826,7 +826,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (long) values.</returns>
-        public static IProducer<long> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, long> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -837,7 +837,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<long?> Sum(this IProducer<IEnumerable<long?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Sum(this IProducer<long?[]> source, DeliveryPolicy<long?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -850,7 +850,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable long) values.</returns>
-        public static IProducer<long?> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, long?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -861,7 +861,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<float> Sum(this IProducer<IEnumerable<float>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Sum(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -874,7 +874,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (float) values.</returns>
-        public static IProducer<float> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, float> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -885,7 +885,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<float?> Sum(this IProducer<IEnumerable<float?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Sum(this IProducer<float?[]> source, DeliveryPolicy<float?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -898,7 +898,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable float) values.</returns>
-        public static IProducer<float?> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, float?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -909,7 +909,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<double> Sum(this IProducer<IEnumerable<double>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Sum(this IProducer<double[]> source, DeliveryPolicy<double[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -922,7 +922,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (double) values.</returns>
-        public static IProducer<double> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, double> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -933,7 +933,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<double?> Sum(this IProducer<IEnumerable<double?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Sum(this IProducer<double?[]> source, DeliveryPolicy<double?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -946,7 +946,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable double) values.</returns>
-        public static IProducer<double?> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, double?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -957,7 +957,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<decimal> Sum(this IProducer<IEnumerable<decimal>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Sum(this IProducer<decimal[]> source, DeliveryPolicy<decimal[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -970,7 +970,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (decimal) values.</returns>
-        public static IProducer<decimal> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -981,7 +981,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum values.</returns>
-        public static IProducer<decimal?> Sum(this IProducer<IEnumerable<decimal?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Sum(this IProducer<decimal?[]> source, DeliveryPolicy<decimal?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(), deliveryPolicy);
         }
@@ -994,7 +994,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Sum<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Sum<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Sum(selector), deliveryPolicy);
         }
@@ -1005,7 +1005,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<int> Min(this IProducer<IEnumerable<int>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Min(this IProducer<int[]> source, DeliveryPolicy<int[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1018,7 +1018,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<int> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, int> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1029,7 +1029,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<int?> Min(this IProducer<IEnumerable<int?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Min(this IProducer<int?[]> source, DeliveryPolicy<int?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1042,7 +1042,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable int) values.</returns>
-        public static IProducer<int?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, int?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1053,7 +1053,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<long> Min(this IProducer<IEnumerable<long>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Min(this IProducer<long[]> source, DeliveryPolicy<long[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1066,7 +1066,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (long) values.</returns>
-        public static IProducer<long> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, long> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1077,7 +1077,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<long?> Min(this IProducer<IEnumerable<long?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Min(this IProducer<long?[]> source, DeliveryPolicy<long?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1090,7 +1090,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable long) values.</returns>
-        public static IProducer<long?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, long?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1101,7 +1101,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<float> Min(this IProducer<IEnumerable<float>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Min(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs), deliveryPolicy);
         }
@@ -1114,7 +1114,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (float) values.</returns>
-        public static IProducer<float> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, float> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs.Select(selector)), deliveryPolicy);
         }
@@ -1125,7 +1125,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<float?> Min(this IProducer<IEnumerable<float?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Min(this IProducer<float?[]> source, DeliveryPolicy<float?[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs), deliveryPolicy);
         }
@@ -1138,7 +1138,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable float) values.</returns>
-        public static IProducer<float?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, float?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs.Select(selector)), deliveryPolicy);
         }
@@ -1149,7 +1149,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<double> Min(this IProducer<IEnumerable<double>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Min(this IProducer<double[]> source, DeliveryPolicy<double[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs), deliveryPolicy);
         }
@@ -1162,7 +1162,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (double) values.</returns>
-        public static IProducer<double> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, double> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs.Select(selector)), deliveryPolicy);
         }
@@ -1173,7 +1173,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<double?> Min(this IProducer<IEnumerable<double?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Min(this IProducer<double?[]> source, DeliveryPolicy<double?[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs), deliveryPolicy);
         }
@@ -1186,7 +1186,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable double) values.</returns>
-        public static IProducer<double?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, double?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Min(xs.Select(selector)), deliveryPolicy);
         }
@@ -1197,7 +1197,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<decimal> Min(this IProducer<IEnumerable<decimal>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Min(this IProducer<decimal[]> source, DeliveryPolicy<decimal[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1210,7 +1210,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (decimal) values.</returns>
-        public static IProducer<decimal> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1221,7 +1221,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<decimal?> Min(this IProducer<IEnumerable<decimal?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Min(this IProducer<decimal?[]> source, DeliveryPolicy<decimal?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1234,7 +1234,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Min<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Min<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1246,7 +1246,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<TSource> Min<TSource>(this IProducer<IEnumerable<TSource>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TSource> Min<TSource>(this IProducer<TSource[]> source, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(), deliveryPolicy);
         }
@@ -1260,7 +1260,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum values.</returns>
-        public static IProducer<TResult> Min<TSource, TResult>(this IProducer<IEnumerable<TSource>> source, Func<TSource, TResult> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TResult> Min<TSource, TResult>(this IProducer<TSource[]> source, Func<TSource, TResult> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Min(selector), deliveryPolicy);
         }
@@ -1271,7 +1271,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (int) values.</returns>
-        public static IProducer<int> Max(this IProducer<IEnumerable<int>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Max(this IProducer<int[]> source, DeliveryPolicy<int[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1284,7 +1284,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (int) values.</returns>
-        public static IProducer<int> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, int> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1295,7 +1295,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable int) values.</returns>
-        public static IProducer<int?> Max(this IProducer<IEnumerable<int?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Max(this IProducer<int?[]> source, DeliveryPolicy<int?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1308,7 +1308,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable int) values.</returns>
-        public static IProducer<int?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, int?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1319,7 +1319,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (long) values.</returns>
-        public static IProducer<long> Max(this IProducer<IEnumerable<long>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Max(this IProducer<long[]> source, DeliveryPolicy<long[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1332,7 +1332,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (long) values.</returns>
-        public static IProducer<long> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, long> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1343,7 +1343,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable long) values.</returns>
-        public static IProducer<long?> Max(this IProducer<IEnumerable<long?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Max(this IProducer<long?[]> source, DeliveryPolicy<long?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1356,7 +1356,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable long) values.</returns>
-        public static IProducer<long?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, long?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1367,7 +1367,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (float) values.</returns>
-        public static IProducer<float> Max(this IProducer<IEnumerable<float>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Max(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs), deliveryPolicy);
         }
@@ -1380,7 +1380,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (float) values.</returns>
-        public static IProducer<float> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, float> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs.Select(selector)), deliveryPolicy);
         }
@@ -1391,7 +1391,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable float) values.</returns>
-        public static IProducer<float?> Max(this IProducer<IEnumerable<float?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Max(this IProducer<float?[]> source, DeliveryPolicy<float?[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs), deliveryPolicy);
         }
@@ -1404,7 +1404,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable float) values.</returns>
-        public static IProducer<float?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, float?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs.Select(selector)), deliveryPolicy);
         }
@@ -1415,7 +1415,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (double) values.</returns>
-        public static IProducer<double> Max(this IProducer<IEnumerable<double>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Max(this IProducer<double[]> source, DeliveryPolicy<double[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs), deliveryPolicy);
         }
@@ -1428,7 +1428,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (double) values.</returns>
-        public static IProducer<double> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, double> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs.Select(selector)), deliveryPolicy);
         }
@@ -1439,7 +1439,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable double) values.</returns>
-        public static IProducer<double?> Max(this IProducer<IEnumerable<double?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Max(this IProducer<double?[]> source, DeliveryPolicy<double?[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs), deliveryPolicy);
         }
@@ -1452,7 +1452,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable double) values.</returns>
-        public static IProducer<double?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, double?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => MathExtensions.Max(xs.Select(selector)), deliveryPolicy);
         }
@@ -1463,7 +1463,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (decimal) values.</returns>
-        public static IProducer<decimal> Max(this IProducer<IEnumerable<decimal>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Max(this IProducer<decimal[]> source, DeliveryPolicy<decimal[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1476,7 +1476,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (decimal) values.</returns>
-        public static IProducer<decimal> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1487,7 +1487,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Max(this IProducer<IEnumerable<decimal?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Max(this IProducer<decimal?[]> source, DeliveryPolicy<decimal?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1500,7 +1500,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Max<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Max<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1512,7 +1512,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
-        public static IProducer<TSource> Max<TSource>(this IProducer<IEnumerable<TSource>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TSource> Max<TSource>(this IProducer<TSource[]> source, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(), deliveryPolicy);
         }
@@ -1526,7 +1526,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum values.</returns>
-        public static IProducer<TResult> Max<TSource, TResult>(this IProducer<IEnumerable<TSource>> source, Func<TSource, TResult> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TResult> Max<TSource, TResult>(this IProducer<TSource[]> source, Func<TSource, TResult> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Max(selector), deliveryPolicy);
         }
@@ -1537,7 +1537,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<IEnumerable<int>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<int[]> source, DeliveryPolicy<int[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1550,7 +1550,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, int> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1561,7 +1561,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<IEnumerable<int?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<int?[]> source, DeliveryPolicy<int?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1574,7 +1574,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, int?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1585,7 +1585,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<IEnumerable<long>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<long[]> source, DeliveryPolicy<long[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1598,7 +1598,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, long> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1609,7 +1609,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<IEnumerable<long?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<long?[]> source, DeliveryPolicy<long?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1622,7 +1622,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, long?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1633,7 +1633,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Average(this IProducer<IEnumerable<float>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Average(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1646,7 +1646,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, float> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1657,7 +1657,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable float) values.</returns>
-        public static IProducer<float?> Average(this IProducer<IEnumerable<float?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Average(this IProducer<float?[]> source, DeliveryPolicy<float?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1670,7 +1670,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable float) values.</returns>
-        public static IProducer<float?> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, float?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1681,7 +1681,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<IEnumerable<double>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<double[]> source, DeliveryPolicy<double[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1694,7 +1694,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, double> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1705,7 +1705,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<IEnumerable<double?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<double?[]> source, DeliveryPolicy<double?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1718,7 +1718,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, double?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1729,7 +1729,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Average(this IProducer<IEnumerable<decimal>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Average(this IProducer<decimal[]> source, DeliveryPolicy<decimal[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1742,7 +1742,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1753,7 +1753,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Average(this IProducer<IEnumerable<decimal?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Average(this IProducer<decimal?[]> source, DeliveryPolicy<decimal?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(), deliveryPolicy);
         }
@@ -1766,7 +1766,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Average<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Average<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Average(selector), deliveryPolicy);
         }
@@ -1777,7 +1777,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<IEnumerable<int>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<int[]> source, DeliveryPolicy<int[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1790,7 +1790,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, int> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1801,7 +1801,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double?) values.</returns>
-        public static IProducer<double?> Std(this IProducer<IEnumerable<int?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<int?[]> source, DeliveryPolicy<int?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1814,7 +1814,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double?) values.</returns>
-        public static IProducer<double?> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, int?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, int?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1825,7 +1825,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<IEnumerable<long>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<long[]> source, DeliveryPolicy<long[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1838,7 +1838,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, long> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1849,7 +1849,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double?) values.</returns>
-        public static IProducer<double?> Std(this IProducer<IEnumerable<long?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<long?[]> source, DeliveryPolicy<long?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1862,7 +1862,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double?) values.</returns>
-        public static IProducer<double?> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, long?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, long?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1873,7 +1873,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Std(this IProducer<IEnumerable<float>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Std(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1886,7 +1886,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, float> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(selector), deliveryPolicy);
         }
@@ -1897,7 +1897,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float?) values.</returns>
-        public static IProducer<float?> Std(this IProducer<IEnumerable<float?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Std(this IProducer<float?[]> source, DeliveryPolicy<float?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1910,7 +1910,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float?) values.</returns>
-        public static IProducer<float?> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, float?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, float?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(selector), deliveryPolicy);
         }
@@ -1921,7 +1921,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Std(this IProducer<IEnumerable<double>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<double[]> source, DeliveryPolicy<double[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1934,7 +1934,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, double> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1945,7 +1945,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double?) values.</returns>
-        public static IProducer<double?> Std(this IProducer<IEnumerable<double?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<double?[]> source, DeliveryPolicy<double?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1958,7 +1958,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double?) values.</returns>
-        public static IProducer<double?> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, double?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, double?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1969,7 +1969,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Std(this IProducer<IEnumerable<decimal>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Std(this IProducer<decimal[]> source, DeliveryPolicy<decimal[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -1982,7 +1982,7 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
         }
@@ -1993,7 +1993,7 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal?) values.</returns>
-        public static IProducer<decimal?> Std(this IProducer<IEnumerable<decimal?>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Std(this IProducer<decimal?[]> source, DeliveryPolicy<decimal?[]> deliveryPolicy = null)
         {
             return source.Select(xs => xs.Std(), deliveryPolicy);
         }
@@ -2006,9 +2006,9 @@ namespace Microsoft.Psi
         /// <param name="selector">Transform function applied to each element.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal?> Std<TSource>(this IProducer<IEnumerable<TSource>> source, Func<TSource, decimal?> selector, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Std<TSource>(this IProducer<TSource[]> source, Func<TSource, decimal?> selector, DeliveryPolicy<TSource[]> deliveryPolicy = null)
         {
-            return source.Select(xs => xs.Select(selector).Std(), deliveryPolicy);
+            return source.Std(selector, deliveryPolicy);
         }
 
         /// <summary>
@@ -2018,8 +2018,15 @@ namespace Microsoft.Psi
         /// <returns>Stream of standard deviation (double) values.</returns>
         public static double Std(this IEnumerable<int> source)
         {
+            double result = 0.0;
             var count = source.Count();
-            return count <= 1 ? 0.0 : Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+            if (count > 1)
+            {
+                var average = source.Average();
+                result = Math.Sqrt(source.Sum(d => Math.Pow(d - average, 2)) / (count - 1));
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2064,8 +2071,15 @@ namespace Microsoft.Psi
         /// <returns>Stream of standard deviation (double) values.</returns>
         public static double Std(this IEnumerable<long> source)
         {
+            double result = 0.0;
             var count = source.Count();
-            return count <= 1 ? 0.0 : Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+            if (count > 1)
+            {
+                var average = source.Average();
+                result = Math.Sqrt(source.Sum(d => Math.Pow(d - average, 2)) / (count - 1));
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2110,8 +2124,15 @@ namespace Microsoft.Psi
         /// <returns>Stream of standard deviation (float) values.</returns>
         public static float Std(this IEnumerable<float> source)
         {
+            float result = 0.0f;
             var count = source.Count();
-            return count <= 1 ? 0.0f : (float)Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+            if (count > 1)
+            {
+                var average = source.Average();
+                result = (float)Math.Sqrt(source.Sum(d => Math.Pow(d - average, 2)) / (count - 1));
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2156,8 +2177,15 @@ namespace Microsoft.Psi
         /// <returns>Stream of standard deviation (double) values.</returns>
         public static double Std(this IEnumerable<double> source)
         {
+            double result = 0.0;
             var count = source.Count();
-            return count <= 1 ? 0.0 : Math.Sqrt(source.Sum(d => Math.Pow(d - source.Average(), 2)) / (count - 1));
+            if (count > 1)
+            {
+                var average = source.Average();
+                result = Math.Sqrt(source.Sum(d => Math.Pow(d - average, 2)) / (count - 1));
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2202,9 +2230,16 @@ namespace Microsoft.Psi
         /// <returns>Stream of standard deviation (decimal) values.</returns>
         public static decimal Std(this IEnumerable<decimal> source)
         {
+            decimal result = 0m;
             var count = source.Count();
-            Func<decimal, decimal> sq = x => x * x;
-            return count <= 1 ? 0m : (decimal)Math.Sqrt((double)source.Sum(d => sq(d - source.Average())) / (count - 1)); // return 0m for first value
+            if (count > 1)
+            {
+                var average = source.Average();
+                Func<decimal, decimal> sq = x => x * x;
+                result = (decimal)Math.Sqrt((double)source.Sum(d => sq(d - average)) / (count - 1)); // return 0m for first value
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2242,8 +2277,8 @@ namespace Microsoft.Psi
             return source.Select(selector).Std();
         }
 
-#endregion LINQ
-#region Over History Window
+        #endregion LINQ
+        #region Over History Window
 
         /// <summary>
         /// Compute the count of values within each window by time span.
@@ -2253,9 +2288,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of (int) count values.</returns>
-        public static IProducer<int> Count<TSource>(this IProducer<TSource> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Count<TSource>(this IProducer<TSource> source, TimeSpan timeSpan, DeliveryPolicy<TSource> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Count(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Count(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2266,9 +2301,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of (long) count values.</returns>
-        public static IProducer<long> LongCount<TSource>(this IProducer<TSource> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> LongCount<TSource>(this IProducer<TSource> source, TimeSpan timeSpan, DeliveryPolicy<TSource> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).LongCount(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).LongCount(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2278,9 +2313,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (int) values.</returns>
-        public static IProducer<int> Sum(this IProducer<int> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Sum(this IProducer<int> source, int size, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2290,9 +2325,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (int) values.</returns>
-        public static IProducer<int> Sum(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Sum(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2302,9 +2337,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable int) values.</returns>
-        public static IProducer<int?> Sum(this IProducer<int?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Sum(this IProducer<int?> source, int size, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2314,9 +2349,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable int) values.</returns>
-        public static IProducer<int?> Sum(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Sum(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2326,9 +2361,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (long) values.</returns>
-        public static IProducer<long> Sum(this IProducer<long> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Sum(this IProducer<long> source, int size, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2338,9 +2373,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (long) values.</returns>
-        public static IProducer<long> Sum(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Sum(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2350,9 +2385,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable long) values.</returns>
-        public static IProducer<long?> Sum(this IProducer<long?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Sum(this IProducer<long?> source, int size, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2362,9 +2397,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable long) values.</returns>
-        public static IProducer<long?> Sum(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Sum(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2374,9 +2409,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (float) values.</returns>
-        public static IProducer<float> Sum(this IProducer<float> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Sum(this IProducer<float> source, int size, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2386,9 +2421,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (float) values.</returns>
-        public static IProducer<float> Sum(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Sum(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2398,9 +2433,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable float) values.</returns>
-        public static IProducer<float?> Sum(this IProducer<float?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Sum(this IProducer<float?> source, int size, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2410,9 +2445,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable float) values.</returns>
-        public static IProducer<float?> Sum(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Sum(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2422,9 +2457,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (double) values.</returns>
-        public static IProducer<double> Sum(this IProducer<double> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Sum(this IProducer<double> source, int size, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2434,9 +2469,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (double) values.</returns>
-        public static IProducer<double> Sum(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Sum(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2446,9 +2481,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable double) values.</returns>
-        public static IProducer<double?> Sum(this IProducer<double?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Sum(this IProducer<double?> source, int size, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2458,9 +2493,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable double) values.</returns>
-        public static IProducer<double?> Sum(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Sum(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2470,9 +2505,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (decimal) values.</returns>
-        public static IProducer<decimal> Sum(this IProducer<decimal> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Sum(this IProducer<decimal> source, int size, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2482,9 +2517,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (decimal) values.</returns>
-        public static IProducer<decimal> Sum(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Sum(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2494,9 +2529,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Sum(this IProducer<decimal?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Sum(this IProducer<decimal?> source, int size, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2506,9 +2541,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of sum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Sum(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Sum(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Sum(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2518,9 +2553,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<int> Min(this IProducer<int> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Min(this IProducer<int> source, int size, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2530,9 +2565,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (int) values.</returns>
-        public static IProducer<int> Min(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Min(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2542,9 +2577,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable int) values.</returns>
-        public static IProducer<int?> Min(this IProducer<int?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Min(this IProducer<int?> source, int size, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2554,9 +2589,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable long) values.</returns>
-        public static IProducer<int?> Min(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Min(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2566,9 +2601,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (long) values.</returns>
-        public static IProducer<long> Min(this IProducer<long> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Min(this IProducer<long> source, int size, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2578,9 +2613,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (long) values.</returns>
-        public static IProducer<long> Min(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Min(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2590,9 +2625,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable long) values.</returns>
-        public static IProducer<long?> Min(this IProducer<long?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Min(this IProducer<long?> source, int size, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2602,9 +2637,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable long) values.</returns>
-        public static IProducer<long?> Min(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Min(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2614,9 +2649,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (float) values.</returns>
-        public static IProducer<float> Min(this IProducer<float> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Min(this IProducer<float> source, int size, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2626,9 +2661,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (float) values.</returns>
-        public static IProducer<float> Min(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Min(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2638,9 +2673,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable float) values.</returns>
-        public static IProducer<float?> Min(this IProducer<float?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Min(this IProducer<float?> source, int size, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2650,9 +2685,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable float) values.</returns>
-        public static IProducer<float?> Min(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Min(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2662,9 +2697,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (double) values.</returns>
-        public static IProducer<double> Min(this IProducer<double> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Min(this IProducer<double> source, int size, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2674,9 +2709,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (double) values.</returns>
-        public static IProducer<double> Min(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Min(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2686,9 +2721,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable double) values.</returns>
-        public static IProducer<double?> Min(this IProducer<double?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Min(this IProducer<double?> source, int size, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2698,9 +2733,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable double) values.</returns>
-        public static IProducer<double?> Min(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Min(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2710,9 +2745,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (decimal) values.</returns>
-        public static IProducer<decimal> Min(this IProducer<decimal> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Min(this IProducer<decimal> source, int size, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2722,9 +2757,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (decimal) values.</returns>
-        public static IProducer<decimal> Min(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Min(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2734,9 +2769,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Min(this IProducer<decimal?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Min(this IProducer<decimal?> source, int size, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2746,9 +2781,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Min(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Min(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Min(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2758,9 +2793,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (int) values.</returns>
-        public static IProducer<int> Max(this IProducer<int> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Max(this IProducer<int> source, int size, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2770,9 +2805,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (int) values.</returns>
-        public static IProducer<int> Max(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Max(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2782,9 +2817,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable int) values.</returns>
-        public static IProducer<int?> Max(this IProducer<int?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Max(this IProducer<int?> source, int size, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2794,9 +2829,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable int) values.</returns>
-        public static IProducer<int?> Max(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int?> Max(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2806,9 +2841,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (long) values.</returns>
-        public static IProducer<long> Max(this IProducer<long> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Max(this IProducer<long> source, int size, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2818,9 +2853,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (long) values.</returns>
-        public static IProducer<long> Max(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Max(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2830,9 +2865,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable long) values.</returns>
-        public static IProducer<long?> Max(this IProducer<long?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Max(this IProducer<long?> source, int size, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2842,9 +2877,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable long) values.</returns>
-        public static IProducer<long?> Max(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long?> Max(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2854,9 +2889,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (float) values.</returns>
-        public static IProducer<float> Max(this IProducer<float> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Max(this IProducer<float> source, int size, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2866,9 +2901,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (float) values.</returns>
-        public static IProducer<float> Max(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Max(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2878,9 +2913,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable float) values.</returns>
-        public static IProducer<float?> Max(this IProducer<float?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Max(this IProducer<float?> source, int size, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2890,9 +2925,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable float) values.</returns>
-        public static IProducer<float?> Max(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Max(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2902,9 +2937,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (double) values.</returns>
-        public static IProducer<double> Max(this IProducer<double> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Max(this IProducer<double> source, int size, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2914,9 +2949,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (double) values.</returns>
-        public static IProducer<double> Max(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Max(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2926,9 +2961,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable double) values.</returns>
-        public static IProducer<double?> Max(this IProducer<double?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Max(this IProducer<double?> source, int size, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2938,9 +2973,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable double) values.</returns>
-        public static IProducer<double?> Max(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Max(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2950,9 +2985,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of minimum (decimal) values.</returns>
-        public static IProducer<decimal> Max(this IProducer<decimal> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Max(this IProducer<decimal> source, int size, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2962,9 +2997,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (decimal) values.</returns>
-        public static IProducer<decimal> Max(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Max(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2974,9 +3009,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Max(this IProducer<decimal?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Max(this IProducer<decimal?> source, int size, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2986,9 +3021,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of maximum (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Max(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Max(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Max(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -2998,9 +3033,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<int> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<int> source, int size, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3010,9 +3045,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3022,9 +3057,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<int?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<int?> source, int size, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3034,9 +3069,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3046,9 +3081,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<long> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<long> source, int size, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3058,9 +3093,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3070,9 +3105,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<long?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<long?> source, int size, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3082,9 +3117,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3094,9 +3129,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Average(this IProducer<float> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Average(this IProducer<float> source, int size, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3106,9 +3141,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (float) values.</returns>
-        public static IProducer<float> Average(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Average(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3118,9 +3153,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable float) values.</returns>
-        public static IProducer<float?> Average(this IProducer<float?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Average(this IProducer<float?> source, int size, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3130,9 +3165,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable float) values.</returns>
-        public static IProducer<float?> Average(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Average(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3142,9 +3177,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<double> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<double> source, int size, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3154,9 +3189,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (double) values.</returns>
-        public static IProducer<double> Average(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Average(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3166,9 +3201,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<double?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<double?> source, int size, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3178,9 +3213,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable double) values.</returns>
-        public static IProducer<double?> Average(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Average(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3190,9 +3225,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Average(this IProducer<decimal> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Average(this IProducer<decimal> source, int size, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3202,9 +3237,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (decimal) values.</returns>
-        public static IProducer<decimal> Average(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Average(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3214,9 +3249,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Average(this IProducer<decimal?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Average(this IProducer<decimal?> source, int size, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3226,9 +3261,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of average (nullable decimal) values.</returns>
-        public static IProducer<decimal?> Average(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Average(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Average(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3238,9 +3273,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double> Std(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<int> source, TimeSpan timeSpan, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3250,9 +3285,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double> Std(this IProducer<int> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<int> source, int size, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3262,9 +3297,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double?> Std(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<int?> source, TimeSpan timeSpan, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3274,9 +3309,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double?> Std(this IProducer<int?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<int?> source, int size, DeliveryPolicy<int?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3286,9 +3321,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double> Std(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<long> source, TimeSpan timeSpan, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3298,9 +3333,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double> Std(this IProducer<long> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<long> source, int size, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3310,9 +3345,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double?> Std(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<long?> source, TimeSpan timeSpan, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3322,9 +3357,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double?> Std(this IProducer<long?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<long?> source, int size, DeliveryPolicy<long?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3334,9 +3369,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<float> Std(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Std(this IProducer<float> source, TimeSpan timeSpan, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3346,9 +3381,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<float> Std(this IProducer<float> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Std(this IProducer<float> source, int size, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3358,9 +3393,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<float?> Std(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Std(this IProducer<float?> source, TimeSpan timeSpan, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3370,9 +3405,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<float?> Std(this IProducer<float?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float?> Std(this IProducer<float?> source, int size, DeliveryPolicy<float?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3382,9 +3417,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double> Std(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<double> source, TimeSpan timeSpan, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3394,9 +3429,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double> Std(this IProducer<double> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Std(this IProducer<double> source, int size, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3406,9 +3441,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double?> Std(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<double?> source, TimeSpan timeSpan, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3418,9 +3453,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<double?> Std(this IProducer<double?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double?> Std(this IProducer<double?> source, int size, DeliveryPolicy<double?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3430,9 +3465,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<decimal> Std(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Std(this IProducer<decimal> source, TimeSpan timeSpan, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3442,9 +3477,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<decimal> Std(this IProducer<decimal> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Std(this IProducer<decimal> source, int size, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3454,9 +3489,9 @@ namespace Microsoft.Psi
         /// <param name="timeSpan">Window time span.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<decimal?> Std(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Std(this IProducer<decimal?> source, TimeSpan timeSpan, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, RelativeTimeInterval.Past(timeSpan), deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3466,9 +3501,9 @@ namespace Microsoft.Psi
         /// <param name="size">Window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of standard deviation values.</returns>
-        public static IProducer<decimal?> Std(this IProducer<decimal?> source, int size, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal?> Std(this IProducer<decimal?> source, int size, DeliveryPolicy<decimal?> deliveryPolicy = null)
         {
-            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.Unlimited);
+            return Window(source, -(size - 1), 0, deliveryPolicy).Std(DeliveryPolicy.SynchronousOrThrottle);
         }
 
 #endregion Over History Window
@@ -3480,7 +3515,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (int) values.</returns>
-        public static IProducer<int> Abs(this IProducer<int> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Abs(this IProducer<int> source, DeliveryPolicy<int> deliveryPolicy = null)
         {
             return source.Select(d => Math.Abs(d), deliveryPolicy);
         }
@@ -3492,9 +3527,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (int) values.</returns>
-        public static IProducer<int> Abs(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Abs(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3503,7 +3538,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (long) values.</returns>
-        public static IProducer<long> Abs(this IProducer<long> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Abs(this IProducer<long> source, DeliveryPolicy<long> deliveryPolicy = null)
         {
             return source.Select(d => Math.Abs(d), deliveryPolicy);
         }
@@ -3515,9 +3550,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (long) values.</returns>
-        public static IProducer<long> Abs(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Abs(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3526,7 +3561,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (float) values.</returns>
-        public static IProducer<float> Abs(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Abs(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
             return source.Select(d => Math.Abs(d), deliveryPolicy);
         }
@@ -3538,9 +3573,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (float) values.</returns>
-        public static IProducer<float> Abs(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Abs(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3549,7 +3584,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (double) values.</returns>
-        public static IProducer<double> Abs(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Abs(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             return source.Select(d => Math.Abs(d), deliveryPolicy);
         }
@@ -3561,9 +3596,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (double) values.</returns>
-        public static IProducer<double> Abs(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Abs(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3572,7 +3607,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (decimal) values.</returns>
-        public static IProducer<decimal> Abs(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Abs(this IProducer<decimal> source, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             return source.Select(d => Math.Abs(d), deliveryPolicy);
         }
@@ -3584,9 +3619,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of absolute (decimal) values.</returns>
-        public static IProducer<decimal> Abs(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Abs(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Abs(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3595,9 +3630,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (int) values.</returns>
-        public static IProducer<int> Delta(this IProducer<int> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Delta(this IProducer<int> source, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.Unlimited).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.Unlimited);
+            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.SynchronousOrThrottle).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3607,9 +3642,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (int) values.</returns>
-        public static IProducer<int> Delta(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<int> Delta(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3618,9 +3653,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (long) values.</returns>
-        public static IProducer<long> Delta(this IProducer<long> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Delta(this IProducer<long> source, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.Unlimited).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.Unlimited);
+            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.SynchronousOrThrottle).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3630,9 +3665,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (long) values.</returns>
-        public static IProducer<long> Delta(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<long> Delta(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3641,9 +3676,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (float) values.</returns>
-        public static IProducer<float> Delta(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Delta(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.Unlimited).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.Unlimited);
+            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.SynchronousOrThrottle).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3653,9 +3688,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (float) values.</returns>
-        public static IProducer<float> Delta(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Delta(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3664,9 +3699,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (double) values.</returns>
-        public static IProducer<double> Delta(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Delta(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.Unlimited).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.Unlimited);
+            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.SynchronousOrThrottle).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3676,9 +3711,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (double) values.</returns>
-        public static IProducer<double> Delta(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Delta(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3687,9 +3722,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (decimal) values.</returns>
-        public static IProducer<decimal> Delta(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Delta(this IProducer<decimal> source, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.Unlimited).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.Unlimited);
+            return source.Window(0, 1, deliveryPolicy).Select(b => b.ToArray(), DeliveryPolicy.SynchronousOrThrottle).Select(p => (p.Length > 1 ? p[1] : 0) - (p.Length > 0 ? p[0] : 0), DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3699,9 +3734,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of delta (decimal) values.</returns>
-        public static IProducer<decimal> Delta(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<decimal> Delta(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Delta(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3710,7 +3745,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<int> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<int> source, DeliveryPolicy<int> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log(x), deliveryPolicy);
         }
@@ -3722,9 +3757,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<int> source, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3734,7 +3769,7 @@ namespace Microsoft.Psi
         /// <param name="newBase">The base of the logarithm.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<int> source, double newBase, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<int> source, double newBase, DeliveryPolicy<int> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log(x, newBase), deliveryPolicy);
         }
@@ -3747,9 +3782,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<int> source, double newBase, Predicate<int> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<int> source, double newBase, Predicate<int> condition, DeliveryPolicy<int> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3758,7 +3793,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<long> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<long> source, DeliveryPolicy<long> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log(x), deliveryPolicy);
         }
@@ -3770,9 +3805,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<long> source, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3782,7 +3817,7 @@ namespace Microsoft.Psi
         /// <param name="newBase">The base of the logarithm.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<long> source, double newBase, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<long> source, double newBase, DeliveryPolicy<long> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log(x, newBase), deliveryPolicy);
         }
@@ -3795,9 +3830,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<long> source, double newBase, Predicate<long> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<long> source, double newBase, Predicate<long> condition, DeliveryPolicy<long> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3806,7 +3841,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<float> Log(this IProducer<float> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Log(this IProducer<float> source, DeliveryPolicy<float> deliveryPolicy = null)
         {
             return source.Select(x => (float)Math.Log(x), deliveryPolicy);
         }
@@ -3818,9 +3853,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<float> Log(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Log(this IProducer<float> source, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3830,7 +3865,7 @@ namespace Microsoft.Psi
         /// <param name="newBase">The base of the logarithm.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<float> Log(this IProducer<float> source, double newBase, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Log(this IProducer<float> source, double newBase, DeliveryPolicy<float> deliveryPolicy = null)
         {
             return source.Select(x => (float)Math.Log(x, newBase), deliveryPolicy);
         }
@@ -3843,9 +3878,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<float> Log(this IProducer<float> source, double newBase, Predicate<float> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<float> Log(this IProducer<float> source, double newBase, Predicate<float> condition, DeliveryPolicy<float> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3854,7 +3889,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<double> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<double> source, DeliveryPolicy<double> deliveryPolicy = null)
         {
             return source.Select(Math.Log, deliveryPolicy);
         }
@@ -3866,9 +3901,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<double> source, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3878,7 +3913,7 @@ namespace Microsoft.Psi
         /// <param name="newBase">The base of the logarithm.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<double> source, double newBase, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<double> source, double newBase, DeliveryPolicy<double> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log(x, newBase), deliveryPolicy);
         }
@@ -3891,9 +3926,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<double> source, double newBase, Predicate<double> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<double> source, double newBase, Predicate<double> condition, DeliveryPolicy<double> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3902,7 +3937,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<decimal> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<decimal> source, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log((double)x), deliveryPolicy);
         }
@@ -3914,9 +3949,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of natural (base e) logarithms.</returns>
-        public static IProducer<double> Log(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<decimal> source, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -3926,7 +3961,7 @@ namespace Microsoft.Psi
         /// <param name="newBase">The base of the logarithm.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<decimal> source, double newBase, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<decimal> source, double newBase, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
             return source.Select(x => Math.Log((double)x, newBase), deliveryPolicy);
         }
@@ -3939,9 +3974,9 @@ namespace Microsoft.Psi
         /// <param name="condition">A function to test each value for a condition.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of logarithms in given base.</returns>
-        public static IProducer<double> Log(this IProducer<decimal> source, double newBase, Predicate<decimal> condition, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<double> Log(this IProducer<decimal> source, double newBase, Predicate<decimal> condition, DeliveryPolicy<decimal> deliveryPolicy = null)
         {
-            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.Unlimited);
+            return source.Where(condition, deliveryPolicy).Log(newBase, DeliveryPolicy.SynchronousOrThrottle);
         }
 
 #endregion Miscellaneous

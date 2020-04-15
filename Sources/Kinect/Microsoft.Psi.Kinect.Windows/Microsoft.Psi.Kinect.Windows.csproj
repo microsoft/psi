@@ -7,7 +7,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Release\net47\Microsoft.Psi.Kinect.Windows.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\net472\Microsoft.Psi.Kinect.Windows.xml</DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -15,7 +15,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Debug\net47\Microsoft.Psi.Kinect.Windows.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\net472\Microsoft.Psi.Kinect.Windows.xml</DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -28,7 +28,7 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.8.1" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.0" />
     <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
     <PackageReference Include="Microsoft.Kinect" Version="2.0.1410.19000" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
@@ -36,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
     <ProjectReference Include="..\..\Calibration\Microsoft.Psi.Calibration\Microsoft.Psi.Calibration.csproj" />
+    <ProjectReference Include="..\..\Devices\Microsoft.Psi.DeviceManagement\Microsoft.Psi.DeviceManagement.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
   </ItemGroup>

@@ -49,11 +49,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMinIEnumerableDouble()
+        public void StatisticsMinDoubleArray()
         {
             this.RunTest(Operators.Min,
                 (
-                    new IEnumerable<double>[] // sequence of enumerations
+                    new double[][] // sequence of enumerations
                     {
                         new[] { 1.0 },
                         new[] { 1.0, 2.0 },
@@ -69,7 +69,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMinEmptyIEnumerableDouble()
+        public void StatisticsMinEmptyDoubleArray()
         {
             Exception error = null;
 
@@ -77,7 +77,7 @@ namespace Test.Psi
             {
                 this.RunTest(Operators.Min,
                     (
-                        new IEnumerable<double>[] { new double[] { } }, // sequence containing an empty enumeration
+                        new double[][] { new double[] { } }, // sequence containing an empty enumeration
                         new double[] { } // no expected output - should throw
                     )
                 );
@@ -94,11 +94,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMinIEnumerableNullableDouble()
+        public void StatisticsMinNullableDoubleArray()
         {
             this.RunTest(Operators.Min,
                 (
-                    new IEnumerable<double?>[] // sequence of enumerations
+                    new double?[][] // sequence of enumerations
                     {
                         new double?[] { },
                         new double?[] { null },
@@ -152,11 +152,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMinIEnumerableFloat()
+        public void StatisticsMinFloatArray()
         {
             this.RunTest(Operators.Min,
                 (
-                    new IEnumerable<float>[] // sequence of enumerations
+                    new float[][] // sequence of enumerations
                     {
                         new[] { 1.0f },
                         new[] { 1.0f, 2.0f },
@@ -172,7 +172,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMinEmptyIEnumerableFloat()
+        public void StatisticsMinEmptyFloatArray()
         {
             Exception error = null;
 
@@ -180,7 +180,7 @@ namespace Test.Psi
             {
                 this.RunTest(Operators.Min,
                     (
-                        new IEnumerable<float>[] { new float[] { } }, // sequence containing an empty enumeration
+                        new float[][] { new float[] { } }, // sequence containing an empty enumeration
                         new float[] { } // no expected output - should throw
                     )
                 );
@@ -197,11 +197,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMinIEnumerableNullableFloat()
+        public void StatisticsMinNullableFloatArray()
         {
             this.RunTest(Operators.Min,
                 (
-                    new IEnumerable<float?>[] // sequence of enumerations
+                    new float?[][] // sequence of enumerations
                     {
                         new float?[] { },
                         new float?[] { null },
@@ -255,11 +255,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMaxIEnumerableDouble()
+        public void StatisticsMaxDoubleArray()
         {
             this.RunTest(Operators.Max,
                 (
-                    new IEnumerable<double>[] // sequence of enumerations
+                    new double[][] // sequence of enumerations
                     {
                         new[] { 1.0 },
                         new[] { 1.0, 2.0 },
@@ -275,7 +275,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMaxEmptyIEnumerableDouble()
+        public void StatisticsMaxEmptyDoubleArray()
         {
             Exception error = null;
 
@@ -283,7 +283,7 @@ namespace Test.Psi
             {
                 this.RunTest(Operators.Max,
                     (
-                        new IEnumerable<double>[] { new double[] { } }, // sequence containing an empty enumeration
+                        new double[][] { new double[] { } }, // sequence containing an empty enumeration
                         new double[] { } // no expected output - should throw
                     )
                 );
@@ -300,11 +300,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMaxIEnumerableNullableDouble()
+        public void StatisticsMaxNullableDoubleArray()
         {
             this.RunTest(Operators.Max,
                 (
-                    new IEnumerable<double?>[] // sequence of enumerations
+                    new double?[][] // sequence of enumerations
                     {
                         new double?[] { },
                         new double?[] { null },
@@ -358,11 +358,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMaxIEnumerableFloat()
+        public void StatisticsMaxFloatArray()
         {
             this.RunTest(Operators.Max,
                 (
-                    new IEnumerable<float>[] // sequence of enumerations
+                    new float[][] // sequence of enumerations
                     {
                         new[] { 1.0f },
                         new[] { 1.0f, 2.0f },
@@ -378,7 +378,7 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMaxEmptyIEnumerableFloat()
+        public void StatisticsMaxEmptyFloatArray()
         {
             Exception error = null;
 
@@ -386,7 +386,7 @@ namespace Test.Psi
             {
                 this.RunTest(Operators.Max,
                     (
-                        new IEnumerable<float>[] { new float[] { } }, // sequence containing an empty enumeration
+                        new float[][] { new float[] { } }, // sequence containing an empty enumeration
                         new float[] { } // no expected output - should throw
                     )
                 );
@@ -403,11 +403,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsMaxIEnumerableNullableFloat()
+        public void StatisticsMaxNullableFloatArray()
         {
             this.RunTest(Operators.Max,
                 (
-                    new IEnumerable<float?>[] // sequence of enumerations
+                    new float?[][] // sequence of enumerations
                     {
                         new float?[] { },
                         new float?[] { null },
@@ -461,11 +461,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsSumIEnumerableDouble()
+        public void StatisticsSumDoubleArray()
         {
             this.RunTest(Operators.Sum,
                 (
-                    new IEnumerable<double>[] // sequence of enumerations
+                    new double[][] // sequence of enumerations
                     {
                         new double[] { },
                         new[] { 1.0, 2.0, -1.5, 3.0 },
@@ -481,11 +481,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsSumIEnumerableNullableDouble()
+        public void StatisticsSumNullableDoubleArray()
         {
             this.RunTest(Operators.Sum,
                 (
-                    new IEnumerable<double?>[] // sequence of enumerations
+                    new double?[][] // sequence of enumerations
                     {
                         new double?[] { },
                         new double?[] { null },
@@ -538,11 +538,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsSumIEnumerableFloat()
+        public void StatisticsSumFloatArray()
         {
             this.RunTest(Operators.Sum,
                 (
-                    new IEnumerable<float>[] // sequence of enumerations
+                    new float[][] // sequence of enumerations
                     {
                         new float[] { },
                         new[] { 1.0f, 2.0f, -1.5f, 3.0f },
@@ -558,11 +558,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsSumIEnumerableNullableFloat()
+        public void StatisticsSumNullableFloatArray()
         {
             this.RunTest(Operators.Sum,
                 (
-                    new IEnumerable<float?>[] // sequence of enumerations
+                    new float?[][] // sequence of enumerations
                     {
                         new float?[] { },
                         new float?[] { null },
@@ -615,11 +615,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsAverageIEnumerableDouble()
+        public void StatisticsAverageDoubleArray()
         {
             this.RunTest(Operators.Average,
                 (
-                    new IEnumerable<double>[] // sequence of enumerations
+                    new double[][] // sequence of enumerations
                     {
                         new[] { 1.0 },
                         new[] { 1.0, 2.0, -1.5, 3.0 },
@@ -635,11 +635,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsAverageIEnumerableNullableDouble()
+        public void StatisticsAverageNullableDoubleArray()
         {
             this.RunTest(Operators.Average,
                 (
-                    new IEnumerable<double?>[] // sequence of enumerations
+                    new double?[][] // sequence of enumerations
                     {
                         new double?[] { },
                         new double?[] { null },
@@ -693,11 +693,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsAverageIEnumerableFloat()
+        public void StatisticsAverageFloatArray()
         {
             this.RunTest(Operators.Average,
                 (
-                    new IEnumerable<float>[] // sequence of enumerations
+                    new float[][] // sequence of enumerations
                     {
                         new[] { 1.0f },
                         new[] { 1.0f, 2.0f, -1.5f, 3.0f },
@@ -713,11 +713,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsAverageIEnumerableNullableFloat()
+        public void StatisticsAverageNullableFloatArray()
         {
             this.RunTest(Operators.Average,
                 (
-                    new IEnumerable<float?>[] // sequence of enumerations
+                    new float?[][] // sequence of enumerations
                     {
                         new float?[] { },
                         new float?[] { null },
@@ -771,11 +771,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsStdIEnumerableDouble()
+        public void StatisticsStdDoubleArray()
         {
             this.RunTest(Operators.Std,
                 (
-                    new IEnumerable<double>[] // sequence of enumerations
+                    new double[][] // sequence of enumerations
                     {
                         new double[] { },
                         new[] { 1.0 },
@@ -829,11 +829,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsStdIEnumerableFloat()
+        public void StatisticsStdFloatArray()
         {
             this.RunTest(Operators.Std,
                 (
-                    new IEnumerable<float>[] // sequence of enumerations
+                    new float[][] // sequence of enumerations
                     {
                         new float[] { },
                         new[] { 1.0f },
@@ -867,11 +867,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsStdIEnumerableDecimal()
+        public void StatisticsStdDecimalArray()
         {
             this.RunTest(Operators.Std,
                 (
-                    new IEnumerable<decimal>[] // sequence of enumerations
+                    new decimal[][] // sequence of enumerations
                     {
                         new decimal[] { },
                         new[] { 1.0m },
@@ -901,11 +901,11 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void StatisticsStdIEnumerableInt()
+        public void StatisticsStdIntArray()
         {
             this.RunTest(Operators.Std,
                 (
-                    new IEnumerable<int>[] // sequence of enumerations
+                    new int[][] // sequence of enumerations
                     {
                         new int[] { },
                         new[] { 1 },
@@ -926,7 +926,7 @@ namespace Test.Psi
         /// <param name="operator">The operator to apply to the input stream.</param>
         /// <param name="testInputOutput">A parameter list of the input sequence/expected output pairs.</param>
         private void RunTest<TInput, TOutput>(
-            Func<IProducer<TInput>, DeliveryPolicy, IProducer<TOutput>> @operator,
+            Func<IProducer<TInput>, DeliveryPolicy<TInput>, IProducer<TOutput>> @operator,
             params (TInput[] input, TOutput[] output)[] testInputOutput)
         {
             // lists for capturing test output

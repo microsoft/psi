@@ -43,14 +43,23 @@ namespace Microsoft.Psi.Visualization.Base
         /// <param name="propertyName">The name of the property to be set.</param>
         /// <param name="property">A reference to the property to be set.</param>
         /// <param name="value">The value to set the property to.</param>
-        protected void Set<T>(string propertyName, ref T property, T value)
+        /// <returns>True if the value changed, otherwise false.</returns>
+        protected bool Set<T>(string propertyName, ref T property, T value)
         {
-            if ((property != null && !property.Equals(value)) || value != null)
+            if ((property == null) && (value == null))
             {
-                this.RaisePropertyChanging(propertyName);
-                property = value;
-                this.RaisePropertyChanged(propertyName);
+                return false;
             }
+
+            if ((property != null) && (value != null) && property.Equals(value))
+            {
+                return false;
+            }
+
+            this.RaisePropertyChanging(propertyName);
+            property = value;
+            this.RaisePropertyChanged(propertyName);
+            return true;
         }
     }
 }

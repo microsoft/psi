@@ -21,6 +21,9 @@ namespace Microsoft.Psi.Speech
     /// </remarks>
     public sealed class SystemSpeechSynthesizer : ConsumerProducer<string, AudioBuffer>, ISourceComponent, IDisposable
     {
+        private static readonly string SpeakSsmlPrefix = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en\">";
+        private static readonly string SpeakSsmlPostfix = "</speak>";
+
         /// <summary>
         /// A pointer to the pipeline.
         /// </summary>
@@ -45,6 +48,10 @@ namespace Microsoft.Psi.Speech
             : base(pipeline)
         {
             this.pipeline = pipeline;
+
+            // Create additional receivers
+            this.SpeakSsml = pipeline.CreateReceiver<string>(this, this.ReceiveSpeakSsml, nameof(this.SpeakSsml));
+            this.CancelAll = pipeline.CreateReceiver<bool>(this, this.ReceiveCancelAll, nameof(this.CancelAll));
 
             // Create the emitters for the various events
             this.BookmarkReached = pipeline.CreateEmitter<BookmarkReachedEventData>(this, nameof(this.BookmarkReached));
@@ -73,6 +80,16 @@ namespace Microsoft.Psi.Speech
                 (configurationFilename == null) ? new SystemSpeechSynthesizerConfiguration() : new ConfigurationHelper<SystemSpeechSynthesizerConfiguration>(configurationFilename).Configuration)
         {
         }
+
+        /// <summary>
+        /// Gets the receiver for issuing speak SSML commands to the component.
+        /// </summary>
+        public Receiver<string> SpeakSsml { get; private set; }
+
+        /// <summary>
+        /// Gets the receiver for issuing a command to stop the speech synthesizer.
+        /// </summary>
+        public Receiver<bool> CancelAll { get; private set; }
 
         /// <summary>
         /// Gets the output stream of bookmark reached events.
@@ -165,12 +182,8 @@ namespace Microsoft.Psi.Speech
             notifyCompleted();
         }
 
-        /// <summary>
-        /// Receiver for audio data.
-        /// </summary>
-        /// <param name="utteranceText">A string containing the next utterance to synthesize.</param>
-        /// <param name="e">The message envelope for the next utterance to synthesize.</param>
-        protected override void Receive(string utteranceText, Envelope e)
+        /// <inheritdoc/>
+        protected override void Receive(string utteranceText, Envelope envelope)
         {
             // Construct the SSML for the text to speak.
             PromptBuilder pb = new PromptBuilder();
@@ -180,6 +193,50 @@ namespace Microsoft.Psi.Speech
 
             // Speak synchronously
             this.speechSynthesizer.SpeakAsync(pb);
+        }
+
+        private void ReceiveSpeakSsml(string speakSsml, Envelope envelope)
+        {
+            // Construct the prompt based on the utterance SSML
+            var ssml = this.CreatePromptSsml(speakSsml);
+            var prompt = new Prompt(ssml, SynthesisTextFormat.Ssml);
+
+            // Speak synchronously
+            this.speechSynthesizer.SpeakAsync(prompt);
+        }
+
+        private void ReceiveCancelAll(bool cancelAll, Envelope envelope)
+        {
+            this.speechSynthesizer.SpeakAsyncCancelAll();
+        }
+
+        private string CreatePromptSsml(string utteranceSsml)
+        {
+            utteranceSsml = utteranceSsml.Replace(Environment.NewLine, " ");
+
+            int speakPrefixIndex = utteranceSsml.IndexOf(SpeakSsmlPrefix);
+            int speakPostfixIndex = utteranceSsml.IndexOf(SpeakSsmlPostfix);
+
+            // construct the adjusted ssml
+            if (speakPrefixIndex != -1 && speakPostfixIndex != -1)
+            {
+                return string.Format(
+                    "{0}{1}<prosody rate=\"{2}\" pitch=\"{3}\">{4}</prosody>{5}",
+                    utteranceSsml.Substring(0, speakPrefixIndex),
+                    SpeakSsmlPrefix,
+                    this.configuration.ProsodyRate,
+                    this.configuration.ProsodyPitch,
+                    utteranceSsml.Substring(speakPrefixIndex + SpeakSsmlPrefix.Length, speakPostfixIndex - speakPrefixIndex - SpeakSsmlPrefix.Length),
+                    utteranceSsml.Substring(speakPostfixIndex));
+            }
+            else if (speakPrefixIndex == -1 && speakPostfixIndex == -1)
+            {
+                return $"{SpeakSsmlPrefix}<prosody rate=\"{this.configuration.ProsodyRate}\" pitch=\"{this.configuration.ProsodyPitch}\">{utteranceSsml}</prosody>{SpeakSsmlPostfix}";
+            }
+            else
+            {
+                throw new InvalidDataException("The provided SSML is not in a valid format.");
+            }
         }
 
         private SpeechSynthesizer CreateSpeechSynthesizer()

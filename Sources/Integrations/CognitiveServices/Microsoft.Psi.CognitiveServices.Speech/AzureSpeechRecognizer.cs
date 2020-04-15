@@ -34,30 +34,16 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// </summary>
         private SpeechRecognitionClient speechRecognitionClient;
 
-        /// <summary>
-        /// The last partial recognition result.
-        /// </summary>
-        private string lastPartialResult;
+        // The current recognition task
+        private SpeechRecognitionTask currentRecognitionTask;
 
-        /// <summary>
-        /// The time the VAD last detected the start of speech.
-        /// </summary>
-        private DateTime lastVADSpeechStartTime;
-
-        /// <summary>
-        /// The time the VAD last detected the end of speech.
-        /// </summary>
-        private DateTime lastVADSpeechEndTime;
+        // The queue of pending recognition tasks
+        private ConcurrentQueue<SpeechRecognitionTask> pendingRecognitionTasks = new ConcurrentQueue<SpeechRecognitionTask>();
 
         /// <summary>
         /// The time the last audio input contained speech.
         /// </summary>
         private DateTime lastAudioContainingSpeechTime;
-
-        /// <summary>
-        /// The time interval of the last detected speech segment.
-        /// </summary>
-        private TimeInterval lastVADSpeechTimeInterval = new TimeInterval(DateTime.Now, DateTime.Now);
 
         /// <summary>
         /// The originating time of the most recently received audio packet.
@@ -77,12 +63,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <summary>
         /// Queue of current audio buffers for the pending recognition task.
         /// </summary>
-        private ConcurrentQueue<ValueTuple<AudioBuffer, bool>> currentQueue = new ConcurrentQueue<ValueTuple<AudioBuffer, bool>>();
-
-        /// <summary>
-        /// Last contiguous audio buffer collected pending recognition.
-        /// </summary>
-        private byte[] lastAudioBuffer;
+        private Queue<ValueTuple<AudioBuffer, bool>> currentQueue = new Queue<ValueTuple<AudioBuffer, bool>>();
 
         /// <summary>
         /// The last conversation error.
@@ -185,6 +166,11 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             byte[] audioData = data.Item1.Data;
             bool hasSpeech = data.Item2;
 
+            if (this.lastAudioOriginatingTime == default)
+            {
+                this.lastAudioOriginatingTime = e.OriginatingTime - data.Item1.Duration;
+            }
+
             var previousAudioOriginatingTime = this.lastAudioOriginatingTime;
             this.lastAudioOriginatingTime = e.OriginatingTime;
 
@@ -205,12 +191,20 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             if (hasSpeech)
             {
                 this.lastAudioContainingSpeechTime = e.OriginatingTime;
-            }
 
-            if (hasSpeech || this.lastAudioContainedSpeech)
-            {
+                bool newSession = false;
+                if (!this.lastAudioContainedSpeech)
+                {
+                    // queue a new recognition task
+                    this.currentRecognitionTask = new SpeechRecognitionTask { SpeechStartTime = previousAudioOriginatingTime };
+                    this.pendingRecognitionTasks.Enqueue(this.currentRecognitionTask);
+
+                    // create a new session when sending the first audio packet
+                    newSession = true;
+                }
+
                 // Send the audio data to the cloud
-                await this.speechRecognitionClient.SendAudioAsync(audioData, this.cancellationTokenSource.Token);
+                await this.speechRecognitionClient.SendAudioAsync(audioData, this.cancellationTokenSource.Token, newSession);
 
                 // Add audio to the current utterance queue so we can reconstruct it in the recognition result later
                 this.currentQueue.Enqueue(data.DeepClone(this.In.Recycler));
@@ -219,16 +213,20 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             // If this is the last audio packet containing speech
             if (!hasSpeech && this.lastAudioContainedSpeech)
             {
-                this.lastVADSpeechEndTime = this.lastAudioContainingSpeechTime;
-                this.lastVADSpeechTimeInterval = new TimeInterval(this.lastVADSpeechStartTime, this.lastVADSpeechEndTime);
+                // If this is the first audio packet containing no speech, use the time of the previous audio packet
+                // as the end of the actual speech, since that is the last packet that contained any speech.
+                var lastVADSpeechEndTime = this.lastAudioContainingSpeechTime;
+
+                // update the latest in-progress recognition
 
                 // Allocate a buffer large enough to hold the buffered audio
                 BufferWriter bw = new BufferWriter(this.currentQueue.Sum(b => b.Item1.Length));
 
                 // Get the audio associated with the recognized text from the current queue.
                 ValueTuple<AudioBuffer, bool> buffer;
-                while (this.currentQueue.TryDequeue(out buffer))
+                while (this.currentQueue.Count > 0)
                 {
+                    buffer = this.currentQueue.Dequeue();
                     bw.Write(buffer.Item1.Data);
 
                     // We are done with this buffer so enqueue it for recycling
@@ -236,20 +234,11 @@ namespace Microsoft.Psi.CognitiveServices.Speech
                 }
 
                 // Save the buffered audio
-                this.lastAudioBuffer = bw.Buffer;
+                this.currentRecognitionTask.Audio = new AudioBuffer(bw.Buffer, this.Configuration.InputFormat);
+                this.currentRecognitionTask.SpeechEndTime = lastVADSpeechEndTime;
 
                 // Call EndAudio to signal that this is the last packet
                 await this.speechRecognitionClient.SendEndAudioAsync(this.cancellationTokenSource.Token);
-            }
-            else if (hasSpeech && !this.lastAudioContainedSpeech)
-            {
-                // If this is the first audio packet containing speech, mark the time of the previous audio packet
-                // as the start of the actual speech
-                this.lastVADSpeechStartTime = previousAudioOriginatingTime;
-
-                // Also post a null partial recognition result
-                this.lastPartialResult = string.Empty;
-                this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, this.BuildPartialSpeechRecognitionResult(this.lastPartialResult), e.OriginatingTime);
             }
 
             // Remember last audio state.
@@ -303,25 +292,28 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <param name="e">An object that contains the event data.</param>
         private void OnResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
         {
-            // Prefer VAD end time as originating time, but if there is no VAD input
-            // then use last audio packet time (which may give over-optimistic results).
-            DateTime originatingTime = (this.lastVADSpeechEndTime == DateTime.MinValue) ?
-                this.lastAudioOriginatingTime : this.lastVADSpeechEndTime;
+            // get the current (oldest) recognition task from the queue
+            if (!this.pendingRecognitionTasks.TryPeek(out var currentRecognitionTask))
+            {
+                // This proabaly means that we have just received an end-of-dictation response which normally
+                // arrives after a successful recognition result, so we would have already completed the
+                // recognition task. Hence we just ignore the response.
+                return;
+            }
 
-            if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.Success)
+            // update the in-progress recognition task
+            currentRecognitionTask.AppendResult(e.PhraseResponse);
+
+            if (currentRecognitionTask.IsDoneSpeaking)
             {
-                this.PostWithOriginatingTimeConsistencyCheck(this.Out, this.BuildSpeechRecognitionResult(e.PhraseResponse), originatingTime);
-            }
-            else if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.InitialSilenceTimeout)
-            {
-                this.PostWithOriginatingTimeConsistencyCheck(this.Out, this.BuildSpeechRecognitionResult(string.Empty), originatingTime);
-            }
-            else if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.NoMatch)
-            {
-                this.PostWithOriginatingTimeConsistencyCheck(this.Out, this.BuildSpeechRecognitionResult(this.lastPartialResult), originatingTime);
+                // current recognition task is no longer in progress so finalize and remove it
+                currentRecognitionTask.IsFinalized = true;
+                this.PostWithOriginatingTimeConsistencyCheck(this.Out, currentRecognitionTask.BuildSpeechRecognitionResult(), currentRecognitionTask.SpeechEndTime);
+                this.pendingRecognitionTasks.TryDequeue(out _);
             }
 
             // Post the raw result from the underlying recognition engine
+            var originatingTime = currentRecognitionTask.SpeechStartTime.Add(e.PhraseResponse.Offset).Add(e.PhraseResponse.Duration);
             this.PostWithOriginatingTimeConsistencyCheck(this.SpeechResponseEvent, e, originatingTime);
         }
 
@@ -332,15 +324,31 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <param name="e">An object that contains the event data.</param>
         private void OnPartialResponseReceivedHandler(object sender, PartialSpeechResponseEventArgs e)
         {
-            this.lastPartialResult = e.PartialResult;
-            var result = this.BuildPartialSpeechRecognitionResult(e.PartialResult);
+            // get the current (oldest) recognition task from the queue
+            if (!this.pendingRecognitionTasks.TryPeek(out var currentRecognitionTask))
+            {
+                // ignore if there is no in-progress task
+                return;
+            }
+
+            // add the offset and duration to the VAD start time of the utterance
+            var originatingTime = currentRecognitionTask.SpeechStartTime.Add(e.PartialResult.Offset).Add(e.PartialResult.Duration);
+
+            if (currentRecognitionTask.IsDoneSpeaking && originatingTime > currentRecognitionTask.SpeechEndTime)
+            {
+                // ignore if the computed originating time exceeds the VAD end time
+                return;
+            }
+
+            // update the in-progress recognition task
+            currentRecognitionTask.AppendResult(e.PartialResult);
 
             // Since this is a partial response, VAD may not yet have signalled the end of speech
             // so just use the last audio packet time (which will probably be ahead).
-            this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, result, this.lastAudioOriginatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, currentRecognitionTask.BuildPartialSpeechRecognitionResult(), originatingTime);
 
             // Post the raw result from the underlying recognition engine
-            this.PostWithOriginatingTimeConsistencyCheck(this.PartialSpeechResponseEvent, e, this.lastAudioOriginatingTime);
+            this.PostWithOriginatingTimeConsistencyCheck(this.PartialSpeechResponseEvent, e, originatingTime);
         }
 
         /// <summary>
@@ -393,54 +401,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             {
                 this.PostWithOriginatingTimeConsistencyCheck(this.SpeechErrorEvent, e, this.lastAudioOriginatingTime);
             }
-        }
-
-        /// <summary>
-        /// Builds a StreamingSpeechRecognitionResult object from a RecognitionResult returned by the recognizer.
-        /// </summary>
-        /// <param name="result">The RecognitionResult object.</param>
-        /// <returns>A StreamingSpeechRecognitionResult object containing the recognition results.</returns>
-        private StreamingSpeechRecognitionResult BuildSpeechRecognitionResult(RecognitionResult result)
-        {
-            return new StreamingSpeechRecognitionResult(
-                true,
-                result.Results[0].LexicalForm,
-                result.Results[0].Confidence,
-                result.Results.Select(p => new SpeechRecognitionAlternate(p.LexicalForm, p.Confidence)),
-                new AudioBuffer(this.lastAudioBuffer, this.Configuration.InputFormat),
-                this.lastVADSpeechTimeInterval.Span);
-        }
-
-        /// <summary>
-        /// Builds a StreamingSpeechRecognitionResult object for an empty recognition.
-        /// </summary>
-        /// <param name="result">The RecognitionResult object.</param>
-        /// <param name="confidence">The confidence score (if any).</param>
-        /// <returns>A StreamingSpeechRecognitionResult object containing the recognition results.</returns>
-        private StreamingSpeechRecognitionResult BuildSpeechRecognitionResult(string result, double? confidence = null)
-        {
-            return new StreamingSpeechRecognitionResult(
-                true,
-                result,
-                confidence,
-                new SpeechRecognitionAlternate[] { new SpeechRecognitionAlternate(result, confidence) },
-                new AudioBuffer(this.lastAudioBuffer, this.Configuration.InputFormat),
-                this.lastVADSpeechTimeInterval.Span);
-        }
-
-        /// <summary>
-        /// Builds a partial StreamingSpeechRecognitionResult object from a partial text result returned by the recognizer.
-        /// </summary>
-        /// <param name="partialResult">The partial result from the recognizer.</param>
-        /// <param name="confidence">The confidence score of the result (if any).</param>
-        /// <returns>A StreamingSpeechRecognitionResult object containing the partial recognition result.</returns>
-        private StreamingSpeechRecognitionResult BuildPartialSpeechRecognitionResult(string partialResult, double? confidence = null)
-        {
-            return new StreamingSpeechRecognitionResult(
-                false,
-                partialResult,
-                confidence,
-                new SpeechRecognitionAlternate[] { new SpeechRecognitionAlternate(partialResult, confidence) });
         }
     }
 }

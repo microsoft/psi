@@ -6,15 +6,14 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
     /// <summary>
     /// Represents a speech recognition result.
     /// </summary>
-    public class RecognitionResult
+    public class RecognitionResult : SpeechResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognitionResult"/> class.
         /// </summary>
-        /// <param name="speechPhraseMessage">
-        /// The speech.phrase message returned by the service.
-        /// </param>
+        /// <param name="speechPhraseMessage">The speech.phrase message returned by the service.</param>
         internal RecognitionResult(SpeechPhraseMessage speechPhraseMessage)
+            : base(speechPhraseMessage.Offset, speechPhraseMessage.Duration)
         {
             this.RecognitionStatus = speechPhraseMessage.RecognitionStatus;
 

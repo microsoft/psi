@@ -1,0 +1,206 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<UserControl
+    x:Class="Microsoft.Psi.Visualization.Views.NavigatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrls="clr-namespace:Microsoft.Psi.Visualization.Controls"
+    xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
+    xmlns:views="clr-namespace:Microsoft.Psi.Visualization.Views"
+    mc:Ignorable="d" 
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <conv:TimeSpanConverter x:Key="TimeSpanConverter" />
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Microsoft.Psi.Visualization.Common.Windows;component/Themes/Brushes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="Root" Background="{StaticResource TimelineDarkBrush}" ClipToBounds="True" MouseLeftButtonDown="Root_MouseLeftButtonDown" MouseRightButtonDown="Root_MouseRightButtonDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" IsHitTestVisible="False">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Visibility="{Binding ShowTimingHeader, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Text="Selection Start" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="2" Text="Cursor" Margin="2" HorizontalAlignment="Right">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource LiveCursorBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="False">
+                                        <Setter Property="Foreground" Value="{StaticResource CursorBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" Text="Selection End" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="4" Text="Session End" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
+
+                <Grid Grid.Row="1" Visibility="{Binding ShowAbsoluteTiming, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Absolute Time" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionRange.StartTime, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="2" Text="{Binding Cursor, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" Margin="2" HorizontalAlignment="Right">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource LiveCursorBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="False">
+                                        <Setter Property="Foreground" Value="{StaticResource CursorBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionRange.EndTime, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="4" Text="{Binding DataRange.EndTime, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
+
+                <Grid Grid.Row="2" Visibility="{Binding ShowTimingRelativeToSessionStart, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Relative to Session Start" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="2" Text="{Binding CursorRelativeToSessionStartFormatted}" Margin="2" HorizontalAlignment="Right">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource LiveCursorBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="False">
+                                        <Setter Property="Foreground" Value="{StaticResource CursorBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="4" Text="{Binding DataRange.Duration, StringFormat=hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
+
+                <Grid Grid.Row="3" Visibility="{Binding ShowTimingRelativeToSelectionStart, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Relative to Selection Start" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="00:00:00.0000" Foreground="{StaticResource SelectionStartBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="2" Text="{Binding CursorRelativeToSelectionStartFormatted}" Margin="2" HorizontalAlignment="Right">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource LiveCursorBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsCursorModeLive}" Value="False">
+                                        <Setter Property="Foreground" Value="{StaticResource CursorBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionRange.Duration, StringFormat=hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource SelectionEndBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="4" Text="{Binding SessionEndRelativeToSelectionStartFormatted}" Foreground="{StaticResource ForegroundBrush}" Margin="2" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" BorderBrush="{StaticResource DarkBackgroundBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" >
+                    <Canvas x:Name="Canvas">
+                        <Rectangle Height="2" Width="4000" Fill="{StaticResource TimelineDividerBrush}" Canvas.Top="27" />
+                        <Thumb x:Name="ViewRangeThumb" Canvas.Left="10" Width="40" Height="30" Canvas.Top="0" DragDelta="Thumb_OnDragDelta"  DragCompleted="Thumb_OnDragCompleted">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Grid x:Name="ViewRangeMarker">
+                                        <Rectangle Height="30" Width="4000" Fill="{StaticResource TimelineLightBrush}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                        <Thumb x:Name="ViewStartThumb" Canvas.Left="10" Canvas.Top="0" Cursor="SizeWE"  DragDelta="Thumb_OnDragDelta"  DragCompleted="Thumb_OnDragCompleted">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Rectangle x:Name="ViewStartMarker" Height="29" Width="2" Fill="{StaticResource TimelineDividerBrush}" />
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                        <Thumb x:Name="ViewEndThumb" Canvas.Left="50" Canvas.Top="0" Cursor="SizeWE" DragDelta="Thumb_OnDragDelta"  DragCompleted="Thumb_OnDragCompleted">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Rectangle x:Name="ViewEndMarker" Height="29" Width="2" Fill="{StaticResource TimelineDividerBrush}" />
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Canvas>
+
+                    <views:TimelineView Mode="DataRange" />
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Rectangle Height="30" Width="4000" Fill="{StaticResource TimelineLightBrush}" />
+                    <ctrls:TimelineScroller Navigator="{Binding .}" IsHitTestVisible="True" Background="Transparent">
+                        <views:TimelineView />
+                    </ctrls:TimelineScroller>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

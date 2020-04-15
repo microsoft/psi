@@ -49,7 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Language", "Language", "{8F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Language", "Sources\Language\Microsoft.Psi.Language\Microsoft.Psi.Language.csproj", "{8AC7DE3C-DF3C-44A8-9E69-E1F21BF3E564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Speech.Windows", "Sources\Speech\Test.Psi.Speech.Windows\Test.Psi.Speech.Windows.csproj", "{FFFD905A-1672-4920-B790-EEA6A961383C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Speech.Windows", "Sources\Speech\Test.Psi.Speech.Windows\Test.Psi.Speech.Windows.csproj", "{FFFD905A-1672-4920-B790-EEA6A961383C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Audio", "Sources\Audio\Test.Psi.Audio\Test.Psi.Audio.csproj", "{7D481D0D-75C2-4E9F-9FE3-43EB63403F2B}"
 EndProject
@@ -71,7 +71,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Data", "Sourc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Data", "Sources\Data\Test.Psi.Data\Test.Psi.Data.csproj", "{91184A9B-5AB9-4715-B853-8E95E5065AA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Kinect.Windows.x64", "Sources\Kinect\Test.Psi.Kinect.Windows.x64\Test.Psi.Kinect.Windows.x64.csproj", "{3A3F1C2C-A805-4EA2-B5AE-80371B565A15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Kinect.Windows.x64", "Sources\Kinect\Test.Psi.Kinect.Windows.x64\Test.Psi.Kinect.Windows.x64.csproj", "{3A3F1C2C-A805-4EA2-B5AE-80371B565A15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Calibration", "Calibration", "{DF620739-6A2F-49F0-A732-6575879F1D86}"
 EndProject
@@ -91,15 +91,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ROS", "ROS", "{FAEDAFC0-CAB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CognitiveServices", "CognitiveServices", "{05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Face.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Face.Windows\Microsoft.Psi.CognitiveServices.Face.Windows.csproj", "{B7E2B341-CD5F-432F-B7E2-10CA9315499C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Language", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language\Microsoft.Psi.CognitiveServices.Language.csproj", "{7F967CC6-905A-4198-A667-F9953C8A2139}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Speech", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Speech\Microsoft.Psi.CognitiveServices.Speech.csproj", "{CFB5E6D3-C2FD-4D46-B8AC-7E39634E2CA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Vision.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Vision.Windows\Microsoft.Psi.CognitiveServices.Vision.Windows.csproj", "{334726D9-6524-4318-82F1-4B72A1027E6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Vision", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Vision\Microsoft.Psi.CognitiveServices.Vision.csproj", "{334726D9-6524-4318-82F1-4B72A1027E6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.CognitiveServices.Vision.Windows", "Sources\Integrations\CognitiveServices\Test.Psi.CognitiveServices.Vision.Windows\Test.Psi.CognitiveServices.Vision.Windows.csproj", "{2AE339CD-1D81-46F4-AA19-703EB0CF86FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.CognitiveServices.Vision.Windows", "Sources\Integrations\CognitiveServices\Test.Psi.CognitiveServices.Vision.Windows\Test.Psi.CognitiveServices.Vision.Windows.csproj", "{2AE339CD-1D81-46F4-AA19-703EB0CF86FB}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Microsoft.Psi.ROS", "Sources\Integrations\ROS\Microsoft.Psi.ROS\Microsoft.Psi.ROS.fsproj", "{BE4A63D6-8153-458C-AC0E-744C320AA521}"
 EndProject
@@ -122,9 +120,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{8FEFAB80
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PsiStudio", "PsiStudio", "{0E72598E-2A93-4439-B732-8763CD99F2C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.PsiStudio", "Sources\Tools\PsiStudio\Microsoft.Psi.PsiStudio\Microsoft.Psi.PsiStudio.csproj", "{C72AED47-F5FF-4B7B-BD11-62149542FB22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.PsiStudio", "Sources\Tools\PsiStudio\Microsoft.Psi.PsiStudio\Microsoft.Psi.PsiStudio.csproj", "{C72AED47-F5FF-4B7B-BD11-62149542FB22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.PsiStudio", "Sources\Tools\PsiStudio\Test.Psi.PsiStudio\Test.Psi.PsiStudio.csproj", "{5600A9AF-934C-4225-B05D-F11DBC29E0FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.PsiStudio", "Sources\Tools\PsiStudio\Test.Psi.PsiStudio\Test.Psi.PsiStudio.csproj", "{5600A9AF-934C-4225-B05D-F11DBC29E0FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Visualization.Common.Windows", "Sources\Visualization\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj", "{D69636BA-CCE9-4A85-845E-A378A2B03D62}"
 EndProject
@@ -134,15 +132,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Speech", "Sources\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Visualization", "Sources\Visualization\Test.Psi.Visualization\Test.Psi.Visualization.csproj", "{3F40EF71-126D-4D2B-84DB-37A574091B13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCVSample", "Samples\OpenCVSample\OpenCVSample\OpenCVSample.csproj", "{A04D4DFC-2843-4BC4-96A0-F03631700506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCVSample", "Samples\OpenCVSample\OpenCVSample\OpenCVSample.csproj", "{A04D4DFC-2843-4BC4-96A0-F03631700506}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCVSample.Interop", "Samples\OpenCVSample\OpenCVSample.Interop\OpenCVSample.Interop.vcxproj", "{0C0D11F0-04C4-41D3-AF43-7C2ACA90214A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectSample", "Samples\KinectSample\KinectSample.csproj", "{C42C2219-487C-479E-87E7-90E1E47AB049}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinectSample", "Samples\KinectSample\KinectSample.csproj", "{C42C2219-487C-479E-87E7-90E1E47AB049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechSample", "Samples\SpeechSample\SpeechSample.csproj", "{C5AB7394-68FB-4641-BDAE-8A956EDC44A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechSample", "Samples\SpeechSample\SpeechSample.csproj", "{C5AB7394-68FB-4641-BDAE-8A956EDC44A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebcamWithAudioSample", "Samples\WebcamWithAudioSample\WebcamWithAudioSample.csproj", "{F2C129EC-E1BE-4F37-AA91-C48D1B98D75A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebcamWithAudioSample", "Samples\WebcamWithAudioSample\WebcamWithAudioSample.csproj", "{F2C129EC-E1BE-4F37-AA91-C48D1B98D75A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicrosoftSpeech", "MicrosoftSpeech", "{F4700C50-5E28-41BC-8D0E-7443B190C42C}"
 EndProject
@@ -150,9 +148,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.MicrosoftSpee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Imaging.Linux", "Sources\Imaging\Microsoft.Psi.Imaging.Linux\Microsoft.Psi.Imaging.Linux.csproj", "{B9F00634-88A1-40EF-9DAD-814A307AD81F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Windows", "Sources\Runtime\Test.Psi.Windows\Test.Psi.Windows.csproj", "{BE194924-7162-405D-BF6E-E6086BAA12F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Windows", "Sources\Runtime\Test.Psi.Windows\Test.Psi.Windows.csproj", "{BE194924-7162-405D-BF6E-E6086BAA12F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfSample", "Samples\WpfSample\WpfSample.csproj", "{65DF8A90-AF28-4F59-BF48-AF1E681397A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfSample", "Samples\WpfSample\WpfSample.csproj", "{65DF8A90-AF28-4F59-BF48-AF1E681397A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Kinect.Face.Windows.x64", "Sources\Kinect\Microsoft.Psi.Kinect.Face.Windows.x64\Microsoft.Psi.Kinect.Face.Windows.x64.csproj", "{4478A162-4FE9-4737-A630-3899DC5935C6}"
 EndProject
@@ -191,7 +189,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PsiStoreTool", "Sources\Too
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Language.Windows", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language.Windows\Microsoft.Psi.CognitiveServices.Language.Windows.csproj", "{FE571017-BC81-4B70-A876-58A52CAB40B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Msagl.WpfGraphControl", "Sources\Visualization\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj", "{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Msagl.WpfGraphControl", "Sources\Visualization\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj", "{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Devices", "Devices", "{8AEFDD4F-CF2E-4392-AF46-378DE96126A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.DeviceManagement", "Sources\Devices\Microsoft.Psi.DeviceManagement\Microsoft.Psi.DeviceManagement.csproj", "{6B572F54-0E2F-4223-8283-14B3BAB7534A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Face", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Face\Microsoft.Psi.CognitiveServices.Face.csproj", "{084FB05C-4022-40FD-B00B-E3229B882F08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -287,10 +291,6 @@ Global
 		{808E6F51-9810-4461-AF4E-EF42EE47C806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808E6F51-9810-4461-AF4E-EF42EE47C806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{808E6F51-9810-4461-AF4E-EF42EE47C806}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7E2B341-CD5F-432F-B7E2-10CA9315499C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7E2B341-CD5F-432F-B7E2-10CA9315499C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7E2B341-CD5F-432F-B7E2-10CA9315499C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7E2B341-CD5F-432F-B7E2-10CA9315499C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7F967CC6-905A-4198-A667-F9953C8A2139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F967CC6-905A-4198-A667-F9953C8A2139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F967CC6-905A-4198-A667-F9953C8A2139}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -355,10 +355,10 @@ Global
 		{0C0D11F0-04C4-41D3-AF43-7C2ACA90214A}.Debug|Any CPU.Build.0 = Debug|x64
 		{0C0D11F0-04C4-41D3-AF43-7C2ACA90214A}.Release|Any CPU.ActiveCfg = Release|x64
 		{0C0D11F0-04C4-41D3-AF43-7C2ACA90214A}.Release|Any CPU.Build.0 = Release|x64
-		{C42C2219-487C-479E-87E7-90E1E47AB049}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{C42C2219-487C-479E-87E7-90E1E47AB049}.Debug|Any CPU.Build.0 = Debug|x64
-		{C42C2219-487C-479E-87E7-90E1E47AB049}.Release|Any CPU.ActiveCfg = Release|x64
-		{C42C2219-487C-479E-87E7-90E1E47AB049}.Release|Any CPU.Build.0 = Release|x64
+		{C42C2219-487C-479E-87E7-90E1E47AB049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42C2219-487C-479E-87E7-90E1E47AB049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42C2219-487C-479E-87E7-90E1E47AB049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42C2219-487C-479E-87E7-90E1E47AB049}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5AB7394-68FB-4641-BDAE-8A956EDC44A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5AB7394-68FB-4641-BDAE-8A956EDC44A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5AB7394-68FB-4641-BDAE-8A956EDC44A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -427,6 +427,14 @@ Global
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B572F54-0E2F-4223-8283-14B3BAB7534A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B572F54-0E2F-4223-8283-14B3BAB7534A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B572F54-0E2F-4223-8283-14B3BAB7534A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B572F54-0E2F-4223-8283-14B3BAB7534A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084FB05C-4022-40FD-B00B-E3229B882F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084FB05C-4022-40FD-B00B-E3229B882F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084FB05C-4022-40FD-B00B-E3229B882F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084FB05C-4022-40FD-B00B-E3229B882F08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -469,7 +477,6 @@ Global
 		{916962DE-E7D5-4FBB-8B62-42872488ED9E} = {A0856299-D28A-4513-B964-3FA5290FF160}
 		{FAEDAFC0-CAB3-4877-8AE4-CDDB2CEEB8F5} = {916962DE-E7D5-4FBB-8B62-42872488ED9E}
 		{05481E26-A4CA-4F7D-B6FC-671A8AAC18B1} = {916962DE-E7D5-4FBB-8B62-42872488ED9E}
-		{B7E2B341-CD5F-432F-B7E2-10CA9315499C} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{7F967CC6-905A-4198-A667-F9953C8A2139} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{CFB5E6D3-C2FD-4D46-B8AC-7E39634E2CA9} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{334726D9-6524-4318-82F1-4B72A1027E6E} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
@@ -510,6 +517,9 @@ Global
 		{896CE6A5-59AA-4F7B-90EB-562F47D3C49E} = {8FEFAB80-0A89-4109-9104-5E937315C913}
 		{FE571017-BC81-4B70-A876-58A52CAB40B4} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 		{F1D041E0-DDB2-41B8-97EE-5539B10D91BE} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
+		{8AEFDD4F-CF2E-4392-AF46-378DE96126A5} = {A0856299-D28A-4513-B964-3FA5290FF160}
+		{6B572F54-0E2F-4223-8283-14B3BAB7534A} = {8AEFDD4F-CF2E-4392-AF46-378DE96126A5}
+		{084FB05C-4022-40FD-B00B-E3229B882F08} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

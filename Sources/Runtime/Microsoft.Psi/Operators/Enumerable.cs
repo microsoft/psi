@@ -26,7 +26,7 @@ namespace Microsoft.Psi
         /// <param name="condition">Predicate condition while which values will be enumerated (otherwise infinite).</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Enumerable with elements from the source stream.</returns>
-        public static IEnumerable<T> ToEnumerable<T>(this IProducer<T> source, Func<T, bool> condition = null, DeliveryPolicy deliveryPolicy = null)
+        public static IEnumerable<T> ToEnumerable<T>(this IProducer<T> source, Func<T, bool> condition = null, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return new StreamEnumerable<T>(source, condition, deliveryPolicy);
         }
@@ -45,7 +45,7 @@ namespace Microsoft.Psi
             /// <param name="source">The source stream to enumerate.</param>
             /// <param name="predicate">Predicate (filter) function.</param>
             /// <param name="deliveryPolicy">An optional delivery policy.</param>
-            public StreamEnumerable(IProducer<T> source, Func<T, bool> predicate = null, DeliveryPolicy deliveryPolicy = null)
+            public StreamEnumerable(IProducer<T> source, Func<T, bool> predicate = null, DeliveryPolicy<T> deliveryPolicy = null)
             {
                 this.enumerator = new StreamEnumerator(predicate ?? (_ => true));
 

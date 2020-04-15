@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="configuration">The resampler configuration.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of resampled audio.</returns>
-        public static IProducer<AudioBuffer> Resample(this IProducer<AudioBuffer> source, AudioResamplerConfiguration configuration, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<AudioBuffer> Resample(this IProducer<AudioBuffer> source, AudioResamplerConfiguration configuration, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
         {
             return source.PipeTo(new AudioResampler(source.Out.Pipeline, configuration), deliveryPolicy);
         }
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="outputFormat">The desired audio output format for the resampled stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of resampled audio.</returns>
-        public static IProducer<AudioBuffer> Resample(this IProducer<AudioBuffer> source, WaveFormat outputFormat, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<AudioBuffer> Resample(this IProducer<AudioBuffer> source, WaveFormat outputFormat, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
         {
             return Resample(source, new AudioResamplerConfiguration() { OutputFormat = outputFormat }, deliveryPolicy);
         }

@@ -27,7 +27,6 @@ namespace Microsoft.Psi.Visualization
             allTypes.Where(type => type.IsSubclassOf(typeof(VisualizationObject))).ToList().ForEach((type) => this.AddType(type));
             allTypes.Where(type => type.IsSubclassOf(typeof(VisualizationPanel))).ToList().ForEach((type) => this.AddType(type));
             this.AddType(typeof(VisualizationObject));
-            this.AddType(typeof(VisualizationObject<>));
             this.AddType(typeof(VisualizationPanel));
             this.AddType(typeof(VisualizationContainer));
         }
@@ -41,7 +40,6 @@ namespace Microsoft.Psi.Visualization
         /// <inheritdoc />
         public override Type ResolveName(string typeName, string typeNamespace, Type declaredType, DataContractResolver knownTypeResolver)
         {
-            Console.WriteLine($"{typeName} {typeNamespace}");
             if (this.typeMap.ContainsKey(typeName))
             {
                 return this.typeMap[typeName];

@@ -127,7 +127,7 @@ namespace Microsoft.Psi.Samples.SpeechSample
                         Language = "en-US",
                         Grammars = new GrammarInfo[]
                         {
-                            new GrammarInfo() { Name = Program.AppName, FileName = "SampleGrammar.grxml" },
+                                new GrammarInfo() { Name = Program.AppName, FileName = "SampleGrammar.grxml" },
                         },
                     });
 

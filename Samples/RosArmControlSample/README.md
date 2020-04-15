@@ -321,40 +321,26 @@ Disconnect()
 The callback takes a sequence of name/value tuples:
 
 ```C#
-public event EventHandler<Tuple<float, float, float>> PositionChanged;
+public event EventHandler<(float, float, float)> PositionChanged;
 
 private float x, y, z;
 
 private void PositionUpdate(IEnumerable<Tuple<string, RosMessage.RosFieldVal>> position)
 {
-    foreach (var p in position)
-    {
-        var name = p.Item1;
-        var val = RosMessage.GetFloat32Val(p.Item2);
-        switch (name)
-        {
-            case "x":
-                this.x = val;
-                break;
-            case "y":
-                this.y = val;
-                break;
-            case "z":
-                this.z = val;
-                break;
-        }
-    }
-
-    if (this.PositionChanged != null)
-    {
-        this.PositionChanged(this, Tuple.Create(this.x, this.y, this.z));
-    }
+    dynamic pos = RosMessage.GetDynamicFieldVals(position);
+    this.x = pos.x;
+    this.y = pos.y;
+    this.z = pos.z;
+    this.PositionChanged?.Invoke(this, (this.x, this.y, this.z));
 }
 ```
 
-You're responsible for "parsing" the sequence of field values, which may themselves be composite structures forming trees.
-This is _much_ simpler to do in F# with destructuring bind and you can see plenty of examples of this in the ROS project.
-But in this case, in C#, we'll just iterate the fields and store away the `x`/`y`/`z` values which will be used now to control the arm.
+Incoming ROS messages (given to `PositionUpdate(...)`) are sequences of name/`RosFieldVal` (note, not `RosFieldDef`), and may themselves be composite structures forming trees.
+We may parse this however we like. There are static helper functions in `RosMessage` to convert individual values
+(e.g. `GetInt32Val(...)`, `GetFixedArrayVal(...)`, `GetStructVal(...)`, ...) as well as a function to convert
+to `dynamic` (`GetDynamicVal(...)`).
+
+Above we get as a `dynamic` with expected `x`/`y`/`z` properties and store these away to be used now to control the arm.
 
 Notice that we surface the stream of position updates as a `PositionChanged` event. This seems reasonable.
 In some cases, you may want to delay subscribing to the ROS topic until someone has actually bound the event, but we'll keep it simple here.
@@ -480,15 +466,15 @@ class UArmComponent
         this.arm = arm;
     }
 
-    public Receiver<Tuple<float, float>> Beep { get; private set; }
+    public Receiver<(float, float)> Beep { get; private set; }
 
     public Receiver<bool> Pump { get; private set; }
 
-    public Receiver<Tuple<float, float, float>> AbsolutePosition { get; private set; }
+    public Receiver<(float, float, float)> AbsolutePosition { get; private set; }
 
-    public Receiver<Tuple<float, float, float>> RelativePosition { get; private set; }
+    public Receiver<(float, float, float)> RelativePosition { get; private set; }
 
-    public Emitter<Tuple<float, float, float>> PositionChanged { get; private set; }
+    public Emitter<(float, float, float)> PositionChanged { get; private set; }
 }
 ```
 
@@ -498,18 +484,18 @@ The `Receiver`s are merely be wired to methods on the `arm`:
 public UArmComponent(Pipeline pipeline, UArm arm)
 {
     ...
-    this.Beep = pipeline.CreateReceiver<Tuple<float, float>>(this, (b, _) => this.arm.Beep(b.Item1, b.Item2), nameof(this.Beep));
+    this.Beep = pipeline.CreateReceiver<(float, float)>(this, (b, _) => this.arm.Beep(b.Item1, b.Item2), nameof(this.Beep));
     this.Pump = pipeline.CreateReceiver<bool>(this, (p, _) => this.arm.Pump(p), nameof(this.Pump));
-    this.AbsolutePosition = pipeline.CreateReceiver<Tuple<float, float, float>>(this, (p, _) => this.arm.AbsolutePosition(p.Item1, p.Item2, p.Item3), nameof(this.AbsolutePosition));
-    this.RelativePosition = pipeline.CreateReceiver<Tuple<float, float, float>>(this, (p, _) => this.arm.RelativePosition(p.Item1, p.Item2, p.Item3), nameof(this.RelativePosition));
-    this.PositionChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PositionChanged));
+    this.AbsolutePosition = pipeline.CreateReceiver<(float, float, float)>(this, (p, _) => this.arm.AbsolutePosition(p.Item1, p.Item2, p.Item3), nameof(this.AbsolutePosition));
+    this.RelativePosition = pipeline.CreateReceiver<(float, float, float)>(this, (p, _) => this.arm.RelativePosition(p.Item1, p.Item2, p.Item3), nameof(this.RelativePosition));
+    this.PositionChanged = pipeline.CreateEmitter<(float, float, float)>(this, nameof(this.PositionChanged));
 }
 ```
 
 We'll make an event handler for position changes that `Post`s on the `Emitter`:
 
 ```C#
-private void OnPositionChanged(object sender, Tuple<float, float, float> position)
+private void OnPositionChanged(object sender, (float, float, float) position)
 {
     this.PositionChanged.Post(position, this.pipeline.GetCurrentTime());
 }
@@ -584,7 +570,7 @@ using (var pipeline = Pipeline.Create())
 Setting up the beep is similar:
 
 ```C#
-keys.Where(k => k == ConsoleKey.B).Select(_ => Tuple.Create(500f, 0.1f)).PipeTo(arm.Beep);
+keys.Where(k => k == ConsoleKey.B).Select(_ => (500f, 0.1f)).PipeTo(arm.Beep);
 ```
 
 Reporting the positions is simply a side-effecting `Do()` on the `PositionChanged` stream:
@@ -600,15 +586,15 @@ keys.Select(k =>
 {
     switch (k)
     {
-        case ConsoleKey.U: return Tuple.Create(0f, 0f, -10f);
-        case ConsoleKey.D: return Tuple.Create(0f, 0f, 10f);
-        case ConsoleKey.LeftArrow: return Tuple.Create(0f, -10f, 0f);
-        case ConsoleKey.RightArrow: return Tuple.Create(0f, 10f, 0f);
-        case ConsoleKey.UpArrow: return Tuple.Create(-10f, 0f, 0f);
-        case ConsoleKey.DownArrow: return Tuple.Create(10f, 0f, 0f);
-        default: return null;
+        case ConsoleKey.U: return (0f, 0f, -10f);
+        case ConsoleKey.D: return (0f, 0f, 10f);
+        case ConsoleKey.LeftArrow: return (0f, -10f, 0f);
+        case ConsoleKey.RightArrow: return (0f, 10f, 0f);
+        case ConsoleKey.UpArrow: return (-10f, 0f, 0f);
+        case ConsoleKey.DownArrow: return (10f, 0f, 0f);
+        default: return (0f, 0f, 0f);
     }
-}).Where(p => p != null).PipeTo(arm.RelativePosition);
+}).PipeTo(arm.RelativePosition);
 ```
 
 Hopefully this has helped with understanding how to interface with ROS from Windows with the bridge library and how to then build \psi components to control robots.

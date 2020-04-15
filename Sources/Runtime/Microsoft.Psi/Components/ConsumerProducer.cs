@@ -6,8 +6,8 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// This is the base class for any component that transforms an input type into an output type.
     /// Derive from thsi class if your component has more than one input or more than one output.
-    /// Otherwise, use one of the the <see cref="Operators.Select{TIn, TOut}(IProducer{TIn}, System.Func{TIn, Envelope, TOut}, DeliveryPolicy)"/>
-    /// or <see cref="Operators.Process{TIn, TOut}(IProducer{TIn}, System.Action{TIn, Envelope, Emitter{TOut}}, DeliveryPolicy)"/> operators.
+    /// Otherwise, use one of the the <see cref="Operators.Select{TIn, TOut}(IProducer{TIn}, System.Func{TIn, Envelope, TOut}, DeliveryPolicy{TIn})"/>
+    /// or <see cref="Operators.Process{TIn, TOut}(IProducer{TIn}, System.Action{TIn, Envelope, Emitter{TOut}}, DeliveryPolicy{TIn})"/> operators.
     /// </summary>
     /// <typeparam name="TIn">The input message type.</typeparam>
     /// <typeparam name="TOut">The output message type.</typeparam>

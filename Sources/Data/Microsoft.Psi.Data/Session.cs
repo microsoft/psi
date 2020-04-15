@@ -199,27 +199,13 @@ namespace Microsoft.Psi.Data
                                 replayDescriptor = ReplayDescriptor.ReplayAll;
                             }
 
-                            pipeline.RunAsync(replayDescriptor);
+                            pipeline.RunAsync(replayDescriptor, progress != null ? new Progress<double>(p => progress.Report((null, p))) : null);
 
                             var durationTicks = pipeline.ReplayDescriptor.End.Ticks - pipeline.ReplayDescriptor.Start.Ticks;
                             while (!pipeline.WaitAll(100))
                             {
                                 // periodically check for cancellation
                                 cancellationToken.ThrowIfCancellationRequested();
-
-                                if (progress != null)
-                                {
-                                    try
-                                    {
-                                        var currentTime = pipeline.GetCurrentTime();
-                                        progress.Report((null, (currentTime.Ticks - pipeline.ReplayDescriptor.Start.Ticks) / (double)durationTicks));
-                                    }
-                                    catch (InvalidOperationException)
-                                    {
-                                        // Workaround for when pipeline ends before call to GetCurrentTime(), until Pipeline supports progress reporting
-                                        progress.Report((null, 1.0));
-                                    }
-                                }
                             }
                         }
                     }

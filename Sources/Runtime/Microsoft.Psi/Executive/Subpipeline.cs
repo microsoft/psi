@@ -15,37 +15,49 @@ namespace Microsoft.Psi
     /// <remarks>This is essentially a pipeline as a component within other pipelines.</remarks>
     public class Subpipeline : Pipeline, ISourceComponent
     {
-        private Pipeline parent;
+        private readonly Pipeline parentPipeline;
         private Action<DateTime> notifyCompletionTime;
         private Action notifyCompleted;
         private bool hasSourceComponents;
         private bool completed;
+        private ReplayDescriptor replayDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Subpipeline"/> class.
         /// </summary>
         /// <param name="parent">Parent pipeline.</param>
         /// <param name="name">Subpipeline name (inherits "Sub<Parent>" name if unspecified)</Parent>.</param>
-        /// <param name="deliveryPolicy">Pipeline-level delivery policy (inherits from parent if unspecified).</param>
-        public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
-            : base(name ?? $"Sub{parent.Name}", deliveryPolicy ?? parent.DeliveryPolicy, parent.Scheduler, new SchedulerContext(), parent.DiagnosticsCollector, parent.DiagnosticsConfiguration)
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
+        public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)
+            : base(
+                  name ?? $"Sub[{parent.Name}]",
+                  defaultDeliveryPolicy,
+                  parent.Scheduler,
+                  new SchedulerContext(),
+                  parent.DiagnosticsCollector,
+                  parent.DiagnosticsConfiguration)
         {
-            this.parent = parent;
+            this.parentPipeline = parent;
 
             // ensures that the subpipeline is registered with the parent
-            this.parent.GetOrCreateNode(this);
+            this.parentPipeline.GetOrCreateNode(this);
         }
+
+        /// <summary>
+        /// Gets the parent pipeline.
+        /// </summary>
+        protected Pipeline ParentPipeline { get => this.parentPipeline; }
 
         /// <summary>
         /// Create subpipeline.
         /// </summary>
         /// <param name="parent">Parent pipeline.</param>
         /// <param name="name">Subpipeline name.</param>
-        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
         /// <returns>Created subpipeline.</returns>
-        public static Subpipeline Create(Pipeline parent, string name = null, DeliveryPolicy deliveryPolicy = null)
+        public static Subpipeline Create(Pipeline parent, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)
         {
-            return new Subpipeline(parent, name, deliveryPolicy);
+            return new Subpipeline(parent, name, defaultDeliveryPolicy);
         }
 
         /// <summary>
@@ -59,7 +71,7 @@ namespace Microsoft.Psi
             this.InitializeCompletionTimes();
 
             // start the subpipeline
-            this.RunAsync(this.parent.ReplayDescriptor, this.parent.Clock);
+            base.RunAsync(this.replayDescriptor ?? this.parentPipeline.ReplayDescriptor, this.parentPipeline.Clock);
         }
 
         /// <inheritdoc/>
@@ -74,34 +86,13 @@ namespace Microsoft.Psi
             }
         }
 
-        /// <summary>
-        /// Proposes a replay time interval for the pipeline.
-        /// </summary>
-        /// <param name="activeInterval">Active time interval.</param>
-        /// <param name="originatingTimeInterval">Originating time interval.</param>
-        public override void ProposeReplayTime(TimeInterval activeInterval, TimeInterval originatingTimeInterval)
+        /// <inheritdoc/>
+        public override void ProposeReplayTime(TimeInterval originatingTimeInterval)
         {
-            base.ProposeReplayTime(activeInterval, originatingTimeInterval);
+            base.ProposeReplayTime(originatingTimeInterval);
 
             // propagate the proposed replay time interval back up to the parent
-            this.parent.ProposeReplayTime(activeInterval, originatingTimeInterval);
-        }
-
-        /// <summary>
-        /// Run pipeline (asynchronously).
-        /// </summary>
-        /// <param name="descriptor">Replay descriptor.</param>
-        /// <returns>Disposable used to terminate pipeline.</returns>
-        public override IDisposable RunAsync(ReplayDescriptor descriptor)
-        {
-            var node = this.parent.GetOrCreateNode(this);
-            node.Activate();
-
-            // We are starting this subpipeline by activating its associated node in
-            // the parent pipeline. Wait for activation to finish before returning.
-            this.Scheduler.PauseForQuiescence(this.parent.ActivationContext);
-
-            return this;
+            this.parentPipeline.ProposeReplayTime(originatingTimeInterval);
         }
 
         /// <summary>
@@ -138,19 +129,44 @@ namespace Microsoft.Psi
             return new Connector<T>(this, toPipeline, name);
         }
 
+        /// <inheritdoc />
+        /// <remarks>Return subpipeline name as component name.</remarks>
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         internal override void NotifyCompletionTime(PipelineElement component, DateTime finalOriginatingTime)
         {
             this.CompleteComponent(component, finalOriginatingTime);
 
             if (this.NoRemainingCompletableComponents.WaitOne(0))
             {
-                // no more components pending completion - notify the parent pipeline of the subpipeline's completion time
-                this.notifyCompletionTime(this.LatestSourceCompletionTime > DateTime.MinValue ? this.LatestSourceCompletionTime : DateTime.MaxValue);
+                // No more components pending completion - notify the parent pipeline of the subpipeline's completion time or
+                // DateTime.MaxValue if there were no finite sources, which means the subpipeline is effectively an infinite source.
+                this.notifyCompletionTime(this.LatestFiniteSourceCompletionTime ?? DateTime.MaxValue);
                 this.completed = true;
 
                 // additionally notify completed if we have already been requested by the pipeline to stop
                 this.notifyCompleted?.Invoke();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock, IProgress<double> progress)
+        {
+            // Set our own replay descriptor, if supplied (e.g. when a dynamic subpipeline is run after
+            // the parent pipeline is already running). If null, the parent replay descriptor is assumed.
+            this.replayDescriptor = descriptor;
+
+            var node = this.parentPipeline.GetOrCreateNode(this);
+            node.Activate();
+
+            // We are starting this subpipeline by activating its associated node in
+            // the parent pipeline. Wait for activation to finish before returning.
+            this.Scheduler.PauseForQuiescence(this.parentPipeline.ActivationContext);
+
+            return this;
         }
 
         private void InitializeCompletionTimes()

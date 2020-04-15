@@ -284,12 +284,13 @@ namespace Test.Psi
         [Timeout(60000)]
         public void Time_TimerTest()
         {
+            var elapsed = TimeSpan.Zero;
+
             using (var p = Pipeline.Create())
             {
                 // create a timer with the smallest possible increment
                 var timer = Timers.Timer(p, TimeSpan.FromMilliseconds(1));
 
-                var elapsed = TimeSpan.Zero;
                 timer.Do(t =>
                 {
                     // verify that the timer ticks forward
@@ -297,7 +298,8 @@ namespace Test.Psi
                     elapsed = t;
                 });
 
-                p.Run(TimeSpan.FromSeconds(1));
+                p.RunAsync();
+                p.WaitAll(TimeSpan.FromSeconds(1));
             }
         }
     }

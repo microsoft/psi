@@ -26,19 +26,19 @@ namespace TurtleROSSample
         {
             this.pipeline = pipeline;
             this.turtle = turtle;
-            this.Velocity = pipeline.CreateReceiver<Tuple<float, float>>(this, (c, _) => this.turtle.Velocity(c.Item1, c.Item2), nameof(this.Velocity));
-            this.PoseChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PoseChanged));
+            this.Velocity = pipeline.CreateReceiver<(float, float)>(this, (c, _) => this.turtle.Velocity(c.Item1, c.Item2), nameof(this.Velocity));
+            this.PoseChanged = pipeline.CreateEmitter<(float, float, float)>(this, nameof(this.PoseChanged));
         }
 
         /// <summary>
         /// Gets velocity receiver.
         /// </summary>
-        public Receiver<Tuple<float, float>> Velocity { get; private set; }
+        public Receiver<(float, float)> Velocity { get; private set; }
 
         /// <summary>
         /// Gets pose changed emitter.
         /// </summary>
-        public Emitter<Tuple<float, float, float>> PoseChanged { get; private set; }
+        public Emitter<(float, float, float)> PoseChanged { get; private set; }
 
         /// <inheritdoc/>
         public void Start(Action<DateTime> notifyCompletionTime)
@@ -63,7 +63,7 @@ namespace TurtleROSSample
             }
         }
 
-        private void OnPoseChanged(object sender, Tuple<float, float, float> pose)
+        private void OnPoseChanged(object sender, (float, float, float) pose)
         {
             if (!this.stopped)
             {

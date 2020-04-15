@@ -4,6 +4,7 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Globalization;
 #if TRACKLEAKS
     using System.Diagnostics;
     using System.Text;
@@ -74,7 +75,7 @@ namespace Microsoft.Psi
     /// Once a resource is wrapped in a Shared object, it should be considered read-only.
     /// </remarks>
     [Serializer(typeof(Shared<>.CustomSerializer))]
-    public class Shared<T> : IDisposable
+    public class Shared<T> : IDisposable, IFormattable
         where T : class
     {
         private SharedContainer<T> inner;
@@ -176,6 +177,28 @@ namespace Microsoft.Psi
             sh.inner = this.inner;
             this.inner.AddRef();
             return sh;
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return this.ToString(string.Empty, CultureInfo.CurrentCulture);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            string value;
+            if (this.inner != null && this.inner.Resource is IFormattable formattableResource)
+            {
+                value = formattableResource.ToString(format, formatProvider);
+            }
+            else
+            {
+                value = this.inner == null ? "<null>" : this.inner.Resource.ToString();
+            }
+
+            return $"Shared({value})";
         }
 
         // The custom serializer delegates everything to the inner SharedContainer<>

@@ -44,5 +44,11 @@ namespace Microsoft.Psi.Serialization
         /// Gets the PropertyInfo or FieldInfo specification for this member.
         /// </summary>
         public MemberInfo MemberInfo { get; private set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

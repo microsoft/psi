@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Components
 
         private int anchorMessageSequenceId = -1;
         private DateTime anchorMessageOriginatingTime = DateTime.MinValue;
-        private bool initialBuffer = true; // constructing first initial buffer
+        private bool initialBuffer; // constructing first initial buffer
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeTimeWindow{TInput, TOutput}"/> class.
@@ -29,12 +29,16 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="relativeTimeInterval">The relative time interval over which to gather messages.</param>
         /// <param name="selector">Select output message from collected window of input messages.</param>
-        public RelativeTimeWindow(Pipeline pipeline, RelativeTimeInterval relativeTimeInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector)
+        /// <param name="waitForCompleteWindow">Whether to wait for seeing a complete window before computing the selector function and posting the first time. True by default.</param>
+        public RelativeTimeWindow(Pipeline pipeline, RelativeTimeInterval relativeTimeInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector, bool waitForCompleteWindow = true)
             : base(pipeline)
         {
             this.relativeTimeInterval = relativeTimeInterval;
             this.selector = selector;
             this.In.Unsubscribed += _ => this.OnUnsubscribed();
+
+            // If false, processing should begin immediately without waiting for full window length.
+            this.initialBuffer = waitForCompleteWindow;
         }
 
         /// <inheritdoc />

@@ -5,6 +5,7 @@ namespace Test.Psi.Kinect
 {
     using System;
     using Microsoft.Psi;
+    using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Kinect;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,7 +17,7 @@ namespace Test.Psi.Kinect
     public class MeshTests : IDisposable
     {
         private KinectSensor sensor;
-        private IKinectCalibration calibration = null;
+        private IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo = null;
         private Shared<Microsoft.Psi.Imaging.Image> lastImage = null;
         private Shared<Microsoft.Psi.Imaging.Image> lastColor = null;
         private bool disposed = false;
@@ -29,9 +30,10 @@ namespace Test.Psi.Kinect
             using (var pipeline = Pipeline.Create())
             {
                 this.sensor = new KinectSensor(pipeline, new KinectSensorConfiguration() { OutputCalibration = true, OutputBodies = true, OutputColor = true });
-                var calibration = this.sensor.Calibration.Do((kc) => this.calibration = kc.DeepClone());
+                var calibration = this.sensor.DepthDeviceCalibrationInfo.Do((kc) => this.depthDeviceCalibrationInfo = kc.DeepClone());
 
-                pipeline.Run(TimeSpan.FromSeconds(10));
+                pipeline.RunAsync();
+                pipeline.WaitAll(TimeSpan.FromSeconds(10));
             }
         }
 
@@ -47,7 +49,7 @@ namespace Test.Psi.Kinect
             using (var pipeline = Pipeline.Create())
             {
                 this.sensor = new KinectSensor(pipeline, new KinectSensorConfiguration() { OutputCalibration = true, OutputBodies = true, OutputColor = true, OutputDepth = true });
-                var calibration = this.sensor.Calibration.Do((kc) => this.calibration = kc.DeepClone());
+                var calibration = this.sensor.DepthDeviceCalibrationInfo.Do((kc) => this.depthDeviceCalibrationInfo = kc.DeepClone());
                 this.sensor.ColorImage.Do((image) =>
                 {
                     if (this.lastColor == null)
@@ -62,9 +64,9 @@ namespace Test.Psi.Kinect
                         this.lastImage = image.AddRef();
                     }
 
-                    if (this.lastImage != null && this.lastColor != null && this.calibration != null)
+                    if (this.lastImage != null && this.lastColor != null && this.depthDeviceCalibrationInfo != null)
                     {
-                        var mesh = Test.Psi.Kinect.Mesh.MeshFromDepthMap(this.lastImage, this.lastColor, this.calibration);
+                        var mesh = Test.Psi.Kinect.Mesh.MeshFromDepthMap(this.lastImage, this.lastColor, this.depthDeviceCalibrationInfo);
                         int faceCount = 0;
                         foreach (var face in mesh.Faces)
                         {
@@ -123,7 +125,8 @@ namespace Test.Psi.Kinect
                         }
                     }
                 });
-                pipeline.Run(TimeSpan.FromSeconds(10));
+                pipeline.RunAsync();
+                pipeline.WaitAll(TimeSpan.FromSeconds(10));
             }
         }
 

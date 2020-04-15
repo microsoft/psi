@@ -62,7 +62,7 @@ namespace Microsoft.Psi.Calibration
         /// <summary>
         /// Projects a 3D point into the pixel space.
         /// </summary>
-        /// <param name="point3D">Point in 3D space.</param>
+        /// <param name="point3D">Point in 3D space, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</param>
         /// <param name="distort">Indicates whether to apply distortion.</param>
         /// <returns>Point in pixel space.</returns>
         Point2D ToPixelSpace(Point3D point3D, bool distort);
@@ -73,7 +73,7 @@ namespace Microsoft.Psi.Calibration
         /// <param name="point2D">Point in pixel space.</param>
         /// <param name="depth">Depth at pixel.</param>
         /// <param name="undistort">Indicates whether to apply undistortion.</param>
-        /// <returns>Point in 3D space.</returns>
+        /// <returns>Point in 3D space, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</returns>
         Point3D ToCameraSpace(Point2D point2D, double depth, bool undistort);
 
         /// <summary>

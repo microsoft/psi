@@ -18,7 +18,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of originating times.</returns>
-        public static IProducer<DateTime> TimeOf<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<DateTime> TimeOf<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Select((_, e) => e.OriginatingTime, deliveryPolicy);
         }
@@ -30,7 +30,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of latency (time span) values.</returns>
-        public static IProducer<TimeSpan> Latency<T>(this IProducer<T> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TimeSpan> Latency<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Select((_, e) => e.Time - e.OriginatingTime, deliveryPolicy);
         }
@@ -43,11 +43,11 @@ namespace Microsoft.Psi
         /// <param name="delay">Time span by which to delay.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Delay<T>(this IProducer<T> source, TimeSpan delay, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T> Delay<T>(this IProducer<T> source, TimeSpan delay, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source
                 .Process<T, (T, DateTime)>((d, e, s) => s.Post((d, e.OriginatingTime), e.OriginatingTime + delay), deliveryPolicy)
-                .Process<(T, DateTime), T>((t, _, s) => s.Post(t.Item1, t.Item2), DeliveryPolicy.Unlimited);
+                .Process<(T, DateTime), T>((t, _, s) => s.Post(t.Item1, t.Item2), DeliveryPolicy.SynchronousOrThrottle);
         }
     }
 }

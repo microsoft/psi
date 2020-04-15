@@ -1,0 +1,30 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<UserControl x:Class="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignWidth="1024"
+             d:DesignHeight="768">
+    <UserControl.Resources>
+        <Image x:Key="Home" Source="pack://application:,,,/Microsoft.Psi.Visualization.Common.Windows;component/Images/PipelineDiagnosticsHome.png" />
+        <Image x:Key="Back" Source="pack://application:,,,/Microsoft.Psi.Visualization.Common.Windows;component/Images/PipelineDiagnosticsBack.png" />
+        <Image x:Key="Expand" Source="pack://application:,,,/Microsoft.Psi.Visualization.Common.Windows;component/Images/PipelineDiagnosticsExpandView.png" />
+    </UserControl.Resources>
+    <Grid Background="Black">
+        <DockPanel Name="dockPanel" ClipToBounds="True" MouseLeave="DockPanel_MouseLeave" />
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="homeButton" ToolTip="Navigate home to root graph" Click="HomeButton_Click" Margin="6" Background="#00000000" BorderBrush="#00000000" Foreground="White" FontSize="18" Cursor="Hand" Content="{StaticResource Home}" />
+                <Button Name="backButton" ToolTip="Navigate back to parent graph" Click="BackButton_Click" Margin="6" Background="#00000000" BorderBrush="#00000000" Foreground="White" FontSize="18" Cursor="Hand" Content="{StaticResource Back}" />
+                <Button Name="fitButton" ToolTip="Fit graph to panel extents" Click="FitButton_Click" Margin="6" Background="#00000000" BorderBrush="#00000000" Foreground="White" FontSize="18" Cursor="Hand" Content="{StaticResource Expand}" />
+                <Button Name="statusText" Click="HomeButton_Click" Margin="6" Background="#00000000" BorderBrush="#00000000" Foreground="White" FontSize="18" Cursor="Hand">Psi Pipeline Graph Visualizer</Button>
+                <StackPanel Name="breadcrumbNav" Orientation="Horizontal"></StackPanel>
+            </StackPanel>
+            <TextBlock Name="infoText" Margin="6,0,6,6" Background="#E5191919" HorizontalAlignment="Left" VerticalAlignment="Top" MouseDown="InfoText_MouseDown"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

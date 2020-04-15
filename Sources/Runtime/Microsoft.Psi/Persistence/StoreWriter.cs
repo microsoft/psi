@@ -168,12 +168,13 @@ namespace Microsoft.Psi.Persistence
         /// Closes the storage stream and persists the stream statistics.
         /// </summary>
         /// <param name="streamId">The id of the stream to close.</param>
-        public void CloseStream(int streamId)
+        /// <param name="originatingTime">The originating time when the stream was closed.</param>
+        public void CloseStream(int streamId, DateTime? originatingTime = null)
         {
             var meta = this.metadata[streamId];
             if (!meta.IsClosed)
             {
-                meta.Closed = meta.LastMessageTime;
+                meta.Closed = originatingTime ?? meta.LastMessageTime;
                 meta.IsClosed = true;
                 this.WriteToCatalog(meta);
             }

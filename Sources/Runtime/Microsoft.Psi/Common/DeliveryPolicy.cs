@@ -13,27 +13,52 @@ namespace Microsoft.Psi
         /// <summary>
         /// The default initial size of receiver queues.
         /// </summary>
-        private const int DefaultInitialQueueSize = 16;
+        internal const int DefaultInitialQueueSize = 16;
 
         /// <summary>
         /// A delivery policy which lets the queue grow as much as needed, with no latency constraints.
         /// </summary>
-        private static DeliveryPolicy unlimitedPolicy = new DeliveryPolicy(
+        private static readonly DeliveryPolicy UnlimitedPolicy = new DeliveryPolicy(
             initialQueueSize: DefaultInitialQueueSize,
             maximumQueueSize: int.MaxValue,
             maximumLatency: null,
             throttleWhenFull: false,
-            attemptSynchronous: false);
+            attemptSynchronous: false,
+            nameof(Unlimited));
 
         /// <summary>
         /// A delivery policy which limits the queue to one message, with no latency constraints.
         /// </summary>
-        private static DeliveryPolicy latestMessage = new DeliveryPolicy(
+        private static readonly DeliveryPolicy LatestMessagePolicy = new DeliveryPolicy(
             initialQueueSize: 1,
             maximumQueueSize: 1,
             maximumLatency: null,
             throttleWhenFull: false,
-            attemptSynchronous: false);
+            attemptSynchronous: false,
+            nameof(LatestMessage));
+
+        /// <summary>
+        /// The throttle policy limits the queue to one message and throttles its source as long as
+        /// there is a message in the queue waiting to be processed.
+        /// </summary>
+        private static readonly DeliveryPolicy ThrottlePolicy = new DeliveryPolicy(
+            initialQueueSize: 1,
+            maximumQueueSize: 1,
+            maximumLatency: null,
+            throttleWhenFull: true,
+            attemptSynchronous: false,
+            nameof(Throttle));
+
+        /// <summary>
+        /// A delivery policy which attempts synchronous message delivery; if synchronous delivery fails, the source is throttled.
+        /// </summary>
+        private static readonly DeliveryPolicy SynchronousOrThrottlePolicy = new DeliveryPolicy(
+            initialQueueSize: 1,
+            maximumQueueSize: 1,
+            maximumLatency: null,
+            throttleWhenFull: true,
+            attemptSynchronous: true,
+            nameof(SynchronousOrThrottle));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeliveryPolicy"/> class.
@@ -43,29 +68,42 @@ namespace Microsoft.Psi
         /// <param name="maximumLatency">The maximum latency allowable for messages to be delivered.</param>
         /// <param name="throttleWhenFull">A value indicating whether to block the upstream producer if the receiver queue is full.</param>
         /// <param name="attemptSynchronous">A value indicating whether to attempt synchronous delivery.</param>
+        /// <param name="name">Name used for debugging and diagnostics.</param>
         internal DeliveryPolicy(
             int initialQueueSize = DefaultInitialQueueSize,
             int maximumQueueSize = int.MaxValue,
             TimeSpan? maximumLatency = null,
             bool throttleWhenFull = false,
-            bool attemptSynchronous = false)
+            bool attemptSynchronous = false,
+            string name = null)
         {
             this.InitialQueueSize = initialQueueSize;
             this.MaximumQueueSize = maximumQueueSize;
             this.MaximumLatency = maximumLatency;
             this.ThrottleWhenFull = throttleWhenFull;
-            this.AttemptSynchronous = attemptSynchronous;
+            this.AttemptSynchronousDelivery = attemptSynchronous;
+            this.Name = name ?? $"{nameof(DeliveryPolicy)}({nameof(initialQueueSize)}={initialQueueSize}, {nameof(maximumQueueSize)}={maximumQueueSize}, {nameof(maximumLatency)}={maximumLatency}, {nameof(throttleWhenFull)}={throttleWhenFull}, {nameof(attemptSynchronous)}={attemptSynchronous})";
         }
 
         /// <summary>
         /// Gets a lossless, unlimited delivery policy which lets the receiver queue grow as much as needed, with no latency constraints.
         /// </summary>
-        public static DeliveryPolicy Unlimited => DeliveryPolicy.unlimitedPolicy;
+        public static DeliveryPolicy Unlimited => DeliveryPolicy.UnlimitedPolicy;
 
         /// <summary>
         /// Gets a lossy delivery policy which limits the receiver queue to one message, with no latency constraints.
         /// </summary>
-        public static DeliveryPolicy LatestMessage => DeliveryPolicy.latestMessage;
+        public static DeliveryPolicy LatestMessage => DeliveryPolicy.LatestMessagePolicy;
+
+        /// <summary>
+        /// Gets a throttling delivery policy, which attempts to throttle its source as long as there is a message in the queue waiting to be processed.
+        /// </summary>
+        public static DeliveryPolicy Throttle => DeliveryPolicy.ThrottlePolicy;
+
+        /// <summary>
+        /// Gets a delivery policy which attempts synchronous message delivery; if synchronous delivery fails, the source is throttled.
+        /// </summary>
+        public static DeliveryPolicy SynchronousOrThrottle => DeliveryPolicy.SynchronousOrThrottlePolicy;
 
         /// <summary>
         /// Gets a value indicating whether to block the upstream producer if the receiver queue is full.
@@ -91,7 +129,12 @@ namespace Microsoft.Psi
         /// <summary>
         /// Gets a value indicating whether the runtime should attempt synchronous delivery when possible.
         /// </summary>
-        public bool AttemptSynchronous { get; private set; }
+        public bool AttemptSynchronousDelivery { get; private set; }
+
+        /// <summary>
+        /// Gets name used for debugging and diagnostics.
+        /// </summary>
+        public string Name { get; }
 
         /// <summary>
         /// Creates a latency-constrained delivery policy. Messages older than the specified maximum latency are discarded.
@@ -100,7 +143,13 @@ namespace Microsoft.Psi
         /// <returns>A latency-constrained delivery policy.</returns>
         public static DeliveryPolicy LatencyConstrained(TimeSpan maximumLatency)
         {
-            return new DeliveryPolicy(DefaultInitialQueueSize, int.MaxValue, maximumLatency, false, false);
+            return new DeliveryPolicy(
+                DefaultInitialQueueSize,
+                int.MaxValue,
+                maximumLatency,
+                false,
+                false,
+                $"{nameof(LatencyConstrained)}({nameof(maximumLatency)}={maximumLatency})");
         }
 
         /// <summary>
@@ -108,10 +157,48 @@ namespace Microsoft.Psi
         /// maximum queue size, after which they will be discarded.
         /// </summary>
         /// <param name="maximumQueueSize">The maximum queue size.</param>
+        /// <param name="throttleWhenFull">A value indicating whether to block the upstream producer if the receiver queue is full.</param>
+        /// <param name="attemptSynchronous">A value indicating whether to attempt synchronous delivery.</param>
         /// <returns>A queue-size constrained delivery policy.</returns>
-        public static DeliveryPolicy QueueSizeConstrained(int maximumQueueSize)
+        public static DeliveryPolicy QueueSizeConstrained(int maximumQueueSize, bool throttleWhenFull = false, bool attemptSynchronous = false)
         {
-            return new DeliveryPolicy(1, maximumQueueSize, null, false, false);
+            return new DeliveryPolicy(
+                1,
+                maximumQueueSize,
+                null,
+                throttleWhenFull,
+                attemptSynchronous,
+                $"{nameof(QueueSizeConstrained)}({nameof(maximumQueueSize)}={maximumQueueSize})");
+        }
+
+        /// <summary>
+        /// Creates a typed delivery policy with guarantees by adding a message guaranteed function to an existing untyped delivery policy.
+        /// </summary>
+        /// <typeparam name="T">The type of the messages in the resulting delivery policy.</typeparam>
+        /// <param name="deliveryPolicy">The untyped delivery policy.</param>
+        /// <param name="guaranteeDelivery">A function that evaluates whether the delivery of a given message should be guaranteed.</param>
+        /// <returns>The typed delivery policy with guarantees.</returns>
+        public static DeliveryPolicy<T> WithGuarantees<T>(DeliveryPolicy deliveryPolicy, Func<T, bool> guaranteeDelivery)
+        {
+            return new DeliveryPolicy<T>(
+                DeliveryPolicy.DefaultInitialQueueSize,
+                deliveryPolicy.MaximumQueueSize,
+                deliveryPolicy.MaximumLatency,
+                deliveryPolicy.ThrottleWhenFull,
+                deliveryPolicy.AttemptSynchronousDelivery,
+                guaranteeDelivery,
+                $"{deliveryPolicy.Name}.WithGuarantees");
+        }
+
+        /// <summary>
+        /// Creates a typed delivery policy with guarantees by adding a message guaranteed function to an existing untyped delivery policy.
+        /// </summary>
+        /// <typeparam name="T">The type of the messages in the resulting delivery policy.</typeparam>
+        /// <param name="guaranteeDelivery">A function that evaluates whether the delivery of a given message should be guaranteed.</param>
+        /// <returns>The typed delivery policy with guarantees.</returns>
+        public DeliveryPolicy<T> WithGuarantees<T>(Func<T, bool> guaranteeDelivery)
+        {
+            return DeliveryPolicy.WithGuarantees(this, guaranteeDelivery);
         }
     }
 }

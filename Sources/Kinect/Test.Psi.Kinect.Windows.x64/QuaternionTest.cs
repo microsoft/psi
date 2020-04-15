@@ -9,20 +9,26 @@ namespace Test.Psi.Kinect.Windows
     using Microsoft.Kinect;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Quaternion test.
+    /// </summary>
     [TestClass]
     [Ignore]
     public class QuaternionTest : IDisposable
     {
+        /// <inheritdoc />
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        // Very simple test to make sure that our quaternion math is correct.
-        // This rotates 10 degrees around the Y axis via a quaternion and then
-        // rotates the entire result by 90 degrees. After this the resulting quaternion
-        // should be rotated 100 degrees around Y axis.
+        /// <summary>
+        /// Very simple test to make sure that our quaternion math is correct.
+        /// This rotates 10 degrees around the Y axis via a quaternion and then
+        /// rotates the entire result by 90 degrees. After this the resulting quaternion
+        /// should be rotated 100 degrees around Y axis.
+        /// </summary>
         [TestMethod]
         [Timeout(60000)]
         [Ignore]
@@ -47,6 +53,10 @@ namespace Test.Psi.Kinect.Windows
             Vector4 axisAngle = Microsoft.Psi.Kinect.KinectExtensions.QuaternionAsAxisAngle(qv);
         }
 
+        /// <summary>
+        /// Dispose.
+        /// </summary>
+        /// <param name="disposing">Disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
         }

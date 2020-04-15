@@ -435,7 +435,7 @@ namespace Test.Psi
                 var parallelVarLen = new ParallelVariableLength<int, int>(p, (i, prod) => prod, false);
                 Assert.AreEqual(p, parallelVarLen.Out.Pipeline); // composite components shouldn't expose subpipelines
 
-                var parallelSparse = new ParallelSparse<int, int, int>(p, (i, prod) => prod, false);
+                var parallelSparse = new ParallelSparseSelect<Dictionary<int, int>, int, int, int, Dictionary<int, int>>(p, _ => _, (i, prod) => prod, _ => _, false);
                 Assert.AreEqual(p, parallelSparse.Out.Pipeline); // composite components shouldn't expose subpipelines
             }
         }

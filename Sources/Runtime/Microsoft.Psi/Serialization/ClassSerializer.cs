@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Serialization
 {
+    using System;
     using System.Runtime.CompilerServices;
     using System.Runtime.Serialization;
     using Microsoft.Psi.Common;
@@ -54,7 +55,19 @@ namespace Microsoft.Psi.Serialization
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Serialize(BufferWriter writer, T instance, SerializationContext context)
         {
-            this.serializeImpl(writer, instance, context);
+            try
+            {
+                this.serializeImpl(writer, instance, context);
+            }
+            catch (NotSupportedException)
+            {
+                if (instance.GetType().BaseType == typeof(MulticastDelegate))
+                {
+                    throw new NotSupportedException("Cannot serialize Func/Action/Delegate. A common cause is serializing streams of IEnumerables holding closure references. A solution is to reify with `.ToList()` or similar.");
+                }
+
+                throw;
+            }
         }
 
         /// <summary>

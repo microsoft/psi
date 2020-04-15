@@ -6,13 +6,13 @@
     <RootNamespace>Microsoft.Psi.MicrosoftSpeech</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\net47\Microsoft.Psi.MicrosoftSpeech.Windows.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\net472\Microsoft.Psi.MicrosoftSpeech.Windows.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\net47\Microsoft.Psi.MicrosoftSpeech.Windows.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\net472\Microsoft.Psi.MicrosoftSpeech.Windows.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
@@ -41,7 +41,7 @@
     </Reference>
   </ItemGroup>
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation" ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''" />
+    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation" ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''" />
     <CreateProperty Value="" Condition="'$(MsSpeechSdkDir)'==''">
       <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
     </CreateProperty>
@@ -51,9 +51,5 @@
     <CreateProperty Value="" Condition="'$(MsSpeechSdkDir)'==''">
       <Output TaskParameter="Value" PropertyName="GenerateNuspecDependsOn" />
     </CreateProperty>
-    <CallTarget Targets="DoBuild" Condition=" ('$(MsSpeechSdkDir)' != '') AND ('$(AGENT_BUILDDIRECTORY)'=='') " />
   </Target>
-  <Target Name="DoBuild" DependsOnTargets="Build">
-    <Exec Command="echo Built sample using MsSpeechSdkDir='%MsSpeechSdkDir%'" />
-  </Target>
 </Project>

@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="encoderFn">Method to perform encoding.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the encoded images.</returns>
-        public static IProducer<Shared<EncodedImage>> Encode(this IProducer<Shared<Image>> source, Func<IBitmapEncoder> encoderFn, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<EncodedImage>> Encode(this IProducer<Shared<Image>> source, Func<IBitmapEncoder> encoderFn, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return source.PipeTo(new ImageEncoder(source.Out.Pipeline, encoderFn), deliveryPolicy);
         }
@@ -29,7 +29,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="quality">JPEG quality to use.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the JPEG images.</returns>
-        public static IProducer<Shared<EncodedImage>> EncodeJpeg(this IProducer<Shared<Image>> source, int quality = 90, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<EncodedImage>> EncodeJpeg(this IProducer<Shared<Image>> source, int quality = 90, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return Encode(source, () => new JpegBitmapEncoder { QualityLevel = quality }, deliveryPolicy);
         }
@@ -40,7 +40,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="source">Source image to compress.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the PNG images.</returns>
-        public static IProducer<Shared<EncodedImage>> EncodePng(this IProducer<Shared<Image>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<EncodedImage>> EncodePng(this IProducer<Shared<Image>> source, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return Encode(source, () => new PngBitmapEncoder(), deliveryPolicy);
         }
@@ -51,7 +51,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="source">Source image to compress.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Returns a producer that generates the decoded images.</returns>
-        public static IProducer<Shared<Image>> Decode(this IProducer<Shared<EncodedImage>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> Decode(this IProducer<Shared<EncodedImage>> source, DeliveryPolicy<Shared<EncodedImage>> deliveryPolicy = null)
         {
             return source.PipeTo(new ImageDecoder(source.Out.Pipeline), deliveryPolicy);
         }

@@ -21,7 +21,7 @@ namespace Microsoft.Psi
         int Id { get; }
 
         /// <summary>
-        /// Gets the name of the type of data conatined in the stream the metadata represents.
+        /// Gets the name of the type of data contained in the stream the metadata represents.
         /// </summary>
         string TypeName { get; }
 

@@ -68,6 +68,30 @@ namespace Microsoft.Psi.MicrosoftSpeech
         public int BufferLengthInMs { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of milliseconds during which the internal speech detection
+        /// engine accepts input containing only silence before making a state transition.
+        /// </summary>
+        public int InitialSilenceTimeoutMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of milliseconds during which the internal speech detection
+        /// engine accepts input containing only background noise before making a state transition.
+        /// </summary>
+        public int BabbleTimeoutMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of milliseconds of silence that the internal speech detection
+        /// engine will accept at the end of unambiguous input before making a state transition.
+        /// </summary>
+        public int EndSilenceTimeoutMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of milliseconds of silence that the internal speech detection
+        /// engine will accept at the end of ambiguous input before making a state transition.
+        /// </summary>
+        public int EndSilenceTimeoutAmbiguousMs { get; set; }
+
+        /// <summary>
         /// Gets or sets the expected input format of the audio stream.
         /// </summary>
         /// <remarks>

@@ -125,21 +125,15 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// GenerateNext is called by the Generator base class when the next sample should be read.
         /// </summary>
-        /// <param name="previous">Time of previous sample.</param>
-        /// <returns>Time for current sample.</returns>
-        protected override DateTime GenerateNext(DateTime previous)
+        /// <param name="currentTime">The originating time of the message that triggered the current call to GenerateNext.</param>
+        /// <returns>The originating time at which to read the next sample.</returns>
+        protected override DateTime GenerateNext(DateTime currentTime)
         {
             Envelope env;
             if (this.reader.MoveNext(out env))
             {
                 this.reader.Read(out JToken data);
                 this.emitters[env.SourceId].Item2(data, env.OriginatingTime);
-
-                if (env.OriginatingTime <= previous)
-                {
-                    return previous + TimeSpan.FromTicks(1);
-                }
-
                 return env.OriginatingTime;
             }
 

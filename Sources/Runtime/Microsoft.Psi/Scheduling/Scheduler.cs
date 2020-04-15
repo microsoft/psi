@@ -193,10 +193,15 @@ namespace Microsoft.Psi.Scheduling
                 throw new ArgumentNullException();
             }
 
+            if (!allowSchedulingPastFinalization && startTime > context.FinalizeTime)
+            {
+                return;
+            }
+
             // Enter the context to track this new work item. The context will be exited
             // only after the work item has been successfully executed (or dropped).
             context.Enter();
-            this.Schedule(new WorkItem() { SyncLock = synchronizationObject, Callback = action, StartTime = startTime, SchedulerContext = context });
+            this.Schedule(new WorkItem() { SyncLock = synchronizationObject, Callback = action, StartTime = startTime, SchedulerContext = context }, asContinuation);
         }
 
         /// <summary>
@@ -372,10 +377,9 @@ namespace Microsoft.Psi.Scheduling
         /// </summary>
         /// <param name="wi">The work item to schedule.</param>
         /// <param name="asContinuation">Flag whether to execute once current operation completes.</param>
-        /// <param name="allowSchedulingPastFinalization">Allow scheduling past finalization time.</param>
-        private void Schedule(WorkItem wi, bool asContinuation = true, bool allowSchedulingPastFinalization = false)
+        private void Schedule(WorkItem wi, bool asContinuation = true)
         {
-            if (this.forcedShutdownRequested || (wi.StartTime > wi.SchedulerContext.FinalizeTime && !allowSchedulingPastFinalization) || this.completed)
+            if (this.forcedShutdownRequested || this.completed)
             {
                 wi.SchedulerContext.Exit();
                 return;

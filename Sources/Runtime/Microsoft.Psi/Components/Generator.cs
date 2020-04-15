@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Components
 {
     using System;
+    using Microsoft.Psi.Executive;
 
     /// <summary>
     /// Generates a sequence of messages at the pace dictated by the pipeline.
@@ -27,6 +28,7 @@ namespace Microsoft.Psi.Components
         private readonly Receiver<int> loopBackIn;
         private readonly Emitter<int> loopBackOut;
         private readonly Pipeline pipeline;
+        private readonly PipelineElement node;
         private readonly bool isInfiniteSource;
         private bool stopped;
         private Action<DateTime> notifyCompletionTime;
@@ -44,8 +46,9 @@ namespace Microsoft.Psi.Components
         {
             this.loopBackOut = pipeline.CreateEmitter<int>(this, nameof(this.loopBackOut));
             this.loopBackIn = pipeline.CreateReceiver<int>(this, this.Next, nameof(this.loopBackIn));
-            this.loopBackOut.PipeTo(this.loopBackIn);
+            this.loopBackOut.PipeTo(this.loopBackIn, DeliveryPolicy.Unlimited);
             this.pipeline = pipeline;
+            this.node = pipeline.GetOrCreateNode(this);
             this.isInfiniteSource = isInfiniteSource;
         }
 
@@ -53,23 +56,33 @@ namespace Microsoft.Psi.Components
         public void Start(Action<DateTime> notifyCompletionTime)
         {
             this.notifyCompletionTime = notifyCompletionTime;
-            if (this.isInfiniteSource)
+
+            // If this is an infinite source *and* the pipeline does not specify a finite replay interval,
+            // then we can notify completion with MaxValue now to notify the pipeline that this component
+            // will not terminate until the pipeline is explicitly stopped. Otherwise, we will notify later
+            // once we have completed generating all messages within the pipeline's replay interval.
+            if (this.isInfiniteSource && this.pipeline.ReplayDescriptor.End == DateTime.MaxValue)
             {
                 this.notifyCompletionTime(DateTime.MaxValue);
+            }
+            else
+            {
+                // ensure that messages are not posted past the end of the replay descriptor
+                this.finalMessageTime = this.pipeline.ReplayDescriptor.End;
             }
 
             var firstEnvelope = default(Envelope);
 
             if (this.pipeline.ReplayDescriptor.Start == DateTime.MinValue)
             {
-                firstEnvelope.OriginatingTime = this.pipeline.GetCurrentTime();
+                firstEnvelope.OriginatingTime = this.pipeline.StartTime;
             }
             else
             {
                 firstEnvelope.OriginatingTime = this.pipeline.ReplayDescriptor.Start;
             }
 
-            this.Next(0, firstEnvelope);
+            this.loopBackOut.Post(0, firstEnvelope.OriginatingTime);
         }
 
         /// <inheritdoc />
@@ -90,13 +103,12 @@ namespace Microsoft.Psi.Components
         /// Function that gets called to produce more data once the pipeline is ready to consume it.
         /// Override to post data to the appropriate stream.
         /// </summary>
-        /// <param name="previous">The previously returned time, which is also the originating time of the message
-        /// that triggered the current call to GenerateNext.</param>
+        /// <param name="currentTime">The originating time of the message that triggered the current call to GenerateNext.</param>
         /// <returns>
-        /// The timestamp (originating time) of the next message to be posted back to LoopBackIn.
+        /// The originating time of the next message that will trigger the next call to GenerateNext.
         /// The next call will occur only after this time (based on the pipeline clock).
         /// </returns>
-        protected abstract DateTime GenerateNext(DateTime previous);
+        protected abstract DateTime GenerateNext(DateTime currentTime);
 
         private void Next(int counter, Envelope envelope)
         {
@@ -105,27 +117,44 @@ namespace Microsoft.Psi.Components
                 return;
             }
 
-            this.nextMessageTime = this.GenerateNext(envelope.OriginatingTime);
-
-            // stop if nextMessageTime is past finalMessageTime or is equal to DateTime.MaxValue (which indicates that there is no more data)
-            if (this.nextMessageTime > this.finalMessageTime || this.nextMessageTime == DateTime.MaxValue)
+            try
             {
-                this.stopped = true;
-                this.notifyCompletionTime(envelope.OriginatingTime);
+                this.nextMessageTime = this.GenerateNext(envelope.OriginatingTime);
 
-                // additionally notify completed if we have already been requested by the pipeline to stop
-                this.notifyCompleted?.Invoke();
-                return;
+                // impose strictly increasing times for the loopback message as required by the runtime
+                if (this.nextMessageTime <= envelope.OriginatingTime)
+                {
+                    this.nextMessageTime = envelope.OriginatingTime.AddTicks(1);
+                }
+
+                // stop if nextMessageTime is past finalMessageTime or is equal to DateTime.MaxValue (which indicates that there is no more data)
+                if (this.nextMessageTime > this.finalMessageTime || this.nextMessageTime == DateTime.MaxValue)
+                {
+                    this.stopped = true;
+
+                    // get the latest message time from all of this component's emitters
+                    var finalOriginatingTime = this.node.LastOutputEnvelope.OriginatingTime;
+
+                    // notify the pipeline of the originating time of the final message from this component
+                    this.notifyCompletionTime(finalOriginatingTime);
+
+                    // additionally notify completed if we have already been requested by the pipeline to stop
+                    this.notifyCompleted?.Invoke();
+                    return;
+                }
+
+                this.loopBackOut.Post(counter + 1, this.nextMessageTime);
             }
-
-            // Check if the times coming out of GenerateNext are not strictly increasing
-            // (but only check once we've gone through this method at least once)
-            if ((counter > 0) && (this.nextMessageTime <= envelope.OriginatingTime))
+            catch
             {
-                throw new InvalidOperationException("Generator is creating timestamps out of order. The times returned by GenerateNext are required to be strictly increasing.");
+                // If the loopback function throws, we must terminate the generator immediately since we cannot guarantee
+                // the delivery of any further loopback messages. The pipeline will attempt to stop all source components
+                // (including this generator), so setting this.nextMessageTime to DateTime.MaxValue signals to the component
+                // to call notifyCompleted as soon as the pipeline calls its Stop() method, rather than wait for further
+                // loopback messages pending completion (since there won't be any forthcoming).
+                this.nextMessageTime = DateTime.MaxValue;
+                throw;
             }
-
-            this.loopBackOut.Post(counter + 1, this.nextMessageTime);
         }
     }
 }

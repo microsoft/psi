@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 #pragma warning disable SA1649 // SA1649FileNameMustMatchTypeName
+#pragma warning disable SA1402 // SA1402MustContainSingleType
 
 namespace Microsoft.Psi.Samples.OpenCV
 {
@@ -33,7 +34,7 @@ namespace Microsoft.Psi.Samples.OpenCV
         /// <param name="source">Our source producer (source stream of image samples).</param>
         /// <param name="deliveryPolicy">Our delivery policy (null means use the default).</param>
         /// <returns>The new stream of converted images.</returns>
-        public static IProducer<Shared<Image>> ToGrayViaOpenCV(this IProducer<Shared<Image>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Shared<Image>> ToGrayViaOpenCV(this IProducer<Shared<Image>> source, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             // Process informs the pipeline that we want to call our lambda ("(srcImage, env, e) =>{...}") with each image
             // from the stream.
@@ -164,3 +165,4 @@ namespace Microsoft.Psi.Samples.OpenCV
 }
 
 #pragma warning restore SA1649 // SA1649FileNameMustMatchTypeName
+#pragma warning restore SA1402 // SA1402MustContainSingleType

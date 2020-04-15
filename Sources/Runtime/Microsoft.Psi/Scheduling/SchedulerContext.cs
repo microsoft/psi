@@ -13,16 +13,9 @@ namespace Microsoft.Psi.Scheduling
     /// </summary>
     public sealed class SchedulerContext
     {
-        private readonly SynchronizationLock syncLock;
+        private readonly object syncLock = new object();
+        private readonly ManualResetEvent empty = new ManualResetEvent(true);
         private int workItemCount;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SchedulerContext"/> class.
-        /// </summary>
-        public SchedulerContext()
-        {
-            this.syncLock = new SynchronizationLock(this);
-        }
 
         /// <summary>
         /// Gets or sets the finalization time of the context after which no further work will be scheduled.
@@ -35,7 +28,7 @@ namespace Microsoft.Psi.Scheduling
         /// <summary>
         /// Gets a wait handle that signals when there are no remaining work items in the context.
         /// </summary>
-        public ManualResetEvent Empty { get; } = new ManualResetEvent(true);
+        public WaitHandle Empty => this.empty;
 
         internal Clock Clock { get; private set; } = new Clock(DateTime.MinValue, 0);
 
@@ -65,13 +58,13 @@ namespace Microsoft.Psi.Scheduling
         /// </summary>
         internal void Enter()
         {
-            this.syncLock.Lock();
-            if (++this.workItemCount == 1)
+            lock (this.syncLock)
             {
-                this.Empty.Reset();
+                if (++this.workItemCount == 1)
+                {
+                    this.empty.Reset();
+                }
             }
-
-            this.syncLock.Release();
         }
 
         /// <summary>
@@ -79,13 +72,13 @@ namespace Microsoft.Psi.Scheduling
         /// </summary>
         internal void Exit()
         {
-            this.syncLock.Lock();
-            if (--this.workItemCount == 0)
+            lock (this.syncLock)
             {
-                this.Empty.Set();
+                if (--this.workItemCount == 0)
+                {
+                    this.empty.Set();
+                }
             }
-
-            this.syncLock.Release();
         }
     }
 }

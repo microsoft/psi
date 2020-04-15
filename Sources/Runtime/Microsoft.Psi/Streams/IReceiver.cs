@@ -34,5 +34,10 @@ namespace Microsoft.Psi
         /// Gets receiver source emitter.
         /// </summary>
         IEmitter Source { get; }
+
+        /// <summary>
+        /// Gets the envelope of the last message received by this receiver.
+        /// </summary>
+        Envelope LastEnvelope { get; }
     }
 }

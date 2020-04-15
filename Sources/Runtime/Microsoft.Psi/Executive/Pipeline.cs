@@ -33,21 +33,14 @@ namespace Microsoft.Psi
         /// </summary>
         private readonly ManualResetEvent completed = new ManualResetEvent(false);
 
-        /// <summary>
-        /// This event becomes set when the first source component is done.
-        /// </summary>
-        private readonly ManualResetEvent anyCompleted = new ManualResetEvent(false);
-
         private readonly KeyValueStore configStore = new KeyValueStore();
 
-        private readonly DeliveryPolicy deliveryPolicy;
+        private readonly DeliveryPolicy defaultDeliveryPolicy;
 
         /// <summary>
         /// If set, indicates that the pipeline is in replay mode.
         /// </summary>
         private ReplayDescriptor replayDescriptor;
-
-        private TimeInterval proposedTimeInterval;
 
         private TimeInterval proposedOriginatingTimeInterval;
 
@@ -60,8 +53,6 @@ namespace Microsoft.Psi
         /// The list of completable components.
         /// </summary>
         private List<PipelineElement> completableComponents = new List<PipelineElement>();
-
-        private bool finiteSourcePreviouslyCompleted = false;
 
         private Scheduler scheduler;
 
@@ -79,17 +70,27 @@ namespace Microsoft.Psi
 
         private Emitter<PipelineDiagnostics> diagnosticsEmitter;
 
+        private IProgress<double> progressReporter;
+        private Time.TimerDelegate progressDelegate;
+        private Platform.ITimer progressTimer;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
-        public Pipeline(string name, DeliveryPolicy deliveryPolicy, int threadCount, bool allowSchedulingOnExternalThreads, bool enableDiagnostics = false, DiagnosticsConfiguration diagnosticsConfig = null)
-            : this(name, deliveryPolicy, enableDiagnostics ? new DiagnosticsCollector() : null, diagnosticsConfig)
+        /// <param name="diagnosticsConfiguration">Optional diagnostics configuration information.</param>
+        public Pipeline(
+            string name,
+            DeliveryPolicy defaultDeliveryPolicy,
+            int threadCount,
+            bool allowSchedulingOnExternalThreads,
+            bool enableDiagnostics = false,
+            DiagnosticsConfiguration diagnosticsConfiguration = null)
+            : this(name, defaultDeliveryPolicy, enableDiagnostics ? new DiagnosticsCollector(diagnosticsConfiguration) : null, diagnosticsConfiguration)
         {
             this.scheduler = new Scheduler(this.ErrorHandler, threadCount, allowSchedulingOnExternalThreads, name);
             this.schedulerContext = new SchedulerContext();
@@ -102,13 +103,19 @@ namespace Microsoft.Psi
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
         /// <param name="scheduler">Scheduler to be used.</param>
         /// <param name="schedulerContext">The scheduler context.</param>
         /// <param name="diagnosticsCollector">Collector with which to gather diagnostic information.</param>
         /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
-        internal Pipeline(string name, DeliveryPolicy deliveryPolicy, Scheduler scheduler, SchedulerContext schedulerContext, DiagnosticsCollector diagnosticsCollector, DiagnosticsConfiguration diagnosticsConfig)
-            : this(name, deliveryPolicy, diagnosticsCollector, diagnosticsConfig)
+        internal Pipeline(
+            string name,
+            DeliveryPolicy defaultDeliveryPolicy,
+            Scheduler scheduler,
+            SchedulerContext schedulerContext,
+            DiagnosticsCollector diagnosticsCollector,
+            DiagnosticsConfiguration diagnosticsConfig)
+            : this(name, defaultDeliveryPolicy, diagnosticsCollector, diagnosticsConfig)
         {
             this.scheduler = scheduler;
             this.schedulerContext = schedulerContext;
@@ -118,25 +125,31 @@ namespace Microsoft.Psi
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
         /// </summary>
         /// <param name="name">Pipeline name.</param>
-        /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
+        /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
         /// <param name="diagnosticsCollector">Collector with which to gather diagnostic information.</param>
         /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
-        private Pipeline(string name, DeliveryPolicy deliveryPolicy, DiagnosticsCollector diagnosticsCollector, DiagnosticsConfiguration diagnosticsConfig)
+        private Pipeline(
+            string name,
+            DeliveryPolicy defaultDeliveryPolicy,
+            DiagnosticsCollector diagnosticsCollector,
+            DiagnosticsConfiguration diagnosticsConfig)
         {
             this.id = Interlocked.Increment(ref lastPipelineId);
             this.name = name ?? "default";
-            this.deliveryPolicy = deliveryPolicy ?? DeliveryPolicy.Unlimited;
+            this.defaultDeliveryPolicy = defaultDeliveryPolicy ?? DeliveryPolicy.Unlimited;
             this.enableExceptionHandling = false;
-            this.LatestSourceCompletionTime = DateTime.MinValue;
             this.FinalOriginatingTime = DateTime.MinValue;
             this.state = State.Initial;
             this.activationContext = new SchedulerContext();
-            this.DiagnosticsCollector = diagnosticsCollector;
-            this.DiagnosticsConfiguration = diagnosticsConfig ?? DiagnosticsConfiguration.Default;
-            this.DiagnosticsCollector?.PipelineCreate(this);
-            if (!(this is Subpipeline))
+            if (diagnosticsCollector != null)
             {
-                this.Diagnostics = new DiagnosticsSampler(this, this.DiagnosticsCollector, this.DiagnosticsConfiguration).Diagnostics;
+                this.DiagnosticsConfiguration = diagnosticsConfig ?? DiagnosticsConfiguration.Default;
+                this.DiagnosticsCollector = diagnosticsCollector;
+                this.DiagnosticsCollector.PipelineCreate(this);
+                if (!(this is Subpipeline))
+                {
+                    this.Diagnostics = new DiagnosticsSampler(this, this.DiagnosticsCollector, this.DiagnosticsConfiguration).Diagnostics;
+                }
             }
         }
 
@@ -214,9 +227,14 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Gets the pipeline-level delivery policy.
+        /// Gets the pipeline start time based on the pipeline clock.
         /// </summary>
-        public DeliveryPolicy DeliveryPolicy => this.deliveryPolicy;
+        public DateTime StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the progress reporting time interval.
+        /// </summary>
+        public TimeSpan ProgressReportInterval { get; set; } = TimeSpan.FromMilliseconds(500);
 
         internal bool IsInitial => this.state == State.Initial;
 
@@ -245,14 +263,14 @@ namespace Microsoft.Psi
         internal DiagnosticsConfiguration DiagnosticsConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the completion time of the latest completed source component.
-        /// </summary>
-        protected DateTime LatestSourceCompletionTime { get; set; }
-
-        /// <summary>
         /// Gets or sets originating time of final message scheduled.
         /// </summary>
-        protected DateTime FinalOriginatingTime { get; set; }
+        internal DateTime FinalOriginatingTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the completion time of the latest completed finite source component.
+        /// </summary>
+        protected DateTime? LatestFiniteSourceCompletionTime { get; set; }
 
         /// <summary>
         /// Gets an <see cref="AutoResetEvent"/> that signals when there are no remaining completable components.
@@ -304,22 +322,36 @@ namespace Microsoft.Psi
         /// <summary>
         /// Propose replay time.
         /// </summary>
-        /// <param name="activeInterval">Active time interval.</param>
         /// <param name="originatingTimeInterval">Originating time interval.</param>
-        public virtual void ProposeReplayTime(TimeInterval activeInterval, TimeInterval originatingTimeInterval)
+        public virtual void ProposeReplayTime(TimeInterval originatingTimeInterval)
         {
-            if (!activeInterval.LeftEndpoint.Bounded)
-            {
-                throw new ArgumentException(nameof(activeInterval), "Replay time intervals must have a valid start time.");
-            }
-
             if (!originatingTimeInterval.LeftEndpoint.Bounded)
             {
                 throw new ArgumentException(nameof(originatingTimeInterval), "Replay time intervals must have a valid start time.");
             }
 
-            this.proposedTimeInterval = (this.proposedTimeInterval == null) ? activeInterval : TimeInterval.Coverage(new[] { this.proposedTimeInterval, activeInterval });
             this.proposedOriginatingTimeInterval = (this.proposedOriginatingTimeInterval == null) ? originatingTimeInterval : TimeInterval.Coverage(new[] { this.proposedOriginatingTimeInterval, originatingTimeInterval });
+        }
+
+        /// <summary>
+        /// Gets the default delivery policy for a stream of given type.
+        /// </summary>
+        /// <typeparam name="T">The type of the stream.</typeparam>
+        /// <returns>The default delivery policy to use for that stream.</returns>
+        /// <remarks>The default delivery policy is used when no delivery policy is specified when wiring the stream.</remarks>
+        public virtual DeliveryPolicy<T> GetDefaultDeliveryPolicy<T>()
+        {
+            return this.defaultDeliveryPolicy;
+        }
+
+        /// <summary>
+        /// Gets the default message validator for a stream of a given type.
+        /// </summary>
+        /// <typeparam name="T">The type of the stream.</typeparam>
+        /// <returns>The default validator to use for that stream.</returns>
+        public virtual Emitter<T>.ValidateMessageHandler GetDefaultMessageValidator<T>()
+        {
+            return null;
         }
 
         /// <summary>
@@ -424,10 +456,11 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of emitted messages.</typeparam>
         /// <param name="owner">Owner of emitter.</param>
         /// <param name="name">Name of emitter.</param>
+        /// <param name="messageValidator">An optional message validator.</param>
         /// <returns>Created emitter.</returns>
-        public Emitter<T> CreateEmitter<T>(object owner, string name)
+        public Emitter<T> CreateEmitter<T>(object owner, string name, Emitter<T>.ValidateMessageHandler messageValidator = null)
         {
-            return this.CreateEmitterWithFixedStreamId<T>(owner, name, Interlocked.Increment(ref lastStreamId));
+            return this.CreateEmitterWithFixedStreamId(owner, name, Interlocked.Increment(ref lastStreamId), messageValidator);
         }
 
         /// <summary>
@@ -441,27 +474,26 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Wait for any component to complete.
+        /// Wait for all components to complete.
         /// </summary>
-        /// <param name="millisecondsTimeout">Timeout (milliseconds).</param>
+        /// <param name="timeout">Timeout.</param>
         /// <returns>Success.</returns>
-        public bool WaitAny(int millisecondsTimeout = Timeout.Infinite)
+        public bool WaitAll(TimeSpan timeout)
         {
-            return this.anyCompleted.WaitOne(millisecondsTimeout);
+            return this.completed.WaitOne(timeout);
         }
 
         /// <inheritdoc />
         public virtual void Dispose()
         {
             this.Dispose(false);
-            this.DiagnosticsCollector?.PipelineDisposed(this);
         }
 
         /// <summary>
-        /// Run pipeline (synchronously).
+        /// Runs the pipeline synchronously.
         /// </summary>
-        /// <param name="descriptor">Replay descriptor.</param>
-        public void Run(ReplayDescriptor descriptor)
+        /// <param name="descriptor">An optional replay descriptor to apply when replaying data from a store.</param>
+        public void Run(ReplayDescriptor descriptor = null)
         {
             this.enableExceptionHandling = true; // suppress exceptions while running
             this.RunAsync(descriptor);
@@ -473,109 +505,116 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Run pipeline (synchronously).
+        /// Runs the pipeline synchronously in replay mode. This method may be used when replaying data from a store.
         /// </summary>
-        /// <param name="replayInterval">Time interval within which to replay.</param>
-        /// <param name="useOriginatingTime">Whether to use originating time.</param>
-        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
-        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        public void Run(TimeInterval replayInterval = null, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
+        /// <param name="replayInterval">
+        /// The time interval within which to replay the data. The pipeline will commence playback at the start time of
+        /// this interval, and only messages bearing an originating time within this interval will be retrieved from the
+        /// store(s) contained in the pipeline and delivered. Pipeline execution will stop once all messages within this
+        /// interval have been processed.
+        /// </param>
+        /// <param name="enforceReplayClock">
+        /// Whether to enforce the replay clock. If true, messages retrieved from the store(s) will be delivered according
+        /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
+        /// store(s) will be delivered as soon as possible irrespective of their originating times.
+        /// </param>
+        public void Run(TimeInterval replayInterval, bool enforceReplayClock = true)
         {
-            this.Run(new ReplayDescriptor(replayInterval, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
+            this.Run(new ReplayDescriptor(replayInterval, enforceReplayClock));
         }
 
         /// <summary>
-        /// Run pipeline (synchronously).
+        /// Runs the pipeline synchronously in replay mode. This method may be used when replaying data from a store.
         /// </summary>
-        /// <param name="replayStartTime">Time at which to start replaying.</param>
-        /// <param name="useOriginatingTime">Whether to use originating time.</param>
-        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
-        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        public void Run(DateTime replayStartTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
+        /// <param name="replayStartTime">The time at which to start replaying.</param>
+        /// <param name="replayEndTime">The time at which to end replaying.</param>
+        /// <param name="enforceReplayClock">
+        /// Whether to enforce the replay clock. If true, messages retrieved from the store(s) will be delivered according
+        /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
+        /// store(s) will be delivered as soon as possible irrespective of their originating times.
+        /// </param>
+        public void Run(DateTime replayStartTime, DateTime replayEndTime, bool enforceReplayClock = true)
         {
-            this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
+            this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, enforceReplayClock));
         }
 
         /// <summary>
-        /// Run pipeline (synchronously).
-        /// </summary>
-        /// <param name="replayStartTime">Time at which to start replaying.</param>
-        /// <param name="replayEndTime">Time at which to end replaying.</param>
-        /// <param name="useOriginatingTime">Whether to use originating time.</param>
-        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
-        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        public void Run(DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
-        {
-            this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
-        }
-
-        /// <summary>
-        /// Run pipeline (synchronously).
-        /// </summary>
-        /// <param name="duration">Duration (time span) to replay.</param>
-        public void Run(TimeSpan duration)
-        {
-            this.enableExceptionHandling = true; // suppress exceptions while running
-            this.RunAsync();
-            if (!this.WaitAll((int)duration.TotalMilliseconds))
-            {
-                this.Stop(this.GetCurrentTime());
-            }
-
-            this.enableExceptionHandling = false;
-
-            // throw any exceptions if running synchronously and there is no PipelineException handler
-            this.ThrowIfError();
-        }
-
-        /// <summary>
-        /// Run pipeline (asynchronously).
-        /// </summary>
-        /// <param name="replayInterval">Time interval within which to replay.</param>
-        /// <param name="useOriginatingTime">Whether to use originating time.</param>
-        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
-        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        /// <returns>Disposable used to terminate pipeline.</returns>
-        public IDisposable RunAsync(TimeInterval replayInterval = null, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
-        {
-            return this.RunAsync(new ReplayDescriptor(replayInterval, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
-        }
-
-        /// <summary>
-        /// Run pipeline (asynchronously).
+        /// Runs the pipeline synchronously in replay mode. This method may be used when replaying data from a store.
         /// </summary>
         /// <param name="replayStartTime">Time at which to start replaying.</param>
-        /// <param name="useOriginatingTime">Whether to use originating time.</param>
-        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
-        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        /// <returns>Disposable used to terminate pipeline.</returns>
-        public IDisposable RunAsync(DateTime replayStartTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
+        /// <param name="enforceReplayClock">
+        /// Whether to enforce the replay clock. If true, messages retrieved from the store(s) will be delivered according
+        /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
+        /// store(s) will be delivered as soon as possible irrespective of their originating times.
+        /// </param>
+        public void Run(DateTime replayStartTime, bool enforceReplayClock = true)
         {
-            return this.RunAsync(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
+            this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, enforceReplayClock));
         }
 
         /// <summary>
-        /// Run pipeline (asynchronously).
+        /// Runs the pipeline asynchronously.
+        /// </summary>
+        /// <param name="descriptor">An optional replay descriptor to apply when replaying data from a store.</param>
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        /// <returns>An IDisposable instance which may be used to terminate the pipeline.</returns>
+        public IDisposable RunAsync(ReplayDescriptor descriptor = null, IProgress<double> progress = null)
+        {
+            return this.RunAsync(descriptor, null, progress);
+        }
+
+        /// <summary>
+        /// Runs the pipeline asynchronously in replay mode. This method may be used when replaying data from a store.
+        /// </summary>
+        /// <param name="replayInterval">
+        /// The time interval within which to replay the data. The pipeline will commence playback at the start time of
+        /// this interval, and only messages bearing an originating time within this interval will be retrieved from the
+        /// store(s) contained in the pipeline and delivered. Pipeline execution will stop once all messages within this
+        /// interval have been processed.
+        /// </param>
+        /// <param name="enforceReplayClock">
+        /// Whether to enforce the replay clock. If true, messages retrieved from the store(s) will be delivered according
+        /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
+        /// store(s) will be delivered as soon as possible irrespective of their originating times.
+        /// </param>
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        /// <returns>An IDisposable instance which may be used to terminate the pipeline.</returns>
+        public IDisposable RunAsync(TimeInterval replayInterval, bool enforceReplayClock = true, IProgress<double> progress = null)
+        {
+            return this.RunAsync(new ReplayDescriptor(replayInterval, enforceReplayClock), progress);
+        }
+
+        /// <summary>
+        /// Runs the pipeline asynchronously in replay mode. This method may be used when replaying data from a store.
         /// </summary>
         /// <param name="replayStartTime">Time at which to start replaying.</param>
         /// <param name="replayEndTime">Time at which to end replaying.</param>
-        /// <param name="useOriginatingTime">Whether to use originating time.</param>
-        /// <param name="enforceReplayClock">Whether to enforce replay clock.</param>
-        /// <param name="replaySpeedFactor">Speed factor at which to replay (e.g. 2 for double speed, 0.5 for half speed).</param>
-        /// <returns>Disposable used to terminate pipeline.</returns>
-        public IDisposable RunAsync(DateTime replayStartTime, DateTime replayEndTime, bool useOriginatingTime = false, bool enforceReplayClock = true, float replaySpeedFactor = 1)
+        /// <param name="enforceReplayClock">
+        /// Whether to enforce the replay clock. If true, messages retrieved from the store(s) will be delivered according
+        /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
+        /// store(s) will be delivered as soon as possible irrespective of their originating times.
+        /// </param>
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        /// <returns>An IDisposable instance which may be used to terminate the pipeline.</returns>
+        public IDisposable RunAsync(DateTime replayStartTime, DateTime replayEndTime, bool enforceReplayClock = true, IProgress<double> progress = null)
         {
-            return this.RunAsync(new ReplayDescriptor(replayStartTime, replayEndTime, useOriginatingTime, enforceReplayClock, replaySpeedFactor));
+            return this.RunAsync(new ReplayDescriptor(replayStartTime, replayEndTime, enforceReplayClock), progress);
         }
 
         /// <summary>
-        /// Run pipeline (asynchronously).
+        /// Runs the pipeline asynchronously in replay mode. This method may be used when replaying data from a store.
         /// </summary>
-        /// <param name="descriptor">Replay descriptor.</param>
-        /// <returns>Disposable used to terminate pipeline.</returns>
-        public virtual IDisposable RunAsync(ReplayDescriptor descriptor)
+        /// <param name="replayStartTime">Time at which to start replaying.</param>
+        /// <param name="enforceReplayClock">
+        /// Whether to enforce the replay clock. If true, messages retrieved from the store(s) will be delivered according
+        /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
+        /// store(s) will be delivered as soon as possible irrespective of their originating times.
+        /// </param>
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        /// <returns>An IDisposable instance which may be used to terminate the pipeline.</returns>
+        public IDisposable RunAsync(DateTime replayStartTime, bool enforceReplayClock = true, IProgress<double> progress = null)
         {
-            return this.RunAsync(descriptor, null);
+            return this.RunAsync(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, enforceReplayClock), progress);
         }
 
         /// <summary>
@@ -637,10 +676,10 @@ namespace Microsoft.Psi
             return this.Clock.ToVirtualTime(time);
         }
 
-        internal Emitter<T> CreateEmitterWithFixedStreamId<T>(object owner, string name, int streamId)
+        internal Emitter<T> CreateEmitterWithFixedStreamId<T>(object owner, string name, int streamId, Emitter<T>.ValidateMessageHandler messageValidator)
         {
             PipelineElement node = this.GetOrCreateNode(owner);
-            var emitter = new Emitter<T>(streamId, owner, node.SyncContext, this);
+            var emitter = new Emitter<T>(streamId, name, owner, node.SyncContext, this, messageValidator ?? this.GetDefaultMessageValidator<T>());
             node.AddOutput(name, emitter);
             return emitter;
         }
@@ -660,6 +699,7 @@ namespace Microsoft.Psi
             this.Stop(this.GetCurrentTime(), abandonPendingWorkItems);
             this.DisposeComponents();
             this.components = null;
+            this.DiagnosticsCollector?.PipelineDisposed(this);
         }
 
         internal void AddComponent(PipelineElement pe)
@@ -683,9 +723,9 @@ namespace Microsoft.Psi
             if (this.NoRemainingCompletableComponents.WaitOne(0))
             {
                 // stop the pipeline once all finite sources have completed
-                if (this.finiteSourcePreviouslyCompleted)
+                if (this.LatestFiniteSourceCompletionTime.HasValue)
                 {
-                    ThreadPool.QueueUserWorkItem(_ => this.Stop(this.LatestSourceCompletionTime));
+                    ThreadPool.QueueUserWorkItem(_ => this.Stop(this.LatestFiniteSourceCompletionTime.Value));
                 }
             }
         }
@@ -723,17 +763,16 @@ namespace Microsoft.Psi
                 this.completableComponents.Remove(component);
                 lastRemainingCompletable = this.completableComponents.Count == 0;
 
-                if (finiteCompletion && finalOriginatingTime > this.LatestSourceCompletionTime)
+                if (finiteCompletion && (this.LatestFiniteSourceCompletionTime == null || finalOriginatingTime > this.LatestFiniteSourceCompletionTime))
                 {
-                    this.LatestSourceCompletionTime = finalOriginatingTime;
+                    // keep track of the latest finite source component completion time
+                    this.LatestFiniteSourceCompletionTime = finalOriginatingTime;
                 }
             }
 
             if (finiteCompletion)
             {
-                this.anyCompleted.Set();
                 this.ComponentCompleted?.Invoke(this, new ComponentCompletedEventArgs(component.Name, finalOriginatingTime));
-                this.finiteSourcePreviouslyCompleted = true;
             }
 
             if (lastRemainingCompletable)
@@ -741,68 +780,6 @@ namespace Microsoft.Psi
                 // signal completion of all completable components
                 this.NoRemainingCompletableComponents.Set();
             }
-        }
-
-        /// <summary>
-        /// Run pipeline (asynchronously).
-        /// </summary>
-        /// <param name="descriptor">Replay descriptor.</param>
-        /// <param name="clock">Clock to use (in the case of a shared scheduler - e.g. subpipeline).</param>
-        /// <returns>Disposable used to terminate pipeline.</returns>
-        internal IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock)
-        {
-            this.state = State.Starting;
-            descriptor = descriptor ?? ReplayDescriptor.ReplayAll;
-            this.replayDescriptor = descriptor.Intersect(descriptor.UseOriginatingTime ? this.proposedOriginatingTimeInterval : this.proposedTimeInterval);
-
-            this.completed.Reset();
-            if (clock == null)
-            {
-                // this is the main pipeline (subpipelines inherit the parent clock)
-                clock =
-                    this.replayDescriptor.Interval.Left != DateTime.MinValue ?
-                    new Clock(this.replayDescriptor.Start, 1 / this.replayDescriptor.ReplaySpeedFactor) :
-                    new Clock(default(TimeSpan), 1 / this.replayDescriptor.ReplaySpeedFactor);
-
-                // start the scheduler
-                this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);
-            }
-
-            this.DiagnosticsCollector?.PipelineStart(this);
-
-            // raise the event prior to starting the components
-            this.PipelineRun?.Invoke(this, new PipelineRunEventArgs(this.Clock.GetCurrentTime()));
-
-            this.state = State.Running;
-
-            // keep track of completable source components
-            foreach (var component in this.components)
-            {
-                if (component.IsSource)
-                {
-                    lock (this.completableComponents)
-                    {
-                        this.completableComponents.Add(component);
-                    }
-                }
-            }
-
-            // Start scheduling for component activation only - startup of source components will be scheduled, but
-            // any other work (e.g. delivery of messages) will be deferred until the schedulerContext is started.
-            this.scheduler.StartScheduling(this.activationContext);
-
-            foreach (var component in this.components)
-            {
-                component.Activate();
-            }
-
-            // wait for component activation to finish
-            this.scheduler.PauseForQuiescence(this.activationContext);
-
-            // now start scheduling work on the main scheduler context
-            this.scheduler.StartScheduling(this.schedulerContext);
-
-            return this;
         }
 
         /// <summary>
@@ -882,8 +859,8 @@ namespace Microsoft.Psi
 
             this.state = State.Stopping;
 
-            // use the supplied final originating time, unless the pipeline has already seen a later source completion time
-            this.NotifyPipelineFinalizing(finalOriginatingTime > this.LatestSourceCompletionTime ? finalOriginatingTime : this.LatestSourceCompletionTime);
+            // use the supplied final originating time, unless the pipeline has already seen a later finite source completion time
+            this.NotifyPipelineFinalizing((this.LatestFiniteSourceCompletionTime == null || finalOriginatingTime > this.LatestFiniteSourceCompletionTime) ? finalOriginatingTime : this.LatestFiniteSourceCompletionTime.Value);
 
             // deactivate all components, to disable the generation of new messages from source components
             int count;
@@ -902,8 +879,90 @@ namespace Microsoft.Psi
             // block until all messages in the pipeline are fully processed
             this.Scheduler.StopScheduling(this.SchedulerContext);
 
+            // wait for progress timer delegate to finish
+            if (this.progressTimer != null)
+            {
+                this.progressTimer.Stop();
+                this.ReportProgress(); // ensure that final progress is reported
+            }
+
             this.completed.Set();
             this.Complete(abandonPendingWorkitems);
+        }
+
+        /// <summary>
+        /// Run pipeline (asynchronously).
+        /// </summary>
+        /// <param name="descriptor">Replay descriptor.</param>
+        /// <param name="clock">Clock to use (in the case of a shared scheduler - e.g. subpipeline).</param>
+        /// <param name="progress">Progress reporter.</param>
+        /// <returns>Disposable used to terminate pipeline.</returns>
+        protected virtual IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock, IProgress<double> progress = null)
+        {
+            this.state = State.Starting;
+            descriptor = descriptor ?? ReplayDescriptor.ReplayAllRealTime;
+            this.replayDescriptor = descriptor.Intersect(this.proposedOriginatingTimeInterval);
+
+            this.completed.Reset();
+            if (clock == null)
+            {
+                // this is the main pipeline (subpipelines inherit the parent clock)
+                clock =
+                    this.replayDescriptor.Interval.Left != DateTime.MinValue ?
+                    new Clock(this.replayDescriptor.Start) :
+                    new Clock(default(TimeSpan));
+
+                // start the scheduler
+                this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);
+            }
+
+            // The pipeline start time reflects either the replay start time if one was specified,
+            // otherwise the clock origin, which is the time the pipeline scheduler was started.
+            this.StartTime = this.replayDescriptor.Start != DateTime.MinValue ? this.replayDescriptor.Start : clock.Origin;
+
+            this.DiagnosticsCollector?.PipelineStart(this);
+
+            // raise the event prior to starting the components
+            this.PipelineRun?.Invoke(this, new PipelineRunEventArgs(this.StartTime));
+
+            this.state = State.Running;
+
+            // keep track of completable source components
+            foreach (var component in this.components)
+            {
+                if (component.IsSource)
+                {
+                    lock (this.completableComponents)
+                    {
+                        this.completableComponents.Add(component);
+                    }
+                }
+            }
+
+            // Start scheduling for component activation only - startup of source components will be scheduled, but
+            // any other work (e.g. delivery of messages) will be deferred until the schedulerContext is started.
+            this.scheduler.StartScheduling(this.activationContext);
+
+            foreach (var component in this.components)
+            {
+                component.Activate();
+            }
+
+            // wait for component activation to finish
+            this.scheduler.PauseForQuiescence(this.activationContext);
+
+            // now start scheduling work on the main scheduler context
+            this.scheduler.StartScheduling(this.schedulerContext);
+
+            // start a progress reporting timer if a progress reporter is supplied
+            if (progress != null)
+            {
+                this.progressReporter = progress;
+                this.progressDelegate = new Time.TimerDelegate((i, m, c, d1, d2) => this.ReportProgress());
+                this.progressTimer = Platform.Specific.TimerStart((uint)this.ProgressReportInterval.TotalMilliseconds, this.progressDelegate);
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -1265,6 +1324,75 @@ namespace Microsoft.Psi
                     throw error;
                 }
             }
+        }
+
+        private double EstimateProgress()
+        {
+            long startTicks = this.replayDescriptor.Start.Ticks;
+            long endTicks = this.replayDescriptor.End.Ticks;
+            double totalProgress = 0.0;
+
+            foreach (var component in this.components)
+            {
+                double componentProgress = 0.0;
+                if (component.IsFinalized)
+                {
+                    // a finalized component is by definition 100% done
+                    componentProgress = 1.0;
+                }
+                else if (component.StateObject is Subpipeline sub)
+                {
+                    // recursively estimate progress for subpipelines
+                    componentProgress = sub.EstimateProgress();
+                }
+                else if (component.Outputs.Count > 0 || component.Inputs.Count > 0)
+                {
+                    long ticks = 0;
+                    foreach (var input in component.Inputs)
+                    {
+                        ticks += Math.Max(input.Value.LastEnvelope.OriginatingTime.Ticks, startTicks);
+                    }
+
+                    foreach (var output in component.Outputs)
+                    {
+                        ticks += Math.Max(output.Value.LastEnvelope.OriginatingTime.Ticks, startTicks);
+                    }
+
+                    // use average originating time across all outputs and inputs to estimate percent completion
+                    int streamCount = component.Outputs.Count + component.Inputs.Count;
+                    ticks = streamCount > 0 ? Math.Min(ticks / streamCount, endTicks) : startTicks;
+
+                    // if we have seen a message with maximum originating time, call it done
+                    componentProgress = 1.0 * (ticks - startTicks) / (endTicks - startTicks);
+                }
+                else if (component.IsActivated)
+                {
+                    // if we cannot estimate progress, default to 50%
+                    componentProgress = 0.5;
+                }
+                else if (component.IsDeactivating)
+                {
+                    // once pipeline has told the component to deactivate, it is 90% done
+                    componentProgress = 0.9;
+                }
+                else if (component.IsDeactivated)
+                {
+                    // when component has been deactivated, it is 99% done (just needs to be finalized)
+                    componentProgress = 0.99;
+                }
+
+                // sum of all components progress
+                totalProgress += componentProgress;
+            }
+
+            // use the average as a rough estimate of overall pipeline progress
+            return totalProgress / this.components.Count;
+        }
+
+        private void ReportProgress()
+        {
+            double progress = this.EstimateProgress();
+            this.progressReporter.Report(progress);
         }
     }
 }

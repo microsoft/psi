@@ -30,11 +30,6 @@ namespace Microsoft.Psi.Components
         private Platform.ITimer timer;
 
         /// <summary>
-        /// The last time published by the timer.
-        /// </summary>
-        private DateTime currentTime;
-
-        /// <summary>
         /// The start time of the timer.
         /// </summary>
         private DateTime startTime;
@@ -91,18 +86,8 @@ namespace Microsoft.Psi.Components
         {
             this.notifyCompletionTime = notifyCompletionTime;
 
-            var replay = this.pipeline.ReplayDescriptor;
-            if (replay.Start == DateTime.MinValue)
-            {
-                this.startTime = this.pipeline.GetCurrentTime();
-            }
-            else
-            {
-                this.startTime = replay.Start;
-            }
-
-            this.endTime = replay.End;
-            this.currentTime = this.startTime;
+            this.startTime = this.pipeline.StartTime;
+            this.endTime = this.pipeline.ReplayDescriptor.End;
             uint realTimeInterval = (uint)this.pipeline.ConvertToRealTime(this.timerInterval).TotalMilliseconds;
             this.timerDelegate = new Time.TimerDelegate(this.PublishTime);
             this.timer = Platform.Specific.TimerStart(realTimeInterval, this.timerDelegate);
@@ -144,8 +129,6 @@ namespace Microsoft.Psi.Components
                 // publish a new message.
                 this.Generate(now, now - this.startTime);
             }
-
-            this.currentTime += this.timerInterval;
         }
 
         private void StopTimer()

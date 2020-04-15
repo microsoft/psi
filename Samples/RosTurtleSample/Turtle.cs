@@ -7,7 +7,6 @@ namespace TurtleROSSample
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Ros;
 
     /// <summary>
@@ -52,7 +51,7 @@ namespace TurtleROSSample
         /// <summary>
         /// Pose changed event handler.
         /// </summary>
-        public event EventHandler<Tuple<float, float, float>> PoseChanged;
+        public event EventHandler<(float, float, float)> PoseChanged;
 
         /// <summary>
         /// Connect to ROS.
@@ -91,8 +90,8 @@ namespace TurtleROSSample
         {
             if (this.PoseChanged != null)
             {
-                var pos = position.Select(f => RosMessage.GetFloat32Val(f.Item2)).ToArray();
-                this.PoseChanged(this, Tuple.Create(pos[0], pos[1], pos[2])); // drop velocity info
+                dynamic pos = RosMessage.GetDynamicFieldVals(position);
+                this.PoseChanged(this, (pos.x, pos.y, pos.theta));
             }
         }
     }

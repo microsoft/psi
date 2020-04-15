@@ -185,7 +185,7 @@ namespace Microsoft.Psi.Data
         {
             var result = true;
             Envelope e;
-            this.reader.Seek(descriptor.Interval, descriptor.UseOriginatingTime);
+            this.reader.Seek(descriptor.Interval, true);
             while (result || this.reader.IsMoreDataExpected())
             {
                 if (cancelationToken.IsCancellationRequested)

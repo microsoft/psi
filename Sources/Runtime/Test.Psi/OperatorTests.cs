@@ -4,7 +4,6 @@
 namespace Test.Psi
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reactive;
@@ -100,10 +99,6 @@ namespace Test.Psi
         {
             List<double> results = new List<double>();
 
-            var start = DateTime.Now;
-            var end = start + TimeSpan.FromMilliseconds(10);
-            var replay = new ReplayDescriptor(start, end);
-
             using (var p = Pipeline.Create("test"))
             {
                 var eventSource = new EventSource<EventHandler<int>, double>(
@@ -112,7 +107,7 @@ namespace Test.Psi
                         handler => this.EventSourceTestEvent -= handler,
                         post => new EventHandler<int>((sender, e) => post(e / 10.0)));
                 eventSource.Out.Do(f => results.Add(f));
-                p.RunAsync(replay);
+                p.RunAsync();
 
                 for (var i = 0; i < 10; i++)
                 {
@@ -1019,6 +1014,123 @@ namespace Test.Psi
             }
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void DynamicWindow()
+        {
+            // test sets of window and expected result pairs
+            void Test(((int, int, int) Window, int[] Expected)[] pairs, bool leftInclusive, bool rightInclusive)
+            {
+                // data is a 0..9 range, windows are start/end indexes into this + obsolete index
+                int[][] GetWindowedData(IEnumerable<(int Obsolete, int Start, int End)> windows)
+                {
+                    // indexes mapped to originating time
+                    DateTime ToTime(int i)
+                    {
+                        return DateTime.MinValue.AddMilliseconds(i * 10);
+                    }
+
+                    using (var p = Pipeline.Create())
+                    {
+                        var output = Generators.Sequence(p, new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.Select(d => (d, ToTime(d))))
+                            .Window(
+                                Generators.Sequence(p, windows, TimeSpan.FromMilliseconds(10)),
+                                m => (new TimeInterval(ToTime(m.Data.Start), leftInclusive, ToTime(m.Data.End), rightInclusive), ToTime(m.Data.Obsolete)))
+                            .Select(ms => ms.Select(m => m.Data).ToArray())
+                            .ToObservable().ToListObservable();
+                        p.Run();
+                        return output.AsEnumerable().ToArray();
+                    }
+                }
+
+                // get windowed data and compare with expected results
+                var results = GetWindowedData(pairs.Select(p => p.Window));
+                Assert.AreEqual(results.Length, pairs.Count());
+                for (var i = 0; i < results.Length; i++)
+                {
+                    Assert.IsTrue(Enumerable.SequenceEqual(results[i], pairs[i].Expected));
+                }
+            }
+
+            // test growing (right) window - pairs are (obsolete, start, end) windows with expected windowed data
+            Test(new[] {
+                ((2, 2, 4), new[] { 2, 3, 4 }), // 2..4 growing to right
+                ((2, 2, 5), new[] { 2, 3, 4, 5 }), // 2..5
+                ((2, 2, 6), new[] { 2, 3, 4, 5, 6 }), // 2..6
+            }, true, true);
+
+            // test left inclusivity
+            Test(new[] {
+                ((2, 2, 4), new[] { 3, 4 }),
+                ((2, 2, 5), new[] { 3, 4, 5 }),
+                ((2, 2, 6), new[] { 3, 4, 5, 6 }),
+            }, false /* not including left */, true);
+
+            // test right inclusivity
+            Test(new[] {
+                ((2, 2, 4), new[] { 2, 3 }),
+                ((2, 2, 5), new[] { 2, 3, 4 }),
+                ((2, 2, 6), new[] { 2, 3, 4, 5}),
+            }, true, false /* not including right */);
+
+            // test left & right inclusivity
+            Test(new[] {
+                ((2, 2, 4), new[] { 3 }),
+                ((2, 2, 5), new[] { 3, 4 }),
+                ((2, 2, 6), new[] { 3, 4, 5}),
+            }, false /* not including left */, false /* not including right */);
+
+            // test left-most window
+            Test(new[] { ((0, 0, 2), new[] { 0, 1, 2 }), }, true, true);
+
+            // test right-most window
+            Test(new[] { ((7, 7, 9), new[] { 7, 8, 9 }), }, true, true);
+
+            // test beyond right-most window
+            Test(new[] { ((7, 7, 100), new[] { 7, 8, 9 }), }, true, true);
+
+            // test sliding window
+            Test(new[] {
+                ((2, 2, 4), new[] { 2, 3, 4 }), // 2..4 sliding to right
+                ((3, 3, 5), new[] { 3, 4, 5 }), // 3..6
+                ((4, 4, 6), new[] { 4, 5, 6 }), // 4..7
+            }, true, true);
+
+            // test growing (left) window
+            Test(new[] {
+                ((1, 3, 5), new[] { 3, 4, 5 }), // 3..5 growing to left
+                ((1, 2, 5), new[] { 2, 3, 4, 5 }), // 2..4
+                ((1, 1, 5), new[] { 1, 2, 3, 4, 5}), // 1..5
+            }, true, true);
+
+            // invalid if obsolete time moves backward!
+            try
+            {
+                Test(new[] {
+                    ((3, 3, 5), new[] { 3, 4, 5 }), // 3..5 growing to left
+                    ((2, 3, 5), new[] { 3, 4, 5 }), // 3..4 boom! (2 earlier than previous [3] obsolete)
+                }, true, true);
+                Assert.Fail("Expected exception due to obsolete time backtracking");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.InnerException.Message, "Dynamic window with obsolete time prior to previous window.");
+            }
+
+            // invalid if window requests are before previous obsolete time
+            try
+            {
+                Test(new[] {
+                    ((3, 3, 5), new[] { 3, 4, 5 }), // 3..5 growing to left
+                    ((3, 2, 5), new[] { 1, 3, 4, 5 }), // 2..5 boom! (2 has alreadly been obsoleted)
+                }, true, true);
+                Assert.Fail("Expected exception due to window request into obsoleted inputs");
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.InnerException.Message, "Dynamic window must not extend before previous obsolete time.");
+            }
+        }
 
         [TestMethod]
         [Timeout(60000)]
@@ -1036,13 +1148,71 @@ namespace Test.Psi
         {
             using (var pipeline = Pipeline.Create())
             {
-                var windows = Generators.Sequence(pipeline, new IEnumerable<double>[] { new[] { 727.7, 1086.5, 1091.0, 1361.3, 1490.5, 1956.1 }, new double[] { } }, TimeSpan.FromTicks(1));
+                var windows = Generators.Sequence(pipeline, new double[][] { new[] { 727.7, 1086.5, 1091.0, 1361.3, 1490.5, 1956.1 }, new double[] { } }, TimeSpan.FromTicks(1));
                 var std = windows.Std().ToObservable().ToListObservable();
                 pipeline.Run();
 
                 var results = std.AsEnumerable().ToArray();
                 Assert.AreEqual(2, results.Length);
                 Assert.IsTrue(Enumerable.SequenceEqual(new[] { 420.96248961952256, 0 }, results));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void ZipAndMerge()
+        {
+            var zipped = new List<string>();
+            var merged = new List<string>();
+
+            using (var p = Pipeline.Create())
+            {
+                Generators.Range(p, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open because of Delay
+
+                // A0  A1  A2  A3  A4  A5  A6  A7  A8  A9
+                // B0    B1    B2    B3    B4    B5    B6    B7    B8    B9
+                // C0      C1      C2      C3      C4      C5      C6      C7      C8      C9 (arriving 100ms late in wall-clock time)
+                //
+                // Zipped order: A0 B0 C0 A1 B1 A2 C1 A3 B2 A4 C2 B3 A5 A6 B4 C3 A7 B5 A8 C4 A9 B6 C5 B7 B8 C6 B9 C7 C8 C9
+                // Several places align *exactly* in originating time (e.g. A0-B0-C0, A2-C1, A3-B2, etc.) these are ordered by stream ID within the same tick
+                var sourceA = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(10)).Select(i => $"A{i}");
+                var sourceB = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(15)).Select(i => $"B{i}");
+                var sourceC = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(20)).Select(i => $"C{i}").Delay(TimeSpan.FromMilliseconds(100));
+
+                Operators.Merge(new [] { sourceA, sourceB, sourceC }).Do(x => merged.Add(x.Data)); // non-deterministic order
+                Operators.Zip(new [] { sourceA, sourceB, sourceC }).Do(x => zipped.Add(x.Data)); // ordered by originating time, then stream ID within single tick
+
+                p.Run();
+            }
+
+            // Zipped and ordered by originating time (with stream ID tie-breaker)
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { "A0", "B0", "C0", "A1", "B1", "A2", "C1", "A3", "B2", "A4",
+                                                           "C2", "B3", "A5", "A6", "B4", "C3", "A7", "B5", "A8", "C4",
+                                                           "A9", "B6", "C5", "B7", "B8", "C6", "B9", "C7", "C8", "C9" }, zipped));
+
+
+            // Since merging is non-deterministic, all we test here is that all messages arrive
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9",
+                                                           "B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9",
+                                                           "C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9" }, merged.OrderBy(_ => _)));
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void FirstOperator()
+        {
+            using (var p = Pipeline.Create())
+            {
+                var source = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(10));
+                var first1 = source.First().ToObservable().ToListObservable();
+                var first5 = source.First(5).ToObservable().ToListObservable();
+                var firstN = source.First(int.MaxValue).ToObservable().ToListObservable();
+
+                p.Run();
+
+                CollectionAssert.AreEqual(new[] { 0 }, first1.AsEnumerable().ToArray());
+                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4 }, first5.AsEnumerable().ToArray());
+                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, firstN.AsEnumerable().ToArray());
             }
         }
 

@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Data
     using System.Runtime.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Psi.Data.Helpers;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -76,6 +77,7 @@ namespace Microsoft.Psi.Data
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.Auto,
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    SerializationBinder = new SafeSerializationBinder(),
                 });
             using (var jsonFile = File.OpenText(filename))
             using (var jsonReader = new JsonTextReader(jsonFile))
@@ -153,6 +155,7 @@ namespace Microsoft.Psi.Data
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = TypeNameHandling.Auto,
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    SerializationBinder = new SafeSerializationBinder(),
                 });
             using (var jsonFile = File.CreateText(filename))
             using (var jsonWriter = new JsonTextWriter(jsonFile))

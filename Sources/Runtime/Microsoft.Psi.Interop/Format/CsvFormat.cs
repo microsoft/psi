@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Interop.Format
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using CsvHelper;
@@ -34,7 +35,7 @@ namespace Microsoft.Psi.Interop.Format
         {
             using (var ms = new MemoryStream())
             using (var sw = new StreamWriter(ms))
-            using (var csv = new CsvWriter(sw))
+            using (var csv = new CsvWriter(sw, CultureInfo.InvariantCulture))
             {
                 this.WriteCsvHeader(message, csv); // individual messages contain header for field names
                 this.WriteCsvRecord(message, originatingTime, csv);
@@ -49,7 +50,7 @@ namespace Microsoft.Psi.Interop.Format
         {
             using (var ms = new MemoryStream(payload, index, count))
             using (var sr = new StreamReader(ms))
-            using (var csv = new CsvReader(sr))
+            using (var csv = new CsvReader(sr, CultureInfo.InvariantCulture))
             {
                 csv.Read();
                 return this.ReadCsvRecord(csv);
@@ -59,7 +60,7 @@ namespace Microsoft.Psi.Interop.Format
         /// <inheritdoc />
         public dynamic PersistHeader(dynamic message, Stream stream)
         {
-            var csvWriter = new CsvWriter(new StreamWriter(stream));
+            var csvWriter = new CsvWriter(new StreamWriter(stream), CultureInfo.InvariantCulture);
             this.WriteCsvHeader(message, csvWriter);
             return csvWriter;
         }
@@ -80,7 +81,7 @@ namespace Microsoft.Psi.Interop.Format
         /// <inheritdoc />
         public IEnumerable<(dynamic, DateTime)> DeserializeRecords(Stream stream)
         {
-            using (var csv = new CsvReader(new StreamReader(stream)))
+            using (var csv = new CsvReader(new StreamReader(stream), CultureInfo.InvariantCulture))
             {
                 while (csv.Read())
                 {

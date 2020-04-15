@@ -52,24 +52,6 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Generates a stream of values published at a regular interval from a specified enumerator.
-        /// </summary>
-        /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
-        /// <param name="enumerator">The enumerator producing the values to publish.</param>
-        /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
-        /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
-        /// specified alignment time.</param>
-        /// <param name="keepOpen">Indicates whether the stream should be kept open after all messages in the sequence have been posted.</param>
-        /// <returns>A stream of values of type T.</returns>
-        /// <remarks>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline. The generated stream closes when the enumerator closes.</remarks>
-        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false)
-        {
-            return new Generator<T>(pipeline, enumerator, interval, alignmentDateTime, isInfiniteSource: keepOpen);
-        }
-
-        /// <summary>
         /// Generates a stream of values published at a regular interval from a specified enumerable.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
@@ -88,31 +70,21 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Generates a stream of values from a specified enumerator that provides the values and corresponding originating times.
-        /// </summary>
-        /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
-        /// <param name="enumerator">An enumerator of (data, originating time) pairs.</param>
-        /// <param name="keepOpen">Indicates whether the stream should be kept open after all the messages in the enumerator have been posted.</param>
-        /// <returns>A stream of values of type T.</returns>
-        /// <remarks>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</remarks>
-        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerator<(T, DateTime)> enumerator, bool keepOpen = false)
-        {
-            return new Generator<T>(pipeline, enumerator, isInfiniteSource: keepOpen);
-        }
-
-        /// <summary>
         /// Generates a stream of values from a specified enumerable that provides the values and corresponding originating times.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="enumerable">An enumerable sequence of (data, originating time) pairs.</param>
+        /// <param name="startTime">The explicit start time of the data in the enumeration. Supply this parameter when the enumeration contains
+        /// data values with absolute originating times (e.g. [value, time] pairs read from a file), and you want to propose a pipeline replay
+        /// time to take this into account. Otherwise, pipeline playback will be determined by the prevailing replay descriptor (taking into
+        /// account any other components in the pipeline which may have proposed replay times).</param>
         /// <param name="keepOpen">Indicates whether the stream should be kept open after all the messages in the enumerable have been posted.</param>
         /// <returns>A stream of values of type T.</returns>
         /// <remarks>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</remarks>
-        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerable<(T, DateTime)> enumerable, bool keepOpen = false)
+        public static IProducer<T> Sequence<T>(Pipeline pipeline, IEnumerable<(T, DateTime)> enumerable, DateTime? startTime = null, bool keepOpen = false)
         {
-            return new Generator<T>(pipeline, enumerable.GetEnumerator(), isInfiniteSource: keepOpen);
+            return new Generator<T>(pipeline, enumerable.GetEnumerator(), startTime, isInfiniteSource: keepOpen);
         }
 
         /// <summary>
@@ -121,15 +93,11 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of value to publish.</typeparam>
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="value">The value to publish.</param>
-        /// <param name="interval">The desired time interval used to align the messages with an alignment time. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
-        /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
-        /// specified alignment time.</param>
         /// <returns>A stream of values of type T.</returns>
         /// <remarks>The generated stream stays open until the pipeline is shut down.</remarks>
-        public static IProducer<T> Once<T>(Pipeline pipeline, T value, TimeSpan interval = default, DateTime? alignmentDateTime = null)
+        public static IProducer<T> Once<T>(Pipeline pipeline, T value)
         {
-            return Sequence(pipeline, new[] { value }, interval, alignmentDateTime, keepOpen: true);
+            return Sequence(pipeline, new[] { value }, default, null, keepOpen: true);
         }
 
         /// <summary>
@@ -138,15 +106,11 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The type of value to publish.</typeparam>
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="value">The value to publish.</param>
-        /// <param name="interval">The desired time interval between consecutive messages, or used to align the messages with an alignment time. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
-        /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
-        /// specified alignment time.</param>
         /// <returns>A stream containing one value of type T.</returns>
         /// <remarks>The generated stream closes after the message is published.</remarks>
-        public static IProducer<T> Return<T>(Pipeline pipeline, T value, TimeSpan interval = default, DateTime? alignmentDateTime = null)
+        public static IProducer<T> Return<T>(Pipeline pipeline, T value)
         {
-            return Sequence(pipeline, new[] { value }, interval, alignmentDateTime, keepOpen: false);
+            return Sequence(pipeline, new[] { value }, default, null, keepOpen: false);
         }
 
         /// <summary>

@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Provides Windows-specific APIs and components for audio capture, processing and playback.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.Audio</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Release\net47\Microsoft.Psi.Audio.Windows.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\Microsoft.Psi.Audio.Windows.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Debug\net47\Microsoft.Psi.Audio.Windows.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\Microsoft.Psi.Audio.Windows.xml</DocumentationFile>
     <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />

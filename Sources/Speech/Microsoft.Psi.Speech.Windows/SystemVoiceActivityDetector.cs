@@ -5,7 +5,6 @@ namespace Microsoft.Psi.Speech
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Speech.AudioFormat;
     using System.Speech.Recognition;
     using System.Threading;
@@ -210,6 +209,12 @@ namespace Microsoft.Psi.Speech
 
             // Specify the input stream and audio format
             recognizer.SetInputToAudioStream(this.inputAudioStream, formatInfo);
+
+            // Set the speech recognition engine parameters
+            recognizer.InitialSilenceTimeout = TimeSpan.FromMilliseconds(this.Configuration.InitialSilenceTimeoutMs);
+            recognizer.BabbleTimeout = TimeSpan.FromMilliseconds(this.Configuration.BabbleTimeoutMs);
+            recognizer.EndSilenceTimeout = TimeSpan.FromMilliseconds(this.Configuration.EndSilenceTimeoutMs);
+            recognizer.EndSilenceTimeoutAmbiguous = TimeSpan.FromMilliseconds(this.Configuration.EndSilenceTimeoutAmbiguousMs);
 
             return recognizer;
         }

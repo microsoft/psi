@@ -6,6 +6,8 @@ namespace Microsoft.Ros
 module RosMessage =
 
     open System
+    open System.Collections.Generic
+    open System.Dynamic
     open System.Text
     open System.IO
 
@@ -55,6 +57,30 @@ module RosMessage =
     let GetVariableArrayVal = function VariableArrayVal v -> v           | _ -> failwith "Expected variable array value"
     let GetFixedArrayVal    = function FixedArrayVal    v -> v           | _ -> failwith "Expected fixed array value"
     let GetStructVal        = function StructVal        v -> v           | _ -> failwith "Expected struct value"
+
+    let rec GetDynamicFieldVals (fields : NamedRosFieldVal seq) =
+        let expando = ExpandoObject()
+        let dict = expando :> IDictionary<string, obj>
+        fields |> Seq.iter (fun (n, v) -> dict.Add(n, GetDynamicVal v))
+        box expando
+    and GetDynamicVal = function
+        | BoolVal          v -> box v
+        | Int8Val          v -> box v
+        | UInt8Val         v -> box v
+        | Int16Val         v -> box v
+        | UInt16Val        v -> box v
+        | Int32Val         v -> box v
+        | UInt32Val        v -> box v
+        | Int64Val         v -> box v
+        | UInt64Val        v -> box v
+        | Float32Val       v -> box v
+        | Float64Val       v -> box v
+        | TimeVal          (s, n) -> box (s, n)
+        | DurationVal      (s, n) -> box (s, n)
+        | StringVal        v -> box v
+        | VariableArrayVal v -> v |> Array.ofList |> box
+        | FixedArrayVal    v -> v |> Array.ofList |> box
+        | StructVal        v -> GetDynamicFieldVals v
 
     // serdes
 

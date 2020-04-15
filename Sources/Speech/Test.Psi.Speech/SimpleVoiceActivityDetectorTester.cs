@@ -29,7 +29,7 @@ namespace Test.Psi.Speech
                 vad.Out.Do(r => results.Add(r));
 
                 // Run pipeline and wait for completion.
-                pipeline.Run(null, false, false);
+                pipeline.Run(null, false);
 
                 Assert.IsTrue(results.Count > 0, "No results!");
                 CollectionAssert.AreEqual(Enumerable.Repeat(false, 29).ToList(), results.GetRange(0, 29), "Initial silence detection failed!");

@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-namespace Microsoft.Psi.Visualization.Windows
+namespace Microsoft.Psi.PsiStudio.Windows
 {
-    using System;
-    using System.IO;
     using System.Windows;
 
     /// <summary>

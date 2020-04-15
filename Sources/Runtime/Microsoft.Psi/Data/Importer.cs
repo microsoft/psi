@@ -17,19 +17,13 @@ namespace Microsoft.Psi.Data
     /// Instances of this class can be created using the <see cref="Store.Open"/> method.
     /// The store metadata is available immediately after open (before the pipeline is running) via the <see cref="AvailableStreams"/> property.
     /// </summary>
-    public sealed class Importer : ISourceComponent, IDisposable
+    public sealed class Importer : Subpipeline, IDisposable
     {
-        private readonly Receiver<bool> loopBack;
-        private readonly Emitter<bool> next;
-        private readonly Emitter<Message<BufferReader>> output;
         private readonly StoreReader reader;
+        private readonly MessageImporter msgImporter;
         private readonly Splitter<Message<BufferReader>, int> splitter;
         private readonly Dictionary<string, object> streams = new Dictionary<string, object>();
         private readonly Pipeline pipeline;
-        private Action<DateTime> notifyCompletionTime;
-        private long finalTicks = 0;
-        private bool stopping;
-        private byte[] buffer;
         private KnownSerializers serializers;
 
         /// <summary>
@@ -39,21 +33,14 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to open a volatile data store.</param>
         public Importer(Pipeline pipeline, string name, string path)
+            : base(pipeline, $"{nameof(Importer)}[{name}]")
         {
             this.reader = new StoreReader(name, path, this.LoadMetadata);
             this.pipeline = pipeline;
-            this.next = pipeline.CreateEmitter<bool>(this, nameof(this.next));
-            this.loopBack = pipeline.CreateReceiver<bool>(this, this.Next, nameof(this.loopBack));
-            this.next.PipeTo(this.loopBack, DeliveryPolicy.LatestMessage);
-            this.splitter = new Splitter<Message<BufferReader>, int>(pipeline, (msg, e) => msg.Envelope.SourceId);
-            this.output = pipeline.CreateEmitter<Message<BufferReader>>(this, nameof(this.output));
-            this.output.PipeTo(this.splitter.In, DeliveryPolicy.Unlimited);
+            this.msgImporter = new MessageImporter(this, this.reader);
+            this.splitter = new Splitter<Message<BufferReader>, int>(this, (msg, e) => msg.Envelope.SourceId);
+            this.msgImporter.PipeTo(this.splitter.In, DeliveryPolicy.SynchronousOrThrottle);
         }
-
-        /// <summary>
-        /// Gets the name of the store.
-        /// </summary>
-        public string Name => this.reader.Name;
 
         /// <summary>
         /// Gets the path of the store, or null if this is a volatile store.
@@ -86,27 +73,10 @@ namespace Microsoft.Psi.Data
         /// </summary>
         public RuntimeInfo SourceRuntimeInfo => this.reader.RuntimeVersion;
 
-        /// <inheritdoc />
-        public void Start(Action<DateTime> notifyCompletionTime)
-        {
-            this.notifyCompletionTime = notifyCompletionTime;
-
-            var replay = this.pipeline.ReplayDescriptor;
-            this.reader.Seek(replay.Interval, replay.UseOriginatingTime);
-            this.next.Post(true, replay.Start);
-        }
-
-        /// <inheritdoc />
-        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
-        {
-            this.stopping = true;
-            notifyCompleted();
-        }
-
         /// <summary>
         /// Closes the store and disposes of the current instance.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             this.reader.Dispose();
         }
@@ -131,14 +101,12 @@ namespace Microsoft.Psi.Data
         /// <param name="streamName">The name of the storage stream to copy.</param>
         /// <param name="writer">The store to copy to.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void CopyStream(string streamName, Exporter writer, DeliveryPolicy deliveryPolicy = null)
+        public void CopyStream(string streamName, Exporter writer, DeliveryPolicy<Message<BufferReader>> deliveryPolicy = null)
         {
-            var meta = this.reader.GetMetadata(streamName);
-            this.reader.OpenStream(meta); // this checks for duplicates but bypasses type checks
-
             // create the copy pipeline
-            var splitterOut = this.splitter.Add(meta.Id);
-            writer.Write(splitterOut, meta, deliveryPolicy);
+            var meta = this.reader.GetMetadata(streamName);
+            var raw = this.OpenRawStream(meta);
+            writer.Write(raw, meta, deliveryPolicy);
         }
 
         /// <summary>
@@ -185,7 +153,7 @@ namespace Microsoft.Psi.Data
         /// <returns>A stream that publishes the data read from the store.</returns>
         public IProducer<T> OpenStream<T>(string streamName, T reusableInstance = default(T))
         {
-            return this.OpenStream<T>(streamName, new DeserializerComponent<T>(this.pipeline, this.serializers, reusableInstance));
+            return this.OpenStream<T>(streamName, new DeserializerComponent<T>(this, this.serializers, reusableInstance));
         }
 
         /// <summary>
@@ -197,10 +165,23 @@ namespace Microsoft.Psi.Data
         /// <returns>A stream of dynamic that publishes the data read from the store.</returns>
         public IProducer<dynamic> OpenDynamicStream(string streamName)
         {
-            return this.OpenStream<dynamic>(streamName, new DynamicDeserializerComponent(this.pipeline, this.reader.OpenStream(streamName).TypeName, this.serializers.Schemas));
+            return this.OpenStream<dynamic>(streamName, new DynamicDeserializerComponent(this, this.reader.OpenStream(streamName).TypeName, this.serializers.Schemas), false);
         }
 
-        private IProducer<T> OpenStream<T>(string streamName, ConsumerProducer<Message<BufferReader>, T> deserializer)
+        /// <summary>
+        /// Opens the specified storage stream as raw `Message` of `BufferReader` for reading and returns a stream instance that can be used to consume the messages.
+        /// The returned stream will publish data read from the store once the pipeline is running.
+        /// </summary>
+        /// <remarks>Messages are not deserialized.</remarks>
+        /// <param name="meta">The meta of the storage stream to open.</param>
+        /// <returns>A stream of raw messages that publishes the data read from the store.</returns>
+        internal Emitter<Message<BufferReader>> OpenRawStream(PsiStreamMetadata meta)
+        {
+            this.reader.OpenStream(meta); // this checks for duplicates but bypasses type checks
+            return this.splitter.Add(meta.Id);
+        }
+
+        private IProducer<T> OpenStream<T>(string streamName, ConsumerProducer<Message<BufferReader>, T> deserializer, bool checkType = true)
         {
             if (this.streams.TryGetValue(streamName, out object stream))
             {
@@ -209,63 +190,59 @@ namespace Microsoft.Psi.Data
 
             var meta = this.reader.OpenStream(streamName);
 
-            if (meta.ActiveLifetime != null && !meta.ActiveLifetime.IsEmpty && meta.ActiveLifetime.IsFinite)
+            if (checkType)
+            {
+                // check that the requested type matches the stream type
+                var streamType = meta.TypeName;
+                var requestedType = TypeSchema.GetContractName(typeof(T), this.serializers.RuntimeVersion);
+                if (streamType != requestedType)
+                {
+                    // check if the handler maps the stream type to the requested type
+                    var handler = this.serializers.GetHandler<T>();
+                    if (handler.Name != streamType)
+                    {
+                        if (this.serializers.Schemas.TryGetValue(streamType, out var streamTypeSchema) &&
+                            this.serializers.Schemas.TryGetValue(requestedType, out var requestedTypeSchema))
+                        {
+                            // validate compatibility - will throw if types are incompatible
+                            streamTypeSchema.ValidateCompatibleWith(requestedTypeSchema);
+                        }
+                    }
+                }
+            }
+
+            if (meta.OriginatingLifetime != null && !meta.OriginatingLifetime.IsEmpty && meta.OriginatingLifetime.IsFinite)
             {
                 // propose a replay time that covers the stream lifetime
-                this.pipeline.ProposeReplayTime(meta.ActiveLifetime, meta.OriginatingLifetime);
+                this.ProposeReplayTime(meta.OriginatingLifetime);
             }
 
             // register this stream with the store catalog
             this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, streamName, meta);
 
-            // create the deserialization sub-pipeline (and validate that we can deserialize this stream)
+            // collate the raw messages by their stream IDs
             var splitterOut = this.splitter.Add(meta.Id);
-            deserializer.Out.Name = streamName;
             splitterOut.PipeTo(deserializer, DeliveryPolicy.Unlimited);
-            this.streams[streamName] = deserializer.Out;
-            return deserializer.Out;
-        }
 
-        /// <summary>
-        /// Attempts to move the reader to the next message (across all logical storage streams).
-        /// </summary>
-        /// <param name="moreDataPromised">Indicates whether an absence of messages should be reported as the end of the store.</param>
-        /// <param name="env">The envelope of the last message we read.</param>
-        private void Next(bool moreDataPromised, Envelope env)
-        {
-            if (this.stopping)
-            {
-                return;
-            }
+            // preserve the envelope of the deserialized message in the output connector
+            var outConnector = new Connector<T>(this, this.pipeline, $"connectorOut{streamName}", preserveEnvelope: true);
 
-            Envelope e;
-            var result = this.reader.MoveNext(out e);
-            if (result)
-            {
-                int count = this.reader.Read(ref this.buffer);
-                var bufferReader = new BufferReader(this.buffer, count);
+            deserializer
+                .Process<T, T>(
+                    (msg, env, emitter) =>
+                    {
+                        // do not deliver messages past the stream closing time
+                        if (meta.Closed == default || env.OriginatingTime <= meta.Closed)
+                        {
+                            // call Deliver rather than Post to preserve the original envelope
+                            emitter.Deliver(msg, env);
+                        }
+                    }, DeliveryPolicy.SynchronousOrThrottle)
+                .PipeTo(outConnector, DeliveryPolicy.SynchronousOrThrottle);
 
-                // we want messages to be scheduled and delivered based on their original creation time, not originating time
-                // the check below is just to ensure we don't fail because of some timing issue when writing the data (since there is no ordering guarantee across streams)
-                // note that we are posting a message of a message, and once the outer message is stripped by the splitter, the inner message will still have the correct originating time
-                var nextTime = (env.OriginatingTime > e.Time) ? env.OriginatingTime : e.Time;
-                this.output.Post(Message.Create(bufferReader, e), nextTime);
-                this.next.Post(true, nextTime.AddTicks(1));
-                this.finalTicks = Math.Max(this.finalTicks, Math.Max(e.OriginatingTime.Ticks, nextTime.Ticks));
-            }
-            else
-            {
-                // retry at least once, even if there is no active writer
-                bool willHaveMoreData = this.reader.IsMoreDataExpected();
-                if (willHaveMoreData || moreDataPromised)
-                {
-                    this.next.Post(willHaveMoreData, env.OriginatingTime.AddTicks(1));
-                }
-                else
-                {
-                    this.notifyCompletionTime(new DateTime(this.finalTicks));
-                }
-            }
+            outConnector.Out.Name = streamName;
+            this.streams[streamName] = outConnector.Out;
+            return outConnector.Out;
         }
 
         /// <summary>

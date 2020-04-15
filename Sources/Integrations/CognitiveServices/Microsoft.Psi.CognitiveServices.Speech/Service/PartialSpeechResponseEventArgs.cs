@@ -10,20 +10,18 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
     /// </summary>
     public class PartialSpeechResponseEventArgs : EventArgs
     {
-        private string partialResult;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PartialSpeechResponseEventArgs"/> class.
         /// </summary>
         /// <param name="partialResult">The partial speech recognition result text.</param>
-        internal PartialSpeechResponseEventArgs(string partialResult)
+        internal PartialSpeechResponseEventArgs(PartialRecognitionResult partialResult)
         {
-            this.partialResult = partialResult;
+            this.PartialResult = partialResult;
         }
 
         /// <summary>
-        /// Gets the partial speech recognition result text.
+        /// Gets the partial speech recognition result.
         /// </summary>
-        public string PartialResult => this.partialResult;
+        public PartialRecognitionResult PartialResult { get; }
     }
 }

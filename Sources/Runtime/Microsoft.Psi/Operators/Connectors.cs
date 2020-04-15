@@ -20,7 +20,7 @@ namespace Microsoft.Psi
         /// <param name="consumer">The consumer (subscriber).</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Consumer (subscriber).</returns>
-        public static TC PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, DeliveryPolicy deliveryPolicy = null)
+        public static TC PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, DeliveryPolicy<TIn> deliveryPolicy = null)
             where TC : IConsumer<TIn>
         {
             return PipeTo(source, consumer, false, deliveryPolicy);
@@ -52,10 +52,10 @@ namespace Microsoft.Psi
         /// <param name="allowWhileRunning">An optional flag to allow connections in running pipelines.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Consumer.</returns>
-        internal static TC PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, bool allowWhileRunning, DeliveryPolicy deliveryPolicy = null)
+        internal static TC PipeTo<TIn, TC>(this IProducer<TIn> source, TC consumer, bool allowWhileRunning, DeliveryPolicy<TIn> deliveryPolicy = null)
             where TC : IConsumer<TIn>
         {
-            source.Out.Subscribe(consumer.In, allowWhileRunning, deliveryPolicy ?? source.Out.Pipeline.DeliveryPolicy);
+            source.Out.Subscribe(consumer.In, allowWhileRunning, deliveryPolicy ?? source.Out.Pipeline.GetDefaultDeliveryPolicy<TIn>());
             return consumer;
         }
     }

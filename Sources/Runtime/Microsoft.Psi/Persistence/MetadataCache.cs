@@ -124,7 +124,7 @@ namespace Microsoft.Psi.Persistence
                         // we expect this to be first in the file (or completely missing in v0 files)
                         this.runtimeVersion = meta as RuntimeInfo;
 
-                        // Need to review this with Mihai. The issue was that the RemoteExporter is not writing
+                        // Need to review this. The issue was that the RemoteExporter is not writing
                         // out the RuntimeInfo to the stream. This causes the RemoteImporter side of things to
                         // never see a RuntimeInfo metadata object and thus it assumes that the stream is using
                         // version 0.0 of serialization (i.e. non-data-contract version) which causes a mismatch

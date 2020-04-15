@@ -29,7 +29,7 @@ namespace Microsoft.Psi
             TimeSpan samplingInterval,
             Interpolator<T, TInterpolation> interpolator,
             DateTime? alignmentDateTime = null,
-            DeliveryPolicy deliveryPolicy = null)
+            DeliveryPolicy<T> deliveryPolicy = null)
         {
             var clock = Generators.Repeat(source.Out.Pipeline, 0, samplingInterval, alignmentDateTime);
             return source.Interpolate(clock, interpolator, deliveryPolicy);
@@ -52,8 +52,8 @@ namespace Microsoft.Psi
             this IProducer<T> source,
             IProducer<TClock> clock,
             Interpolator<T, TInterpolation> interpolator,
-            DeliveryPolicy sourceDeliveryPolicy = null,
-            DeliveryPolicy clockDeliveryPolicy = null)
+            DeliveryPolicy<T> sourceDeliveryPolicy = null,
+            DeliveryPolicy<TClock> clockDeliveryPolicy = null)
         {
             var fuse = new Fuse<TClock, T, TInterpolation, TInterpolation>(source.Out.Pipeline, interpolator, (clk, data) => data[0]);
             clock.PipeTo(fuse.InPrimary, clockDeliveryPolicy);
@@ -79,7 +79,7 @@ namespace Microsoft.Psi
             TimeSpan samplingInterval,
             TimeSpan tolerance,
             DateTime? alignmentDateTime = null,
-            DeliveryPolicy deliveryPolicy = null)
+            DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Interpolate(
                 samplingInterval,
@@ -106,7 +106,7 @@ namespace Microsoft.Psi
             TimeSpan samplingInterval,
             RelativeTimeInterval relativeTimeInterval,
             DateTime? alignmentDateTime = null,
-            DeliveryPolicy deliveryPolicy = null)
+            DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source.Interpolate(
                 samplingInterval,
@@ -131,8 +131,8 @@ namespace Microsoft.Psi
             this IProducer<T> source,
             IProducer<TClock> clock,
             TimeSpan tolerance,
-            DeliveryPolicy sourceDeliveryPolicy = null,
-            DeliveryPolicy clockDeliveryPolicy = null)
+            DeliveryPolicy<T> sourceDeliveryPolicy = null,
+            DeliveryPolicy<TClock> clockDeliveryPolicy = null)
         {
             return source.Interpolate(clock, Reproducible.Nearest<T>(new RelativeTimeInterval(-tolerance, tolerance)), sourceDeliveryPolicy, clockDeliveryPolicy);
         }
@@ -153,8 +153,8 @@ namespace Microsoft.Psi
             this IProducer<T> source,
             IProducer<TClock> clock,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy sourceDeliveryPolicy = null,
-            DeliveryPolicy clockDeliveryPolicy = null)
+            DeliveryPolicy<T> sourceDeliveryPolicy = null,
+            DeliveryPolicy<TClock> clockDeliveryPolicy = null)
         {
             return source.Interpolate(clock, Reproducible.Nearest<T>(relativeTimeInterval), sourceDeliveryPolicy, clockDeliveryPolicy);
         }

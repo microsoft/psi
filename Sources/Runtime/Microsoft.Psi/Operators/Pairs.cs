@@ -31,8 +31,8 @@ namespace Microsoft.Psi
             IProducer<TSecondary> secondary,
             Func<TPrimary, TSecondary, TOut> outputCreator,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(
                 new Pair<TPrimary, TSecondary, TOut>(primary.Out.Pipeline, outputCreator, initialValue),
@@ -59,8 +59,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             Func<TPrimary, TSecondary, TOut> outputCreator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(
                 new Pair<TPrimary, TSecondary, TOut>(primary.Out.Pipeline, outputCreator),
@@ -85,8 +85,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(
                 new Pair<TPrimary, TSecondary, (TPrimary, TSecondary)>(primary.Out.Pipeline, ValueTuple.Create, initialValue),
@@ -110,8 +110,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondary)> Pair<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(
                 new Pair<TPrimary, TSecondary, (TPrimary, TSecondary)>(primary.Out.Pipeline, ValueTuple.Create),
@@ -141,8 +141,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, s), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -161,8 +161,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TSecondary)> Pair<TPrimaryItem1, TPrimaryItem2, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, s), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -184,8 +184,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, s), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -205,8 +205,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary)> Pair<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, s), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -229,8 +229,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, s), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -251,8 +251,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary)> Pair<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, s), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -276,8 +276,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -299,8 +299,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary)> Pair<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -325,8 +325,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             TSecondary initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, p.Item6, s), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -349,8 +349,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary)> Pair<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, p.Item6, s), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -375,8 +375,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             (TSecondaryItem1, TSecondaryItem2) initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -395,8 +395,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2)> Pair<TPrimary, TSecondaryItem1, TSecondaryItem2>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -418,8 +418,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3) initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -439,8 +439,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> Pair<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -463,8 +463,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4) initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -485,8 +485,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> Pair<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -510,8 +510,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5) initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -533,8 +533,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> Pair<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -559,8 +559,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6) initialValue,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5, s.Item6), initialValue, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -583,8 +583,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> Pair<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Pair(primary, secondary, (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5, s.Item6), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -595,8 +595,8 @@ namespace Microsoft.Psi
             Pair<TPrimary, TSecondary, TOut> pair,
             IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             primary.PipeTo(pair.InPrimary, primaryDeliveryPolicy);
             secondary.PipeTo(pair.InSecondary, secondaryDeliveryPolicy);

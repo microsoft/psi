@@ -19,7 +19,7 @@ namespace Microsoft.Psi
         /// <param name="stream">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Observable with elements from the source stream.</returns>
-        public static IObservable<T> ToObservable<T>(this IProducer<T> stream, DeliveryPolicy deliveryPolicy = null)
+        public static IObservable<T> ToObservable<T>(this IProducer<T> stream, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return new StreamObservable<T>(stream, deliveryPolicy);
         }
@@ -37,7 +37,7 @@ namespace Microsoft.Psi
             /// </summary>
             /// <param name="stream">The source stream to observe.</param>
             /// <param name="deliveryPolicy">An optional delivery policy.</param>
-            public StreamObservable(IProducer<T> stream, DeliveryPolicy deliveryPolicy = null)
+            public StreamObservable(IProducer<T> stream, DeliveryPolicy<T> deliveryPolicy = null)
             {
                 var processor = new Processor<T, T>(
                     stream.Out.Pipeline,

@@ -34,8 +34,8 @@ namespace Microsoft.Psi
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
             Func<TPrimary, TInterpolation, TOut> outputCreator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -62,8 +62,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(primary, secondary, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -89,8 +89,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -119,8 +119,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -150,8 +150,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -182,8 +182,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -215,8 +215,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             Interpolator<TSecondary, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -247,8 +247,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             Interpolator<(TSecondaryItem1, TSecondaryItem2), (TSecondaryItem1, TSecondaryItem2)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Fuse<TPrimary, (TSecondaryItem1, TSecondaryItem2), (TSecondaryItem1, TSecondaryItem2), (TPrimary, TSecondaryItem1, TSecondaryItem2)>(
                 primary,
@@ -276,8 +276,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             Interpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -306,8 +306,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             Interpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -337,8 +337,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             Interpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -369,8 +369,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             Interpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Fuse(
                 primary,
@@ -404,8 +404,8 @@ namespace Microsoft.Psi
             IEnumerable<IProducer<TSecondary>> secondaries,
             Interpolator<TSecondary, TInterpolation> interpolator,
             Func<TPrimary, TInterpolation[], TOut> outputCreator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondariesDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
         {
             var fuse = new Fuse<TPrimary, TSecondary, TInterpolation, TOut>(
                 primary.Out.Pipeline,
@@ -436,7 +436,7 @@ namespace Microsoft.Psi
         public static IProducer<TIn[]> Fuse<TIn>(
             this IEnumerable<IProducer<TIn>> inputs,
             Interpolator<TIn, TIn> interpolator,
-            DeliveryPolicy deliveryPolicy = null)
+            DeliveryPolicy<TIn> deliveryPolicy = null)
         {
             var count = inputs.Count();
             if (count > 1)

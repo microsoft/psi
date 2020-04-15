@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Data
         /// The known serializer set can be accessed and modified afterwards via the <see cref="Serializers"/> property.
         /// </param>
         internal Exporter(Pipeline pipeline, string name, string path, bool createSubdirectory = true, KnownSerializers serializers = null)
-            : base(pipeline)
+            : base(pipeline, $"{nameof(Exporter)}[{name}]")
         {
             this.pipeline = pipeline;
             this.serializers = serializers ?? new KnownSerializers();
@@ -127,7 +127,7 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The name of the storage stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void Write<T>(Emitter<T> source, string name, bool largeMessages = false, DeliveryPolicy deliveryPolicy = null)
+        public void Write<T>(Emitter<T> source, string name, bool largeMessages = false, DeliveryPolicy<T> deliveryPolicy = null)
         {
             // make sure we can serialize this type
             var handler = this.serializers.GetHandler<T>();
@@ -138,9 +138,11 @@ namespace Microsoft.Psi.Data
 
             // name the stream if it's not already named
             var connector = new MessageConnector<T>(source.Pipeline, this, null);
-            source.PipeTo(connector);
-            source.Name = source.Name ?? name;
-            connector.Out.Name = name;
+
+            // defaults to lossless delivery policy unless otherwise specified
+            source.PipeTo(connector, deliveryPolicy ?? DeliveryPolicy.Unlimited);
+            source.Name = connector.Out.Name = name;
+            source.Closed += closeTime => this.writer.CloseStream(source.Id, closeTime);
 
             // tell the writer to write the serialized stream
             var meta = this.writer.OpenStream(source.Id, name, largeMessages, handler.Name);
@@ -150,8 +152,54 @@ namespace Microsoft.Psi.Data
 
             // hook up the serializer
             var serializer = new SerializerComponent<T>(this, this.serializers);
-            serializer.PipeTo(mergeInput, true, DeliveryPolicy.Unlimited); // allows connections in running pipelines
-            connector.PipeTo(serializer, true, deliveryPolicy);
+
+            // The serializer and merger will act synchronously and throttle the connector for as long as
+            // the merger is busy writing data. This will cause messages to be queued or dropped at the input
+            // to the connector (per the user-supplied deliveryPolicy) until the merger is able to accept
+            // the next serialized data message.
+            serializer.PipeTo(mergeInput, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
+            connector.PipeTo(serializer, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
+        }
+
+        /// <summary>
+        /// Writes the envelopes of messages from the specified stream to the store.
+        /// </summary>
+        /// <typeparam name="T">The type of messages in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        public void WriteEnvelopes<T>(Emitter<T> source, string name, DeliveryPolicy<T> deliveryPolicy = null)
+        {
+            // make sure we can serialize this type
+            var handler = this.serializers.GetHandler<int>();
+
+            // add another input to the merger to hook up the serializer to
+            // and check for duplicate names in the process
+            var mergeInput = this.merger.Add(name);
+
+            // name the stream if it's not already named
+            var connector = new MessageEnvelopeConnector<T>(source.Pipeline, this, null);
+
+            // defaults to lossless delivery policy unless otherwise specified
+            source.PipeTo(connector, deliveryPolicy ?? DeliveryPolicy.Unlimited);
+            source.Name = connector.Out.Name = name;
+            source.Closed += closeTime => this.writer.CloseStream(source.Id, closeTime);
+
+            // tell the writer to write the serialized stream
+            var meta = this.writer.OpenStream(source.Id, name, false, handler.Name);
+
+            // register this stream with the store catalog
+            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, name, meta);
+
+            // hook up the serializer
+            var serializer = new SerializerComponent<int>(this, this.serializers);
+
+            // The serializer and merger will act synchronously and throttle the connector for as long as
+            // the merger is busy writing data. This will cause messages to be queued or dropped at the input
+            // to the connector (per the user-supplied deliveryPolicy) until the merger is able to accept
+            // the next serialized data message.
+            serializer.PipeTo(mergeInput, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
+            connector.PipeTo(serializer, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
@@ -231,7 +279,7 @@ namespace Microsoft.Psi.Data
                         if (writeMethod != null)
                         {
                             var writeStream = writeMethod.MakeGenericMethod(objPropType.GetGenericArguments());
-                            object[] args = { propInfo.GetValue(sensor), f.Name, true, Microsoft.Psi.DeliveryPolicy.LatestMessage };
+                            object[] args = { propInfo.GetValue(sensor), f.Name, true, DeliveryPolicy.LatestMessage };
                             writeStream.Invoke(this, args);
                         }
                     }
@@ -239,7 +287,7 @@ namespace Microsoft.Psi.Data
             }
         }
 
-        internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata meta, DeliveryPolicy deliveryPolicy = null)
+        internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata meta, DeliveryPolicy<Message<BufferReader>> deliveryPolicy = null)
         {
             var mergeInput = this.merger.Add(meta.Name); // this checks for duplicates
 
@@ -250,7 +298,8 @@ namespace Microsoft.Psi.Data
 
             this.writer.OpenStream(meta);
 
-            connector.PipeTo(mergeInput, true, deliveryPolicy);
+            // defaults to lossless delivery policy unless otherwise specified
+            connector.PipeTo(mergeInput, true, deliveryPolicy ?? DeliveryPolicy.Unlimited);
         }
 
         /// <summary>

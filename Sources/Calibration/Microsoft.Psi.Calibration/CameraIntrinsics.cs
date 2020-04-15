@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Calibration
             this.ImageWidth = imageWidth;
             this.ImageHeight = imageHeight;
             this.Transform = transform;
-            this.RadialDistortion = radialDistortion ?? Vector<double>.Build.Dense(2, 0);
+            this.RadialDistortion = radialDistortion ?? Vector<double>.Build.Dense(6, 0);
             this.TangentialDistortion = tangentialDistortion ?? Vector<double>.Build.Dense(2, 0);
             this.FocalLengthXY = new Point2D(this.Transform[0, 0], this.Transform[1, 1]);
             this.PrincipalPoint = new Point2D(this.Transform[0, 2], this.Transform[1, 2]);
@@ -76,36 +76,11 @@ namespace Microsoft.Psi.Calibration
         /// <inheritdoc/>
         public int ImageHeight { get; private set; }
 
-        /// <summary>
-        /// Build is used to create our camera's intrinsic matrix. This matrix
-        /// converts from camera space coordinates into pixel coordinates.
-        /// </summary>
-        /// <param name="principalPoint">Image planes principal point.</param>
-        /// <param name="imageWidth">Width in pixels of image plane.</param>
-        /// <param name="imageHeight">Height in pixels of image plane.</param>
-        /// <param name="focalLength">focal length of the camera in mm.</param>
-        /// <param name="skew">Skew factor to account for non-perpendicular image plane axis.</param>
-        /// <param name="xscale">Scale factor to apply to X axis (pixels per mm).</param>
-        /// <param name="yscale">Scale factor to apply to Y axis (pixels per mm).</param>
-        /// <returns>Returns a new IntrinsicData object.</returns>
-        public static CameraIntrinsics Build(Point2D principalPoint, int imageWidth, int imageHeight, double focalLength, double skew, double xscale, double yscale)
-        {
-            // Set up our projection matrix (converts from camera coordinates into NDC)
-            // For more details, see Hartley & Zisserman's "Multiple View Geometry in Computer Vision", page 157.
-            var transform = Matrix<double>.Build.Dense(4, 4);
-            transform[0, 0] = focalLength * xscale;
-            transform[0, 1] = skew;
-            transform[0, 2] = xscale;
-            transform[1, 1] = focalLength * yscale;
-            transform[1, 2] = yscale;
-
-            return new CameraIntrinsics(imageWidth, imageHeight, transform);
-        }
-
         /// <inheritdoc/>
         public Point2D ToPixelSpace(Point3D pt, bool distort)
         {
-            Point2D pixelPt = new Point2D(pt.X / pt.Z, pt.Y / pt.Z);
+            // X points in the depth dimension. Y points to the left, and Z points up.
+            Point2D pixelPt = new Point2D(-pt.Y / pt.X, -pt.Z / pt.X);
             if (distort)
             {
                 this.DistortPoint(pixelPt, out pixelPt);
@@ -130,7 +105,8 @@ namespace Microsoft.Psi.Calibration
                 pixelPt = this.UndistortPoint(pixelPt);
             }
 
-            return new Point3D(pixelPt.X * depth, pixelPt.Y * depth, depth);
+            // X points in the depth dimension. Y points to the left, and Z points up.
+            return new Point3D(depth, -pixelPt.X * depth, -pixelPt.Y * depth);
         }
 
         /// <inheritdoc/>
@@ -139,124 +115,103 @@ namespace Microsoft.Psi.Calibration
             double x = undistortedPt.X;
             double y = undistortedPt.Y;
 
-            // Check if we are accounting for tangential distortion. If not, then the solution is considerably simpler.
-            if (this.TangentialDistortion[0] == 0.0 && this.TangentialDistortion[1] == 0.0 &&
-                (this.RadialDistortion[0] != 0.0 || this.RadialDistortion[1] != 0.0))
-            {
-                // In this case there is no tangential distortion. Thus we can just take the derivative relative
-                // to the radius and rescale the current point.
-                double k0 = this.RadialDistortion[0];
-                double k1 = this.RadialDistortion[1];
+            // Our distortion model is defined as:
+            // See https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=convertpointshomogeneous
+            //        r^2 = x^2 + y^2
+            //               (1+k1*r^2+k2*r^3+k3^r^6)
+            //        Fx = x ------------------------ + t1*(r^2+ 2 * x^2) + 2 * t0 * x*y
+            //               (1+k4*r^2+k5*r^3+k6^r^6)
+            //
+            //               (1+k1*r^2+k2*r^3+k3^r^6)
+            //        Fy = y ------------------------ + t0*(r^2+ 2 * y^2) + 2 * t1 * x*y
+            //               (1+k4*r^2+k5*r^3+k6^r^6)
+            //
+            // We want to solve for:
+            //                          1                            | @Fy/@y   -@Fx/@y |
+            //    J(F(x))^-1 =  ------------------------------------ |                  |
+            //                   @Fx/@x * @Fy/dy - @Fy/@x * @Fx/@y   | -@Fy/@x  @Fx/@x  |
+            // where ("@y/@x" is used to represent the partial derivative of y with respect to x):
+            //
+            //    g = 1 + k1 * r^2 + k2 * r^4 + k3 * r^6
+            //    h = 1 + k4 * r^2 + k5 * r^4 + k6 * r^6
+            //    d = g / h
+            //    @r^2/@x = 2x
+            //    @r^2/@y = 2y
+            //    @g/r^2 = k1 + 2*k2*r^2 + 3*k3*r^4
+            //    @h/r^2 = k4 + 2*k5*r^2 + 3*k6*r^4
+            //    @d/@x = @d/@r^2 * @r^2/@x = @d/@r^2 * 2*x
+            //    @d/@y = @d/@r^2 * @r^2/@y = @d/@r^2 * 2*y
+            //    @Fx/@x = x @d/@x + d + 2*t0*y + 6*t1*x
+            //    @Fy/@y = y @d/@y + d + 2*t0*x + 6*t1*y
+            //    @Fx/@y = x @d/@y + 2*t0*x + 2*t1*y
+            //    @Fy/@x = y @d/@x + 2*t0*y + 2*t1*x
+            //
+            // In the code below @<x>/@<y> is named 'd<x>d<y>'.
+            double k1 = this.RadialDistortion[0];
+            double k2 = this.RadialDistortion[1];
+            double k3 = this.RadialDistortion[2];
+            double k4 = this.RadialDistortion[3];
+            double k5 = this.RadialDistortion[4];
+            double k6 = this.RadialDistortion[5];
+            double t0 = this.TangentialDistortion[0];
+            double t1 = this.TangentialDistortion[1];
 
 #pragma warning disable SA1305
-                bool converged = false;
-                double ru = System.Math.Sqrt((x * x) + (y * y));
-                double r = ru;
-                double r2 = 0;
-                double r4 = 0;
-                double factor = 1.0;
-                for (int j = 0; j < 100 && !converged; j++)
-                {
-                    r2 = r * r;
-                    r4 = r2 * r2;
-                    factor = 1 + k0 * r2 + k1 * r4;
-                    double num = r * factor - ru;
-                    double denom = 1 + 3 * r2 * k0 + 5 * r4 * k1;
-                    converged = System.Math.Abs(num / denom) < 1E-16;
-                    r = r - num / denom;
-                }
-
-                x = undistortedPt.X / factor;
-                y = undistortedPt.Y / factor;
-#pragma warning restore SA1305
-            }
-            else if (this.RadialDistortion[0] != 0.0 || this.RadialDistortion[1] != 0.0)
+            bool converged = false;
+            for (int j = 0; j < 100 && !converged; j++)
             {
-                // Our distortion model is defined as:
-                //    Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd
-                //    Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd
-                // Next we need to compute the Jacobian of this:
-                //    @Fx/@x = (1 + K0 * r^2 + K1 * r^4) + Xd @/@x (1 + K0 * r^2 + K1 * r^4) + @/@x T1*r^2 + T1*4*Xd + T0*2*Yd
-                //           = (1 + K0 * r^2 + K1 * r^4) + Xd (K0 * @/@x r^2 + K1 * @/@x r^4) + T1 @/@x r^2 + T1*4*Xd + T0*2*Yd
-                //    @Fx/@y = Xd @/@y (1 + K0 * r^2 + K1 * r^4) + @/@y T1*r^2 + T0*2*Xd
-                //           = Xd (K0 * @/@y r^2 + K1 * @/@y r^4) + @/@y T1*r^2 + T0*2*Xd
-                //    @Fy/@x = Yd (K0 * @/@x r^2 + K1 * @/@x r^4) + @/@x T0*r^2 + T1*2*Yd
-                //    @Fy/@y = (1 + K0 * r^2 + K1 * r^4) + Yd (K0 * @/@y r^2 + K1 * @/@y r^4) + @/@y T0*r^2 + 4*Yd*T0 + 2*T1*Xd
-                // Next compute partials of r^2 and r^4
-                //    r^2=x^2+y^2
-                //    @r^2/@x = 2x
-                //    @r^2/@y = 2y
-                //    @r^4/@x = @/@x(r^2)^2 = 2*r^2*@/@x(r^2) = 2*r^2*2x=4xr^2
-                // Next solving for:
-                //                          1                            | @Fy/@y   -@Fx/@y |
-                //    J(F(x))^-1 =  ------------------------------------ |                  |
-                //                   @Fx/@x * @Fy/dy - @Fy/@x * @Fx/@y   | -@Fy/@x  @Fx/@x  |
-                double k0 = this.RadialDistortion[0];
-                double k1 = this.RadialDistortion[1];
-                double t0 = this.TangentialDistortion[0];
-                double t1 = this.TangentialDistortion[1];
+                double distortedRadius = (x * x) + (y * y);
+                double radiusSq = distortedRadius;
+                double radiusSqSq = radiusSq * radiusSq;
+                double g = 1 + k1 * radiusSq + k2 * radiusSqSq + k3 * radiusSq * radiusSqSq;
+                double h = 1 + k4 * radiusSq + k5 * radiusSqSq + k6 * radiusSq * radiusSqSq;
+                double dr2dx = 2 * x;
+                double dr2dy = 2 * y;
+                double d = g / h;
+                double dgdr2 = k1 + 2 * k2 * radiusSq + 3 * k3 * radiusSqSq;
+                double dhdr2 = k4 * 2 * k5 * radiusSq + 3 * k6 * radiusSqSq;
+                double dddr2 = (dgdr2 * h - g * dhdr2) / (h * h);
+                double dddx = dddr2 * 2 * x;
+                double dddy = dddr2 * 2 * y;
+                double dFxdx = x * dddx + d + 2 * t0 * y + 6 * t1 * x;
+                double dFxdy = x * dddy + 2 * t0 * x + 2 * t1 * y;
+                double dFydx = y * dddx + 2 * t1 * y + 2 * t0 * x;
+                double dFydy = y * dddy + d + 2 * t1 * x + 6 * t0 * y;
 
-#pragma warning disable SA1305
-                bool converged = false;
-                for (int j = 0; j < 100 && !converged; j++)
+                double det = (dFxdx * dFydy) - dFydx * dFxdy;
+
+                if (System.Math.Abs(det) < 1E-16)
                 {
-                    double distortedRadius = (x * x) + (y * y);
-                    double radiusSq = distortedRadius;
-                    double radiusSqSq = radiusSq * radiusSq;
-
-                    // dFxdx = (1 + K0 * r^2 + K1 * r^4) + Xd (K0 * @/@x r^2 + K1 * @/@x r^4) + T1 @/@x r^2 + T1*4*Xd + T0*2*Yd
-                    double dFxdx = (1 + (k0 * radiusSq) + (k1 * radiusSqSq)) +
-                        (x * ((k0 * 2 * x) + (k1 * 4 * x * radiusSq))) + (t1 * 2 * x) + (t1 * 4 * x) + (t0 * 2 * y);
-
-                    // dFxdy = Xd (K0 * @/@y r^2 + K1 * @/@y r^4) + @/@y T1*r^2 + T0*2*Xd
-                    double dFxdy = (x * ((k0 * 2 * y) + (k1 * 4 * y * radiusSq))) + (t1 * 2 * y) + (t0 * 2 * x);
-
-                    // dFydx = Yd (K0 * @/@x r^2 + K1 * @/@x r^4) + @/@x T0*r^2 + T1*2*Yd
-                    double dFydx = (y * ((k0 * 2 * x) + (k1 * 4 * x * radiusSq))) + (t0 * 2 * x) + (t1 * 2 * y);
-
-                    // dFydy = (1 + K0 * r^2 + K1 * r^4) + Yd (K0 * @/@y r^2 + K1 * @/@y r^4) + @/@y T0*r^2 + 4*Yd*T0 + 2*T1*Xd
-                    double dFydy = (1 + ((k0 * radiusSq) + (k1 * radiusSqSq))) +
-                        (y * ((k0 * 2 * y) + (k1 * 4 * y * radiusSq))) + (t0 * 2 * y) + (t0 * 4 * y) + (t1 * 2 * x);
-
-                    double det = 1.0 / ((dFxdx * dFydy) - (dFydx * dFxdy));
-
-                    if (det < 1E-16)
-                    {
-                        // Not invertible. Perform no undistortion
-                        distortedPt = new Point2D(0.0, 0.0);
-                        return false;
-                    }
-
-                    dFxdx = dFxdx / det;
-                    dFxdy = dFxdy / det;
-                    dFydx = dFydx / det;
-                    dFydy = dFydy / det;
-
-                    // We now want to compute:
-                    //     Xn = Xn-1 - J(F(x))^-1 * F(x)
-                    double xy = 2.0 * x * y;
-                    double x2 = 2.0 * x * x;
-                    double y2 = 2.0 * y * y;
-                    double xp = (x * (1.0 + (k0 * radiusSq) + (k1 * radiusSqSq))) + (t1 * (radiusSq + x2)) + (t0 * xy);
-                    double yp = (y * (1.0 + (k0 * radiusSq) + (k1 * radiusSqSq))) + (t0 * (radiusSq + y2)) + (t1 * xy);
-
-                    // Account for F(x) = distort(Xd) - Xd, since we want to solve:
-                    //   0 = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd - Xu
-                    //   0 = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd - Yu
-                    xp -= undistortedPt.X;
-                    yp -= undistortedPt.Y;
-
-                    if ((xp * xp) + (yp * yp) < 1E-16)
-                    {
-                        converged = true;
-                        break;
-                    }
-
-                    // Update our new guess (i.e. x = x - J(F(x))^-1 * F(x))
-                    x = x - ((dFydy * xp) - (dFxdy * yp));
-                    y = y - ((-dFydx * xp) + (dFxdx * yp));
-#pragma warning restore SA1305
+                    // Not invertible. Perform no distortion
+                    distortedPt = new Point2D(undistortedPt.X, undistortedPt.Y);
+                    return false;
                 }
+
+                // Compute the undisortion of our estimated distorted point.
+                double xy = 2.0 * x * y;
+                double x2 = 2.0 * x * x;
+                double y2 = 2.0 * y * y;
+                double xp = (x * d) + (t1 * (radiusSq + x2)) + (t0 * xy);
+                double yp = (y * d) + (t0 * (radiusSq + y2)) + (t1 * xy);
+
+                // We need the difference between our undistorted point
+                // and the undistortion of our estimated distorted point
+                // to be equal to 0:
+                //       0 = F(xp) - Xu
+                //       0 = F(yp) - Yu
+                xp -= undistortedPt.X;
+                yp -= undistortedPt.Y;
+
+                if ((xp * xp) + (yp * yp) < 1E-16)
+                {
+                    converged = true;
+                    break;
+                }
+
+                // Update our new guess (i.e. x = x - J(F(x))^-1 * F(x))
+                x = x - ((dFydy * xp) - (dFxdy * yp)) / det;
+                y = y - ((-dFydx * xp) + (dFxdx * yp)) / det;
+#pragma warning restore SA1305
             }
 
             distortedPt = new Point2D(x, y);
@@ -266,14 +221,23 @@ namespace Microsoft.Psi.Calibration
         /// <inheritdoc/>
         public Point2D UndistortPoint(Point2D distortedPt)
         {
-            double radiusSquared = (distortedPt.X * distortedPt.X) + (distortedPt.Y * distortedPt.Y);
-
             // Undistort pixel
             double xp, yp;
+            double radiusSquared = (distortedPt.X * distortedPt.X) + (distortedPt.Y * distortedPt.Y);
             if (this.RadialDistortion != null)
             {
-                xp = distortedPt.X * (1.0 + (this.RadialDistortion[0] * radiusSquared) + (this.RadialDistortion[1] * radiusSquared * radiusSquared));
-                yp = distortedPt.Y * (1.0 + (this.RadialDistortion[0] * radiusSquared) + (this.RadialDistortion[1] * radiusSquared * radiusSquared));
+                double k1 = this.RadialDistortion[0];
+                double k2 = this.RadialDistortion[1];
+                double k3 = this.RadialDistortion[2];
+                double k4 = this.RadialDistortion[3];
+                double k5 = this.RadialDistortion[4];
+                double k6 = this.RadialDistortion[5];
+                double g = 1 + k1 * radiusSquared + k2 * radiusSquared * radiusSquared + k3 * radiusSquared * radiusSquared * radiusSquared;
+                double h = 1 + k4 * radiusSquared + k5 * radiusSquared * radiusSquared + k6 * radiusSquared * radiusSquared * radiusSquared;
+                double d = g / h;
+
+                xp = distortedPt.X * d;
+                yp = distortedPt.Y * d;
             }
             else
             {

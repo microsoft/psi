@@ -96,7 +96,7 @@ namespace Microsoft.Psi.Diagnostics
             var root = this.collector.CurrentRoot;
             if (root != null)
             {
-                this.Diagnostics.Post(root, this.pipeline.GetCurrentTime());
+                this.Diagnostics.Post(new PipelineDiagnostics(root, this.Config.IncludeStoppedPipelines, this.Config.IncludeStoppedPipelineElements), this.pipeline.GetCurrentTime());
             }
         }
     }

@@ -33,8 +33,8 @@ namespace Microsoft.Psi
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             Func<TPrimary, TSecondary, TOut> outputCreator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -59,8 +59,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondary)> Join<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(primary, secondary, Reproducible.Exact<TSecondary>(), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -81,8 +81,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(primary, secondary, new RelativeTimeInterval(-tolerance, tolerance), primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -103,8 +103,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -130,8 +130,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(primary, secondary, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondaryDeliveryPolicy);
         }
@@ -156,8 +156,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -183,8 +183,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -212,8 +212,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -241,8 +241,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -270,8 +270,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -298,8 +298,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -328,8 +328,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -358,8 +358,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -388,8 +388,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -417,8 +417,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -447,8 +447,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -478,8 +478,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -509,8 +509,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -539,8 +539,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -571,8 +571,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -603,8 +603,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -635,8 +635,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -666,8 +666,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -699,8 +699,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -732,8 +732,8 @@ namespace Microsoft.Psi
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -764,8 +764,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -791,8 +791,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -820,8 +820,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -849,8 +849,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -878,8 +878,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -906,8 +906,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -936,8 +936,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -966,8 +966,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -996,8 +996,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1025,8 +1025,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1056,8 +1056,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1087,8 +1087,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1118,8 +1118,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1148,8 +1148,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1180,8 +1180,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1212,8 +1212,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1244,8 +1244,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1275,8 +1275,8 @@ namespace Microsoft.Psi
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1308,8 +1308,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             TimeSpan tolerance,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1341,8 +1341,8 @@ namespace Microsoft.Psi
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             RelativeTimeInterval relativeTimeInterval,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
         {
             return Join(
                 primary,
@@ -1376,8 +1376,8 @@ namespace Microsoft.Psi
             IEnumerable<IProducer<TSecondary>> secondaries,
             ReproducibleInterpolator<TSecondary, TInterpolation> interpolator,
             Func<TPrimary, TInterpolation[], TOut> outputCreator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondariesDeliveryPolicy = null)
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
         {
             var join = new Join<TPrimary, TSecondary, TInterpolation, TOut>(
                 primary.Out.Pipeline,
@@ -1408,7 +1408,7 @@ namespace Microsoft.Psi
         public static IProducer<TIn[]> Join<TIn>(
             this IEnumerable<IProducer<TIn>> inputs,
             ReproducibleInterpolator<TIn> interpolator,
-            DeliveryPolicy deliveryPolicy = null)
+            DeliveryPolicy<TIn> deliveryPolicy = null)
         {
             var count = inputs.Count();
             if (count > 1)
@@ -1452,8 +1452,8 @@ namespace Microsoft.Psi
             this IProducer<int> primary,
             IEnumerable<IProducer<TIn>> inputs,
             ReproducibleInterpolator<TIn, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            DeliveryPolicy<int> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TIn> secondaryDeliveryPolicy = null)
         {
             var join = new Join<int, TIn, TInterpolation, TInterpolation[]>(
                 primary.Out.Pipeline,
@@ -1483,33 +1483,26 @@ namespace Microsoft.Psi
         /// <typeparam name="TIn">Type of input messages.</typeparam>
         /// <typeparam name="TKey">Type of key values.</typeparam>
         /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
+        /// <typeparam name="TOutput">The type of the output.</typeparam>
         /// <param name="primary">Primary stream.</param>
         /// <param name="inputs">Collection of secondary streams.</param>
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
+        /// <param name="outputCreator">The output creator function.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
         /// <returns>Output stream.</returns>
-        public static Join<Dictionary<TKey, int>, TIn, TInterpolation, Dictionary<TKey, TInterpolation>> Join<TIn, TKey, TInterpolation>(
+        public static Join<Dictionary<TKey, int>, TIn, TInterpolation, TOutput> Join<TIn, TKey, TInterpolation, TOutput>(
             this IProducer<Dictionary<TKey, int>> primary,
             IEnumerable<IProducer<TIn>> inputs,
             ReproducibleInterpolator<TIn, TInterpolation> interpolator,
-            DeliveryPolicy primaryDeliveryPolicy = null,
-            DeliveryPolicy secondaryDeliveryPolicy = null)
+            Func<Dictionary<TKey, int>, TInterpolation[], TOutput> outputCreator,
+            DeliveryPolicy<Dictionary<TKey, int>> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TIn> secondaryDeliveryPolicy = null)
         {
-            var buffer = new Dictionary<TKey, TInterpolation>();
-            var join = new Join<Dictionary<TKey, int>, TIn, TInterpolation, Dictionary<TKey, TInterpolation>>(
+            var join = new Join<Dictionary<TKey, int>, TIn, TInterpolation, TOutput>(
                 primary.Out.Pipeline,
                 interpolator,
-                (keys, values) =>
-                {
-                    buffer.Clear();
-                    foreach (var keyPair in keys)
-                    {
-                        buffer[keyPair.Key] = values[keyPair.Value];
-                    }
-
-                    return buffer;
-                },
+                outputCreator,
                 inputs.Count(),
                 keys => keys.Select(p => p.Value));
 
@@ -1522,6 +1515,43 @@ namespace Microsoft.Psi
             }
 
             return join;
+        }
+
+        /// <summary>
+        /// Sparse vector join.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input messages.</typeparam>
+        /// <typeparam name="TKey">Type of key values.</typeparam>
+        /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="inputs">Collection of secondary streams.</param>
+        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static Join<Dictionary<TKey, int>, TIn, TInterpolation, Dictionary<TKey, TInterpolation>> Join<TIn, TKey, TInterpolation>(
+            this IProducer<Dictionary<TKey, int>> primary,
+            IEnumerable<IProducer<TIn>> inputs,
+            ReproducibleInterpolator<TIn, TInterpolation> interpolator,
+            DeliveryPolicy<Dictionary<TKey, int>> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TIn> secondaryDeliveryPolicy = null)
+        {
+            var buffer = new Dictionary<TKey, TInterpolation>();
+            return primary.Join(
+                inputs,
+                interpolator,
+                (keys, values) =>
+                {
+                    buffer.Clear();
+                    foreach (var keyPair in keys)
+                    {
+                        buffer[keyPair.Key] = values[keyPair.Value];
+                    }
+
+                    return buffer;
+                },
+                primaryDeliveryPolicy,
+                secondaryDeliveryPolicy);
         }
     }
 

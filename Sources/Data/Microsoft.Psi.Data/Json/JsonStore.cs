@@ -42,7 +42,7 @@ namespace Microsoft.Psi.Data.Json
         /// <param name="writer">The store writer, created by e.g. <see cref="Create(Pipeline, string, string, bool)"/>.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>The input stream.</returns>
-        public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, JsonExporter writer, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<TIn> Write<TIn>(this IProducer<TIn> source, string name, JsonExporter writer, DeliveryPolicy<TIn> deliveryPolicy = null)
         {
             writer.Write(source.Out, name, deliveryPolicy);
             return source;

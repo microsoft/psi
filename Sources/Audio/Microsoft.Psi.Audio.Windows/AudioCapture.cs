@@ -173,7 +173,7 @@ namespace Microsoft.Psi.Audio
             this.wasapiCapture.AudioVolumeNotification += this.HandleAudioVolumeNotification;
 
             // tell the audio device to start capturing audio
-            this.wasapiCapture.StartCapture(this.Configuration.TargetLatencyInMs, this.Configuration.Gain, this.Configuration.OutputFormat, this.Configuration.OptimizeForSpeech);
+            this.wasapiCapture.StartCapture(this.Configuration.TargetLatencyInMs, this.Configuration.AudioEngineBufferInMs, this.Configuration.Gain, this.Configuration.OutputFormat, this.Configuration.OptimizeForSpeech, this.Configuration.UseEventDrivenCapture);
 
             // Get the actual capture format. This should normally match the configured output format,
             // unless that was null in which case the native device capture format is returned.

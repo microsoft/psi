@@ -62,7 +62,7 @@ namespace Microsoft.Psi.Visualization.Common
             lock (this.imageLock)
             {
                 this.psiImage?.Dispose();
-                if (image == null)
+                if (image == null || image.Resource == null)
                 {
                     this.psiImage = null;
                     return;
@@ -92,7 +92,7 @@ namespace Microsoft.Psi.Visualization.Common
 
         private void UpdateBitmap()
         {
-            if (Application.Current != null)
+            if ((Application.Current != null) && (this.psiImage != null) && (this.psiImage.Resource != null))
             {
                 Application.Current.Dispatcher.BeginInvoke(
                     (Action)(() =>
@@ -132,7 +132,8 @@ namespace Microsoft.Psi.Visualization.Common
                                         break;
 
                                     default:
-                                        throw new Exception("Unexpected PixelFormat in DisplayImage");
+                                        this.Image = null;
+                                        return;
                                 }
 
                                 this.Image = new WriteableBitmap(this.psiImage.Resource.Width, this.psiImage.Resource.Height, 300, 300, pixelFormat, null);

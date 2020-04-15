@@ -267,7 +267,7 @@ namespace Microsoft.Psi.Serialization
             // var interf = genericSerializer.GetInterface("ISerializer`1");
             var interf = genericSerializer.GetInterface(typeof(ISerializer<>).FullName);
             var serializableType = interf.GetGenericArguments()[0];
-            serializableType = Type.GetType(serializableType.Namespace + "." + serializableType.Name); // FullName doesn't work here
+            serializableType = TypeResolutionHelper.GetVerifiedType(serializableType.Namespace + "." + serializableType.Name); // FullName doesn't work here
             this.templates[serializableType] = genericSerializer;
         }
 
@@ -382,7 +382,7 @@ namespace Microsoft.Psi.Serialization
                 if (!this.knownTypes.TryGetValue(schema.Name, out Type type))
                 {
                     // nothing registered, try getting a type based on the type hint
-                    type = Type.GetType(schema.TypeName, this.AssemblyResolver, null);
+                    type = TypeResolutionHelper.GetVerifiedType(schema.TypeName);
                     if (type == null)
                     {
                         throw new SerializationException($"Failed to create a deserializer for type {schema.Name} because no type was registered for this name and the source type {schema.TypeName} could not be found. Add a reference to the assembly containing this type, or register an alternate type for this name.");
@@ -570,23 +570,6 @@ namespace Microsoft.Psi.Serialization
             }
 
             throw new SerializationException("Don't know how to serialize objects of type " + type.FullName);
-        }
-
-        private Assembly AssemblyResolver(AssemblyName name)
-        {
-            var asm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().FullName == name.FullName);
-            if (asm != null)
-            {
-                return asm;
-            }
-
-            asm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => AssemblyName.ReferenceMatchesDefinition(a.GetName(), name));
-            if (asm != null)
-            {
-                return asm;
-            }
-
-            return null;
         }
     }
 }

@@ -59,6 +59,11 @@ namespace Microsoft.Psi.Visualization.Navigation
         public DateTime StartTime { get; private set; }
 
         /// <summary>
+        /// Gets the navigator range as a time interval.
+        /// </summary>
+        public TimeInterval AsTimeInterval => new TimeInterval(this.StartTime, this.EndTime);
+
+        /// <summary>
         /// Scrolls the start and end times of the Range.
         /// </summary>
         /// <param name="timespan">The amount of time to scroll the range.</param>

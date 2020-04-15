@@ -272,10 +272,8 @@ namespace Microsoft.Psi.Persistence
             if (!this.IsVolatile)
             {
                 this.extentName = System.IO.Path.Combine(this.path, this.extentName);
-                using (var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
-                {
-                    newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
-                }
+                var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+                newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
             }
             else
             {

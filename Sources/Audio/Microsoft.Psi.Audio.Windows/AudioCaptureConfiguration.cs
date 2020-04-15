@@ -19,9 +19,11 @@ namespace Microsoft.Psi.Audio
         {
             this.DeviceName = string.Empty;
             this.TargetLatencyInMs = 20;
+            this.AudioEngineBufferInMs = 500;
             this.AudioLevel = -1;
             this.Gain = 1.0f;
             this.OptimizeForSpeech = false;
+            this.UseEventDrivenCapture = true;
             this.DropOutOfOrderPackets = false;
             this.OutputFormat = null;
         }
@@ -38,20 +40,33 @@ namespace Microsoft.Psi.Audio
         public string DeviceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the target audio latency.
+        /// Gets or sets the target audio latency (pull capture mode only).
         /// </summary>
         /// <remarks>
-        /// Captured audio will be output as a stream of type <see cref="AudioBuffer"/> in the
-        /// <see cref="AudioCapture"/> component. This parameter controls the amount of audio to capture
-        /// for each <see cref="AudioBuffer"/> message, which in turn determines the latency of the
-        /// audio (i.e. the amount of lag between when the audio was produced and when a captured
-        /// <see cref="AudioBuffer"/> is output on the stream). The larger this value, the more audio
-        /// data is carried in each <see cref="AudioBuffer"/> and the longer the audio latency. For
-        /// live audio capture, we normally want this value to be small as possible, with the lower
-        /// bound being constrained by the audio capture pipeline. By default, this value is set to
-        /// 20 milliseconds. Is is safe to leave this unchanged.
+        /// In pull capture mode, this parameter determines the interval at which the audio engine is
+        /// polled for new data. This in turn affects the latency of the captured audio (i.e. the amount
+        /// of lag between when the audio was produced and when a captured <see cref="AudioBuffer"/> is
+        /// output on the stream). The larger this value, the more audio data is captured at each interval,
+        /// and the larger the audio latency. For live audio capture, we normally want this value to be as
+        /// small as possible. By default, this value is set to 20 milliseconds. This value is ignored if
+        /// <see cref="UseEventDrivenCapture"/> is set to true. In event-driven capture mode, the latency
+        /// is determined by the rate at which the audio engine signals that it has new data available.
         /// </remarks>
         public int TargetLatencyInMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the audio engine buffer.
+        /// </summary>
+        /// <remarks>
+        /// This parameter controls the amount of audio that the audio capture engine is able to
+        /// buffer between reads. This determines the maximum delay that may be incurred between
+        /// reading two consecutive audio buffers before an overrun occurs, which may lead to
+        /// glitches due to loss of audio, and allows additional audio packets to be queued up
+        /// in the engine should the application occasionally not be able to consume the captured
+        /// audio packets fast enough. Setting this to a larger value reduces the likelihood of
+        /// encountering glitches in the captured audio stream.
+        /// </remarks>
+        public int AudioEngineBufferInMs { get; set; }
 
         /// <summary>
         /// Gets or sets the audio input level.
@@ -84,6 +99,17 @@ namespace Microsoft.Psi.Audio
         /// This feature may not be available for all capture devices.
         /// </remarks>
         public bool OptimizeForSpeech { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use event-driven or pull capture mode. When using
+        /// event-driven capture, audio is captured as soon as the audio engine signals that there is
+        /// data available, instead of intervals determined by the <see cref="TargetLatencyInMs"/>
+        /// property. When this value is set to false, the audio engine is polled at an interval
+        /// equal to the value specified by <see cref="TargetLatencyInMs"/>. Additional data may be buffered
+        /// by the audio engine (up to an amount equivalent to <see cref="AudioEngineBufferInMs"/>) should
+        /// the application be unable to consume the audio data quickly enough.
+        /// </summary>
+        public bool UseEventDrivenCapture { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the component should

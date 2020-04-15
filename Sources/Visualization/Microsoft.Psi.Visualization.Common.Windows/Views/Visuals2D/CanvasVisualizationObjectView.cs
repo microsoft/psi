@@ -9,7 +9,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
-    using Microsoft.Psi.Visualization.Config;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -17,17 +16,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// </summary>
     /// <typeparam name="TStreamVisualizationObject">The type of visualization object configuration.</typeparam>
     /// <typeparam name="TData">The type of data.</typeparam>
-    /// <typeparam name="TConfig">The type of config.</typeparam>
-    public class CanvasVisualizationObjectView<TStreamVisualizationObject, TData, TConfig> : UserControl
-        where TStreamVisualizationObject : StreamVisualizationObject<TData, TConfig>, new()
-        where TConfig : StreamVisualizationObjectConfiguration, new()
+    public class CanvasVisualizationObjectView<TStreamVisualizationObject, TData> : UserControl
+        where TStreamVisualizationObject : StreamVisualizationObject<TData>, new()
     {
         private readonly ScaleTransform scaleTransform = new ScaleTransform();
         private readonly TranslateTransform translateTransform = new TranslateTransform();
         private readonly TransformGroup transformGroup = new TransformGroup();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CanvasVisualizationObjectView{TVisualizationObject, TData, TConfig}"/> class.
+        /// Initializes a new instance of the <see cref="CanvasVisualizationObjectView{TVisualizationObject, TData}"/> class.
         /// </summary>
         public CanvasVisualizationObjectView()
         {
@@ -86,8 +83,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             // setup handlers for properties changing
             this.VisualizationObject.PropertyChanging += this.OnVisualizationObjectPropertyChanging;
             this.VisualizationObject.PropertyChanged += this.OnVisualizationObjectPropertyChanged;
-            this.VisualizationObject.Configuration.PropertyChanging += this.OnVisualizationObjectConfigurationPropertyChanging;
-            this.VisualizationObject.Configuration.PropertyChanged += this.OnVisualizationObjectConfigurationPropertyChanged;
 
             // if we have data, setup handlers for data changes
             this.OnDataCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
@@ -110,18 +105,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 // panel, so detach all handlers
                 this.VisualizationObject.PropertyChanging -= this.OnVisualizationObjectPropertyChanging;
                 this.VisualizationObject.PropertyChanged -= this.OnVisualizationObjectPropertyChanged;
-                this.VisualizationObject.Configuration.PropertyChanging -= this.OnVisualizationObjectConfigurationPropertyChanging;
-                this.VisualizationObject.Configuration.PropertyChanged -= this.OnVisualizationObjectConfigurationPropertyChanged;
                 if (this.VisualizationObject.Data != null)
                 {
                     this.VisualizationObject.Data.DetailedCollectionChanged -= this.OnDataCollectionChanged;
                 }
-            }
-            else if (e.PropertyName == nameof(this.VisualizationObject.Configuration))
-            {
-                // If the configuration is about to change, detach the handlers
-                this.VisualizationObject.Configuration.PropertyChanging -= this.OnVisualizationObjectConfigurationPropertyChanging;
-                this.VisualizationObject.Configuration.PropertyChanged -= this.OnVisualizationObjectConfigurationPropertyChanged;
             }
             else if (e.PropertyName == nameof(this.VisualizationObject.Data))
             {
@@ -140,13 +127,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="e">The event arguments.</param>
         protected virtual void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.VisualizationObject.Configuration))
-            {
-                // if the configuration is changed, reattach the handlers
-                this.VisualizationObject.Configuration.PropertyChanging += this.OnVisualizationObjectConfigurationPropertyChanging;
-                this.VisualizationObject.Configuration.PropertyChanged += this.OnVisualizationObjectConfigurationPropertyChanged;
-            }
-            else if (e.PropertyName == nameof(this.VisualizationObject.Data))
+            if (e.PropertyName == nameof(this.VisualizationObject.Data))
             {
                 this.OnDataCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 if (this.VisualizationObject.Data != null)
@@ -158,24 +139,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 this.OnCurrentValueChanged();
             }
-        }
-
-        /// <summary>
-        /// Implements changes in response to changes in the visualization object configuration.
-        /// </summary>
-        /// <param name="sender">The sender of the change.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnVisualizationObjectConfigurationPropertyChanging(object sender, PropertyChangingEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Implements changes in response to changes in the visualization object configuration.
-        /// </summary>
-        /// <param name="sender">The sender of the change.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnVisualizationObjectConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
         }
 
         /// <summary>

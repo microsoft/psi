@@ -39,12 +39,10 @@ namespace Microsoft.Psi.Components
         /// <param name="envelope">The envelope of the message.</param>
         protected override void Receive(Message<BufferReader> msg, Envelope envelope)
         {
-            var message = msg;
-
             // don't read unless there are active subscribers
-            this.handler.Deserialize(message.Data, ref this.reusableInstance, this.context);
+            this.handler.Deserialize(msg.Data, ref this.reusableInstance, this.context);
             this.context.Reset();
-            this.Out.Deliver(this.reusableInstance, message.Envelope);
+            this.Out.Deliver(this.reusableInstance, msg.Envelope);
         }
     }
 }

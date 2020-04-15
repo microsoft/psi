@@ -354,8 +354,8 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <param name="e">An object that contains the event data.</param>
         private void OnPartialResponseReceivedHandler(object sender, PartialSpeechResponseEventArgs e)
         {
-            this.lastPartialResult = e.PartialResult;
-            var result = this.BuildPartialSpeechRecognitionResult(e.PartialResult);
+            this.lastPartialResult = e.PartialResult.Text;
+            var result = this.BuildPartialSpeechRecognitionResult(e.PartialResult.Text);
 
             // Since this is a partial response, VAD may not yet have signalled the end of speech
             // so just use the last audio packet time (which will probably be ahead).

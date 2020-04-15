@@ -238,6 +238,22 @@ namespace Microsoft.Msagl.WpfGraphControl
         }
 
         /// <summary>
+        /// Get label text and optional tooltip from string in the form "label|tooltip".
+        /// </summary>
+        /// <param name="text">Text value from which to extract label and tooltip text.</param>
+        /// <returns>Label and tooltip text.</returns>
+        public static (string, string) GetLabelTextAndToolTip(string text)
+        {
+            if (text == null)
+            {
+                return (string.Empty, string.Empty);
+            }
+
+            var parts = text.Split('|');
+            return (parts[0], parts.Length > 1 ? parts[1] : string.Empty);
+        }
+
+        /// <summary>
         /// Invalidate rendered node.
         /// </summary>
         public void Invalidate()
@@ -299,10 +315,11 @@ namespace Microsoft.Msagl.WpfGraphControl
             this.SetFillAndStroke();
             if (this.Node.Label != null)
             {
-                this.BoundaryPath.ToolTip = this.Node.LabelText;
+                var (_, tooltip) = GetLabelTextAndToolTip(this.Node.LabelText);
+                this.BoundaryPath.ToolTip = tooltip;
                 if (this.FrameworkElementOfNodeForLabel != null)
                 {
-                    this.FrameworkElementOfNodeForLabel.ToolTip = this.Node.LabelText;
+                    this.FrameworkElementOfNodeForLabel.ToolTip = tooltip;
                 }
             }
         }

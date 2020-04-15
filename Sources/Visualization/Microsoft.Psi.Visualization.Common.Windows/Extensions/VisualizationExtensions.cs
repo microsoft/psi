@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// <param name="source">The stream of enumerables of T.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted array of T.</returns>
-        public static IProducer<T[]> ToArray<T, TEnumerable>(this IProducer<TEnumerable> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<T[]> ToArray<T, TEnumerable>(this IProducer<TEnumerable> source, DeliveryPolicy<TEnumerable> deliveryPolicy = null)
             where TEnumerable : IEnumerable<T>
         {
             return source.Select(s => s.ToArray(), deliveryPolicy);
@@ -36,7 +36,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// <param name="source">The stream of dictionarys of TKey and TValue.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted collections of TValue.</returns>
-        public static IProducer<Dictionary<TKey, TValue>.ValueCollection> Values<TKey, TValue>(this IProducer<Dictionary<TKey, TValue>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<Dictionary<TKey, TValue>.ValueCollection> Values<TKey, TValue>(this IProducer<Dictionary<TKey, TValue>> source, DeliveryPolicy<Dictionary<TKey, TValue>> deliveryPolicy = null)
         {
             return source.Select(s => s.Values, deliveryPolicy);
         }
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// <param name="source">The stream of dictionarys of 2d points.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted list of named points.</returns>
-        public static IProducer<List<Tuple<Point, string>>> ToScatterPoints2D<TKey>(this IProducer<Dictionary<TKey, Point2D>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<List<Tuple<Point, string>>> ToScatterPoints2D<TKey>(this IProducer<Dictionary<TKey, Point2D>> source, DeliveryPolicy<Dictionary<TKey, Point2D>> deliveryPolicy = null)
         {
             return source.Select(d => d.Select(kvp => Tuple.Create(new Point(kvp.Value.X, kvp.Value.Y), kvp.Key.ToString())).ToList(), deliveryPolicy);
         }
@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Visualization.Extensions
         /// <param name="source">The stream of dictionarys of rectangles.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted list of named rectangles.</returns>
-        public static IProducer<List<Tuple<System.Drawing.Rectangle, string>>> ToScatterRectangle<TKey>(this IProducer<Dictionary<TKey, System.Drawing.Rectangle>> source, DeliveryPolicy deliveryPolicy = null)
+        public static IProducer<List<Tuple<System.Drawing.Rectangle, string>>> ToScatterRectangle<TKey>(this IProducer<Dictionary<TKey, System.Drawing.Rectangle>> source, DeliveryPolicy<Dictionary<TKey, System.Drawing.Rectangle>> deliveryPolicy = null)
         {
             return source.Select(d => d.Select(kvp => Tuple.Create(kvp.Value, kvp.Key.ToString())).ToList(), deliveryPolicy);
         }

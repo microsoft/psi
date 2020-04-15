@@ -30,24 +30,14 @@ namespace Microsoft.Psi.Visualization.Data
         Type StreamAdapterType { get; }
 
         /// <summary>
-        /// Gets the stream binding.
-        /// </summary>
-        StreamBinding StreamBinding { get; }
-
-        /// <summary>
         /// Gets the stream name.
         /// </summary>
         string StreamName { get; }
 
         /// <summary>
-        /// Gets the store name.
+        /// Gets a value indicating whether the stream reader currently has any instant stream readers.
         /// </summary>
-        string StoreName { get; }
-
-        /// <summary>
-        /// Gets the store path.
-        /// </summary>
-        string StorePath { get; }
+        bool HasInstantStreamReaders { get; }
 
         /// <summary>
         /// Cancels this reader.
@@ -74,13 +64,39 @@ namespace Microsoft.Psi.Visualization.Data
         void OpenStream(ISimpleReader reader, bool useIndex);
 
         /// <summary>
-        /// Reads a single message from a stream identified by a reader and an index entry.
+        /// Registers an instant data target to be notified when new data for a stream is available.
         /// </summary>
-        /// <typeparam name="TItem">The type of the message to read.</typeparam>
+        /// <typeparam name="TTarget">The type of data the instant visualization object consumes.</typeparam>
+        /// <param name="target">An instant data target that specifies the stream binding, the cursor epsilon, and the callback to call when new data is available.</param>
+        /// <param name="viewRange">The initial time range over which data is expected.</param>
+        void RegisterInstantDataTarget<TTarget>(InstantDataTarget target, TimeInterval viewRange);
+
+        /// <summary>
+        /// Unregisters an instant data target from data notification.
+        /// </summary>
+        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
+        void UnregisterInstantDataTarget(Guid registrationToken);
+
+        /// <summary>
+        /// Updates the cursor epsilon for an instant data target.  Changes to cursor epsilon will
+        /// impact which data is served to the instant visualization object for a given cursor time.
+        /// </summary>
+        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
+        /// <param name="epsilon">A relative time interval specifying the window around a message time that may be considered a match.</param>
+        void UpdateInstantDataTargetEpsilon(Guid registrationToken, RelativeTimeInterval epsilon);
+
+        /// <summary>
+        /// Reads instant data from the stream at the given cursor time and notifies all registered instant visualization objects of the new data.
+        /// </summary>
         /// <param name="reader">The reader to read from.</param>
-        /// <param name="indexEntry">The index entry indicating which message to read.</param>
-        /// <returns>The message that was read.</returns>
-        TItem Read<TItem>(ISimpleReader reader, IndexEntry indexEntry);
+        /// <param name="cursorTime">The currenttime at the cursor..</param>
+        void ReadInstantData(ISimpleReader reader, DateTime cursorTime);
+
+        /// <summary>
+        /// Notifies the data store reader that the range of data that may be of interest to instant data targets has changed.
+        /// </summary>
+        /// <param name="viewRange">The new view range.</param>
+        void OnInstantViewRangeChanged(TimeInterval viewRange);
 
         /// <summary>
         /// Creates a view of the indices identified by the matching start and end times and asychronously fills it in.

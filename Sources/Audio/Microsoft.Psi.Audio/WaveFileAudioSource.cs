@@ -24,13 +24,8 @@ namespace Microsoft.Psi.Audio
         /// The size of each data buffer to post, determined by the amount of audio data it can hold.
         /// </param>
         public WaveFileAudioSource(Pipeline pipeline, string filename, DateTime? audioStartTime = null, int targetLatencyMs = 20)
-            : base(pipeline, EnumerateWaveFile(pipeline, filename, audioStartTime, targetLatencyMs))
+            : base(pipeline, EnumerateWaveFile(pipeline, filename, audioStartTime, targetLatencyMs), audioStartTime)
         {
-            if ((audioStartTime != null) && audioStartTime.HasValue)
-            {
-                var interval = TimeInterval.LeftBounded(audioStartTime.Value);
-                pipeline.ProposeReplayTime(interval, interval);
-            }
         }
 
         private static IEnumerator<ValueTuple<AudioBuffer, DateTime>> EnumerateWaveFile(
@@ -45,7 +40,7 @@ namespace Microsoft.Psi.Audio
                 WaveFormat format = WaveFileHelper.ReadWaveFileHeader(br);
 
                 // Compute originating times based on audio chunk start time + duration
-                var startTime = audioStartTime ?? pipeline.GetCurrentTime();
+                var startTime = audioStartTime ?? pipeline.StartTime;
 
                 // Buffer size based on target latency
                 int bufferSize = (int)(format.AvgBytesPerSec * targetLatencyMs / 1000);

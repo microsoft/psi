@@ -1,0 +1,66 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<UserControl
+    x:Class="Microsoft.Psi.Visualization.Views.Visuals2D.ScatterPlotVisualizationObjectView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="clr-namespace:Microsoft.Psi.Visualization.Converters"
+    xmlns:local="clr-namespace:Microsoft.Psi.Visualization.Views.Visuals2D"
+    mc:Ignorable="d" 
+    Background="Transparent"
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <conv:ColorConverter x:Key="ColorConverter" />
+        <conv:PlacementConverter x:Key="XPlacementConverter" />
+        <conv:PlacementConverter x:Key="YPlacementConverter" />
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <SolidColorBrush x:Key="FillBrush" Color="{Binding FillColor, Converter={StaticResource ColorConverter}}" />
+        <EllipseGeometry
+            x:Key="PlotGeometry"
+            RadiusX="{Binding Path=ScatterPlotVisualizationObject.Radius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ScatterPlotVisualizationObjectView}}}" 
+            RadiusY="{Binding Path=ScatterPlotVisualizationObject.Radius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ScatterPlotVisualizationObjectView}}}" />
+    </UserControl.Resources>
+    
+    <Grid Name="Inset" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border BorderThickness="1" BorderBrush="Black" ClipToBounds="True">
+            <ItemsControl Name="ItemsControl" ItemsSource="{Binding CurrentValue.Data}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+    
+                <!--http://stackoverflow.com/questions/1265364/setting-canvas-properties-in-an-itemscontrol-datatemplate-->
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding Path=Item1.X, Converter={StaticResource XPlacementConverter}}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Path=Item1.Y, Converter={StaticResource YPlacementConverter}}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Path Grid.Column="0" Fill="{StaticResource FillBrush}" Data="{StaticResource PlotGeometry}" />
+                            <TextBlock 
+                                Grid.Column="1"
+                                Text="{Binding Path=Item2}"
+                                Foreground="{Binding Path=ScatterPlotVisualizationObject.LabelColor, Converter={StaticResource ColorConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ScatterPlotVisualizationObjectView}}}"
+                                Visibility="{Binding Path=ScatterPlotVisualizationObject.ShowLabels, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:ScatterPlotVisualizationObjectView}}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Grid>
+</UserControl>

@@ -25,17 +25,17 @@ namespace ArmControlROSSample
         {
             this.pipeline = pipeline;
             this.arm = arm;
-            this.Beep = pipeline.CreateReceiver<Tuple<float, float>>(this, (b, _) => this.arm.Beep(b.Item1, b.Item2), nameof(this.Beep));
+            this.Beep = pipeline.CreateReceiver<(float, float)>(this, (b, _) => this.arm.Beep(b.Item1, b.Item2), nameof(this.Beep));
             this.Pump = pipeline.CreateReceiver<bool>(this, (p, _) => this.arm.Pump(p), nameof(this.Pump));
-            this.AbsolutePosition = pipeline.CreateReceiver<Tuple<float, float, float>>(this, (p, _) => this.arm.AbsolutePosition(p.Item1, p.Item2, p.Item3), nameof(this.AbsolutePosition));
-            this.RelativePosition = pipeline.CreateReceiver<Tuple<float, float, float>>(this, (p, _) => this.arm.RelativePosition(p.Item1, p.Item2, p.Item3), nameof(this.RelativePosition));
-            this.PositionChanged = pipeline.CreateEmitter<Tuple<float, float, float>>(this, nameof(this.PositionChanged));
+            this.AbsolutePosition = pipeline.CreateReceiver<(float, float, float)>(this, (p, _) => this.arm.AbsolutePosition(p.Item1, p.Item2, p.Item3), nameof(this.AbsolutePosition));
+            this.RelativePosition = pipeline.CreateReceiver<(float, float, float)>(this, (p, _) => this.arm.RelativePosition(p.Item1, p.Item2, p.Item3), nameof(this.RelativePosition));
+            this.PositionChanged = pipeline.CreateEmitter<(float, float, float)>(this, nameof(this.PositionChanged));
         }
 
         /// <summary>
         /// Gets receiver of beep commands.
         /// </summary>
-        public Receiver<Tuple<float, float>> Beep { get; private set; }
+        public Receiver<(float, float)> Beep { get; private set; }
 
         /// <summary>
         /// Gets receiver of pump commands.
@@ -45,17 +45,17 @@ namespace ArmControlROSSample
         /// <summary>
         /// Gets receiver of absolute cartesian positions.
         /// </summary>
-        public Receiver<Tuple<float, float, float>> AbsolutePosition { get; private set; }
+        public Receiver<(float, float, float)> AbsolutePosition { get; private set; }
 
         /// <summary>
         /// Gets receiver of relative cartesian positions.
         /// </summary>
-        public Receiver<Tuple<float, float, float>> RelativePosition { get; private set; }
+        public Receiver<(float, float, float)> RelativePosition { get; private set; }
 
         /// <summary>
         /// Gets emitter of position changes.
         /// </summary>
-        public Emitter<Tuple<float, float, float>> PositionChanged { get; private set; }
+        public Emitter<(float, float, float)> PositionChanged { get; private set; }
 
         /// <inheritdoc/>
         public void Start(Action<DateTime> notifyCompletionTime)
@@ -75,7 +75,7 @@ namespace ArmControlROSSample
             notifyCompleted();
         }
 
-        private void OnPositionChanged(object sender, Tuple<float, float, float> position)
+        private void OnPositionChanged(object sender, (float, float, float) position)
         {
             this.PositionChanged.Post(position, this.pipeline.GetCurrentTime());
         }

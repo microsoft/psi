@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Data.Json
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
         /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store.</param>
         public JsonExporter(Pipeline pipeline, string name, string path, bool createSubdirectory = true)
-            : this(pipeline, new JsonStoreWriter(name, path, createSubdirectory))
+            : this(pipeline, name, new JsonStoreWriter(name, path, createSubdirectory))
         {
         }
 
@@ -35,9 +35,10 @@ namespace Microsoft.Psi.Data.Json
         /// Initializes a new instance of the <see cref="JsonExporter"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline that owns this instance.</param>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="writer">The underlying store writer.</param>
-        protected JsonExporter(Pipeline pipeline, JsonStoreWriter writer)
-            : base(pipeline)
+        protected JsonExporter(Pipeline pipeline, string name, JsonStoreWriter writer)
+            : base(pipeline, $"{nameof(JsonExporter)}[{name}]")
         {
             this.pipeline = pipeline;
             this.writer = writer;
@@ -77,7 +78,7 @@ namespace Microsoft.Psi.Data.Json
         /// <param name="source">The source stream to write.</param>
         /// <param name="name">The name of the persisted stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void Write<T>(Emitter<T> source, string name, DeliveryPolicy deliveryPolicy = null)
+        public void Write<T>(Emitter<T> source, string name, DeliveryPolicy<T> deliveryPolicy = null)
         {
             // add another input to the merger to hook up the serializer to
             // and check for duplicate names in the process
@@ -94,7 +95,11 @@ namespace Microsoft.Psi.Data.Json
 
             // hook up the serializer
             var serializer = new JsonSerializerComponent<T>(this.pipeline);
-            serializer.PipeTo(mergeInput, DeliveryPolicy.Unlimited);
+
+            // The merger input receiver will throttle the serializer as long as it is busy writing data.
+            // This will cause messages to be queued or dropped at the serializer (per the user-supplied
+            // deliveryPolicy) until the merger is able to service the next serialized data message.
+            serializer.PipeTo(mergeInput, DeliveryPolicy.Throttle);
             source.PipeTo(serializer, deliveryPolicy);
         }
 
@@ -104,7 +109,7 @@ namespace Microsoft.Psi.Data.Json
         /// <param name="source">The source stream to write.</param>
         /// <param name="metadata">The stream metadata of the stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        internal void Write(Emitter<Message<JToken>> source, JsonStreamMetadata metadata, DeliveryPolicy deliveryPolicy = null)
+        internal void Write(Emitter<Message<JToken>> source, JsonStreamMetadata metadata, DeliveryPolicy<Message<JToken>> deliveryPolicy = null)
         {
             var mergeInput = this.merger.Add(metadata.Name); // this checks for duplicates
             this.writer.OpenStream(metadata);

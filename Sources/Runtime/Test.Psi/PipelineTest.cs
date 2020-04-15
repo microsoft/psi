@@ -379,7 +379,7 @@ namespace Test.Psi
             {
                 Generators.Return(pipeline, 123);
                 pipeline.RunAsync();
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsTrue(stopped);
             }
 
@@ -387,7 +387,7 @@ namespace Test.Psi
             using (var pipeline = Pipeline.Create())
             {
                 pipeline.RunAsync();
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsFalse(stopped);
             }
 
@@ -398,11 +398,11 @@ namespace Test.Psi
                 var finiteToInfinite = new FiniteToInfiniteTestComponent(pipeline);
                 pipeline.RunAsync();
 
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsFalse(stopped); // waiting for remaining "finite" component
 
                 finiteToInfinite.SwitchToInfinite();
-                stopped = pipeline.WaitAll(5000);
+                stopped = pipeline.WaitAll(1000);
                 Assert.IsTrue(stopped); // now we complete
             }
 
@@ -413,7 +413,7 @@ namespace Test.Psi
                 var infinite = new InfiniteTestComponent(pipeline);
                 pipeline.RunAsync();
 
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsTrue(stopped); // should complete once finite component completes
             }
 
@@ -424,7 +424,7 @@ namespace Test.Psi
                 pipeline.RunAsync();
 
                 finiteToInfinite.SwitchToInfinite();
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsFalse(stopped); // now should not complete because no previous finite sources have completed (or existed)
             }
 
@@ -434,16 +434,26 @@ namespace Test.Psi
                 var subpipeline = Subpipeline.Create(pipeline);
                 Generators.Return(subpipeline, 123);
                 pipeline.RunAsync();
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsTrue(stopped);
             }
 
-            // pipeline containing subpipeline which in turn contains *no* finite sources should run until explicitly stopped
+            // pipeline containing subpipeline which in turn contains *only* infinite sources should run until explicitly stopped
+            using (var pipeline = Pipeline.Create())
+            {
+                var subpipeline = Subpipeline.Create(pipeline);
+                Generators.Repeat(subpipeline, 123, TimeSpan.FromMilliseconds(1));
+                pipeline.RunAsync();
+                var stopped = pipeline.WaitAll(1000);
+                Assert.IsFalse(stopped);
+            }
+
+            // pipeline containing subpipeline which in turn contains *no* sources should run until explicitly stopped
             using (var pipeline = Pipeline.Create())
             {
                 var subpipeline = Subpipeline.Create(pipeline);
                 pipeline.RunAsync();
-                var stopped = pipeline.WaitAll(5000);
+                var stopped = pipeline.WaitAll(1000);
                 Assert.IsFalse(stopped);
             }
         }
@@ -464,13 +474,13 @@ namespace Test.Psi
                 this.Out = pipeline.CreateEmitter<int>(this, nameof(this.Out));
             }
 
-            protected override DateTime GenerateNext(DateTime previous)
+            protected override DateTime GenerateNext(DateTime currentTime)
             {
                 // introduce a delay (in wall-clock time) to artificially slow down the generator
                 Thread.Sleep(this.latency);
 
-                this.Out.Post(0, previous);
-                return previous + this.interval;
+                this.Out.Post(0, currentTime);
+                return currentTime + this.interval;
             }
         }
 
@@ -485,17 +495,30 @@ namespace Test.Psi
 
                 // use a generator (with artificial latency) as the clock for densification
                 // increase the latency TimeSpan value to cause the test to fail when shutdown doesn't account for slow sources
-                var clock = new GeneratorWithLatency(p, TimeSpan.FromMilliseconds(25), TimeSpan.FromMilliseconds(50));
+                var clock = new GeneratorWithLatency(p, TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(500));
 
-                // the densified stream which should contain two of every input value, except for the last value
+                // The densified stream which should contain five of every input value, except for the last value,
+                // since the clock stream has a frequency of 5x the generated sequence stream.
                 var densified = clock.Out.Join(generator.Out, RelativeTimeInterval.Past()).Select(x => x.Item2);
                 var seq = densified.ToObservable().ToListObservable();
 
-                // specify a start time to synchronize the two generators
-                p.Run(DateTime.UtcNow);
+                p.Run();
 
                 var results = seq.AsEnumerable().ToArray();
-                CollectionAssert.AreEqual(new[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10 }, results);
+                CollectionAssert.AreEqual(
+                    new[] {
+                        0, 0, 0, 0, 0,
+                        1, 1, 1, 1, 1,
+                        2, 2, 2, 2, 2,
+                        3, 3, 3, 3, 3,
+                        4, 4, 4, 4, 4,
+                        5, 5, 5, 5, 5,
+                        6, 6, 6, 6, 6,
+                        7, 7, 7, 7, 7,
+                        8, 8, 8, 8, 8,
+                        9, 9, 9, 9, 9,
+                        10
+                    }, results);
             }
         }
 
@@ -540,8 +563,7 @@ namespace Test.Psi
                 // the densified stream which should contain two of every input value, except for the last value
                 var seq = densifier.Out.ToObservable().ToListObservable();
 
-                // specify a start time to synchronize the two generators
-                p.Run(DateTime.UtcNow);
+                p.Run();
 
                 var results = seq.AsEnumerable().ToArray();
                 CollectionAssert.AreEqual(new[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10 }, results);
@@ -1746,7 +1768,7 @@ namespace Test.Psi
             Assert.AreEqual(2, graph.GetPipelineCount()); // total graphs
             Assert.AreEqual(11, graph.GetPipelineElementCount()); // total pipeline elements
             Assert.AreEqual(21, graph.GetEmitterCount()); // total emitters (not necessarily connected)
-            Assert.AreEqual(6, graph.GetAllEmitterDiagnostics().Where(e => e.Targets.Count != 0).Count()); // total _connected_ emitters
+            Assert.AreEqual(6, graph.GetAllEmitterDiagnostics().Where(e => e.Targets.Length != 0).Count()); // total _connected_ emitters
             Assert.AreEqual(13, graph.GetReceiverCount()); // total receivers (not necessarily connected)
             Assert.AreEqual(6, graph.GetAllReceiverDiagnostics().Where(r => r.Source != null).Count()); // total _connected_ receivers
             Assert.IsTrue(graph.GetAllReceiverDiagnostics().Select(r => r.QueueSize).Sum() > 0); // usually 50+
@@ -1755,16 +1777,147 @@ namespace Test.Psi
 
             // example complex query: average latency at emitter across reactive components in leaf subpipelines
             var complex = graph.GetAllPipelineDiagnostics()
-                               .Where(p => p.Subpipelines.Count == 0) // leaf subpipelines
+                               .Where(p => p.SubpipelineDiagnostics.Length == 0) // leaf subpipelines
                                .GetAllPipelineElements()
-                               .Where(e => e.Kind == PipelineDiagnostics.PipelineElementDiagnostics.PipelineElementKind.Reactive) // reactive components
+                               .Where(e => e.Kind == PipelineElementKind.Reactive) // reactive components
                                .GetAllReceiverDiagnostics()
-                               .Select(r => r.MessageLatencyAtEmitterHistory.AverageTime()); // average latency at emitter into each component's receivers
+                               .Select(r => r.MessageLatencyAtEmitter); // average latency at emitter into each component's receivers
 
             Assert.AreEqual("default", graph.Name);
             Assert.IsTrue(graph.IsPipelineRunning);
-            Assert.AreEqual(8, graph.PipelineElements.Count);
-            Assert.AreEqual(1, graph.Subpipelines.Count);
+            Assert.AreEqual(8, graph.PipelineElements.Length);
+            Assert.AreEqual(1, graph.SubpipelineDiagnostics.Length);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PipelineProgressTestInfiniteReplay()
+        {
+            var progress = new List<double>();
+
+            using (var pipeline = Pipeline.Create())
+            {
+                // pipeline with infinite source
+                Generators.Repeat(pipeline, 0, TimeSpan.FromMilliseconds(10))
+                    .Select(x => x)
+                    .Do(x => { });
+
+                // increase report frequency for testing purposes
+                pipeline.ProgressReportInterval = TimeSpan.FromMilliseconds(50);
+
+                // run pipeline for a bit
+                pipeline.RunAsync(null, new Progress<double>(x => progress.Add(x)));
+                pipeline.WaitAll(200);
+
+                // pipeline is still running and latest progress should reflect this
+                Assert.IsTrue(pipeline.IsRunning);
+                Assert.IsTrue(progress[progress.Count - 1] < 1.0);
+            }
+
+            // Progress<T>.Report() is invoked on the thread-pool since this is a non-UI app,
+            // so wait for a bit to ensure that the last progress report action completes.
+            Thread.Sleep(100);
+
+            double lastValue = 0;
+            foreach (double value in progress)
+            {
+                Console.WriteLine($"Progress: {value * 100}%");
+
+                // verify progress increases
+                Assert.IsTrue(value >= lastValue);
+                lastValue = value;
+            }
+
+            // verify final progress is 1.0
+            Assert.AreEqual(1.0, lastValue);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PipelineProgressTestFiniteReplay()
+        {
+            var progress = new List<double>();
+
+            using (var pipeline = Pipeline.Create())
+            {
+                // pipeline with infinite source
+                Generators.Repeat(pipeline, 0, 50, TimeSpan.FromMilliseconds(10))
+                    .Select(x => x)
+                    .Do(x => { });
+
+                // increase report frequency for testing purposes
+                pipeline.ProgressReportInterval = TimeSpan.FromMilliseconds(50);
+
+                // create a finite replay descriptor
+                var replay = new ReplayDescriptor(DateTime.UtcNow, DateTime.UtcNow.AddMilliseconds(200));
+
+                // run and wait for pipeline to complete
+                pipeline.RunAsync(replay, new Progress<double>(x => progress.Add(x)));
+                pipeline.WaitAll();
+            }
+
+            // Progress<T>.Report() is invoked on the thread-pool since this is a non-UI app,
+            // so wait for a bit to ensure that the last progress report action completes.
+            Thread.Sleep(100);
+
+            double lastValue = 0;
+            foreach (double value in progress)
+            {
+                Console.WriteLine($"Progress: {value * 100}%");
+
+                // verify progress increases
+                Assert.IsTrue(value >= lastValue);
+                lastValue = value;
+            }
+
+            // verify final progress is 1.0
+            Assert.AreEqual(1.0, lastValue);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PipelineProgressTestSubpipeline()
+        {
+            var progress = new List<double>();
+
+            using (var pipeline = Pipeline.Create())
+            {
+                // pipeline with finite source
+                Generators.Repeat(pipeline, 0, 50, TimeSpan.FromMilliseconds(10))
+                    .Select(x => x)
+                    .Do(x => { });
+
+                // subpipeline containing finite source
+                var subpipeline = Subpipeline.Create(pipeline, "subpipeline");
+                Generators.Repeat(subpipeline, 0, 100, TimeSpan.FromMilliseconds(1));
+
+                // increase report frequency for testing purposes
+                pipeline.ProgressReportInterval = TimeSpan.FromMilliseconds(50);
+
+                // create a finite replay descriptor
+                var replay = new ReplayDescriptor(DateTime.UtcNow, DateTime.UtcNow.AddMilliseconds(200));
+
+                // run and wait for pipeline to complete
+                pipeline.RunAsync(replay, new Progress<double>(x => progress.Add(x)));
+                pipeline.WaitAll();
+            }
+
+            // Progress<T>.Report() is invoked on the thread-pool since this is a non-UI app,
+            // so wait for a bit to ensure that the last progress report action completes.
+            Thread.Sleep(100);
+
+            double lastValue = 0;
+            foreach (double value in progress)
+            {
+                Console.WriteLine($"Progress: {value * 100}%");
+
+                // verify progress increases
+                Assert.IsTrue(value >= lastValue);
+                lastValue = value;
+            }
+
+            // verify final progress is 1.0
+            Assert.AreEqual(1.0, lastValue);
         }
 
         private class FinalizationTestComponent : ISourceComponent
