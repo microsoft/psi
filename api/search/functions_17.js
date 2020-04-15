@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['xyvisualizationpanelconfiguration',['XYVisualizationPanelConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_visualization_panel_configuration.html#aec952b8cf197e425442fa218e74be551',1,'Microsoft::Psi::Visualization::Config::XYVisualizationPanelConfiguration']]],
-  ['xyzvisualizationpanelconfiguration',['XYZVisualizationPanelConfiguration',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_z_visualization_panel_configuration.html#ab73d5650bc68b8da9dc6c7bf4e2afdaa',1,'Microsoft::Psi::Visualization::Config::XYZVisualizationPanelConfiguration']]]
+  ['xypanelvisual_4741',['XYPanelVisual',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals3_d_1_1_x_y_panel_visual.html#a4f299837372f43dc3894129df3c49ab2',1,'Microsoft::Psi::Visualization::Views::Visuals3D::XYPanelVisual']]],
+  ['xyvisualizationpanel_4742',['XYVisualizationPanel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_x_y_visualization_panel.html#a9cc8db23224d4fe16b619a4f4230f992',1,'Microsoft::Psi::Visualization::VisualizationPanels::XYVisualizationPanel']]],
+  ['xyvisualizationpanelview_4743',['XYVisualizationPanelView',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_x_y_visualization_panel_view.html#a0da6615732f4ea8c294549bda1374287',1,'Microsoft::Psi::Visualization::Views::XYVisualizationPanelView']]],
+  ['xyzvisualizationpanel_4744',['XYZVisualizationPanel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_panels_1_1_x_y_z_visualization_panel.html#a5fcdd006cb9054fba918a4f1b1b8c318',1,'Microsoft::Psi::Visualization::VisualizationPanels::XYZVisualizationPanel']]],
+  ['xyzvisualizationpanelview_4745',['XYZVisualizationPanelView',['../class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_x_y_z_visualization_panel_view.html#a1ce46d4eabfbcdc817279459b45a4981',1,'Microsoft::Psi::Visualization::Views::XYZVisualizationPanelView']]]
 ];

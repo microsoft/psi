@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['x',['X',['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_gv_mouse_event_args.html#a2cef411f039266ca21e6c3fc46081286',1,'Microsoft::Msagl::WpfGraphControl::GvMouseEventArgs']]],
-  ['xaxis',['XAxis',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_visualization_panel_configuration.html#a127a0d09cd15ec71f1417d47e61e8450',1,'Microsoft::Psi::Visualization::Config::XYVisualizationPanelConfiguration']]],
-  ['xaxis2',['XAxis2',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_x_y_visualization_panel_configuration.html#aac4c15cbd379f808825f56ce40c898de',1,'Microsoft::Psi::Visualization::Config::XYVisualizationPanelConfiguration']]],
-  ['xmax',['XMax',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_plot_visualization_object_configuration.html#a5a648d87f341ea8ad8edff7095003b0e',1,'Microsoft::Psi::Visualization::Config::ScatterPlotVisualizationObjectConfiguration']]],
-  ['xmin',['XMin',['../class_microsoft_1_1_psi_1_1_visualization_1_1_config_1_1_scatter_plot_visualization_object_configuration.html#a0a678c5be6dca91335a273ac4057f2d6',1,'Microsoft::Psi::Visualization::Config::ScatterPlotVisualizationObjectConfiguration']]]
+  ['x_6383',['X',['../class_microsoft_1_1_psi_1_1_calibration_1_1_multi_camera_calibration_1_1_calibration_vector.html#a7572d646aa194f8088a8e6438be0e2ec',1,'Microsoft.Psi.Calibration.MultiCameraCalibration.CalibrationVector.X()'],['../class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_gv_mouse_event_args.html#a2cef411f039266ca21e6c3fc46081286',1,'Microsoft.Msagl.WpfGraphControl.GvMouseEventArgs.X()']]],
+  ['xmax_6384',['XMax',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_scatter_plot_visualization_object.html#a1116159b8d32bb173b4a6d75d885ec4c',1,'Microsoft::Psi::Visualization::VisualizationObjects::ScatterPlotVisualizationObject']]],
+  ['xmin_6385',['XMin',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_scatter_plot_visualization_object.html#ae87d81892e190a66204a5302090426b8',1,'Microsoft::Psi::Visualization::VisualizationObjects::ScatterPlotVisualizationObject']]],
+  ['xyvisualizationpanel_6386',['XYVisualizationPanel',['../class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_x_y_panel3_d_visualization_object.html#afc276b698b918e691b6771eaeeb5dfd8',1,'Microsoft::Psi::Visualization::VisualizationObjects::XYPanel3DVisualizationObject']]]
 ];

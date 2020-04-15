@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['shape',['Shape',['../namespace_microsoft_1_1_msagl_1_1_wpf_graph_control.html#a70ac2722490d908255f7b156f6791ad3',1,'Microsoft::Msagl::WpfGraphControl']]],
-  ['size',['Size',['../namespace_microsoft_1_1_msagl_1_1_wpf_graph_control.html#a6d8b20d14304e6f3a31129a5769d678f',1,'Microsoft::Msagl::WpfGraphControl']]]
+  ['readsamplehandlerfordevice_5140',['ReadSampleHandlerForDevice',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a996670020fc8ec2dcc9835f9adf23cfd',1,'Microsoft::Psi::Media_Interop']]],
+  ['rectangle_5141',['Rectangle',['../namespace_microsoft_1_1_msagl_1_1_wpf_graph_control.html#a613da0cc8d36e0abeeee29bec4a9b359',1,'Microsoft::Msagl::WpfGraphControl']]]
 ];
