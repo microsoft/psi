@@ -5,12 +5,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
     using System.ComponentModel;
-    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Threading;
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Represents an instant visualization object.
@@ -88,6 +88,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <inheritdoc/>
+        public override DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior)
+        {
+            return DataManager.Instance.GetOriginatingTimeOfNearestInstantMessage(this.StreamBinding, time);
+        }
+
         /// <summary>
         /// Called when the current instant data has changed.  This method is called on a worker thread.
         /// </summary>
@@ -103,30 +109,26 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     // Abort the task
                     if (this.lastDataChangedTask.Abort())
                     {
-                        // If the data is shared, release the reference
+                        // If the data that was to be used as the current data is shared, then decrement its reference count
                         if (this.IsShared && (this.lastDataChangedTaskData != null))
                         {
-                            (this.lastDataChangedTaskData as IDisposable).Dispose();
+                                (this.lastDataChangedTaskData as IDisposable).Dispose();
                         }
                     }
                 }
 
-                // Squirrel away the data object in case we need to abort the task before it gets scheduled
-                this.lastDataChangedTaskData = (TData)data;
-
-                // Queue up the task on the UI thread
-                this.lastDataChangedTask = Application.Current.Dispatcher.BeginInvoke(
-                    (Action)(() =>
-                    {
-                        // Construct a message for the current value
-                        this.CurrentValue = new Message<TData>((TData)data, indexEntry.OriginatingTime, indexEntry.Time, 0, 0);
-
-                        // If the data is shared, release the reference
-                        if (this.IsShared && (data != null))
-                        {
-                            (data as IDisposable).Dispose();
-                        }
-                    }), DispatcherPriority.Render);
+                // Because this method is called on a worker thread and some of our Model3DVisual visualization objects directly touch UI elements
+                // when we call SetCurrentValue, we need to invoke the dispatcher, and we do so asynchronously for performance reasons.  If data is
+                // a shared object then the code that called this method will release its reference to the shared data object shortly after this
+                // method returns.  Consequently we need to add a new reference to the shared data object now instead of the usual pattern where
+                // the code in SetCurrentValue adds the new reference.  We therefore pass false as the incrementSharedRefCount parameter to indicate
+                // that we've already incremented the reference count and the code in SetCurrentValue should not.  We also squirrel away a reference
+                // to data in case we get called again before the dispatcher has had a chance to execute our task.  If this happens, the currently
+                // pending dispatcher task is obsolete so we'll cancel it.  If we cancel the task and the data for the task was a shared object then
+                // we'll need to dereference the data ourselves to ensure it gets released properly, see code above.
+                Message<TData> newValue = new Message<TData>((this.IsShared && data != null) ? ((TData)data).DeepClone() : (TData)data, indexEntry.OriginatingTime, indexEntry.Time, 0, 0);
+                this.lastDataChangedTaskData = newValue.Data;
+                this.lastDataChangedTask = Application.Current.Dispatcher.BeginInvoke((Action)(() => this.SetCurrentValue(newValue, false)), DispatcherPriority.Render);
             }
         }
 

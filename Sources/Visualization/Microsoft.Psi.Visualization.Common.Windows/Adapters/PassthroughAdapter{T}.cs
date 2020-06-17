@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.Adapters
 {
-    using System;
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
@@ -22,12 +21,9 @@ namespace Microsoft.Psi.Visualization.Adapters
 
         private static T Adapter(T data, Envelope env)
         {
-            if (data is IDisposable disposableData)
-            {
-                return data.DeepClone<T>();
-            }
-
-            return data;
+            // If the data is shared, clone it because the caller will
+            // dereference the source soon after this method returns.
+            return SourceIsSharedType ? data.DeepClone() : data;
         }
     }
 }

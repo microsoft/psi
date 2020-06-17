@@ -1,6 +1,6 @@
 # Speech Sample
 
-This sample demostrates how to build a simple speech recognition application using a number of different audio and speech components. In addition, it also demonstrates data logging and replay of logged data. The sample builds and runs on Windows.
+This sample demonstrates how to build a simple speech recognition application using a number of different audio and speech components. In addition, it also demonstrates data logging and replay of logged data. The sample builds and runs on Windows.
 
 __NOTES:__
 

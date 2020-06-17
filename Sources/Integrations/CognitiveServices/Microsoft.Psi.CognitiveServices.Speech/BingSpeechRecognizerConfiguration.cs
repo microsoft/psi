@@ -29,12 +29,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// </summary>
         public BingSpeechRecognizerConfiguration()
         {
-            this.Language = "en-us";
-            this.RecognitionMode = SpeechRecognitionMode.Interactive;
-            this.SubscriptionKey = null; // This must be set to the key associated with your account
-
-            // Defaults to 16 kHz, 16-bit, 1-channel PCM samples
-            this.InputFormat = WaveFormat.Create16kHz1Channel16BitPcm();
         }
 
         /// <summary>
@@ -45,7 +39,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// this defaults to "en-us" (U.S. English). Other supported locales include "en-gb",
         /// "de-de", "es-es", "fr-fr", "it-it" and "zh-cn".
         /// </remarks>
-        public string Language { get; set; }
+        public string Language { get; set; } = "en-us";
 
         /// <summary>
         /// Gets or sets the speech recognition mode.
@@ -54,7 +48,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// The speech recognition mode must be one of the values defined in the enumeration
         /// <see cref="SpeechRecognitionMode"/>. The default value is <see cref="SpeechRecognitionMode.Interactive"/>.
         /// </remarks>
-        public SpeechRecognitionMode RecognitionMode { get; set; }
+        public SpeechRecognitionMode RecognitionMode { get; set; } = SpeechRecognitionMode.Interactive;
 
         /// <summary>
         /// Gets or sets the subscription key.
@@ -71,14 +65,14 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// instead. You may obtain a subscription key for the Azure Speech service here:
         /// https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-services.
         /// </remarks>
-        public string SubscriptionKey { get; set; }
+        public string SubscriptionKey { get; set; } = null;
 
         /// <summary>
-        /// Gets or sets the expected input format of the audio stream.
+        /// Gets the expected input format of the audio stream.
         /// </summary>
         /// <remarks>
         /// Currently, the only supported input audio format is 16000 Hz, 1-channel, 16-bit PCM.
         /// </remarks>
-        public WaveFormat InputFormat { get; set; }
+        public WaveFormat InputFormat { get; } = WaveFormat.Create16kHz1Channel16BitPcm();
     }
 }

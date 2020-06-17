@@ -94,23 +94,6 @@ namespace Microsoft.Psi
         /// <typeparam name="TSource">Type of source messages.</typeparam>
         /// <typeparam name="TOutput">Type of output messages.</typeparam>
         /// <param name="source">Source stream of messages.</param>
-        /// <param name="relativeTimeInterval">The relative time interval over which to gather messages.</param>
-        /// <param name="selector">Selector function.</param>
-        /// <param name="waitForCompleteWindow">Whether to wait for the full window before output.</param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>Output stream.</returns>
-        public static IProducer<TOutput> Window<TSource, TOutput>(this IProducer<TSource> source, RelativeTimeInterval relativeTimeInterval, Func<IEnumerable<Message<TSource>>, TOutput> selector, bool waitForCompleteWindow, DeliveryPolicy<TSource> deliveryPolicy = null)
-        {
-            var window = new RelativeTimeWindow<TSource, TOutput>(source.Out.Pipeline, relativeTimeInterval, selector, waitForCompleteWindow);
-            return PipeTo(source, window, deliveryPolicy);
-        }
-
-        /// <summary>
-        /// Process windows of messages by relative time interval.
-        /// </summary>
-        /// <typeparam name="TSource">Type of source messages.</typeparam>
-        /// <typeparam name="TOutput">Type of output messages.</typeparam>
-        /// <param name="source">Source stream of messages.</param>
         /// <param name="fromTime">The relative timespan from which to gather messages.</param>
         /// <param name="toTime">The relative timespan to which to gather messages.</param>
         /// <param name="selector">Selector function.</param>

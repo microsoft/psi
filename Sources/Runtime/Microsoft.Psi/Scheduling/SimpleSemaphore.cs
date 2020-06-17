@@ -3,17 +3,18 @@
 
 namespace Microsoft.Psi.Scheduling
 {
+    using System;
     using System.Threading;
 
     /// <summary>
     /// Implements a semaphore class that limits the number of threads entering a resource and provides an event when all threads finished.
     /// </summary>
-    public class SimpleSemaphore
+    public class SimpleSemaphore : IDisposable
     {
+        private readonly ManualResetEvent empty;
+        private readonly ManualResetEvent available;
         private readonly int maxThreadCount;
         private int count;
-        private ManualResetEvent empty;
-        private ManualResetEvent available;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleSemaphore"/> class.
@@ -40,6 +41,13 @@ namespace Microsoft.Psi.Scheduling
         /// Gets maximum number of threads.
         /// </summary>
         public int MaxThreadCount => this.maxThreadCount;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.empty.Dispose();
+            this.available.Dispose();
+        }
 
         /// <summary>
         /// Try to enter the semaphore.

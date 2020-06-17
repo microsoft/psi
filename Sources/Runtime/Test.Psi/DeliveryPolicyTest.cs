@@ -33,7 +33,7 @@ namespace Test.Psi
                 p.WaitAll(100);
             }
 
-            // Timer continues to post so messages will be dropped at receiver B until C stops throttling it 
+            // Timer continues to post so messages will be dropped at receiver B until C stops throttling it
             Assert.IsTrue(countA > 0);
             Assert.IsTrue(countA > countB);
             Assert.AreEqual(countB, countC);
@@ -77,12 +77,13 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 var numGen = Generators.Range(p, 10, 3, TimeSpan.FromMilliseconds(100));
-                numGen.Do(m =>
-                {
-                    Thread.Sleep(500);
-                    loopCount++;
-                    lastMsg = m;
-                }, DeliveryPolicy.LatestMessage);
+                numGen.Do(
+                    m =>
+                    {
+                        Thread.Sleep(500);
+                        loopCount++;
+                        lastMsg = m;
+                    }, DeliveryPolicy.LatestMessage);
 
                 p.RunAsync();
                 p.WaitAll(700);
@@ -252,18 +253,25 @@ namespace Test.Psi
                 p.Run();
             }
 
-            // with latest we only get the first message since the others are dropped, and the 
-            // last message.
-            CollectionAssert.AreEqual(latest, new List<int>() { 0, 9 });
+            // with latest we may drop some messages except the last message.
+            CollectionAssert.IsSubsetOf(new List<int>() { 9 }, latest);
+            CollectionAssert.AllItemsAreUnique(latest); // ensure uniqueness
+            CollectionAssert.AreEqual(latest.OrderBy(x => x).ToList(), latest); // ensure order
 
             // with guarantees we get all the even messages.
-            CollectionAssert.AreEqual(latestWithGuarantees, new List<int>() { 0, 2, 4, 6, 8 });
+            CollectionAssert.IsSubsetOf(new List<int>() { 0, 2, 4, 6, 8 }, latestWithGuarantees);
+            CollectionAssert.AllItemsAreUnique(latestWithGuarantees);
+            CollectionAssert.AreEqual(latestWithGuarantees.OrderBy(x => x).ToList(), latestWithGuarantees);
 
             // with guarantees we get all the even and multiple of 3 messages.
-            CollectionAssert.AreEqual(latestWithGuaranteesChained, new List<int>() { 0, 2, 3, 4, 6, 8, 9 });
+            CollectionAssert.IsSubsetOf(new List<int>() { 0, 2, 3, 4, 6, 8, 9 }, latestWithGuaranteesChained);
+            CollectionAssert.AllItemsAreUnique(latestWithGuaranteesChained);
+            CollectionAssert.AreEqual(latestWithGuaranteesChained.OrderBy(x => x).ToList(), latestWithGuaranteesChained);
 
             // with guarantees, even when queue size is 2, we get all the even messages.
-            CollectionAssert.AreEqual(queueSizeTwoWithGuarantees, new List<int>() { 0, 2, 4, 6, 8 });
+            CollectionAssert.IsSubsetOf(new List<int>() { 0, 2, 4, 6, 8 }, queueSizeTwoWithGuarantees);
+            CollectionAssert.AllItemsAreUnique(queueSizeTwoWithGuarantees);
+            CollectionAssert.AreEqual(queueSizeTwoWithGuarantees.OrderBy(x => x).ToList(), queueSizeTwoWithGuarantees);
         }
     }
 }

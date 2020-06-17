@@ -17,7 +17,7 @@ namespace Microsoft.Psi
         public int SourceId;
 
         /// <summary>
-        /// The sequence number of this message, unique within the stream idetified by <see cref="SourceId"/>.
+        /// The sequence number of this message, unique within the stream identified by <see cref="SourceId"/>.
         /// </summary>
         public int SequenceId;
 

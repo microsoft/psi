@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Psi.AzureKinect.x64</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <projectUrl>https://github.com/microsoft/psi/wiki</projectUrl>
+    <description>Provides APIs and components for using the Microsoft Azure Kinect sensor.</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Psi Microsoft</tags>
+    <repository type="git" url="http://github.com/microsoft/psi/" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Psi.Calibration" version="$version$" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Psi.DeviceManagement" version="$version$" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Psi.Imaging" version="$version$" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Psi.Runtime" version="$version$" exclude="Build,Analyzers" />
+        <dependency id="MathNet.Numerics.Signed" version="4.9.1" exclude="Build,Analyzers" />
+        <dependency id="MathNet.Spatial.Signed" version="0.6.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Azure.Kinect.BodyTracking" version="1.0.1" exclude="Analyzers" />
+        <dependency id="Microsoft.Azure.Kinect.Sensor" version="1.3.0" exclude="Analyzers" />
+      </group>
+    </dependencies>
+    <contentFiles />
+  </metadata>
+  <files>
+    <file src=".\bin\x64\$configuration$\netstandard2.0\Microsoft.Psi.AzureKinect.x64.dll" target="lib\netstandard2.0\Microsoft.Psi.AzureKinect.x64.dll" />
+    <file src=".\bin\x64\$configuration$\netstandard2.0\Microsoft.Psi.AzureKinect.x64.pdb" target="lib\netstandard2.0\Microsoft.Psi.AzureKinect.x64.pdb" />
+    <file src=".\bin\x64\$configuration$\netstandard2.0\Microsoft.Psi.AzureKinect.x64.xml" target="lib\netstandard2.0\Microsoft.Psi.AzureKinect.x64.xml" />
+    <file src="..\..\..\LICENSE.txt" target="LICENSE.txt" />
+  </files>
+</package>

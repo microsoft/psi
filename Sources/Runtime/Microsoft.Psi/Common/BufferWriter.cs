@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Common
 
             fixed (byte* buf = this.buffer)
             {
-                // more efficient then Array.Copy or cpblk IL instruction because it handles small sizes explicitly
+                // more efficient than Array.Copy or cpblk IL instruction because it handles small sizes explicitly
                 // http://referencesource.microsoft.com/#mscorlib/system/buffer.cs,c2ca91c0d34a8f86
                 System.Buffer.MemoryCopy(source, buf + start, this.buffer.Length - start, lenghtInBytes);
             }

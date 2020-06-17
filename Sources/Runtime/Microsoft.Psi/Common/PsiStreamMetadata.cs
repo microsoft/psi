@@ -6,6 +6,7 @@ namespace Microsoft.Psi
     using System;
     using System.Collections.Generic;
     using Microsoft.Psi.Common;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
     /// Specifies custom flags for Psi data streams.
@@ -39,15 +40,17 @@ namespace Microsoft.Psi
     /// </summary>
     public sealed class PsiStreamMetadata : Metadata, IStreamMetadata
     {
+        private const int CurrentVersion = 1;
         private const int TicksPerMicrosecond = 10;
+        private byte[] supplementalMetadataBytes = Array.Empty<byte>();
 
         internal PsiStreamMetadata(string name, int id, string typeName)
-            : base(MetadataKind.StreamMetadata, name, id, typeName, 0, null, 0, 0)
+            : base(MetadataKind.StreamMetadata, name, id, typeName, CurrentVersion, null, 0, 0)
         {
         }
 
         internal PsiStreamMetadata(string name, int id, string typeName, int version, string serializerTypeName, int serializerVersion, ushort customFlags)
-           : base(MetadataKind.StreamMetadata, name, id, typeName, version, serializerTypeName, serializerVersion, customFlags)
+            : base(MetadataKind.StreamMetadata, name, id, typeName, version, serializerTypeName, serializerVersion, customFlags)
         {
         }
 
@@ -141,6 +144,9 @@ namespace Microsoft.Psi
             }
         }
 
+        /// <inheritdoc />
+        public string SupplementalMetadataTypeName { get; private set; }
+
         /// <summary>
         /// Gets the average frequency of messages written to this stream.
         /// </summary>
@@ -190,6 +196,58 @@ namespace Microsoft.Psi
             this.LastMessageOriginatingTime = messagesOriginatingTimeInterval.Right;
         }
 
+        /// <summary>
+        /// Gets supplemental stream metadata.
+        /// </summary>
+        /// <typeparam name="T">Type of supplemental metadata.</typeparam>
+        /// <param name="serializers">Known serializers.</param>
+        /// <returns>Supplemental metadata.</returns>
+        internal T GetSupplementalMetadata<T>(KnownSerializers serializers)
+        {
+            if (string.IsNullOrEmpty(this.SupplementalMetadataTypeName))
+            {
+                throw new InvalidOperationException("Stream does not contain supplemental metadata.");
+            }
+
+            if (typeof(T) != Type.GetType(this.SupplementalMetadataTypeName))
+            {
+                throw new InvalidCastException($"Supplemental metadata type mismatch ({this.SupplementalMetadataTypeName}).");
+            }
+
+            var handler = serializers.GetHandler<T>();
+            var reader = new BufferReader(this.supplementalMetadataBytes);
+            var target = default(T);
+            handler.Deserialize(reader, ref target, new SerializationContext(serializers));
+            return target;
+        }
+
+        /// <summary>
+        /// Sets supplemental stream metadata.
+        /// </summary>
+        /// <typeparam name="T">Type of supplemental metadata.</typeparam>
+        /// <param name="value">Supplemental metadata value.</param>
+        /// <param name="serializers">Known serializers.</param>
+        internal void SetSupplementalMetadata<T>(T value, KnownSerializers serializers)
+        {
+            this.SupplementalMetadataTypeName = typeof(T).AssemblyQualifiedName;
+            var handler = serializers.GetHandler<T>();
+            var writer = new BufferWriter(this.supplementalMetadataBytes);
+            handler.Serialize(writer, value, new SerializationContext(serializers));
+            this.supplementalMetadataBytes = writer.Buffer;
+        }
+
+        /// <summary>
+        /// Update supplemental stream metadata from another stream metadata.
+        /// </summary>
+        /// <param name="other">Other stream metadata from which to copy supplemental metadata.</param>
+        /// <returns>Updated stream metadata.</returns>
+        internal PsiStreamMetadata UpdateSupplementalMetadataFrom(PsiStreamMetadata other)
+        {
+            this.SupplementalMetadataTypeName = other.SupplementalMetadataTypeName;
+            this.supplementalMetadataBytes = other.supplementalMetadataBytes;
+            return this;
+        }
+
         // custom deserializer with no dependency on the Serializer subsystem
         // order of fields is important for backwards compat and must be the same as the order in Serialize, don't change!
         internal new void Deserialize(BufferReader metadataBuffer)
@@ -211,6 +269,14 @@ namespace Microsoft.Psi
                 {
                     this.RuntimeTypes.Add(metadataBuffer.ReadInt32(), metadataBuffer.ReadString());
                 }
+            }
+
+            if (this.Version >= 1)
+            {
+                this.SupplementalMetadataTypeName = metadataBuffer.ReadString();
+                var len = metadataBuffer.ReadInt32();
+                this.supplementalMetadataBytes = new byte[len];
+                metadataBuffer.Read(this.supplementalMetadataBytes, len);
             }
         }
 
@@ -234,6 +300,13 @@ namespace Microsoft.Psi
                     metadataBuffer.Write(pair.Key);
                     metadataBuffer.Write(pair.Value);
                 }
+            }
+
+            metadataBuffer.Write(this.SupplementalMetadataTypeName);
+            metadataBuffer.Write(this.supplementalMetadataBytes.Length);
+            if (this.supplementalMetadataBytes.Length > 0)
+            {
+                metadataBuffer.Write(this.supplementalMetadataBytes);
             }
         }
 

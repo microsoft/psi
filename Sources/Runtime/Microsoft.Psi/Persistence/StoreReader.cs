@@ -187,7 +187,7 @@ namespace Microsoft.Psi.Persistence
         }
 
         /// <summary>
-        /// Closes allthe storage streams.
+        /// Closes all the storage streams.
         /// </summary>
         public void CloseAllStreams()
         {

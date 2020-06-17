@@ -89,8 +89,15 @@ namespace Microsoft.Psi.Visualization.Data
         /// Reads instant data from the stream at the given cursor time and notifies all registered instant visualization objects of the new data.
         /// </summary>
         /// <param name="reader">The reader to read from.</param>
-        /// <param name="cursorTime">The currenttime at the cursor..</param>
+        /// <param name="cursorTime">The current time at the cursor..</param>
         void ReadInstantData(ISimpleReader reader, DateTime cursorTime);
+
+        /// <summary>
+        /// Gets originating time of the message in a stream that's closest to a given time.
+        /// </summary>
+        /// <param name="time">The time for which to return the message with the closest originating time.</param>
+        /// <returns>The originating time of the message closest to time.</returns>
+        public DateTime? GetOriginatingTimeOfNearestInstantMessage(DateTime time);
 
         /// <summary>
         /// Notifies the data store reader that the range of data that may be of interest to instant data targets has changed.
@@ -99,7 +106,7 @@ namespace Microsoft.Psi.Visualization.Data
         void OnInstantViewRangeChanged(TimeInterval viewRange);
 
         /// <summary>
-        /// Creates a view of the indices identified by the matching start and end times and asychronously fills it in.
+        /// Creates a view of the indices identified by the matching start and end times and asynchronously fills it in.
         /// </summary>
         /// <param name="startTime">Start time of indices to read.</param>
         /// <param name="endTime">End time of indices to read.</param>

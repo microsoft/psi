@@ -29,7 +29,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="simpleReaderType">The simple reader type for the underlying store.</param>
         /// <param name="streamAdapterType">The type of the stream adapter, null if there is none.</param>
         /// <param name="summarizerType">The type of the stream summarizer, null if there is none.</param>
-        /// <param name="summarizerArgs">The arguments used when constructing the stream summarizer, null if ther is none.</param>
+        /// <param name="summarizerArgs">The arguments used when constructing the stream summarizer, null if there is none.</param>
         public StreamBinding(
             string streamName,
             string partitionName,
@@ -91,7 +91,7 @@ namespace Microsoft.Psi.Visualization.Data
         public IStreamMetadata StreamMetadata { get; private set; }
 
         /// <summary>
-        /// Gets stream adapater.
+        /// Gets stream adapter.
         /// </summary>
         [IgnoreDataMember]
         public IStreamAdapter StreamAdapter
@@ -141,7 +141,9 @@ namespace Microsoft.Psi.Visualization.Data
 
                 // update value and update type name
                 this.streamAdapterType = value;
-                this.StreamAdapterTypeName = this.streamAdapterType?.FullName;
+
+                // use assembly-qualified name as stream adapter may be in a different assembly
+                this.StreamAdapterTypeName = this.streamAdapterType?.AssemblyQualifiedName;
             }
         }
 
@@ -215,7 +217,7 @@ namespace Microsoft.Psi.Visualization.Data
         public object[] SummarizerArgs { get; set; }
 
         /// <summary>
-        /// Gets summaraizer type.
+        /// Gets summarizer type.
         /// </summary>
         [IgnoreDataMember]
         public Type SummarizerType
@@ -234,7 +236,9 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 // update value and update type name
                 this.summarizerType = value;
-                this.SummarizerTypeName = this.summarizerType?.FullName;
+
+                // use assembly-qualified name as simple reader may be in a different assembly
+                this.SummarizerTypeName = this.summarizerType?.AssemblyQualifiedName;
             }
         }
 

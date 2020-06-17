@@ -35,7 +35,7 @@ namespace Microsoft.Psi
         /// Enumerable stream class.
         /// </summary>
         /// <typeparam name="T">Type of stream messages.</typeparam>
-        public class StreamEnumerable<T> : IEnumerable, IEnumerable<T>
+        public class StreamEnumerable<T> : IEnumerable, IEnumerable<T>, IDisposable
         {
             private readonly StreamEnumerator enumerator;
 
@@ -59,6 +59,12 @@ namespace Microsoft.Psi
 
                 source.PipeTo(processor, deliveryPolicy);
                 processor.In.Unsubscribed += _ => this.enumerator.Update.Set();
+            }
+
+            /// <inheritdoc />
+            public void Dispose()
+            {
+                this.enumerator.Dispose();
             }
 
             /// <inheritdoc />
@@ -98,6 +104,7 @@ namespace Microsoft.Psi
 
                 public void Dispose()
                 {
+                    this.enqueued.Dispose();
                 }
 
                 public bool MoveNext()

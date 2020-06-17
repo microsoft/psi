@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
     /// <summary>
-    /// Visualizationo panel types.
+    /// Visualization panel types.
     /// </summary>
     public enum VisualizationPanelType
     {

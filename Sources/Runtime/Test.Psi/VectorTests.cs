@@ -4,10 +4,10 @@
 namespace Test.Psi
 {
     using System;
-    using System.Threading;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -103,7 +103,6 @@ namespace Test.Psi
             CollectionAssert.AreEqual(new int[] { 0, 10, 30, 60, 100 }, results.ToArray());
         }
 
-
         [TestMethod]
         [Timeout(60000)]
         public void SparseVectorStatelessParallel()
@@ -131,7 +130,8 @@ namespace Test.Psi
         [Timeout(60000)]
         public void SparseVectorWithGapParallel()
         {
-            var sequence = new List<Dictionary<int, int>>() {
+            var sequence = new List<Dictionary<int, int>>()
+            {
                 new Dictionary<int, int> { { 1, 100 } },
                 new Dictionary<int, int> { { 1, 100 } },
                 new Dictionary<int, int> { { 1, 100 } },
@@ -181,7 +181,8 @@ namespace Test.Psi
         [Timeout(60000)]
         public void SparseVectorBranchTerminationPolicy()
         {
-            var sequence = new List<Dictionary<int, int>>() {
+            var sequence = new List<Dictionary<int, int>>()
+            {
                 new Dictionary<int, int> { { 1, 100 } },
                 new Dictionary<int, int> { { 1, 100 } },
                 new Dictionary<int, int> { { 1, 100 } },
@@ -311,7 +312,7 @@ namespace Test.Psi
                     new Dictionary<int, int> {            { 2, 26 } },
                     new Dictionary<int, int> {            { 2, 27 } },
                     new Dictionary<int, int> {            { 2, 28 } },
-                    new Dictionary<int, int> {            { 2, 29 } }
+                    new Dictionary<int, int> {            { 2, 29 } },
                 };
 
             var results = new List<string>();
@@ -340,8 +341,10 @@ namespace Test.Psi
                             {
                                 sb.Append($"{v},");
                             }
+
                             sb.Remove(sb.Length - 1, 1);
                         }
+
                         results.Add(sb.ToString().Substring(1));
                     });
                 p.Run();
@@ -484,7 +487,7 @@ namespace Test.Psi
 
                 p.RunAsync();
 
-                void step(int expected)
+                void Step(int expected)
                 {
                     stepper.Step();
                     while (results.Count != expected)
@@ -497,34 +500,34 @@ namespace Test.Psi
 
                 Assert.AreEqual<int>(0, results.Count);
 
-                step(1); // A   C
+                Step(1); // A   C
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 3, 'C' } }, results[0]);
 
-                step(2); // A   C   E
+                Step(2); // A   C   E
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 3, 'C' }, { 5, 'E' } }, results[1]);
 
-                step(2); // - B - D E (holes) no new results
+                Step(2); // - B - D E (holes) no new results
 
-                step(3); // A B C D - (hole) stream 5/E closed
+                Step(3); // A B C D - (hole) stream 5/E closed
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, '\0' }, { 2, 'B' }, { 3, '\0' }, { 4, 'D' }, { 5, 'E' } }, results[2]); // note default '\0' values
 
-                step(4); // A - C -
+                Step(4); // A - C -
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, '\0' } }, results[3]); // note default '\0' value
 
-                step(6); // A B C D E stream 5/E "reopens" two outputs
+                Step(6); // A B C D E stream 5/E "reopens" two outputs
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, '\0' }, { 3, 'C' }, { 4, '\0' } }, results[4]); // note default '\0' values
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } }, results[5]);
 
-                step(7); // A B C D E
+                Step(7); // A B C D E
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' }, { 4, 'D' }, { 5, 'E' } }, results[6]);
 
-                step(8); // A B C streams 4/D and 5/E closed
+                Step(8); // A B C streams 4/D and 5/E closed
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' }, { 3, 'C' } }, results[7]);
 
-                step(9); // A B stream 3/C closed
+                Step(9); // A B stream 3/C closed
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' } }, results[8]);
 
-                step(10); // A B streams 1/A and 2/B now closed
+                Step(10); // A B streams 1/A and 2/B now closed
                 CollectionAssert.AreEquivalent(new Dictionary<int, char> { { 1, 'A' }, { 2, 'B' } }, results[9]);
 
                 Assert.IsFalse(stepper.Step()); // we're done
@@ -549,6 +552,8 @@ namespace Test.Psi
                 this.Out = pipeline.CreateEmitter<T>(this, "Out");
             }
 
+            public Emitter<T> Out { get; private set; }
+
             public bool Step()
             {
                 if (this.index < this.sequence.Count)
@@ -571,8 +576,6 @@ namespace Test.Psi
             {
                 notifyCompleted();
             }
-
-            public Emitter<T> Out { get; private set; }
         }
     }
 }

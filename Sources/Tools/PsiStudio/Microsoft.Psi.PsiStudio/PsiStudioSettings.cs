@@ -7,8 +7,10 @@ namespace Microsoft.Psi.PsiStudio
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using System.Windows;
     using System.Xml;
     using System.Xml.Serialization;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Persisted application settings.
@@ -36,23 +38,6 @@ namespace Microsoft.Psi.PsiStudio
             this.ShowTimingRelativeToSelectionStart = false;
             this.CurrentLayoutName = null;
             this.AdditionalAssemblies = null;
-        }
-
-        /// <summary>
-        /// Finalizes an instance of the <see cref="PsiStudioSettings"/> class.
-        /// </summary>
-        ~PsiStudioSettings()
-        {
-            if (string.IsNullOrWhiteSpace(this.settingsFilename))
-            {
-                throw new InvalidOperationException("Coould not save the settings to file because PsiStudioSettings.Load() was not previously called to set the filepath.");
-            }
-
-            using (var writer = XmlWriter.Create(this.settingsFilename, new XmlWriterSettings() { Indent = true }))
-            {
-                var xmlSerializer = new XmlSerializer(typeof(PsiStudioSettings));
-                xmlSerializer.Serialize(writer, this);
-            }
         }
 
         /// <summary>
@@ -150,6 +135,51 @@ namespace Microsoft.Psi.PsiStudio
             }
 
             return settings;
+        }
+
+        /// <summary>
+        /// Saves the settings to the settings file.
+        /// </summary>
+        public void Save()
+        {
+            if (string.IsNullOrWhiteSpace(this.settingsFilename))
+            {
+                throw new InvalidOperationException("Could not save the settings to file because PsiStudioSettings.Load() was not previously called to set the filepath.");
+            }
+
+            // To avoid obliterating the existing settings file if something goes wrong, write
+            // the settings to a temporary file and then copy the file over the existing settings
+            // file once we know we were successful.
+            string tempFilename = this.CreateTempFilename();
+
+            try
+            {
+                using (var writer = XmlWriter.Create(tempFilename, new XmlWriterSettings() { Indent = true }))
+                {
+                    var xmlSerializer = new XmlSerializer(typeof(PsiStudioSettings));
+                    xmlSerializer.Serialize(writer, this);
+                }
+
+                // Delete the existing settings file
+                File.Delete(this.settingsFilename);
+
+                // Move the temp file to be the new settings file
+                File.Move(tempFilename, this.settingsFilename);
+            }
+            catch (Exception ex)
+            {
+                new MessageBoxWindow(
+                    Application.Current.MainWindow,
+                    "Save Settings Error",
+                    $"An error occurred while attempting to save the application settings{Environment.NewLine}{Environment.NewLine}{ex.Message}",
+                    "Close",
+                    null).ShowDialog();
+            }
+        }
+
+        private string CreateTempFilename()
+        {
+            return this.settingsFilename.Substring(0, this.settingsFilename.IndexOf('.')) + ".tmp";
         }
 
         /// <summary>

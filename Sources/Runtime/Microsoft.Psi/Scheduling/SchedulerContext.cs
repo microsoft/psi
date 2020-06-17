@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Scheduling
     /// Maintains a count of the number of work items currently in-flight and an event
     /// to signal when there are no remaining work items in the context.
     /// </summary>
-    public sealed class SchedulerContext
+    public sealed class SchedulerContext : IDisposable
     {
         private readonly object syncLock = new object();
         private readonly ManualResetEvent empty = new ManualResetEvent(true);
@@ -33,6 +33,12 @@ namespace Microsoft.Psi.Scheduling
         internal Clock Clock { get; private set; } = new Clock(DateTime.MinValue, 0);
 
         internal bool Started { get; private set; } = false;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.empty.Dispose();
+        }
 
         /// <summary>
         /// Starts scheduling work on the context.

@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Scheduling
     /// <summary>
     /// Maintains a queue of workitems and schedules worker threads to empty them.
     /// </summary>
-    public sealed class Scheduler
+    public sealed class Scheduler : IDisposable
     {
         private readonly string name;
         private readonly SimpleSemaphore threadSemaphore;
@@ -17,6 +17,9 @@ namespace Microsoft.Psi.Scheduling
         private readonly bool allowSchedulingOnExternalThreads;
         private readonly ManualResetEvent stopped = new ManualResetEvent(true);
         private readonly AutoResetEvent futureAdded = new AutoResetEvent(false);
+        private readonly ThreadLocal<WorkItem?> nextWorkitem = new ThreadLocal<WorkItem?>();
+        private readonly ThreadLocal<bool> isSchedulerThread = new ThreadLocal<bool>(() => false);
+        private readonly ThreadLocal<DateTime> currentWorkitemTime = new ThreadLocal<DateTime>(() => DateTime.MaxValue);
 
         // the queue of pending workitems, ordered by start time
         private readonly WorkItemQueue globalWorkitems;
@@ -24,9 +27,6 @@ namespace Microsoft.Psi.Scheduling
         private Thread futuresThread;
         private IPerfCounterCollection<SchedulerCounters> counters;
         private bool forcedShutdownRequested;
-        private ThreadLocal<WorkItem?> nextWorkitem = new ThreadLocal<WorkItem?>();
-        private ThreadLocal<bool> isSchedulerThread = new ThreadLocal<bool>(() => false);
-        private ThreadLocal<DateTime> currentWorkitemTime = new ThreadLocal<DateTime>(() => DateTime.MaxValue);
         private Clock clock;
         private bool delayFutureWorkitemsUntilDue;
         private bool started = false;
@@ -75,6 +75,19 @@ namespace Microsoft.Psi.Scheduling
             {
                 return !this.stopped.WaitOne(0);
             }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.threadSemaphore.Dispose();
+            this.stopped.Dispose();
+            this.futureAdded.Dispose();
+            this.globalWorkitems.Dispose();
+            this.futureWorkitems.Dispose();
+            this.nextWorkitem.Dispose();
+            this.isSchedulerThread.Dispose();
+            this.currentWorkitemTime.Dispose();
         }
 
         /// <summary>

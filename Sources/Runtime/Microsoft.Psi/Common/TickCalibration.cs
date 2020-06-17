@@ -130,7 +130,7 @@ namespace Microsoft.Psi
         /// Attempts to recalibrate elapsed ticks against the system time. The current elapsed ticks from
         /// the performance counter will be compared against the current system time and the calibration
         /// data will be modified only if it is determined that the times have drifted by more than the
-        /// maxmimum allowed amount since the last calibration.
+        /// maximum allowed amount since the last calibration.
         /// </summary>
         /// <param name="force">Forces the calibration data to be modified regardless of the observed drift.</param>
         internal void Recalibrate(bool force = false)

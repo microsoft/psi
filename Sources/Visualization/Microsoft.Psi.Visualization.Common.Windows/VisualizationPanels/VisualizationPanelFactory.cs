@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 case VisualizationPanelType.XYZ:
                     return Activator.CreateInstance<XYZVisualizationPanel>();
                 default:
-                    throw new ArgumentException(string.Format("Unknown visualiation panel type {0}.", visualizationPanelType.ToString()));
+                    throw new ArgumentException(string.Format("Unknown visualization panel type {0}.", visualizationPanelType.ToString()));
             }
         }
     }

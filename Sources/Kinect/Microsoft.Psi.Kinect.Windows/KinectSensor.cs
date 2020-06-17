@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Kinect
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Kinect;
     using Microsoft.Psi;
@@ -19,7 +18,7 @@ namespace Microsoft.Psi.Kinect
     /// <summary>
     /// Component that captures and streams information (images, depth, audio, bodies, etc.) from a Kinect One (v2) sensor.
     /// </summary>
-    public class KinectSensor : IKinectSensor, ISourceComponent, IDisposable
+    public class KinectSensor : ISourceComponent, IDisposable
     {
         private static List<CameraDeviceInfo> allDevices = null;
         private static WaveFormat audioFormat = WaveFormat.Create16kHz1ChannelIeeeFloat();
@@ -36,7 +35,6 @@ namespace Microsoft.Psi.Kinect
 
         private IList<Body> bodies = null;
         private List<KinectBody> kinectBodies = null;
-        private int trackedBodies = 0;
         private byte[] audioBuffer = null;
         private IList<ulong> bodyTrackingIds = null;
         private bool disposed = false;
@@ -74,7 +72,7 @@ namespace Microsoft.Psi.Kinect
             this.Bodies = pipeline.CreateEmitter<List<KinectBody>>(this, nameof(this.Bodies));
             this.ColorImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.ColorImage));
             this.RGBDImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.RGBDImage));
-            this.DepthImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.DepthImage));
+            this.DepthImage = pipeline.CreateEmitter<Shared<DepthImage>>(this, nameof(this.DepthImage));
             this.InfraredImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.InfraredImage));
             this.LongExposureInfraredImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.LongExposureInfraredImage));
             this.DepthDeviceCalibrationInfo = pipeline.CreateEmitter<IDepthDeviceCalibrationInfo>(this, nameof(this.DepthDeviceCalibrationInfo));
@@ -101,6 +99,7 @@ namespace Microsoft.Psi.Kinect
                     di.FriendlyName = $"Kinect-v2";
                     var kinectSensor = Microsoft.Kinect.KinectSensor.GetDefault();
                     di.DeviceName = kinectSensor.UniqueKinectId;
+                    di.DeviceId = 0;
                     kinectSensor?.Close();
                     di.SerialNumber = string.Empty;
                     di.Sensors = new List<CameraDeviceInfo.Sensor>();
@@ -174,9 +173,9 @@ namespace Microsoft.Psi.Kinect
         public Emitter<Shared<Image>> RGBDImage { get; private set; }
 
         /// <summary>
-        /// Gets the current image from the depth camera.
+        /// Gets the current depth image from the depth camera.
         /// </summary>
-        public Emitter<Shared<Image>> DepthImage { get; private set; }
+        public Emitter<Shared<DepthImage>> DepthImage { get; private set; }
 
         /// <summary>
         /// Gets the current image from the infrared camera.
@@ -234,8 +233,9 @@ namespace Microsoft.Psi.Kinect
         {
             if (!this.disposed)
             {
-                this.multiFrameReader?.Dispose();
-                this.audioBeamFrameReader?.Dispose();
+                // Cast to IDisposable to suppress false CA2213 warning
+                ((IDisposable)this.multiFrameReader)?.Dispose();
+                ((IDisposable)this.audioBeamFrameReader)?.Dispose();
                 this.kinectSensor?.Close();
                 this.disposed = true;
             }
@@ -324,34 +324,6 @@ namespace Microsoft.Psi.Kinect
                     var kinectInternalCalibration = new KinectInternalCalibration();
                     kinectInternalCalibration.RecoverCalibrationFromSensor(this.kinectSensor);
 
-                    Matrix<double> colorCameraMatrix = Matrix<double>.Build.Dense(3, 3);
-                    Matrix<double> depthCameraMatrix = Matrix<double>.Build.Dense(3, 3);
-                    for (int i = 0; i < 3; i++)
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            colorCameraMatrix[i, j] = kinectInternalCalibration.colorCameraMatrix[i, j];
-                            depthCameraMatrix[i, j] = kinectInternalCalibration.depthCameraMatrix[i, j];
-                        }
-                    }
-
-                    Vector<double> colorLensDistortion = Vector<double>.Build.Dense(5);
-                    Vector<double> depthLensDistortion = Vector<double>.Build.Dense(5);
-                    for (int i = 0; i < 5; i++)
-                    {
-                        colorLensDistortion[i] = kinectInternalCalibration.colorLensDistortion[i];
-                        depthLensDistortion[i] = kinectInternalCalibration.depthLensDistortion[i];
-                    }
-
-                    Matrix<double> depthToColorTransform = Matrix<double>.Build.Dense(4, 4);
-                    for (int i = 0; i < 4; i++)
-                    {
-                        for (int j = 0; j < 4; j++)
-                        {
-                            depthToColorTransform[i, j] = kinectInternalCalibration.depthToColorTransform[i, j];
-                        }
-                    }
-
                     // Kinect uses a basis under the hood that assumes Forward=Z, Left=X, Up=Y.
                     var kinectBasis = new CoordinateSystem(default, UnitVector3D.ZAxis, UnitVector3D.XAxis, UnitVector3D.YAxis);
 
@@ -363,13 +335,13 @@ namespace Microsoft.Psi.Kinect
                     this.depthDeviceCalibrationInfo = new DepthDeviceCalibrationInfo(
                         this.kinectSensor.ColorFrameSource.FrameDescription.Width,
                         this.kinectSensor.ColorFrameSource.FrameDescription.Height,
-                        colorCameraMatrix,
+                        kinectInternalCalibration.colorCameraMatrix,
                         colorRadialDistortion,
                         colorTangentialDistortion,
-                        kinectBasis.Invert() * depthToColorTransform * kinectBasis, // Convert to MathNet
+                        kinectBasis.Invert() * kinectInternalCalibration.depthToColorTransform * kinectBasis, // Convert to MathNet basis
                         this.kinectSensor.DepthFrameSource.FrameDescription.Width,
                         this.kinectSensor.DepthFrameSource.FrameDescription.Height,
-                        depthCameraMatrix,
+                        kinectInternalCalibration.depthCameraMatrix,
                         depthRadialDistortion,
                         depthTangentialDistortion,
                         CoordinateSystem.CreateIdentity(4));
@@ -437,7 +409,7 @@ namespace Microsoft.Psi.Kinect
                 FrameDescription depthFrameDescription = depthFrame.FrameDescription;
                 using (KinectBuffer depthBuffer = depthFrame.LockImageBuffer())
                 {
-                    using (var dest = ImagePool.GetOrCreate(depthFrameDescription.Width, depthFrameDescription.Height, Imaging.PixelFormat.Gray_16bpp))
+                    using (var dest = DepthImagePool.GetOrCreate(depthFrameDescription.Width, depthFrameDescription.Height))
                     {
                         depthFrame.CopyFrameDataToIntPtr(dest.Resource.ImageData, (uint)(depthFrameDescription.Width * depthFrameDescription.Height * 2));
                         var time = this.pipeline.GetCurrentTimeFromElapsedTicks(depthFrame.RelativeTime.Ticks);
@@ -564,12 +536,12 @@ namespace Microsoft.Psi.Kinect
                     bodyFrame.GetAndRefreshBodyData(this.bodies);
 
                     // compute the number of tracked bodies
-                    this.trackedBodies = this.bodies.Count(b => b.IsTracked);
+                    var numTrackedBodies = this.bodies.Count(b => b.IsTracked);
 
-                    if (this.kinectBodies == null || this.kinectBodies.Count != this.trackedBodies)
+                    if (this.kinectBodies == null || this.kinectBodies.Count != numTrackedBodies)
                     {
-                        this.kinectBodies = new List<KinectBody>(this.trackedBodies);
-                        for (int i = 0; i < this.trackedBodies; i++)
+                        this.kinectBodies = new List<KinectBody>(numTrackedBodies);
+                        for (int i = 0; i < numTrackedBodies; i++)
                         {
                             this.kinectBodies.Add(new KinectBody());
                         }
@@ -581,20 +553,8 @@ namespace Microsoft.Psi.Kinect
                     {
                         if (this.bodies[i].IsTracked)
                         {
+                            this.kinectBodies[ti].UpdateFrom(this.bodies[i]);
                             this.kinectBodies[ti].FloorClipPlane = bodyFrame.FloorClipPlane;
-                            this.kinectBodies[ti].ClippedEdges = this.bodies[i].ClippedEdges;
-                            this.kinectBodies[ti].HandLeftConfidence = this.bodies[i].HandLeftConfidence;
-                            this.kinectBodies[ti].HandLeftState = this.bodies[i].HandLeftState;
-                            this.kinectBodies[ti].HandRightConfidence = this.bodies[i].HandRightConfidence;
-                            this.kinectBodies[ti].HandRightState = this.bodies[i].HandRightState;
-                            this.kinectBodies[ti].IsRestricted = this.bodies[i].IsRestricted;
-                            this.kinectBodies[ti].IsRestricted = this.bodies[i].IsRestricted;
-                            this.kinectBodies[ti].IsTracked = this.bodies[i].IsTracked;
-                            this.kinectBodies[ti].JointOrientations = this.CloneDictionary(this.bodies[i].JointOrientations);
-                            this.kinectBodies[ti].Joints = this.CloneDictionary(this.bodies[i].Joints);
-                            this.kinectBodies[ti].Lean = this.bodies[i].Lean;
-                            this.kinectBodies[ti].LeanTrackingState = this.bodies[i].LeanTrackingState;
-                            this.kinectBodies[ti].TrackingId = this.bodies[i].TrackingId;
                             ti++;
                         }
                     }

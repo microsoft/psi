@@ -80,7 +80,7 @@ namespace Microsoft.Psi.Arrays
         public IndexDefinition Slice(int start, int end) => this.Slice(new Range(start, end));
 
         /// <summary>
-        /// Merges two index definitions into one dicontinuous index. The two are assumed to belong to the same dimension.
+        /// Merges two index definitions into one discontiguous index. The two are assumed to belong to the same dimension.
         /// </summary>
         /// <param name="other">The other definition.</param>
         /// <returns>A combined definition.</returns>

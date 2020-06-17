@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.Converters
     using System.Windows.Data;
 
     /// <summary>
-    /// Provides a way to apply custom logic to a binding. Specifically, converting from numeric value to a scaled offest.
+    /// Provides a way to apply custom logic to a binding. Specifically, converting from numeric value to a scaled offset.
     /// </summary>
     public class PlacementConverter : IValueConverter
     {

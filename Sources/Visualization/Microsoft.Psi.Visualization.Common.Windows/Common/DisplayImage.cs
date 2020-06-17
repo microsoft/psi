@@ -62,6 +62,7 @@ namespace Microsoft.Psi.Visualization.Common
             lock (this.imageLock)
             {
                 this.psiImage?.Dispose();
+
                 if (image == null || image.Resource == null)
                 {
                     this.psiImage = null;
@@ -69,6 +70,33 @@ namespace Microsoft.Psi.Visualization.Common
                 }
 
                 this.psiImage = image.AddRef();
+            }
+
+            this.UpdateBitmap();
+        }
+
+        /// <summary>
+        /// Update the underlying image with the specified image.
+        /// </summary>
+        /// <param name="encodedImage">New encoded image.</param>
+        public void UpdateImage(Shared<EncodedImage> encodedImage)
+        {
+            lock (this.imageLock)
+            {
+                if (encodedImage == null || encodedImage.Resource == null)
+                {
+                    this.psiImage?.Dispose();
+                    this.psiImage = null;
+                    return;
+                }
+
+                if (this.psiImage == null)
+                {
+                    this.psiImage = Shared.Create(new Imaging.Image(encodedImage.Resource.Width, encodedImage.Resource.Height, Imaging.PixelFormat.BGR_24bpp));
+                }
+
+                var decoder = new ImageFromStreamDecoder();
+                decoder.DecodeFromStream(encodedImage.Resource.ToStream(), this.psiImage.Resource);
             }
 
             this.UpdateBitmap();
@@ -84,7 +112,8 @@ namespace Microsoft.Psi.Visualization.Common
         /// <returns>The newly cropped image.</returns>
         public DisplayImage Crop(int left, int top, int width, int height)
         {
-            Shared<Image> croppedCopy = this.psiImage.Resource.Crop(left, top, width, height);
+            Shared<Image> croppedCopy = this.psiImage.SharedPool.GetOrCreate();
+            this.psiImage.Resource.Crop(croppedCopy.Resource, left, top, width, height);
             var displayImage = new DisplayImage();
             displayImage.UpdateImage(croppedCopy);
             return displayImage;

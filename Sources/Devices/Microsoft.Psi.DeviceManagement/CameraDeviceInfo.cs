@@ -49,6 +49,11 @@ namespace Microsoft.Psi.DeviceManagement
         public string DeviceName { get; set; }
 
         /// <summary>
+        /// Gets or sets the device id (index of device from systems perspective).
+        /// </summary>
+        public int DeviceId { get; set; }
+
+        /// <summary>
         /// Gets or sets the serial number for this device. Maybe empty string.
         /// </summary>
         public string SerialNumber { get; set; }

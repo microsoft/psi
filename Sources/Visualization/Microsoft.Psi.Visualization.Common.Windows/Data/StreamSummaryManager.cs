@@ -49,7 +49,7 @@ namespace Microsoft.Psi.Visualization.Data
         public string StreamName { get; private set; }
 
         /// <summary>
-        /// Gets the stream adapater type.
+        /// Gets the stream adapter type.
         /// </summary>
         public Type StreamAdapterType { get; private set; }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Finds the time of the next data point after the point indicated by the given time.
         /// </summary>
         /// <typeparam name="T">The summary data type.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="time">Time of current data point.</param>
         /// <param name="interval">The time interval each summary value covers.</param>
         /// <returns>Time of the next data point.</returns>
@@ -100,7 +100,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Finds the time of the previous data point before the point indicated by the given time.
         /// </summary>
         /// <typeparam name="T">The summary data type.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="time">Time of current data point.</param>
         /// <param name="interval">The time interval each summary value covers.</param>
         /// <returns>Time of the previous data point.</returns>
@@ -130,7 +130,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a view over the specified time range of the cached summary data.
         /// </summary>
         /// <typeparam name="T">The summary data type.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="viewMode">The view mode, which may be either fixed or live data.</param>
         /// <param name="startTime">The start time of the view range.</param>
         /// <param name="endTime">The end time of the view range.</param>

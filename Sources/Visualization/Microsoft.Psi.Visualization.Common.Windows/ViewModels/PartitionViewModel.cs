@@ -135,7 +135,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public string LastMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.LastMessageOriginatingTime);
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in this session.
+        /// Gets the originating time interval (earliest to latest) of the messages in this session.
         /// </summary>
         [Browsable(false)]
         public TimeInterval OriginatingTimeInterval => this.streamTreeRoot.OriginatingTimeInterval;
@@ -312,10 +312,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
             try
             {
-                // Keep waiting on messages until the partition exits live mode or we're signalled to stop
+                // Keep waiting on messages until the partition exits live mode or we're signaled to stop
                 while (this.continueMonitoring && this.IsLivePartition && Application.Current != null)
                 {
-                    // If there's a new message, squirrel it away as the lastest recent message, otherwise sleep
+                    // If there's a new message, squirrel it away as the latest recent message, otherwise sleep
                     if (storeReader.MoveNext(out Envelope envelope))
                     {
                         if ((!latestLiveMessageReceived.HasValue) || (envelope.Time > latestLiveMessageReceived.Value.Time))
@@ -380,7 +380,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     // If we don't already have a node for this stream, add one
                     if (!this.streamsById.ContainsKey(psiStreamMetadata.Id))
                     {
-                        IStreamMetadata streamMetadata = new PsiLiveStreamMetadata(psiStreamMetadata.Name, psiStreamMetadata.Id, psiStreamMetadata.TypeName, this.StoreName, this.StorePath);
+                        IStreamMetadata streamMetadata = new PsiLiveStreamMetadata(psiStreamMetadata.Name, psiStreamMetadata.Id, psiStreamMetadata.TypeName, psiStreamMetadata.SupplementalMetadataTypeName, this.StoreName, this.StorePath);
                         this.streamsById[streamMetadata.Id] = this.StreamTreeRoot.AddPath(streamMetadata);
                     }
                 }

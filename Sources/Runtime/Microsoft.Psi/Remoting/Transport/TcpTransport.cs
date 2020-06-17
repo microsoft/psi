@@ -116,6 +116,7 @@ namespace Microsoft.Psi.Remoting
 
             public void Dispose()
             {
+                this.stream.Close();
                 this.client.Dispose();
                 this.client = null;
             }

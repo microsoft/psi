@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.Data
         void RegisterInstantDataTarget(InstantDataTarget target);
 
         /// <summary>
-        /// Unregisters an instant data target from receiving data fromt he provider.
+        /// Unregisters an instant data target from receiving data from he provider.
         /// </summary>
         /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
         /// <returns>An instant data target representing the target that was unregistered, or null if no target with

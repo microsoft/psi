@@ -113,7 +113,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public double UiElementOpacity => this.DatasetViewModel.CurrentSessionViewModel == this ? 1.0d : 0.5d;
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in this session.
+        /// Gets the originating time interval (earliest to latest) of the messages in this session.
         /// </summary>
         [Browsable(false)]
         public TimeInterval OriginatingTimeInterval =>
@@ -183,7 +183,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                                 }
                                 else
                                 {
-                                    throw new ApplicationException("Invalid file type selected when adding partition.");
+                                    throw new NotSupportedException("Invalid file type selected when adding partition.");
                                 }
                             }
                         });
@@ -267,7 +267,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         /// <param name="storeName">The name of the annotation store.</param>
         /// <param name="storePath">The path of the annotation store.</param>
-        /// <param name="definition">The annotated event definition to use when creating new annoted events in the newly created annotation partition.</param>
+        /// <param name="definition">The annotated event definition to use when creating new annotated events in the newly created annotation partition.</param>
         /// <param name="partitionName">The partition name. Default is null.</param>
         public void CreateAnnotationPartition(string storeName, string storePath, AnnotatedEventDefinition definition, string partitionName = null)
         {

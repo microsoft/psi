@@ -95,7 +95,7 @@ namespace Microsoft.Psi.Data.Annotations
         /// <summary>
         /// Removes an annotation schema value from the current annotation schema.
         /// </summary>
-        /// <param name="schemaValue">The annotation schema value to remove from teh current annotation schema.</param>
+        /// <param name="schemaValue">The annotation schema value to remove from the current annotation schema.</param>
         public void RemoveSchemaValue(AnnotationSchemaValue schemaValue)
         {
             this.InternalValues.Remove(schemaValue);

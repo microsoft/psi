@@ -15,9 +15,14 @@ namespace Microsoft.Psi.Visualization.Data
     public class StreamAdapter<TSrc, TDest> : IStreamAdapter
     {
         /// <summary>
-        /// Gets default stream adapater.
+        /// Gets default stream adapter.
         /// </summary>
         public static readonly IStreamAdapter Default = new StreamAdapter<TDest, TDest>((src, env) => src);
+
+        /// <summary>
+        /// Flag indicating whether type parameter TSrc is Shared{} or not.
+        /// </summary>
+        public static readonly bool SourceIsSharedType = typeof(TSrc).IsGenericType && typeof(TSrc).GetGenericTypeDefinition() == typeof(Shared<>);
 
         private readonly Func<TSrc, Envelope, TDest> adapter;
 
@@ -67,13 +72,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>Destination data.</returns>
         public TDest AdaptData(TSrc data)
         {
-            var dest = this.adapter(data, default(Envelope));
-            if (data is IDisposable)
-            {
-                (data as IDisposable).Dispose();
-            }
-
-            return dest;
+            return this.adapter(data, default(Envelope));
         }
 
         /// <summary>
@@ -86,7 +85,9 @@ namespace Microsoft.Psi.Visualization.Data
             return (data, env) =>
             {
                 var dest = this.adapter(data, env);
-                if (data is IDisposable)
+
+                // Release the reference to the source data if it's shared.
+                if (SourceIsSharedType && data != null)
                 {
                     (data as IDisposable).Dispose();
                 }

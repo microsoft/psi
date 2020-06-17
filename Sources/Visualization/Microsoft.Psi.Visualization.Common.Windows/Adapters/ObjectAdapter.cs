@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.Adapters
 {
-    using System.Runtime.Serialization;
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
@@ -22,7 +21,9 @@ namespace Microsoft.Psi.Visualization.Adapters
 
         private static object Adapter(T value, Envelope env)
         {
-            return value;
+            // If the data is shared, clone it because the caller will
+            // dereference the source soon after this method returns.
+            return SourceIsSharedType ? value.DeepClone() : value;
         }
     }
 }

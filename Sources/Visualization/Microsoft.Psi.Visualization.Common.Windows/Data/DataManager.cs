@@ -9,10 +9,12 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Threading;
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Collections;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Provides cached-controlled read access to data stores used by the visualization runtime.
@@ -82,7 +84,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="streamBinding">Information about the stream source and the required stream adapter.</param>
         /// <param name="cursorEpsilon">The epsilon window to use when reading data at a given time.</param>
         /// <param name="callback">The method to call when new data is available.</param>
-        /// <param name="viewRange">The initial time range over which data is expectd.</param>
+        /// <param name="viewRange">The initial time range over which data is expected.</param>
         /// <returns>A registration token that must be used by the target to unregister from updates or to modify the read epsilon.</returns>
         public Guid RegisterInstantDataTarget<TTarget>(StreamBinding streamBinding, RelativeTimeInterval cursorEpsilon, Action<object, IndexEntry> callback, TimeInterval viewRange)
         {
@@ -153,7 +155,7 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Notifies the data manager that the possible range of data that mey be read has changed.
+        /// Notifies the data manager that the possible range of data that may be read has changed.
         /// </summary>
         /// <param name="viewRange">The new view range of the navigator.</param>
         public void OnInstantViewRangeChanged(TimeInterval viewRange)
@@ -165,10 +167,10 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Creates a view of the messages identified by the matching start and end times and asychronously fills it in.
+        /// Creates a view of the messages identified by the matching start and end times and asynchronously fills it in.
         /// </summary>
         /// <typeparam name="T">The type of the message to read.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="startTime">Start time of messages to read.</param>
         /// <param name="endTime">End time of messages to read.</param>
         /// <returns>Observable view of data.</returns>
@@ -184,10 +186,10 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Creates a view of the messages identified by the matching tail count and asychronously fills it in.
+        /// Creates a view of the messages identified by the matching tail count and asynchronously fills it in.
         /// </summary>
         /// <typeparam name="T">The type of the message to read.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="tailCount">Number of messages to included in tail.</param>
         /// <returns>Observable view of data.</returns>
         public ObservableKeyedCache<DateTime, Message<T>>.ObservableKeyedView ReadStream<T>(StreamBinding streamBinding, uint tailCount)
@@ -202,10 +204,10 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Creates a view of the messages identified by the matching tail range and asychronously fills it in.
+        /// Creates a view of the messages identified by the matching tail range and asynchronously fills it in.
         /// </summary>
         /// <typeparam name="T">The type of the message to read.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="tailRange">Function to determine range included in tail.</param>
         /// <returns>Observable view of data.</returns>
         public ObservableKeyedCache<DateTime, Message<T>>.ObservableKeyedView ReadStream<T>(StreamBinding streamBinding, Func<DateTime, DateTime> tailRange)
@@ -223,7 +225,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a view over the specified time range of the cached summary data.
         /// </summary>
         /// <typeparam name="T">The summary data type.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="startTime">The start time of the view range.</param>
         /// <param name="endTime">The end time of the view range.</param>
         /// <param name="interval">The time interval each summary value should cover.</param>
@@ -238,7 +240,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a view over the specified time range of the cached summary data.
         /// </summary>
         /// <typeparam name="T">The summary data type.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="interval">The time interval each summary value should cover.</param>
         /// <param name="tailCount">Number of items to include in view.</param>
         /// <returns>A view over the cached summary data that covers the specified time range.</returns>
@@ -252,7 +254,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a view over the specified time range of the cached summary data.
         /// </summary>
         /// <typeparam name="T">The summary data type.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="interval">The time interval each summary value should cover.</param>
         /// <param name="tailRange">Tail duration function. Computes the view range start time given an end time. Applies to live view mode only.</param>
         /// <returns>A view over the cached summary data that covers the specified time range.</returns>
@@ -260,6 +262,17 @@ namespace Microsoft.Psi.Visualization.Data
         {
             var viewMode = ObservableKeyedCache<DateTime, IntervalData<T>>.ObservableKeyedView.ViewMode.TailRange;
             return this.FindStreamSummaryManager(streamBinding).ReadSummary(streamBinding, viewMode, DateTime.MinValue, DateTime.MaxValue, interval, 0, tailRange);
+        }
+
+        /// <summary>
+        /// Gets originating time of the message in a stream that's closest to a given time.
+        /// </summary>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
+        /// <param name="time">The time for which to return the message with the closest originating time.</param>
+        /// <returns>The originating time of the message closest to time.</returns>
+        public DateTime? GetOriginatingTimeOfNearestInstantMessage(StreamBinding streamBinding, DateTime time)
+        {
+            return this.FindDataStoreReader(streamBinding).GetOriginatingTimeOfNearestInstantMessage(streamBinding, time);
         }
 
         /// <summary>
@@ -281,7 +294,19 @@ namespace Microsoft.Psi.Visualization.Data
                 // If there's a cursor time, initiate an instant read request on each data store reader, otherwise we're done.
                 if (taskCursorTime.HasValue)
                 {
-                    Parallel.ForEach(this.GetDataStoreReaderList(), dataStoreReader => dataStoreReader.ReadInstantData(taskCursorTime.Value));
+                    try
+                    {
+                        Parallel.ForEach(this.GetDataStoreReaderList(), dataStoreReader => dataStoreReader.ReadInstantData(taskCursorTime.Value));
+                    }
+                    catch (Exception ex)
+                    {
+                        new MessageBoxWindow(
+                            Application.Current.MainWindow,
+                            "Instant Data Push Error",
+                            $"An error occurred while attempting to push instant data to the visualization objects{Environment.NewLine}{Environment.NewLine}{ex.Message}",
+                            "Close",
+                            null).ShowDialog();
+                    }
                 }
                 else
                 {
@@ -293,7 +318,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Disposes of an instance of the <see cref="DataManager"/> class.
         /// </summary>
-        /// <param name="disposing">Indicates wheter the method call comes from a Dispose method (its value is true) or from its destructor (its value is false).</param>
+        /// <param name="disposing">Indicates whether the method call comes from a Dispose method (its value is true) or from its destructor (its value is false).</param>
         private void Dispose(bool disposing)
         {
             if (this.disposed)

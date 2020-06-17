@@ -242,7 +242,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
                 using (Stream imageFileStream = new MemoryStream())
                 {
                     // convert image to a stream and send to service
-                    data.Resource.ToManagedImage(false).Save(imageFileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    data.Resource.ToBitmap(false).Save(imageFileStream, System.Drawing.Imaging.ImageFormat.Jpeg);
                     imageFileStream.Seek(0, SeekOrigin.Begin);
                     try
                     {

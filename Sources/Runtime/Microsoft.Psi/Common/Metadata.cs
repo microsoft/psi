@@ -22,7 +22,7 @@ namespace Microsoft.Psi
         RuntimeInfo = 1,
 
         /// <summary>
-        /// Metadata usied in storing the schema definitions used when serializing and deserializing a type in a Psi Store.
+        /// Metadata using in storing the schema definitions used when serializing and deserializing a type in a Psi Store.
         /// </summary>
         TypeSchema = 2,
     }
@@ -59,7 +59,7 @@ namespace Microsoft.Psi
         public int Id { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the name of the type of data conatined in the object the metadata represents.
+        /// Gets or sets the name of the type of data contained in the object the metadata represents.
         /// </summary>
         public string TypeName { get; protected set; }
 
@@ -74,7 +74,7 @@ namespace Microsoft.Psi
         public int Version { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the metadata serializer verson number.
+        /// Gets or sets the metadata serializer version number.
         /// </summary>
         public int SerializerVersion { get; protected set; }
 

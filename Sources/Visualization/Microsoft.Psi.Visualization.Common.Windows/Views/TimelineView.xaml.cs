@@ -231,7 +231,7 @@ namespace Microsoft.Psi.Visualization.Views
             long segmentStart = (range.StartTime.Ticks - this.Navigator.DataRange.StartTime.Ticks) / tickZoomLevelDescriptorMajor.DurationInTicks;
             long segmentEnd = (range.EndTime.Ticks - this.Navigator.DataRange.StartTime.Ticks) / tickZoomLevelDescriptorMajor.DurationInTicks;
 
-            // remove all unnessary segments (due to scrolling out of view)
+            // remove all unnecessary segments (due to scrolling out of view)
             //   segment start + duration < visible start time... no part of segment is visible
             //   or segment start > visible range
             var segmentsToRemove = this.segments.Keys.Where(key => key.Item1 + key.Item2 < range.StartTime || key.Item1 > range.EndTime).ToList();
@@ -265,7 +265,7 @@ namespace Microsoft.Psi.Visualization.Views
             this.UpdateSelectionMarkers();
             if (e.NewStartTime != e.OriginalStartTime)
             {
-                // our times are all expressed in ellapsed timne from DataRange.Start so we need to reset any timeline when this changes
+                // our times are all expressed in elapsed time from DataRange.Start so we need to reset any timeline when this changes
                 this.Clear();
                 this.ComputeTicks();
             }

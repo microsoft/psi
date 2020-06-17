@@ -121,6 +121,60 @@
   <data name="TestImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TestImage2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_RedChannel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_RedChannel.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_GreenChannel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_GreenChannel.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_BlueChannel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_BlueChannel.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_FlipHoriz" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_FlipHoriz.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_AbsDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_AbsDiff.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_FlipVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_FlipVert.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_Rotate_Neg10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_Rotate_Neg10.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_Rotate_110" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_Rotate_110.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_DrawRect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_DrawRect.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_DrawLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_DrawLine.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_DrawCircle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_DrawCircle.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_DrawText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_DrawText.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_CopyImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_CopyImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_Invert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_Invert.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_Threshold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_Threshold.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_Mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_Mask.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage2_Mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage2_Mask.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TestImage_Crop_0_0_200_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestImage_Crop_0_0_200_100.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,13 +184,13 @@
   <data name="TestImage_Crop_73_41_59_37" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\testimage_crop_73_41_59_37.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TestImage_Scale_150_125" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TestImage_Scale_150_125.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TestImage_Scale_150_125_Point" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage_Scale_150_125_Point.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TestImage_Scale_25_200" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TestImage_Scale_25_200.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TestImage_Scale_25_200_Linear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage_Scale_25_200_Linear.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TestImage_Scale_50_25" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TestImage_Scale_50_25.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TestImage_Scale_50_25_Cubic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage_Scale_50_25_Cubic.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

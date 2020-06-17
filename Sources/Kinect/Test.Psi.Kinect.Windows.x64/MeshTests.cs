@@ -18,7 +18,7 @@ namespace Test.Psi.Kinect
     {
         private KinectSensor sensor;
         private IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo = null;
-        private Shared<Microsoft.Psi.Imaging.Image> lastImage = null;
+        private Shared<Microsoft.Psi.Imaging.DepthImage> lastImage = null;
         private Shared<Microsoft.Psi.Imaging.Image> lastColor = null;
         private bool disposed = false;
 

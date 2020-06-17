@@ -57,12 +57,12 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         }
 
         /// <summary>
-        /// An event that is raised when a final speech recognition response has beeen received.
+        /// An event that is raised when a final speech recognition response has been received.
         /// </summary>
         public event EventHandler<SpeechResponseEventArgs> OnResponseReceived;
 
         /// <summary>
-        /// An event that is raised when a partial speech recognition response has beeen received.
+        /// An event that is raised when a partial speech recognition response has been received.
         /// </summary>
         public event EventHandler<PartialSpeechResponseEventArgs> OnPartialResponseReceived;
 
@@ -76,6 +76,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         {
             this.authentication.Dispose();
             this.semaphore.Dispose();
+            this.webSocket.Dispose();
         }
 
         /// <summary>

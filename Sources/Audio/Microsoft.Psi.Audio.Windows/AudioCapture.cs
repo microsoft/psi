@@ -89,6 +89,16 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class with a specified output format.
+        /// </summary>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="outputFormat">The output format to use.</param>
+        public AudioCapture(Pipeline pipeline, WaveFormat outputFormat)
+            : this(pipeline, new AudioCaptureConfiguration() { OutputFormat = outputFormat })
+        {
+        }
+
+        /// <summary>
         /// Gets the output stream of audio buffers.
         /// </summary>
         public Emitter<AudioBuffer> Out

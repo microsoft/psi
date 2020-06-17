@@ -64,7 +64,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         [Browsable(false)]
         [IgnoreDataMember]
-        public override bool CanSnapToStream => true;
+        public override bool CanSnapToStream => this.IsBound;
 
         /// <summary>
         /// Gets the snap to stream command.
@@ -95,11 +95,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.zoomToStreamCommand == null)
                 {
-                    this.zoomToStreamCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.Container.Navigator.Zoom(this.StreamBinding.StreamMetadata.FirstMessageOriginatingTime, this.StreamBinding.StreamMetadata.LastMessageOriginatingTime);
-                        });
+                    this.zoomToStreamCommand = new RelayCommand(() => this.Container.Navigator.Zoom(this.StreamBinding.StreamMetadata.FirstMessageOriginatingTime, this.StreamBinding.StreamMetadata.LastMessageOriginatingTime));
                 }
 
                 return this.zoomToStreamCommand;
@@ -107,37 +103,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the current value.
+        /// Gets the current value.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public Message<TData>? CurrentValue
-        {
-            get => this.currentValue;
-            protected set
-            {
-                if (this.currentValue != value)
-                {
-                    this.RaisePropertyChanging(nameof(this.CurrentValue));
+        public Message<TData>? CurrentValue => this.currentValue;
 
-                    if (this.IsShared)
-                    {
-                        if (this.currentValue.HasValue)
-                        {
-                            ((IDisposable)this.currentValue.Value.Data)?.Dispose();
-                        }
+        /// <summary>
+        /// Gets the current data.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public TData CurrentData => this.currentValue.HasValue ? this.currentValue.Value.Data : default;
 
-                        value.DeepClone(ref this.currentValue);
-                    }
-                    else
-                    {
-                        this.currentValue = value;
-                    }
-
-                    this.RaisePropertyChanged(nameof(this.CurrentValue));
-                }
-            }
-        }
+        /// <summary>
+        /// Gets the originating time of the current data.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public DateTime CurrentOriginatingTime => this.currentValue.HasValue ? this.currentValue.Value.OriginatingTime : default;
 
         /// <summary>
         /// Gets or sets the data view.
@@ -165,7 +149,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     }
                     else
                     {
-                        this.CurrentValue = null;
+                        this.SetCurrentValue(null);
                     }
                 }
             }
@@ -187,21 +171,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [Browsable(true)]
         [IgnoreDataMember]
-        public Type StreamAdapterType => this.StreamBinding.StreamAdapterType;
+        public Type StreamAdapterType => this.StreamBinding?.StreamAdapterType;
 
         /// <summary>
         /// Gets the summarizer type.
         /// </summary>
         [Browsable(true)]
         [IgnoreDataMember]
-        public Type SummarizerType => this.StreamBinding.SummarizerType;
+        public Type SummarizerType => this.StreamBinding?.SummarizerType;
 
         /// <summary>
-        /// Gets a value indicating whether the visualization object is currenty bound to a datasource.
+        /// Gets a value indicating whether the visualization object is currently bound to a datasource.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
         public bool IsBound => this.StreamBinding != null ? this.StreamBinding.IsBound : false;
+
+        /// <inheritdoc/>
+        public override bool ShowZoomToStreamMenuItem => this.IsBound;
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -256,9 +243,46 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets a value indicating whether type paramamter T is Shared{} or not.
+        /// Gets a value indicating whether type parameter T is Shared{} or not.
         /// </summary>
         protected bool IsShared { get; private set; }
+
+        /// <summary>
+        /// Sets the current value for the visualization object.
+        /// </summary>
+        /// <param name="value">The value to use as the new current value.</param>
+        /// <param name="incrementSharedRefCount">True if the reference count of shared data should be automatically incremented, otherwise false.</param>
+        public void SetCurrentValue(Message<TData>? value, bool incrementSharedRefCount = true)
+        {
+            if (this.currentValue != value)
+            {
+                this.RaisePropertyChanging(nameof(this.CurrentValue));
+                this.RaisePropertyChanging(nameof(this.CurrentData));
+                this.RaisePropertyChanging(nameof(this.CurrentOriginatingTime));
+
+                // If we're handling shared objects, decrement the reference count of the current value
+                if (this.IsShared && this.currentValue.HasValue)
+                {
+                    ((IDisposable)this.currentValue.Value.Data)?.Dispose();
+                }
+
+                // If we're handling shared objects, increment the reference count if requested.
+                // NOTE: InstantVisualzationObject will pass false for incrementSharedRefCount
+                // because it already increased the reference count itself before calling us.
+                if (this.IsShared && incrementSharedRefCount)
+                {
+                    this.currentValue = value.DeepClone();
+                }
+                else
+                {
+                    this.currentValue = value;
+                }
+
+                this.RaisePropertyChanged(nameof(this.CurrentValue));
+                this.RaisePropertyChanged(nameof(this.CurrentData));
+                this.RaisePropertyChanged(nameof(this.CurrentOriginatingTime));
+            }
+        }
 
         /// <inheritdoc/>
         public override void ToggleSnapToStream()
@@ -293,10 +317,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         public void UpdateStreamBinding(Session session)
         {
-            this.RaisePropertyChanging(nameof(this.IconSource));
-            this.RaisePropertyChanging(nameof(this.CanSnapToStream));
-
-            // Keep a note of whether we're currenty bound to a source
+            // Keep a note of whether we're currently bound to a source
             bool wasBound = this.StreamBinding.IsBound;
 
             // Attempt to rebind to the underlying dataset
@@ -307,6 +328,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 return;
             }
+
+            this.RaisePropertyChanging(nameof(this.IconSource));
+            this.RaisePropertyChanging(nameof(this.CanSnapToStream));
+            this.RaisePropertyChanging(nameof(this.ShowZoomToStreamMenuItem));
 
             // Notify that we're no longer bound to the previous data source
             if (wasBound)
@@ -322,12 +347,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             this.RaisePropertyChanged(nameof(this.IconSource));
             this.RaisePropertyChanged(nameof(this.CanSnapToStream));
+            this.RaisePropertyChanged(nameof(this.ShowZoomToStreamMenuItem));
         }
 
         /// <inheritdoc/>
-        public virtual DateTime? GetSnappedTime(DateTime time)
+        public virtual DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest)
         {
-            return this.GetTimeOfNearestMessage(time, this.Data?.Count ?? 0, (idx) => this.Data[idx].OriginatingTime);
+            // TODO
+            return this.GetTimeOfNearestMessage(time, this.Data?.Count ?? 0, (idx) => this.Data[idx].OriginatingTime, snappingBehavior);
         }
 
         /// <summary>
@@ -336,10 +363,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="currentTime">The time underneath the mouse cursor.</param>
         /// <param name="count">Number of entries to search within.</param>
         /// <param name="timeAtIndex">Function that returns an index given a time.</param>
+        /// <param name="snappingBehavior">Timeline snapping behavior.</param>
         /// <returns>The timestamp of the message that's temporally closest to currentTime.</returns>
-        protected DateTime? GetTimeOfNearestMessage(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
+        protected DateTime? GetTimeOfNearestMessage(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, SnappingBehavior snappingBehavior)
         {
-            int index = IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex);
+            int index = IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex, snappingBehavior);
             if (index >= 0)
             {
                 return timeAtIndex(index);
@@ -378,7 +406,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 var last = this.Data.LastOrDefault();
                 if (last != default(Message<TData>))
                 {
-                    this.CurrentValue = last;
+                    this.SetCurrentValue(last);
                 }
             }
         }
@@ -405,6 +433,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected virtual void OnStreamUnbound()
         {
             this.Data = null;
+
+            // If this is the stream currently being snapped to, disable snap to stream.
+            if (this.IsSnappedToStream)
+            {
+                this.ToggleSnapToStream();
+            }
         }
 
         private void OnDataDetailedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

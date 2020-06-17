@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Audio
     /// </remarks>
     public sealed class AcousticFeaturesExtractor : IConsumer<AudioBuffer>
     {
-        private Connector<AudioBuffer> inAudio;
+        private readonly Connector<AudioBuffer> inAudio;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AcousticFeaturesExtractor"/> class.
@@ -43,11 +43,9 @@ namespace Microsoft.Psi.Audio
             float frameRate = configuration.FrameRateInHz;
             int frameSize = (int)((configuration.InputFormat.SamplesPerSec * configuration.FrameDurationInSeconds) + 0.5);
             int frameShift = (int)((configuration.InputFormat.SamplesPerSec / frameRate) + 0.5);
-            int frameOverlap = frameSize - frameShift;
             int bytesPerSample = configuration.InputFormat.BlockAlign;
             int bytesPerFrame = bytesPerSample * frameSize;
             int bytesPerFrameShift = bytesPerSample * frameShift;
-            int bytesPerOverlap = bytesPerFrame - bytesPerFrameShift;
             int fftSize = 2;
             while (fftSize < frameSize)
             {

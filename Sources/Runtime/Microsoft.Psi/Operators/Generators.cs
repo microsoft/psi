@@ -22,7 +22,7 @@ namespace Microsoft.Psi
         /// <param name="generateNext">The function that generates a new value based on the previous value.</param>
         /// <param name="count">The number of messages to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <param name="keepOpen">Indicates whether the stream should be kept open after all messages in the sequence have been posted.</param>
@@ -41,7 +41,7 @@ namespace Microsoft.Psi
         /// <param name="initialValue">The initial value.</param>
         /// <param name="generateNext">The function that generates a new value based on the previous value.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <returns>A stream of values of type T.</returns>
@@ -58,7 +58,7 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="enumerable">The sequence to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <param name="keepOpen">Indicates whether the stream should be kept open after all messages in the sequence have been posted.</param>
@@ -121,7 +121,7 @@ namespace Microsoft.Psi
         /// <param name="value">The value to publish.</param>
         /// <param name="count">The number of messages to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <param name="keepOpen">Indicates whether the stream should be kept open after the specified number of messages have been posted.</param>
@@ -139,7 +139,7 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline that will run this generator.</param>
         /// <param name="value">The value to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <returns>A stream of values of type T.</returns>
@@ -156,7 +156,7 @@ namespace Microsoft.Psi
         /// <param name="start">The starting value.</param>
         /// <param name="count">The number of messages to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
-        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <returns>A stream of consecutive integers.</returns>
         /// <param name="keepOpen">Indicates whether the stream should be kept open after the specified number of messages have been posted.</param>

@@ -4,9 +4,6 @@
 namespace Test.Psi
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Reflection;
-    using System.Text;
     using Microsoft.Psi;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,7 +19,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -68,7 +65,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -114,7 +111,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -160,7 +157,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message (outside upper bound)
@@ -215,7 +212,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate should not match the right end of the interval
@@ -273,7 +270,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -319,7 +316,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -365,7 +362,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message (outside upper bound)
@@ -420,7 +417,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate should not match the right end of the interval because it's open.
@@ -449,7 +446,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -495,7 +492,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -541,7 +538,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -587,7 +584,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message (outside upper bound)
@@ -646,7 +643,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate should return does not exist b/c message at 30 falls after the open window
@@ -675,7 +672,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -721,7 +718,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -767,7 +764,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -813,7 +810,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message (outside upper bound)
@@ -868,7 +865,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate should not match the right end of the interval
@@ -926,7 +923,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -972,7 +969,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -1018,7 +1015,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message (outside upper bound)
@@ -1073,7 +1070,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate should not match the right end of the interval because it's open.
@@ -1102,7 +1099,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -1148,7 +1145,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -1194,7 +1191,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -1240,7 +1237,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message (outside upper bound)
@@ -1299,7 +1296,7 @@ namespace Test.Psi
             {
                 new Message<int>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<int>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<int>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate should return does not exist b/c message at 30 falls after the open window
@@ -1328,7 +1325,7 @@ namespace Test.Psi
             {
                 new Message<double>(1, new DateTime(10), new DateTime(11), 0, 0),
                 new Message<double>(2, new DateTime(20), new DateTime(21), 0, 1),
-                new Message<double>(3, new DateTime(30), new DateTime(31), 0, 2)
+                new Message<double>(3, new DateTime(30), new DateTime(31), 0, 2),
             };
 
             // Interpolate at point later than last message
@@ -1384,7 +1381,6 @@ namespace Test.Psi
             result = interpolator.Interpolate(new DateTime(26), noMessages, null);
             Assert.AreEqual(InterpolationResult<double>.InsufficientData(), result);
         }
-
 
         private InterpolationResult<T> MakeResult<T>(Message<T> msg)
         {

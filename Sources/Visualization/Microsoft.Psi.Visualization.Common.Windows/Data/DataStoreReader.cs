@@ -83,7 +83,7 @@ namespace Microsoft.Psi.Visualization.Data
         {
             // Get the stream reader.  Note that we don't care about the stream reader's stream adapter
             // because with instant data we always read raw data and adapt the stream later.
-            IStreamReader streamReader = this.GetStreamReader<TStreamData>(target.StreamName, null, true);
+            IStreamReader streamReader = this.GetOrCreateStreamReader<TStreamData>(target.StreamName, null);
 
             // Register the target with the stream reader
             streamReader.RegisterInstantDataTarget<TTarget>(target, viewRange);
@@ -115,7 +115,7 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Notifies the data store the the view range of instant data has changed.
+        /// Notifies the data store the view range of instant data has changed.
         /// </summary>
         /// <param name="viewRange">The new view range of the navigator.</param>
         internal void OnInstantViewRangeChanged(TimeInterval viewRange)
@@ -155,7 +155,7 @@ namespace Microsoft.Psi.Visualization.Data
         ///     TailRange - sliding dynamic range that includes the tail of the underlying data based on function.
         /// </summary>
         /// <typeparam name="T">The type of the message to read.</typeparam>
-        /// <param name="streamBinding">The stream binding inidicating which stream to read from.</param>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
         /// <param name="viewMode">Mode the view will be created in.</param>
         /// <param name="startTime">Start time of messages to read.</param>
         /// <param name="endTime">End time of messages to read.</param>
@@ -170,7 +170,18 @@ namespace Microsoft.Psi.Visualization.Data
             uint tailCount,
             Func<DateTime, DateTime> tailRange)
         {
-            return this.GetStreamReader<T>(streamBinding.StreamName, streamBinding.StreamAdapter, true).ReadStream<T>(viewMode, startTime, endTime, tailCount, tailRange);
+            return this.GetOrCreateStreamReader<T>(streamBinding.StreamName, streamBinding.StreamAdapter).ReadStream<T>(viewMode, startTime, endTime, tailCount, tailRange);
+        }
+
+        /// <summary>
+        /// Gets originating time of the message in a stream that's closest to a given time.
+        /// </summary>
+        /// <param name="streamBinding">The stream binding indicating which stream to read from.</param>
+        /// <param name="time">The time for which to return the message with the closest originating time.</param>
+        /// <returns>The originating time of the message closest to time.</returns>
+        internal DateTime? GetOriginatingTimeOfNearestInstantMessage(StreamBinding streamBinding, DateTime time)
+        {
+            return this.GetExistingStreamReader(streamBinding.StreamName, null).GetOriginatingTimeOfNearestInstantMessage(time);
         }
 
         /// <summary>
@@ -247,21 +258,25 @@ namespace Microsoft.Psi.Visualization.Data
             this.streamReaders.ForEach(sr => sr.DispatchData());
         }
 
-        private IStreamReader GetStreamReader<T>(string streamName, IStreamAdapter streamAdapter, bool createIfNecessary)
+        private IStreamReader GetExistingStreamReader(string streamName, IStreamAdapter streamAdapter)
+        {
+            IStreamReader streamReader = this.streamReaders.Find(sr => sr.StreamName == streamName && sr.StreamAdapterType == streamAdapter?.GetType());
+            if (streamReader == null)
+            {
+                throw new ArgumentException("No stream reader exists for the stream.");
+            }
+
+            return streamReader;
+        }
+
+        private IStreamReader GetOrCreateStreamReader<T>(string streamName, IStreamAdapter streamAdapter)
         {
             var streamReader = this.streamReaders.Find(sr => sr.StreamName == streamName && sr.StreamAdapterType == streamAdapter?.GetType());
 
             if (streamReader == null)
             {
-                if (createIfNecessary)
-                {
-                    streamReader = new StreamReader<T>(streamName, streamAdapter);
-                    this.streamReaders.Add(streamReader);
-                }
-                else
-                {
-                    throw new ArgumentException("No stream reader exists for the stream binding.");
-                }
+                streamReader = new StreamReader<T>(streamName, streamAdapter);
+                this.streamReaders.Add(streamReader);
             }
 
             return streamReader;

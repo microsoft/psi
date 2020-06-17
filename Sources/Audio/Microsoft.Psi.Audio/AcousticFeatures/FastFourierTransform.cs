@@ -10,14 +10,12 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     internal sealed class FastFourierTransform
     {
-        private int fftSize;         // FFT size
-        private int windowSize;      // Size of the data window.  FFTSize - WindowSize = ZeroPadSize
-        private int fftPow2;         // FFT size in form of POW of 2
-        private int halfFftSize;
+        private readonly int fftSize;         // FFT size
+        private readonly int windowSize;      // Size of the data window.  FFTSize - WindowSize = ZeroPadSize
+        private readonly int fftPow2;         // FFT size in form of POW of 2
 
-        private float[] wriFactors;         // SinCos(theta) array
-        private float[] alignedWriFactors;  // SinCos(theta) array - 16 byte aligned
-        private short[] revMap;
+        private readonly float[] alignedWriFactors;  // SinCos(theta) array - 16 byte aligned
+        private readonly short[] revMap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FastFourierTransform"/> class.
@@ -28,17 +26,15 @@ namespace Microsoft.Psi.Audio
         {
             this.fftSize = fftSize;
             this.windowSize = windowSize;
-            this.halfFftSize = this.fftSize >> 1;
             this.fftPow2 = 1;
             int size = 2;
             while (size < fftSize)
             {
-                size = size << 1;
+                size <<= 1;
                 this.fftPow2++;
             }
 
             this.alignedWriFactors = new float[this.fftSize * 2];
-            this.wriFactors = new float[(this.fftSize * 2) + 20];
             this.revMap = new short[this.fftSize / 2];
             this.alignedWriFactors[0] = 1.0f;
             this.alignedWriFactors[1] = -1.0f;
@@ -68,7 +64,7 @@ namespace Microsoft.Psi.Audio
                 while (j >= k)
                 {
                     j -= k;
-                    k = k >> 1;
+                    k >>= 1;
                 }
 
                 j += k;
@@ -240,7 +236,7 @@ namespace Microsoft.Psi.Audio
 
                 kk += limit;
                 limit = incr;
-                incr = incr + incr;
+                incr += incr;
             }
 
             float xr1, xi1, xr2, xi2;

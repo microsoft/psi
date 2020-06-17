@@ -39,7 +39,7 @@ namespace Microsoft.Msagl.WpfGraphControl
     /// <summary>
     /// Graph viewer.
     /// </summary>
-    public class GraphViewer : IViewer
+    public class GraphViewer : IViewer, IDisposable
     {
         private const double DesiredPathThicknessInInches = 0.008;
 
@@ -511,6 +511,12 @@ namespace Microsoft.Msagl.WpfGraphControl
                 Brushes.Black,
                 VisualTreeHelper.GetDpi(visual).PixelsPerDip);
             return new Size(formattedText.Width, formattedText.Height);
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.backgroundWorker?.Dispose();
         }
 
         /// <summary>

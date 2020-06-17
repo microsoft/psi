@@ -92,22 +92,21 @@ namespace Microsoft.Psi
                 public Timer(uint delay, Time.TimerDelegate handler, bool periodic)
                 {
                     uint ignore = 0;
-                    this.id = TimeSetEvent(delay, 0, handler, ref ignore, (uint)(periodic ? 1 : 0));
+                    uint eventType = (uint)(periodic ? 1 : 0);
+
+                    // TIME_KILL_SYNCHRONOUS flag prevents timer event from occurring after timeKillEvent is called
+                    eventType |= 0x100;
+
+                    this.id = NativeMethods.TimeSetEvent(delay, 0, handler, ref ignore, eventType);
                 }
 
                 public void Stop()
                 {
-                    if (TimeKillEvent(this.id) != 0)
+                    if (NativeMethods.TimeKillEvent(this.id) != 0)
                     {
                         throw new ArgumentException("Invalid timer event ID.");
                     }
                 }
-
-                [DllImport("winmm.dll", SetLastError = true, EntryPoint = "timeSetEvent")]
-                private static extern uint TimeSetEvent(uint delay, uint resolution, Time.TimerDelegate handler, ref uint userCtx, uint eventType);
-
-                [DllImport("winmm.dll", SetLastError = true, EntryPoint = "timeKillEvent")]
-                private static extern uint TimeKillEvent(uint timerEventId);
             }
 
             internal sealed class HighResolutionTime : IHighResolutionTime
@@ -115,7 +114,7 @@ namespace Microsoft.Psi
                 public long TimeStamp()
                 {
                     long time;
-                    if (!QueryPerformanceCounter(out time))
+                    if (!NativeMethods.QueryPerformanceCounter(out time))
                     {
                         throw new NotImplementedException("QueryPerformanceCounter failed (supported on Windows XP and later)");
                     }
@@ -126,7 +125,7 @@ namespace Microsoft.Psi
                 public long TimeFrequency()
                 {
                     long freq;
-                    if (!QueryPerformanceFrequency(out freq))
+                    if (!NativeMethods.QueryPerformanceFrequency(out freq))
                     {
                         throw new NotImplementedException("QueryPerformanceFrequency failed (supported on Windows XP and later)");
                     }
@@ -137,7 +136,7 @@ namespace Microsoft.Psi
                 public long SystemTime()
                 {
                     long time;
-                    GetSystemTimePreciseAsFileTime(out time);
+                    NativeMethods.GetSystemTimePreciseAsFileTime(out time);
                     return time;
                 }
 
@@ -145,15 +144,6 @@ namespace Microsoft.Psi
                 {
                     return new Timer(delay, handler, periodic);
                 }
-
-                [DllImport("kernel32.dll")]
-                private static extern void GetSystemTimePreciseAsFileTime(out long systemTimeAsFileTime);
-
-                [DllImport("kernel32.dll")]
-                private static extern bool QueryPerformanceCounter(out long performanceCount);
-
-                [DllImport("kernel32.dll")]
-                private static extern bool QueryPerformanceFrequency(out long frequency);
             }
 
             internal sealed class Threading : IThreading
@@ -163,12 +153,31 @@ namespace Microsoft.Psi
                     thread.SetApartmentState(state);
                 }
             }
+
+            private static class NativeMethods
+            {
+                [DllImport("winmm.dll", SetLastError = true, EntryPoint = "timeSetEvent")]
+                internal static extern uint TimeSetEvent(uint delay, uint resolution, Time.TimerDelegate handler, ref uint userCtx, uint eventType);
+
+                [DllImport("winmm.dll", SetLastError = true, EntryPoint = "timeKillEvent")]
+                internal static extern uint TimeKillEvent(uint timerEventId);
+
+                [DllImport("kernel32.dll")]
+                internal static extern void GetSystemTimePreciseAsFileTime(out long systemTimeAsFileTime);
+
+                [DllImport("kernel32.dll")]
+                internal static extern bool QueryPerformanceCounter(out long performanceCount);
+
+                [DllImport("kernel32.dll")]
+                internal static extern bool QueryPerformanceFrequency(out long frequency);
+            }
         }
 
         private static class Standard // Linux, Mac, ...
         {
-            internal sealed class Timer : ITimer
+            internal sealed class Timer : ITimer, IDisposable
             {
+                private readonly object timerDelegateLock = new object();
                 private System.Timers.Timer timer;
 
                 public Timer(uint delay, Time.TimerDelegate handler, bool periodic)
@@ -177,18 +186,34 @@ namespace Microsoft.Psi
                     this.timer.AutoReset = periodic;
                     this.timer.Elapsed += (sender, args) =>
                     {
-                        lock (this.timer)
+                        lock (this.timerDelegateLock)
                         {
-                            handler(0, 0, UIntPtr.Zero, UIntPtr.Zero, UIntPtr.Zero);
+                            // prevents handler from being called if timer has been stopped
+                            if (this.timer != null)
+                            {
+                                handler(0, 0, UIntPtr.Zero, UIntPtr.Zero, UIntPtr.Zero);
+                            }
                         }
                     };
                     this.timer.Start();
                 }
 
+                public void Dispose()
+                {
+                    this.Stop();
+                }
+
                 public void Stop()
                 {
-                    this.timer?.Stop();
-                    this.timer?.Dispose();
+                    if (this.timer != null)
+                    {
+                        lock (this.timerDelegateLock)
+                        {
+                            this.timer.Stop();
+                            this.timer.Dispose();
+                            this.timer = null;
+                        }
+                    }
                 }
 
                 private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

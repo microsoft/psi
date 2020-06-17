@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Windows.Media;
 
     /// <summary>
-    /// represetns a visualization panel type attribute.
+    /// Represents a visualization panel type attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class VisualizationPanelTypeAttribute : Attribute

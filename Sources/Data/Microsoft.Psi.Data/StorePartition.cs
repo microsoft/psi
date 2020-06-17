@@ -15,6 +15,7 @@ namespace Microsoft.Psi.Data
         private StorePartition(Session session, string storeName, string storePath, string name)
             : base(session, storeName, storePath, name, typeof(SimpleReader))
         {
+            this.Reader = new SimpleReader(storeName, storePath);
         }
 
         private StorePartition()
@@ -40,7 +41,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Creates a store partition from an exisitng data store.
+        /// Creates a store partition from an existing data store.
         /// </summary>
         /// <param name="session">The session that this partition belongs to.</param>
         /// <param name="storeName">The store name of this partition.</param>
@@ -60,7 +61,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Overridable method to allow derived object to initialize properties as part of object construction or after deserialization.
+        /// Overridable method to allow derived object to initialize properties after deserialization.
         /// </summary>
         protected override void InitNew()
         {

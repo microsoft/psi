@@ -5,9 +5,9 @@ namespace Test.Psi.Calibration
 {
     using System;
     using System.IO;
-    using System.Net.Http.Headers;
     using System.Runtime.InteropServices;
     using MathNet.Numerics.LinearAlgebra;
+    using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Calibration;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -58,7 +58,11 @@ namespace Test.Psi.Calibration
         public void TestDistortion()
         {
             // Create a checkerboard image
-            var img = Microsoft.Psi.Imaging.Image.Create(1024, 1024, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp);
+            bool useColor = false;
+            bool reverseDirection = true;
+            int width = useColor ? 1280 : 640;
+            int height = useColor ? 720 : 576;
+            var img = new Microsoft.Psi.Imaging.Image(width, height, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp);
             unsafe
             {
                 byte* row = (byte*)img.ImageData.ToPointer();
@@ -69,15 +73,15 @@ namespace Test.Psi.Calibration
                     {
                         if ((i / 20 + j / 20) % 2 == 0)
                         {
-                            col[0] = 255;
-                            col[1] = 0;
+                            col[0] = (byte)(255.0f * (float)j / (float)img.Width);
+                            col[1] = (byte)(255.0f * (1.0f - (float)j / (float)img.Width));
                             col[2] = 0;
                         }
                         else
                         {
                             col[0] = 0;
-                            col[1] = 0;
-                            col[2] = 255;
+                            col[1] = (byte)(255.0f * (float)i / (float)img.Height);
+                            col[2] = (byte)(255.0f * (1.0f - (float)i / (float)img.Height));
                         }
 
                         col += img.BitsPerPixel / 8;
@@ -90,19 +94,67 @@ namespace Test.Psi.Calibration
 #endif // DUMP_IMAGES
             }
 
+            double[] colorAzureDistortionCoefficients = new double[6]
+            {
+                0.609246314,
+                -2.84837151,
+                1.63566089,
+                0.483219713,
+                -2.66301942,
+                1.55776918,
+            };
+            double[] colorAzureTangentialCoefficients = new double[2]
+            {
+                -0.000216085638,
+                0.000744335062,
+            };
+            double[] colorIntrinsics = new double[4]
+            {
+                638.904968, // cx
+                350.822327, // cy
+                607.090698, // fx
+                607.030762, // fy
+            };
+            double[] depthIntrinsics = new double[4]
+            {
+                326.131775, // cx
+                324.755524, // cy
+                504.679749, // fx
+                504.865875, // fy
+            };
+
+            double[] depthAzureDistortionCoefficients = new double[6]
+            {
+                0.228193134,
+                -0.0650567561,
+                -0.000764187891,
+                0.568694472,
+                -0.0599768497,
+                -0.0119919786,
+            };
+            double[] depthAzureTangentialCoefficients = new double[2]
+            {
+                -9.04210319e-05,
+                -9.16166828e-05,
+            };
+
             // Setup our distortion coefficients
-            double[] distortionCoefficients = new double[6] { 1.10156359448570129, -0.049757665717193485, -0.0018714899575029596, 0.0, 0.0, 0.0 };
-            double[] tangentialCoefficients = new double[2] { 0.0083588278483703853, 0.0 };
+            var distortionCoefficients = useColor ? colorAzureDistortionCoefficients : depthAzureDistortionCoefficients;
+            var tangentialCoefficients = useColor ? colorAzureTangentialCoefficients : depthAzureTangentialCoefficients;
 
             // Next run distort on the image
-            var distortedImage = Microsoft.Psi.Imaging.Image.Create(img.Width, img.Height, img.PixelFormat);
-            var intrinsicMat = CreateMatrix.Dense<double>(3, 3, new double[9] { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 });
+            var distortedImage = new Microsoft.Psi.Imaging.Image(img.Width, img.Height, img.PixelFormat);
+            double[] colorArray = new double[9] { colorIntrinsics[2], 0.0, 0.0, 0.0, colorIntrinsics[3], 0.0, colorIntrinsics[0], colorIntrinsics[1], 1.0, };
+            double[] depthArray = new double[9] { depthIntrinsics[2], 0.0, 0.0, 0.0, depthIntrinsics[3], 0.0, depthIntrinsics[0], depthIntrinsics[1], 1.0, };
+            var intrinsicMat = CreateMatrix.Dense<double>(3, 3, useColor ? colorArray : depthArray);
             var ci = new CameraIntrinsics(
                 img.Width,
                 img.Height,
                 intrinsicMat,
                 Vector<double>.Build.DenseOfArray(distortionCoefficients),
-                Vector<double>.Build.DenseOfArray(tangentialCoefficients));
+                Vector<double>.Build.DenseOfArray(tangentialCoefficients),
+                reverseDirection);
+
             unsafe
             {
                 byte* dstrow = (byte*)distortedImage.ImageData.ToPointer();
@@ -111,15 +163,18 @@ namespace Test.Psi.Calibration
                     byte* dstcol = dstrow;
                     for (int j = 0; j < distortedImage.Width; j++)
                     {
-                        MathNet.Spatial.Euclidean.Point2D pixelCoord = new MathNet.Spatial.Euclidean.Point2D((i - 512.0) / 1024.0, (j - 512.0) / 1024.0);
-                        MathNet.Spatial.Euclidean.Point2D distortedPixelCoord;
-                        ci.DistortPoint(pixelCoord, out distortedPixelCoord);
+                        MathNet.Spatial.Euclidean.Point2D pixelCoord = new MathNet.Spatial.Euclidean.Point2D(
+                            ((float)j - ci.PrincipalPoint.X) / ci.FocalLengthXY.X,
+                            ((float)i - ci.PrincipalPoint.Y) / ci.FocalLengthXY.Y);
 
-                        int px = (int)(distortedPixelCoord.X * 1024.0 + 512.0);
-                        int py = (int)(distortedPixelCoord.Y * 1024.0 + 512.0);
-                        if (px >= 0 && px < img.Width && py >= 0 && py < img.Height)
+                        Point2D undistortedPoint;
+                        bool converged = ci.UndistortPoint(pixelCoord, out undistortedPoint);
+
+                        int px = (int)(undistortedPoint.X * ci.FocalLengthXY.X + ci.PrincipalPoint.X);
+                        int py = (int)(undistortedPoint.Y * ci.FocalLengthXY.Y + ci.PrincipalPoint.Y);
+                        if (converged && px >= 0 && px < img.Width && py >= 0 && py < img.Height)
                         {
-                            byte* src = (byte*)img.ImageData.ToPointer() + py * distortedImage.Stride + px * distortedImage.BitsPerPixel / 8;
+                            byte* src = (byte*)img.ImageData.ToPointer() + py * img.Stride + px * img.BitsPerPixel / 8;
                             dstcol[0] = src[0];
                             dstcol[1] = src[1];
                             dstcol[2] = src[2];
@@ -136,7 +191,7 @@ namespace Test.Psi.Calibration
             }
 
             // Finally run undistort on the result
-            var undistortedImage = Microsoft.Psi.Imaging.Image.Create(img.Width, img.Height, img.PixelFormat);
+            var undistortedImage = new Microsoft.Psi.Imaging.Image(img.Width, img.Height, img.PixelFormat);
             unsafe
             {
                 double err = 0.0;
@@ -147,14 +202,16 @@ namespace Test.Psi.Calibration
                     byte* dstcol = dstrow;
                     for (int j = 0; j < undistortedImage.Width; j++)
                     {
-                        MathNet.Spatial.Euclidean.Point2D pixelCoord = new MathNet.Spatial.Euclidean.Point2D((i - 512.0) / 1024.0, (j - 512.0) / 1024.0);
-                        MathNet.Spatial.Euclidean.Point2D distortedPixelCoord;
+                        MathNet.Spatial.Euclidean.Point2D pixelCoord = new MathNet.Spatial.Euclidean.Point2D(
+                            ((float)j - ci.PrincipalPoint.X) / ci.FocalLengthXY.X,
+                            ((float)i - ci.PrincipalPoint.Y) / ci.FocalLengthXY.Y);
+                        MathNet.Spatial.Euclidean.Point2D distortedPixelCoord, undistortedPixelCoord;
                         ci.DistortPoint(pixelCoord, out distortedPixelCoord);
-                        var undistortedPixelCoord = ci.UndistortPoint(distortedPixelCoord);
+                        bool converged = ci.UndistortPoint(distortedPixelCoord, out undistortedPixelCoord);
 
-                        int px = (int)(undistortedPixelCoord.X * 1024.0 + 512.0);
-                        int py = (int)(undistortedPixelCoord.Y * 1024.0 + 512.0);
-                        if (px >= 0 && px < img.Width && py >= 0 && py < img.Height)
+                        int px = (int)(undistortedPixelCoord.X * ci.FocalLengthXY.X + ci.PrincipalPoint.X);
+                        int py = (int)(undistortedPixelCoord.Y * ci.FocalLengthXY.Y + ci.PrincipalPoint.Y);
+                        if (converged && px >= 0 && px < img.Width && py >= 0 && py < img.Height)
                         {
                             byte* src = (byte*)img.ImageData.ToPointer() + py * img.Stride + px * img.BitsPerPixel / 8;
                             dstcol[0] = src[0];

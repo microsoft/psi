@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Components
     /// The static functions provided by the <see cref="Generators"/> wrap <see cref="Generator{T}"/>
     /// and are designed to make the common cases easier.
     /// </remarks>
-    public class Generator<T> : Generator, IProducer<T>
+    public class Generator<T> : Generator, IProducer<T>, IDisposable
     {
         private readonly Enumerator enumerator;
 
@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to attach to.</param>
         /// <param name="enumerator">A lazy enumerator of data.</param>
         /// <param name="interval">The interval used to increment time on each generated message.</param>
-        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the paramater
+        /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
         /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
@@ -64,6 +64,12 @@ namespace Microsoft.Psi.Components
         /// Gets the output stream.
         /// </summary>
         public Emitter<T> Out { get; }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.enumerator?.Dispose();
+        }
 
         /// <summary>
         /// Called to generate the next value.

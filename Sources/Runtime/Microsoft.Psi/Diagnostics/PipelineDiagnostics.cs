@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Diagnostics
     /// Represents diagnostic information about a pipeline.
     /// </summary>
     /// <remarks>
-    /// This is a sumarized snapshot of the graph with aggregated message statistics which is posted to the
+    /// This is a summarized snapshot of the graph with aggregated message statistics which is posted to the
     /// diagnostics stream. It has a much smaller memory footprint compared with PipelineDiagnosticsInternal.
     /// </remarks>
     public class PipelineDiagnostics

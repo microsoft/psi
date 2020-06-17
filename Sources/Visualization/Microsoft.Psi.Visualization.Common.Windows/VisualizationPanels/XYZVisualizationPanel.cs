@@ -24,34 +24,29 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private double thickness = 0.01;
 
         /// <summary>
-        /// The extents of the models in the scene.
-        /// </summary>
-        private Rect3D sceneExtents;
-
-        /// <summary>
         /// The current plan for moving the camera.
         /// </summary>
         private Dictionary<string, Timeline> cameraAnimation;
 
         /// <summary>
-        /// The point towards which the camera looks.
+        /// The current camera position.
         /// </summary>
-        private Point3D modelCenterOffset;
-
-        /// <summary>
-        /// The curreent camera position.
-        /// </summary>
-        private Point3D cameraPosition;
+        private Point3D cameraPosition = new Point3D(15, 15, 15);
 
         /// <summary>
         /// The current camera look direction.
         /// </summary>
-        private Vector3D cameraLookDirection;
+        private Vector3D cameraLookDirection = new Vector3D(-15, -15, -15);
 
         /// <summary>
         /// The current camera up direction.
         /// </summary>
-        private Vector3D cameraUpDirection;
+        private Vector3D cameraUpDirection = new Vector3D(0, 0, 1);
+
+        /// <summary>
+        /// The current camera field of view.
+        /// </summary>
+        private double cameraFieldOfView = 45;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XYZVisualizationPanel"/> class.
@@ -114,30 +109,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets or sets the extents of the models in the scene.
-        /// </summary>
-        public Rect3D SceneExtents
-        {
-            get { return this.sceneExtents; }
-            set { this.Set(nameof(this.SceneExtents), ref this.sceneExtents, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the offset of the center of the model from the origin.
-        /// </summary>
-        [IgnoreDataMember]
-        [ExpandableObject]
-        public Point3D ModelCenterOffset
-        {
-            get { return this.modelCenterOffset; }
-            set { this.Set(nameof(this.ModelCenterOffset), ref this.modelCenterOffset, value); }
-        }
-
-        /// <summary>
         /// Gets or sets the view's camera position.
         /// </summary>
         [IgnoreDataMember]
         [ExpandableObject]
+        [Description("The view camera position.")]
         public Point3D CameraPosition
         {
             get { return this.cameraPosition; }
@@ -149,6 +125,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [IgnoreDataMember]
         [ExpandableObject]
+        [Description("The view camera look direction.")]
         public Vector3D CameraLookDirection
         {
             get { return this.cameraLookDirection; }
@@ -160,6 +137,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [IgnoreDataMember]
         [ExpandableObject]
+        [Description("The view camera up direction.")]
         public Vector3D CameraUpDirection
         {
             get { return this.cameraUpDirection; }
@@ -167,9 +145,21 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Gets or sets the view's camera field of view (in degrees).
+        /// </summary>
+        [IgnoreDataMember]
+        [ExpandableObject]
+        [Description("The view camera field of view.")]
+        public double CameraFieldOfView
+        {
+            get { return this.cameraFieldOfView; }
+            set { this.Set(nameof(this.CameraFieldOfView), ref this.cameraFieldOfView, value); }
+        }
+
+        /// <summary>
         /// Called when the views's current camera animation has completed.
         /// </summary>
-        public void CameraStoryboardCompleted()
+        public void NotifyCameraAnimationCompleted()
         {
             this.CameraAnimationCompleted?.Invoke(this, EventArgs.Empty);
         }

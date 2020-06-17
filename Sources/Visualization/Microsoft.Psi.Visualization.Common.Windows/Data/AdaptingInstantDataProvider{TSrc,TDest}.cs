@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Microsoft.Psi.Persistence;
 
     /// <summary>
@@ -19,7 +18,7 @@ namespace Microsoft.Psi.Visualization.Data
     public class AdaptingInstantDataProvider<TSrc, TDest> : IAdaptingInstantDataProvider<TSrc>
     {
         /// <summary>
-        /// Flag indicating whether type paramamter TSrc is Shared{} or not.
+        /// Flag indicating whether type parameter TDest is Shared{} or not.
         /// </summary>
         private readonly bool adaptedDataIsSharedType = typeof(TDest).IsGenericType && typeof(TDest).GetGenericTypeDefinition() == typeof(Shared<>);
 
@@ -84,39 +83,20 @@ namespace Microsoft.Psi.Visualization.Data
         /// <inheritdoc/>
         public void PushData(TSrc sourceData, IndexEntry indexEntry)
         {
-            // Adapt the data to the type required by target.  The data
-            // adapter will release the reference to the source data automatically.
+            // Adapt the data to the type required by target.
             TDest adaptedData = this.streamAdapter.AdaptData(sourceData);
 
-            // Create a non-volatile copy of the list of targets
-            List<InstantDataTarget> targetList;
-            lock (this.targets)
+            // Call each of the targets with the adapted data, cloning it if it's shared.
+            foreach (InstantDataTarget instantDataTarget in this.targets.Values.ToList())
             {
-                targetList = this.targets.Values.ToList();
+                instantDataTarget.Callback.Invoke(adaptedData, indexEntry);
             }
 
-            // Call each of the targets with the new data.  If the adapted data is shared,
-            // then do a deep clone of each item before calling the callback and release the
-            // reference to the adapted data once we're done.
-            bool createClone = this.adaptedDataIsSharedType && adaptedData != null;
-
-            foreach (InstantDataTarget callbackTarget in targetList)
-            {
-                this.RunPushTask(callbackTarget, createClone ? adaptedData.DeepClone<TDest>() : adaptedData, indexEntry);
-            }
-
-            if (createClone)
+            // We're done with the adapted data, so decrement its reference count if it's shared
+            if (this.adaptedDataIsSharedType && adaptedData != null)
             {
                 (adaptedData as IDisposable).Dispose();
             }
-        }
-
-        private void RunPushTask(InstantDataTarget target, TDest data, IndexEntry indexEntry)
-        {
-            Task.Run(() =>
-            {
-                target.Callback.Invoke(data, indexEntry);
-            });
         }
     }
 }

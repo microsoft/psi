@@ -184,7 +184,7 @@ namespace Microsoft.Psi.Audio
                     timestamp + (10000000L * length / this.Configuration.OutputFormat.AvgBytesPerSec),
                     DateTimeKind.Utc);
 
-                if (originatingTime < this.lastOutputPostTime)
+                if (originatingTime <= this.lastOutputPostTime)
                 {
                     // If the input audio packet is larger than the output packet (as determined by the
                     // target latency), then the packet will be split into multiple packets for resampling.
@@ -195,10 +195,10 @@ namespace Microsoft.Psi.Audio
                     // This could happen if the two consecutive input packets overlap in time, for example
                     // if an automatic system time adjustment occurred between the capture of the two packets.
                     // These adjustments occur from time to time to account for system clock drift w.r.t.
-                    // UTC time. In order to ensure that this does not lead to resampled output sub-packets
-                    // regressing in time, we manually enforce the output originating time to be no less than
-                    // that of the previous packet.
-                    originatingTime = this.lastOutputPostTime;
+                    // UTC time. As this could in result in output message originating times not advancing
+                    // or even regressing, we check for this and ensure that they are always monotonically
+                    // increasing.
+                    originatingTime = this.lastOutputPostTime + TimeSpan.FromTicks(1);
                 }
 
                 // post the data to the output stream

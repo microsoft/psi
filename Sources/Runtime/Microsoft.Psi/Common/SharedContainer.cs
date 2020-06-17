@@ -77,7 +77,7 @@ namespace Microsoft.Psi
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 this.handler = serializers.GetHandler<T>();
-                var type = this.GetType();
+                var type = typeof(SharedContainer<T>);
                 var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
                 var resourceMember = new TypeMemberSchema("resource", typeof(T).AssemblyQualifiedName, true);
                 var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, new TypeMemberSchema[] { resourceMember }, Version);

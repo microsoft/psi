@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Gets the number of elements in the array.
         /// </summary>
-        int ICollection<T>.Count => this.length;
+        public int Count => this.length;
 
         /// <summary>
         /// Gets the size of the allocated memory, in bytes.
@@ -96,7 +96,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Gets a value indicating whether the array can be modified or not.
         /// </summary>
-        bool ICollection<T>.IsReadOnly => this.isReadOnly;
+        public bool IsReadOnly => this.isReadOnly;
 
         /// <summary>
         /// Gets or sets the value of the element at the specified index.
@@ -110,7 +110,7 @@ namespace Microsoft.Psi.Common
             {
                 if (index < 0 || index > this.length)
                 {
-                    throw new IndexOutOfRangeException();
+                    throw new ArgumentException();
                 }
 
                 return MemoryAccess.ReadValue<T>(this.data + (index * ElementSize));
@@ -458,7 +458,7 @@ namespace Microsoft.Psi.Common
         }
 
         /// <inheritdoc />
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return new UnmanagedEnumerator(this);
         }

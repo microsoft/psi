@@ -67,6 +67,7 @@ namespace Microsoft.Psi.Data.Json
             this.jsonWriter.WriteEndArray();
             this.streamWriter.Dispose();
             this.streamWriter = null;
+            this.jsonWriter.Close();
             this.jsonWriter = null;
         }
 

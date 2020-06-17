@@ -148,7 +148,7 @@ namespace Microsoft.Msagl.WpfGraphControl
         public IViewerNode Target { get; private set; }
 
         /// <summary>
-        /// Gets or sets the radious of the polyline corner.
+        /// Gets or sets the radius of the polyline corner.
         /// </summary>
         public double RadiusOfPolylineCorner { get; set; }
 

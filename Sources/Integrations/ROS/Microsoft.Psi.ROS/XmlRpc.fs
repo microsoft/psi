@@ -211,11 +211,11 @@ module XmlRpc =
         (new XmlRpcReader(client.GetResponse().GetResponseStream())).ReadMethodResponse()
 
     // An XmlRpc "server" listens for requests on a particular TCP port, waiting for HTTP POSTs
-    // I didn't like how HttpListener requires admin privilages and restricts listening blanketly on a port
+    // I didn't like how HttpListener requires admin privileges and restricts listening blanketly on a port
     // Instead we handle a very minimal HTTP protocol right here
     // A port is assigned and returned.
     // Your callback is called with method name and args and is expected to return a value (XmlRpcValue) or throw
-    // Again, no attemt is made here to parse the method call or validate arguments, etc.
+    // Again, no attempt is made here to parse the method call or validate arguments, etc.
     let xmlRpcListen (callback: string -> XmlRpcValue list -> XmlRpcValue) =
         let listener = new TcpListener(IPAddress.Any, 0)
         listener.Start()

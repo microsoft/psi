@@ -10,7 +10,7 @@ namespace Test.Psi
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
-    /// Scenarios and usage around simple pipelines, join and repeat
+    /// Scenarios and usage around simple pipelines, join and repeat.
     /// </summary>
     [TestClass]
     public class APITester

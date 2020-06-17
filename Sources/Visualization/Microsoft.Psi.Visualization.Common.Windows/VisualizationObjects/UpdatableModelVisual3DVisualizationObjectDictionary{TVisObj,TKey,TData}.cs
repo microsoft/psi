@@ -26,6 +26,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         // Specifies whether we're currently inside a BeginUpdate/EndUpdate operation.
         private bool isUpdating = false;
 
+        // Specifies a predicate that determines the visibility of the individual items.
+        private Predicate<TKey> visibilityPredicate = null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdatableModelVisual3DVisualizationObjectDictionary{TVisObj, TKey, TData}"/> class.
         /// </summary>
@@ -65,6 +68,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
                     // Add the visual to the collection and to the model visual
                     this.visuals[key] = visual;
+                    if (this.visibilityPredicate != null)
+                    {
+                        this.visuals[key].Visible = this.visibilityPredicate(key);
+                    }
+
                     this.ModelView.Children.Add(visual.ModelView);
                 }
 
@@ -113,9 +121,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData(Dictionary<TKey, TData> currentData, DateTime originatingTime)
+        public override void UpdateData()
         {
-            if (currentData == null)
+            if (this.CurrentData == null)
             {
                 this.RemoveAll();
             }
@@ -123,9 +131,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 this.BeginUpdate();
 
-                foreach (var datum in currentData)
+                foreach (var datum in this.CurrentData)
                 {
-                    this[datum.Key].UpdateData(datum.Value, originatingTime);
+                    this[datum.Key].SetCurrentValue(this.SynthesizeMessage(datum.Value));
                 }
 
                 this.EndUpdate();
@@ -136,6 +144,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public override void NotifyPropertyChanged(string propertyName)
         {
             base.NotifyPropertyChanged(propertyName);
+        }
+
+        /// <summary>
+        /// Set the visibility of the 3D visualization objects based on a specified predicate.
+        /// </summary>
+        /// <param name="visibilityPredicate">A predicate that determines whether the visualization object corresponding to a given key is visible.</param>
+        public void SetVisibility(Predicate<TKey> visibilityPredicate)
+        {
+            this.visibilityPredicate = visibilityPredicate;
+            foreach (var key in this.visuals.Keys)
+            {
+                this.visuals[key].Visible = visibilityPredicate(key);
+            }
         }
 
         private void RemoveAll()

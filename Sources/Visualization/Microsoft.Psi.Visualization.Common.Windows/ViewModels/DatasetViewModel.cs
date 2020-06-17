@@ -211,7 +211,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Creates a new dataset from an exising data store.
+        /// Creates a new dataset from an existing data store.
         /// </summary>
         /// <param name="storeName">The name of the data store.</param>
         /// <param name="storePath">The path of the data store.</param>
@@ -223,7 +223,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Asynchronously creates a new dataset from an exising data store.
+        /// Asynchronously creates a new dataset from an existing data store.
         /// </summary>
         /// <param name="storeName">The name of the data store.</param>
         /// <param name="storePath">The path of the data store.</param>
@@ -240,7 +240,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Sets a session to be the currrent session being visualized.
+        /// Sets a session to be the current session being visualized.
         /// </summary>
         /// <param name="sessionViewModel">The SessionViewModel to visualize.</param>
         public void VisualizeSession(SessionViewModel sessionViewModel)

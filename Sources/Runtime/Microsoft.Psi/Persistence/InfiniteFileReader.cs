@@ -79,6 +79,9 @@ namespace Microsoft.Psi.Persistence
         {
             this.writePulse.Dispose();
             this.CloseCurrent();
+
+            // may have already been disposed in CloseCurrent
+            this.view?.Dispose();
         }
 
         // Seeks to the next block (assumes the position points to a block entry)
@@ -216,10 +219,8 @@ namespace Microsoft.Psi.Persistence
                     {
                         try
                         {
-                            using (var file = File.Open(fullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                            {
-                                this.mappedFile = MemoryMappedFile.CreateFromFile(file, null, 0, MemoryMappedFileAccess.Read, HandleInheritability.Inheritable, false);
-                            }
+                            var file = File.Open(fullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                            this.mappedFile = MemoryMappedFile.CreateFromFile(file, null, 0, MemoryMappedFileAccess.Read, HandleInheritability.Inheritable, false);
                         }
                         catch (IOException)
                         {

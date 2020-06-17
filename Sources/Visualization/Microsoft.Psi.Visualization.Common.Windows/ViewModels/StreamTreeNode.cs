@@ -14,7 +14,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Diagnostics;
-    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Helpers;
@@ -137,6 +136,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public string TypeName { get; protected set; }
 
         /// <summary>
+        /// Gets or sets the type of supplemental metadata for this stream tree node.
+        /// </summary>
+        [PropertyOrder(11)]
+        [DisplayName("SupplementalMetadataType")]
+        [Description("The type of supplemental metadata for the stream.")]
+        public string SupplementalMetadataTypeName { get; protected set; }
+
+        /// <summary>
         /// Gets the collection of children for the this stream tree node.
         /// </summary>
         [Browsable(false)]
@@ -254,7 +261,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             {
                 if (this.IsStream)
                 {
-                    if (VisualizationContext.Instance.GetStreamType(this)?.Name == nameof(PipelineDiagnostics))
+                    if (VisualizationContext.Instance.GetDataType(this)?.Name == nameof(PipelineDiagnostics))
                     {
                         return this.Partition.IsLivePartition ? IconSourcePath.DiagnosticsLive : IconSourcePath.Diagnostics;
                     }
@@ -262,7 +269,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     {
                         return this.Partition.IsLivePartition ? IconSourcePath.StreamGroupLive : IconSourcePath.StreamGroup;
                     }
-                    else if (VisualizationContext.Instance.GetStreamType(this) == typeof(AudioBuffer))
+                    else if (VisualizationContext.Instance.GetDataType(this) == typeof(AudioBuffer))
                     {
                         return this.Partition.IsLivePartition ? IconSourcePath.StreamAudioMutedLive : IconSourcePath.StreamAudioMuted;
                     }
@@ -279,7 +286,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in this session.
+        /// Gets the originating time interval (earliest to latest) of the messages in this session.
         /// </summary>
         [Browsable(false)]
         public TimeInterval OriginatingTimeInterval
@@ -381,13 +388,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 this.InternalChildren.Add(child);
             }
 
-            // if we are at the last segement of the path name then we are at the leaf node
+            // if we are at the last segment of the path name then we are at the leaf node
             if (path.Length == depth)
             {
                 Debug.Assert(child.StreamMetadata == null, "There should never be two leaf nodes");
                 child.StreamMetadata = streamMetadata;
-                child.TypeName = streamMetadata.TypeName;
                 child.StreamName = streamMetadata.Name;
+                child.TypeName = streamMetadata.TypeName;
+                child.SupplementalMetadataTypeName = streamMetadata.SupplementalMetadataTypeName;
                 return child;
             }
 

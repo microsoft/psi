@@ -10,14 +10,14 @@ namespace Microsoft.Psi.Scheduling
     /// A generic ordered queue that sorts items based on the specified Comparer.
     /// </summary>
     /// <typeparam name="T">Type of item in the list.</typeparam>
-    public abstract class PriorityQueue<T>
+    public abstract class PriorityQueue<T> : IDisposable
     {
         // the head of the ordered work item list is always empty
         private readonly PriorityQueueNode head = new PriorityQueueNode(0);
         private readonly PriorityQueueNode emptyHead = new PriorityQueueNode(0);
         private readonly Comparison<T> comparer;
+        private readonly ManualResetEvent empty = new ManualResetEvent(true);
         private IPerfCounterCollection<PriorityQueueCounters> counters;
-        private ManualResetEvent empty = new ManualResetEvent(true);
         private int count;
         private int nextId;
 
@@ -37,6 +37,12 @@ namespace Microsoft.Psi.Scheduling
         public int Count => this.count;
 
         internal WaitHandle Empty => this.empty;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.empty.Dispose();
+        }
 
         /// <summary>
         /// Try peeking at first item; returning indication of success.

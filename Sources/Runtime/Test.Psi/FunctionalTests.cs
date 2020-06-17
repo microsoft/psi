@@ -123,7 +123,7 @@ namespace Test.Psi
                 validateSync: false);
         }
 
-        // uses types that need cloning but ccan be reclaimed
+        // uses types that need cloning but can be reclaimed
         [TestMethod]
         [Timeout(60000)]
         public void RefTypePipeline()
@@ -347,7 +347,7 @@ namespace Test.Psi
                 Console.WriteLine(resultCount);
                 if (sources.Length == 0)
                 {
-                    throw new Exception("This was here just to keeo source alive in release mode, why did it hit?");
+                    throw new Exception("This was here just to keep source alive in release mode, why did it hit?");
                 }
             }
 

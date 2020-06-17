@@ -24,7 +24,7 @@ namespace Microsoft.Psi
     /// </remarks>
     /// <typeparam name="T">The type of messages that can be received.</typeparam>
     [Serializer(typeof(Receiver<>.NonSerializer))]
-    public class Receiver<T> : IReceiver, IConsumer<T>
+    public sealed class Receiver<T> : IReceiver, IConsumer<T>
     {
         private readonly Action<Message<T>> onReceived;
         private readonly PipelineElement element;

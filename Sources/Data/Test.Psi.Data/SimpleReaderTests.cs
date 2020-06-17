@@ -98,5 +98,30 @@ namespace Test.Psi.Data
                 Assert.AreEqual(result.Sum(x => x), probe * size);
             }
         }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void RetrieveStreamSupplementalMetadata()
+        {
+            var name = nameof(this.RetrieveStreamSupplementalMetadata);
+
+            // create store with supplemental meta
+            using (var p = Pipeline.Create("write"))
+            {
+                var store = Store.Create(p, name, this.path);
+                var stream0 = Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
+                var stream1 = Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
+                stream0.Write("NoMeta", store, true);
+                stream1.Write(("Favorite irrational number", Math.E), "WithMeta", store);
+            }
+
+            // read it back with a simple reader
+            var reader = new SimpleReader(name, this.path);
+            Assert.IsNull(reader.GetMetadata("NoMeta").SupplementalMetadataTypeName);
+            Assert.AreEqual(typeof(ValueTuple<string, double>).AssemblyQualifiedName, reader.GetMetadata("WithMeta").SupplementalMetadataTypeName);
+            var supplemental1 = reader.GetSupplementalMetadata<(string, double)>("WithMeta");
+            Assert.AreEqual("Favorite irrational number", supplemental1.Item1);
+            Assert.AreEqual(Math.E, supplemental1.Item2);
+        }
     }
 }

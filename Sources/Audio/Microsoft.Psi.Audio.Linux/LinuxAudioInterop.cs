@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Audio
     /// Structs, enums and static methods for interacting with Advanced Linux Sound Architecture (ALSA) drivers.
     /// </summary>
     /// <remarks>
-    /// This implimentation is based on this spec: http://www.alsa-project.org/alsa-doc/alsa-lib
+    /// This implementation is based on this spec: http://www.alsa-project.org/alsa-doc/alsa-lib
     /// The only dependency is on `asound`, which comes with the system.
     /// </remarks>
     internal static class LinuxAudioInterop
@@ -347,56 +347,24 @@ namespace Microsoft.Psi.Audio
         internal static unsafe AudioDevice Open(string name, Mode mode, int rate = 44100, int channels = 1, Format format = Format.S16LE, Access access = Access.Interleaved)
         {
             void* handle;
-            if (Open(&handle, name, (int)mode, 0) != 0)
-            {
-                throw new ArgumentException("Open failed.");
-            }
+            CheckResult(NativeMethods.Open(&handle, name, (int)mode, 0), "Open failed");
 
             void* param;
-            if (HardwareParamsMalloc(&param) != 0)
-            {
-                throw new ArgumentException("Hardware params malloc failed.");
-            }
-
-            if (HardwareParamsAny(handle, param) != 0)
-            {
-                throw new ArgumentException("Hardware params any failed.");
-            }
-
-            if (HardwareParamsSetAccess(handle, param, (int)access) != 0)
-            {
-                throw new ArgumentException("Hardware params set access failed.");
-            }
-
-            if (HardwareParamsSetFormat(handle, param, (int)format) != 0)
-            {
-                throw new ArgumentException("Hardware params set format failed.");
-            }
+            CheckResult(NativeMethods.HardwareParamsMalloc(&param), "Hardware params malloc failed");
+            CheckResult(NativeMethods.HardwareParamsAny(handle, param), "Hardware params any failed");
+            CheckResult(NativeMethods.HardwareParamsSetAccess(handle, param, (int)access), "Hardware params set access failed");
+            CheckResult(NativeMethods.HardwareParamsSetFormat(handle, param, (int)format), "Hardware params set format failed");
 
             int* ratePtr = &rate;
             int dir = 0;
             int* dirPtr = &dir;
-            if (HardwareParamsSetRate(handle, param, ratePtr, dirPtr) != 0)
-            {
-                throw new ArgumentException("Hardware params set rate failed.");
-            }
+            CheckResult(NativeMethods.HardwareParamsSetRate(handle, param, ratePtr, dirPtr), "Hardware params set rate failed");
+            CheckResult(NativeMethods.HardwareParamsSetChannels(handle, param, (uint)channels), "Hardware params set channels failed");
+            CheckResult(NativeMethods.HardwareParams(handle, param), "Hardware set params failed");
 
-            if (HardwareParamsSetChannels(handle, param, (uint)channels) != 0)
-            {
-                throw new ArgumentException("Hardware params set channels failed.");
-            }
+            NativeMethods.HardwareParamsFree(param);
 
-            if (HardwareParams(handle, param) != 0)
-            {
-                throw new ArgumentException("Hardware set params failed.");
-            }
-
-            HardwareParamsFree(param);
-
-            if (PrepareHandle(handle) != 0)
-            {
-                throw new ArgumentException("Prepare handle failed.");
-            }
+            CheckResult(NativeMethods.PrepareHandle(handle), "Prepare handle failed");
 
             return new AudioDevice(handle);
         }
@@ -411,18 +379,23 @@ namespace Microsoft.Psi.Audio
         {
             fixed (void* bufferPtr = buffer)
             {
-                long err = Read(device.Handle, bufferPtr, (ulong)blockSize);
+                long err;
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    err = NativeMethods.Read64(device.Handle, bufferPtr, (ulong)blockSize);
+                }
+                else
+                {
+                    err = NativeMethods.Read32(device.Handle, bufferPtr, (uint)blockSize);
+                }
+
                 if (err < 0)
                 {
-                    err = Recover(device.Handle, (int)err, 1);
-                    if (err < 0)
-                    {
-                        throw new ArgumentException("Read recovery failed.");
-                    }
+                    CheckResult(NativeMethods.Recover(device.Handle, (int)err, 1), "Read recovery failed");
                 }
                 else if (err != blockSize)
                 {
-                    throw new ArgumentException("Read failed.");
+                    throw new ArgumentException($"Read failed (ALSA error code: {err}).");
                 }
             }
         }
@@ -441,14 +414,18 @@ namespace Microsoft.Psi.Audio
             fixed (void* bufferPtr = buffer)
             {
                 byte* pb = (byte*)bufferPtr + offset;
-                err = Write(device.Handle, pb, (ulong)blockSize);
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    err = NativeMethods.Write64(device.Handle, pb, (ulong)blockSize);
+                }
+                else
+                {
+                    err = NativeMethods.Write32(device.Handle, pb, (uint)blockSize);
+                }
+
                 if (err < 0)
                 {
-                    err = Recover(device.Handle, (int)err, 1);
-                    if (err < 0)
-                    {
-                        throw new ArgumentException("Write recovery failed.");
-                    }
+                    CheckResult(NativeMethods.Recover(device.Handle, (int)err, 1), "Write recovery failed");
                 }
                 else if (err != blockSize)
                 {
@@ -464,53 +441,24 @@ namespace Microsoft.Psi.Audio
         /// <param name="device">Device handle.</param>
         internal static unsafe void Close(AudioDevice device)
         {
-            if (CloseHandle(device.Handle) != 0)
+            if (NativeMethods.CloseHandle(device.Handle) != 0)
             {
                 throw new ArgumentException("Close failed.");
             }
         }
 
-        [DllImport("asound", EntryPoint = "snd_pcm_open")]
-        private static unsafe extern int Open(void** handle, [MarshalAs(UnmanagedType.LPStr)]string name, int capture, int mode);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_malloc")]
-        private static unsafe extern int HardwareParamsMalloc(void** param);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_any")]
-        private static unsafe extern int HardwareParamsAny(void* handle, void* param);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_access")]
-        private static unsafe extern int HardwareParamsSetAccess(void* handle, void* param, int access);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_format")]
-        private static unsafe extern int HardwareParamsSetFormat(void* handle, void* param, int format);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_rate_near")]
-        private static unsafe extern int HardwareParamsSetRate(void* handle, void* param, int* rate, int* dir);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_channels")]
-        private static unsafe extern int HardwareParamsSetChannels(void* handle, void* param, uint channels);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params")]
-        private static unsafe extern int HardwareParams(void* handle, void* param);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_hw_params_free")]
-        private static unsafe extern void HardwareParamsFree(void* param);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_prepare")]
-        private static unsafe extern int PrepareHandle(void* handle);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_recover")]
-        private static unsafe extern int Recover(void* handle, int error, int silent);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_readi")]
-        private static unsafe extern long Read(void* handle, void* buffer, ulong blockSize);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_writei")]
-        private static unsafe extern long Write(void* handle, void* buffer, ulong blockSize);
-
-        [DllImport("asound", EntryPoint = "snd_pcm_close")]
-        private static unsafe extern int CloseHandle(void* handle);
+        /// <summary>
+        /// Check result code and throw argument exception upon failure from ALSA APIs.
+        /// </summary>
+        /// <param name="result">Result code returned by ALSA API.</param>
+        /// <param name="message">Error message in case of failure.</param>
+        private static void CheckResult(long result, string message)
+        {
+            if (result != 0)
+            {
+                throw new ArgumentException($"{message} (ALSA error code: {result}).");
+            }
+        }
 
         /// <summary>
         /// Audio device handle.
@@ -531,6 +479,57 @@ namespace Microsoft.Psi.Audio
             /// Gets device handle pointer.
             /// </summary>
             public unsafe void* Handle { get; private set; }
+        }
+
+        private static class NativeMethods
+        {
+            [DllImport("asound", EntryPoint = "snd_pcm_open", BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            internal static unsafe extern int Open(void** handle, [MarshalAs(UnmanagedType.LPStr)]string name, int capture, int mode);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_malloc")]
+            internal static unsafe extern int HardwareParamsMalloc(void** param);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_any")]
+            internal static unsafe extern int HardwareParamsAny(void* handle, void* param);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_access")]
+            internal static unsafe extern int HardwareParamsSetAccess(void* handle, void* param, int access);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_format")]
+            internal static unsafe extern int HardwareParamsSetFormat(void* handle, void* param, int format);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_rate_near")]
+            internal static unsafe extern int HardwareParamsSetRate(void* handle, void* param, int* rate, int* dir);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_set_channels")]
+            internal static unsafe extern int HardwareParamsSetChannels(void* handle, void* param, uint channels);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params")]
+            internal static unsafe extern int HardwareParams(void* handle, void* param);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_hw_params_free")]
+            internal static unsafe extern void HardwareParamsFree(void* param);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_prepare")]
+            internal static unsafe extern int PrepareHandle(void* handle);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_recover")]
+            internal static unsafe extern int Recover(void* handle, int error, int silent);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_readi")]
+            internal static unsafe extern int Read32(void* handle, void* buffer, uint blockSize);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_readi")]
+            internal static unsafe extern long Read64(void* handle, void* buffer, ulong blockSize);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_writei")]
+            internal static unsafe extern int Write32(void* handle, void* buffer, uint blockSize);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_writei")]
+            internal static unsafe extern long Write64(void* handle, void* buffer, ulong blockSize);
+
+            [DllImport("asound", EntryPoint = "snd_pcm_close")]
+            internal static unsafe extern int CloseHandle(void* handle);
         }
     }
 }

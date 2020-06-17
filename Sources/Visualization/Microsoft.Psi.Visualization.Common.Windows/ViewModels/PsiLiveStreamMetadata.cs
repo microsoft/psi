@@ -16,13 +16,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="id">The id of the data stream.</param>
         /// <param name="typeName">The type of data of this stream.</param>
+        /// <param name="supplementalMetadataTypeName">The type of supplemental metadata for this stream.</param>
         /// <param name="partitionName">The name of th partition.</param>
         /// <param name="partitionPath">The path of the partition.</param>
-        public PsiLiveStreamMetadata(string name, int id, string typeName, string partitionName, string partitionPath)
+        public PsiLiveStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string partitionName, string partitionPath)
         {
             this.Name = name;
             this.Id = id;
             this.TypeName = typeName;
+            this.SupplementalMetadataTypeName = supplementalMetadataTypeName;
             this.PartitionName = partitionName;
             this.PartitionPath = partitionPath;
             this.FirstMessageTime = DateTime.MinValue;
@@ -39,6 +41,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
         /// <inheritdoc />
         public string TypeName { get; private set; }
+
+        /// <inheritdoc />
+        public string SupplementalMetadataTypeName { get; private set; }
 
         /// <inheritdoc />
         public string PartitionName { get; private set; }

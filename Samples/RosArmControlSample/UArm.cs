@@ -113,7 +113,7 @@ namespace ArmControlROSSample
         }
 
         /// <summary>
-        /// Set absolute cartesian position.
+        /// Set absolute Cartesian position.
         /// </summary>
         /// <param name="x">Coordinate X.</param>
         /// <param name="y">Coordinate Y.</param>
@@ -124,7 +124,7 @@ namespace ArmControlROSSample
         }
 
         /// <summary>
-        /// Set relative cartesian position.
+        /// Set relative Cartesian position.
         /// </summary>
         /// <param name="x">Delta X.</param>
         /// <param name="y">Delta Y.</param>

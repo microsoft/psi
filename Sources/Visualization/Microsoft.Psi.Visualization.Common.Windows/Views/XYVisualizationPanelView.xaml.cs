@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Visualization.Views
         }
 
         /// <summary>
-        /// Gets ths visualization panel.
+        /// Gets the visualization panel.
         /// </summary>
         protected XYVisualizationPanel VisualizationPanel => (XYVisualizationPanel)this.DataContext;
     }

@@ -18,7 +18,7 @@ namespace Test.Psi
             // The clock sync precision in ticks
             long syncPrecision = 10;
 
-            // Get QPC frequency and compute a sync preceision in QPC cycles
+            // Get QPC frequency and compute a sync precision in QPC cycles
             long qpcFrequency = Platform.Specific.TimeFrequency();
             double qpcToHns = 10000000.0 / qpcFrequency;
             long qpcSyncPrecision = (long)(syncPrecision / qpcToHns);
@@ -209,7 +209,7 @@ namespace Test.Psi
             long ft = cal.ConvertToFileTime(ticks);
             Assert.AreEqual(ft, cal.ConvertToFileTime(ticks));
 
-            // Add more calibration data until the capacityis reached. After initialization,
+            // Add more calibration data until the capacity is reached. After initialization,
             // converter will already have one calibration entry, so these add to it. Note
             // the different adjustment factor (2:1) that will allow us to distinguish this
             // from the previous calibration data.

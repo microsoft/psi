@@ -1,6 +1,6 @@
 # Speech Sample
 
-This sample demostrates how to build a simple speech recognition application using the audio and speech components on Linux.
+This sample demonstrates how to build a simple speech recognition application using the audio and speech components on Linux.
 
 __NOTES:__
 

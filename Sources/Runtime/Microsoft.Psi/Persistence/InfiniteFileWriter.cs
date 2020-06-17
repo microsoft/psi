@@ -140,6 +140,9 @@ namespace Microsoft.Psi.Persistence
             this.globalWritePulse = null;
             this.activeWriterMutex.Dispose();
             this.activeWriterMutex = null;
+
+            // may have already been disposed in CloseCurrent
+            this.view?.Dispose();
         }
 
         public void Write(BufferWriter bufferWriter)

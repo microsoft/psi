@@ -17,6 +17,7 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -29,6 +30,8 @@ namespace Microsoft.Psi.PsiStudio
     /// </summary>
     public class MainWindowViewModel : ObservableObject
     {
+        private readonly TimeSpan nudgeTimeSpan = TimeSpan.FromSeconds(1 / 30.0);
+        private readonly TimeSpan jumpTimeSpan = TimeSpan.FromSeconds(1 / 6.0);
         private readonly string newLayoutName = "<New Layout>";
         private List<LayoutInfo> availableLayouts = new List<LayoutInfo>();
         private LayoutInfo currentLayout = null;
@@ -56,6 +59,10 @@ namespace Microsoft.Psi.PsiStudio
 
         private RelayCommand playPauseCommand;
         private RelayCommand toggleCursorFollowsMouseComand;
+        private RelayCommand nudgeRightCommand;
+        private RelayCommand nudgeLeftCommand;
+        private RelayCommand jumpRightCommand;
+        private RelayCommand jumpLeftCommand;
         private RelayCommand openStoreCommand;
         private RelayCommand openDatasetCommand;
         private RelayCommand saveDatasetCommand;
@@ -100,6 +107,7 @@ namespace Microsoft.Psi.PsiStudio
             Application.Current.MainWindow.ContentRendered += this.MainWindow_Activated;
 
             // Listen for property change events from the visualization context (specifically when the visualization container changes)
+            VisualizationContext.Instance.PropertyChanging += this.VisualizationContext_PropertyChanging;
             VisualizationContext.Instance.PropertyChanged += this.VisualizationContext_PropertyChanged;
 
             // Load the available layouts
@@ -145,6 +153,31 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
+        /// Gets the text to display in the application's titlebar.
+        /// </summary>
+        public string TitleText
+        {
+            get
+            {
+                StringBuilder text = new StringBuilder("Platform for Situated Intelligence Studio");
+                if (VisualizationContext.Instance.DatasetViewModel != null)
+                {
+                    text.Append(" - ");
+                    text.Append(VisualizationContext.Instance.DatasetViewModel.Name);
+
+                    if (VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject != null)
+                    {
+                        text.Append(" [cursor snaps to ");
+                        text.Append(VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject.Name);
+                        text.Append(" stream]");
+                    }
+                }
+
+                return text.ToString();
+            }
+        }
+
+        /// <summary>
         /// Gets the play/pause command.
         /// </summary>
         [Browsable(false)]
@@ -180,6 +213,86 @@ namespace Microsoft.Psi.PsiStudio
                 }
 
                 return this.toggleCursorFollowsMouseComand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the nudge cursor right command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand NudgeRightCommand
+        {
+            get
+            {
+                if (this.nudgeRightCommand == null)
+                {
+                    this.nudgeRightCommand = new RelayCommand(
+                        () => this.MoveCursorBy(this.nudgeTimeSpan, SnappingBehavior.Next),
+                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                }
+
+                return this.nudgeRightCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the nudge cursor left command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand NudgeLeftCommand
+        {
+            get
+            {
+                if (this.nudgeLeftCommand == null)
+                {
+                    this.nudgeLeftCommand = new RelayCommand(
+                        () => this.MoveCursorBy(-this.nudgeTimeSpan, SnappingBehavior.Previous),
+                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                }
+
+                return this.nudgeLeftCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the jump cursor right command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand JumpRightCommand
+        {
+            get
+            {
+                if (this.jumpRightCommand == null)
+                {
+                    this.jumpRightCommand = new RelayCommand(
+                        () => this.MoveCursorBy(this.jumpTimeSpan, SnappingBehavior.Next),
+                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                }
+
+                return this.jumpRightCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the jump cursor left command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand JumpLeftCommand
+        {
+            get
+            {
+                if (this.jumpLeftCommand == null)
+                {
+                    this.jumpLeftCommand = new RelayCommand(
+                        () => this.MoveCursorBy(-this.jumpTimeSpan, SnappingBehavior.Previous),
+                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                }
+
+                return this.jumpLeftCommand;
             }
         }
 
@@ -654,7 +767,7 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the selected visualzation changed command.
+        /// Gets the selected visualization changed command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -881,10 +994,13 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         public void OnClosing()
         {
-            // Put the current state of the timeing buttons into the settings object
+            // Put the current state of the timing buttons into the settings object
             this.AppSettings.ShowAbsoluteTiming = this.VisualizationContainer.Navigator.ShowAbsoluteTiming;
             this.AppSettings.ShowTimingRelativeToSessionStart = this.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart;
             this.AppSettings.ShowTimingRelativeToSelectionStart = this.VisualizationContainer.Navigator.ShowTimingRelativeToSelectionStart;
+
+            // Save the settings
+            this.AppSettings.Save();
         }
 
         /*/// <summary>
@@ -936,6 +1052,21 @@ namespace Microsoft.Psi.PsiStudio
                 annotations.OpenStream(new StreamBinding(dlg.StreamName, dlg.PartitionName, dlg.StoreName, dlg.StorePath, typeof(AnnotationSimpleReader)));
             }
         }*/
+
+        private void MoveCursorBy(TimeSpan timeSpan, SnappingBehavior snappingBehavior)
+        {
+            var visContainer = this.VisualizationContainer;
+            var nav = visContainer.Navigator;
+            var time = nav.Cursor + timeSpan;
+            if (visContainer.SnapToVisualizationObject is IStreamVisualizationObject vo)
+            {
+                nav.MoveTo(vo.GetSnappedTime(time, snappingBehavior) ?? time);
+            }
+            else
+            {
+                nav.MoveTo(time);
+            }
+        }
 
         private void OpenCurrentLayout()
         {
@@ -1010,7 +1141,7 @@ namespace Microsoft.Psi.PsiStudio
                 Directory.CreateDirectory(this.LayoutsDirectory);
             }
 
-            // Find all the layout files and add them to the the list of available layouts
+            // Find all the layout files and add them to the list of available layouts
             FileInfo[] files = directoryInfo.GetFiles("*.plo");
             foreach (FileInfo fileInfo in files)
             {
@@ -1129,11 +1260,67 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
+        private void VisualizationContext_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        {
+            if (e.PropertyName == nameof(VisualizationContext.VisualizationContainer))
+            {
+                // Unhook property changed events from old visualization container
+                if (VisualizationContext.Instance.VisualizationContainer != null)
+                {
+                    VisualizationContext.Instance.VisualizationContainer.PropertyChanged -= this.VisualizationContainer_PropertyChanged;
+                }
+
+                this.RaisePropertyChanging(nameof(this.VisualizationContainer));
+            }
+            else if (e.PropertyName == nameof(VisualizationContext.DatasetViewModel))
+            {
+                // Unhook property changed events from old dataset view model
+                if (VisualizationContext.Instance.DatasetViewModel != null)
+                {
+                    VisualizationContext.Instance.DatasetViewModel.PropertyChanged -= this.DatasetViewModel_PropertyChanged;
+                }
+
+                this.RaisePropertyChanged(nameof(this.TitleText));
+            }
+        }
+
         private void VisualizationContext_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(VisualizationContext.VisualizationContainer))
             {
+                // Hook property changed events to new visualization container
+                if (VisualizationContext.Instance.VisualizationContainer != null)
+                {
+                    VisualizationContext.Instance.VisualizationContainer.PropertyChanged += this.VisualizationContainer_PropertyChanged;
+                }
+
                 this.RaisePropertyChanged(nameof(this.VisualizationContainer));
+            }
+            else if (e.PropertyName == nameof(VisualizationContext.DatasetViewModel))
+            {
+                // Hook property changed events to new dataset view model
+                if (VisualizationContext.Instance.DatasetViewModel != null)
+                {
+                    VisualizationContext.Instance.DatasetViewModel.PropertyChanged += this.DatasetViewModel_PropertyChanged;
+                }
+
+                this.RaisePropertyChanged(nameof(this.TitleText));
+            }
+        }
+
+        private void DatasetViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(DatasetViewModel.Name))
+            {
+                this.RaisePropertyChanged(nameof(this.TitleText));
+            }
+        }
+
+        private void VisualizationContainer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject))
+            {
+                this.RaisePropertyChanged(nameof(this.TitleText));
             }
         }
 

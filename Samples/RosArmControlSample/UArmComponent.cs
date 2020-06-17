@@ -43,12 +43,12 @@ namespace ArmControlROSSample
         public Receiver<bool> Pump { get; private set; }
 
         /// <summary>
-        /// Gets receiver of absolute cartesian positions.
+        /// Gets receiver of absolute Cartesian positions.
         /// </summary>
         public Receiver<(float, float, float)> AbsolutePosition { get; private set; }
 
         /// <summary>
-        /// Gets receiver of relative cartesian positions.
+        /// Gets receiver of relative Cartesian positions.
         /// </summary>
         public Receiver<(float, float, float)> RelativePosition { get; private set; }
 

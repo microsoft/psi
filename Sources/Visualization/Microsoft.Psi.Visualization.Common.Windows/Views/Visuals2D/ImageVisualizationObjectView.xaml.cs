@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     public partial class ImageVisualizationObjectView : UserControl
     {
         // A blank image to display when there is no data.
-        private static Shared<Imaging.Image> blankImage = Shared.Create(new Imaging.Image(0, 0, Imaging.PixelFormat.Undefined));
+        private static readonly Shared<Imaging.Image> BlankImage = Shared.Create(new Imaging.Image(100, 100, Imaging.PixelFormat.BGR_24bpp));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageVisualizationObjectView"/> class.
@@ -66,20 +66,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             if (image == null)
             {
                 // There's no data, so use the default blank image
-                using (Shared<Imaging.Image> defaultImage = blankImage.AddRef())
-                {
-                    this.DisplayImage.UpdateImage(defaultImage);
-                }
+                using Shared<Imaging.Image> defaultImage = BlankImage.AddRef();
+                this.DisplayImage.UpdateImage(defaultImage);
             }
             else if (this.ImageVisualizationObject.HorizontalFlip)
             {
                 // Flip the image before displaying it
-                Bitmap bitmap = image.Resource.ToManagedImage(true);
+                Bitmap bitmap = image.Resource.ToBitmap(true);
                 bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                using (Shared<Imaging.Image> flippedImage = Shared.Create(Imaging.Image.FromManagedImage(bitmap)))
-                {
-                    this.DisplayImage.UpdateImage(flippedImage);
-                }
+                using Shared<Imaging.Image> flippedImage = Shared.Create(Imaging.Image.FromBitmap(bitmap));
+                this.DisplayImage.UpdateImage(flippedImage);
             }
             else
             {

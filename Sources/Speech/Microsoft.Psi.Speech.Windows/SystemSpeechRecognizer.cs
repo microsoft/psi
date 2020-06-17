@@ -194,7 +194,7 @@ namespace Microsoft.Psi.Speech
         public Emitter<AudioLevelUpdatedEventArgs> AudioLevelUpdated { get; }
 
         /// <summary>
-        /// Gets the output stream of emulate recognize completed completed events.
+        /// Gets the output stream of emulate recognize completed events.
         /// </summary>
         public Emitter<EmulateRecognizeCompletedEventArgs> EmulateRecognizeCompleted { get; }
 
@@ -242,6 +242,7 @@ namespace Microsoft.Psi.Speech
             // Free any other managed objects here.
             this.recognizeComplete.Dispose();
             this.recognizeComplete = null;
+            this.inputAudioStream.Dispose();
         }
 
         /// <inheritdoc/>

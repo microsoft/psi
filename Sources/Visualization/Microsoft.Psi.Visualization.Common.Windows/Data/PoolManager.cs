@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Visualization.Data
             this.sharedToPoolMap = new Dictionary<Type, Func<IPool>>
             {
                 { typeof(Shared<Image>), () => new Pool<Image>(() => new Image(0, 0, PixelFormat.Undefined)) },
-                { typeof(Shared<EncodedImage>), () => new Pool<EncodedImage>(() => new EncodedImage()) },
+                { typeof(Shared<EncodedImage>), () => new Pool<EncodedImage>(() => new EncodedImage(0, 0, PixelFormat.Undefined)) },
             };
         }
 

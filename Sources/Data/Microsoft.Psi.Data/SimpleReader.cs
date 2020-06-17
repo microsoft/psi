@@ -115,6 +115,18 @@ namespace Microsoft.Psi.Data
         public PsiStreamMetadata GetMetadata(string streamName) => this.reader.GetMetadata(streamName);
 
         /// <summary>
+        /// Returns the supplemental metadata for a specified storage stream.
+        /// </summary>
+        /// <typeparam name="T">Type of supplemental metadata.</typeparam>
+        /// <param name="streamName">The name of the storage stream.</param>
+        /// <returns>The metadata associated with the storage stream.</returns>
+        public T GetSupplementalMetadata<T>(string streamName)
+        {
+            var meta = this.reader.GetMetadata(streamName);
+            return meta.GetSupplementalMetadata<T>(this.Serializers);
+        }
+
+        /// <summary>
         /// Checks whether the specified storage stream exist in this store.
         /// </summary>
         /// <param name="streamName">The name of the storage stream to look for.</param>

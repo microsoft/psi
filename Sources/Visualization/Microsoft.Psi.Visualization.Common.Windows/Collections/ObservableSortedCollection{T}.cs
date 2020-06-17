@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Visualization.Collections
         private const string IndexerName = "Item[]";
 
         /// <summary>
-        /// Underlying sorted array of itmes.
+        /// Underlying sorted array of items.
         /// </summary>
         private SortedArray<T> items;
 
@@ -79,7 +79,7 @@ namespace Microsoft.Psi.Visualization.Collections
 
         /// <summary>
         /// Occurs when an item is added, removed, changed, moved, or the entire list is refreshed.
-        /// This event does not fire range based events for compatability to wpf controls. It turns adds into resets.
+        /// This event does not fire range based events for compatibility to wpf controls. It turns adds into resets.
         /// </summary>
         public virtual event NotifyCollectionChangedEventHandler CollectionChanged;
 
@@ -127,7 +127,7 @@ namespace Microsoft.Psi.Visualization.Collections
                 return this.items[index];
             }
 
-            set { throw new NotSupportedException("ObservableSortedCollection does not support assignemt by index."); }
+            set { throw new NotSupportedException("ObservableSortedCollection does not support assignment by index."); }
         }
 
         /// <summary>

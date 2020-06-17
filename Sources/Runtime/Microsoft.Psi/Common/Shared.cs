@@ -153,7 +153,9 @@ namespace Microsoft.Psi
                 e.AddHistory("Instance created", this.constructorStackTrace);
                 e.AddHistory("Instance disposed", this.disposeStackTrace);
 #endif
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                 throw e;
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
             }
 #if TRACKLEAKS
             else
@@ -213,7 +215,7 @@ namespace Microsoft.Psi
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 this.handler = serializers.GetHandler<SharedContainer<T>>();
-                var type = this.GetType();
+                var type = typeof(Shared<T>);
                 var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
                 var innerMember = new TypeMemberSchema("inner", typeof(SharedContainer<T>).AssemblyQualifiedName, true);
                 var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, new TypeMemberSchema[] { innerMember }, Version);

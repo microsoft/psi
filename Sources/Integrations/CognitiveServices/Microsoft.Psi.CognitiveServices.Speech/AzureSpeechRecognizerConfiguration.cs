@@ -19,12 +19,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// </summary>
         public AzureSpeechRecognizerConfiguration()
         {
-            this.Language = "en-us";
-            this.SubscriptionKey = null; // This must be set to the key associated with your account
-            this.Region = null; // This must be set to the region associated to the key
-
-            // Defaults to 16 kHz, 16-bit, 1-channel PCM samples
-            this.InputFormat = WaveFormat.Create16kHz1Channel16BitPcm();
         }
 
         /// <summary>
@@ -35,7 +29,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// this defaults to "en-us" (U.S. English). Other supported locales include "en-gb",
         /// "de-de", "es-es", "fr-fr", "it-it" and "zh-cn".
         /// </remarks>
-        public string Language { get; set; }
+        public string Language { get; set; } = "en-us";
 
         /// <summary>
         /// Gets or sets the subscription key.
@@ -47,15 +41,15 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// https://azure.microsoft.com/en-us/try/cognitive-services/ for more information on obtaining a
         /// subscription.
         /// </remarks>
-        public string SubscriptionKey { get; set; }
+        public string SubscriptionKey { get; set; } = null;
 
         /// <summary>
-        /// Gets or sets the expected input format of the audio stream.
+        /// Gets the expected input format of the audio stream.
         /// </summary>
         /// <remarks>
         /// Currently, the only supported input audio format is 16000 Hz, 1-channel, 16-bit PCM.
         /// </remarks>
-        public WaveFormat InputFormat { get; set; }
+        public WaveFormat InputFormat { get; } = WaveFormat.Create16kHz1Channel16BitPcm();
 
         /// <summary>
         /// Gets or sets the region.
@@ -63,6 +57,6 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <remarks>
         /// This is the region that is associated to the subscription key.
         /// </remarks>
-        public string Region { get; set; }
+        public string Region { get; set; } = null;
     }
 }

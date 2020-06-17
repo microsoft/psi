@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Data
         string Name { get; set; }
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in this partition.
+        /// Gets the originating time interval (earliest to latest) of the messages in this partition.
         /// </summary>
         TimeInterval OriginatingTimeInterval { get; }
 

@@ -7,21 +7,25 @@ namespace Microsoft.Psi.Imaging
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Pipeline component that converts an Image to a different format.
+    /// Pipeline component that converts an shared Image to a different format.
     /// </summary>
     internal class ToPixelFormat : ConsumerProducer<Shared<Image>, Shared<Image>>
     {
-        private PixelFormat pixelFormat;
+        private readonly PixelFormat pixelFormat;
+        private System.Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToPixelFormat"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipline.</param>
-        /// <param name="pixelFormat">The pixel format to conver to.</param>
-        internal ToPixelFormat(Pipeline pipeline, PixelFormat pixelFormat)
+        /// <param name="pipeline">The pipeline.</param>
+        /// <param name="pixelFormat">The pixel format to convert to.</param>
+        /// <param name="sharedImageAllocator ">Optional image allocator for creating new shared image.</param>
+        internal ToPixelFormat(Pipeline pipeline, PixelFormat pixelFormat, System.Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
             : base(pipeline)
         {
             this.pixelFormat = pixelFormat;
+            sharedImageAllocator ??= (width, height, pixelFormat) => ImagePool.GetOrCreate(width, height, pixelFormat);
+            this.sharedImageAllocator = sharedImageAllocator;
         }
 
         /// <summary>
@@ -38,11 +42,9 @@ namespace Microsoft.Psi.Imaging
             }
             else
             {
-                using (var image = ImagePool.GetOrCreate(sharedImage.Resource.Width, sharedImage.Resource.Height, this.pixelFormat))
-                {
-                    sharedImage.Resource.CopyTo(image.Resource);
-                    this.Out.Post(image, e.OriginatingTime);
-                }
+                using var image = this.sharedImageAllocator (sharedImage.Resource.Width, sharedImage.Resource.Height, this.pixelFormat);
+                sharedImage.Resource.CopyTo(image.Resource);
+                this.Out.Post(image, e.OriginatingTime);
             }
         }
     }

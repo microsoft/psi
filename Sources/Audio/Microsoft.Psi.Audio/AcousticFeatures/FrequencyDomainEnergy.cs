@@ -10,8 +10,8 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     public sealed class FrequencyDomainEnergy : ConsumerProducer<float[], float>
     {
-        private int start;
-        private int end;
+        private readonly int start;
+        private readonly int end;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrequencyDomainEnergy"/> class.

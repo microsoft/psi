@@ -318,15 +318,32 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
+        /// Moves the cursor to the given datetime.
+        /// </summary>
+        /// <param name="dateTime">Time to which to move cursor.</param>
+        public void MoveTo(DateTime dateTime)
+        {
+            if (this.CursorMode != CursorMode.Live)
+            {
+                this.Cursor = dateTime;
+                this.EnsureCursorVisible();
+            }
+        }
+
+        /// <summary>
         /// Moves the cursor to the start of the selection.
         /// </summary>
         public void MoveToSelectionStart()
         {
-            if (this.CursorMode != CursorMode.Live)
-            {
-                this.Cursor = this.SelectionRange.StartTime;
-                this.EnsureCursorVisible();
-            }
+            this.MoveTo(this.SelectionRange.StartTime);
+        }
+
+        /// <summary>
+        /// Moves the cursor to the end of the selection.
+        /// </summary>
+        public void MoveToSelectionEnd()
+        {
+            this.MoveTo(this.SelectionRange.EndTime);
         }
 
         /// <summary>
@@ -349,18 +366,6 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.AudioPlaybackStreams.Add(streamBinding);
             this.UpdateAudioPlayback();
             this.RaisePropertyChanged(nameof(this.AudioPlaybackStreams));
-        }
-
-        /// <summary>
-        /// Moves the cursor to the end of the selection.
-        /// </summary>
-        public void MoveToSelectionEnd()
-        {
-            if (this.CursorMode != CursorMode.Live)
-            {
-                this.Cursor = this.SelectionRange.EndTime;
-                this.EnsureCursorVisible();
-            }
         }
 
         /// <summary>
@@ -526,7 +531,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Animates the navigator curor based on indicated speed.
+        /// Animates the navigator cursor based on indicated speed.
         /// </summary>
         private void StartPlayback()
         {

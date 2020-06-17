@@ -221,7 +221,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 VisualizationObject snappedVisualizationObject = this.Container.SnapToVisualizationObject;
 
                 // Work out how many visualization objects we could potentially snap to.  If one of
-                // this panel's visualization objects is currenlty being snapped to, then this total
+                // this panel's visualization objects is currently being snapped to, then this total
                 // is actually one fewer, and we'll also need to add an "unsnap" menu item.
                 int snappableVisualizationObjectsCount = this.VisualizationObjects.Count;
                 if ((snappedVisualizationObject != null) && this.VisualizationObjects.Contains(snappedVisualizationObject))

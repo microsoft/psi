@@ -99,7 +99,7 @@ namespace Test.Psi
                     doneEvt.WaitOne(20000);
 #if !ShellExecute
                     server.StandardInput.WriteLine();
-                    server.StandardInput.WriteLine(); // the test executon framework is also waiting for a line
+                    server.StandardInput.WriteLine(); // the test execution framework is also waiting for a line
 #endif
                     server.WaitForExit();
                     Console.WriteLine("Server completed.");
@@ -115,7 +115,7 @@ namespace Test.Psi
         /// <summary>
         /// Starts the Test.Psi.exe process with the specified entry point (needs to be a public method)
         /// </summary>
-        /// <param name="entryPoint">The name of a public mehtod. Doesn't need to have the [TestMethod] annotation.</param>
+        /// <param name="entryPoint">The name of a public method. Doesn't need to have the [TestMethod] annotation.</param>
         /// <returns>A process. Caller should ensure the process terminates (e.g via process.Kill)</returns>
         private Process StartServer(string entryPoint)
         {

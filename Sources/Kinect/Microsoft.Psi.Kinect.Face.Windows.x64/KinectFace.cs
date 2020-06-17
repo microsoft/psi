@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Kinect.Face
         public Dictionary<FacePointType, PointF> FacePointsInColorSpace { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of points for each face point. Points are defined in pixels relative to the infared image.
+        /// Gets or sets a list of points for each face point. Points are defined in pixels relative to the infrared image.
         /// </summary>
         public Dictionary<FacePointType, PointF> FacePointsInInfraredSpace { get; set; }
 

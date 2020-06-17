@@ -428,6 +428,49 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Transforms a stream of messages by splitting it into a set of substreams (indexed by a key),
+        /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding
+        /// output stream.
+        /// </summary>
+        /// <typeparam name="TIn">The type of input messages.</typeparam>
+        /// <typeparam name="TBranchKey">Type of the substream key.</typeparam>
+        /// <typeparam name="TBranchIn">Type of the substream messages.</typeparam>
+        /// <typeparam name="TBranchOut">Type of the subpipeline output for each substream.</typeparam>
+        /// <param name="source">Source stream.</param>
+        /// <param name="splitter">A function that splits the input by generating a dictionary of key-value pairs for each given input message.</param>
+        /// <param name="streamTransform">Stream transform to be applied to each substream.</param>
+        /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
+        /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, dictionary of values and the originating time of the last message containing the key.</param>
+        /// <param name="name">Name for the parallel composite component (defaults to ParallelSparse).</param>
+        /// <param name="defaultParallelDeliveryPolicy">Pipeline-level default delivery policy to be used by the parallel composite component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
+        /// <returns>Stream of output dictionaries.</returns>
+        public static IProducer<Dictionary<TBranchKey, TBranchOut>> Parallel<TIn, TBranchKey, TBranchIn, TBranchOut>(
+            this IProducer<TIn> source,
+            Func<TIn, Dictionary<TBranchKey, TBranchIn>> splitter,
+            Func<IProducer<TBranchIn>, IProducer<TBranchOut>> streamTransform,
+            bool outputDefaultIfDropped = false,
+            TBranchOut defaultValue = default,
+            DeliveryPolicy<TIn> deliveryPolicy = null,
+            Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
+            string name = null,
+            DeliveryPolicy defaultParallelDeliveryPolicy = null)
+        {
+            var p = new ParallelSparseSelect<TIn, TBranchKey, TBranchIn, TBranchOut, Dictionary<TBranchKey, TBranchOut>>(
+                source.Out.Pipeline,
+                splitter,
+                (k, s) => streamTransform(s),
+                _ => _,
+                outputDefaultIfDropped,
+                defaultValue,
+                branchTerminationPolicy,
+                name,
+                defaultParallelDeliveryPolicy);
+            return source.PipeTo(p, deliveryPolicy);
+        }
+
+        /// <summary>
         /// Transforms a stream of dictionary messages by creating a stream for each key in the dictionary,
         /// applying a sub-pipeline to each of these streams, and assembling the results into a corresponding output
         /// dictionary stream.
@@ -436,7 +479,7 @@ namespace Microsoft.Psi
         /// <typeparam name="TBranchIn">Type of input dictionary values.</typeparam>
         /// <typeparam name="TBranchOut">Type of output dictionary values.</typeparam>
         /// <param name="source">Source stream.</param>
-        /// <param name="streamTransform">Function mapping from an input element stream to an output output element stream.</param>
+        /// <param name="streamTransform">Function mapping from an input element stream to an output element stream.</param>
         /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to default.</param>
         /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>

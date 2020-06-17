@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Visualization.Views
         }
 
         /// <summary>
-        /// Gets ths visualization panel.
+        /// Gets the visualization panel.
         /// </summary>
         protected InstantVisualizationPlaceholderPanel VisualizationPanel => (InstantVisualizationPlaceholderPanel)this.DataContext;
     }

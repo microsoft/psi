@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Represents a stream visualization object.
@@ -42,7 +43,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets a snapped time based on a given time.
         /// </summary>
         /// <param name="time">The input time.</param>
+        /// <param name="snappingBehavior">Timeline snapping behavior.</param>
         /// <returns>The snapped time.</returns>
-        DateTime? GetSnappedTime(DateTime time);
+        DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest);
     }
 }

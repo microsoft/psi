@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media;
     using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
@@ -109,24 +110,21 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        /// <inheritdoc/>
-        public override bool ShowZoomToStreamMenuItem => true;
-
         /// <summary>
         /// Gets a value indicating whether the visualization object is using summarization.
         /// </summary>
         protected bool IsUsingSummarization => this.StreamBinding.SummarizerType != null;
 
         /// <inheritdoc/>
-        public override DateTime? GetSnappedTime(DateTime time)
+        public override DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior)
         {
             if (this.IsUsingSummarization)
             {
-                return this.GetTimeOfNearestMessage(time, this.SummaryData?.Count ?? 0, (idx) => this.SummaryData[idx].OriginatingTime);
+                return this.GetTimeOfNearestMessage(time, this.SummaryData?.Count ?? 0, (idx) => this.SummaryData[idx].OriginatingTime, snappingBehavior);
             }
             else
             {
-                return base.GetSnappedTime(time);
+                return base.GetSnappedTime(time, snappingBehavior);
             }
         }
 
@@ -238,7 +236,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 IntervalData<TData> last = this.SummaryData.LastOrDefault();
                 if (last != default(IntervalData<TData>))
                 {
-                    this.CurrentValue = Message.Create(last.Value, last.OriginatingTime, last.EndTime, 0, 0);
+                    this.SetCurrentValue(Message.Create(last.Value, last.OriginatingTime, last.EndTime, 0, 0));
                 }
             }
         }
@@ -254,11 +252,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (index != -1)
                 {
                     var interval = this.SummaryData[index];
-                    this.CurrentValue = Message.Create(interval.Value, interval.OriginatingTime, interval.EndTime, 0, 0);
+                    this.SetCurrentValue(Message.Create(interval.Value, interval.OriginatingTime, interval.EndTime, 0, 0));
                 }
                 else
                 {
-                    this.CurrentValue = null;
+                    this.SetCurrentValue(null);
                 }
             }
             else
@@ -266,11 +264,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 int index = this.GetIndexForTime(currentTime, this.Data?.Count ?? 0, (idx) => this.Data[idx].OriginatingTime);
                 if (index != -1)
                 {
-                    this.CurrentValue = this.Data[index];
+                    this.SetCurrentValue(this.Data[index]);
                 }
                 else
                 {
-                    this.CurrentValue = null;
+                    this.SetCurrentValue(null);
                 }
             }
 

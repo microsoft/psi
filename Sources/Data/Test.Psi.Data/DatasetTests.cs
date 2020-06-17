@@ -388,7 +388,7 @@ namespace Test.Psi.Data
                         var inputStream = importer.OpenStream<int>("Root");
                         var derivedStream = inputStream.Sample(TimeSpan.FromMinutes(1), RelativeTimeInterval.Infinite).Select(x => x * parameter).Write("DerivedStream", exporter);
 
-                        // add a dummy source and propose a long time interval so that the operation will block (and eventually be cancelled)
+                        // add a dummy source and propose a long time interval so that the operation will block (and eventually be canceled)
                         var generator = Generators.Repeat(pipeline, 0, int.MaxValue, TimeSpan.FromMilliseconds(1000));
                         var replayTimeInterval = TimeInterval.LeftBounded(importer.OriginatingTimeInterval.Left);
                         pipeline.ProposeReplayTime(replayTimeInterval);

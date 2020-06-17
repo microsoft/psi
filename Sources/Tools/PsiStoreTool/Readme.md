@@ -55,7 +55,7 @@ AnotherStream (MyNamespace.MyType)
 Count: 3394
 ```
 
-This displays the name and .NET type of each stream.
+This displays the name and .NET type of each stream. Adding '-s true' option enables listing the size of each stream (the information displayed includes both the average message size and the total size of all messages in the store).
 
 To get info about a particular stream:
 

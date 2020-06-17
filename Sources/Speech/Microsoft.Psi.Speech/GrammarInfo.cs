@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Speech
     /// Represents information about a grammar.
     /// </summary>
     /// <remarks>
-    /// This information may be used to define a set of files containing grammar definitions to be comsumed by a speech recognition component.
+    /// This information may be used to define a set of files containing grammar definitions to be consumed by a speech recognition component.
     /// </remarks>
     public class GrammarInfo
     {

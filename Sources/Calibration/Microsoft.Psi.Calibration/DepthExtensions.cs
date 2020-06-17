@@ -4,7 +4,9 @@
 namespace Microsoft.Psi.Calibration
 {
     using System;
+    using System.Collections.Generic;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi;
     using Microsoft.Psi.Imaging;
 
     /// <summary>
@@ -19,9 +21,9 @@ namespace Microsoft.Psi.Calibration
         /// <param name="point2D">Pixel coordinates in the color camera.</param>
         /// <param name="depthImage">Depth map.</param>
         /// <returns>Point in camera coordinates.</returns>
-        internal static Point3D? ProjectToCameraSpace(IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo, Point2D point2D, Shared<Image> depthImage)
+        public static Point3D? ProjectToCameraSpace(IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo, Point2D point2D, Shared<DepthImage> depthImage)
         {
-            var colorExtrinsicsInverse = depthDeviceCalibrationInfo.ColorExtrinsics.Inverse();
+            var colorExtrinsicsInverse = depthDeviceCalibrationInfo.ColorPose;
             var pointInCameraSpace = depthDeviceCalibrationInfo.ColorIntrinsics.ToCameraSpace(point2D, 1.0, true);
             double x = pointInCameraSpace.X * colorExtrinsicsInverse[0, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[0, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[0, 2] + colorExtrinsicsInverse[0, 3];
             double y = pointInCameraSpace.X * colorExtrinsicsInverse[1, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[1, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[1, 2] + colorExtrinsicsInverse[1, 3];
@@ -33,6 +35,20 @@ namespace Microsoft.Psi.Calibration
         }
 
         /// <summary>
+        /// Projects set of 2D image points into 3D.
+        /// </summary>
+        /// <param name="source">Tuple of depth image, list of points to project, and calibration information.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>Returns a producer that generates a list of corresponding 3D points in Kinect camera space.</returns>
+        public static IProducer<List<Point3D>> ProjectTo3D(
+            this IProducer<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> source, DeliveryPolicy<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> deliveryPolicy = null)
+        {
+            var projectTo3D = new ProjectTo3D(source.Out.Pipeline);
+            source.PipeTo(projectTo3D, deliveryPolicy);
+            return projectTo3D;
+        }
+
+        /// <summary>
         /// Performs a ray/mesh intersection with the depth map.
         /// </summary>
         /// <param name="calibration">Defines the calibration (extrinsics and intrinsics) for the depth camera.</param>
@@ -41,7 +57,7 @@ namespace Microsoft.Psi.Calibration
         /// <param name="skipFactor">Distance to march on each step along ray.</param>
         /// <param name="undistort">Whether undistortion should be applied to the point.</param>
         /// <returns>Returns point of intersection.</returns>
-        internal static Point3D? IntersectLineWithDepthMesh(IDepthDeviceCalibrationInfo calibration, Line3D line, Image depthImage, double skipFactor, bool undistort = true)
+        internal static Point3D? IntersectLineWithDepthMesh(IDepthDeviceCalibrationInfo calibration, Line3D line, DepthImage depthImage, double skipFactor, bool undistort = true)
         {
             // max distance to check for intersection with the scene
             double totalDistance = 5;
@@ -67,7 +83,7 @@ namespace Microsoft.Psi.Calibration
             return null;
         }
 
-        private static float GetMeshDepthAtPoint(IDepthDeviceCalibrationInfo calibration, Image depthImage, Point3D point, bool undistort)
+        private static float GetMeshDepthAtPoint(IDepthDeviceCalibrationInfo calibration, DepthImage depthImage, Point3D point, bool undistort)
         {
             Point2D depthSpacePoint = calibration.DepthIntrinsics.ToPixelSpace(point, undistort);
 

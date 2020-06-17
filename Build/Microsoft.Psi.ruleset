@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Microsoft Psi Released Project Rules" Description="These rules are used for released Psi projects." ToolsVersion="15.0">
+<RuleSet Name="Microsoft Psi Released Project Rules" Description="These rules are used for released Psi projects." ToolsVersion="16.0">
+  <Include Path="Security.ruleset" Action="Default" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />
     <Rule Id="CA1009" Action="Warning" />
@@ -8,6 +9,7 @@
     <Rule Id="CA1049" Action="Warning" />
     <Rule Id="CA1060" Action="Warning" />
     <Rule Id="CA1061" Action="Warning" />
+    <Rule Id="CA1063" Action="None" />
     <Rule Id="CA1065" Action="Warning" />
     <Rule Id="CA1301" Action="Warning" />
     <Rule Id="CA1400" Action="Warning" />
@@ -71,7 +73,7 @@
     <Rule Id="SA1009" Action="None" />
     <Rule Id="SA1124" Action="None" />
     <Rule Id="SA1305" Action="Warning" />
-    <Rule Id="SA1504" Action="None" />
     <Rule Id="SA1407" Action="None" />
+    <Rule Id="SA1504" Action="None" />
   </Rules>
 </RuleSet>

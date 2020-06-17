@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Visualization.Views
         }
 
         /// <summary>
-        /// Gets ths visualization panel.
+        /// Gets the visualization panel.
         /// </summary>
         protected InstantVisualizationContainer VisualizationPanel => (InstantVisualizationContainer)this.DataContext;
 
@@ -70,9 +70,12 @@ namespace Microsoft.Psi.Visualization.Views
         private void ResizeChildVisualizationPanels()
         {
             InstantVisualizationContainer containerPanel = this.DataContext as InstantVisualizationContainer;
-            foreach (VisualizationPanel panel in containerPanel.Panels)
+            if (containerPanel != null)
             {
-                panel.Width = this.ActualWidth / containerPanel.Panels.Count;
+                foreach (VisualizationPanel panel in containerPanel.Panels)
+                {
+                    panel.Width = this.ActualWidth / containerPanel.Panels.Count;
+                }
             }
         }
 

@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Data.Annotations
         private AnnotationPartition(Session session, string storeName, string storePath, string name)
             : base(session, storeName, storePath, name, typeof(AnnotationSimpleReader))
         {
+            this.Reader = new AnnotationSimpleReader(storeName, storePath);
         }
 
         private AnnotationPartition()
@@ -36,7 +37,7 @@ namespace Microsoft.Psi.Data.Annotations
             using (var writer = new AnnotationSimpleWriter(definition))
             {
                 writer.CreateStore(storeName, storePath);
-                writer.CreateStream(new JsonStreamMetadata(definition.Name, 0, typeof(AnnotatedEvent).AssemblyQualifiedName, storeName, storePath), new List<Message<AnnotatedEvent>>());
+                writer.CreateStream(new JsonStreamMetadata(definition.Name, 0, typeof(AnnotatedEvent).AssemblyQualifiedName, null, storeName, storePath), new List<Message<AnnotatedEvent>>());
                 writer.WriteAll(ReplayDescriptor.ReplayAll);
             }
 
@@ -57,7 +58,7 @@ namespace Microsoft.Psi.Data.Annotations
         }
 
         /// <summary>
-        /// Overridable method to allow derived object to initialize properties as part of object construction or after deserialization.
+        /// Overridable method to allow derived object to initialize properties after deserialization.
         /// </summary>
         protected override void InitNew()
         {

@@ -6,6 +6,7 @@ namespace Microsoft.Psi
     using System;
     using System.Linq;
     using System.Reflection;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Helper class for type resolution.
@@ -23,9 +24,25 @@ namespace Microsoft.Psi
             return Type.GetType(typeName, AssemblyResolver, null);
         }
 
+        /// <summary>
+        /// Removes the assembly name from an assembly-qualified type name, returning the fully
+        /// qualified name of the type, including its namespace but not the assembly name.
+        /// </summary>
+        /// <param name="assemblyQualifiedName">A string representing the assembly-qualified name of a type.</param>
+        /// <returns>The fully qualified name of the type, including its namespace but not the assembly name.</returns>
+        internal static string RemoveAssemblyName(string assemblyQualifiedName)
+        {
+            string typeName = assemblyQualifiedName;
+
+            // strip out all assembly names (including in nested type parameters)
+            typeName = Regex.Replace(typeName, @",\s[^,\[\]\*]+", string.Empty);
+
+            return typeName;
+        }
+
         private static Assembly AssemblyResolver(AssemblyName assemblyName)
         {
-            // Get the list of currently loaded asemblies
+            // Get the list of currently loaded assemblies
             Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             // Attempt to match by full name first

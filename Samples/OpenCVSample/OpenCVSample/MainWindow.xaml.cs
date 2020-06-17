@@ -42,7 +42,7 @@ namespace Microsoft.Psi.Samples.OpenCV
                 (srcImage, env, e) =>
                 {
                     // Our lambda here is called with each image sample from our stream and calls OpenCV to convert
-                    // the image into a grayscale image. We then post the resulting gray scale image to our event queu
+                    // the image into a grayscale image. We then post the resulting gray scale image to our event queue
                     // so that the Psi pipeline will send it to the next component.
 
                     // Have Psi allocate a new image. We will convert the current image ('srcImage') into this new image.

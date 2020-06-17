@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Visualization
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Summarizers;
@@ -166,6 +167,60 @@ namespace Microsoft.Psi.Visualization
             }
 
             return metadatas;
+        }
+
+        /// <summary>
+        /// Gets the visualizer metadata whose data type is hierarchically closest to a stream's data type.
+        /// Metadata objects that don't use an adapter are prioritized first.
+        /// </summary>
+        /// <param name="dataType">The data type of messages in the stream.</param>
+        /// <param name="metadatas">A list of metadatas to select from.</param>
+        /// <returns>The metadata whose data type is closest (hierarchically, prioritizing non-adapters) to the message data type.</returns>
+        public static VisualizerMetadata GetClosestVisualizerMetadata(Type dataType, IEnumerable<VisualizerMetadata> metadatas)
+        {
+            // Get the collection of metadatas that don't use an adapter
+            var nonAdaptedMetadatas = metadatas.Where(m => m.StreamAdapterType == null);
+
+            // If there are any metadata objects that don't use an adapter, return the one
+            // whose data type is closest to the message data type in the derivation hierarchy.
+            if (nonAdaptedMetadatas.Any())
+            {
+                VisualizerMetadata metadata = GetVisualizerMetadataOfNearestBaseType(dataType, nonAdaptedMetadatas);
+                if (metadata != default)
+                {
+                    return metadata;
+                }
+            }
+
+            // Return the metadata object whose data type is closest
+            // to the message data type in the derivation hierarchy.
+            return GetVisualizerMetadataOfNearestBaseType(dataType, metadatas);
+        }
+
+        /// <summary>
+        /// Gets the visualizer metadata whose data type is hierarchically closest to a stream's data type.
+        /// </summary>
+        /// <param name="dataType">The data type of messages in the stream.</param>
+        /// <param name="metadatas">A collection of metadatas to select from.</param>
+        /// <returns>The metadata whose data type is hierarchically closest to the message data type.</returns>
+        private static VisualizerMetadata GetVisualizerMetadataOfNearestBaseType(Type dataType, IEnumerable<VisualizerMetadata> metadatas)
+        {
+            Type type = dataType;
+            do
+            {
+                VisualizerMetadata metadata = metadatas.FirstOrDefault(m => m.DataType == type);
+                if (metadata != default)
+                {
+                    return metadata;
+                }
+
+                type = type.BaseType;
+            }
+            while (type != null);
+
+            // The collection of metadata objects passed to this method should be guaranteed
+            // to find a match.  If that failed, then there's a bug in our logic.
+            throw new ApplicationException("No compatible metadata could be found for the message type");
         }
 
         private static void Create(List<VisualizerMetadata> metadatas, Type dataType, Type visualizationObjectType, VisualizationObjectAttribute visualizationObjectAttribute, VisualizationPanelTypeAttribute visualizationPanelTypeAttribute, StreamAdapterMetadata adapterMetadata)

@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Speech
             var voiceActivityDetected = logEnergyThreshold.Window(0, voiceActivityDetectionFrames - 1).Average();
             var silenceDetected = logEnergyThreshold.Window(-(silenceDetectionFrames - 1), 0).Average();
 
-            // Use Aggregate opertator to update the state (isSpeaking) based on the current state.
+            // Use Aggregate operator to update the state (isSpeaking) based on the current state.
             var vad = voiceActivityDetected.Join(silenceDetected).Aggregate(
                 false,
                 (isSpeaking, v) => isSpeaking ? v.Item2 != 0 : v.Item1 == 1.0);

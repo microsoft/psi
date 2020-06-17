@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -11,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     /// <typeparam name="TVisObj">The type of visualization objects in the collection.</typeparam>
     /// <typeparam name="TData">The type of data of each item in the collection.</typeparam>
-    /// <typeparam name="TColl">The type of of the collection.</typeparam>
+    /// <typeparam name="TColl">The type of the collection.</typeparam>
     public abstract class ModelVisual3DVisualizationObjectEnumerable<TVisObj, TData, TColl> : ModelVisual3DVisualizationObjectCollectionBase<TVisObj, TColl>
         where TVisObj : ModelVisual3DVisualizationObject<TData>, new()
         where TColl : IEnumerable<TData>
@@ -28,21 +27,21 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData(TColl currentData, DateTime originatingTime)
+        public override void UpdateData()
         {
-            if (currentData != null)
+            if (this.CurrentData != null)
             {
                 int index = 0;
-                foreach (TData datum in currentData)
+                foreach (TData datum in this.CurrentData)
                 {
-                    // If we don't have enought visualization objects, create a new one
+                    // If we don't have enough visualization objects, create a new one
                     while (index >= this.ModelView.Children.Count)
                     {
                         this.AddNew(datum);
                     }
 
                     // Get the child visualization object to update itself
-                    this.children[index].UpdateData(datum, originatingTime);
+                    this.children[index].SetCurrentValue(this.SynthesizeMessage(datum));
 
                     index++;
                 }

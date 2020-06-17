@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Components
         }
 
         /// <summary>
-        /// Override this method to process the incomming message and potentially publish one or more output messages.
+        /// Override this method to process the incoming message and potentially publish one or more output messages.
         /// The input message payload is only valid for the duration of the call.
         /// If the data needs to be stored beyond the scope of this method,
         /// use the extension method <see cref="Serializer.DeepClone{T}(T, ref T)"/> to create a private copy.

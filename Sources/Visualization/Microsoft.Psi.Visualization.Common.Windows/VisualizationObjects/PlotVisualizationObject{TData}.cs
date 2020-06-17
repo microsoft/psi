@@ -231,7 +231,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         protected override int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
         {
-            return IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex, this.InterpolationStyle);
+            return IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex);
         }
 
         /// <inheritdoc />

@@ -22,9 +22,9 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="definition">The annotated event definition used to create and validate annotated events for this store.</param>
         /// <param name="createSubdirectory">If true, a numbered subdirectory is created for this store.</param>
         public AnnotationSimpleWriter(string name, string path, AnnotatedEventDefinition definition, bool createSubdirectory = true)
-            : base(name, path, createSubdirectory, AnnotationStoreCommon.DefaultExtension)
+            : this(definition)
         {
-            this.definition = definition;
+            this.Writer = new AnnotationStoreWriter(name, path, definition, createSubdirectory);
         }
 
         /// <summary>

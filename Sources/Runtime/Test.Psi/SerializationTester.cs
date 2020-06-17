@@ -20,7 +20,7 @@ namespace Test.Psi
         internal enum FooEnum : uint
         {
             One = 0x1,
-            Two = 0x2
+            Two = 0x2,
         }
 
         [TestMethod]

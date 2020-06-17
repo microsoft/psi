@@ -112,7 +112,7 @@ namespace Microsoft.Psi.Arrays
             {
                 if (indices.Length != this.dimensions.Length)
                 {
-                    throw new ArgumentException("Invalid number of dimmensions. Expected " + this.dimensions.Length);
+                    throw new ArgumentException("Invalid number of dimensions. Expected " + this.dimensions.Length);
                 }
 
                 int index = 0;

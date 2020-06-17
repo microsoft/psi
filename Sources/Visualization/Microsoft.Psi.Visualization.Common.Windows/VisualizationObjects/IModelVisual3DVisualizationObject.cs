@@ -3,8 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Represents a model visual 3d visualization object.
     /// </summary>
@@ -26,10 +24,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         void OnChildPropertyChanged(string path, object value);
 
         /// <summary>
-        /// Called when we need to notify the child visualization objects that a proeprty has changed.
+        /// Called when we need to notify the child visualization objects that a property has changed.
         /// </summary>
         /// <param name="path">The path from the current visualization object to the property to set.</param>
-        /// <param name="newValue">The new value for the proeprty.</param>
+        /// <param name="newValue">The new value for the property.</param>
         void SetDescendantProperty(string path, object newValue);
     }
 }

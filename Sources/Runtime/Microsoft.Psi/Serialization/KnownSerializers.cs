@@ -423,7 +423,14 @@ namespace Microsoft.Psi.Serialization
                 name = TypeSchema.GetContractName(type, this.runtimeVersion);
             }
 
-            int id = this.schemas.TryGetValue(name, out schema) ? schema.Id : TypeSchema.GetId(name);
+            if (!this.schemas.TryGetValue(name, out schema))
+            {
+                // try to match to an existing schema without assembly/version info
+                string typeName = TypeResolutionHelper.RemoveAssemblyName(type.AssemblyQualifiedName);
+                schema = this.schemas.Values.FirstOrDefault(s => TypeResolutionHelper.RemoveAssemblyName(s.TypeName) == typeName);
+            }
+
+            int id = schema?.Id ?? TypeSchema.GetId(name);
 
             serializer = this.CreateSerializer<T>();
             handler = SerializationHandler.Create<T>(serializer, name, id);

@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Visualization.Collections
         /// <summary>
         /// Initializes a new instance of the <see cref="ObservableDataItem{T}"/> class.
         /// </summary>
-        /// <param name="data">The initiali data value.</param>
+        /// <param name="data">The initial data value.</param>
         public ObservableDataItem(T data)
         {
             this.data = data;

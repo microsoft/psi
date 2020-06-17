@@ -11,9 +11,14 @@ namespace Microsoft.Psi.Calibration
     public interface IDepthDeviceCalibrationInfo
     {
         /// <summary>
-        /// Gets the extrinsics defining the color camera's position with respect to the depth camera.
+        /// Gets the extrinsics associated with the color camera, which describes how to transform points in world coordinates to color camera coordinates (world => camera).
         /// </summary>
         CoordinateSystem ColorExtrinsics { get; }
+
+        /// <summary>
+        /// Gets the pose of the color camera in the world, which is obtained by inverting the extrinsics matrix (camera => world).
+        /// </summary>
+        CoordinateSystem ColorPose { get; }
 
         /// <summary>
         /// Gets the intrinsics associated with the color camera.
@@ -21,9 +26,14 @@ namespace Microsoft.Psi.Calibration
         ICameraIntrinsics ColorIntrinsics { get; }
 
         /// <summary>
-        /// Gets the extrinsics defining the depth camera's position in the world.
+        /// Gets the extrinsics associated with the depth camera, which describes how to transform points in world coordinates to depth camera coordinates (world => camera).
         /// </summary>
         CoordinateSystem DepthExtrinsics { get; }
+
+        /// <summary>
+        /// Gets the pose of the depth camera in the world, which is obtained by inverting the extrinsics matrix (camera => world).
+        /// </summary>
+        CoordinateSystem DepthPose { get; }
 
         /// <summary>
         /// Gets the intrinsics associated with the depth camera.

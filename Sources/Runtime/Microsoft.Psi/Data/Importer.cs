@@ -24,7 +24,6 @@ namespace Microsoft.Psi.Data
         private readonly Splitter<Message<BufferReader>, int> splitter;
         private readonly Dictionary<string, object> streams = new Dictionary<string, object>();
         private readonly Pipeline pipeline;
-        private KnownSerializers serializers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Importer"/> class.
@@ -51,7 +50,7 @@ namespace Microsoft.Psi.Data
         /// Gets the set of types that this Importer can deserialize.
         /// Types can be added or re-mapped using the <see cref="KnownSerializers.Register{T}(string)"/> method.
         /// </summary>
-        public KnownSerializers Serializers => this.serializers;
+        public KnownSerializers Serializers { get; private set; }
 
         /// <summary>
         /// Gets the metadata of all the storage streams in this store.
@@ -87,6 +86,18 @@ namespace Microsoft.Psi.Data
         /// <param name="streamName">The name of the storage stream.</param>
         /// <returns>The metadata associated with the storage stream.</returns>
         public PsiStreamMetadata GetMetadata(string streamName) => this.reader.GetMetadata(streamName);
+
+        /// <summary>
+        /// Returns the supplemental metadata for a specified storage stream.
+        /// </summary>
+        /// <typeparam name="T">Type of supplemental metadata.</typeparam>
+        /// <param name="streamName">The name of the storage stream.</param>
+        /// <returns>The metadata associated with the storage stream.</returns>
+        public T GetSupplementalMetadata<T>(string streamName)
+        {
+            var meta = this.reader.GetMetadata(streamName);
+            return meta.GetSupplementalMetadata<T>(this.Serializers);
+        }
 
         /// <summary>
         /// Indicates whether the store contains the specified storage stream.
@@ -153,7 +164,7 @@ namespace Microsoft.Psi.Data
         /// <returns>A stream that publishes the data read from the store.</returns>
         public IProducer<T> OpenStream<T>(string streamName, T reusableInstance = default(T))
         {
-            return this.OpenStream<T>(streamName, new DeserializerComponent<T>(this, this.serializers, reusableInstance));
+            return this.OpenStream<T>(streamName, new DeserializerComponent<T>(this, this.Serializers, reusableInstance));
         }
 
         /// <summary>
@@ -165,7 +176,7 @@ namespace Microsoft.Psi.Data
         /// <returns>A stream of dynamic that publishes the data read from the store.</returns>
         public IProducer<dynamic> OpenDynamicStream(string streamName)
         {
-            return this.OpenStream<dynamic>(streamName, new DynamicDeserializerComponent(this, this.reader.OpenStream(streamName).TypeName, this.serializers.Schemas), false);
+            return this.OpenStream<dynamic>(streamName, new DynamicDeserializerComponent(this, this.reader.OpenStream(streamName).TypeName, this.Serializers.Schemas), false);
         }
 
         /// <summary>
@@ -177,6 +188,12 @@ namespace Microsoft.Psi.Data
         /// <returns>A stream of raw messages that publishes the data read from the store.</returns>
         internal Emitter<Message<BufferReader>> OpenRawStream(PsiStreamMetadata meta)
         {
+            if (meta.OriginatingLifetime != null && !meta.OriginatingLifetime.IsEmpty && meta.OriginatingLifetime.IsFinite)
+            {
+                // propose a replay time that covers the stream lifetime
+                this.ProposeReplayTime(meta.OriginatingLifetime);
+            }
+
             this.reader.OpenStream(meta); // this checks for duplicates but bypasses type checks
             return this.splitter.Add(meta.Id);
         }
@@ -194,15 +211,15 @@ namespace Microsoft.Psi.Data
             {
                 // check that the requested type matches the stream type
                 var streamType = meta.TypeName;
-                var requestedType = TypeSchema.GetContractName(typeof(T), this.serializers.RuntimeVersion);
+                var requestedType = TypeSchema.GetContractName(typeof(T), this.Serializers.RuntimeVersion);
                 if (streamType != requestedType)
                 {
                     // check if the handler maps the stream type to the requested type
-                    var handler = this.serializers.GetHandler<T>();
+                    var handler = this.Serializers.GetHandler<T>();
                     if (handler.Name != streamType)
                     {
-                        if (this.serializers.Schemas.TryGetValue(streamType, out var streamTypeSchema) &&
-                            this.serializers.Schemas.TryGetValue(requestedType, out var requestedTypeSchema))
+                        if (this.Serializers.Schemas.TryGetValue(streamType, out var streamTypeSchema) &&
+                            this.Serializers.Schemas.TryGetValue(requestedType, out var requestedTypeSchema))
                         {
                             // validate compatibility - will throw if types are incompatible
                             streamTypeSchema.ValidateCompatibleWith(requestedTypeSchema);
@@ -252,12 +269,12 @@ namespace Microsoft.Psi.Data
         /// <param name="runtimeVersion">The version of the runtime that produced the store.</param>
         private void LoadMetadata(IEnumerable<Metadata> metadata, RuntimeInfo runtimeVersion)
         {
-            if (this.serializers == null)
+            if (this.Serializers == null)
             {
-                this.serializers = new KnownSerializers(runtimeVersion);
+                this.Serializers = new KnownSerializers(runtimeVersion);
             }
 
-            this.serializers.RegisterMetadata(metadata);
+            this.Serializers.RegisterMetadata(metadata);
         }
     }
 }

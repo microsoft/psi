@@ -59,6 +59,11 @@ namespace PsiStoreTool
         [Verb("list", HelpText = "List streams within a Psi data store.")]
         internal class ListStreams : BaseStoreCommand
         {
+            /// <summary>
+            /// Gets or sets a value indicating whether to show stream size information.
+            /// </summary>
+            [Option('s', "showsize", Required = false, HelpText = "Shows stream size information.", Default = false)]
+            public bool ShowSize { get; set; }
         }
 
         /// <summary>
@@ -66,6 +71,14 @@ namespace PsiStoreTool
         /// </summary>
         [Verb("info", HelpText = "Display stream information (metadata).")]
         internal class Info : BaseStreamCommand
+        {
+        }
+
+        /// <summary>
+        /// Remove stream verb.
+        /// </summary>
+        [Verb("removestream", HelpText = "Removes a stream from a store.")]
+        internal class RemoveStream : BaseStreamCommand
         {
         }
 

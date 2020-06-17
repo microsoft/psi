@@ -17,7 +17,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech.Service
         }
 
         /// <summary>
-        /// Gets or sets the the offset (in 100-nanosecond units) when speech was detected in the
+        /// Gets or sets the offset (in 100-nanosecond units) when speech was detected in the
         /// audio stream, relative to the start of the stream.
         /// </summary>
         public int Offset { get; set; }

@@ -17,9 +17,6 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public AudioResamplerConfiguration()
         {
-            this.TargetLatencyInMs = 20;
-            this.InputFormat = WaveFormat.Create16kHz1Channel16BitPcm();
-            this.OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm();
         }
 
         /// <summary>
@@ -30,9 +27,9 @@ namespace Microsoft.Psi.Audio
         /// turn determines the latency of the audio output. The larger this value, the more audio
         /// data is carried in each <see cref="AudioBuffer"/> and the longer the audio latency. For
         /// live audio capture, we normally want this value to be small as possible. By default,
-        /// this value is set to 20 milliseconds. Is is safe to leave this unchanged.
+        /// this value is set to 20 milliseconds. It is safe to leave this unchanged.
         /// </remarks>
-        public int TargetLatencyInMs { get; set; }
+        public int TargetLatencyInMs { get; set; } = 20;
 
         /// <summary>
         /// Gets or sets the input format of the audio stream to be resampled.
@@ -42,11 +39,11 @@ namespace Microsoft.Psi.Audio
         /// set, the <see cref="AudioResampler"/> component will attempt to infer the audio format
         /// from the <see cref="AudioBuffer"/> messages arriving on the input stream.
         /// </remarks>
-        public WaveFormat InputFormat { get; set; }
+        public WaveFormat InputFormat { get; set; } = WaveFormat.Create16kHz1Channel16BitPcm();
 
         /// <summary>
         /// Gets or sets the output format for the resampled audio.
         /// </summary>
-        public WaveFormat OutputFormat { get; set; }
+        public WaveFormat OutputFormat { get; set; } = WaveFormat.Create16kHz1Channel16BitPcm();
     }
 }

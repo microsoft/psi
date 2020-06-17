@@ -1438,7 +1438,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Joins a primary stream of integers with an enumeration of seconary streams based on a specified reproducible interpolator.
+        /// Joins a primary stream of integers with an enumeration of secondary streams based on a specified reproducible interpolator.
         /// </summary>
         /// <typeparam name="TIn">Type of input messages.</typeparam>
         /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>

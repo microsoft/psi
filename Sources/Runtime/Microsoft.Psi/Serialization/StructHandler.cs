@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Serialization
 
             if (typeof(T).IsByRef)
             {
-                throw new InvalidOperationException("Cannot use a valut type handler with a class serializer");
+                throw new InvalidOperationException("Cannot use a value type handler with a class serializer");
             }
         }
 

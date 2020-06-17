@@ -46,12 +46,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private string legendValue = string.Empty;
 
         /// <summary>
-        /// Gets the data to de displayed in the control.
+        /// Gets the data to be displayed in the control.
         /// </summary>
         public List<TimeIntervalVisualizationObjectData> DisplayData { get; private set; } = new List<TimeIntervalVisualizationObjectData>();
 
         /// <summary>
-        /// Gets the data to de displayed in the control.
+        /// Gets the data to be displayed in the control.
         /// </summary>
         public int TrackCount => Math.Max(1, this.trackNames.Count);
 
@@ -220,7 +220,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void GenerateLegendValue()
         {
-            // For now the legend value is simmply a list of all the track names
+            // For now the legend value is simply a list of all the track names
             StringBuilder legend = new StringBuilder();
             foreach (string trackName in this.trackNames)
             {

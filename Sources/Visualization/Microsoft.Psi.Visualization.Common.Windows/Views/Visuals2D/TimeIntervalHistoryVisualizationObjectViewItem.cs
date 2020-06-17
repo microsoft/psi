@@ -77,7 +77,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="data">The data to update the item from.</param>
         internal void Update(TimeIntervalHistoryVisualizationObject.TimeIntervalVisualizationObjectData data)
         {
-            // determine the correspondance of 5 pixels in the time space
+            // determine the correspondence of 5 pixels in the time space
             var offset = 10.0 / this.parent.ScaleTransform.ScaleX;
             var verticalSpace = this.parent.VisualizationObject.LineWidth * 4 / this.parent.ScaleTransform.ScaleY;
 

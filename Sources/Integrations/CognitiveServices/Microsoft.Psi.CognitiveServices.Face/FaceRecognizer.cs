@@ -89,7 +89,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
                 try
                 {
                     // convert image to a Stream and send to Cog Services
-                    data.Resource.ToManagedImage(false).Save(imageFileStream, ImageFormat.Jpeg);
+                    data.Resource.ToBitmap(false).Save(imageFileStream, ImageFormat.Jpeg);
                     imageFileStream.Seek(0, SeekOrigin.Begin);
 
                     var detected = (await this.client.Face.DetectWithStreamAsync(imageFileStream, recognitionModel: this.configuration.RecognitionModelName)).Select(d => d.FaceId.Value).ToList();
@@ -115,7 +115,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
                     }
                     else
                     {
-                        throw exception;
+                        throw;
                     }
                 }
             }

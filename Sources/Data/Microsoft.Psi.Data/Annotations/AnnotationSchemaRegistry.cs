@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Data.Annotations
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Provides a singleton resistry for annotation schemas.
+    /// Provides a singleton registry for annotation schemas.
     /// </summary>
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class AnnotationSchemaRegistry
@@ -22,7 +22,6 @@ namespace Microsoft.Psi.Data.Annotations
         private AnnotationSchemaRegistry()
         {
             this.InternalSchemas = new List<AnnotationSchema>();
-            this.InitNew();
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace Microsoft.Psi.Data.Annotations
         }
 
         /// <summary>
-        /// Overridable method to allow derived object to initialize properties as part of object construction or after deserialization.
+        /// Overridable method to allow derived object to initialize properties after deserialization.
         /// </summary>
         protected virtual void InitNew()
         {

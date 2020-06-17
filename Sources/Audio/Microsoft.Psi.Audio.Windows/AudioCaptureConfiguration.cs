@@ -17,15 +17,6 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         public AudioCaptureConfiguration()
         {
-            this.DeviceName = string.Empty;
-            this.TargetLatencyInMs = 20;
-            this.AudioEngineBufferInMs = 500;
-            this.AudioLevel = -1;
-            this.Gain = 1.0f;
-            this.OptimizeForSpeech = false;
-            this.UseEventDrivenCapture = true;
-            this.DropOutOfOrderPackets = false;
-            this.OutputFormat = null;
         }
 
         /// <summary>
@@ -37,7 +28,7 @@ namespace Microsoft.Psi.Audio
         /// <see cref="AudioCapture.GetAvailableDevices"/> static method. If not specified, the
         /// default recording device will be selected.
         /// </remarks>
-        public string DeviceName { get; set; }
+        public string DeviceName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the target audio latency (pull capture mode only).
@@ -52,7 +43,7 @@ namespace Microsoft.Psi.Audio
         /// <see cref="UseEventDrivenCapture"/> is set to true. In event-driven capture mode, the latency
         /// is determined by the rate at which the audio engine signals that it has new data available.
         /// </remarks>
-        public int TargetLatencyInMs { get; set; }
+        public int TargetLatencyInMs { get; set; } = 20;
 
         /// <summary>
         /// Gets or sets the audio engine buffer.
@@ -66,7 +57,7 @@ namespace Microsoft.Psi.Audio
         /// audio packets fast enough. Setting this to a larger value reduces the likelihood of
         /// encountering glitches in the captured audio stream.
         /// </remarks>
-        public int AudioEngineBufferInMs { get; set; }
+        public int AudioEngineBufferInMs { get; set; } = 500;
 
         /// <summary>
         /// Gets or sets the audio input level.
@@ -76,7 +67,7 @@ namespace Microsoft.Psi.Audio
         /// between 0.0 and 1.0 inclusive. If not specified, the current level of the selected
         /// recording device will be left unchanged.
         /// </remarks>
-        public double AudioLevel { get; set; }
+        public double AudioLevel { get; set; } = -1;
 
         /// <summary>
         /// Gets or sets the additional gain to be applied to the captured audio.
@@ -86,7 +77,7 @@ namespace Microsoft.Psi.Audio
         /// audio signal. Values greater than 1.0 boost the audio signal, while values in the range
         /// of 0.0 to 1.0 attenuate it. The default value is 1.0 (no additional gain).
         /// </remarks>
-        public float Gain { get; set; }
+        public float Gain { get; set; } = 1.0f;
 
         /// <summary>
         /// Gets or sets a value indicating whether the captured audio should be pre-processed for
@@ -98,7 +89,7 @@ namespace Microsoft.Psi.Audio
         /// the audio for speech recognition applications. By default, this option is set to false.
         /// This feature may not be available for all capture devices.
         /// </remarks>
-        public bool OptimizeForSpeech { get; set; }
+        public bool OptimizeForSpeech { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether to use event-driven or pull capture mode. When using
@@ -109,7 +100,7 @@ namespace Microsoft.Psi.Audio
         /// by the audio engine (up to an amount equivalent to <see cref="AudioEngineBufferInMs"/>) should
         /// the application be unable to consume the audio data quickly enough.
         /// </summary>
-        public bool UseEventDrivenCapture { get; set; }
+        public bool UseEventDrivenCapture { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether the component should
@@ -118,7 +109,7 @@ namespace Microsoft.Psi.Audio
         /// <remarks>
         /// This is for internal use only and may be removed in future versions.
         /// </remarks>
-        public bool DropOutOfOrderPackets { get; set; }
+        public bool DropOutOfOrderPackets { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the desired format for the captured audio.
@@ -128,6 +119,6 @@ namespace Microsoft.Psi.Audio
         /// Use this to specify a different format for the <see cref="AudioBuffer"/> Out stream of
         /// the <see cref="AudioCapture"/> component.
         /// </remarks>
-        public WaveFormat OutputFormat { get; set; }
+        public WaveFormat OutputFormat { get; set; } = null;
     }
 }

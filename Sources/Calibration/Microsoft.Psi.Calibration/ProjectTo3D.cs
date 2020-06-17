@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Calibration
     /// Inputs are the depth image, list of 2D points from the color image, and the camera calibration.
     /// Outputs the 3D points projected into the depth camera's coordinate system.
     /// </remarks>
-    public sealed class ProjectTo3D : ConsumerProducer<(Shared<Image>, List<Point2D>, IDepthDeviceCalibrationInfo), List<Point3D>>
+    public sealed class ProjectTo3D : ConsumerProducer<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo), List<Point3D>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectTo3D"/> class.
@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Calibration
         }
 
         /// <inheritdoc/>
-        protected override void Receive((Shared<Image>, List<Point2D>, IDepthDeviceCalibrationInfo) data, Envelope e)
+        protected override void Receive((Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo) data, Envelope e)
         {
             var point2DList = data.Item2;
             var depthImage = data.Item1;

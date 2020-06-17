@@ -1,6 +1,6 @@
 # Contributing to Platform for Situated Intelligence
 
-We welcome contributions from the community in a variety of forms: from simply using it and filing issues and bugs, to writing and releasing your own new components, to creating pull requests for bug fixes or new features, etc. This document describes some of the things you need to know if you are going to contribute to the Platform for Situated Intelligence ecosystem. Please read it carefully before making source code changes.
+We welcome contributions from the community in a variety of forms: from simply using it and filing issues and bugs, to writing and releasing your own new components, to creating pull requests for bug fixes or new features, etc. This document describes some of the things you need to know if you are going to contribute to the Platform for Situated Intelligence ecosystem.
 
 ## Code of conduct
 
@@ -60,12 +60,14 @@ Below is a description of the directory structure for the Platform for Situated 
 | Sources   | Audio         | Contains class libraries for audio components. |
 | Sources   | Calibration   | Contains class libraries for calibrating cameras. |
 | Sources   | Common        | Contains class libraries for common test support. |
-| Sources   | Extensions    | Contains class libraries that extend the \psi runtime class libraries. |
+| Sources   | Data          | Contains class libraries for creating and manipulating datasets. |
+| Sources   | Devices       | Contains class libraries that support enumerating devices. |
 | Sources   | Imaging       | Contains class libraries for \psi imaging, e.g. images, video capture, etc. |
 | Sources   | Integrations  | Contains integrations - libraries that provide shims around 3rd party libraries. |
-| Sources   | Kinect        | Contains class libraries for Kinect sensor components. |
+| Sources   | Kinect        | Contains class libraries for Azure Kinect and Kinect V2 sensor components. |
 | Sources   | Language      | Contains class libraries for natural language processing components. |
 | Sources   | Media         | Contains class libraries for media components. |
+| Sources   | RealSense     | Contains class libraries for RealSense sensor component. |
 | Sources   | Runtime       | Contains class libraries for \psi runtime. |
 | Sources   | Speech        | Contains class libraries for speech components. |
 | Sources   | Toolkits      | Contains toolkits - e.g. Finite State Machine toolkit, etc. |
@@ -74,10 +76,9 @@ Below is a description of the directory structure for the Platform for Situated 
 
 ### Coding Style
 
-Platform for Situated Intelligence is an organically grown codebase. The consistency of style reflects this.
-For the most part, the team follows these [coding conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions) along with these [design guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/). Pull requests that reformat the code will not be accepted.
+For the most part, the Platform for Situated Intelligence codebase follows these [coding conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions) along with these [design guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/). 
 
-In case you would like to add a new project to the `Psi.sln` we require that the project is setup in a similar ways to the other projects to ensure a certain coding standard.
+In case you would like to add a new project to the `Psi.sln` we require that the project is setup in a similar ways to the other projects to ensure consistency.
 
 ### Build and Test
 
@@ -85,9 +86,7 @@ To fully validate your changes, do a complete rebuild and test for both Debug an
 
 ### Pull Requests
 
-We accept __bug fix pull requests__. Please make sure there is a corresponding tracking issue for the bug. When you submit a PR for a bug, please link to the issue.
-
-We also accept __new feature pull requests__. We are available to discuss new features. We recommend you open an issue if you plan to develop new features.
+We accept __bug fix pull requests__ as well as __new feature pull requests__. For bug fixes, please open a corresponding issue for the bug and link to it, if one does not already exist. We also recommend you open an issue if you plan to develop new features, which will help facilitate community discussions about the design, implementation, etc.
 
 Pull requests should:
 

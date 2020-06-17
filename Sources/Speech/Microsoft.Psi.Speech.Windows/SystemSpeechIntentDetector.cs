@@ -99,6 +99,7 @@ namespace Microsoft.Psi.Speech
             {
                 // Unregister handlers so they won't fire while disposing.
                 this.speechRecognitionEngine.LoadGrammarCompleted -= this.OnLoadGrammarCompleted;
+                this.speechRecognitionEngine.Dispose();
             }
         }
 

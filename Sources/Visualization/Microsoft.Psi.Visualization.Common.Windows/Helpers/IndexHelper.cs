@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.Helpers
 {
     using System;
-    using Microsoft.Psi.Visualization.Common;
 
     /// <summary>
     /// Represents helper methods for psi indices.
@@ -18,53 +17,39 @@ namespace Microsoft.Psi.Visualization.Helpers
         /// <param name="currentTime">The time to find the index for.</param>
         /// <param name="count">The number of items in the index collection.</param>
         /// <param name="timeAtIndex">A function that returns the time for a given index id.</param>
+        /// <param name="snappingBehavior">Timeline snapping behaviors.</param>
         /// <returns>The index id closest to the specified time, using the specified interpolation style.</returns>
-        public static int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
+        public static int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest)
         {
-            return GetIndexForTime(currentTime, count, timeAtIndex, InterpolationStyle.Direct);
-        }
-
-        /// <summary>
-        /// Gets the index id corresponding to a specified time for
-        /// a collection of indices that are ordered by time.
-        /// </summary>
-        /// <param name="currentTime">The time to find the index for.</param>
-        /// <param name="count">The number of items in the index collection.</param>
-        /// <param name="timeAtIndex">A function that returns the time for a given index id.</param>
-        /// <param name="interpolationStyle">The type of interpolation (Direct or Step) to use when resolving indices that don't exactly lie at the specified time.</param>
-        /// <returns>The index id closest to the specified time, using the specified interpolation style.</returns>
-        public static int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, InterpolationStyle interpolationStyle)
-        {
-            // Perform a binary search
-            SearchResult result = SearchIndex(currentTime, count, timeAtIndex);
-            if (result.ExactMatchFound)
-            {
-                return result.ExactIndex;
-            }
-
-            // If no exact match, lo and hi indicate ticks that
-            // are right before and right after the time we're looking for.
-            // If we're using Step interpolation, then we should return
-            // lo, otherwise we should return whichever value is closest
-            if (interpolationStyle == InterpolationStyle.Step)
-            {
-                return result.LowIndex;
-            }
-
-            // If the're only one point in the index, then return its index
+            // If there's only one point in the index, then return its index
             if (count == 1)
             {
                 return 0;
             }
 
-            // Return the index of whichever point is closest to the current time
-            if ((timeAtIndex(result.HighIndex) - currentTime) < (currentTime - timeAtIndex(result.LowIndex)))
+            // Perform a binary search
+            // If no exact match, lo and hi indicate ticks that
+            // are right before and right after the time we're looking for.
+            SearchResult result = SearchIndex(currentTime, count, timeAtIndex);
+
+            if (result.ExactMatchFound)
             {
-                return result.HighIndex;
+                return result.ExactIndex;
             }
-            else
+
+            switch (snappingBehavior)
             {
-                return result.LowIndex;
+                case SnappingBehavior.Previous:
+                    return result.LowIndex;
+                case SnappingBehavior.Next:
+                    return result.HighIndex;
+                case SnappingBehavior.Nearest:
+                default:
+                    // Return the index of whichever point is closest to the current time
+                    return
+                        (timeAtIndex(result.HighIndex) - currentTime) < (currentTime - timeAtIndex(result.LowIndex)) ?
+                        result.HighIndex :
+                        result.LowIndex;
             }
         }
 

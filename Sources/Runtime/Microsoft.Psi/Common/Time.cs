@@ -51,7 +51,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Returns the system UTC time represented by the number of 100ns ticks from system boot.
         /// The tick counter is calibrated against system time to a precision that is determined
-        /// by the tickSyncPrecision argument of the <see cref="TickCalibration"/> constuctor
+        /// by the tickSyncPrecision argument of the <see cref="TickCalibration"/> constructor
         /// (1 microsecond by default). To account for OS system clock adjustments which may cause
         /// the tick counter to drift relative to the system clock, the calibration is repeated
         /// whenever the drift exceeds a predefined maximum (1 millisecond by default).

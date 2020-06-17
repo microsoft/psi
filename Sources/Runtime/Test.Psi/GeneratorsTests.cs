@@ -3,13 +3,13 @@
 
 namespace Test.Psi
 {
-    using Microsoft.Psi;
-    using Microsoft.Psi.Components;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Microsoft.Psi;
+    using Microsoft.Psi.Components;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
     /// Runs a series of tests for stream generators.
@@ -51,7 +51,6 @@ namespace Test.Psi
             // message should be at or after its originating time.
             Assert.IsTrue(lastMessageTime >= originatingTimes.Last());
         }
-
 
         [TestMethod]
         [Timeout(60000)]

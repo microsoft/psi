@@ -219,7 +219,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         }
 
         /// <summary>
-        /// Navigate back to givin graph.
+        /// Navigate back to given graph.
         /// </summary>
         /// <param name="id">Graph Id.</param>
         public void NavBackTo(int id)
@@ -371,7 +371,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 case PipelineDiagnosticsVisualizationObject.HighlightCondition.ThrottledReceivers:
                     return receiverDiagnostics.Throttled;
                 default:
-                    throw new ArgumentException($"Unknown hilight condition: {this.model.VisualizationObject.Highlight}");
+                    throw new ArgumentException($"Unknown highlight condition: {this.model.VisualizationObject.Highlight}");
             }
         }
 
@@ -481,15 +481,22 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             return $"     {emitterName}{arrow}{receiverName}{stats}{deliveryPolicyName}     "; // extra padding to allow for stats changes without re-layout
         }
 
-        private Edge BuildVisualEdge(Node source, Node target, PipelineDiagnostics.ReceiverDiagnostics input, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector)
+        private Edge BuildVisualEdge(Node source, Node target, string emitterName, string receiverName, string stats, string deliveryPolicyName, Style style)
         {
             var edge = new Edge(source, target, ConnectionToGraph.Connected);
-            edge.UserData = input;
             edge.Attr.Color = this.EdgeColor;
             edge.Attr.LineWidth = this.model.VisualizationObject.EdgeLineThickness;
-            var stats = statsSelector != null ? $" ({statsSelector(input):0.#})" : string.Empty;
-            edge.LabelText = this.BuildVisualEdgeLabelText(input.Source.Name, input.ReceiverName, stats, input.DeliveryPolicyName);
+            edge.Attr.AddStyle(style);
+            edge.LabelText = this.BuildVisualEdgeLabelText(emitterName, receiverName, stats, deliveryPolicyName);
             edge.Label.FontColor = this.LabelColorLight;
+            return edge;
+        }
+
+        private Edge BuildVisualEdge(Node source, Node target, PipelineDiagnostics.ReceiverDiagnostics input, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector)
+        {
+            var stats = statsSelector != null ? $" ({statsSelector(input):0.#})" : string.Empty;
+            var edge = this.BuildVisualEdge(source, target, input.Source.Name, input.ReceiverName, stats, input.DeliveryPolicyName, Style.Solid);
+            edge.UserData = input;
             edge.Label.UserData = edge;
             return edge;
         }
@@ -675,18 +682,43 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                         if (subpipelineIdToPipelineDiagnostics.ContainsKey(targetPipeline.Id))
                         {
                             var targetNode = graph.FindNode($"n{subpipelineNodes[targetPipeline.Id].Id}");
-                            var edge = new Edge(connector, targetNode, ConnectionToGraph.Connected);
-                            edge.Attr.Color = this.EdgeColor;
-                            edge.Attr.LineWidth = this.model.VisualizationObject.EdgeLineThickness;
-                            edge.Attr.AddStyle(Style.Dotted);
-                            edge.LabelText = this.BuildVisualEdgeLabelText(n.Name, bridgedPipeline.Name, string.Empty, string.Empty);
-                            edge.Label.FontColor = this.LabelColorLight;
-                            graph.AddPrecalculatedEdge(edge);
+                            graph.AddPrecalculatedEdge(this.BuildVisualEdge(connector, targetNode, n.Name, bridgedPipeline.Name, string.Empty, string.Empty, Style.Dotted));
                             break;
                         }
 
                         // walk up ancestor chain until we're at a direct child subpipeline
                         targetPipeline = targetPipeline.ParentPipelineDiagnostics;
+                    }
+                }
+            }
+
+            // add connector bridge edges between descendants (shown between current-level subpiplines)
+            int? TryFindCurrentLevelAncestorSubpipelineId(int id)
+            {
+                foreach (var ancestor in pipelineIdToPipelineDiagnostics[id].AncestorPipelines)
+                {
+                    if (subpipelineNodes.TryGetValue(ancestor.Id, out PipelineDiagnostics.PipelineElementDiagnostics subpipeline))
+                    {
+                        return subpipeline.Id;
+                    }
+                }
+
+                return null;
+            }
+
+            foreach (var descendantConnector in diagnostics.GetAllPipelineElementDiagnostics().Where(this.IsConnectorBridge))
+            {
+                if (descendantConnector.Emitters.Length == 0 /* source-side of connector pair */)
+                {
+                    var sourceId = descendantConnector.PipelineId;
+                    var targetId = descendantConnector.ConnectorBridgeToPipelineElement.PipelineId;
+                    var sourceCurrentLevelId = TryFindCurrentLevelAncestorSubpipelineId(sourceId);
+                    var targetCurrentLevelId = TryFindCurrentLevelAncestorSubpipelineId(targetId);
+                    if (sourceCurrentLevelId != null && targetCurrentLevelId != null && sourceCurrentLevelId != targetCurrentLevelId)
+                    {
+                        var sourceNode = graph.FindNode($"n{sourceCurrentLevelId}");
+                        var targetNode = graph.FindNode($"n{targetCurrentLevelId}");
+                        graph.AddPrecalculatedEdge(this.BuildVisualEdge(sourceNode, targetNode, string.Empty, descendantConnector.Name, string.Empty, string.Empty, Style.Dotted));
                     }
                 }
             }

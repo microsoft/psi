@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Visualization.Collections
         private readonly Func<TItem, TKey> getKeyForItem;
 
         /// <summary>
-        /// Number of collection changed events recieved before pruning the cache.
+        /// Number of collection changed events received before pruning the cache.
         /// </summary>
         private uint pruneThreshold = ObservableSortedCollection<TItem>.DefaultCapacity;
 
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Visualization.Collections
         private bool needsPruning = false;
 
         /// <summary>
-        /// Number of collection changed events recieved, since last pruning of the cache.
+        /// Number of collection changed events received, since last pruning of the cache.
         /// </summary>
         private uint collectionChangedCount = 0;
 
@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Visualization.Collections
         /// <summary>
         /// Initializes a new instance of the <see cref="ObservableKeyedCache{TKey, TItem}" /> class that uses the default comparers.
         /// </summary>
-        /// <param name="getKeyForItem">Funtion that returns a key given an item.</param>
+        /// <param name="getKeyForItem">Function that returns a key given an item.</param>
         /// <exception cref="ArgumentNullException"><paramref name="getKeyForItem"/> is null.</exception>
         public ObservableKeyedCache(Func<TItem, TKey> getKeyForItem)
             : this(null, null, getKeyForItem)
@@ -403,7 +403,7 @@ namespace Microsoft.Psi.Visualization.Collections
 
             /// <summary>
             /// Occurs when an item is added, removed, changed, moved, or the entire list is refreshed.
-            /// This event does not fire range based events for compatability to wpf controls. It turns adds into resets.
+            /// This event does not fire range based events for compatibility to wpf controls. It turns adds into resets.
             /// </summary>
             public virtual event NotifyCollectionChangedEventHandler CollectionChanged;
 

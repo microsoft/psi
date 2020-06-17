@@ -166,6 +166,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{4026C2BE
 		Build\MSLogoGreySmall.png = Build\MSLogoGreySmall.png
 		Build\RunDoxygen.ps1 = Build\RunDoxygen.ps1
 		Build\Sample.Psi.ruleset = Build\Sample.Psi.ruleset
+		Build\Security.ruleset = Build\Security.ruleset
 		Build\Test.Psi.ruleset = Build\Test.Psi.ruleset
 	EndProjectSection
 EndProject
@@ -196,6 +197,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.DeviceManagement", "Sources\Devices\Microsoft.Psi.DeviceManagement\Microsoft.Psi.DeviceManagement.csproj", "{6B572F54-0E2F-4223-8283-14B3BAB7534A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.CognitiveServices.Face", "Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Face\Microsoft.Psi.CognitiveServices.Face.csproj", "{084FB05C-4022-40FD-B00B-E3229B882F08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.AzureKinect.Visualization.Windows.x64", "Sources\Kinect\Microsoft.Psi.AzureKinect.Visualization\Microsoft.Psi.AzureKinect.Visualization.Windows.x64.csproj", "{8D33307F-0E96-491A-9D31-9025709310F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.AzureKinect.x64", "Sources\Kinect\Microsoft.Psi.AzureKinect.x64\Microsoft.Psi.AzureKinect.x64.csproj", "{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureKinectSample", "Samples\AzureKinectSample\AzureKinectSample.csproj", "{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Kinect.Visualization.Windows", "Sources\Kinect\Microsoft.Psi.Kinect.Visualization.Windows\Microsoft.Psi.Kinect.Visualization.Windows.csproj", "{F31606FF-3737-45DC-8E89-6256AACD841F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -435,6 +444,22 @@ Global
 		{084FB05C-4022-40FD-B00B-E3229B882F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{084FB05C-4022-40FD-B00B-E3229B882F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{084FB05C-4022-40FD-B00B-E3229B882F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D33307F-0E96-491A-9D31-9025709310F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D33307F-0E96-491A-9D31-9025709310F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D33307F-0E96-491A-9D31-9025709310F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D33307F-0E96-491A-9D31-9025709310F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67}.Debug|Any CPU.Build.0 = Debug|x64
+		{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67}.Release|Any CPU.ActiveCfg = Release|x64
+		{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67}.Release|Any CPU.Build.0 = Release|x64
+		{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2}.Debug|Any CPU.Build.0 = Debug|x64
+		{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2}.Release|Any CPU.ActiveCfg = Release|x64
+		{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2}.Release|Any CPU.Build.0 = Release|x64
+		{F31606FF-3737-45DC-8E89-6256AACD841F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31606FF-3737-45DC-8E89-6256AACD841F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31606FF-3737-45DC-8E89-6256AACD841F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31606FF-3737-45DC-8E89-6256AACD841F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -520,6 +545,10 @@ Global
 		{8AEFDD4F-CF2E-4392-AF46-378DE96126A5} = {A0856299-D28A-4513-B964-3FA5290FF160}
 		{6B572F54-0E2F-4223-8283-14B3BAB7534A} = {8AEFDD4F-CF2E-4392-AF46-378DE96126A5}
 		{084FB05C-4022-40FD-B00B-E3229B882F08} = {05481E26-A4CA-4F7D-B6FC-671A8AAC18B1}
+		{8D33307F-0E96-491A-9D31-9025709310F6} = {CB8286F5-167B-4416-8FE9-9B97FCF146D5}
+		{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67} = {CB8286F5-167B-4416-8FE9-9B97FCF146D5}
+		{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2} = {1AA38339-B349-4AA7-A0A9-F92ADCFDB2DF}
+		{F31606FF-3737-45DC-8E89-6256AACD841F} = {CB8286F5-167B-4416-8FE9-9B97FCF146D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

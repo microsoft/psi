@@ -22,12 +22,12 @@ namespace Microsoft.Psi.Media
         /// </summary>
         private readonly MediaCaptureConfiguration configuration;
 
+        private readonly IProducer<Audio.AudioBuffer> audio;
+
         /// <summary>
         /// The video capture device.
         /// </summary>
         private MediaCaptureDevice camera;
-
-        private IProducer<Microsoft.Psi.Audio.AudioBuffer> audio;
 
         /// <summary>
         /// Defines attributes of properties exposed by MediaCaptureDevice.
@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Media
             this.configuration = configurationHelper.Configuration;
             if (this.configuration.CaptureAudio)
             {
-                this.audio = new Audio.AudioCapture(pipeline, new Audio.AudioCaptureConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
+                this.audio = new Audio.AudioCapture(pipeline, Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm());
             }
         }
 
@@ -55,13 +55,13 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">Pipeline this component is a part of.</param>
         /// <param name="configuration">Describes how to configure the media capture device.</param>
-        public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration)
+        public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration = null)
         : this(pipeline)
         {
-            this.configuration = configuration;
+            this.configuration = configuration ?? new MediaCaptureConfiguration();
             if (this.configuration.CaptureAudio)
             {
-                this.audio = new Audio.AudioCapture(pipeline, new Audio.AudioCaptureConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
+                this.audio = new Audio.AudioCapture(pipeline, Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm());
             }
         }
 
@@ -74,9 +74,8 @@ namespace Microsoft.Psi.Media
         /// <param name="framerate">Frame rate.</param>
         /// <param name="captureAudio">Should we create an audio capture device.</param>
         /// <param name="deviceId">Device ID.</param>
-        /// <param name="persistVideoFrames">Indicates whether video frames should be persisted.</param>
         /// <param name="useInSharedMode">Indicates whether camera is shared amongst multiple applications.</param>
-        public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 15, bool captureAudio = false, string deviceId = null, bool persistVideoFrames = false, bool useInSharedMode = false)
+        public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 15, bool captureAudio = false, string deviceId = null, bool useInSharedMode = false)
             : this(pipeline)
         {
             this.configuration = new MediaCaptureConfiguration()
@@ -90,7 +89,7 @@ namespace Microsoft.Psi.Media
             };
             if (this.configuration.CaptureAudio)
             {
-                this.audio = new Audio.AudioCapture(pipeline, new Audio.AudioCaptureConfiguration() { OutputFormat = Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm() });
+                this.audio = new Audio.AudioCapture(pipeline, Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm());
             }
         }
 
@@ -122,7 +121,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Returns information about each property exposed by the media capture device.
         /// </summary>
-        /// <returns>MediaCaptureInfo object definiting ranges and availability of each property.</returns>
+        /// <returns>MediaCaptureInfo object defining ranges and availability of each property.</returns>
         public MediaCaptureInfo GetDeviceInfo()
         {
             return this.deviceInfo;
@@ -134,18 +133,20 @@ namespace Microsoft.Psi.Media
         /// <returns>A new MediaCaptureConfiguration object with the device's current settings.</returns>
         public MediaCaptureConfiguration GetDeviceConfiguration()
         {
-            MediaCaptureConfiguration config = new MediaCaptureConfiguration();
-            config.BacklightCompensation = this.GetValueBool(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo.Supported);
-            config.Brightness = this.GetValueInt(VideoProperty.Brightness, this.deviceInfo.BrightnessInfo.Supported);
-            config.ColorEnable = this.GetValueBool(VideoProperty.ColorEnable, this.deviceInfo.ColorEnableInfo.Supported);
-            config.Contrast = this.GetValueInt(VideoProperty.Contrast, this.deviceInfo.ContrastInfo.Supported);
-            config.Gain = this.GetValueInt(VideoProperty.Gain, this.deviceInfo.GainInfo.Supported);
-            config.Gamma = this.GetValueInt(VideoProperty.Gamma, this.deviceInfo.GammaInfo.Supported);
-            config.Hue = this.GetValueInt(VideoProperty.Hue, this.deviceInfo.HueInfo.Supported);
-            config.Saturation = this.GetValueInt(VideoProperty.Saturation, this.deviceInfo.SaturationInfo.Supported);
-            config.Sharpness = this.GetValueInt(VideoProperty.Sharpness, this.deviceInfo.SharpnessInfo.Supported);
-            config.WhiteBalance = this.GetValueInt(VideoProperty.WhiteBalance, this.deviceInfo.WhiteBalanceInfo.Supported);
-            config.Focus = this.GetValueInt(ManagedCameraControlProperty.Focus, this.deviceInfo.FocusInfo.Supported);
+            MediaCaptureConfiguration config = new MediaCaptureConfiguration
+            {
+                BacklightCompensation = this.GetValueBool(VideoProperty.BacklightCompensation, this.deviceInfo.BacklightCompensationInfo.Supported),
+                Brightness = this.GetValueInt(VideoProperty.Brightness, this.deviceInfo.BrightnessInfo.Supported),
+                ColorEnable = this.GetValueBool(VideoProperty.ColorEnable, this.deviceInfo.ColorEnableInfo.Supported),
+                Contrast = this.GetValueInt(VideoProperty.Contrast, this.deviceInfo.ContrastInfo.Supported),
+                Gain = this.GetValueInt(VideoProperty.Gain, this.deviceInfo.GainInfo.Supported),
+                Gamma = this.GetValueInt(VideoProperty.Gamma, this.deviceInfo.GammaInfo.Supported),
+                Hue = this.GetValueInt(VideoProperty.Hue, this.deviceInfo.HueInfo.Supported),
+                Saturation = this.GetValueInt(VideoProperty.Saturation, this.deviceInfo.SaturationInfo.Supported),
+                Sharpness = this.GetValueInt(VideoProperty.Sharpness, this.deviceInfo.SharpnessInfo.Supported),
+                WhiteBalance = this.GetValueInt(VideoProperty.WhiteBalance, this.deviceInfo.WhiteBalanceInfo.Supported),
+                Focus = this.GetValueInt(ManagedCameraControlProperty.Focus, this.deviceInfo.FocusInfo.Supported),
+            };
             return config;
         }
 
@@ -255,13 +256,11 @@ namespace Microsoft.Psi.Media
                 this.camera.CaptureSample((data, length, timestamp) =>
                 {
                     var time = DateTime.FromFileTimeUtc(timestamp);
-                    using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp))
-                    {
-                        sharedImage.Resource.CopyFrom(data);
+                    using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp);
+                    sharedImage.Resource.CopyFrom(data);
 
-                        var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(timestamp);
-                        this.Out.Post(sharedImage, originatingTime);
-                    }
+                    var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(timestamp);
+                    this.Out.Post(sharedImage, originatingTime);
                 });
             }
             else
@@ -305,48 +304,6 @@ namespace Microsoft.Psi.Media
             }
         }
 
-        private MediaCaptureInfo.PropertyInfo GetInfo(ManagedCameraControlProperty prop)
-        {
-            MediaCaptureInfo.PropertyInfo info = new MediaCaptureInfo.PropertyInfo();
-            int min = 0, max = 0, stepSize = 0, defValue = 0, flag = 0;
-            if (this.camera.GetRange(prop, ref min, ref max, ref stepSize, ref defValue, ref flag))
-            {
-                info.MinValue = min;
-                info.MaxValue = max;
-                info.StepSize = stepSize;
-                info.DefaultValue = defValue;
-                info.AutoControlled = (flag == (int)VideoPropertyFlags.Auto) ? true : false;
-                info.Supported = true;
-            }
-            else
-            {
-                info.Supported = false;
-            }
-
-            return info;
-        }
-
-        private MediaCaptureInfo.PropertyInfo GetInfo(VideoProperty prop)
-        {
-            MediaCaptureInfo.PropertyInfo info = new MediaCaptureInfo.PropertyInfo();
-            int min = 0, max = 0, stepSize = 0, defValue = 0, flag = 0;
-            if (this.camera.GetRange(prop, ref min, ref max, ref stepSize, ref defValue, ref flag))
-            {
-                info.MinValue = min;
-                info.MaxValue = max;
-                info.StepSize = stepSize;
-                info.DefaultValue = defValue;
-                info.AutoControlled = (flag == (int)VideoPropertyFlags.Auto) ? true : false;
-                info.Supported = true;
-            }
-            else
-            {
-                info.Supported = false;
-            }
-
-            return info;
-        }
-
         private MediaCaptureConfiguration.PropertyValue<int> GetValueInt(VideoProperty prop, bool supported)
         {
             int flags = 0;
@@ -356,7 +313,7 @@ namespace Microsoft.Psi.Media
                 this.camera.GetProperty(prop, ref value, ref flags))
             {
                 propValue.Value = value;
-                propValue.Auto = (flags == (int)VideoPropertyFlags.Auto) ? true : false;
+                propValue.Auto = flags == (int)VideoPropertyFlags.Auto;
             }
 
             return propValue;
@@ -371,7 +328,7 @@ namespace Microsoft.Psi.Media
                 this.camera.GetProperty(prop, ref value, ref flags))
             {
                 propValue.Value = value;
-                propValue.Auto = (flags == (int)VideoPropertyFlags.Auto) ? true : false;
+                propValue.Auto = flags == (int)VideoPropertyFlags.Auto;
             }
 
             return propValue;
@@ -385,8 +342,8 @@ namespace Microsoft.Psi.Media
             if (supported &&
                 this.camera.GetProperty(prop, ref value, ref flags))
             {
-                propValue.Value = (value == 1) ? true : false;
-                propValue.Auto = (flags == (int)VideoPropertyFlags.Auto) ? true : false;
+                propValue.Value = value == 1;
+                propValue.Auto = flags == (int)VideoPropertyFlags.Auto;
             }
 
             return propValue;

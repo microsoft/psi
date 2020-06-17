@@ -100,7 +100,7 @@ namespace Microsoft.Psi.Serialization
                         if (target == null)
                         {
                             // a custom serializer was implemented incorrectly
-                            throw new InvalidDataException("The serializer detected an unresolved circular reference to an instance of type {typeof(T)}. The custom serializer for this type needs to implement the ISerializerEx interface.");
+                            throw new InvalidDataException($"The serializer detected an unresolved circular reference to an instance of type {typeof(T)}. The custom serializer for this type needs to implement the ISerializerEx interface.");
                         }
 
                         return;

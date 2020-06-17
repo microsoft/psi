@@ -7,7 +7,7 @@ namespace Microsoft.Psi
     using System.Diagnostics;
 
     /// <summary>
-    /// Performacne counter collection.
+    /// Performance counter collection.
     /// </summary>
     /// <typeparam name="TKey">Performance counter key type.</typeparam>
     public class PerfCounterCollection<TKey> : IPerfCounterCollection<TKey>

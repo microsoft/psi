@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in this session.
+        /// Gets the originating time interval (earliest to latest) of the messages in this session.
         /// </summary>
         [IgnoreDataMember]
         public TimeInterval OriginatingTimeInterval =>
@@ -122,7 +122,7 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="storeName">The name of the annotation store.</param>
         /// <param name="storePath">The path of the annotation store.</param>
-        /// <param name="definition">The annotated event definition to use when creating new annoted events in the newly created annotation partition.</param>
+        /// <param name="definition">The annotated event definition to use when creating new annotated events in the newly created annotation partition.</param>
         /// <param name="partitionName">The partition name. Default is null.</param>
         /// <returns>The newly added annotation partition.</returns>
         public AnnotationPartition CreateAnnotationPartition(string storeName, string storePath, AnnotatedEventDefinition definition, string partitionName = null)
@@ -135,7 +135,7 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Asynchronously computes a derived partition for the session.
         /// </summary>
-        /// <typeparam name="TParameter">The type of paramater passed to the action.</typeparam>
+        /// <typeparam name="TParameter">The type of parameter passed to the action.</typeparam>
         /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
         /// <param name="parameter">The parameter to be passed to the action.</param>
         /// <param name="outputPartitionName">The output partition name to be created.</param>
@@ -144,7 +144,7 @@ namespace Microsoft.Psi.Data
         /// <param name="outputPartitionPath">The path of the output partition. Default is null.</param>
         /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
-        /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
+        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync<TParameter>(
             Action<Pipeline, SessionImporter, Exporter, TParameter> computeDerived,
@@ -274,7 +274,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Due to the runtime's asynchronous behaviour, we may try to
+        /// Due to the runtime's asynchronous behavior, we may try to
         /// delete our test directory before the runtime has finished
         /// messing with it.  This method will keep trying to delete
         /// the directory until the runtime shuts down.

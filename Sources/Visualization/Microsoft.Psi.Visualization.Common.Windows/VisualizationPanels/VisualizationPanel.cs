@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private VisualizationObject currentVisualizationObject;
 
         /// <summary>
-        /// multithreaded collection lock.
+        /// Multithreaded collection lock.
         /// </summary>
         private object visualizationObjectsLock;
 

@@ -28,9 +28,13 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.0" />
-    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.1" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0" />
     <PackageReference Include="Microsoft.Kinect" Version="2.0.1410.19000" />
     <PackageReference Include="Microsoft.Kinect.Face.x64" Version="2.0.1410.19000" />
   </ItemGroup> 

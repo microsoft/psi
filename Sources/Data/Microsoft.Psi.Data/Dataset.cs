@@ -43,7 +43,7 @@ namespace Microsoft.Psi.Data
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in this dataset.
+        /// Gets the originating time interval (earliest to latest) of the messages in this dataset.
         /// </summary>
         [IgnoreDataMember]
         public TimeInterval OriginatingTimeInterval =>
@@ -87,7 +87,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Creates a new dataset from an exising data store.
+        /// Creates a new dataset from an existing data store.
         /// </summary>
         /// <param name="storeName">The name of the data store.</param>
         /// <param name="storePath">The path of the data store.</param>
@@ -227,7 +227,7 @@ namespace Microsoft.Psi.Data
         /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
         /// <param name="outputStorePath">The path of the output data store. Default is null.</param>
         /// <param name="replayDescriptor">The replay descriptor to us.</param>
-        /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
+        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync(
             Action<Pipeline, SessionImporter, Exporter> computeDerived,
@@ -259,7 +259,7 @@ namespace Microsoft.Psi.Data
         /// <param name="outputPathFunction">A function to determine output path from the given Session.</param>
         /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
-        /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
+        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync(
             Action<Pipeline, SessionImporter, Exporter> computeDerived,
@@ -286,7 +286,7 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
         /// </summary>
-        /// <typeparam name="TParameter">The type of paramater passed to the action.</typeparam>
+        /// <typeparam name="TParameter">The type of parameter passed to the action.</typeparam>
         /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
         /// <param name="parameter">The parameter to be passed to the action.</param>
         /// <param name="outputPartitionName">The output partition name to be created.</param>
@@ -295,7 +295,7 @@ namespace Microsoft.Psi.Data
         /// <param name="outputPathFunction">A function to determine output path from the given Session.</param>
         /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
-        /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
+        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync<TParameter>(
             Action<Pipeline, SessionImporter, Exporter, TParameter> computeDerived,
@@ -328,7 +328,7 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
         /// </summary>
-        /// <typeparam name="TParameter">The type of paramater passed to the action.</typeparam>
+        /// <typeparam name="TParameter">The type of parameter passed to the action.</typeparam>
         /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
         /// <param name="parameter">The parameter to be passed to the action.</param>
         /// <param name="outputPartitionName">The output partition name to be created.</param>
@@ -336,7 +336,7 @@ namespace Microsoft.Psi.Data
         /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
         /// <param name="outputStorePath">The path of the output data store. Default is null.</param>
         /// <param name="replayDescriptor">The replay descriptor to us.</param>
-        /// <param name="cancellationToken">A token for cancelling the asynchronous task.</param>
+        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync<TParameter>(
             Action<Pipeline, SessionImporter, Exporter, TParameter> computeDerived,
@@ -372,7 +372,7 @@ namespace Microsoft.Psi.Data
         /// Adds sessions from data stores located in the specified path.
         /// </summary>
         /// <param name="path">The path that contains the data stores.</param>
-        /// <param name="partitionName">The name of the partion to be added when adding a new session. Default is null.</param>
+        /// <param name="partitionName">The name of the partition to be added when adding a new session. Default is null.</param>
         public void AddSessionsFromExistingStores(string path, string partitionName = null)
         {
             this.AddSessionsFromExistingStores(path, path, partitionName);

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Diagnostics
     /// </summary>
     /// <remarks>
     /// This is used while gathering live diagnostics information. It is optimized for lookups with Dictionaries and
-    /// maintains latency, processing time, message size histories. This information is sumarized before being posted
+    /// maintains latency, processing time, message size histories. This information is summarized before being posted
     /// as PipelineDiagnostics.
     /// </remarks>
     internal class PipelineDiagnosticsInternal

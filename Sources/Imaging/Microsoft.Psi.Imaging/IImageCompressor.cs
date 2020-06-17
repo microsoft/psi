@@ -7,30 +7,28 @@ namespace Microsoft.Psi.Imaging
     using Microsoft.Psi.Serialization;
 
     /// <summary>
-    /// Defines type of compression to use when serializing out an Image.
+    /// Defines type of compression to use when serializing out a <see cref="DepthImage"/>.
     /// </summary>
     public enum CompressionMethod
     {
         /// <summary>
-        /// Use JPEG compression
+        /// Use JPEG compression.
         /// </summary>
-        JPEG,
+        Jpeg,
 
         /// <summary>
-        /// Use PNG compression
+        /// Use PNG compression.
         /// </summary>
-        PNG,
+        Png,
 
         /// <summary>
-        /// Use no compression
+        /// Use no compression.
         /// </summary>
         None,
     }
 
     /// <summary>
-    /// Interface implemented by the system specific assembly.
-    /// For instance, Microsoft.Psi.Imaging.Windows will define
-    /// an ImageCompressor that implements this interfaces.
+    /// Defines a interface for image compressors.
     /// </summary>
     public interface IImageCompressor
     {
@@ -43,16 +41,16 @@ namespace Microsoft.Psi.Imaging
         /// Serialize compressor.
         /// </summary>
         /// <param name="writer">Writer to which to serialize.</param>
-        /// <param name="instance">Image instance to serialize.</param>
+        /// <param name="image">Image instance to serialize.</param>
         /// <param name="context">Serialization context.</param>
-        void Serialize(BufferWriter writer, Image instance, SerializationContext context);
+        void Serialize(BufferWriter writer, Image image, SerializationContext context);
 
         /// <summary>
         /// Deserialize compressor.
         /// </summary>
         /// <param name="reader">Reader from which to deserialize.</param>
-        /// <param name="target">Target image to which to deserialize.</param>
+        /// <param name="image">Target image to which to deserialize.</param>
         /// <param name="context">Serialization context.</param>
-        void Deserialize(BufferReader reader, ref Image target, SerializationContext context);
+        void Deserialize(BufferReader reader, ref Image image, SerializationContext context);
     }
 }

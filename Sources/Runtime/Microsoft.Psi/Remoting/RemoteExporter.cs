@@ -142,6 +142,8 @@ namespace Microsoft.Psi.Remoting
             this.connections = null;
             this.metaClientThread = null;
             this.dataClientThread = null;
+
+            this.dataTransport.Dispose();
         }
 
         private void AddConnection(Connection connection)
@@ -302,10 +304,10 @@ namespace Microsoft.Psi.Remoting
                     this.stream.Write(writer.Buffer, 0, len);
                     this.storeReader = new StoreReader(this.storeName, this.storePath, this.MetaUpdateHandler, true);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     this.Disconnect();
-                    throw ex;
+                    throw;
                 }
             }
 

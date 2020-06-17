@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <summary>
     /// Represents an image visualization object.
     /// </summary>
-    /// <typeparam name="TData">The type of the image visualzation object.</typeparam>
+    /// <typeparam name="TData">The type of the image visualization object.</typeparam>
     public abstract class ImageVisualizationObjectBase<TData> : Instant2DVisualizationObject<TData>
     {
         /// <summary>

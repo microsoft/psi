@@ -122,20 +122,20 @@ namespace Microsoft.Psi.Persistence
 
         /// <summary>
         /// Creates a logical storage stream to write messages to.
-        /// The storage stream characteristics are extracted form the prvoided metadata descriptor.
+        /// The storage stream characteristics are extracted from the provided metadata descriptor.
         /// </summary>
         /// <param name="meta">The metadata describing the stream to open.</param>
         /// <returns>The complete metadata for the storage stream just created.</returns>
         public PsiStreamMetadata OpenStream(PsiStreamMetadata meta)
         {
-            return this.OpenStream(meta.Id, meta.Name, meta.IsIndexed, meta.TypeName);
+            return this.OpenStream(meta.Id, meta.Name, meta.IsIndexed, meta.TypeName).UpdateSupplementalMetadataFrom(meta);
         }
 
         /// <summary>
         /// Creates a logical storage stream to write messages to.
         /// </summary>
         /// <param name="streamId">The id of the stream, unique for this store. All messages with this stream id will be written to this storage stream.</param>
-        /// <param name="streamName">The name of the stream. This name can be later used to open the sorage stream for reading.</param>
+        /// <param name="streamName">The name of the stream. This name can be later used to open the storage stream for reading.</param>
         /// <param name="indexed">Indicates whether the stream is indexed or not. Indexed streams have a small index entry in the main data file and the actual message body in a large data file.</param>
         /// <param name="typeName">A name identifying the type of the messages in this stream. This is usually a fully-qualified type name or a data contract name, but can be anything that the caller wants.</param>
         /// <returns>The complete metadata for the storage stream just created.</returns>

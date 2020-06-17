@@ -17,12 +17,12 @@
         <Storyboard x:Key="CameraStoryboard" />
     </UserControl.Resources>
     
-    <Grid KeyDown="Grid_KeyDown" Background="Gray" Margin="{Binding VisualMargin}">
+    <Grid Background="Gray" Margin="{Binding VisualMargin}">
 
         <Border BorderBrush="{StaticResource LightBorderColorBrush}" Background="{StaticResource MediumBackgroundColorBrush}" BorderThickness="1" />
         <h:HelixViewport3D Grid.Row="1" Name="ViewPort3D">
             <h:HelixViewport3D.Camera>
-                <PerspectiveCamera x:Name="ViewCamera" Position="15,15,15" LookDirection="-15,-15,-15" UpDirection="0,0,1" FieldOfView="45"/>
+                <PerspectiveCamera x:Name="ViewCamera" Position="{Binding CameraPosition, Mode=TwoWay}" LookDirection="{Binding CameraLookDirection, Mode=TwoWay}" UpDirection="{Binding CameraUpDirection, Mode=TwoWay}" FieldOfView="{Binding CameraFieldOfView, Mode=TwoWay}"/>
             </h:HelixViewport3D.Camera>
 
             <ModelVisual3D>

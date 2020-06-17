@@ -11,7 +11,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsAsErrors />
-    <DefineConstants>TRACE;RELEASE;NET47;COM_SERVER</DefineConstants>
+    <DefineConstants>TRACE;RELEASE;NET47</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\net472\Microsoft.Psi.Visualization.Common.Windows.xml</DocumentationFile>
@@ -19,7 +19,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DefineConstants>TRACE;DEBUG;NET47;COM_SERVER</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET47</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icons\2d.png" />
@@ -221,12 +221,17 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HelixToolkit.Wpf" Version="2.10.0" />
+    <PackageReference Include="HelixToolkit.Wpf" Version="2.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="C5" Version="2.5.3" />
-    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.8.0" />
-    <PackageReference Include="MathNet.Spatial.Signed" Version="0.5.0" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.6.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.1" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +240,6 @@
     <ProjectReference Include="..\..\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
-    <ProjectReference Include="..\..\Kinect\Microsoft.Psi.Kinect.Windows\Microsoft.Psi.Kinect.Windows.csproj" />
     <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
     <ProjectReference Include="..\..\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj" />
     <ProjectReference Include="..\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj" />
@@ -247,7 +251,7 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup>    
     <Page Include="Themes\Brushes.xaml" />
     <Page Include="Themes\Buttons.xaml" />
     <Page Include="Themes\CollectionControl.xaml" />

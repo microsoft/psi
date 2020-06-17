@@ -38,22 +38,36 @@ namespace PsiStoreTool
         /// </summary>
         /// <param name="store">Store name.</param>
         /// <param name="path">Store path.</param>
+        /// <param name="showSize">Indicates whether to show the stream size information.</param>
         /// <returns>Success flag.</returns>
-        internal static int ListStreams(string store, string path)
+        internal static int ListStreams(string store, string path, bool showSize = false)
         {
-            Console.WriteLine($"Available Streams (store={store}, path={path})");
+            var stringBuilder = new StringBuilder();
+
             using (var pipeline = Pipeline.Create())
             {
                 var data = Store.Open(pipeline, store, Path.GetFullPath(path));
-                var count = 0;
-                foreach (var stream in data.AvailableStreams)
-                {
-                    Console.WriteLine($"{stream.Name} ({stream.TypeName.Split(',')[0]})");
-                    count++;
-                }
 
-                Console.WriteLine($"Count: {count}");
+                stringBuilder.AppendLine($"{data.AvailableStreams.Count()} Available Streams (store={store}, path={path})");
+                if (showSize)
+                {
+                    stringBuilder.AppendLine("[Avg. Message Size / Total Size]; * marks indexed streams");
+                    foreach (var stream in data.AvailableStreams.OrderByDescending(s => (double)s.MessageCount * s.AverageMessageSize))
+                    {
+                        var isIndexed = stream.IsIndexed ? "* " : "  ";
+                        stringBuilder.AppendLine($"{isIndexed}[{(double)stream.AverageMessageSize / 1024:0.00}Kb / {(stream.AverageMessageSize * (double)stream.MessageCount) / (1024 * 1024):0.00}Mb] {stream.Name} ({stream.TypeName.Split(',')[0]})");
+                    }
+                }
+                else
+                {
+                    foreach (var stream in data.AvailableStreams)
+                    {
+                        stringBuilder.AppendLine($"{stream.Name} ({stream.TypeName.Split(',')[0]})");
+                    }
+                }
             }
+
+            Console.WriteLine(stringBuilder.ToString());
 
             return 0;
         }
@@ -75,6 +89,7 @@ namespace PsiStoreTool
                 Console.WriteLine($"ID: {meta.Id}");
                 Console.WriteLine($"Name: {meta.Name}");
                 Console.WriteLine($"TypeName: {meta.TypeName}");
+                Console.WriteLine($"SupplementalMetadataTypeName: {meta.SupplementalMetadataTypeName}");
                 Console.WriteLine($"MessageCount: {meta.MessageCount}");
                 Console.WriteLine($"AverageFrequency: {meta.AverageFrequency}");
                 Console.WriteLine($"AverageLatency: {meta.AverageLatency}");
@@ -94,6 +109,52 @@ namespace PsiStoreTool
                     }
                 }
             }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Removes a stream from the store.
+        /// </summary>
+        /// <param name="stream">Stream name.</param>
+        /// <param name="store">Store name.</param>
+        /// <param name="path">Store path.</param>
+        /// <returns>Success flag.</returns>
+        internal static int RemoveStream(string stream, string store, string path)
+        {
+            string tempFolderPath = Path.Combine(path, $"Copy-{Guid.NewGuid()}");
+
+            // copy all streams to the new path, excluding the specified stream by name
+            Store.Copy((store, path), (store, tempFolderPath), null, s => s.Name != stream, false);
+
+            // create a SafeCopy folder in which to save the original store files
+            var safeCopyPath = Path.Combine(path, $"Original-{Guid.NewGuid()}");
+            Directory.CreateDirectory(safeCopyPath);
+
+            // Move the original store files to the BeforeRepair folder. Do this even if the deleteOldStore
+            // flag is true, as deleting the original store files immediately may occasionally fail. This can
+            // happen because the InfiniteFileReader disposes of its MemoryMappedView in a background
+            // thread, which may still be in progress. If deleteOldStore is true, we will delete the
+            // BeforeRepair folder at the very end (by which time any open MemoryMappedViews will likely
+            // have finished disposing).
+            foreach (var file in Directory.EnumerateFiles(path))
+            {
+                var fileInfo = new FileInfo(file);
+                File.Move(file, Path.Combine(safeCopyPath, fileInfo.Name));
+            }
+
+            // move the repaired store files to the original folder
+            foreach (var file in Directory.EnumerateFiles(Path.Combine(tempFolderPath)))
+            {
+                var fileInfo = new FileInfo(file);
+                File.Move(file, Path.Combine(path, fileInfo.Name));
+            }
+
+            // cleanup temporary folder
+            Directory.Delete(tempFolderPath, true);
+
+            // delete the old store files
+            Directory.Delete(safeCopyPath, true);
 
             return 0;
         }
@@ -187,7 +248,7 @@ namespace PsiStoreTool
         /// <returns>Success flag.</returns>
         internal static int CropStore(string store, string path, string output, string start, string length)
         {
-            Console.WriteLine($"Concatenating stores (stores={store}, path={path}, output={output}, start={start}, length={length})");
+            Console.WriteLine($"Cropping store (store={store}, path={path}, output={output}, start={start}, length={length})");
 
             var startTime = TimeSpan.Zero; // start at beginning if unspecified
             if (!string.IsNullOrWhiteSpace(start) && !TimeSpan.TryParse(start, CultureInfo.InvariantCulture, out startTime))
@@ -236,7 +297,7 @@ namespace PsiStoreTool
         /// <param name="path">Store path.</param>
         /// <param name="name">Task name.</param>
         /// <param name="assemblies">Optional assemblies containing task.</param>
-        /// <param name="args">Addidional configuration arguments.</param>
+        /// <param name="args">Additional configuration arguments.</param>
         /// <returns>Success flag.</returns>
         internal static int ExecuteTask(string stream, string store, string path, string name, IEnumerable<string> assemblies, IEnumerable<string> args)
         {
@@ -275,7 +336,7 @@ namespace PsiStoreTool
                     {
                         if (importer == null)
                         {
-                            throw new ArgumentException("Error: Task requires a store, but no store argument suplied (-s).");
+                            throw new ArgumentException("Error: Task requires a store, but no store argument supplied (-s).");
                         }
 
                         parameters[i] = importer;
@@ -362,7 +423,7 @@ namespace PsiStoreTool
                 {
                     if (importer == null)
                     {
-                        throw new ArgumentException("Error: Task requires a stream within a store, but no store argument suplied (-s).");
+                        throw new ArgumentException("Error: Task requires a stream within a store, but no store argument supplied (-s).");
                     }
 
                     importer.OpenDynamicStream(stream).Do((m, e) =>

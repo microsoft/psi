@@ -23,7 +23,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
@@ -31,7 +31,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
@@ -126,10 +126,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="OldBuild" DependsOnTargets="$(OldBuildDependsOn)"/>
+  <Target Name="OldBuild" DependsOnTargets="$(OldBuildDependsOn)" />
   <Target Name="CheckVariable">
     <Warning Text="In order to build this sample you must define the environment variable RealSenseSDKDir to point to your Intel RealSense SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(RealSenseSDKDir)'==''" />
-    <CallTarget Targets="OldBuild" Condition="'$(RealSenseSDKDir)'!=''"/>
+    <CallTarget Targets="OldBuild" Condition="'$(RealSenseSDKDir)'!=''" />
   </Target>
   <PropertyGroup>
     <OldBuildDependsOn>$(BuildDependsOn)</OldBuildDependsOn>

@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Data.Json
         public IEnumerable<IStreamMetadata> AvailableStreams => this.reader.AvailableStreams;
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in the underlying data store.
+        /// Gets the originating time interval (earliest to latest) of the messages in the underlying data store.
         /// </summary>
         public TimeInterval OriginatingTimeInterval => this.reader.OriginatingTimeInterval;
 
@@ -90,7 +90,7 @@ namespace Microsoft.Psi.Data.Json
         /// </summary>
         /// <typeparam name="T">Type of data in underlying stream.</typeparam>
         /// <param name="streamName">The name of the stream.</param>
-        /// <returns>The newly created emmitte that generates messages from the stream of type <typeparamref name="T"/>.</returns>
+        /// <returns>The newly created emitter that generates messages from the stream of type <typeparamref name="T"/>.</returns>
         public Emitter<T> OpenStream<T>(string streamName)
         {
             // if stream already opened, return emitter

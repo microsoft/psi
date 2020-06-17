@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         // The list of properties that should not appear in the property browser if
         // this visualization object is the child of another visualization object.
-        private List<string> hiddenChildProperties = new List<string>() { "CursorEpsilonMs", "InterpolationStyle", "Name" };
+        private List<string> hiddenChildProperties = new List<string>() { nameof(CursorEpsilonMs), nameof(Name), nameof(StreamAdapterType), nameof(SummarizerType) };
 
         /// <summary>
         /// Gets the model view of this visualization object.
@@ -67,9 +67,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Called when the current stream data has changed.
         /// </summary>
-        /// <param name="currentData">The data for the current value.</param>
-        /// <param name="originatingTime">The originating time of the current data.</param>
-        public abstract void UpdateData(TData currentData, DateTime originatingTime);
+        public abstract void UpdateData();
 
         /// <summary>
         /// Called when a property other than CurrentValue changes.
@@ -98,7 +96,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             PropertyInfo property = this.GetType().GetProperty(nextSegment);
 
             // If we're at the end of the path, we're at the property and we can
-            // set it, otherwise we still need to drill further into the heirarchy
+            // set it, otherwise we still need to drill further into the hierarchy
             if (string.IsNullOrEmpty(remainder))
             {
                 property.SetValue(this, newValue);
@@ -206,12 +204,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Message<TData> currentValue = this.CurrentValue.GetValueOrDefault();
-
             if (e.PropertyName == nameof(this.CurrentValue))
             {
                 // Notify of the change to the current data
-                this.UpdateData(currentValue == default ? default : currentValue.Data, currentValue.OriginatingTime);
+                this.UpdateData();
             }
             else
             {
@@ -256,6 +252,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Creates a new <see cref="Message{T}"/> struct suitable for passing to a child <see cref="ModelVisual3DVisualizationObject{TData}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the new message.</typeparam>
+        /// <param name="data">The new message data.</param>
+        /// <returns>A newly created message using the envelope of the current value.</returns>
+        protected Message<T> SynthesizeMessage<T>(T data)
+        {
+            return new Message<T>(data, this.CurrentValue.Value.OriginatingTime, this.CurrentValue.Value.Time, this.CurrentValue.Value.SourceId, this.CurrentValue.Value.SequenceId);
+        }
+
+        /// <summary>
         /// Gets the next path segment from a property path.
         /// </summary>
         /// <param name="path">The path to get the next segment from.</param>
@@ -290,7 +297,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         private void RemoveHiddenChildProperties()
         {
-            // TypeDeescriptor.GetProperties returns a readonly collction, so we need to copy
+            // TypeDeescriptor.GetProperties returns a readonly collection, so we need to copy
             // the properties to a new collection, skipping those properties we wish to hide.
             PropertyDescriptorCollection updatedPropertyDescriptors = new PropertyDescriptorCollection(null);
 

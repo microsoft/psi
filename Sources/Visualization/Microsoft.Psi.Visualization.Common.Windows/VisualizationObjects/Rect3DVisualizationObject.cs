@@ -24,9 +24,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         // The edges that make up the 3D rectangle
         private PipeVisual3D[] edges;
 
-        // The value the last time this object was updated
-        private Rect3D currentData = default;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Rect3DVisualizationObject"/> class.
         /// </summary>
@@ -67,19 +64,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData(Rect3D data, DateTime originatingTime)
+        public override void UpdateData()
         {
-            this.currentData = data;
-            if (this.currentData != default)
+            if (this.CurrentData != default)
             {
-                var p0 = new Point3D(data.Location.X, data.Location.Y, data.Location.Z);
-                var p1 = new Point3D(data.Location.X + data.SizeX, data.Location.Y, data.Location.Z);
-                var p2 = new Point3D(data.Location.X + data.SizeX, data.Location.Y + data.SizeY, data.Location.Z);
-                var p3 = new Point3D(data.Location.X, data.Location.Y + data.SizeY, data.Location.Z);
-                var p4 = new Point3D(data.Location.X, data.Location.Y, data.Location.Z + data.SizeZ);
-                var p5 = new Point3D(data.Location.X + data.SizeX, data.Location.Y, data.Location.Z + data.SizeZ);
-                var p6 = new Point3D(data.Location.X + data.SizeX, data.Location.Y + data.SizeY, data.Location.Z + data.SizeZ);
-                var p7 = new Point3D(data.Location.X, data.Location.Y + data.SizeY, data.Location.Z + data.SizeZ);
+                var p0 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y, this.CurrentData.Location.Z);
+                var p1 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y, this.CurrentData.Location.Z);
+                var p2 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z);
+                var p3 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z);
+                var p4 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
+                var p5 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
+                var p6 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
+                var p7 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
 
                 this.UpdateLinePosition(this.edges[0], p0, p1);
                 this.UpdateLinePosition(this.edges[1], p1, p2);
@@ -139,7 +135,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             foreach (PipeVisual3D line in this.edges)
             {
-                this.UpdateChildVisibility(line, this.Visible && this.currentData != default);
+                this.UpdateChildVisibility(line, this.Visible && this.CurrentData != default);
             }
         }
 

@@ -102,11 +102,7 @@ namespace Microsoft {
 
                 ~MP4Writer()
                 {
-                    if (unmanagedData != nullptr)
-                    {
-                        delete unmanagedData;
-                        unmanagedData = nullptr;
-                    }
+                    Close();
                 }
 
                 HRESULT Open(String ^fn, MP4WriterConfiguration^ config);

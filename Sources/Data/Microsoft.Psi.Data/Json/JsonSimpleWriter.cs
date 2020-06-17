@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Data.Json
         public JsonSimpleWriter(string name, string path, bool createSubdirectory = true, string extension = JsonStoreBase.DefaultExtension)
             : this(extension)
         {
-            this.CreateStore(name, path, createSubdirectory);
+            this.Writer = new JsonStoreWriter(name, path, createSubdirectory, extension);
         }
 
         /// <summary>

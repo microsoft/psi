@@ -57,7 +57,7 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Reads the lenth in bytes of the data section of a Wave file.
+        /// Reads the length in bytes of the data section of a Wave file.
         /// </summary>
         /// <param name="br">The binary reader to read from.</param>
         /// <returns>The number of byte of wave data that follow.</returns>

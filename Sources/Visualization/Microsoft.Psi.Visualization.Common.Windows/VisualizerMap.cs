@@ -24,11 +24,6 @@ namespace Microsoft.Psi.Visualization
         // The list of default assemblies in which the visualizer mapper will search for visualization objects, adapter, and summarizers.
         private string[] defaultAssemblies = new[] { "Microsoft.Psi.Visualization.Common.Windows.dll" };
 
-        /// <summary>
-        /// True if the Initialize() has been called, otherwise false.
-        /// </summary>
-        private bool isInitialized = false;
-
         // The list of summarizers that were found during discovery.
         private Dictionary<Type, SummarizerMetadata> summarizers = new Dictionary<Type, SummarizerMetadata>();
 
@@ -37,6 +32,11 @@ namespace Microsoft.Psi.Visualization
 
         // The list of visualization objects that were found during discovery.
         private List<VisualizerMetadata> visualizers = new List<VisualizerMetadata>();
+
+        /// <summary>
+        /// Gets a value indicating whether or not Initialize() has been called.
+        /// </summary>
+        public bool IsInitialized { get; private set; } = false;
 
         /// <summary>
         /// Initializes the visualizer map.
@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Visualization
             // Load all the visualizers, summarizers, stream adapters
             this.DiscoverVisualizerObjects(assembliesToSearch, visualizerLoadLogFilename);
 
-            this.isInitialized = true;
+            this.IsInitialized = true;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Microsoft.Psi.Visualization
                         // Get the list of types in the assembly
                         Type[] types = this.GetTypesFromAssembly(assemblyPath, logWriter);
 
-                        // Look for attributes denoting visualziation objects, summarizers, and stream adapters.
+                        // Look for attributes denoting visualization objects, summarizers, and stream adapters.
                         foreach (Type type in types)
                         {
                             if (type.GetCustomAttribute<VisualizationObjectAttribute>() != null)
@@ -280,9 +280,9 @@ namespace Microsoft.Psi.Visualization
 
         private void EnsureInitialized()
         {
-            if (!this.isInitialized)
+            if (!this.IsInitialized)
             {
-                throw new InvalidOperationException("VisualizerMap.Initialize() must be called before calling this method.");
+                throw new InvalidOperationException($"{nameof(this.Initialize)} must be called before calling this method.");
             }
         }
     }

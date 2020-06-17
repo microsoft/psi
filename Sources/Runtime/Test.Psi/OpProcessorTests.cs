@@ -6,6 +6,7 @@ namespace Test.Psi
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reactive.Linq;
     using Microsoft.Psi;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -32,6 +33,34 @@ namespace Test.Psi
             }
 
             CollectionAssert.AreEqual(new double[] { 100, 75, 50 }, results);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void StreamEditing()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                var start = new DateTime(1971, 11, 03);
+                var range = Generators.Sequence(pipeline, new[]
+                {
+                    ('B', start.AddSeconds(1)),
+                    ('C', start.AddSeconds(2)),
+                    ('D', start.AddSeconds(3)),
+                    ('E', start.AddSeconds(4)),
+                });
+                var edited = range.EditStream(new[]
+                {
+                    (true, 'F', start.AddSeconds(5)), // insert F after E
+                    (false, default(char), start.AddSeconds(2)), // delete C
+                    (true, 'A', start), // insert A before B
+                    (true, 'X', start.AddSeconds(3)), // update D to X
+                }).ToObservable().ToListObservable();
+                pipeline.Run();
+
+                var editedResults = edited.AsEnumerable().ToArray();
+                Assert.IsTrue(Enumerable.SequenceEqual(new[] { 'A', 'B', 'X', 'E', 'F' }, editedResults));
+            }
         }
     }
 }

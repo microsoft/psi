@@ -6,7 +6,7 @@
     <Company>Microsoft Corporation</Company>
     <Owners>microsoft,psi</Owners>
     <Authors>Microsoft</Authors>
-    <AssemblyVersion>0.11.82.2</AssemblyVersion>
+    <AssemblyVersion>0.12.53.2</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)-beta</Version>
     <SignAssembly>false</SignAssembly>
@@ -21,6 +21,7 @@
     <!-- Workaround for arbitrary value in AssemblyInformationalVersionAttribute until it is fixed in VS 16 https://github.com/Microsoft/visualfsharp/issues/4822 -->
     <NoWarn>FS2003</NoWarn>
     <LangVersion>latest</LangVersion>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
 
   <!-- Support for building in Visual Studio versions 15.9 and up -->

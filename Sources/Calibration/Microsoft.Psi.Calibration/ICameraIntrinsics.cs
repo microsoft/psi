@@ -50,6 +50,15 @@ namespace Microsoft.Psi.Calibration
         Point2D PrincipalPoint { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the closed form equation of the Brown-Conrady Distortion model
+        /// distorts or undistorts. i.e. if true then:
+        ///      Xdistorted = Xundistorted * (1+K1*R2+K2*R3+...
+        /// otherwise:
+        ///      Xundistorted = Xdistorted * (1+K1*R2+K2*R3+...
+        /// </summary>
+        bool ClosedFormDistorts { get; }
+
+        /// <summary>
         /// Gets the width of the camera's image (in pixels).
         /// </summary>
         int ImageWidth { get; }
@@ -92,10 +101,10 @@ namespace Microsoft.Psi.Calibration
         /// Newton's method is used to find the inverse of this. That is
         ///             Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).
         /// </summary>
-        /// <param name="undistortedPoint">The undistorted point in camera post-projection coordinates.</param>
-        /// <param name="distortedPoint">The distorted point.</param>
-        /// <returns>True if 'distortedPoint' contains the distorted point, or false if the algorithm did not converge.</returns>
-        bool DistortPoint(Point2D undistortedPoint, out Point2D distortedPoint);
+        /// <param name="undistortedPt">The undistorted point in camera post-projection coordinates.</param>
+        /// <param name="distortedPt">The distorted point.</param>
+        /// <returns>True if 'distortedPt' contains the distorted point, or false if the algorithm did not converge.</returns>
+        bool DistortPoint(Point2D undistortedPt, out Point2D distortedPt);
 
         /// <summary>
         /// Applies the camera's radial and tangential undistortion to the specified (distorted) point.
@@ -110,8 +119,9 @@ namespace Microsoft.Psi.Calibration
         ///    T0,T1 - tangential distortion coefficients.
         ///
         /// </summary>
-        /// <param name="distortedPoint">Distorted point in camera post-projection coordinates.</param>
-        /// <returns>Undistorted coordinates in camera post-projection coordinates.</returns>
-        Point2D UndistortPoint(Point2D distortedPoint);
+        /// <param name="distortedPt">Distorted point in camera post-projection coordinates.</param>
+        /// <param name="undistortedPt">Returns the undistorted point in camera post-projection coordinates.</param>
+        /// <returns>True if 'undistortedPoint' contains the undistorted point, or false if the algorithm did not converge.</returns>
+        bool UndistortPoint(Point2D distortedPt, out Point2D undistortedPt);
     }
 }

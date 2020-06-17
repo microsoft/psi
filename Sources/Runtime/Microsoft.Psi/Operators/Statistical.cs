@@ -711,7 +711,7 @@ namespace Microsoft.Psi
                     var oldmean = mean;
                     mean = mean + ((value - mean) / count);
                     q = q + ((value - oldmean) * (value - mean));
-                    return count == 1 ? 0m : (decimal)Math.Sqrt((double)q / (count - 1)); // reture 0m for first value
+                    return count == 1 ? 0m : (decimal)Math.Sqrt((double)q / (count - 1)); // return 0m for first value
                 }, deliveryPolicy);
         }
 

@@ -116,7 +116,7 @@ namespace Microsoft.Psi.PsiStudio.TypeSpec
                 {
                     if (i > j)
                     {
-                        yield return new Token(TokenKind.Name, value.Substring(j, i - j)); // preceeding name, if any
+                        yield return new Token(TokenKind.Name, value.Substring(j, i - j)); // preceding name, if any
                     }
 
                     j = i + 1;

@@ -5,7 +5,6 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
-    using System;
     using System.Runtime.Serialization;
     using System.Windows.Media;
     using HelixToolkit.Wpf;
@@ -29,8 +28,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             new ArrowVisual3D() { ThetaDiv = ThetaDivDefault, Fill = Brushes.Green },
             new ArrowVisual3D() { ThetaDiv = ThetaDivDefault, Fill = Brushes.Blue },
         };
-
-        private CoordinateSystem currentData = null;
 
         private double size = 35;
 
@@ -59,7 +56,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (propertyName == nameof(this.Size))
             {
                 this.UpdateDiameters();
-                this.UpdateData(this.currentData, default);
+                this.UpdateData();
             }
             else if (propertyName == nameof(this.Visible))
             {
@@ -68,34 +65,29 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData(CoordinateSystem coordinateSystem, DateTime originatingTime)
+        public override void UpdateData()
         {
-            if (!Equals(this.currentData, coordinateSystem))
+            if (this.CurrentData != null)
             {
-                this.currentData = coordinateSystem;
+                var length = this.Size / 200.0;
+                var x = this.CurrentData.Origin + (length * this.CurrentData.XAxis.Normalize());
+                var y = this.CurrentData.Origin + (length * this.CurrentData.YAxis.Normalize());
+                var z = this.CurrentData.Origin + (length * this.CurrentData.ZAxis.Normalize());
 
-                if (this.currentData != null)
-                {
-                    var length = this.Size / 200.0;
-                    var x = this.currentData.Origin + (length * this.currentData.XAxis.Normalize());
-                    var y = this.currentData.Origin + (length * this.currentData.YAxis.Normalize());
-                    var z = this.currentData.Origin + (length * this.currentData.ZAxis.Normalize());
+                this.axes[XAxisIndex].BeginEdit();
+                this.axes[XAxisIndex].Point1 = new Win3D.Point3D(this.CurrentData.Origin.X, this.CurrentData.Origin.Y, this.CurrentData.Origin.Z);
+                this.axes[XAxisIndex].Point2 = new Win3D.Point3D(x.X, x.Y, x.Z);
+                this.axes[XAxisIndex].EndEdit();
 
-                    this.axes[XAxisIndex].BeginEdit();
-                    this.axes[XAxisIndex].Point1 = new Win3D.Point3D(this.currentData.Origin.X, this.currentData.Origin.Y, this.currentData.Origin.Z);
-                    this.axes[XAxisIndex].Point2 = new Win3D.Point3D(x.X, x.Y, x.Z);
-                    this.axes[XAxisIndex].EndEdit();
+                this.axes[YAxisIndex].BeginEdit();
+                this.axes[YAxisIndex].Point1 = new Win3D.Point3D(this.CurrentData.Origin.X, this.CurrentData.Origin.Y, this.CurrentData.Origin.Z);
+                this.axes[YAxisIndex].Point2 = new Win3D.Point3D(y.X, y.Y, y.Z);
+                this.axes[YAxisIndex].EndEdit();
 
-                    this.axes[YAxisIndex].BeginEdit();
-                    this.axes[YAxisIndex].Point1 = new Win3D.Point3D(this.currentData.Origin.X, this.currentData.Origin.Y, this.currentData.Origin.Z);
-                    this.axes[YAxisIndex].Point2 = new Win3D.Point3D(y.X, y.Y, y.Z);
-                    this.axes[YAxisIndex].EndEdit();
-
-                    this.axes[ZAxisIndex].BeginEdit();
-                    this.axes[ZAxisIndex].Point1 = new Win3D.Point3D(this.currentData.Origin.X, this.currentData.Origin.Y, this.currentData.Origin.Z);
-                    this.axes[ZAxisIndex].Point2 = new Win3D.Point3D(z.X, z.Y, z.Z);
-                    this.axes[ZAxisIndex].EndEdit();
-                }
+                this.axes[ZAxisIndex].BeginEdit();
+                this.axes[ZAxisIndex].Point1 = new Win3D.Point3D(this.CurrentData.Origin.X, this.CurrentData.Origin.Y, this.CurrentData.Origin.Z);
+                this.axes[ZAxisIndex].Point2 = new Win3D.Point3D(z.X, z.Y, z.Z);
+                this.axes[ZAxisIndex].EndEdit();
             }
 
             this.UpdateVisibility();
@@ -115,7 +107,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             foreach (ArrowVisual3D axis in this.axes)
             {
-                this.UpdateChildVisibility(axis, this.Visible && this.currentData != null);
+                this.UpdateChildVisibility(axis, this.Visible && this.CurrentData != null);
             }
         }
     }

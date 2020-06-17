@@ -7,8 +7,8 @@ namespace Test.Psi
     using System.Dynamic;
     using System.IO;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.Psi;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Test.Psi.Common;
 
     [TestClass]
@@ -33,14 +33,14 @@ namespace Test.Psi
         public void PrimitiveToDynamicTest()
         {
             // simple primitives
-            Assert.AreEqual<int>(123, InstanceToDynamic(123));
-            Assert.AreEqual<double>(Math.E, InstanceToDynamic(Math.E));
-            Assert.AreEqual<bool>(true, InstanceToDynamic(true));
-            Assert.AreEqual<char>('x', InstanceToDynamic('x'));
-            Assert.AreEqual<string>("Hello", InstanceToDynamic("Hello"));
+            Assert.AreEqual<int>(123, this.InstanceToDynamic(123));
+            Assert.AreEqual<double>(Math.E, this.InstanceToDynamic(Math.E));
+            Assert.AreEqual<bool>(true, this.InstanceToDynamic(true));
+            Assert.AreEqual<char>('x', this.InstanceToDynamic('x'));
+            Assert.AreEqual<string>("Hello", this.InstanceToDynamic("Hello"));
 
             // collections of primitives
-            CollectionAssert.AreEqual(new[] { 1, 2, 3 }, InstanceToDynamic(new[] { 1, 2, 3 }));
+            CollectionAssert.AreEqual(new[] { 1, 2, 3 }, this.InstanceToDynamic(new[] { 1, 2, 3 }));
         }
 
         public class TestObject
@@ -85,8 +85,8 @@ namespace Test.Psi
         public void ObjectToDynamicTest()
         {
             var obj = new TestObject();
-            var dyn = InstanceToDynamic(obj);
-            AssertTestObject(dyn);
+            var dyn = this.InstanceToDynamic(obj);
+            this.AssertTestObject(dyn);
         }
 
         [TestMethod]
@@ -96,11 +96,11 @@ namespace Test.Psi
             // serialization detects duplicates and flags, deserializer caches and returns existing instances
             var obj = new TestObject();
             var arr = new[] { obj, obj };
-            var dyn = InstanceToDynamic(arr);
+            var dyn = this.InstanceToDynamic(arr);
             Assert.IsTrue(dyn is object[]);
             Assert.AreEqual(2, dyn.Length);
-            AssertTestObject(dyn[0]);
-            AssertTestObject(dyn[1]);
+            this.AssertTestObject(dyn[0]);
+            this.AssertTestObject(dyn[1]);
             Assert.AreSame(dyn[0], dyn[1]); // literally the same object!
             dyn[0].Foo = "Bar";
             Assert.AreEqual("Bar", dyn[1].Foo); // spooky action at a distance (same object!)
@@ -111,14 +111,14 @@ namespace Test.Psi
         public void ComplexObjectToDynamicTest()
         {
             var obj = new ComplexTestObject();
-            var dyn = InstanceToDynamic(obj);
+            var dyn = this.InstanceToDynamic(obj);
             Assert.IsTrue(dyn is ExpandoObject);
-            AssertTestObject(dyn.NestedA);
-            AssertTestObject(dyn.NestedB);
-            AssertTestObject(dyn.Self.NestedA);
-            AssertTestObject(dyn.Self.Self.NestedA);
-            AssertTestObject(dyn.Self.Self.Self.NestedA);
-            AssertTestObject(dyn.Self.Self.Self.Self.NestedA); // I could go on...
+            this.AssertTestObject(dyn.NestedA);
+            this.AssertTestObject(dyn.NestedB);
+            this.AssertTestObject(dyn.Self.NestedA);
+            this.AssertTestObject(dyn.Self.Self.NestedA);
+            this.AssertTestObject(dyn.Self.Self.Self.NestedA);
+            this.AssertTestObject(dyn.Self.Self.Self.Self.NestedA); // I could go on...
             Assert.AreSame(dyn.NestedA, dyn.NestedB); // literally the same object!
             Assert.AreSame(dyn, dyn.Self); // also, literally the same object!
         }
@@ -131,8 +131,8 @@ namespace Test.Psi
 
             public ComplexTestObject()
             {
-                Self = this; // cyclic!
-                NestedA = NestedB = new TestObject(); // duplicate!
+                this.Self = this; // cyclic!
+                this.NestedA = this.NestedB = new TestObject(); // duplicate!
             }
         }
 

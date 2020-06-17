@@ -36,7 +36,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
     [Obsolete("The Bing Speech service will be retired soon. Please use the AzureSpeechRecognizer instead.", false)]
     public sealed class BingSpeechRecognizer : AsyncConsumerProducer<ValueTuple<AudioBuffer, bool>, IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
     {
-        // For cancelling any pending recognition tasks before disposal
+        // For canceling any pending recognition tasks before disposal
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             this.lastPartialResult = e.PartialResult.Text;
             var result = this.BuildPartialSpeechRecognitionResult(e.PartialResult.Text);
 
-            // Since this is a partial response, VAD may not yet have signalled the end of speech
+            // Since this is a partial response, VAD may not yet have signaled the end of speech
             // so just use the last audio packet time (which will probably be ahead).
             this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, result, this.lastAudioOriginatingTime);
 

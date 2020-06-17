@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Visualization.Converters
                 return timespan.ToString("hh\\:mm\\:ss\\.ffff");
             }
 
-            return "Invaid TimeSpan";
+            return "Invalid TimeSpan";
         }
 
         /// <inheritdoc />

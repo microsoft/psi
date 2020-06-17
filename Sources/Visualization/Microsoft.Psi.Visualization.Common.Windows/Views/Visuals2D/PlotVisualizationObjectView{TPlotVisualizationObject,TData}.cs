@@ -456,7 +456,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
             public DateTime? StartTime { get; set; }
 
-            public DateTime EndTime { get; set; } = DateTime.MaxValue; // Start out at MaxValue so that an intial empty segment doesn't get removed from a data range change
+            public DateTime EndTime { get; set; } = DateTime.MaxValue; // Start out at MaxValue so that an initial empty segment doesn't get removed from a data range change
 
             public void AddPoint(DateTime time, Point point)
             {

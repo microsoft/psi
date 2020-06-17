@@ -27,7 +27,7 @@ namespace Microsoft.Psi.RealSense.Windows
         {
             this.shutdown = false;
             this.ColorImage = pipeline.CreateEmitter<Shared<Image>>(this, "ColorImage");
-            this.DepthImage = pipeline.CreateEmitter<Shared<Image>>(this, "DepthImage");
+            this.DepthImage = pipeline.CreateEmitter<Shared<DepthImage>>(this, "DepthImage");
             this.pipeline = pipeline;
         }
 
@@ -39,7 +39,7 @@ namespace Microsoft.Psi.RealSense.Windows
         /// <summary>
         /// Gets the emitter that generates Depth images from the RealSense depth camera.
         /// </summary>
-        public Emitter<Shared<Image>> DepthImage { get; private set; }
+        public Emitter<Shared<DepthImage>> DepthImage { get; private set; }
 
         /// <summary>
         /// Dispose method.
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.RealSense.Windows
         {
             if (this.device != null)
             {
-                this.device.Dispose();
+                ((IDisposable)this.device).Dispose();
                 this.device = null;
             }
         }
@@ -114,7 +114,7 @@ namespace Microsoft.Psi.RealSense.Windows
                     throw new NotSupportedException("Expected 8bpp or 16bpp image.");
             }
 
-            var depthImage = ImagePool.GetOrCreate((int)this.device.GetDepthWidth(), (int)this.device.GetDepthHeight(), pixelFormat);
+            var depthImage = DepthImagePool.GetOrCreate((int)this.device.GetDepthWidth(), (int)this.device.GetDepthHeight());
             uint depthImageSize = this.device.GetDepthHeight() * this.device.GetDepthStride();
             while (!this.shutdown)
             {

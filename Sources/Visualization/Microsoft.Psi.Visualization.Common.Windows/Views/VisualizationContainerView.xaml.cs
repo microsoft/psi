@@ -6,15 +6,12 @@ namespace Microsoft.Psi.Visualization.Views
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using Microsoft.Psi.PsiStudio;
-    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -72,8 +69,9 @@ namespace Microsoft.Psi.Visualization.Views
             else if (dragOperation == DragDropOperation.DragDropStream)
             {
                 StreamTreeNode streamTreeNode = e.Data.GetData(DragDropDataName.StreamTreeNode) as StreamTreeNode;
+                Type streamType = VisualizationContext.Instance.GetDataType(streamTreeNode);
                 Point mousePosition = e.GetPosition(this.Items);
-                List<VisualizerMetadata> metadatas = this.GetStreamDropCommands(streamTreeNode, this.GetVisualizationPanelUnderMouse(mousePosition));
+                List<VisualizerMetadata> metadatas = this.GetStreamDropCommands(streamType, this.GetVisualizationPanelUnderMouse(mousePosition));
                 e.Effects = metadatas.Count > 0 ? DragDropEffects.Move : DragDropEffects.None;
                 e.Handled = true;
             }
@@ -148,13 +146,16 @@ namespace Microsoft.Psi.Visualization.Views
                 // Get the visualization panel (if any) that the mouse is above
                 VisualizationPanel visualizationPanel = this.GetVisualizationPanelUnderMouse(mousePosition);
 
-                // Get the list of commands that are compatible with the user dropping the stream here
-                List<VisualizerMetadata> metadatas = this.GetStreamDropCommands(streamTreeNode, visualizationPanel);
+                // Get the type of messages in the stream
+                Type dataType = VisualizationContext.Instance.GetDataType(streamTreeNode);
 
-                // If there's any compatible visualization commands, execute the first one
+                // Get the list of commands that are compatible with the user dropping the stream here
+                List<VisualizerMetadata> metadatas = this.GetStreamDropCommands(dataType, visualizationPanel);
+
+                // If there's any compatible visualization commands, select the most appropriate one and execute it
                 if (metadatas.Count > 0)
                 {
-                    VisualizationContext.Instance.VisualizeStream(streamTreeNode, metadatas[0], visualizationPanel);
+                    VisualizationContext.Instance.VisualizeStream(streamTreeNode, VisualizerMetadata.GetClosestVisualizerMetadata(dataType, metadatas), visualizationPanel);
                 }
             }
         }
@@ -173,15 +174,10 @@ namespace Microsoft.Psi.Visualization.Views
             return this.hitTestResult != null ? this.hitTestResult.DataContext as VisualizationPanel : null;
         }
 
-        private List<VisualizerMetadata> GetStreamDropCommands(StreamTreeNode streamTreeNode, VisualizationPanel visualizationPanel)
+        private List<VisualizerMetadata> GetStreamDropCommands(Type messageType, VisualizationPanel visualizationPanel)
         {
-            List<VisualizerMetadata> metadatas = new List<VisualizerMetadata>();
-
             // Get all the commands that are applicable to this stream tree node and the panel it was dropped over
-            Type streamType = VisualizationContext.Instance.GetStreamType(streamTreeNode);
-            metadatas = VisualizationContext.Instance.VisualizerMap.GetByDataTypeAndPanelAboveSeparator(streamType, visualizationPanel);
-
-            return metadatas;
+            return VisualizationContext.Instance.VisualizerMap.GetByDataTypeAndPanelAboveSeparator(messageType, visualizationPanel);
         }
 
         private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
@@ -211,7 +207,7 @@ namespace Microsoft.Psi.Visualization.Views
 
         private int FindPanelMoveIndices(VisualizationPanel droppedPanel, int panelVerticalCenter, out int currentPanelIndex)
         {
-            // Find the index of the panel whose vertical center is closest the the panel being dragged's vertical center
+            // Find the index of the panel whose vertical center is closest the panel being dragged's vertical center
             VisualizationContainer visualizationContainer = droppedPanel.Container;
             currentPanelIndex = -1;
 

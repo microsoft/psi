@@ -260,7 +260,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets hilight color.
+        /// Gets or sets highlight color.
         /// </summary>
         [DataMember]
         [DisplayName("Highlight Color")]
@@ -269,7 +269,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public Color HighlightColor
         {
             get { return this.highlightColor; }
-            set { this.Set(nameof(this.highlightColor), ref this.highlightColor, value); }
+            set { this.Set(nameof(this.HighlightColor), ref this.highlightColor, value); }
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Add performance counter defintions.
+        /// Add performance counter definitions.
         /// </summary>
         /// <param name="category">Category name.</param>
         /// <param name="definitions">Performance counter definitions (key, name, help, type).</param>

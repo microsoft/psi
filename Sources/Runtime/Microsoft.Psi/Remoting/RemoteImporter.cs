@@ -152,6 +152,8 @@ namespace Microsoft.Psi.Remoting
 
             this.storeWriter.Dispose();
             this.storeWriter = null;
+
+            this.connected.Dispose();
         }
 
         private void StartMetaClient()

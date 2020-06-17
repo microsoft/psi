@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Visualization.Views
         /// </summary>
         /// <param name="tickAlignment">Tick alignment.</param>
         /// <param name="numDivisions">Number of divisions.</param>
-        /// <param name="label">Timeline segment lable.</param>
+        /// <param name="label">Timeline segment label.</param>
         public TimelineSegmentView(VerticalAlignment tickAlignment, int numDivisions, string label)
         {
             this.InitializeComponent();

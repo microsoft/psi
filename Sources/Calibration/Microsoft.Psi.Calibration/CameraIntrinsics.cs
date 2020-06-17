@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Calibration
 {
+    using System.Runtime.Serialization;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
 
@@ -13,6 +14,9 @@ namespace Microsoft.Psi.Calibration
     {
         private Matrix<double> transform;
 
+        [OptionalField]
+        private bool closedFormDistorts;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraIntrinsics"/> class.
         /// </summary>
@@ -21,12 +25,14 @@ namespace Microsoft.Psi.Calibration
         /// <param name="transform">The intrinsics transform matrix.</param>
         /// <param name="radialDistortion">The radial distortion parameters.</param>
         /// <param name="tangentialDistortion">The tangential distortion parameters.</param>
+        /// <param name="closedFormDistorts">Indicates which direction the closed form equation for Brown-Conrady Distortion model goes. I.e. does it perform distortion or undistortion. Default is to distort (thus making projection simpler and unprojection more complicated).</param>
         public CameraIntrinsics(
             int imageWidth,
             int imageHeight,
             Matrix<double> transform,
             Vector<double> radialDistortion = null,
-            Vector<double> tangentialDistortion = null)
+            Vector<double> tangentialDistortion = null,
+            bool closedFormDistorts = true)
         {
             this.ImageWidth = imageWidth;
             this.ImageHeight = imageHeight;
@@ -35,6 +41,7 @@ namespace Microsoft.Psi.Calibration
             this.TangentialDistortion = tangentialDistortion ?? Vector<double>.Build.Dense(2, 0);
             this.FocalLengthXY = new Point2D(this.Transform[0, 0], this.Transform[1, 1]);
             this.PrincipalPoint = new Point2D(this.Transform[0, 2], this.Transform[1, 2]);
+            this.ClosedFormDistorts = closedFormDistorts;
         }
 
         /// <inheritdoc/>
@@ -71,6 +78,20 @@ namespace Microsoft.Psi.Calibration
         public Point2D PrincipalPoint { get; private set; }
 
         /// <inheritdoc/>
+        public bool ClosedFormDistorts
+        {
+            get
+            {
+                return this.closedFormDistorts;
+            }
+
+            private set
+            {
+                this.closedFormDistorts = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public int ImageWidth { get; private set; }
 
         /// <inheritdoc/>
@@ -88,7 +109,7 @@ namespace Microsoft.Psi.Calibration
 
             Point3D tmp = new Point3D(pixelPt.X, pixelPt.Y, 1.0);
             tmp = tmp.TransformBy(this.transform);
-            return new Point2D(tmp.X, this.ImageHeight - tmp.Y);
+            return new Point2D(tmp.X, tmp.Y);
         }
 
         /// <inheritdoc/>
@@ -98,11 +119,11 @@ namespace Microsoft.Psi.Calibration
             Point3D tmp = new Point3D(pt.X, pt.Y, 1.0);
             tmp = tmp.TransformBy(this.InvTransform);
 
-            // Undistort the pixel
+            // Distort the pixel
             Point2D pixelPt = new Point2D(tmp.X, tmp.Y);
             if (undistort)
             {
-                pixelPt = this.UndistortPoint(pixelPt);
+                this.UndistortPoint(pixelPt, out pixelPt);
             }
 
             // X points in the depth dimension. Y points to the left, and Z points up.
@@ -110,21 +131,51 @@ namespace Microsoft.Psi.Calibration
         }
 
         /// <inheritdoc/>
+        public bool UndistortPoint(Point2D distortedPt, out Point2D undistortedPt)
+        {
+            if (this.ClosedFormDistorts)
+            {
+                return this.InverseOfClosedForm(distortedPt, out undistortedPt);
+            }
+
+            return this.ClosedForm(distortedPt, out undistortedPt);
+        }
+
+        /// <inheritdoc/>
         public bool DistortPoint(Point2D undistortedPt, out Point2D distortedPt)
         {
-            double x = undistortedPt.X;
-            double y = undistortedPt.Y;
+            if (this.ClosedFormDistorts)
+            {
+                return this.ClosedForm(undistortedPt, out distortedPt);
+            }
+
+            return this.InverseOfClosedForm(undistortedPt, out distortedPt);
+        }
+
+        private bool InverseOfClosedForm(Point2D inputPt, out Point2D outputPt)
+        {
+            double k1 = this.RadialDistortion[0];
+            double k2 = this.RadialDistortion[1];
+            double k3 = this.RadialDistortion[2];
+            double k4 = this.RadialDistortion[3];
+            double k5 = this.RadialDistortion[4];
+            double k6 = this.RadialDistortion[5];
+            double t0 = this.TangentialDistortion[0];
+            double t1 = this.TangentialDistortion[1];
+
+            double x = inputPt.X;
+            double y = inputPt.Y;
 
             // Our distortion model is defined as:
             // See https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=convertpointshomogeneous
             //        r^2 = x^2 + y^2
-            //               (1+k1*r^2+k2*r^3+k3^r^6)
+            //               (1+k1*r^2+k2*r^4+k3^r^6)
             //        Fx = x ------------------------ + t1*(r^2+ 2 * x^2) + 2 * t0 * x*y
-            //               (1+k4*r^2+k5*r^3+k6^r^6)
+            //               (1+k4*r^2+k5*r^4+k6^r^6)
             //
-            //               (1+k1*r^2+k2*r^3+k3^r^6)
+            //               (1+k1*r^2+k2*r^4+k3^r^6)
             //        Fy = y ------------------------ + t0*(r^2+ 2 * y^2) + 2 * t1 * x*y
-            //               (1+k4*r^2+k5*r^3+k6^r^6)
+            //               (1+k4*r^2+k5*r^4+k6^r^6)
             //
             // We want to solve for:
             //                          1                            | @Fy/@y   -@Fx/@y |
@@ -147,15 +198,6 @@ namespace Microsoft.Psi.Calibration
             //    @Fy/@x = y @d/@x + 2*t0*y + 2*t1*x
             //
             // In the code below @<x>/@<y> is named 'd<x>d<y>'.
-            double k1 = this.RadialDistortion[0];
-            double k2 = this.RadialDistortion[1];
-            double k3 = this.RadialDistortion[2];
-            double k4 = this.RadialDistortion[3];
-            double k5 = this.RadialDistortion[4];
-            double k6 = this.RadialDistortion[5];
-            double t0 = this.TangentialDistortion[0];
-            double t1 = this.TangentialDistortion[1];
-
 #pragma warning disable SA1305
             bool converged = false;
             for (int j = 0; j < 100 && !converged; j++)
@@ -169,7 +211,7 @@ namespace Microsoft.Psi.Calibration
                 double dr2dy = 2 * y;
                 double d = g / h;
                 double dgdr2 = k1 + 2 * k2 * radiusSq + 3 * k3 * radiusSqSq;
-                double dhdr2 = k4 * 2 * k5 * radiusSq + 3 * k6 * radiusSqSq;
+                double dhdr2 = k4 + 2 * k5 * radiusSq + 3 * k6 * radiusSqSq;
                 double dddr2 = (dgdr2 * h - g * dhdr2) / (h * h);
                 double dddx = dddr2 * 2 * x;
                 double dddy = dddr2 * 2 * y;
@@ -183,7 +225,7 @@ namespace Microsoft.Psi.Calibration
                 if (System.Math.Abs(det) < 1E-16)
                 {
                     // Not invertible. Perform no distortion
-                    distortedPt = new Point2D(undistortedPt.X, undistortedPt.Y);
+                    outputPt = new Point2D(inputPt.X, inputPt.Y);
                     return false;
                 }
 
@@ -199,31 +241,40 @@ namespace Microsoft.Psi.Calibration
                 // to be equal to 0:
                 //       0 = F(xp) - Xu
                 //       0 = F(yp) - Yu
-                xp -= undistortedPt.X;
-                yp -= undistortedPt.Y;
+                double errx = xp - inputPt.X;
+                double erry = yp - inputPt.Y;
 
-                if ((xp * xp) + (yp * yp) < 1E-16)
+                double err = (errx * errx) + (erry * erry);
+                if (err < 1.0e-16)
                 {
                     converged = true;
                     break;
                 }
 
                 // Update our new guess (i.e. x = x - J(F(x))^-1 * F(x))
-                x = x - ((dFydy * xp) - (dFxdy * yp)) / det;
-                y = y - ((-dFydx * xp) + (dFxdx * yp)) / det;
+                x = x - ((dFydy * errx) - (dFxdy * erry)) / det;
+                y = y - ((-dFydx * errx) + (dFxdx * erry)) / det;
+
 #pragma warning restore SA1305
             }
 
-            distortedPt = new Point2D(x, y);
-            return true;
+            if (converged)
+            {
+                outputPt = new Point2D(x, y);
+            }
+            else
+            {
+                outputPt = new Point2D(inputPt.X, inputPt.Y);
+            }
+
+            return converged;
         }
 
-        /// <inheritdoc/>
-        public Point2D UndistortPoint(Point2D distortedPt)
+        private bool ClosedForm(Point2D inputPt, out Point2D outputPt)
         {
             // Undistort pixel
             double xp, yp;
-            double radiusSquared = (distortedPt.X * distortedPt.X) + (distortedPt.Y * distortedPt.Y);
+            double radiusSquared = (inputPt.X * inputPt.X) + (inputPt.Y * inputPt.Y);
             if (this.RadialDistortion != null)
             {
                 double k1 = this.RadialDistortion[0];
@@ -236,26 +287,27 @@ namespace Microsoft.Psi.Calibration
                 double h = 1 + k4 * radiusSquared + k5 * radiusSquared * radiusSquared + k6 * radiusSquared * radiusSquared * radiusSquared;
                 double d = g / h;
 
-                xp = distortedPt.X * d;
-                yp = distortedPt.Y * d;
+                xp = inputPt.X * d;
+                yp = inputPt.Y * d;
             }
             else
             {
-                xp = distortedPt.X;
-                yp = distortedPt.Y;
+                xp = inputPt.X;
+                yp = inputPt.Y;
             }
 
             // If we are incorporating tangential distortion, include that here
             if (this.TangentialDistortion != null && (this.TangentialDistortion[0] != 0.0 || this.TangentialDistortion[1] != 0.0))
             {
-                double xy = 2.0 * distortedPt.X * distortedPt.Y;
-                double x2 = 2.0 * distortedPt.X * distortedPt.X;
-                double y2 = 2.0 * distortedPt.Y * distortedPt.Y;
+                double xy = 2.0 * inputPt.X * inputPt.Y;
+                double x2 = 2.0 * inputPt.X * inputPt.X;
+                double y2 = 2.0 * inputPt.Y * inputPt.Y;
                 xp += (this.TangentialDistortion[1] * (radiusSquared + x2)) + (this.TangentialDistortion[0] * xy);
                 yp += (this.TangentialDistortion[0] * (radiusSquared + y2)) + (this.TangentialDistortion[1] * xy);
             }
 
-            return new Point2D(xp, yp);
+            outputPt = new Point2D(xp, yp);
+            return true;
         }
     }
 }

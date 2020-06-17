@@ -17,9 +17,9 @@ namespace Microsoft.Psi.Visualization.Collections
         private ObservableCollection<T> observableSource;
 
         /// <summary>
-        /// Sets the obvervable source.
+        /// Sets the observable source.
         /// </summary>
-        /// <param name="source">Souce collection to observe.</param>
+        /// <param name="source">Source collection to observe.</param>
         public void SetSource(IList<T> source)
         {
             if (this.observableSource != null)

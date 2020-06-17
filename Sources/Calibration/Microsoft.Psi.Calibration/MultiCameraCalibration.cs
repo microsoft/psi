@@ -132,14 +132,11 @@ namespace Microsoft.Psi.Calibration
             /// Values are stored in column-major order and assumes column-vectors
             /// (i.e. Matrix * Point versus Point * Matrix).
             /// Units are millimeters.
-            /// OpenCV basis is asssumed here (Forward=Z, Right=X, Down=Y):
-            ///           Z (forward)
-            ///          /
-            ///         /
-            ///        +----> X (right)
-            ///        |
-            ///        |
-            ///        Y (down).
+            /// MathNet basis is asssumed here
+            ///      Z ^  X
+            ///        | /
+            ///        |/
+            ///  Y ----+.
             /// </summary>
             [XmlArray]
             public double[] Extrinsics { get; set; }
@@ -241,13 +238,7 @@ namespace Microsoft.Psi.Calibration
                     mtx.SetColumn(3, mtx.Column(3) / 1000.0);
                     mtx[3, 3] = 1;
 
-                    // Extrinsics are stored in OpenCV basis, so convert here to MathNet basis.
-                    var openCVBasis = new MathNet.Spatial.Euclidean.CoordinateSystem(
-                        default,
-                        MathNet.Spatial.Euclidean.UnitVector3D.ZAxis,
-                        MathNet.Spatial.Euclidean.UnitVector3D.XAxis.Negate(),
-                        MathNet.Spatial.Euclidean.UnitVector3D.YAxis.Negate());
-                    return new MathNet.Spatial.Euclidean.CoordinateSystem(openCVBasis.Invert() * mtx.Inverse() * openCVBasis);
+                    return new MathNet.Spatial.Euclidean.CoordinateSystem(mtx.Inverse());
                 }
             }
         }

@@ -238,7 +238,7 @@ namespace Test.Psi
             Assert.IsFalse(results.Any(l => l < 0));
         }
 
-        // validate that items scheduled in the future get delivered imediately when the clock is not enforced
+        // validate that items scheduled in the future get delivered immediately when the clock is not enforced
         [TestMethod]
         [Timeout(60000)]
         public void FutureSchedulingWithoutClockEnforcement()

@@ -3,86 +3,70 @@
 
 namespace Microsoft.Psi.Imaging
 {
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Media.Imaging;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Serialization;
 
     /// <summary>
-    /// ImageCompressor defines an object used by the serialization layer
-    /// for compressing streams of images in a generic fashion. This object
-    /// should not be called directly but instead if used by Microsoft.Psi.Imaging.
+    /// Implements a compressor used by the serialization layer for compressing streams
+    /// of images in a generic fashion. This object should not be called directly, but
+    /// instead is used by the <see cref="Image.CustomSerializer"/> class.
     /// </summary>
     public class ImageCompressor : IImageCompressor
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageCompressor"/> class.
-        /// </summary>
-        public ImageCompressor()
-        {
-        }
+        private readonly IImageToStreamEncoder encoder = null;
+        private readonly IImageFromStreamDecoder decoder = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageCompressor"/> class.
         /// </summary>
-        /// <param name="compressionMethod">Compression method to be used by compressor.</param>
+        /// <param name="compressionMethod">The image compression method to be used.</param>
         public ImageCompressor(CompressionMethod compressionMethod)
         {
             this.CompressionMethod = compressionMethod;
-        }
-
-        /// <summary>
-        /// Gets or sets the compression method being used by the compressor.
-        /// </summary>
-        public CompressionMethod CompressionMethod { get; set; } = CompressionMethod.PNG;
-
-        /// <inheritdoc/>
-        public void Serialize(BufferWriter writer, Image instance, SerializationContext context)
-        {
-            // Note: encoder instances are created here because they (in the case of media foundation) may have thread affinity.
-            BitmapEncoder encoder = null;
             switch (this.CompressionMethod)
             {
-                case CompressionMethod.JPEG:
-                    encoder = new JpegBitmapEncoder { QualityLevel = 90 };
+                case CompressionMethod.Jpeg:
+                    this.encoder = new ImageToJpegStreamEncoder { QualityLevel = 90 };
                     break;
-                case CompressionMethod.PNG:
-                    encoder = new PngBitmapEncoder();
+                case CompressionMethod.Png:
+                    this.encoder = new ImageToPngStreamEncoder();
                     break;
                 case CompressionMethod.None:
                     break;
             }
 
-            if (encoder != null)
+            this.decoder = new ImageFromStreamDecoder();
+        }
+
+        /// <inheritdoc/>
+        public CompressionMethod CompressionMethod { get; set; } = CompressionMethod.Png;
+
+        /// <inheritdoc/>
+        public void Serialize(BufferWriter writer, Image image, SerializationContext context)
+        {
+            if (this.encoder != null)
             {
-                using (var sharedEncodedImage = EncodedImagePool.GetOrCreate())
-                {
-                    ImageEncoder.EncodeFrom(sharedEncodedImage.Resource, instance, encoder);
-                    Serializer.Serialize(writer, sharedEncodedImage, context);
-                }
+                using var sharedEncodedImage = EncodedImagePool.GetOrCreate(
+                    image.Width, image.Height, image.PixelFormat);
+                sharedEncodedImage.Resource.EncodeFrom(image, this.encoder);
+                Serializer.Serialize(writer, sharedEncodedImage, context);
             }
             else
             {
-                Serializer.Serialize(writer, instance, context);
+                Serializer.Serialize(writer, image, context);
             }
         }
 
         /// <inheritdoc/>
-        public void Deserialize(BufferReader reader, ref Image target, SerializationContext context)
+        public void Deserialize(BufferReader reader, ref Image image, SerializationContext context)
         {
-            Shared<EncodedImage> encodedImage = null;
-            Serializer.Deserialize(reader, ref encodedImage, context);
-            using (var image = ImagePool.GetOrCreate(encodedImage.Resource.Width, encodedImage.Resource.Height, Imaging.PixelFormat.BGR_24bpp))
-            {
-                ImageDecoder.DecodeTo(encodedImage.Resource, image.Resource);
-                target = image.Resource.DeepClone();
-            }
-
-            if (encodedImage != null)
-            {
-                encodedImage.Dispose();
-            }
+            Shared<EncodedImage> sharedEncodedImage = null;
+            Serializer.Deserialize(reader, ref sharedEncodedImage, context);
+            using var sharedImage = ImagePool.GetOrCreate(
+                sharedEncodedImage.Resource.Width, sharedEncodedImage.Resource.Height, sharedEncodedImage.Resource.PixelFormat);
+            sharedImage.Resource.DecodeFrom(sharedEncodedImage.Resource, this.decoder);
+            image = sharedImage.Resource.DeepClone();
+            sharedEncodedImage.Dispose();
         }
     }
 }

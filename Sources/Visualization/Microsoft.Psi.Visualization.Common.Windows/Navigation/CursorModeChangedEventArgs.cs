@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.Navigation
     /// Represents the method that will handle an event that has cursor mode changed event data.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">An object that contains cursot mode changed event data.</param>
+    /// <param name="e">An object that contains cursor mode changed event data.</param>
     public delegate void CursorModeChangedHandler(object sender, CursorModeChangedEventArgs e);
 
     /// <summary>

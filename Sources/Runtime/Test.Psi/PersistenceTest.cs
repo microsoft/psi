@@ -7,6 +7,7 @@ namespace Test.Psi
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Reactive.Linq;
     using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
@@ -167,6 +168,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void PersistSingleStream()
         {
+            // generate a sequence from 1 .. 100, simulating also a latency and write to store
             var count = 100;
             var name = nameof(this.PersistSingleStream);
             using (var p = Pipeline.Create("write"))
@@ -230,6 +232,116 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void CopyStore()
+        {
+            // generate a sequence from 1 .. 100
+            var count = 100;
+            var name = nameof(this.CopyStore);
+            var supplemental = Math.E; // supplemental metadata
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                var seq = Generators.Sequence(p, 1, i => i + 1, count, TimeSpan.FromTicks(1))
+                    .Select(
+                        x =>
+                        {
+                            Thread.Sleep(1);
+                            return x;
+                        },
+                        DeliveryPolicy.Unlimited);
+                seq.Write(supplemental, "seq", writeStore);
+                p.Run();
+            }
+
+            var copyName = $"{name}Copy";
+            Store.Copy((name, this.path), (copyName, this.path));
+
+            // now replay the contents and verify we get the right sum
+            double sum = 0;
+            using (var p2 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p2, copyName, this.path);
+                var seq2 = readStore.OpenStream<int>("seq");
+                Assert.AreEqual(supplemental, readStore.GetSupplementalMetadata<double>("seq"), double.Epsilon);
+                var verifier = seq2.Do(s => sum += s);
+                p2.Run();
+            }
+
+            Assert.AreEqual(count * (count + 1) / 2, sum);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void EditStore()
+        {
+            var name = nameof(this.EditStore);
+            var supplemental = Math.E; // supplemental metadata
+            var now = DateTime.UtcNow;
+            DateTime[] originatingTimes = new DateTime[]
+            {
+                now,
+                now.AddMilliseconds(1),
+                now.AddMilliseconds(2),
+                now.AddMilliseconds(3),
+                now.AddMilliseconds(4),
+                now.AddMilliseconds(5),
+            };
+            using (var p = Pipeline.Create("write"))
+            {
+                var writeStore = Store.Create(p, name, this.path);
+                var stream0 = Generators.Sequence(p, new[]
+                    {
+                        (7, originatingTimes[0]),
+                        (42, originatingTimes[1]),
+                        (1, originatingTimes[2]),
+                        (123, originatingTimes[3]),
+                        (1971, originatingTimes[4]),
+                        (0, originatingTimes[5]),
+                    });
+                stream0.Write("stream0", writeStore);
+                var stream1 = Generators.Sequence(p, new[]
+                    {
+                        ('B', originatingTimes[1]),
+                        ('C', originatingTimes[2]),
+                        ('E', originatingTimes[3]),
+                        ('F', originatingTimes[4]),
+                    });
+                var times = stream1.Select((_, e) => e.OriginatingTime).ToObservable().ToListObservable();
+                stream1.Write(supplemental, "stream1", writeStore);
+                p.Run();
+                originatingTimes = times.AsEnumerable().ToArray();
+            }
+
+            var edits = new Dictionary<string, IEnumerable<(bool, dynamic, DateTime)>>();
+            edits.Add(
+                "stream1",
+                new (bool, dynamic, DateTime)[]
+                {
+                    //// TODO: why does Zip never get unsubscribed?! (true, 'G', originatingTimes[3].AddTicks(1)), // insert G after F (past end of original stream)
+                    (true, 'A', originatingTimes[0].AddTicks(-1)), // insert A before B (before start of original stream)
+                    (true, 'D', originatingTimes[1].AddTicks(1)), // insert D between C and E
+                    (false, null, originatingTimes[1]), // delete C
+                    (true, 'X', originatingTimes[2]), // update E to X
+                });
+
+            var editName = $"{name}Edited";
+            Store.Edit((name, this.path), (editName, this.path), edits);
+
+            // now replay the contents and verify we get the right sum
+            using (var p2 = Pipeline.Create("read"))
+            {
+                var readStore = Store.Open(p2, editName, this.path);
+                var stream0 = readStore.OpenStream<int>("stream0").ToObservable().ToListObservable();
+                var stream1 = readStore.OpenStream<char>("stream1").ToObservable().ToListObservable();
+                Assert.AreEqual(supplemental, readStore.GetSupplementalMetadata<double>("stream1"), double.Epsilon);
+                p2.Run();
+                Assert.IsTrue(Enumerable.SequenceEqual(new[] { 7, 42, 1, 123, 1971, 0 }, stream0.AsEnumerable()));
+                Assert.IsTrue(Enumerable.SequenceEqual(new[] { 'A', 'B', 'D', 'X', 'F' }, stream1.AsEnumerable()));
+            }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void Seek()
         {
             var count = 100; // to make sure there are more than one page
@@ -277,14 +389,14 @@ namespace Test.Psi
         [Timeout(60000)]
         public void ReadWhilePersistingToDisk()
         {
-            this.ReadWhilePersisting(nameof(ReadWhilePersistingToDisk), this.path);
+            this.ReadWhilePersisting(nameof(this.ReadWhilePersistingToDisk), this.path);
         }
 
         [TestMethod]
         [Timeout(60000)]
         public void ReadWhilePersistingInMemory()
         {
-            this.ReadWhilePersisting(nameof(ReadWhilePersistingInMemory), null);
+            this.ReadWhilePersisting(nameof(this.ReadWhilePersistingInMemory), null);
         }
 
         // with a null path, the file is only in memory (system file). With a non-null path, the file is also written to disk
@@ -685,12 +797,12 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void CopyStore()
+        public void CopyStream()
         {
             var count = 100;
             var before = new Envelope[count + 1];
             var after = new Envelope[count + 1];
-            var name = nameof(this.CopyStore);
+            var name = nameof(this.CopyStream);
 
             using (var p = Pipeline.Create("write"))
             {
@@ -789,7 +901,7 @@ namespace Test.Psi
             }
 
             // verify the results in the interval after the cropped range
-            for (int i = (count - 4); i <= count; i++)
+            for (int i = count - 4; i <= count; i++)
             {
                 Assert.AreEqual(0, after[i].SequenceId);
                 Assert.AreEqual(0, after[i].OriginatingTime.Ticks);
@@ -822,66 +934,54 @@ namespace Test.Psi
             // pipeline terminated normally so store should be valid
             Assert.IsTrue(Store.IsClosed(name, this.path));
 
-            // now generate an invalid store
-            var p2 = Pipeline.Create("write2");
+            // Now create a new pipeline in which we will simulate an invalid store by taking a
+            // snapshot of the store files midway through the execution (use synchronous policy
+            // to ensure that the messages actually hit the exporter before the snapshot is taken).
+            var p2 = Pipeline.Create("write2", DeliveryPolicy.SynchronousOrThrottle);
             var invalidStore = Store.Create(p2, name, this.path);
             string tempFolder = Path.Combine(this.path, Guid.NewGuid().ToString());
-
-            try
+            var seq2 = Generators.Sequence(p2, 1, i => i + 1, count, TimeSpan.FromTicks(1));
+            seq2.Do((m, e) =>
             {
-                var seq2 = Generators.Sequence(p2, 1, i => i + 1, count, TimeSpan.FromTicks(1));
-                seq2.Do((m, e) =>
+                // Halfway through, simulate abrupt termination of the pipeline by copying the store
+                // files while the pipeline is running, resulting in a store in an invalid state.
+                if (e.OriginatingTime.Ticks == count / 2)
                 {
-                    if (e.OriginatingTime.Ticks >= count / 2)
+                    // at this point the store should still be open
+                    Assert.IsFalse(Store.IsClosed(name, this.path));
+
+                    // We need to temporarily save the invalid store before disposing the pipeline,
+                    // since the store will be rendered valid when the pipeline is terminated.
+                    Directory.CreateDirectory(tempFolder);
+
+                    // copy the store files to the temp folder - we will restore them later
+                    foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
                     {
-                        // Simulate abrupt termination of the pipeline by copying the store files
-                        // while the pipeline is running, resulting in a store in an invalid state.
-
-                        // at this point the store should still be open
-                        Assert.IsFalse(Store.IsClosed(name, this.path));
-
-                        // We need to temporarily save the invalid store before disposing the pipeline,
-                        // since the store will be rendered valid when the pipeline is terminated.
-                        Directory.CreateDirectory(tempFolder);
-
-                        // copy the store files to the temp folder - we will restore them later
-                        foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
-                        {
-                            var fileInfo = new FileInfo(file);
-                            File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
-                        }
-
-                        // throw an exception and terminate the pipeline
-                        throw new Exception();
+                        var fileInfo = new FileInfo(file);
+                        File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
                     }
-                }).Write("seq", invalidStore);
-                seq2.Select(i => i.ToString()).Write("seqString", invalidStore);
-
-                // run the pipeline with exception handling enabled
-                p2.Run(new ReplayDescriptor(new DateTime(1), false));
-            }
-            catch
-            {
-            }
-            finally
-            {
-                p2.Dispose();
-
-                // after disposing the pipeline, the store becomes valid
-                Assert.IsTrue(Store.IsClosed(name, this.path));
-
-                // delete the (now valid) store files
-                foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
-                {
-                    TestRunner.SafeFileDelete(file);
                 }
+            }).Write("seq", invalidStore);
+            seq2.Select(i => i.ToString()).Write("seqString", invalidStore);
 
-                // restore the invalid store files from the temp folder
-                foreach (var file in Directory.EnumerateFiles(tempFolder))
-                {
-                    var fileInfo = new FileInfo(file);
-                    File.Move(file, Path.Combine(invalidStore.Path, fileInfo.Name));
-                }
+            // run the pipeline with exception handling enabled
+            p2.Run(new ReplayDescriptor(new DateTime(1), false));
+            p2.Dispose();
+
+            // after disposing the pipeline, the store becomes valid
+            Assert.IsTrue(Store.IsClosed(name, this.path));
+
+            // delete the (now valid) store files
+            foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
+            {
+                TestRunner.SafeFileDelete(file);
+            }
+
+            // restore the invalid store files from the temp folder
+            foreach (var file in Directory.EnumerateFiles(tempFolder))
+            {
+                var fileInfo = new FileInfo(file);
+                File.Move(file, Path.Combine(invalidStore.Path, fileInfo.Name));
             }
 
             // the generated store should be invalid prior to repairing
@@ -904,14 +1004,19 @@ namespace Test.Psi
                 p3.Run(ReplayDescriptor.ReplayAll);
             }
 
-            // verify the results in the repaired store prior to the exception
-            for (int i = 0; i < count / 2; i++)
+            // Since we cannot guarantee when the messages written to the "invalid store" actually got
+            // flushed from the memory-mapped file, just verify that we got some of the initial data.
+            for (int i = 0; i < 3; i++)
             {
                 Assert.AreEqual(valid[i].SequenceId, invalid[i].SequenceId);
                 Assert.AreEqual(valid[i].OriginatingTime, invalid[i].OriginatingTime);
             }
 
-            // verify there are no results after the exception
+            // log how much of the store actually got written for diagnostic purposes only
+            int lastIndex = invalid.LastOrDefault(e => e.SequenceId != 0).SequenceId;
+            Console.WriteLine($"Last sequence id found: {lastIndex}");
+
+            // verify there are no results after the point at which the store was rendered invalid
             for (int j = count / 2; j <= count; j++)
             {
                 Assert.AreEqual(0, invalid[j].SequenceId);
@@ -928,7 +1033,7 @@ namespace Test.Psi
         {
             // here we write large messages to a store. This will quickly overflow the extents, causing
             // MemoryMappedViews to be disposed. This is a potentially blocking call which we now do on a
-            // separate thread. Prior to this fix, it would block writing/reading the store with a human-noticable
+            // separate thread. Prior to this fix, it would block writing/reading the store with a human-noticeable
             // delay of several seconds.
 
             var payload = new byte[1024 * 1024 * 10];
@@ -1223,6 +1328,36 @@ namespace Test.Psi
 
             // verify final progress is 1.0
             Assert.AreEqual(1.0, lastValue);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PersistingStreamSupplementalMetadata()
+        {
+            var name = nameof(this.PersistingStreamSupplementalMetadata);
+
+            // create store with supplemental meta
+            using (var p = Pipeline.Create("write"))
+            {
+                var store = Store.Create(p, name, this.path);
+                var stream0 = Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
+                var stream1 = Generators.Range(p, 0, 10, TimeSpan.FromTicks(1));
+                stream0.Write("NoMeta", store, true);
+                stream1.Write(("Favorite irrational number", Math.E), "WithMeta", store);
+            }
+
+            // read it back with an importer
+            using (var q = Pipeline.Create("read"))
+            {
+                var store = Store.Open(q, name, this.path);
+                Assert.IsNull(store.GetMetadata("NoMeta").SupplementalMetadataTypeName);
+                Assert.AreEqual(typeof(ValueTuple<string, double>).AssemblyQualifiedName, store.GetMetadata("WithMeta").SupplementalMetadataTypeName);
+                var supplemental0 = store.GetSupplementalMetadata<(string, double)>("WithMeta");
+                Assert.AreEqual("Favorite irrational number", supplemental0.Item1);
+                Assert.AreEqual(Math.E, supplemental0.Item2);
+                Assert.ThrowsException<InvalidOperationException>(() => store.GetSupplementalMetadata<int>("NoMeta"));
+                Assert.ThrowsException<InvalidCastException>(() => store.GetSupplementalMetadata<int>("WithMeta"));
+            }
         }
 
         [DataContract(Name = "TestDataContract")]

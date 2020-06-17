@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Arrays
     using System.Linq;
 
     /// <summary>
-    /// Defines the possible values of an index as a continguous range.
+    /// Defines the possible values of an index as a contiguous range.
     /// </summary>
     internal class RangeIndexDefinition : IndexDefinition
     {

@@ -15,7 +15,7 @@
     xmlns:viewmodels="clr-namespace:Microsoft.Psi.Visualization.ViewModels;assembly=Microsoft.Psi.Visualization.Common.Windows"
     xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit.PropertyGrid;assembly=Xceed.Wpf.Toolkit"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    Title="Platform for Situated Intelligence Studio"
+    Title="{Binding TitleText}"
     WindowState="{Binding AppSettings.WindowState, Mode=TwoWay}"
     Top="{Binding AppSettings.WindowPositionTop, Mode=TwoWay}"
     Left="{Binding AppSettings.WindowPositionLeft, Mode=TwoWay}"
@@ -26,10 +26,10 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding PlayPauseCommand}" Key="F10" />
         <KeyBinding Command="{Binding ToggleCursorFollowsMouseComand}" Key="F" Modifiers="Alt" />
-        <!--<KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.PreviousAnnotatedEventCommand}" Key="F2" />
-        <KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.NextAnnotatedEventCommand}" Key="F3" />
-        <KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.StartAnnotatedEventCommand}" Key="F5" />
-        <KeyBinding Command="{Binding VisualizationContainer.CurrentPanel.CurrentVisualizationObject.EndAnnotatedEventCommand}" Key="F6" />-->
+        <KeyBinding Command="{Binding NudgeRightCommand}" Key="OemPeriod" />
+        <KeyBinding Command="{Binding NudgeLeftCommand}" Key="OemComma" />
+        <KeyBinding Command="{Binding JumpRightCommand}" Key="OemPeriod" Modifiers="Shift" />
+        <KeyBinding Command="{Binding JumpLeftCommand}" Key="OemComma" Modifiers="Shift" />
     </Window.InputBindings>
 
     <Window.Resources>

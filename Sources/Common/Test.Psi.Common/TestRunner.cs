@@ -195,7 +195,7 @@ namespace Test.Psi.Common
         }
 
         /// <summary>
-        /// Due to the runtime's asynchronous behaviour, we may try to
+        /// Due to the runtime's asynchronous behavior, we may try to
         /// delete our test directory before the runtime has finished
         /// messing with it.  This method will keep trying to delete
         /// the directory until the runtime shuts down.

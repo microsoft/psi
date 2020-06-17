@@ -9,7 +9,7 @@ namespace Test.Psi
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class InterpolateTest
+    public class InterpolateTests
     {
         [TestMethod]
         [Timeout(60000)]

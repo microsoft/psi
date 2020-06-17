@@ -47,19 +47,19 @@ namespace Test.Psi.Kinect
         /// <summary>
         /// Create mesh from depth map.
         /// </summary>
-        /// <param name="depthMap">Depth map image.</param>
+        /// <param name="depthImage">Depth map image.</param>
         /// <param name="colorData">Color data image.</param>
         /// <param name="calib">Kinect calibration.</param>
         /// <returns>Mesh.</returns>
-        public static Mesh MeshFromDepthMap(Shared<Image> depthMap, Shared<Image> colorData, IDepthDeviceCalibrationInfo calib)
+        public static Mesh MeshFromDepthMap(Shared<DepthImage> depthImage, Shared<Image> colorData, IDepthDeviceCalibrationInfo calib)
         {
             Mesh mesh = new Mesh();
-            int width = depthMap.Resource.Width;
-            int height = depthMap.Resource.Height;
+            int width = depthImage.Resource.Width;
+            int height = depthImage.Resource.Height;
             mesh.Vertices = new Vertex[width * height];
             bool[] vertexValid = new bool[width * height];
             mesh.Faces = new Face[2 * (width - 1) * (height - 1)];
-            byte[] depthData = depthMap.Resource.ReadBytes(depthMap.Resource.Size);
+            byte[] depthData = depthImage.Resource.ReadBytes(depthImage.Resource.Size);
             byte[] pixelData = colorData.Resource.ReadBytes(colorData.Resource.Size);
             int count = 0;
             unsafe
@@ -68,7 +68,7 @@ namespace Test.Psi.Kinect
                 {
                     for (int j = 0; j < width; j++)
                     {
-                        ushort* src = (ushort*)((byte*)depthMap.Resource.ImageData.ToPointer() + (i * depthMap.Resource.Stride)) + j;
+                        ushort* src = (ushort*)((byte*)depthImage.Resource.ImageData.ToPointer() + (i * depthImage.Resource.Stride)) + j;
                         ushort depth = *src;
                         Point2D pt = new Point2D(j, i);
                         vertexValid[count] = (depth == 0) ? false : true;

@@ -14,18 +14,20 @@ namespace Microsoft.Psi
     public static partial class Operators
     {
         /// <summary>
-        /// Zip one or more streams (T) into a single stream (Message{T}) while ensuring delivery in originating time order (ordered within single tick by stream ID).
+        /// Zip one or more streams (T) into a single stream while ensuring delivery in originating time order.
         /// </summary>
-        /// <remarks>Messages are produced in originating-time order; potentially delayed in wall-clock time.</remarks>
+        /// <remarks>Messages are produced in originating-time order; potentially delayed in wall-clock time.
+        /// If multiple messages arrive with the same originating time, they are added in the output array in
+        /// the order of stream ids.</remarks>
         /// <typeparam name="T">Type of messages.</typeparam>
-        /// <param name="inputs">Collection of homogeneous inputs.</param>
+        /// <param name="inputs">Collection of input streams to zip.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of zipped messages.</returns>
-        public static IProducer<Message<T>> Zip<T>(IEnumerable<IProducer<T>> inputs, DeliveryPolicy<T> deliveryPolicy = null)
+        public static IProducer<T[]> Zip<T>(IEnumerable<IProducer<T>> inputs, DeliveryPolicy<T> deliveryPolicy = null)
         {
             if (inputs.Count() == 0)
             {
-                throw new ArgumentException("Zip requires one or more inputs.");
+                throw new ArgumentException($"{nameof(Zip)} requires one or more inputs.");
             }
 
             var zip = new Zip<T>(inputs.First().Out.Pipeline);
@@ -38,15 +40,17 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Zip two streams (T) into a single stream (Message{T}) while ensuring delivery in originating time order (ordered within single tick by stream ID).
+        /// Zip two streams (T) into a single stream while ensuring delivery in originating time order.
         /// </summary>
-        /// <remarks>Messages are produced in originating-time order; potentially delayed in wall-clock time.</remarks>
+        /// <remarks>Messages are produced in originating-time order; potentially delayed in wall-clock time.
+        /// If multiple messages arrive with the same originating time, they are added in the output array in
+        /// the order of stream ids.</remarks>
         /// <typeparam name="T">Type of messages.</typeparam>
         /// <param name="input1">First input stream.</param>
         /// <param name="input2">Second input stream with same message type.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream of zipped messages.</returns>
-        public static IProducer<Message<T>> Zip<T>(this IProducer<T> input1, IProducer<T> input2, DeliveryPolicy<T> deliveryPolicy = null)
+        public static IProducer<T[]> Zip<T>(this IProducer<T> input1, IProducer<T> input2, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return Zip(new List<IProducer<T>>() { input1, input2 }, deliveryPolicy);
         }

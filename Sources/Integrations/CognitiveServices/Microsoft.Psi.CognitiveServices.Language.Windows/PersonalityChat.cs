@@ -9,7 +9,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
     using Microsoft.Psi.Components;
 
     /// <summary>
-    /// Component that generates dialogue responses to textual inputs using the <a href="https://labs.cognitive.microsoft.com/en-us/project-personality-chat">Microsoft Cognitive Services Personality Chat API</a>.
+    /// Component that generates dialog responses to textual inputs using the <a href="https://labs.cognitive.microsoft.com/en-us/project-personality-chat">Microsoft Cognitive Services Personality Chat API</a>.
     /// </summary>
     /// <remarks>
     /// The component takes in text-based phrases or utterances on its input stream and generates

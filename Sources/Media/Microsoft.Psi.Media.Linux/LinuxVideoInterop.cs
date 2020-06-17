@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Media
     /// Structs, enums and static methods for interacting with Video4Linux drivers (V4L2).
     /// </summary>
     /// <remarks>
-    /// This implimentation is based on this spec: https://www.linuxtv.org/downloads/legacy/video4linux/API/V4L2_API/spec-single/v4l2.html
+    /// This implementation is based on this spec: https://www.linuxtv.org/downloads/legacy/video4linux/API/V4L2_API/spec-single/v4l2.html
     /// The only dependencies are POSIX ioctl, mmap and munmap.
     /// </remarks>
     internal static class LinuxVideoInterop
@@ -342,11 +342,11 @@ namespace Microsoft.Psi.Media
         /// Query device capabilities (POSIX ioctl VIDIOC_QUERYCAP).
         /// </summary>
         /// <param name="fd">Device name (e.g. "/dev/video0").</param>
-        /// <returns>Device capabilites.</returns>
+        /// <returns>Device capabilities.</returns>
         public static Capability QueryCapabilities(int fd)
         {
             var caps = default(Capability);
-            if (QueryCapabilities(fd, VIDIOC(IOCREAD, Marshal.SizeOf(caps), 0) /* VIDIOC_QUERYCAP */, ref caps) != 0)
+            if (NativeMethods.QueryCapabilities(fd, VIDIOC(IOCREAD, Marshal.SizeOf(caps), 0) /* VIDIOC_QUERYCAP */, ref caps) != 0)
             {
                 throw new IOException("QueryCapabilities failed.");
             }
@@ -386,7 +386,7 @@ namespace Microsoft.Psi.Media
         /// <returns>Success flag.</returns>
         public static bool EnumFormats(int fd, ref FormatDescription format)
         {
-            return EnumFormats(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(format), 2) /* VIDIOC_ENUM_FMT */, ref format) >= 0;
+            return NativeMethods.EnumFormats(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(format), 2) /* VIDIOC_ENUM_FMT */, ref format) >= 0;
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Microsoft.Psi.Media
         /// <param name="format">Video format struct to be populated.</param>
         internal static void GetFormat(int fd, ref VideoFormat format)
         {
-            if (GetFormat(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(format), 4) /* VIDIOC_G_FMT */, ref format) != 0)
+            if (NativeMethods.GetFormat(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(format), 4) /* VIDIOC_G_FMT */, ref format) != 0)
             {
                 throw new IOException("GetFormat failed.");
             }
@@ -419,7 +419,7 @@ namespace Microsoft.Psi.Media
                 throw new ArgumentException("Formats other than video capture are not supported.");
             }
 
-            if (SetFormat(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(format), 5) /* VIDIOC_S_FMT */, ref format) != 0)
+            if (NativeMethods.SetFormat(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(format), 5) /* VIDIOC_S_FMT */, ref format) != 0)
             {
                 throw new IOException("SetFormat failed.");
             }
@@ -438,7 +438,7 @@ namespace Microsoft.Psi.Media
             req.Count = count;
             req.Memory = memory;
             req.Type = BufferType.VideoCapture; // note: only video capture supported
-            if (ReqBufs(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(req), 8) /* VIDIOC_REQBUFS */, ref req) != 0)
+            if (NativeMethods.ReqBufs(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(req), 8) /* VIDIOC_REQBUFS */, ref req) != 0)
             {
                 throw new ArgumentException("ReqBufs failed.");
             }
@@ -464,7 +464,7 @@ namespace Microsoft.Psi.Media
                 Memory = Memory.MemoryMapping, // note: memory mapped assumed
             };
 
-            if (QueryBuf(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(buffer), 9) /* VIDIOC_QUERYBUF */, ref buffer) != 0)
+            if (NativeMethods.QueryBuf(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(buffer), 9) /* VIDIOC_QUERYBUF */, ref buffer) != 0)
             {
                 throw new ArgumentException($"QueryBuf failed (index={index}).");
             }
@@ -480,7 +480,16 @@ namespace Microsoft.Psi.Media
         /// <returns>Pointer to mapped memory.</returns>
         internal static unsafe void* MemoryMap(int fd, Buffer buffer)
         {
-            var start = MemMap(IntPtr.Zero, buffer.Length, 0x1 /* PROT_READ */ | 0x2 /* PROT_WRITE */, 0x1 /* MAP_SHARED */, fd, buffer.Pointer);
+            void* start;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                start = NativeMethods.MemMap64(IntPtr.Zero, buffer.Length, 0x1 /* PROT_READ */ | 0x2 /* PROT_WRITE */, 0x1 /* MAP_SHARED */, fd, buffer.Pointer);
+            }
+            else
+            {
+                start = NativeMethods.MemMap32(IntPtr.Zero, buffer.Length, 0x1 /* PROT_READ */ | 0x2 /* PROT_WRITE */, 0x1 /* MAP_SHARED */, fd, (uint)buffer.Pointer);
+            }
+
             if (start == (void*)-1)
             {
                 throw new ArgumentException("Memory map failed.");
@@ -495,7 +504,17 @@ namespace Microsoft.Psi.Media
         /// <param name="buffer">Buffer to unmap.</param>
         internal static unsafe void MemoryUnmap(Buffer buffer)
         {
-            if (MemUnmap(buffer.Pointer, buffer.Length) != 0)
+            int result;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                result = NativeMethods.MemUnmap64(buffer.Pointer, buffer.Length);
+            }
+            else
+            {
+                result = NativeMethods.MemUnmap32((uint)buffer.Pointer, buffer.Length);
+            }
+
+            if (result != 0)
             {
                 throw new ArgumentException("Memory unmap failed.");
             }
@@ -508,7 +527,7 @@ namespace Microsoft.Psi.Media
         /// <param name="buffer">Buffer struct to enqueue.</param>
         internal static void EnqueBuffer(int fd, Buffer buffer)
         {
-            if (EnqueBuffer(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(buffer), 15) /* VIDIOC_QBUF */, ref buffer) != 0)
+            if (NativeMethods.EnqueBuffer(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(buffer), 15) /* VIDIOC_QBUF */, ref buffer) != 0)
             {
                 throw new ArgumentException("Enque buffer failed.");
             }
@@ -523,7 +542,7 @@ namespace Microsoft.Psi.Media
         {
             var buffer = default(Buffer);
             buffer.Type = LinuxVideoInterop.BufferType.VideoCapture;
-            if (DequeBuffer(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(buffer), 17) /* VIDIOC_DQBUF */, ref buffer) != 0)
+            if (NativeMethods.DequeBuffer(fd, VIDIOC(IOCREAD | IOCWRITE, Marshal.SizeOf(buffer), 17) /* VIDIOC_DQBUF */, ref buffer) != 0)
             {
                 throw new ArgumentException("Deque buffer failed.");
             }
@@ -538,7 +557,7 @@ namespace Microsoft.Psi.Media
         internal static void StreamOn(int fd)
         {
             var type = BufferType.VideoCapture; // note: only video capture supported
-            if (StreamOn(fd, VIDIOC(IOCWRITE, sizeof(uint), 18) /* VIDIOC_STREAMON */, ref type) != 0)
+            if (NativeMethods.StreamOn(fd, VIDIOC(IOCWRITE, sizeof(uint), 18) /* VIDIOC_STREAMON */, ref type) != 0)
             {
                 throw new ArgumentException("StreamOn failed.");
             }
@@ -551,7 +570,7 @@ namespace Microsoft.Psi.Media
         internal static void StreamOff(int fd)
         {
             var type = BufferType.VideoCapture; // note: only video capture supported
-            if (StreamOff(fd, VIDIOC(IOCWRITE, Marshal.SizeOf(type), 19) /* VIDIOC_STREAMOFF */, ref type) != 0)
+            if (NativeMethods.StreamOff(fd, VIDIOC(IOCWRITE, Marshal.SizeOf(type), 19) /* VIDIOC_STREAMOFF */, ref type) != 0)
             {
                 throw new ArgumentException("StreamOn failed.");
             }
@@ -568,128 +587,6 @@ namespace Microsoft.Psi.Media
         {
             return readWrite | ((uint)size << 16) | V | (uint)command;
         }
-
-        /// <summary>
-        /// Query capabilites (POSIX ioctl VIDIOC_QUERYCAP).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_QUERYCAP).</param>
-        /// <param name="caps">Capabilities struct to be populated.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int QueryCapabilities(int fd, uint request, ref Capability caps);
-
-        /// <summary>
-        /// Enumerate formats (POSIX ioctl VIDIOC_ENUM_FMT).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_ENUM_FMT).</param>
-        /// <param name="format">Format descrition struct to be populated.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int EnumFormats(int fd, uint request, ref FormatDescription format);
-
-        /// <summary>
-        /// Get format (POSIX ioctl VIDIOC_G_FMT).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_G_FMT).</param>
-        /// <param name="format">Video format struct to be populated.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int GetFormat(int fd, uint request, ref VideoFormat format);
-
-        /// <summary>
-        /// Set format (POSIX ioctl VIDIOC_S_FMT).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_S_FMT).</param>
-        /// <param name="format">Video format.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int SetFormat(int fd, uint request, ref VideoFormat format);
-
-        /// <summary>
-        /// Request buffers (POSIX ioctl VIDIOC_REQBUFS).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_REQBUFS).</param>
-        /// <param name="req">Request buffers struct to be populated.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int ReqBufs(int fd, uint request, ref RequestBuffers req);
-
-        /// <summary>
-        /// Query buffer (POSIX ioctl VIDIOC_QUERYBUF).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_QUERYBUF).</param>
-        /// <param name="buf">Buffer struct to be populated.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int QueryBuf(int fd, uint request, ref Buffer buf);
-
-        /// <summary>
-        /// Memory map (POSIX mmap).
-        /// </summary>
-        /// <param name="start">Buffer start.</param>
-        /// <param name="length">Buffer length.</param>
-        /// <param name="prot">Protection (PROT_EXEC/READ/WRITE/NONE).</param>
-        /// <param name="flags">Flags (MAP_SHARED/PRIVATE).</param>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="offset">Offset within buffer.</param>
-        /// <returns>Pointer to mapped memory.</returns>
-        [DllImport("libc", EntryPoint="mmap", SetLastError=true)]
-        private static unsafe extern void* MemMap(IntPtr start, ulong length, int prot, int flags, int fd, ulong offset);
-
-        /// <summary>
-        /// Memory unmap (POSIX munmap).
-        /// </summary>
-        /// <param name="start">Buffer start.</param>
-        /// <param name="length">Buffer length.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="munmap", SetLastError=true)]
-        private static unsafe extern int MemUnmap(ulong start, ulong length);
-
-        /// <summary>
-        /// Enqueue buffer (POSIX ioctl VIDIOC_QBUF).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_QBUF).</param>
-        /// <param name="buffer">Buffer struct to enqueue.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int EnqueBuffer(int fd, uint request, ref Buffer buffer);
-
-        /// <summary>
-        /// Dequeue buffer (POSIX ioctl VIDIOC_DQBUF).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_DQBUF).</param>
-        /// <param name="buffer">Buffer struct into which to dequeue.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int DequeBuffer(int fd, uint request, ref Buffer buffer);
-
-        /// <summary>
-        /// Streaming on (POSIX ioctl VIDIOC_STREAMON).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_STREAMON).</param>
-        /// <param name="buftype">Buffer type.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int StreamOn(int fd, uint request, ref BufferType buftype);
-
-        /// <summary>
-        /// Streaming off (POSIX ioctl VIDIOC_STREAMOFF).
-        /// </summary>
-        /// <param name="fd">Device file descriptor.</param>
-        /// <param name="request">Request type (VIDIOC_STREAMOFF).</param>
-        /// <param name="buftype">Buffer type.</param>
-        /// <returns>Result flag.</returns>
-        [DllImport("libc", EntryPoint="ioctl", SetLastError=true)]
-        private static extern int StreamOff(int fd, uint request, ref BufferType buftype);
 
         /// <summary>
         /// Capabilities struct (v4l2_capability).
@@ -721,12 +618,12 @@ namespace Microsoft.Psi.Media
             public uint Version;
 
             /// <summary>
-            /// Driver capabilites.
+            /// Driver capabilities.
             /// </summary>
             public CapsFlags Caps;
 
             /// <summary>
-            /// Device capabilites.
+            /// Device capabilities.
             /// </summary>
             public CapsFlags DeviceCaps;
 
@@ -1019,6 +916,153 @@ namespace Microsoft.Psi.Media
             /// </summary>
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
             private uint[] reserved;
+        }
+
+        private static class NativeMethods
+        {
+            /// <summary>
+            /// Query capabilities (POSIX ioctl VIDIOC_QUERYCAP).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_QUERYCAP).</param>
+            /// <param name="caps">Capabilities struct to be populated.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int QueryCapabilities(int fd, uint request, ref Capability caps);
+
+            /// <summary>
+            /// Enumerate formats (POSIX ioctl VIDIOC_ENUM_FMT).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_ENUM_FMT).</param>
+            /// <param name="format">Format description struct to be populated.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int EnumFormats(int fd, uint request, ref FormatDescription format);
+
+            /// <summary>
+            /// Get format (POSIX ioctl VIDIOC_G_FMT).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_G_FMT).</param>
+            /// <param name="format">Video format struct to be populated.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int GetFormat(int fd, uint request, ref VideoFormat format);
+
+            /// <summary>
+            /// Set format (POSIX ioctl VIDIOC_S_FMT).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_S_FMT).</param>
+            /// <param name="format">Video format.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int SetFormat(int fd, uint request, ref VideoFormat format);
+
+            /// <summary>
+            /// Request buffers (POSIX ioctl VIDIOC_REQBUFS).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_REQBUFS).</param>
+            /// <param name="req">Request buffers struct to be populated.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int ReqBufs(int fd, uint request, ref RequestBuffers req);
+
+            /// <summary>
+            /// Query buffer (POSIX ioctl VIDIOC_QUERYBUF).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_QUERYBUF).</param>
+            /// <param name="buf">Buffer struct to be populated.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int QueryBuf(int fd, uint request, ref Buffer buf);
+
+            /// <summary>
+            /// Memory map (POSIX mmap).
+            /// </summary>
+            /// <param name="start">Buffer start.</param>
+            /// <param name="length">Buffer length.</param>
+            /// <param name="prot">Protection (PROT_EXEC/READ/WRITE/NONE).</param>
+            /// <param name="flags">Flags (MAP_SHARED/PRIVATE).</param>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="offset">Offset within buffer.</param>
+            /// <returns>Pointer to mapped memory.</returns>
+            [DllImport("libc", EntryPoint = "mmap", SetLastError = true)]
+            internal static unsafe extern void* MemMap32(IntPtr start, uint length, int prot, int flags, int fd, uint offset);
+
+            /// <summary>
+            /// Memory map (POSIX mmap).
+            /// </summary>
+            /// <param name="start">Buffer start.</param>
+            /// <param name="length">Buffer length.</param>
+            /// <param name="prot">Protection (PROT_EXEC/READ/WRITE/NONE).</param>
+            /// <param name="flags">Flags (MAP_SHARED/PRIVATE).</param>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="offset">Offset within buffer.</param>
+            /// <returns>Pointer to mapped memory.</returns>
+            [DllImport("libc", EntryPoint = "mmap", SetLastError = true)]
+            internal static unsafe extern void* MemMap64(IntPtr start, ulong length, int prot, int flags, int fd, ulong offset);
+
+            /// <summary>
+            /// Memory unmap (POSIX munmap).
+            /// </summary>
+            /// <param name="start">Buffer start.</param>
+            /// <param name="length">Buffer length.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "munmap", SetLastError = true)]
+            internal static unsafe extern int MemUnmap32(uint start, uint length);
+
+            /// <summary>
+            /// Memory unmap (POSIX munmap).
+            /// </summary>
+            /// <param name="start">Buffer start.</param>
+            /// <param name="length">Buffer length.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "munmap", SetLastError = true)]
+            internal static unsafe extern int MemUnmap64(ulong start, ulong length);
+
+            /// <summary>
+            /// Enqueue buffer (POSIX ioctl VIDIOC_QBUF).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_QBUF).</param>
+            /// <param name="buffer">Buffer struct to enqueue.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int EnqueBuffer(int fd, uint request, ref Buffer buffer);
+
+            /// <summary>
+            /// Dequeue buffer (POSIX ioctl VIDIOC_DQBUF).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_DQBUF).</param>
+            /// <param name="buffer">Buffer struct into which to dequeue.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int DequeBuffer(int fd, uint request, ref Buffer buffer);
+
+            /// <summary>
+            /// Streaming on (POSIX ioctl VIDIOC_STREAMON).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_STREAMON).</param>
+            /// <param name="buftype">Buffer type.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int StreamOn(int fd, uint request, ref BufferType buftype);
+
+            /// <summary>
+            /// Streaming off (POSIX ioctl VIDIOC_STREAMOFF).
+            /// </summary>
+            /// <param name="fd">Device file descriptor.</param>
+            /// <param name="request">Request type (VIDIOC_STREAMOFF).</param>
+            /// <param name="buftype">Buffer type.</param>
+            /// <returns>Result flag.</returns>
+            [DllImport("libc", EntryPoint = "ioctl", SetLastError = true)]
+            internal static extern int StreamOff(int fd, uint request, ref BufferType buftype);
         }
     }
 }

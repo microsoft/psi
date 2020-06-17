@@ -18,8 +18,8 @@ namespace Microsoft.Psi.Audio
     /// </remarks>
     public struct AudioBuffer
     {
-        private WaveFormat format;
-        private byte[] data;
+        private readonly WaveFormat format;
+        private readonly byte[] data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioBuffer"/> structure.

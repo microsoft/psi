@@ -50,19 +50,22 @@ namespace Test.Psi
                 // value         N/A       1       2       3       4       5       6       N/A     N/A     N/A
                 // gamma-result           [1       2       -       4       -       -]
                 // out                     1       2       0       4       0       0
-                var input = Generators.Sequence(p, new List<Dictionary<int, int>>()
-                {
-                    new Dictionary<int, int>(),
-                    new Dictionary<int, int>() { { 1, 1 } },
-                    new Dictionary<int, int>() { { 1, 2 } },
-                    new Dictionary<int, int>() { { 1, 3 } },
-                    new Dictionary<int, int>() { { 1, 4 } },
-                    new Dictionary<int, int>() { { 1, 5 } },
-                    new Dictionary<int, int>() { { 1, 6 } },
-                    new Dictionary<int, int>(),
-                    new Dictionary<int, int>(),
-                    new Dictionary<int, int>(),
-                }, TimeSpan.FromTicks(1));
+                var input = Generators.Sequence(
+                    p,
+                    new List<Dictionary<int, int>>()
+                    {
+                        new Dictionary<int, int>(),
+                        new Dictionary<int, int>() { { 1, 1 } },
+                        new Dictionary<int, int>() { { 1, 2 } },
+                        new Dictionary<int, int>() { { 1, 3 } },
+                        new Dictionary<int, int>() { { 1, 4 } },
+                        new Dictionary<int, int>() { { 1, 5 } },
+                        new Dictionary<int, int>() { { 1, 6 } },
+                        new Dictionary<int, int>(),
+                        new Dictionary<int, int>(),
+                        new Dictionary<int, int>(),
+                    },
+                    TimeSpan.FromTicks(1));
 
                 var resultsParallelOrDefault = new List<int>();
                 input.Parallel(s => s.Where(x => x != 3 && x <= 4), outputDefaultIfDropped: true).Do(d =>
@@ -257,7 +260,7 @@ namespace Test.Psi
                         ValueTuple.Create("A6", "B6", "C6", "D6", "E6", "F6", "G6"),
                         ValueTuple.Create("A7", "B7", "C7", "D7", "E7", "F7", "G7"),
                         ValueTuple.Create("A8", "B8", "C8", "D8", "E8", "F8", "G8"),
-                        ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9")
+                        ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9"),
                     },
                     results));
             }
@@ -301,7 +304,7 @@ namespace Test.Psi
                         ValueTuple.Create("A6", "B6", "C6", "D6", "E6", "F6", "G6"),
                         ValueTuple.Create("A7", "B7", "C7", "D7", "E7", "F7", "G7"),
                         ValueTuple.Create("A8", "B8", "C8", "D8", "E8", "F8", "G8"),
-                        ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9")
+                        ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9"),
                     },
                     results));
             }

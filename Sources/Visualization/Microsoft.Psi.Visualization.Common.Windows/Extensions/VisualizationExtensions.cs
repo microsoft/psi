@@ -29,11 +29,11 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Converts stream of dictionarys of TKey and TValue to a stream of collections of TValue.
+        /// Converts stream of dictionaries of TKey and TValue to a stream of collections of TValue.
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
         /// <typeparam name="TValue">The type of dictionary values.</typeparam>
-        /// <param name="source">The stream of dictionarys of TKey and TValue.</param>
+        /// <param name="source">The stream of dictionaries of TKey and TValue.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted collections of TValue.</returns>
         public static IProducer<Dictionary<TKey, TValue>.ValueCollection> Values<TKey, TValue>(this IProducer<Dictionary<TKey, TValue>> source, DeliveryPolicy<Dictionary<TKey, TValue>> deliveryPolicy = null)
@@ -42,10 +42,10 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Converts stream of dictionarys of 2d points to a stream of list of named points.
+        /// Converts stream of dictionaries of 2d points to a stream of list of named points.
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
-        /// <param name="source">The stream of dictionarys of 2d points.</param>
+        /// <param name="source">The stream of dictionaries of 2d points.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted list of named points.</returns>
         public static IProducer<List<Tuple<Point, string>>> ToScatterPoints2D<TKey>(this IProducer<Dictionary<TKey, Point2D>> source, DeliveryPolicy<Dictionary<TKey, Point2D>> deliveryPolicy = null)
@@ -54,10 +54,10 @@ namespace Microsoft.Psi.Visualization.Extensions
         }
 
         /// <summary>
-        /// Converts stream of dictionarys of rectangles to a stream of list of named rectangles.
+        /// Converts stream of dictionaries of rectangles to a stream of list of named rectangles.
         /// </summary>
         /// <typeparam name="TKey">The type of dictionary keys.</typeparam>
-        /// <param name="source">The stream of dictionarys of rectangles.</param>
+        /// <param name="source">The stream of dictionaries of rectangles.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the converted list of named rectangles.</returns>
         public static IProducer<List<Tuple<System.Drawing.Rectangle, string>>> ToScatterRectangle<TKey>(this IProducer<Dictionary<TKey, System.Drawing.Rectangle>> source, DeliveryPolicy<Dictionary<TKey, System.Drawing.Rectangle>> deliveryPolicy = null)

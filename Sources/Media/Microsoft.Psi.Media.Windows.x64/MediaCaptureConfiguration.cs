@@ -13,18 +13,12 @@ namespace Microsoft.Psi.Media
         /// </summary>
         public static readonly MediaCaptureConfiguration Default = new MediaCaptureConfiguration()
         {
-            UseInSharedMode = false,
-            Width = 1280,
-            Height = 720,
-            Framerate = 15,
-            DeviceId = null,
-            CaptureAudio = false,
         };
 
         /// <summary>
         /// Gets or sets a value indicating whether the capture device should include audio capture.
         /// </summary>
-        public bool CaptureAudio { get; set; }
+        public bool CaptureAudio { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether Backlight Compensation is being applied.
@@ -84,27 +78,27 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Gets or sets a value indicating whether the camera device is shared amongst multiple applications.
         /// </summary>
-        public bool UseInSharedMode { get; set; }
+        public bool UseInSharedMode { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the camera resolution width.
         /// </summary>
-        public int Width { get; set; }
+        public int Width { get; set; } = 1280;
 
         /// <summary>
         /// Gets or sets the camera resolution height.
         /// </summary>
-        public int Height { get; set; }
+        public int Height { get; set; } = 720;
 
         /// <summary>
         /// Gets or sets the camera framerate.
         /// </summary>
-        public double Framerate { get; set; }
+        public double Framerate { get; set; } = 15;
 
         /// <summary>
         /// Gets or sets device id used to identify the camera.
         /// </summary>
-        public string DeviceId { get; set; }
+        public string DeviceId { get; set; } = null;
 
         /// <summary>
         /// Defines the type of a property on the media capture device.

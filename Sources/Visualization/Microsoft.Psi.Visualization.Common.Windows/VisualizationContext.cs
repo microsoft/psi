@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Visualization
     public class VisualizationContext : ObservableObject
     {
         private VisualizationContainer visualizationContainer;
-        private DatasetViewModel datasetViewModel;
+        private DatasetViewModel datasetViewModel = null;
         private DispatcherTimer liveStatusTimer = null;
 
         private List<TypeKeyedActionCommand> typeVisualizerActions = new List<TypeKeyedActionCommand>();
@@ -49,16 +49,13 @@ namespace Microsoft.Psi.Visualization
 
         private VisualizationContext()
         {
-            this.RegisterCustomSerializers();
-
             var booleanSchema = new AnnotationSchema("Boolean");
             booleanSchema.AddSchemaValue(null, System.Drawing.Color.Gray);
             booleanSchema.AddSchemaValue("false", System.Drawing.Color.Red);
             booleanSchema.AddSchemaValue("true", System.Drawing.Color.Green);
             AnnotationSchemaRegistry.Default.Register(booleanSchema);
 
-            this.DatasetViewModel = new DatasetViewModel();
-            this.DatasetViewModels = new ObservableCollection<DatasetViewModel> { this.datasetViewModel };
+            this.DatasetViewModels = new ObservableCollection<DatasetViewModel>();
 
             // Periodically check if there's any live partitions in the dataset
             this.liveStatusTimer = new DispatcherTimer(TimeSpan.FromSeconds(10), DispatcherPriority.Normal, new EventHandler(this.OnLiveStatusTimer), Application.Current.Dispatcher);
@@ -137,7 +134,7 @@ namespace Microsoft.Psi.Visualization
                     this.VisualizationContainer = visualizationContainer;
 
                     // zoom into the current session if there is one
-                    SessionViewModel sessionViewModel = this.DatasetViewModel.CurrentSessionViewModel;
+                    SessionViewModel sessionViewModel = this.DatasetViewModel?.CurrentSessionViewModel;
                     if (sessionViewModel != null)
                     {
                         // Zoom to the current session extents
@@ -158,19 +155,19 @@ namespace Microsoft.Psi.Visualization
         }
 
         /// <summary>
-        /// Gets the message type for a stream.  If the message type is unknown (i.e. the assembly
+        /// Gets the message data type for a stream.  If the data type is unknown (i.e. the assembly
         /// that contains the message type is not currently being referenced by PsiStudio, then
         /// we return the generic object type.
         /// </summary>
         /// <param name="streamTreeNode">The stream tree node.</param>
         /// <returns>The type of messages in the stream.</returns>
-        public Type GetStreamType(StreamTreeNode streamTreeNode)
+        public Type GetDataType(StreamTreeNode streamTreeNode)
         {
             return TypeResolutionHelper.GetVerifiedType(streamTreeNode.TypeName) ?? TypeResolutionHelper.GetVerifiedType(streamTreeNode.TypeName.Split(',')[0]) ?? typeof(object);
         }
 
         /// <summary>
-        /// Visualizes a streamin the visualization container.
+        /// Visualizes a streaming the visualization container.
         /// </summary>
         /// <param name="streamTreeNode">The stream to visualize.</param>
         /// <param name="visualizerMetadata">The visualizer metadata to use.</param>
@@ -221,7 +218,7 @@ namespace Microsoft.Psi.Visualization
             Type streamAdapterType = visualizerMetadata.StreamAdapterType;
             if (visualizerMetadata.VisualizationObjectType == typeof(MessageVisualizationObject))
             {
-                streamAdapterType = typeof(ObjectAdapter<>).MakeGenericType(this.GetStreamType(streamTreeNode));
+                streamAdapterType = typeof(ObjectAdapter<>).MakeGenericType(this.GetDataType(streamTreeNode));
             }
 
             // Update the binding
@@ -239,36 +236,45 @@ namespace Microsoft.Psi.Visualization
         /// Asynchronously opens a previously persisted dataset.
         /// </summary>
         /// <param name="filename">Fully qualified path to dataset file.</param>
+        /// <param name="showStatusWindow">Indicates whether to show the status window.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public async Task OpenDatasetAsync(string filename)
+        public async Task OpenDatasetAsync(string filename, bool showStatusWindow = true)
         {
-            // Window that will be used to indicate that an open operation is in progress.
-            // Progress notification and cancellation are not yet fully supported.
-            var statusWindow = new LoadingDatasetWindow(Application.Current.MainWindow, filename);
-
-            // progress reporter for the load dataset task
-            var progress = new Progress<(string s, double p)>(t =>
+            var loadDatasetTask = default(Task);
+            if (showStatusWindow)
             {
-                statusWindow.Status = t.s;
-                if (t.p == 1.0)
+                // Window that will be used to indicate that an open operation is in progress.
+                // Progress notification and cancellation are not yet fully supported.
+                var statusWindow = new LoadingDatasetWindow(Application.Current.MainWindow, filename);
+
+                // progress reporter for the load dataset task
+                var progress = new Progress<(string s, double p)>(t =>
                 {
+                    statusWindow.Status = t.s;
+                    if (t.p == 1.0)
+                    {
                     // close the status window when the task reports completion
                     statusWindow.Close();
+                    }
+                });
+
+                // start the load dataset task
+                loadDatasetTask = this.LoadDatasetOrStoreAsync(filename, progress);
+
+                try
+                {
+                    // show the modal status window, which will be closed once the load dataset operation completes
+                    statusWindow.ShowDialog();
                 }
-            });
-
-            // start the load dataset task
-            var loadDatasetTask = this.LoadDatasetOrStoreAsync(filename, progress);
-
-            try
-            {
-                // show the modal status window, which will be closed once the load dataset operation completes
-                statusWindow.ShowDialog();
+                catch (InvalidOperationException)
+                {
+                    // This indicates that the window has already been closed in the async task,
+                    // which means the operation has already completed, so just ignore and continue.
+                }
             }
-            catch (InvalidOperationException)
+            else
             {
-                // This indicates that the window has already been closed in the async task,
-                // which means the operation has already completed, so just ignore and continue.
+                loadDatasetTask = this.LoadDatasetOrStoreAsync(filename);
             }
 
             try
@@ -324,7 +330,7 @@ namespace Microsoft.Psi.Visualization
         public void ToggleLiveMode()
         {
             // Only enter live mode if the current session contains live partitions
-            if (this.DatasetViewModel.CurrentSessionViewModel.ContainsLivePartitions && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live)
+            if (this.DatasetViewModel != null && this.DatasetViewModel.CurrentSessionViewModel.ContainsLivePartitions && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live)
             {
                 this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Live);
             }
@@ -365,7 +371,7 @@ namespace Microsoft.Psi.Visualization
                 // Get the message type.  Type of object will be returned if we don't reference the
                 // assembly that contains the message type.  This will allow us to still display
                 // the visualize messages and visualize latency menuitems.
-                Type messageType = this.GetStreamType(streamTreeNode);
+                Type messageType = this.GetDataType(streamTreeNode);
 
                 // Get the list of visualization commands for this stream tree node
                 List<VisualizerMetadata> metadataItems = this.VisualizerMap.GetByDataType(messageType);
@@ -473,17 +479,12 @@ namespace Microsoft.Psi.Visualization
                 // Update the list of live partitions
                 this.DatasetViewModel.UpdateLivePartitionStatuses();
 
-                // If the're no longer any live partitions, exit live mode
+                // If there are no longer any live partitions, exit live mode
                 if ((this.DatasetViewModel.CurrentSessionViewModel?.ContainsLivePartitions == false) && (this.VisualizationContainer.Navigator.CursorMode == CursorMode.Live))
                 {
                     this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
                 }
             }
-        }
-
-        private void RegisterCustomSerializers()
-        {
-            KnownSerializers.Default.Register<MathNet.Numerics.LinearAlgebra.Storage.DenseColumnMajorMatrixStorage<double>>(null);
         }
     }
 }

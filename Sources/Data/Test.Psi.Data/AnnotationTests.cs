@@ -49,7 +49,7 @@ namespace Test.Psi.Data.Annotations
             this.definition = new AnnotatedEventDefinition("Definition");
             this.definition.AddSchema(this.booleanSchema);
 
-            this.metadata = new JsonStreamMetadata("Range", 1, typeof(AnnotatedEvent).AssemblyQualifiedName, this.name, this.path);
+            this.metadata = new JsonStreamMetadata("Range", 1, typeof(AnnotatedEvent).AssemblyQualifiedName, null, this.name, this.path);
         }
 
         /// <summary>

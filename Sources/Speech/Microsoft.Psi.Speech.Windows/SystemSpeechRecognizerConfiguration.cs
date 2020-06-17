@@ -20,12 +20,6 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         public SystemSpeechRecognizerConfiguration()
         {
-            this.Language = "en-us";
-            this.Grammars = null;
-            this.BufferLengthInMs = 1000;
-
-            // Defaults to 16 kHz, 16-bit, 1-channel PCM samples
-            this.InputFormat = WaveFormat.Create16kHz1Channel16BitPcm();
         }
 
         /// <summary>
@@ -36,7 +30,7 @@ namespace Microsoft.Psi.Speech
         /// (U.S. English). Other supported locales include "en-gb", "de-de", "es-es", "fr-fr", "ja-jp",
         /// "zh-cn" and "zh-tw".
         /// </remarks>
-        public string Language { get; set; }
+        public string Language { get; set; } = "en-us";
 
         /// <summary>
         /// Gets or sets the list of grammar files.
@@ -49,7 +43,7 @@ namespace Microsoft.Psi.Speech
         /// context-free grammar used for free text dictation.
         /// </remarks>
         [XmlArrayItem("Grammar")]
-        public GrammarInfo[] Grammars { get; set; }
+        public GrammarInfo[] Grammars { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the length of the recognizer's input stream buffer in milliseconds.
@@ -61,31 +55,31 @@ namespace Microsoft.Psi.Speech
         /// on the length of audio to buffer in milliseconds and the audio input format. By default, a 1000 ms
         /// buffer is used. It is safe to leave this value unchanged.
         /// </remarks>
-        public int BufferLengthInMs { get; set; }
+        public int BufferLengthInMs { get; set; } = 1000;
 
         /// <summary>
         /// Gets or sets the number of milliseconds during which the internal speech detection
         /// engine accepts input containing only silence before making a state transition.
         /// </summary>
-        public int InitialSilenceTimeoutMs { get; set; }
+        public int InitialSilenceTimeoutMs { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the number of milliseconds during which the internal speech detection
         /// engine accepts input containing only background noise before making a state transition.
         /// </summary>
-        public int BabbleTimeoutMs { get; set; }
+        public int BabbleTimeoutMs { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets the number of milliseconds of silence that the internal speech detection
         /// engine will accept at the end of unambiguous input before making a state transition.
         /// </summary>
-        public int EndSilenceTimeoutMs { get; set; }
+        public int EndSilenceTimeoutMs { get; set; } = 150;
 
         /// <summary>
         /// Gets or sets the number of milliseconds of silence that the internal speech detection
         /// engine will accept at the end of ambiguous input before making a state transition.
         /// </summary>
-        public int EndSilenceTimeoutAmbiguousMs { get; set; }
+        public int EndSilenceTimeoutAmbiguousMs { get; set; } = 500;
 
         /// <summary>
         /// Gets or sets the expected input format of the audio stream.
@@ -96,6 +90,6 @@ namespace Microsoft.Psi.Speech
         /// <see cref="WaveFormat.Create16BitPcm(int, int)"/> static methods to create the appropriate
         /// <see cref="WaveFormat"/> object. If not specified, a default value of 16000 Hz is assumed.
         /// </remarks>
-        public WaveFormat InputFormat { get; set; }
+        public WaveFormat InputFormat { get; set; } = WaveFormat.Create16kHz1Channel16BitPcm();
     }
 }

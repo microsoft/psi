@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
@@ -19,7 +20,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// <summary>
     /// Interaction logic for DiagnosticsVisualizationObjectView.xaml.
     /// </summary>
-    public partial class PipelineDiagnosticsVisualizationObjectView : UserControl
+    public partial class PipelineDiagnosticsVisualizationObjectView : UserControl, IDisposable
     {
         private GraphViewer graphViewer = new GraphViewer() { LayoutEditingEnabled = false };
         private Dictionary<int, (Transform, Node)> graphVisualPanZoom = new Dictionary<int, (Transform, Node)>();
@@ -42,6 +43,12 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// Gets the image visualization object.
         /// </summary>
         public PipelineDiagnosticsVisualizationObject DiagnosticsVisualizationObject { get; private set; }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.graphViewer.Dispose();
+        }
 
         /// <summary>
         /// Update view.
@@ -280,11 +287,27 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 this.graphVisualPanZoom = new Dictionary<int, (Transform, Node)>();
                 this.FitGraphView();
             }
-            else if (e.PropertyName == nameof(this.DiagnosticsVisualizationObject.CurrentValue) && this.DiagnosticsVisualizationObject.CurrentValue != null && this.DiagnosticsVisualizationObject.CurrentValue.Value.Data != null)
+            else if (e.PropertyName == nameof(this.DiagnosticsVisualizationObject.CurrentData) && this.DiagnosticsVisualizationObject.CurrentData != null)
             {
-                this.presenter.UpdateGraph(this.DiagnosticsVisualizationObject.CurrentValue.Value.Data, false);
+                this.presenter.UpdateGraph(this.DiagnosticsVisualizationObject.CurrentData, false);
             }
-            else
+            else if (
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ConnectorColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.EdgeColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.EdgeLineThickness) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.HeatmapColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.HeatmapStatistics) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.Highlight) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.HighlightColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.InfoTextSize) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.JoinColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.NodeColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowDeliveryPolicies) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowEmitterNames) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowExporterConnections) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowReceiverNames) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.SourceNodeColor) ||
+                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.SubpipelineColor))
             {
                 this.presenter.UpdateSettings(this.DiagnosticsVisualizationObject);
             }

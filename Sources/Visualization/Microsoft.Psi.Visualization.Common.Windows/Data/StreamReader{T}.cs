@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Visualization.Data
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.Visualization.Collections;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
 
     /// <summary>
@@ -137,7 +138,7 @@ namespace Microsoft.Psi.Visualization.Data
         {
             this.InternalRegisterInstantDataTarget<TTarget>(target);
 
-            // Create the index view if one does not already exist
+            // Create the instant index view if one does not already exist
             if (this.instantIndexView == null)
             {
                 this.OnInstantViewRangeChanged(viewRange);
@@ -148,6 +149,14 @@ namespace Microsoft.Psi.Visualization.Data
         public void UnregisterInstantDataTarget(Guid registrationToken)
         {
             this.InternalUnregisterInstantDataTarget(registrationToken);
+
+            // If no instant visualization objects are now using
+            // this stream reader, remove the instant index view
+            if (this.instantStreamReaders.Count <= 0)
+            {
+                this.instantIndexView = null;
+                this.currentIndexViewRange = new NavigatorRange(DateTime.MinValue, DateTime.MinValue);
+            }
         }
 
         /// <inheritdoc />
@@ -158,7 +167,7 @@ namespace Microsoft.Psi.Visualization.Data
 
             if (target != null)
             {
-                // Update the Ccursor epsilon
+                // Update the Cursor epsilon
                 target.CursorEpsilon = epsilon;
 
                 // Create the internal register method
@@ -195,6 +204,18 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 instantStreamReader.ReadInstantData(reader, cursorTime, this.index);
             }
+        }
+
+        /// <inheritdoc />
+        public DateTime? GetOriginatingTimeOfNearestInstantMessage(DateTime time)
+        {
+            int index = IndexHelper.GetIndexForTime(time, this.instantIndexView.Count, (idx) => this.instantIndexView[idx].OriginatingTime, SnappingBehavior.Nearest);
+            if (index >= 0)
+            {
+                return this.instantIndexView[index].OriginatingTime;
+            }
+
+            return null;
         }
 
         /// <inheritdoc />
@@ -397,7 +418,7 @@ namespace Microsoft.Psi.Visualization.Data
                     // compute read requests for first new range
                     newReadRequests.AddRange(this.ComputeReadRequests(startTime, range.Item1, readIndicesOnly));
 
-                    // continue comptuing for second new range
+                    // continue computing for second new range
                     startTime = range.Item2;
                 }
             }
@@ -429,12 +450,6 @@ namespace Microsoft.Psi.Visualization.Data
                         if (!this.instantStreamReaders[index].HasAdaptingDataProviders)
                         {
                             this.instantStreamReaders.RemoveAt(index);
-                        }
-
-                        // If there's no instant stream readers, remove the index view
-                        if (this.instantStreamReaders.Count <= 0)
-                        {
-                            this.instantIndexView = null;
                         }
 
                         return target;

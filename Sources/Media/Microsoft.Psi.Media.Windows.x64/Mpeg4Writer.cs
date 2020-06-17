@@ -94,7 +94,7 @@ namespace Microsoft.Psi.Media
             if (this.writer != null)
             {
                 this.writer.Close();
-                this.writer.Dispose();
+                ((IDisposable)this.writer).Dispose(); // Cast to IDisposable to suppress false CA2213 warning
                 this.writer = null;
                 MP4Writer.Shutdown();
             }

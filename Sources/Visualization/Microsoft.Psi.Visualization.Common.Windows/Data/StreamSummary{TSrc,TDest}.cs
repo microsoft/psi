@@ -69,7 +69,7 @@ namespace Microsoft.Psi.Visualization.Data
         public Type SummarizerType => this.streamBinding.SummarizerType;
 
         /// <summary>
-        /// Gets ths stream binding.
+        /// Gets the stream binding.
         /// </summary>
         public StreamBinding StreamBinding => this.streamBinding;
 
@@ -296,7 +296,7 @@ namespace Microsoft.Psi.Visualization.Data
                     // compute read requests for first new range
                     newRangeRequests.AddRange(this.ComputeRangeRequests(startTime, range.Item1));
 
-                    // continue comptuing for second new range
+                    // continue computing for second new range
                     startTime = range.Item2;
                 }
             }
@@ -334,7 +334,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Returns a view over the summary data and ensure that the view is preserved in the cache.
         /// </summary>
         /// <param name="viewMode">The view mode.</param>
-        /// <param name="startTime">Start stime of the view.</param>
+        /// <param name="startTime">Start time of the view.</param>
         /// <param name="endTime">End time of the view.</param>
         /// <param name="tailCount">Number of items to include in view.</param>
         /// <param name="tailRange">Tail duration function.</param>
@@ -419,7 +419,7 @@ namespace Microsoft.Psi.Visualization.Data
                     int headMerge = this.summaryDataBuffer.FindIndex(list => this.itemComparer.Compare(list[list.Count - 1], items[0]) == 0);
                     if (headMerge != -1)
                     {
-                        // Merge the tail of the predecesor with the head of the range being added
+                        // Merge the tail of the predecessor with the head of the range being added
                         var predecessor = this.summaryDataBuffer[headMerge];
 
                         // Use summarizer-specific method to combine the two IntervalData values

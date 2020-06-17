@@ -15,7 +15,7 @@ namespace Test.Psi
     public class EmitterTester
     {
         // make out local version of immediate, to make sure it's synchronous even in debug builds
-        private static readonly DeliveryPolicy immediate = new DeliveryPolicy(1, int.MaxValue, null, true, true);
+        private static readonly DeliveryPolicy Immediate = new DeliveryPolicy(1, int.MaxValue, null, true, true);
 
         [TestMethod]
         [Timeout(60000)]
@@ -57,7 +57,7 @@ namespace Test.Psi
                     },
                     "receiver");
 
-                Generators.Return(p, c).PipeTo(receiver, immediate);
+                Generators.Return(p, c).PipeTo(receiver, Immediate);
                 p.Run();
             }
 
@@ -109,7 +109,7 @@ namespace Test.Psi
                     },
                     "receiver");
 
-                Generators.Return(p, s).PipeTo(receiver, immediate);
+                Generators.Return(p, s).PipeTo(receiver, Immediate);
                 p.Run();
             }
 
@@ -159,8 +159,8 @@ namespace Test.Psi
                 }
                 catch (AggregateException errors)
                 {
-                    // expecting an ArgumentOutOfRangeException wrapped in an AggregateException
-                    Assert.AreEqual(1, errors.InnerExceptions.Count);
+                    // expecting at least one ArgumentOutOfRangeException wrapped in an AggregateException
+                    Assert.IsTrue(errors.InnerExceptions.Count > 0);
                     Assert.IsInstanceOfType(errors.InnerException, typeof(ArgumentOutOfRangeException));
                     CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5 }, results);
                 }

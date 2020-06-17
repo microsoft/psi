@@ -9,8 +9,8 @@ namespace Test.Psi
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
-    using Microsoft.Psi.Serialization;
     using Microsoft.Psi.Imaging;
+    using Microsoft.Psi.Serialization;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -56,7 +56,7 @@ namespace Test.Psi
             var sharedPool = new SharedPool<UnmanagedBuffer>(() => UnmanagedBuffer.Allocate(100), 1);
             var shared = sharedPool.GetOrCreate(); // refcount = 1
 
-            // a private copy shoudl point to the same resource
+            // a private copy should point to the same resource
             var otherShared = shared.DeepClone(); // refcount = 1 + 1
             Assert.AreNotEqual(shared, otherShared);
             Assert.AreEqual(shared.Inner, otherShared.Inner);
@@ -343,7 +343,7 @@ namespace Test.Psi
             Assert.AreEqual<int>(7, bmp75.Width);
             Assert.AreEqual<int>(5, bmp75.Height);
 
-            var shared57 = ImagePool.GetOrCreate(bmp57);
+            var shared57 = ImagePool.GetOrCreateFromBitmap(bmp57);
             Assert.AreEqual<int>(5, shared57.Resource.Width);
             Assert.AreEqual<int>(7, shared57.Resource.Height);
 
@@ -352,7 +352,7 @@ namespace Test.Psi
             // stride and total size of the recycled image could be incorrect.
 
             shared57.Dispose(); // release to be recycled
-            var shared75 = ImagePool.GetOrCreate(bmp75); // should *not* get the recycled image
+            var shared75 = ImagePool.GetOrCreateFromBitmap(bmp75); // should *not* get the recycled image
             Assert.AreEqual<int>(7, shared75.Resource.Width);
             Assert.AreEqual<int>(5, shared75.Resource.Height);
         }

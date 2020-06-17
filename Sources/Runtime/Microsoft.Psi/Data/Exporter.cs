@@ -61,32 +61,6 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Used to define which emitters should be written to the store using WriteEmitters.
-        /// </summary>
-        public enum WriteWhichEmitters
-        {
-            /// <summary>
-            /// Write all emitters.
-            /// </summary>
-            All,
-
-            /// <summary>
-            /// Write specified emitters.
-            /// </summary>
-            Specified,
-
-            /// <summary>
-            /// Write connected emitters.
-            /// </summary>
-            Connected,
-
-            /// <summary>
-            /// Write attributed emitters.
-            /// </summary>
-            Attributed,
-        }
-
-        /// <summary>
         /// Gets the name of the store being written to.
         /// </summary>
         public new string Name => this.writer.Name;
@@ -117,48 +91,38 @@ namespace Microsoft.Psi.Data
             {
                 this.writer.Dispose();
             }
+
+            this.throttle.Dispose();
         }
 
         /// <summary>
         /// Writes the messages from the specified stream to the matching storage stream in this store.
         /// </summary>
-        /// <typeparam name="T">The type of messages in the stream.</typeparam>
+        /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
         /// <param name="source">The source stream to write.</param>
         /// <param name="name">The name of the storage stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void Write<T>(Emitter<T> source, string name, bool largeMessages = false, DeliveryPolicy<T> deliveryPolicy = null)
+        public void Write<TMessage>(Emitter<TMessage> source, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
         {
-            // make sure we can serialize this type
-            var handler = this.serializers.GetHandler<T>();
+            this.WriteToStorage(source, name, largeMessages, deliveryPolicy);
+        }
 
-            // add another input to the merger to hook up the serializer to
-            // and check for duplicate names in the process
-            var mergeInput = this.merger.Add(name);
-
-            // name the stream if it's not already named
-            var connector = new MessageConnector<T>(source.Pipeline, this, null);
-
-            // defaults to lossless delivery policy unless otherwise specified
-            source.PipeTo(connector, deliveryPolicy ?? DeliveryPolicy.Unlimited);
-            source.Name = connector.Out.Name = name;
-            source.Closed += closeTime => this.writer.CloseStream(source.Id, closeTime);
-
-            // tell the writer to write the serialized stream
-            var meta = this.writer.OpenStream(source.Id, name, largeMessages, handler.Name);
-
-            // register this stream with the store catalog
-            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, name, meta);
-
-            // hook up the serializer
-            var serializer = new SerializerComponent<T>(this, this.serializers);
-
-            // The serializer and merger will act synchronously and throttle the connector for as long as
-            // the merger is busy writing data. This will cause messages to be queued or dropped at the input
-            // to the connector (per the user-supplied deliveryPolicy) until the merger is able to accept
-            // the next serialized data message.
-            serializer.PipeTo(mergeInput, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
-            connector.PipeTo(serializer, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
+        /// <summary>
+        /// Writes the messages from the specified stream to the matching storage stream in this store.
+        /// Additionally stores supplemental metadata value.
+        /// </summary>
+        /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
+        /// <typeparam name="TSupplementalMetadata">The type of supplemental stream metadata.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        /// <param name="supplementalMetadataValue">Supplemental metadata value.</param>
+        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        public void Write<TMessage, TSupplementalMetadata>(Emitter<TMessage> source, TSupplementalMetadata supplementalMetadataValue, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
+        {
+            var meta = this.WriteToStorage(source, name, largeMessages, deliveryPolicy);
+            meta.SetSupplementalMetadata(supplementalMetadataValue, this.serializers);
         }
 
         /// <summary>
@@ -203,88 +167,16 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Given a pipeline source object (such as KinectSensor) this method will
-        /// write all emitters that match the requested properties to the current store.
-        /// This is useful for writing streams from a sensor to a store for later playback
-        /// via Importer.OpenAs().
+        /// Writes the messages from the specified stream to the matching storage stream in this store.
         /// </summary>
-        /// <typeparam name="T">Type of source to get emitters from (e.g. KinectSensor).</typeparam>
-        /// <param name="sensor">The source to write data from.</param>
-        /// <param name="streamsToEmit">Used to indicate which emitters should be written.</param>
-        /// <param name="streamNames">List of stream names if streamToEmit==WriteWhichEmitters.Specified.</param>
-        public void WriteEmitters<T>(T sensor, WriteWhichEmitters streamsToEmit = WriteWhichEmitters.Connected, string[] streamNames = null)
+        /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="metadata">Source stream metadata.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        internal void Write<TMessage>(Emitter<TMessage> source, string name, PsiStreamMetadata metadata, DeliveryPolicy<TMessage> deliveryPolicy = null)
         {
-            var objType = typeof(T);
-            var objProps = objType.GetProperties();
-            foreach (var f in objProps)
-            {
-                var objPropType = f.PropertyType;
-                if (objPropType.GetInterface(nameof(IEmitter)) != null)
-                {
-                    bool emit = false;
-                    switch (streamsToEmit)
-                    {
-                        case WriteWhichEmitters.All:
-                            emit = true;
-                            break;
-                        case WriteWhichEmitters.Specified:
-                            if (streamNames != null)
-                            {
-                                foreach (var name in streamNames)
-                                {
-                                    if (name == f.Name)
-                                    {
-                                        emit = true;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            break;
-                        case WriteWhichEmitters.Connected:
-                            var theEmitter = f.GetValue(sensor);
-                            if (theEmitter != null)
-                            {
-                                var hasSubscribers = objPropType.GetProperty("HasSubscribers").GetValue(theEmitter);
-                                if ((bool)hasSubscribers)
-                                {
-                                    emit = true;
-                                }
-                            }
-
-                            break;
-                        case WriteWhichEmitters.Attributed:
-                            if (Attribute.IsDefined(f, typeof(WriteStreamAttribute)))
-                            {
-                                emit = true;
-                            }
-
-                            break;
-                    }
-
-                    if (emit)
-                    {
-                        var propInfo = typeof(T).GetProperty(f.Name);
-                        var writeMethods = typeof(Exporter).GetMethods();
-                        System.Reflection.MethodInfo writeMethod = null;
-                        foreach (var mi in writeMethods)
-                        {
-                            if (mi.Name == nameof(this.Write) && mi.IsGenericMethod == true)
-                            {
-                                writeMethod = mi;
-                                break;
-                            }
-                        }
-
-                        if (writeMethod != null)
-                        {
-                            var writeStream = writeMethod.MakeGenericMethod(objPropType.GetGenericArguments());
-                            object[] args = { propInfo.GetValue(sensor), f.Name, true, DeliveryPolicy.LatestMessage };
-                            writeStream.Invoke(this, args);
-                        }
-                    }
-                }
-            }
+            this.WriteToStorage(source, name, metadata.IsIndexed, deliveryPolicy).UpdateSupplementalMetadataFrom(metadata);
         }
 
         internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata meta, DeliveryPolicy<Message<BufferReader>> deliveryPolicy = null)
@@ -303,13 +195,48 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Class that defines an attribute used to indicate which Emitters should be
-        /// written when WriteEmitters is called.
-        /// Clients may place the [WriteStream] attribute on each emitter property
-        /// they want written.
+        /// Writes the messages from the specified stream to the matching storage stream in this store.
         /// </summary>
-        public class WriteStreamAttribute : Attribute
+        /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>Stream metadata.</returns>
+        private PsiStreamMetadata WriteToStorage<TMessage>(Emitter<TMessage> source, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
         {
+            // make sure we can serialize this type
+            var handler = this.serializers.GetHandler<TMessage>();
+
+            // add another input to the merger to hook up the serializer to
+            // and check for duplicate names in the process
+            var mergeInput = this.merger.Add(name);
+
+            // name the stream if it's not already named
+            var connector = new MessageConnector<TMessage>(source.Pipeline, this, null);
+
+            // defaults to lossless delivery policy unless otherwise specified
+            source.PipeTo(connector, deliveryPolicy ?? DeliveryPolicy.Unlimited);
+            source.Name = connector.Out.Name = name;
+            source.Closed += closeTime => this.writer.CloseStream(source.Id, closeTime);
+
+            // tell the writer to write the serialized stream
+            var meta = this.writer.OpenStream(source.Id, name, largeMessages, handler.Name);
+
+            // register this stream with the store catalog
+            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, name, meta);
+
+            // hook up the serializer
+            var serializer = new SerializerComponent<TMessage>(this, this.serializers);
+
+            // The serializer and merger will act synchronously and throttle the connector for as long as
+            // the merger is busy writing data. This will cause messages to be queued or dropped at the input
+            // to the connector (per the user-supplied deliveryPolicy) until the merger is able to accept
+            // the next serialized data message.
+            serializer.PipeTo(mergeInput, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
+            connector.PipeTo(serializer, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
+
+            return meta;
         }
     }
 }

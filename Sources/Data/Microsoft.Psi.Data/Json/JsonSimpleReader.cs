@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Data.Json
         public JsonSimpleReader(string name, string path, string extension = JsonStoreBase.DefaultExtension)
             : this(extension)
         {
-            this.OpenStore(name, path);
+            this.Reader = new JsonStoreReader(name, path, extension);
         }
 
         /// <summary>

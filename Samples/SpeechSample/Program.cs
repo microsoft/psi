@@ -116,7 +116,7 @@ namespace Microsoft.Psi.Samples.SpeechSample
                 {
                     // Create the AudioCapture component to capture audio from the default device in 16 kHz 1-channel
                     // PCM format as required by both the voice activity detector and speech recognition components.
-                    audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm() });
+                    audioInput = new AudioCapture(pipeline, WaveFormat.Create16kHz1Channel16BitPcm());
                 }
 
                 // Create System.Speech recognizer component
@@ -202,7 +202,7 @@ namespace Microsoft.Psi.Samples.SpeechSample
                 {
                     // Create the AudioCapture component to capture audio from the default device in 16 kHz 1-channel
                     // PCM format as required by both the voice activity detector and speech recognition components.
-                    audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm() });
+                    audioInput = new AudioCapture(pipeline, WaveFormat.Create16kHz1Channel16BitPcm());
                 }
 
                 // Perform voice activity detection using the voice activity detector component

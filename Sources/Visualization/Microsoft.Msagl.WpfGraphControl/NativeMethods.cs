@@ -7,7 +7,7 @@ namespace Microsoft.Msagl.WpfGraphControl
     ﻿using System.Runtime.InteropServices;
 
     /// <summary>
-    /// Navive methods.
+    /// Native methods.
     /// </summary>
     ﻿internal static class NativeMethods
     {

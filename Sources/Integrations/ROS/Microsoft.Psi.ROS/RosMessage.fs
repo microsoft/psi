@@ -22,8 +22,8 @@ module RosMessage =
 
     type RosFieldVal =
         | BoolVal          of bool // introduced in ROS 0.9
-        | Int8Val          of int8 // depricated alias: byte
-        | UInt8Val         of uint8 // depricated alias: char
+        | Int8Val          of int8 // deprecated alias: byte
+        | UInt8Val         of uint8 // deprecated alias: char
         | Int16Val         of int16
         | UInt16Val        of uint16
         | Int32Val         of int32

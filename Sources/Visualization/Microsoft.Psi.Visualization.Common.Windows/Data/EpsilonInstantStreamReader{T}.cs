@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.Visualization.Collections;
@@ -20,7 +19,7 @@ namespace Microsoft.Psi.Visualization.Data
     public class EpsilonInstantStreamReader<T>
     {
         /// <summary>
-        /// Flag indicating whether type paramamter T is Shared{} or not.
+        /// Flag indicating whether type parameter T is Shared{} or not.
         /// </summary>
         private readonly bool isSharedType = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(Shared<>);
 
@@ -91,7 +90,7 @@ namespace Microsoft.Psi.Visualization.Data
 
                 if (target != null)
                 {
-                    // If the data provider now has no targets to call, remove it from the collecction
+                    // If the data provider now has no targets to call, remove it from the collection
                     if (!this.dataProviders[index].HasRegisteredTargets)
                     {
                         this.dataProviders.RemoveAt(index);
@@ -126,19 +125,16 @@ namespace Microsoft.Psi.Visualization.Data
                 data = reader.Read<T>(indexEntry);
             }
 
-            // Notify all registered adapting data providers of the new data.  If the data is Shared<T> then perform a deep clone
-            // (which resolves to an AddRef() for this type) for each provider we call.  The providers are responsible for releasing
-            // their reference to the data once they're done with it.
+            // Notify each adapting data provider of the new data
+            foreach (IAdaptingInstantDataProvider<T> adaptingInstantDataProvider in this.dataProviders.ToList())
+            {
+                adaptingInstantDataProvider.PushData(data, indexEntry);
+            }
+
+            // Release the reference to the local copy of the data if it's shared
             if (this.isSharedType && data != null)
             {
-                Parallel.ForEach(this.dataProviders.ToList(), provider => provider.PushData(data.DeepClone<T>(), indexEntry));
-
-                // Release the reference to the local copy of the data
                 (data as IDisposable).Dispose();
-            }
-            else
-            {
-                Parallel.ForEach(this.dataProviders.ToList(), provider => provider.PushData(data, indexEntry));
             }
         }
     }

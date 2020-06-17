@@ -80,7 +80,7 @@ namespace Test.Psi.Speech.Windows
                 return;
             }
 
-            // Read the WaveFormat from the file header so we can set the recognizer configuaration.
+            // Read the WaveFormat from the file header so we can set the recognizer configuration.
             WaveFormat format = WaveFileHelper.ReadWaveFileHeader(filename);
 
             // Initialize components and wire up pipeline.
@@ -98,7 +98,7 @@ namespace Test.Psi.Speech.Windows
                 }
 
                 // Add results from outputs. Note that we need to call DeepClone on each result as we
-                // do not want them to be resused by the runtime.
+                // do not want them to be reused by the runtime.
                 var results = new List<IStreamingSpeechRecognitionResult>();
                 recognizer.Out.Do(r => results.Add(r.DeepClone()));
                 recognizer.PartialRecognitionResults.Do(r => results.Add(r.DeepClone()));

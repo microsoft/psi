@@ -1,18 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Microsoft Psi Test Project Rules" Description="These rules are used for Psi test projects." ToolsVersion="16.0">
-  <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
-    <Name Resource="MinimumRecommendedRules_Name" />
-    <Description Resource="MinimumRecommendedRules_Description" />
-  </Localization>
+<RuleSet Name="Microsoft Psi Test Project Rules" Description="These rules are used for Psi test projects." ToolsVersion="15.0">
+  <Include Path="Security.ruleset" Action="Default" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
-    <Rule Id="CA1001" Action="Warning" />
+    <Rule Id="CA1001" Action="None" />
     <Rule Id="CA1009" Action="Warning" />
     <Rule Id="CA1016" Action="Warning" />
     <Rule Id="CA1033" Action="Warning" />
     <Rule Id="CA1049" Action="Warning" />
     <Rule Id="CA1060" Action="Warning" />
     <Rule Id="CA1061" Action="Warning" />
-    <Rule Id="CA1063" Action="Warning" />
+    <Rule Id="CA1063" Action="None" />
     <Rule Id="CA1065" Action="Warning" />
     <Rule Id="CA1301" Action="Warning" />
     <Rule Id="CA1400" Action="Warning" />
@@ -70,15 +67,22 @@
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1005" Action="None" />
     <Rule Id="SA1008" Action="None" />
     <Rule Id="SA1009" Action="None" />
+    <Rule Id="SA1025" Action="None" />
+    <Rule Id="SA1108" Action="None" />
+    <Rule Id="SA1118" Action="None" />
     <Rule Id="SA1124" Action="None" />
-    <Rule Id="SA1305" Action="Warning" />
+    <Rule Id="SA1201" Action="None" />
+    <Rule Id="SA1202" Action="None" />
     <Rule Id="SA1401" Action="None" />
     <Rule Id="SA1402" Action="None" />
     <Rule Id="SA1407" Action="None" />
     <Rule Id="SA1504" Action="None" />
+    <Rule Id="SA1512" Action="None" />
     <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1602" Action="None" />
     <Rule Id="SA1652" Action="None" />
   </Rules>
 </RuleSet>

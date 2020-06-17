@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private ObservableCollection<VisualizationPanel> panels;
 
         /// <summary>
-        /// multithreaded collection lock.
+        /// Multithreaded collection lock.
         /// </summary>
         private object panelsLock;
 
@@ -391,7 +391,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Zoom to the spcified time interval.
+        /// Zoom to the specified time interval.
         /// </summary>
         /// <param name="timeInterval">Time interval to zoom to.</param>
         public void ZoomToRange(TimeInterval timeInterval)

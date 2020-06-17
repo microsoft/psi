@@ -62,7 +62,7 @@ namespace Microsoft.Psi.Data.Json
         public IEnumerable<JsonStreamMetadata> AvailableStreams => this.catalog;
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in the data store.
+        /// Gets the originating time interval (earliest to latest) of the messages in the data store.
         /// </summary>
         public TimeInterval OriginatingTimeInterval => this.originatingTimeInterval;
 
@@ -113,6 +113,7 @@ namespace Microsoft.Psi.Data.Json
         {
             this.streamReader?.Dispose();
             this.streamReader = null;
+            this.jsonReader?.Close();
             this.jsonReader = null;
         }
 

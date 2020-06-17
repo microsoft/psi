@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdatableVisual3DDictionary{TKey,TVisual}"/> class.
         /// </summary>
-        /// <param name="newVisualHandler">The delegate that identifies the method to call whne a new TVisual
+        /// <param name="newVisualHandler">The delegate that identifies the method to call when a new TVisual
         /// needs to be initialized.  This parameter can be null if no initialization is required.</param>
         public UpdatableVisual3DDictionary(NewVisualHandler newVisualHandler)
         {

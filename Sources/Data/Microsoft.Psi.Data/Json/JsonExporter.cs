@@ -69,6 +69,8 @@ namespace Microsoft.Psi.Data.Json
             {
                 this.writer.Dispose();
             }
+
+            this.throttle.Dispose();
         }
 
         /// <summary>

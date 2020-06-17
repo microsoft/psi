@@ -33,7 +33,6 @@ namespace Microsoft.Psi.Data
             this.StoreName = storeName;
             this.StorePath = storePath;
             this.Name = name ?? storeName;
-            this.InitNew();
         }
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace Microsoft.Psi.Data
         public IEnumerable<IStreamMetadata> AvailableStreams => this.Reader?.AvailableStreams;
 
         /// <summary>
-        /// Overridable method to allow derived object to initialize properties as part of object construction or after deserialization.
+        /// Overridable method to allow derived object to initialize properties after deserialization.
         /// </summary>
         protected virtual void InitNew()
         {

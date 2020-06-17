@@ -126,11 +126,11 @@ namespace Microsoft.Psi.Audio
                     {
                         LinuxAudioInterop.Read(this.audioDevice, buf, blockSize);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         if (this.audioDevice != null)
                         {
-                            throw ex;
+                            throw;
                         }
                     }
 

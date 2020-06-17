@@ -100,17 +100,23 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <Version>2.9.8</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.1.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>2.1.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers">
       <Version>1.1.118</Version>
@@ -137,13 +143,26 @@
     <None Include="Resources\TestImage_Crop_153_57_103_199.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TestImage_Scale_25_200.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TestImage_Scale_50_25.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TestImage_Scale_150_125.bmp" />
+    <Content Include="Resources\TestImage2.bmp" />
+    <Content Include="Resources\TestImage2_AbsDiff.bmp" />
+    <Content Include="Resources\TestImage2_BlueChannel.bmp" />
+    <Content Include="Resources\TestImage2_CopyImage.bmp" />
+    <Content Include="Resources\TestImage2_DrawCircle.bmp" />
+    <Content Include="Resources\TestImage2_DrawLine.bmp" />
+    <Content Include="Resources\TestImage2_DrawRect.bmp" />
+    <Content Include="Resources\TestImage2_DrawText.bmp" />
+    <Content Include="Resources\TestImage2_FlipHoriz.bmp" />
+    <Content Include="Resources\TestImage2_FlipVert.bmp" />
+    <Content Include="Resources\TestImage2_GreenChannel.bmp" />
+    <Content Include="Resources\TestImage2_Invert.bmp" />
+    <Content Include="Resources\TestImage2_Mask.bmp" />
+    <Content Include="Resources\TestImage2_RedChannel.bmp" />
+    <Content Include="Resources\TestImage2_Rotate_110.bmp" />
+    <Content Include="Resources\TestImage2_Rotate_Neg10.bmp" />
+    <Content Include="Resources\TestImage2_Threshold.bmp" />
+    <Content Include="Resources\TestImage_Scale_150_125_Point.bmp" />
+    <Content Include="Resources\TestImage_Scale_25_200_Linear.bmp" />
+    <Content Include="Resources\TestImage_Scale_50_25_Cubic.bmp" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

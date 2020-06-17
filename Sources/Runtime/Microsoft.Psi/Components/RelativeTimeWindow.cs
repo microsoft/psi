@@ -21,7 +21,6 @@ namespace Microsoft.Psi.Components
 
         private int anchorMessageSequenceId = -1;
         private DateTime anchorMessageOriginatingTime = DateTime.MinValue;
-        private bool initialBuffer; // constructing first initial buffer
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeTimeWindow{TInput, TOutput}"/> class.
@@ -29,60 +28,29 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">Pipeline to which this component belongs.</param>
         /// <param name="relativeTimeInterval">The relative time interval over which to gather messages.</param>
         /// <param name="selector">Select output message from collected window of input messages.</param>
-        /// <param name="waitForCompleteWindow">Whether to wait for seeing a complete window before computing the selector function and posting the first time. True by default.</param>
-        public RelativeTimeWindow(Pipeline pipeline, RelativeTimeInterval relativeTimeInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector, bool waitForCompleteWindow = true)
+        public RelativeTimeWindow(Pipeline pipeline, RelativeTimeInterval relativeTimeInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector)
             : base(pipeline)
         {
             this.relativeTimeInterval = relativeTimeInterval;
             this.selector = selector;
             this.In.Unsubscribed += _ => this.OnUnsubscribed();
-
-            // If false, processing should begin immediately without waiting for full window length.
-            this.initialBuffer = waitForCompleteWindow;
         }
 
         /// <inheritdoc />
         protected override void Receive(TInput value, Envelope envelope)
         {
-            // clone and add the new message
-            var message = new Message<TInput>(value, envelope).DeepClone(this.recycler);
-
-            // time-based
-            if (this.initialBuffer)
-            {
-                var clone = this.buffer.DeepClone();
-                this.buffer.Enqueue(message);
-                if (this.CheckRemoval())
-                {
-                    this.initialBuffer = false;
-                    this.ProcessWindow(clone, false, this.Out);
-                    this.ProcessRemoval();
-                    this.ProcessWindow(this.buffer, false, this.Out);
-                }
-            }
-            else
-            {
-                this.buffer.Enqueue(message);
-                this.ProcessRemoval();
-                this.ProcessWindow(this.buffer, false, this.Out);
-            }
+            this.buffer.Enqueue(new Message<TInput>(value, envelope).DeepClone(this.recycler));
+            this.ProcessRemoval();
+            this.ProcessWindow(this.buffer, false, this.Out);
         }
 
         private bool RemoveCondition(Message<TInput> message)
         {
-            if (this.initialBuffer)
-            {
-                return message.OriginatingTime < (this.buffer.Last().OriginatingTime + this.relativeTimeInterval).Left;
-            }
-            else
-            {
-                return this.anchorMessageOriginatingTime > DateTime.MinValue && message.OriginatingTime < (this.anchorMessageOriginatingTime + this.relativeTimeInterval).Left;
-            }
+            return this.anchorMessageOriginatingTime > DateTime.MinValue && message.OriginatingTime < (this.anchorMessageOriginatingTime + this.relativeTimeInterval).Left;
         }
 
         private void ProcessWindow(IEnumerable<Message<TInput>> messageList, bool final, Emitter<TOutput> emitter)
         {
-            this.initialBuffer = false;
             var messages = messageList.ToArray();
             var anchorMessageIndex = 0;
             if (this.anchorMessageSequenceId >= 0)

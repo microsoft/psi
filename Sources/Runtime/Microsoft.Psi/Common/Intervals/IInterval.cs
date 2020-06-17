@@ -106,16 +106,16 @@ namespace Microsoft.Psi
         /// <summary>
         /// Scale from left point by a span distance.
         /// </summary>
-        /// <param name="left">Span by whith to scale left.</param>
-        /// <param name="right">Span by whith to scale right.</param>
+        /// <param name="left">Span by which to scale left.</param>
+        /// <param name="right">Span by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         T Scale(TSpan left, TSpan right);
 
         /// <summary>
         /// Scale from left point by a factor.
         /// </summary>
-        /// <param name="left">Factor by whith to scale left.</param>
-        /// <param name="right">Factor by whith to scale right.</param>
+        /// <param name="left">Factor by which to scale left.</param>
+        /// <param name="right">Factor by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         T Scale(float left, float right);
 

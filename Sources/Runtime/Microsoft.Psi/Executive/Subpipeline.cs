@@ -65,7 +65,7 @@ namespace Microsoft.Psi
         /// </summary>
         /// <remarks>This is called by the parent subpipeline, if any.</remarks>
         /// <param name="notifyCompletionTime">Delegate to call to notify of completion time.</param>
-        void ISourceComponent.Start(Action<DateTime> notifyCompletionTime)
+        public void Start(Action<DateTime> notifyCompletionTime)
         {
             this.notifyCompletionTime = notifyCompletionTime;
             this.InitializeCompletionTimes();
@@ -75,7 +75,7 @@ namespace Microsoft.Psi
         }
 
         /// <inheritdoc/>
-        void ISourceComponent.Stop(DateTime finalOriginatingTime, Action notifyCompleted)
+        public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
             this.notifyCompleted = notifyCompleted;
 

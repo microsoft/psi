@@ -18,7 +18,7 @@ namespace Microsoft.Psi
     /// </summary>
     /// <typeparam name="T">The type of messages in the stream.</typeparam>
     [Serializer(typeof(Emitter<>.NonSerializer))]
-    public class Emitter<T> : IEmitter, IProducer<T>
+    public sealed class Emitter<T> : IEmitter, IProducer<T>
     {
         private readonly object owner;
         private readonly Pipeline pipeline;

@@ -8,7 +8,9 @@ namespace Microsoft.Psi.Kinect
     using System;
     using System.Collections.Generic;
     using System.Xml.Serialization;
+    using MathNet.Numerics.LinearAlgebra;
     using Microsoft.Kinect;
+    using Microsoft.Psi.Calibration;
 
     internal class KinectInternalCalibration
     {
@@ -17,94 +19,21 @@ namespace Microsoft.Psi.Kinect
         public const int colorImageWidth = 1920;
         public const int colorImageHeight = 1080;
 
-        public Matrix colorCameraMatrix = new Matrix(3, 3);
-        public Matrix colorLensDistortion = new Matrix(5, 1);
-        public Matrix depthCameraMatrix = new Matrix(3, 3);
-        public Matrix depthLensDistortion = new Matrix(5, 1);
-        public Matrix depthToColorTransform = new Matrix(4, 4);
+        public Matrix<double> colorCameraMatrix = Matrix<double>.Build.Dense(3, 3);
+        public Vector<double> colorLensDistortion = Vector<double>.Build.Dense(5);
+        public Matrix<double> depthCameraMatrix = Matrix<double>.Build.Dense(3, 3);
+        public Vector<double> depthLensDistortion = Vector<double>.Build.Dense(5);
+        public Matrix<double> depthToColorTransform = Matrix<double>.Build.Dense(4, 4);
 
         [XmlIgnoreAttribute]
         public bool silent = true;
 
-        /// <summary>
-        /// Converts a camera space point (3D) to the corresponding color space point (2D-RGB camera)
-        /// </summary>
-        /// <param name="cameraSpacePoint">The color space point to convert</param>
-        /// <returns>The corresponding camera space point</returns>
-        public ColorSpacePoint ToColorSpacePoint(CameraSpacePoint cameraSpacePoint)
-        {
-            var colorPoint = new Matrix(4, 1);
-            var depthPoint = new Matrix(4, 1);
-            depthPoint[0] = (double)cameraSpacePoint.X;
-            depthPoint[1] = (double)cameraSpacePoint.Y;
-            depthPoint[2] = (double)cameraSpacePoint.Z;
-            depthPoint[3] = 1;
-
-            colorPoint.Mult(this.depthToColorTransform, depthPoint);
-
-            double colorX, colorY;
-            Project(this.colorCameraMatrix, this.colorLensDistortion, colorPoint[0], colorPoint[1], colorPoint[2], out colorX, out colorY);
-            ColorSpacePoint colorSpacePoint;
-            colorSpacePoint.X = (float)colorX;
-            colorSpacePoint.Y = (float)(colorImageHeight - colorY);
-            return colorSpacePoint;
-        }
-
-        public void ToCameraSpacePoint(ColorSpacePoint colorSpacePoint, out CameraSpacePoint cameraOrigin3D, out CameraSpacePoint point3D)
-        {
-            Matrix c2d = new Matrix();
-            c2d.Inverse(depthToColorTransform);
-
-            var cameraOrigin = new Matrix(4, 1);
-            cameraOrigin[0] = 0;
-            cameraOrigin[1] = 0;
-            cameraOrigin[2] = 0;
-            cameraOrigin[3] = 1;
-            var cameraOriginIn3DSpace = new Matrix(4, 1);
-            cameraOriginIn3DSpace.Mult(c2d, cameraOrigin);
-            cameraOrigin3D.X = (float)cameraOriginIn3DSpace[0];
-            cameraOrigin3D.Y = (float)cameraOriginIn3DSpace[1];
-            cameraOrigin3D.Z = (float)cameraOriginIn3DSpace[2];
-
-            var pointInImage = new Matrix(4, 1);
-            double undistx;
-            double undisty;
-            Undistort(colorCameraMatrix, colorLensDistortion, colorSpacePoint.X, (colorImageHeight - colorSpacePoint.Y), out undistx, out undisty);
-            pointInImage[0] = undistx;
-            pointInImage[1] = undisty;
-            pointInImage[2] = 1;
-            pointInImage[3] = 1;
-
-            var pointIn3DSpace = new Matrix(4, 1);
-            pointIn3DSpace.Mult(c2d, pointInImage);
-            point3D.X = (float)pointIn3DSpace[0];
-            point3D.Y = (float)pointIn3DSpace[1];
-            point3D.Z = (float)pointIn3DSpace[2];
-        }
-
-
-        /// <summary>
-        /// Converts a cameras space point to a depth space point
-        /// </summary>
-        /// <param name="cameraSpacePoint">The color space point to convert</param>
-        /// <returns>The corresponding camera space point</returns>
-        public DepthSpacePoint ToDepthSpacePoint(CameraSpacePoint cameraSpacePoint)
-        {
-            double depthX, depthY;
-            Project(this.depthCameraMatrix, this.depthLensDistortion, cameraSpacePoint.X, cameraSpacePoint.Y, cameraSpacePoint.Z, out depthX, out depthY);
-            DepthSpacePoint depthSpacePoint;
-            depthSpacePoint.X = (float)depthX;
-            depthSpacePoint.Y = (float)(depthImageHeight - depthY);
-
-            return depthSpacePoint;
-        }
-
-        public void RecoverCalibrationFromSensor(Microsoft.Kinect.KinectSensor kinectSensor)
+        internal void RecoverCalibrationFromSensor(Microsoft.Kinect.KinectSensor kinectSensor)
         {
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            var objectPoints1 = new List<Matrix>();
+            var objectPoints1 = new List<Vector<double>>();
             var colorPoints1 = new List<System.Drawing.PointF>();
             var depthPoints1 = new List<System.Drawing.PointF>();
 
@@ -119,7 +48,7 @@ namespace Microsoft.Psi.Kinect
                         kinectCameraPoint.Z = z;
 
                         // use SDK's projection
-                        // adjust Y to make RH cooridnate system that is a projection of Kinect 3D points
+                        // adjust Y to make RH coordinate system that is a projection of Kinect 3D points
                         var kinectColorPoint = kinectSensor.CoordinateMapper.MapCameraPointToColorSpace(kinectCameraPoint);
                         kinectColorPoint.Y = colorImageHeight - kinectColorPoint.Y;
                         var kinectDepthPoint = kinectSensor.CoordinateMapper.MapCameraPointToDepthSpace(kinectCameraPoint);
@@ -131,7 +60,7 @@ namespace Microsoft.Psi.Kinect
                             (kinectDepthPoint.Y >= 0) && (kinectDepthPoint.Y < depthImageHeight))
                         {
                             n++;
-                            var objectPoint = new Matrix(3, 1);
+                            var objectPoint = Vector<double>.Build.Dense(3);
                             objectPoint[0] = kinectCameraPoint.X;
                             objectPoint[1] = kinectCameraPoint.Y;
                             objectPoint[2] = kinectCameraPoint.Z;
@@ -152,39 +81,38 @@ namespace Microsoft.Psi.Kinect
                         }
                     }
 
-            colorCameraMatrix[0, 0] = 1000; //fx
-            colorCameraMatrix[1, 1] = 1000; //fy
-            colorCameraMatrix[0, 2] = colorImageWidth / 2; //cx
-            colorCameraMatrix[1, 2] = colorImageHeight / 2; //cy
-            colorCameraMatrix[2, 2] = 1;
+            this.colorCameraMatrix[0, 0] = 1000; //fx
+            this.colorCameraMatrix[1, 1] = 1000; //fy
+            this.colorCameraMatrix[0, 2] = colorImageWidth / 2; //cx
+            this.colorCameraMatrix[1, 2] = colorImageHeight / 2; //cy
+            this.colorCameraMatrix[2, 2] = 1;
 
-            var rotation = new Matrix(3, 1);
-            var translation = new Matrix(3, 1);
-            var colorError = CalibrateColorCamera(objectPoints1, colorPoints1, colorCameraMatrix, colorLensDistortion, rotation, translation, silent);
-            var rotationMatrix = Orientation.Rodrigues(rotation);
+            var rotation = Vector<double>.Build.Dense(3);
+            var translation = Vector<double>.Build.Dense(3);
+            var colorError = CalibrateColorCamera(objectPoints1, colorPoints1, colorCameraMatrix, colorLensDistortion, rotation, translation, this.silent);
+            var rotationMatrix = RotationExtensions.AxisAngleToMatrix(rotation);
 
-            depthToColorTransform = Matrix.Identity(4, 4);
+            this.depthToColorTransform = Matrix<double>.Build.DenseIdentity(4, 4);
             for (int i = 0; i < 3; i++)
             {
-                depthToColorTransform[i, 3] = translation[i];
+                this.depthToColorTransform[i, 3] = translation[i];
                 for (int j = 0; j < 3; j++)
-                    depthToColorTransform[i, j] = rotationMatrix[i, j];
+                    this.depthToColorTransform[i, j] = rotationMatrix[i, j];
             }
 
 
-            depthCameraMatrix[0, 0] = 360; //fx
-            depthCameraMatrix[1, 1] = 360; //fy
-            depthCameraMatrix[0, 2] = depthImageWidth / 2; //cx
-            depthCameraMatrix[1, 2] = depthImageHeight / 2; //cy
-            depthCameraMatrix[2, 2] = 1;
+            this.depthCameraMatrix[0, 0] = 360; //fx
+            this.depthCameraMatrix[1, 1] = 360; //fy
+            this.depthCameraMatrix[0, 2] = depthImageWidth / 2.0; //cx
+            this.depthCameraMatrix[1, 2] = depthImageHeight / 2.0; //cy
+            this.depthCameraMatrix[2, 2] = 1;
 
             var depthError = CalibrateDepthCamera(objectPoints1, depthPoints1, depthCameraMatrix, depthLensDistortion, silent);
 
             // check projections
             double depthProjectionError = 0;
             double colorProjectionError = 0;
-            var color = new Matrix(4, 1);
-            var testObjectPoint4 = new Matrix(4, 1);
+            var testObjectPoint4 = Vector<double>.Build.Dense(4);
             for (int i = 0; i < n; i++)
             {
                 var testObjectPoint = objectPoints1[i];
@@ -206,8 +134,8 @@ namespace Microsoft.Psi.Kinect
                 testObjectPoint4[2] = testObjectPoint[2];
                 testObjectPoint4[3] = 1;
 
-                color.Mult(depthToColorTransform, testObjectPoint4);
-                color.Scale(1.0 / color[3]); // not necessary for this transform
+                var color = depthToColorTransform * testObjectPoint4;
+                color *= (1.0 / color[3]); // not necessary for this transform
 
                 double colorU, colorV;
                 Project(colorCameraMatrix, colorLensDistortion, color[0], color[1], color[2], out colorU, out colorV);
@@ -221,7 +149,7 @@ namespace Microsoft.Psi.Kinect
 
 
             stopWatch.Stop();
-            if (!silent)
+            if (!this.silent)
             {
                 Console.WriteLine("FakeCalibration :");
                 Console.WriteLine("n = " + n);
@@ -239,7 +167,7 @@ namespace Microsoft.Psi.Kinect
             }
         }
 
-        public static void Project(Matrix cameraMatrix, Matrix distCoeffs, double x, double y, double z, out double u, out double v)
+        private static void Project(Matrix<double> cameraMatrix, Vector<double> distCoeffs, double x, double y, double z, out double u, out double v)
         {
             double xp = x / z;
             double yp = y / z;
@@ -259,7 +187,7 @@ namespace Microsoft.Psi.Kinect
             v = fy * ypp + cy;
         }
 
-        public static void Undistort(Matrix cameraMatrix, Matrix distCoeffs, double xin, double yin, out double xout, out double yout)
+        private static void Undistort(Matrix<double> cameraMatrix, Vector<double> distCoeffs, double xin, double yin, out double xout, out double yout)
         {
             float fx = (float)cameraMatrix[0, 0];
             float fy = (float)cameraMatrix[1, 1];
@@ -269,7 +197,7 @@ namespace Microsoft.Psi.Kinect
             Undistort(fx, fy, cx, cy, kappa, xin, yin, out xout, out yout);
         }
 
-        public static void Undistort(float fx, float fy, float cx, float cy, float[] kappa, double xin, double yin, out double xout, out double yout)
+        private static void Undistort(float fx, float fy, float cx, float cy, float[] kappa, double xin, double yin, out double xout, out double yout)
         {
             // maps coords in undistorted image (xin, yin) to coords in distorted image (xout, yout)
             double x = (xin - cx) / fx;
@@ -303,38 +231,14 @@ namespace Microsoft.Psi.Kinect
             yout = y / factor;
         }
 
-        public Microsoft.Kinect.PointF[] ComputeDepthFrameToCameraSpaceTable()
-        {
-            float fx = (float)depthCameraMatrix[0, 0];
-            float fy = (float)depthCameraMatrix[1, 1];
-            float cx = (float)depthCameraMatrix[0, 2];
-            float cy = (float)depthCameraMatrix[1, 2];
-            float[] kappa = new float[] { (float)depthLensDistortion[0], (float)depthLensDistortion[1] };
-
-            var table = new Microsoft.Kinect.PointF[depthImageWidth * depthImageHeight];
-
-            for (int framey = 0; framey < depthImageHeight; framey++)
-                for (int framex = 0; framex < depthImageWidth; framex++)
-                {
-                    double xout, yout;
-                    Undistort(fx, fy, cx, cy, kappa, framex, (depthImageHeight - framey), out xout, out yout);
-
-                    var point = new Microsoft.Kinect.PointF();
-                    point.X = (float)xout;
-                    point.Y = (float)yout;
-                    table[depthImageWidth * framey + framex] = point;
-                }
-            return table;
-        }
-
-        static double CalibrateDepthCamera(List<Matrix> worldPoints, List<System.Drawing.PointF> imagePoints, Matrix cameraMatrix, Matrix distCoeffs, bool silent)
+        private static double CalibrateDepthCamera(List<Vector<double>> worldPoints, List<System.Drawing.PointF> imagePoints, Matrix<double> cameraMatrix, Vector<double> distCoeffs, bool silent = true)
         {
             int nPoints = worldPoints.Count;
 
             // pack parameters into vector
             // parameters: fx, fy, cx, cy, k1, k2 = 6 parameters
             int nParameters = 6;
-            var parameters = new Matrix(nParameters, 1);
+            var parameters = Vector<double>.Build.Dense(nParameters);
 
             {
                 int pi = 0;
@@ -349,9 +253,9 @@ namespace Microsoft.Psi.Kinect
             // size of our error vector
             int nValues = nPoints * 2; // each component (x,y) is a separate entry
 
-            LevenbergMarquardt.Function function = delegate (Matrix p)
+            LevenbergMarquardt.Function function = delegate (Vector<double> p)
             {
-                var fvec = new Matrix(nValues, 1);
+                var fvec = Vector<double>.Build.Dense(nValues);
 
                 // unpack parameters
                 int pi = 0;
@@ -362,13 +266,13 @@ namespace Microsoft.Psi.Kinect
                 double k1 = p[pi++];
                 double k2 = p[pi++];
 
-                var K = Matrix.Identity(3, 3);
+                var K = Matrix<double>.Build.DenseIdentity(3, 3);
                 K[0, 0] = fx;
                 K[1, 1] = fy;
                 K[0, 2] = cx;
                 K[1, 2] = cy;
 
-                var d = Matrix.Zero(5, 1);
+                var d = Vector<double>.Build.Dense(5, 0);
                 d[0] = k1;
                 d[1] = k2;
 
@@ -420,23 +324,23 @@ namespace Microsoft.Psi.Kinect
             return calibrate.RMSError;
         }
 
-        static double CalibrateColorCamera(List<Matrix> worldPoints, List<System.Drawing.PointF> imagePoints, Matrix cameraMatrix, Matrix distCoeffs, Matrix rotation, Matrix translation, bool silent)
+        private static double CalibrateColorCamera(List<Vector<double>> worldPoints, List<System.Drawing.PointF> imagePoints, Matrix<double> cameraMatrix, Vector<double> distCoeffs, Vector<double> rotation, Vector<double> translation, bool silent = true)
         {
             int nPoints = worldPoints.Count;
 
             {
-                Matrix R, t;
+                Matrix<double> R;
+                Vector<double> t;
                 DLT(cameraMatrix, distCoeffs, worldPoints, imagePoints, out R, out t);
-                var r = Orientation.RotationVector(R);
-                rotation.Copy(r);
-                translation.Copy(t);
+                var r = RotationExtensions.MatrixToAxisAngle(R);
+                r.CopyTo(rotation);
+                t.CopyTo(translation);
             }
 
             // pack parameters into vector
             // parameters: fx, fy, cx, cy, k1, k2, + 3 for rotation, 3 translation = 12
             int nParameters = 12;
-            var parameters = new Matrix(nParameters, 1);
-
+            var parameters = Vector<double>.Build.Dense(nParameters);
             {
                 int pi = 0;
                 parameters[pi++] = cameraMatrix[0, 0]; // fx
@@ -457,9 +361,9 @@ namespace Microsoft.Psi.Kinect
             // size of our error vector
             int nValues = nPoints * 2; // each component (x,y) is a separate entry
 
-            LevenbergMarquardt.Function function = delegate (Matrix p)
+            LevenbergMarquardt.Function function = delegate (Vector<double> p)
             {
-                var fvec = new Matrix(nValues, 1);
+                var fvec = Vector<double>.Build.Dense(nValues);
 
                 // unpack parameters
                 int pi = 0;
@@ -471,38 +375,34 @@ namespace Microsoft.Psi.Kinect
                 double k1 = p[pi++];
                 double k2 = p[pi++];
 
-                var K = Matrix.Identity(3, 3);
+                var K = Matrix<double>.Build.DenseIdentity(3, 3);
                 K[0, 0] = fx;
                 K[1, 1] = fy;
                 K[0, 2] = cx;
                 K[1, 2] = cy;
 
-                var d = Matrix.Zero(5, 1);
+                var d = Vector<double>.Build.Dense(5, 0);
                 d[0] = k1;
                 d[1] = k2;
 
-                var r = new Matrix(3, 1);
+                var r = Vector<double>.Build.Dense(3);
                 r[0] = p[pi++];
                 r[1] = p[pi++];
                 r[2] = p[pi++];
 
-                var t = new Matrix(3, 1);
+                var t = Vector<double>.Build.Dense(3);
                 t[0] = p[pi++];
                 t[1] = p[pi++];
                 t[2] = p[pi++];
 
-                var R = Orientation.Rodrigues(r);
-
-
-
-                var x = new Matrix(3, 1);
+                var R = RotationExtensions.AxisAngleToMatrix(r);
 
                 int fveci = 0;
                 for (int i = 0; i < worldPoints.Count; i++)
                 {
                     // transform world point to local camera coordinates
-                    x.Mult(R, worldPoints[i]);
-                    x.Add(t);
+                    var x = R * worldPoints[i];
+                    x += t;
 
                     // fvec_i = y_i - f(x_i)
                     double u, v;
@@ -559,11 +459,11 @@ namespace Microsoft.Psi.Kinect
         // This pose estimate will provide a good initial estimate for subsequent projector calibration.
         // Note for a full PnP solution we should probably refine with Levenberg-Marquardt.
         // DLT is described in Hartley and Zisserman p. 178
-        static void DLT(Matrix cameraMatrix, Matrix distCoeffs, List<Matrix> worldPoints, List<System.Drawing.PointF> imagePoints, out Matrix R, out Matrix t)
+        private static void DLT(Matrix<double> cameraMatrix, Vector<double>distCoeffs, List<Vector<double>> worldPoints, List<System.Drawing.PointF> imagePoints, out Matrix<double> R, out Vector<double>t)
         {
             int n = worldPoints.Count;
 
-            var A = Matrix.Zero(2 * n, 12);
+            var A = Matrix<double>.Build.Dense(2 * n, 12);
 
             for (int j = 0; j < n; j++)
             {
@@ -597,54 +497,52 @@ namespace Microsoft.Psi.Kinect
             }
 
             // Pcolumn is the eigenvector of ATA with the smallest eignvalue
-            var Pcolumn = new Matrix(12, 1);
+            var Pcolumn = Vector<double>.Build.Dense(12);
             {
-                var ATA = new Matrix(12, 12);
-                ATA.MultATA(A, A);
-
-                var V = new Matrix(12, 12);
-                var ww = new Matrix(12, 1);
-                ATA.Eig(V, ww);
-
-                Pcolumn.CopyCol(V, 0);
+                var ATA = A.TransposeThisAndMultiply(A);
+                ATA.Evd().EigenVectors.Column(0).CopyTo(Pcolumn);
             }
 
             // reshape into 3x4 projection matrix
-            var P = new Matrix(3, 4);
-            P.Reshape(Pcolumn);
+            var P = Matrix<double>.Build.Dense(3, 4);
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        P[i, j] = Pcolumn[i*4 + j];
+                    }
+                }
+            }
 
-            R = new Matrix(3, 3);
+            R = Matrix<double>.Build.Dense(3, 3);
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
                     R[i, j] = P[i, j];
 
-            if (R.Det3x3() < 0)
+            if (R.Determinant() < 0)
             {
-                R.Scale(-1);
-                P.Scale(-1);
+                R *= -1;
+                P *= -1;
             }
 
             // orthogonalize R
             {
-                var U = new Matrix(3, 3);
-                var V = new Matrix(3, 3);
-                var ww = new Matrix(3, 1);
-                R.SVD(U, ww, V);
-                R.MultAAT(U, V);
+                var svd = R.Svd();
+                R = svd.U * svd.VT;
             }
 
             // determine scale factor
-            var RP = new Matrix(3, 3);
+            var RP = Matrix<double>.Build.Dense(3, 3);
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
                     RP[i, j] = P[i, j];
-            double s = RP.Norm() / R.Norm();
+            double s = RP.L2Norm() / R.L2Norm();
 
-            t = new Matrix(3, 1);
+            t = Vector<double>.Build.Dense(3);
             for (int i = 0; i < 3; i++)
                 t[i] = P[i, 3];
-            t.Scale(1.0 / s);
+            t *= (1.0 / s);
         }
-
     }
 }

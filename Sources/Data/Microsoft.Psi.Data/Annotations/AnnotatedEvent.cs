@@ -21,10 +21,10 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="endTime">The end time of the annotated event.</param>
         public AnnotatedEvent(DateTime startTime, DateTime endTime)
         {
+            this.CheckArguments(startTime, endTime);
             this.StartTime = startTime;
             this.EndTime = endTime;
             this.InternalAnnotations = new List<string>();
-            this.InitNew();
         }
 
         /// <summary>
@@ -85,20 +85,25 @@ namespace Microsoft.Psi.Data.Annotations
         }
 
         /// <summary>
-        /// Overridable method to allow derived object to initialize properties as part of object construction or after deserialization.
+        /// Overridable method to allow derived object to initialize properties after deserialization.
         /// </summary>
         protected virtual void InitNew()
         {
-            if (this.EndTime < this.StartTime)
-            {
-                throw new ArgumentException("startTime must preceed endTime.", "startTime");
-            }
+            this.CheckArguments(this.StartTime, this.EndTime);
         }
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
             this.InitNew();
+        }
+
+        private void CheckArguments(DateTime startTime, DateTime endTime)
+        {
+            if (endTime < startTime)
+            {
+                throw new ArgumentException("startTime must preceed endTime.", "startTime");
+            }
         }
     }
 }

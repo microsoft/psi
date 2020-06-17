@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Data
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the orginating time interval (earliest to latest) of the messages in the session.
+        /// Gets the originating time interval (earliest to latest) of the messages in the session.
         /// </summary>
         public TimeInterval OriginatingTimeInterval { get; private set; }
 
@@ -76,7 +76,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Determines if a specicif importer contains the named stream.
+        /// Determines if a specific importer contains the named stream.
         /// </summary>
         /// <param name="partitionName">Partition name of the specific importer.</param>
         /// <param name="streamName">The stream to search for.</param>

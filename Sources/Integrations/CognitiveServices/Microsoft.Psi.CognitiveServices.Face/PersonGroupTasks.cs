@@ -62,7 +62,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
             {
                 var files = Generators.Sequence(pipeline, Directory.GetFiles(directory), TimeSpan.FromTicks(1));
                 files
-                    .Select(file => ImagePool.GetOrCreate(new Bitmap(File.OpenRead(file))))
+                    .Select(file => ImagePool.GetOrCreateFromBitmap(new Bitmap(File.OpenRead(file))))
                     .RecognizeFace(new FaceRecognizerConfiguration(subscriptionKey, endpoint, groupId))
                     .Join(files)
                     .Do(x =>

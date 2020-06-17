@@ -26,7 +26,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
     /// </remarks>
     public sealed class AzureSpeechRecognizer : AsyncConsumerProducer<ValueTuple<AudioBuffer, bool>, IStreamingSpeechRecognitionResult>, IDisposable
     {
-        // For cancelling any pending recognition tasks before disposal
+        // For canceling any pending recognition tasks before disposal
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             // get the current (oldest) recognition task from the queue
             if (!this.pendingRecognitionTasks.TryPeek(out var currentRecognitionTask))
             {
-                // This proabaly means that we have just received an end-of-dictation response which normally
+                // This probably means that we have just received an end-of-dictation response which normally
                 // arrives after a successful recognition result, so we would have already completed the
                 // recognition task. Hence we just ignore the response.
                 return;
@@ -343,7 +343,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             // update the in-progress recognition task
             currentRecognitionTask.AppendResult(e.PartialResult);
 
-            // Since this is a partial response, VAD may not yet have signalled the end of speech
+            // Since this is a partial response, VAD may not yet have signaled the end of speech
             // so just use the last audio packet time (which will probably be ahead).
             this.PostWithOriginatingTimeConsistencyCheck(this.PartialRecognitionResults, currentRecognitionTask.BuildPartialSpeechRecognitionResult(), originatingTime);
 

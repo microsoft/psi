@@ -36,7 +36,7 @@ namespace Microsoft {
             }
 
             //**********************************************************************
-            // Sets up our MF writer for handling audio. This code always generates
+            // Sets up our Media Foundation writer for handling audio. This code always generates
             // AAC for the audio output and assumes the audio input is always PCM
             //**********************************************************************
             HRESULT MP4WriterUnmanagedData::SetupAudio(UINT32 bitsPerSample, UINT32 samplesPerSecond, UINT32 numChannels)
@@ -222,10 +222,10 @@ namespace Microsoft {
                         dstCol = dstRow;
                         for (UINT32 x = 0; x < outputWidth; x++)
                         {
-                            dstCol[3] = srcCol[0];
-                            dstCol[2] = srcCol[1];
-                            dstCol[1] = srcCol[2];
-                            dstCol[0] = srcCol[3];
+                            dstCol[0] = srcCol[0];
+                            dstCol[1] = srcCol[1];
+                            dstCol[2] = srcCol[2];
+                            dstCol[3] = srcCol[3];
                             srcCol += 4;
                             dstCol += 4;
                         }

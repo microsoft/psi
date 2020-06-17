@@ -18,7 +18,6 @@ namespace Microsoft.Psi.Data.Json
         /// </summary>
         public JsonStreamMetadata()
         {
-            this.Reset();
         }
 
         /// <summary>
@@ -26,15 +25,17 @@ namespace Microsoft.Psi.Data.Json
         /// </summary>
         /// <param name="name">The name of the stream the metadata represents.</param>
         /// <param name="id">The id of the stream the metadata represents.</param>
-        /// <param name="typeName">The name of the type of data conatined in the stream the metadata represents.</param>
-        /// <param name="partitionName">The name of the partation where the stream is stored.</param>
-        /// <param name="partitionPath">The path of the partation where the stream is stored.</param>
-        public JsonStreamMetadata(string name, int id, string typeName, string partitionName, string partitionPath)
+        /// <param name="typeName">The name of the type of data contained in the stream the metadata represents.</param>
+        /// <param name="supplementalMetadataTypeName">The name of the type of supplemental metadata for the stream the metadata represents.</param>
+        /// <param name="partitionName">The name of the partition where the stream is stored.</param>
+        /// <param name="partitionPath">The path of the partition where the stream is stored.</param>
+        public JsonStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string partitionName, string partitionPath)
             : this()
         {
             this.Name = name;
             this.Id = id;
             this.TypeName = typeName;
+            this.SupplementalMetadataTypeName = supplementalMetadataTypeName;
             this.PartitionName = partitionName;
             this.PartitionPath = partitionPath;
         }
@@ -87,19 +88,9 @@ namespace Microsoft.Psi.Data.Json
         [JsonProperty(Order = 12)]
         public int MessageCount { get; set; }
 
-        /// <summary>
-        /// Reset statistics for this stream metadata instance.
-        /// </summary>
-        public virtual void Reset()
-        {
-            this.FirstMessageTime = default(DateTime);
-            this.LastMessageTime = default(DateTime);
-            this.FirstMessageOriginatingTime = default(DateTime);
-            this.LastMessageOriginatingTime = default(DateTime);
-            this.AverageMessageSize = 0;
-            this.AverageLatency = 0;
-            this.MessageCount = 0;
-        }
+        /// <inheritdoc />
+        [JsonProperty(Order = 13)]
+        public string SupplementalMetadataTypeName { get; set; }
 
         /// <inheritdoc />
         public void Update(Envelope envelope, int size)

@@ -19,7 +19,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="samplingInterval">Interval at which to apply the interpolator.</param>
         /// <param name="interpolator">Interpolator to use for generating results.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the sampling messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the sampling messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
@@ -69,7 +69,7 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="samplingInterval">Interval at which to apply the interpolator.</param>
         /// <param name="tolerance">The tolerance within which to search for the nearest message.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the sampling messages with. If the paramater
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the sampling messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
@@ -95,8 +95,10 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source (and output) messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="samplingInterval">Interval at which to apply the interpolator.</param>
-        /// <param name="relativeTimeInterval">The relative time interval within which to search for the nearest message.</param>
-        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the sampling messages with. If the paramater
+        /// <param name="relativeTimeInterval">The relative time interval within which to search for the nearest message.
+        /// If the parameter is not specified the <see cref="RelativeTimeInterval.Infinite"/>relative time interval is
+        /// used,resulting in sampling the nearest point to the clock signal on the source stream.</param>
+        /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the sampling messages with. If the parameter
         /// is non-null, the messages will have originating times that align with (i.e., are an integral number of intervals away from) the
         /// specified alignment time.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
@@ -104,10 +106,11 @@ namespace Microsoft.Psi
         public static IProducer<T> Sample<T>(
             this IProducer<T> source,
             TimeSpan samplingInterval,
-            RelativeTimeInterval relativeTimeInterval,
+            RelativeTimeInterval relativeTimeInterval = null,
             DateTime? alignmentDateTime = null,
             DeliveryPolicy<T> deliveryPolicy = null)
         {
+            relativeTimeInterval ??= RelativeTimeInterval.Infinite;
             return source.Interpolate(
                 samplingInterval,
                 Reproducible.Nearest<T>(relativeTimeInterval),
@@ -145,17 +148,20 @@ namespace Microsoft.Psi
         /// <typeparam name="TClock">Type of messages on the clock stream.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="clock">Clock stream that dictates the interpolation points.</param>
-        /// <param name="relativeTimeInterval">The relative time interval within which to search for the nearest message.</param>
+        /// <param name="relativeTimeInterval">The relative time interval within which to search for the nearest message.
+        /// If the parameter is not specified the <see cref="RelativeTimeInterval.Infinite"/>relative time interval is
+        /// used,resulting in sampling the nearest point to the clock signal on the source stream.</param>
         /// <param name="sourceDeliveryPolicy">An optional delivery policy for the source stream.</param>
         /// <param name="clockDeliveryPolicy">An optional delivery policy for the clock stream.</param>
         /// <returns>Sampled stream.</returns>
         public static IProducer<T> Sample<T, TClock>(
             this IProducer<T> source,
             IProducer<TClock> clock,
-            RelativeTimeInterval relativeTimeInterval,
+            RelativeTimeInterval relativeTimeInterval = null,
             DeliveryPolicy<T> sourceDeliveryPolicy = null,
             DeliveryPolicy<TClock> clockDeliveryPolicy = null)
         {
+            relativeTimeInterval ??= RelativeTimeInterval.Infinite;
             return source.Interpolate(clock, Reproducible.Nearest<T>(relativeTimeInterval), sourceDeliveryPolicy, clockDeliveryPolicy);
         }
     }

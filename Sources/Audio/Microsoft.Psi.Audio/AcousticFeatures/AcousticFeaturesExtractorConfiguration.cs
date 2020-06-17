@@ -34,23 +34,8 @@ namespace Microsoft.Psi.Audio
         public AcousticFeaturesExtractorConfiguration()
         {
             // Default parameters for acoustic features computation
-            this.FrameDurationInSeconds = 0.025f;
-            this.FrameRateInHz = 100.0f;
-            this.AddDither = true;
-            this.DitherScaleFactor = 1.0f;
-            this.StartFrequency = 250.0f;
-            this.EndFrequency = 7000.0f;
-            this.LowEndFrequency = 3000.0f;
-            this.HighStartFrequency = 2500.0f;
-            this.EntropyBandwidth = 2500.0f;
-            this.ComputeLogEnergy = true;
-            this.ComputeZeroCrossingRate = true;
-            this.ComputeFrequencyDomainEnergy = true;
-            this.ComputeLowFrequencyEnergy = true;
-            this.ComputeHighFrequencyEnergy = true;
-            this.ComputeSpectralEntropy = true;
-            this.ComputeFFT = false;
-            this.ComputeFFTPower = false;
+            this.computeFFT = false;
+            this.computeFFTPower = false;
 
             // Defaults to 16 kHz, 16-bit, 1-channel PCM samples
             this.InputFormat = WaveFormat.Create16kHz1Channel16BitPcm();
@@ -59,58 +44,78 @@ namespace Microsoft.Psi.Audio
         /// <summary>
         /// Gets or sets the duration of the frame of audio over which the acoustic features will be computed.
         /// </summary>
-        public float FrameDurationInSeconds { get; set; }
+        public float FrameDurationInSeconds { get; set; } = 0.025f;
 
         /// <summary>
         /// Gets or sets the frame rate at which the acoustic features will be computed.
         /// </summary>
-        public float FrameRateInHz { get; set; }
+        public float FrameRateInHz { get; set; } = 100.0f;
 
         /// <summary>
         /// Gets or sets a value indicating whether dither is to be applied to the audio data.
         /// </summary>
-        public bool AddDither { get; set; }
+        public bool AddDither { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the scale factor by which the dither to be applied will be multiplied.
         /// A scale factor of 1.0 will result in a dither with a range of -1.0 to +1.0.
         /// </summary>
-        public float DitherScaleFactor { get; set; }
+        public float DitherScaleFactor { get; set; } = 1.0f;
 
         /// <summary>
         /// Gets or sets the start frequency for frequency-domain features.
         /// </summary>
-        public float StartFrequency { get; set; }
+        public float StartFrequency { get; set; } = 250.0f;
 
         /// <summary>
         /// Gets or sets the end frequency for frequency-domain features.
         /// </summary>
-        public float EndFrequency { get; set; }
+        public float EndFrequency { get; set; } = 7000.0f;
 
         /// <summary>
         /// Gets or sets the end frequency for low-frequency features.
         /// </summary>
-        public float LowEndFrequency { get; set; }
+        public float LowEndFrequency { get; set; } = 3000.0f;
 
         /// <summary>
         /// Gets or sets the start frequency for high-frequency features.
         /// </summary>
-        public float HighStartFrequency { get; set; }
+        public float HighStartFrequency { get; set; } = 2500.0f;
 
         /// <summary>
         /// Gets or sets the bandwidth for entropy features.
         /// </summary>
-        public float EntropyBandwidth { get; set; }
+        public float EntropyBandwidth { get; set; } = 2500.0f;
 
         /// <summary>
         /// Gets or sets a value indicating whether to compute the log energy stream.
         /// </summary>
-        public bool ComputeLogEnergy { get; set; }
+        public bool ComputeLogEnergy { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether to compute the zero-crossing rate stream.
         /// </summary>
-        public bool ComputeZeroCrossingRate { get; set; }
+        public bool ComputeZeroCrossingRate { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to compute the frequency domain energy stream.
+        /// </summary>
+        public bool ComputeFrequencyDomainEnergy { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to compute the low frequency energy stream.
+        /// </summary>
+        public bool ComputeLowFrequencyEnergy { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to compute the high frequency energy stream.
+        /// </summary>
+        public bool ComputeHighFrequencyEnergy { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to compute the spectral entropy stream.
+        /// </summary>
+        public bool ComputeSpectralEntropy { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether to compute the FFT stream.
@@ -147,26 +152,6 @@ namespace Microsoft.Psi.Audio
                 this.computeFFTPower = value;
             }
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to compute the frequency domain energy stream.
-        /// </summary>
-        public bool ComputeFrequencyDomainEnergy { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to compute the low frequency energy stream.
-        /// </summary>
-        public bool ComputeLowFrequencyEnergy { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to compute the high frequency energy stream.
-        /// </summary>
-        public bool ComputeHighFrequencyEnergy { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to compute the spectral entropy stream.
-        /// </summary>
-        public bool ComputeSpectralEntropy { get; set; }
 
         /// <summary>
         /// Gets or sets the format of the audio stream.

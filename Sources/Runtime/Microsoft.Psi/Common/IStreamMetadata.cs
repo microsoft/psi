@@ -26,12 +26,17 @@ namespace Microsoft.Psi
         string TypeName { get; }
 
         /// <summary>
-        /// Gets the name of the partation where the stream is stored.
+        /// Gets the name of the type of supplemental metadata for the stream the metadata represents.
+        /// </summary>
+        string SupplementalMetadataTypeName { get; }
+
+        /// <summary>
+        /// Gets the name of the partition where the stream is stored.
         /// </summary>
         string PartitionName { get; }
 
         /// <summary>
-        /// Gets the path of the partation where the stream is stored.
+        /// Gets the path of the partition where the stream is stored.
         /// </summary>
         string PartitionPath { get; }
 
