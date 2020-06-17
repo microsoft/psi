@@ -126,13 +126,13 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6b1e42c64e4bd3c79242ba1aa80b2727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a dataset from the specified file.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a6b1e42c64e4bd3c79242ba1aa80b2727">More...</a><br /></td></tr>
 <tr class="separator:a6b1e42c64e4bd3c79242ba1aa80b2727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90ab49972e8d1fcfe37d5afe7c185cc0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html">Dataset</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a90ab49972e8d1fcfe37d5afe7c185cc0">CreateFromExistingStore</a> (string storeName, string storePath, string partitionName=null)</td></tr>
-<tr class="memdesc:a90ab49972e8d1fcfe37d5afe7c185cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new dataset from an exising data store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a90ab49972e8d1fcfe37d5afe7c185cc0">More...</a><br /></td></tr>
+<tr class="memdesc:a90ab49972e8d1fcfe37d5afe7c185cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new dataset from an existing data store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a90ab49972e8d1fcfe37d5afe7c185cc0">More...</a><br /></td></tr>
 <tr class="separator:a90ab49972e8d1fcfe37d5afe7c185cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a18aea80bc5a342c4eaf71fb63e696cd9">OriginatingTimeInterval</a></td></tr>
-<tr class="memdesc:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the orginating time interval (earliest to latest) of the messages in this dataset.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a18aea80bc5a342c4eaf71fb63e696cd9">More...</a><br /></td></tr>
+<tr class="memdesc:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the originating time interval (earliest to latest) of the messages in this dataset.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a18aea80bc5a342c4eaf71fb63e696cd9">More...</a><br /></td></tr>
 <tr class="separator:a18aea80bc5a342c4eaf71fb63e696cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3191f549342914794726159a5fc74ded"><td class="memItemLeft" align="right" valign="top">ReadOnlyCollection&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html">Session</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a3191f549342914794726159a5fc74ded">Sessions</a> =&gt; this.InternalSessions.AsReadOnly()</td></tr>
 <tr class="memdesc:a3191f549342914794726159a5fc74ded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the collection of sessions in this dataset.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_dataset.html#a3191f549342914794726159a5fc74ded">More...</a><br /></td></tr>
@@ -262,7 +262,7 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>The path that contains the data stores.</td></tr>
-    <tr><td class="paramname">partitionName</td><td>The name of the partion to be added when adding a new session. Default is null.</td></tr>
+    <tr><td class="paramname">partitionName</td><td>The name of the partition to be added when adding a new session. Default is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -409,7 +409,7 @@ Properties</h2></td></tr>
     <tr><td class="paramname">outputPathFunction</td><td>A function to determine output path from the given Session.</td></tr>
     <tr><td class="paramname">replayDescriptor</td><td>The replay descriptor to us.</td></tr>
     <tr><td class="paramname">progress</td><td>An object that can be used for reporting progress.</td></tr>
-    <tr><td class="paramname">cancellationToken</td><td>A token for cancelling the asynchronous task.</td></tr>
+    <tr><td class="paramname">cancellationToken</td><td>A token for canceling the asynchronous task.</td></tr>
   </table>
   </dd>
 </dl>
@@ -482,7 +482,7 @@ Properties</h2></td></tr>
     <tr><td class="paramname">outputStoreName</td><td>The name of the output data store. Default is null.</td></tr>
     <tr><td class="paramname">outputStorePath</td><td>The path of the output data store. Default is null.</td></tr>
     <tr><td class="paramname">replayDescriptor</td><td>The replay descriptor to us.</td></tr>
-    <tr><td class="paramname">cancellationToken</td><td>A token for cancelling the asynchronous task.</td></tr>
+    <tr><td class="paramname">cancellationToken</td><td>A token for canceling the asynchronous task.</td></tr>
   </table>
   </dd>
 </dl>
@@ -561,7 +561,7 @@ Properties</h2></td></tr>
 <p>Asynchronously computes a derived partition for each session in the dataset. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TParameter</td><td>The type of paramater passed to the action.</td></tr>
+    <tr><td class="paramname">TParameter</td><td>The type of parameter passed to the action.</td></tr>
   </table>
   </dd>
 </dl>
@@ -575,7 +575,7 @@ Properties</h2></td></tr>
     <tr><td class="paramname">outputPathFunction</td><td>A function to determine output path from the given Session.</td></tr>
     <tr><td class="paramname">replayDescriptor</td><td>The replay descriptor to us.</td></tr>
     <tr><td class="paramname">progress</td><td>An object that can be used for reporting progress.</td></tr>
-    <tr><td class="paramname">cancellationToken</td><td>A token for cancelling the asynchronous task.</td></tr>
+    <tr><td class="paramname">cancellationToken</td><td>A token for canceling the asynchronous task.</td></tr>
   </table>
   </dd>
 </dl>
@@ -648,7 +648,7 @@ Properties</h2></td></tr>
 <p>Asynchronously computes a derived partition for each session in the dataset. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TParameter</td><td>The type of paramater passed to the action.</td></tr>
+    <tr><td class="paramname">TParameter</td><td>The type of parameter passed to the action.</td></tr>
   </table>
   </dd>
 </dl>
@@ -661,7 +661,7 @@ Properties</h2></td></tr>
     <tr><td class="paramname">outputStoreName</td><td>The name of the output data store. Default is null.</td></tr>
     <tr><td class="paramname">outputStorePath</td><td>The path of the output data store. Default is null.</td></tr>
     <tr><td class="paramname">replayDescriptor</td><td>The replay descriptor to us.</td></tr>
-    <tr><td class="paramname">cancellationToken</td><td>A token for cancelling the asynchronous task.</td></tr>
+    <tr><td class="paramname">cancellationToken</td><td>A token for canceling the asynchronous task.</td></tr>
   </table>
   </dd>
 </dl>
@@ -709,7 +709,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a new dataset from an exising data store. </p>
+<p>Creates a new dataset from an existing data store. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">storeName</td><td>The name of the data store.</td></tr>
@@ -889,7 +889,7 @@ Properties</h2></td></tr>
 <div class="line">                    .Where(s =&gt; s.OriginatingTimeInterval.Left &gt; DateTime.MinValue &amp;&amp; s.OriginatingTimeInterval.Right &lt; DateTime.MaxValue)</div>
 <div class="line">                    .Select(s =&gt; s.OriginatingTimeInterval))</div>
 </div><!-- fragment -->
-<p>Gets the orginating time interval (earliest to latest) of the messages in this dataset. </p>
+<p>Gets the originating time interval (earliest to latest) of the messages in this dataset. </p>
 
 </div>
 </div>

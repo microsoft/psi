@@ -67,8 +67,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter-members.html">List of all members</a>  </div>
@@ -82,36 +80,30 @@ $(function() {
 
 <p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html">Microsoft.Psi.Subpipeline</a>, and IDisposable.</p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter_1_1_write_stream_attribute.html">WriteStreamAttribute</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class that defines an attribute used to indicate which Emitters should be written when WriteEmitters is called. Clients may place the [WriteStream] attribute on each emitter property they want written.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter_1_1_write_stream_attribute.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a7366fa6d8d889ad9ec7be37061b9de6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6e">WriteWhichEmitters</a> </td></tr>
-<tr class="memdesc:a7366fa6d8d889ad9ec7be37061b9de6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to define which emitters should be written to the store using WriteEmitters.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6e">More...</a><br /></td></tr>
-<tr class="separator:a7366fa6d8d889ad9ec7be37061b9de6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aacb605b52d6c2de65e253342bc4d9445"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#aacb605b52d6c2de65e253342bc4d9445">Dispose</a> ()</td></tr>
 <tr class="memdesc:aacb605b52d6c2de65e253342bc4d9445"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#aacb605b52d6c2de65e253342bc4d9445">More...</a><br /></td></tr>
 <tr class="separator:aacb605b52d6c2de65e253342bc4d9445"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cb3865d85664a90b8c227d7aaeaf5ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a8cb3865d85664a90b8c227d7aaeaf5ce">Write&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt; source, string name, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; T &gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a8cb3865d85664a90b8c227d7aaeaf5ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the messages from the specified stream to the matching storage stream in this store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a8cb3865d85664a90b8c227d7aaeaf5ce">More...</a><br /></td></tr>
-<tr class="separator:a8cb3865d85664a90b8c227d7aaeaf5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aff88485de53de6bcd9cd3f97e8ed37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a5aff88485de53de6bcd9cd3f97e8ed37">Write&lt; TMessage &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TMessage &gt; source, string name, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a5aff88485de53de6bcd9cd3f97e8ed37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the messages from the specified stream to the matching storage stream in this store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a5aff88485de53de6bcd9cd3f97e8ed37">More...</a><br /></td></tr>
+<tr class="separator:a5aff88485de53de6bcd9cd3f97e8ed37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a286756ee51b549e5bb2009f6432aad61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a286756ee51b549e5bb2009f6432aad61">Write&lt; TMessage, TSupplementalMetadata &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TMessage &gt; source, TSupplementalMetadata supplementalMetadataValue, string name, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a286756ee51b549e5bb2009f6432aad61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the messages from the specified stream to the matching storage stream in this store. Additionally stores supplemental metadata value.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a286756ee51b549e5bb2009f6432aad61">More...</a><br /></td></tr>
+<tr class="separator:a286756ee51b549e5bb2009f6432aad61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab4697e746a653e16e716063a39bccd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#aab4697e746a653e16e716063a39bccd4">WriteEnvelopes&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; T &gt; deliveryPolicy=null)</td></tr>
 <tr class="memdesc:aab4697e746a653e16e716063a39bccd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the envelopes of messages from the specified stream to the store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#aab4697e746a653e16e716063a39bccd4">More...</a><br /></td></tr>
 <tr class="separator:aab4697e746a653e16e716063a39bccd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae64164e92fdcbbb8ffe56dc794c890b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ae64164e92fdcbbb8ffe56dc794c890b2">WriteEmitters&lt; T &gt;</a> (T sensor, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6e">WriteWhichEmitters</a> streamsToEmit=<a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6ea2ec0d16e4ca169baedb9b2d50ec5c6d7">WriteWhichEmitters.Connected</a>, string[] streamNames=null)</td></tr>
-<tr class="memdesc:ae64164e92fdcbbb8ffe56dc794c890b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a pipeline source object (such as KinectSensor) this method will write all emitters that match the requested properties to the current store. This is useful for writing streams from a sensor to a store for later playback via Importer.OpenAs().  <a href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ae64164e92fdcbbb8ffe56dc794c890b2">More...</a><br /></td></tr>
-<tr class="separator:ae64164e92fdcbbb8ffe56dc794c890b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_microsoft_1_1_psi_1_1_subpipeline')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html">Microsoft.Psi.Subpipeline</a></td></tr>
 <tr class="memitem:a5b1804b8107cce279387ec2cbcd66391 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#a5b1804b8107cce279387ec2cbcd66391">Subpipeline</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> parent, string name=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> defaultDeliveryPolicy=null)</td></tr>
 <tr class="memdesc:a5b1804b8107cce279387ec2cbcd66391 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html" title="Represents a graph of components and controls scheduling and message passing.">Subpipeline</a> class.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#a5b1804b8107cce279387ec2cbcd66391">More...</a><br /></td></tr>
 <tr class="separator:a5b1804b8107cce279387ec2cbcd66391 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9ac530e7f6ad4c8eaffafcccc60440 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#a9f9ac530e7f6ad4c8eaffafcccc60440">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:a9f9ac530e7f6ad4c8eaffafcccc60440 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize subpipeline as a finite source component.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#a9f9ac530e7f6ad4c8eaffafcccc60440">More...</a><br /></td></tr>
+<tr class="separator:a9f9ac530e7f6ad4c8eaffafcccc60440 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab02c52ed44003fa9b7f9d025e7de11df inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#ab02c52ed44003fa9b7f9d025e7de11df">Stop</a> (DateTime finalOriginatingTime, Action notifyCompleted)</td></tr>
+<tr class="memdesc:ab02c52ed44003fa9b7f9d025e7de11df inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#ab02c52ed44003fa9b7f9d025e7de11df">More...</a><br /></td></tr>
+<tr class="separator:ab02c52ed44003fa9b7f9d025e7de11df inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86064e732df4b3dafbd43721b6509c99 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#a86064e732df4b3dafbd43721b6509c99">ProposeReplayTime</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> originatingTimeInterval)</td></tr>
 <tr class="memdesc:a86064e732df4b3dafbd43721b6509c99 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propose replay time.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#a86064e732df4b3dafbd43721b6509c99">More...</a><br /></td></tr>
 <tr class="separator:a86064e732df4b3dafbd43721b6509c99 inherit pub_methods_class_microsoft_1_1_psi_1_1_subpipeline"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -281,42 +273,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Component that writes messages to a multi-stream store. The store can be backed by a file on disk, can be ephemeral (in-memory) for inter-process communication or can be a network protocol for cross-machine communication. Instances of this component can be created using <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af445066b425d592506950f389474acf6" title="Creates a new multi-stream store and returns an Exporter instance which can be used to write streams ...">Store.Create(Pipeline, string, string, bool, Serialization.KnownSerializers)</a>. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a7366fa6d8d889ad9ec7be37061b9de6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7366fa6d8d889ad9ec7be37061b9de6e">&#9670;&nbsp;</a></span>WriteWhichEmitters</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6e">Microsoft.Psi.Data.Exporter.WriteWhichEmitters</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Used to define which emitters should be written to the store using WriteEmitters. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7366fa6d8d889ad9ec7be37061b9de6eab1c94ca2fbc3e78fc30069c8d0f01680"></a>All&#160;</td><td class="fielddoc"><p>Write all emitters. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a7366fa6d8d889ad9ec7be37061b9de6eab4b379bf7ded74c07595ccb85bc6fdc3"></a>Specified&#160;</td><td class="fielddoc"><p>Write specified emitters. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a7366fa6d8d889ad9ec7be37061b9de6ea2ec0d16e4ca169baedb9b2d50ec5c6d7"></a>Connected&#160;</td><td class="fielddoc"><p>Write connected emitters. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a7366fa6d8d889ad9ec7be37061b9de6ea0f8231a2888a182ccb3b529b98b84220"></a>Attributed&#160;</td><td class="fielddoc"><p>Write attributed emitters. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aacb605b52d6c2de65e253342bc4d9445"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aacb605b52d6c2de65e253342bc4d9445">&#9670;&nbsp;</a></span>Dispose()</h2>
 
@@ -346,16 +303,16 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a8cb3865d85664a90b8c227d7aaeaf5ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cb3865d85664a90b8c227d7aaeaf5ce">&#9670;&nbsp;</a></span>Write&lt; T &gt;()</h2>
+<a id="a5aff88485de53de6bcd9cd3f97e8ed37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aff88485de53de6bcd9cd3f97e8ed37">&#9670;&nbsp;</a></span>Write&lt; TMessage &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Microsoft.Psi.Data.Exporter.Write&lt; T &gt; </td>
+          <td class="memname">void Microsoft.Psi.Data.Exporter.Write&lt; TMessage &gt; </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; T &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TMessage &gt;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
@@ -373,7 +330,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; T &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt;&#160;</td>
           <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -387,7 +344,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Writes the messages from the specified stream to the matching storage stream in this store. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of messages in the stream.</td></tr>
+    <tr><td class="paramname">TMessage</td><td>The type of messages in the stream.</td></tr>
   </table>
   </dd>
 </dl>
@@ -403,29 +360,41 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ae64164e92fdcbbb8ffe56dc794c890b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae64164e92fdcbbb8ffe56dc794c890b2">&#9670;&nbsp;</a></span>WriteEmitters&lt; T &gt;()</h2>
+<a id="a286756ee51b549e5bb2009f6432aad61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a286756ee51b549e5bb2009f6432aad61">&#9670;&nbsp;</a></span>Write&lt; TMessage, TSupplementalMetadata &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Microsoft.Psi.Data.Exporter.WriteEmitters&lt; T &gt; </td>
+          <td class="memname">void Microsoft.Psi.Data.Exporter.Write&lt; TMessage, TSupplementalMetadata &gt; </td>
           <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>sensor</em>, </td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html">Emitter</a>&lt; TMessage &gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6e">WriteWhichEmitters</a>&#160;</td>
-          <td class="paramname"><em>streamsToEmit</em> = <code><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a7366fa6d8d889ad9ec7be37061b9de6ea2ec0d16e4ca169baedb9b2d50ec5c6d7">WriteWhichEmitters.Connected</a></code>, </td>
+          <td class="paramtype">TSupplementalMetadata&#160;</td>
+          <td class="paramname"><em>supplementalMetadataValue</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string[]&#160;</td>
-          <td class="paramname"><em>streamNames</em> = <code>null</code>&#160;</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>largeMessages</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -435,18 +404,21 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Given a pipeline source object (such as KinectSensor) this method will write all emitters that match the requested properties to the current store. This is useful for writing streams from a sensor to a store for later playback via Importer.OpenAs(). </p>
+<p>Writes the messages from the specified stream to the matching storage stream in this store. Additionally stores supplemental metadata value. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of source to get emitters from (e.g. KinectSensor).</td></tr>
+    <tr><td class="paramname">TMessage</td><td>The type of messages in the stream.</td></tr>
+    <tr><td class="paramname">TSupplementalMetadata</td><td>The type of supplemental stream metadata.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sensor</td><td>The source to write data from.</td></tr>
-    <tr><td class="paramname">streamsToEmit</td><td>Used to indicate which emitters should be written.</td></tr>
-    <tr><td class="paramname">streamNames</td><td>List of stream names if streamToEmit==WriteWhichEmitters.Specified.</td></tr>
+    <tr><td class="paramname">source</td><td>The source stream to write.</td></tr>
+    <tr><td class="paramname">supplementalMetadataValue</td><td>Supplemental metadata value.</td></tr>
+    <tr><td class="paramname">name</td><td>The name of the storage stream.</td></tr>
+    <tr><td class="paramname">largeMessages</td><td>Indicates whether the stream contains large messages (typically &gt;4k). If true, the messages will be written to the large message file.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>

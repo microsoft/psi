@@ -67,7 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -78,74 +78,129 @@ $(function() {
 <p>KinectBody holds information about a body detected by the Kinect.  
  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:aa5f8614176f2eab2f5b1a66f4ae892e3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#aa5f8614176f2eab2f5b1a66f4ae892e3">JointCount</a> =&gt; jointCount</td></tr>
-<tr class="memdesc:aa5f8614176f2eab2f5b1a66f4ae892e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of joints in body's skeleton.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#aa5f8614176f2eab2f5b1a66f4ae892e3">More...</a><br /></td></tr>
-<tr class="separator:aa5f8614176f2eab2f5b1a66f4ae892e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a3ae8bfca372d9358335ba245e861820b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a3ae8bfca372d9358335ba245e861820b">UpdateFrom</a> (Body body)</td></tr>
+<tr class="memdesc:a3ae8bfca372d9358335ba245e861820b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Populate this body representation with new joint and tracking information.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a3ae8bfca372d9358335ba245e861820b">More...</a><br /></td></tr>
+<tr class="separator:a3ae8bfca372d9358335ba245e861820b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82165c842f6ea2ffd0b564ab091b167b"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a82165c842f6ea2ffd0b564ab091b167b">ToString</a> ()</td></tr>
+<tr class="separator:a82165c842f6ea2ffd0b564ab091b167b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a0ae1855d5601fd1b53f2757687b0036c"><td class="memItemLeft" align="right" valign="top">FrameEdges&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a0ae1855d5601fd1b53f2757687b0036c">ClippedEdges</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a0ae1855d5601fd1b53f2757687b0036c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the clipped edges.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a0ae1855d5601fd1b53f2757687b0036c">More...</a><br /></td></tr>
+<tr class="memitem:a9558b89fe785743a395d1bc6de13cf36"><td class="memItemLeft" align="right" valign="top">static List&lt;(JointType ChildJoint, JointType ParentJoint)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a9558b89fe785743a395d1bc6de13cf36">Bones</a><code> [get]</code></td></tr>
+<tr class="memdesc:a9558b89fe785743a395d1bc6de13cf36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the bone relationships.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a9558b89fe785743a395d1bc6de13cf36">More...</a><br /></td></tr>
+<tr class="separator:a9558b89fe785743a395d1bc6de13cf36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ae1855d5601fd1b53f2757687b0036c"><td class="memItemLeft" align="right" valign="top">FrameEdges&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a0ae1855d5601fd1b53f2757687b0036c">ClippedEdges</a><code> [get]</code></td></tr>
+<tr class="memdesc:a0ae1855d5601fd1b53f2757687b0036c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the clipped edges.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a0ae1855d5601fd1b53f2757687b0036c">More...</a><br /></td></tr>
 <tr class="separator:a0ae1855d5601fd1b53f2757687b0036c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c28c5a285d24fd8029a4393f878d6a5"><td class="memItemLeft" align="right" valign="top">Vector4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a6c28c5a285d24fd8029a4393f878d6a5">FloorClipPlane</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a6c28c5a285d24fd8029a4393f878d6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the floor's clip plane.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a6c28c5a285d24fd8029a4393f878d6a5">More...</a><br /></td></tr>
-<tr class="separator:a6c28c5a285d24fd8029a4393f878d6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca0f05d2dab3046c14ca578c39771911"><td class="memItemLeft" align="right" valign="top">TrackingConfidence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#aca0f05d2dab3046c14ca578c39771911">HandLeftConfidence</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aca0f05d2dab3046c14ca578c39771911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets confidence in position/pose of left hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#aca0f05d2dab3046c14ca578c39771911">More...</a><br /></td></tr>
+<tr class="memitem:a6a17631ac314e273ee23005ba4670c4c"><td class="memItemLeft" align="right" valign="top">Microsoft.Kinect.Vector4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a6a17631ac314e273ee23005ba4670c4c">FloorClipPlane</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a6a17631ac314e273ee23005ba4670c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the floor's clip plane.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a6a17631ac314e273ee23005ba4670c4c">More...</a><br /></td></tr>
+<tr class="separator:a6a17631ac314e273ee23005ba4670c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca0f05d2dab3046c14ca578c39771911"><td class="memItemLeft" align="right" valign="top">TrackingConfidence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#aca0f05d2dab3046c14ca578c39771911">HandLeftConfidence</a><code> [get]</code></td></tr>
+<tr class="memdesc:aca0f05d2dab3046c14ca578c39771911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets confidence in position/pose of left hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#aca0f05d2dab3046c14ca578c39771911">More...</a><br /></td></tr>
 <tr class="separator:aca0f05d2dab3046c14ca578c39771911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5b3f0cb4d9ae060f6ef64506d4f383c"><td class="memItemLeft" align="right" valign="top">HandState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#af5b3f0cb4d9ae060f6ef64506d4f383c">HandLeftState</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:af5b3f0cb4d9ae060f6ef64506d4f383c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets state of left hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#af5b3f0cb4d9ae060f6ef64506d4f383c">More...</a><br /></td></tr>
+<tr class="memitem:af5b3f0cb4d9ae060f6ef64506d4f383c"><td class="memItemLeft" align="right" valign="top">HandState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#af5b3f0cb4d9ae060f6ef64506d4f383c">HandLeftState</a><code> [get]</code></td></tr>
+<tr class="memdesc:af5b3f0cb4d9ae060f6ef64506d4f383c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets state of left hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#af5b3f0cb4d9ae060f6ef64506d4f383c">More...</a><br /></td></tr>
 <tr class="separator:af5b3f0cb4d9ae060f6ef64506d4f383c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a250a7e4cc37ad37d7adba6997e89b2a9"><td class="memItemLeft" align="right" valign="top">TrackingConfidence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a250a7e4cc37ad37d7adba6997e89b2a9">HandRightConfidence</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a250a7e4cc37ad37d7adba6997e89b2a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets confidence in position/pose of right hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a250a7e4cc37ad37d7adba6997e89b2a9">More...</a><br /></td></tr>
+<tr class="memitem:a250a7e4cc37ad37d7adba6997e89b2a9"><td class="memItemLeft" align="right" valign="top">TrackingConfidence&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a250a7e4cc37ad37d7adba6997e89b2a9">HandRightConfidence</a><code> [get]</code></td></tr>
+<tr class="memdesc:a250a7e4cc37ad37d7adba6997e89b2a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets confidence in position/pose of right hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a250a7e4cc37ad37d7adba6997e89b2a9">More...</a><br /></td></tr>
 <tr class="separator:a250a7e4cc37ad37d7adba6997e89b2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a549a9a826a52f5cd30bcff1e1cc28e49"><td class="memItemLeft" align="right" valign="top">HandState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a549a9a826a52f5cd30bcff1e1cc28e49">HandRightState</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a549a9a826a52f5cd30bcff1e1cc28e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets state of right hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a549a9a826a52f5cd30bcff1e1cc28e49">More...</a><br /></td></tr>
+<tr class="memitem:a549a9a826a52f5cd30bcff1e1cc28e49"><td class="memItemLeft" align="right" valign="top">HandState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a549a9a826a52f5cd30bcff1e1cc28e49">HandRightState</a><code> [get]</code></td></tr>
+<tr class="memdesc:a549a9a826a52f5cd30bcff1e1cc28e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets state of right hand.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a549a9a826a52f5cd30bcff1e1cc28e49">More...</a><br /></td></tr>
 <tr class="separator:a549a9a826a52f5cd30bcff1e1cc28e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf14e67b7f71abcf38def4b7d6f9d925"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abf14e67b7f71abcf38def4b7d6f9d925">IsRestricted</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:abf14e67b7f71abcf38def4b7d6f9d925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether the body is restricted.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abf14e67b7f71abcf38def4b7d6f9d925">More...</a><br /></td></tr>
+<tr class="memitem:abf14e67b7f71abcf38def4b7d6f9d925"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abf14e67b7f71abcf38def4b7d6f9d925">IsRestricted</a><code> [get]</code></td></tr>
+<tr class="memdesc:abf14e67b7f71abcf38def4b7d6f9d925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether the body is restricted.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abf14e67b7f71abcf38def4b7d6f9d925">More...</a><br /></td></tr>
 <tr class="separator:abf14e67b7f71abcf38def4b7d6f9d925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf4ebe7fcb6aacd415a99c1d3f8572ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#acf4ebe7fcb6aacd415a99c1d3f8572ed">IsTracked</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:acf4ebe7fcb6aacd415a99c1d3f8572ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets a value indicating whether the body is tracked.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#acf4ebe7fcb6aacd415a99c1d3f8572ed">More...</a><br /></td></tr>
+<tr class="memitem:acf4ebe7fcb6aacd415a99c1d3f8572ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#acf4ebe7fcb6aacd415a99c1d3f8572ed">IsTracked</a><code> [get]</code></td></tr>
+<tr class="memdesc:acf4ebe7fcb6aacd415a99c1d3f8572ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether the body is tracked.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#acf4ebe7fcb6aacd415a99c1d3f8572ed">More...</a><br /></td></tr>
 <tr class="separator:acf4ebe7fcb6aacd415a99c1d3f8572ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77f0cff3793fb2142187a8383902c525"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; JointType, JointOrientation &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a77f0cff3793fb2142187a8383902c525">JointOrientations</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a77f0cff3793fb2142187a8383902c525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the joint orientations.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a77f0cff3793fb2142187a8383902c525">More...</a><br /></td></tr>
-<tr class="separator:a77f0cff3793fb2142187a8383902c525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d5d8603fa8f8c8d13c4cd35e807a048"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; JointType, Joint &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a5d5d8603fa8f8c8d13c4cd35e807a048">Joints</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a5d5d8603fa8f8c8d13c4cd35e807a048"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the joints.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a5d5d8603fa8f8c8d13c4cd35e807a048">More...</a><br /></td></tr>
-<tr class="separator:a5d5d8603fa8f8c8d13c4cd35e807a048"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a152f171ad9037ab86de6f0b798700b8f"><td class="memItemLeft" align="right" valign="top">PointF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a152f171ad9037ab86de6f0b798700b8f">Lean</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a152f171ad9037ab86de6f0b798700b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the lean point.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a152f171ad9037ab86de6f0b798700b8f">More...</a><br /></td></tr>
-<tr class="separator:a152f171ad9037ab86de6f0b798700b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dfb5c13c075a417b0fbac0efcaa5ce4"><td class="memItemLeft" align="right" valign="top">TrackingState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a9dfb5c13c075a417b0fbac0efcaa5ce4">LeanTrackingState</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a9dfb5c13c075a417b0fbac0efcaa5ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the lean tracking state.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a9dfb5c13c075a417b0fbac0efcaa5ce4">More...</a><br /></td></tr>
+<tr class="memitem:abc1438f81355c99da5d432fb01ffc916"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; JointType,(CoordinateSystem Pose, TrackingState TrackingState)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abc1438f81355c99da5d432fb01ffc916">Joints</a><code> [get]</code></td></tr>
+<tr class="memdesc:abc1438f81355c99da5d432fb01ffc916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the joint information.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#abc1438f81355c99da5d432fb01ffc916">More...</a><br /></td></tr>
+<tr class="separator:abc1438f81355c99da5d432fb01ffc916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fad8b449793ad1f2c4779c19489675"><td class="memItemLeft" align="right" valign="top">Point2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a44fad8b449793ad1f2c4779c19489675">Lean</a><code> [get]</code></td></tr>
+<tr class="memdesc:a44fad8b449793ad1f2c4779c19489675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the lean point.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a44fad8b449793ad1f2c4779c19489675">More...</a><br /></td></tr>
+<tr class="separator:a44fad8b449793ad1f2c4779c19489675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dfb5c13c075a417b0fbac0efcaa5ce4"><td class="memItemLeft" align="right" valign="top">TrackingState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a9dfb5c13c075a417b0fbac0efcaa5ce4">LeanTrackingState</a><code> [get]</code></td></tr>
+<tr class="memdesc:a9dfb5c13c075a417b0fbac0efcaa5ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the lean tracking state.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a9dfb5c13c075a417b0fbac0efcaa5ce4">More...</a><br /></td></tr>
 <tr class="separator:a9dfb5c13c075a417b0fbac0efcaa5ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48a295bf9929854991a7420c8f5895f1"><td class="memItemLeft" align="right" valign="top">ulong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a48a295bf9929854991a7420c8f5895f1">TrackingId</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a48a295bf9929854991a7420c8f5895f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or sets the body's tracking ID.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a48a295bf9929854991a7420c8f5895f1">More...</a><br /></td></tr>
+<tr class="memitem:a48a295bf9929854991a7420c8f5895f1"><td class="memItemLeft" align="right" valign="top">ulong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a48a295bf9929854991a7420c8f5895f1">TrackingId</a><code> [get]</code></td></tr>
+<tr class="memdesc:a48a295bf9929854991a7420c8f5895f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the body's tracking ID.  <a href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_body.html#a48a295bf9929854991a7420c8f5895f1">More...</a><br /></td></tr>
 <tr class="separator:a48a295bf9929854991a7420c8f5895f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>KinectBody holds information about a body detected by the Kinect. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="aa5f8614176f2eab2f5b1a66f4ae892e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5f8614176f2eab2f5b1a66f4ae892e3">&#9670;&nbsp;</a></span>JointCount</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a82165c842f6ea2ffd0b564ab091b167b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82165c842f6ea2ffd0b564ab091b167b">&#9670;&nbsp;</a></span>ToString()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Microsoft.Psi.Kinect.KinectBody.JointCount =&gt; jointCount</td>
+          <td class="memname">override string Microsoft.Psi.Kinect.KinectBody.ToString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the number of joints in body's skeleton. </p>
+<p></p>
+
+</div>
+</div>
+<a id="a3ae8bfca372d9358335ba245e861820b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ae8bfca372d9358335ba245e861820b">&#9670;&nbsp;</a></span>UpdateFrom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Kinect.KinectBody.UpdateFrom </td>
+          <td>(</td>
+          <td class="paramtype">Body&#160;</td>
+          <td class="paramname"><em>body</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Populate this body representation with new joint and tracking information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">body</td><td>The body from the Kinect sensor from which to populate this body with information.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="a9558b89fe785743a395d1bc6de13cf36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9558b89fe785743a395d1bc6de13cf36">&#9670;&nbsp;</a></span>Bones</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;(JointType ChildJoint, JointType ParentJoint)&gt; Microsoft.Psi.Kinect.KinectBody.Bones</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the bone relationships. </p>
+
+</div>
+</div>
 <a id="a0ae1855d5601fd1b53f2757687b0036c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ae1855d5601fd1b53f2757687b0036c">&#9670;&nbsp;</a></span>ClippedEdges</h2>
 
@@ -161,17 +216,17 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the clipped edges. </p>
+<p>Gets the clipped edges. </p>
 
 </div>
 </div>
-<a id="a6c28c5a285d24fd8029a4393f878d6a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c28c5a285d24fd8029a4393f878d6a5">&#9670;&nbsp;</a></span>FloorClipPlane</h2>
+<a id="a6a17631ac314e273ee23005ba4670c4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a17631ac314e273ee23005ba4670c4c">&#9670;&nbsp;</a></span>FloorClipPlane</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,7 +235,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Vector4 Microsoft.Psi.Kinect.KinectBody.FloorClipPlane</td>
+          <td class="memname">Microsoft.Kinect.Vector4 Microsoft.Psi.Kinect.KinectBody.FloorClipPlane</td>
         </tr>
       </table>
   </td>
@@ -209,12 +264,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets confidence in position/pose of left hand. </p>
+<p>Gets confidence in position/pose of left hand. </p>
 
 </div>
 </div>
@@ -233,12 +288,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets state of left hand. </p>
+<p>Gets state of left hand. </p>
 
 </div>
 </div>
@@ -257,12 +312,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets confidence in position/pose of right hand. </p>
+<p>Gets confidence in position/pose of right hand. </p>
 
 </div>
 </div>
@@ -281,12 +336,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets state of right hand. </p>
+<p>Gets state of right hand. </p>
 
 </div>
 </div>
@@ -305,12 +360,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets a value indicating whether the body is restricted. </p>
+<p>Gets a value indicating whether the body is restricted. </p>
 
 </div>
 </div>
@@ -329,17 +384,17 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets a value indicating whether the body is tracked. </p>
+<p>Gets a value indicating whether the body is tracked. </p>
 
 </div>
 </div>
-<a id="a77f0cff3793fb2142187a8383902c525"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77f0cff3793fb2142187a8383902c525">&#9670;&nbsp;</a></span>JointOrientations</h2>
+<a id="abc1438f81355c99da5d432fb01ffc916"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc1438f81355c99da5d432fb01ffc916">&#9670;&nbsp;</a></span>Joints</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -348,22 +403,24 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Dictionary&lt;JointType, JointOrientation&gt; Microsoft.Psi.Kinect.KinectBody.JointOrientations</td>
+          <td class="memname">Dictionary&lt;JointType, (CoordinateSystem Pose, TrackingState TrackingState)&gt; Microsoft.Psi.Kinect.KinectBody.Joints</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets or sets the joint orientations. </p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">            <span class="keyword">new</span> Dictionary&lt;JointType, (CoordinateSystem Pose, TrackingState TrackingState)&gt;()</div>
+</div><!-- fragment -->
+<p>Gets the joint information. </p>
 
 </div>
 </div>
-<a id="a5d5d8603fa8f8c8d13c4cd35e807a048"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d5d8603fa8f8c8d13c4cd35e807a048">&#9670;&nbsp;</a></span>Joints</h2>
+<a id="a44fad8b449793ad1f2c4779c19489675"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44fad8b449793ad1f2c4779c19489675">&#9670;&nbsp;</a></span>Lean</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -372,41 +429,17 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Dictionary&lt;JointType, Joint&gt; Microsoft.Psi.Kinect.KinectBody.Joints</td>
+          <td class="memname">Point2D Microsoft.Psi.Kinect.KinectBody.Lean</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the joints. </p>
-
-</div>
-</div>
-<a id="a152f171ad9037ab86de6f0b798700b8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a152f171ad9037ab86de6f0b798700b8f">&#9670;&nbsp;</a></span>Lean</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">PointF Microsoft.Psi.Kinect.KinectBody.Lean</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets or sets the lean point. </p>
+<p>Gets the lean point. </p>
 
 </div>
 </div>
@@ -425,12 +458,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the lean tracking state. </p>
+<p>Gets the lean tracking state. </p>
 
 </div>
 </div>
@@ -449,12 +482,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets or sets the body's tracking ID. </p>
+<p>Gets the body's tracking ID. </p>
 
 </div>
 </div>

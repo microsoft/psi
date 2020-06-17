@@ -67,6 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Calibration.DepthExtensions Class Reference</div>  </div>
@@ -75,9 +76,119 @@ $(function() {
 
 <p>Define set of extensions for dealing with depth maps.  
  <a href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a721e26838cda45ff492d65821235205d"><td class="memItemLeft" align="right" valign="top">static ? Point3D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#a721e26838cda45ff492d65821235205d">ProjectToCameraSpace</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a> depthDeviceCalibrationInfo, Point2D point2D, <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt; depthImage)</td></tr>
+<tr class="memdesc:a721e26838cda45ff492d65821235205d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method for projecting a point in pixel coordinate from the color camera into the depth camera's coordinates by determining the corresponding depth pixel.  <a href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#a721e26838cda45ff492d65821235205d">More...</a><br /></td></tr>
+<tr class="separator:a721e26838cda45ff492d65821235205d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7278fb915111e08ec226fb15dfc27e04"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; List&lt; Point3D &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#a7278fb915111e08ec226fb15dfc27e04">ProjectTo3D</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>)&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt;(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>)&gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:a7278fb915111e08ec226fb15dfc27e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects set of 2D image points into 3D.  <a href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#a7278fb915111e08ec226fb15dfc27e04">More...</a><br /></td></tr>
+<tr class="separator:a7278fb915111e08ec226fb15dfc27e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Define set of extensions for dealing with depth maps. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7278fb915111e08ec226fb15dfc27e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7278fb915111e08ec226fb15dfc27e04">&#9670;&nbsp;</a></span>ProjectTo3D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;List&lt;Point3D&gt; &gt; Microsoft.Psi.Calibration.DepthExtensions.ProjectTo3D </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>)&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt;(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>)&gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Projects set of 2D image points into 3D. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Tuple of depth image, list of points to project, and calibration information.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates a list of corresponding 3D points in Kinect camera space.</dd></dl>
+
+</div>
+</div>
+<a id="a721e26838cda45ff492d65821235205d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a721e26838cda45ff492d65821235205d">&#9670;&nbsp;</a></span>ProjectToCameraSpace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static ? Point3D Microsoft.Psi.Calibration.DepthExtensions.ProjectToCameraSpace </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>&#160;</td>
+          <td class="paramname"><em>depthDeviceCalibrationInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Point2D&#160;</td>
+          <td class="paramname"><em>point2D</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&#160;</td>
+          <td class="paramname"><em>depthImage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Method for projecting a point in pixel coordinate from the color camera into the depth camera's coordinates by determining the corresponding depth pixel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">depthDeviceCalibrationInfo</td><td>Defines the calibration information (extrinsics and intrinsics) for the depth device.</td></tr>
+    <tr><td class="paramname">point2D</td><td>Pixel coordinates in the color camera.</td></tr>
+    <tr><td class="paramname">depthImage</td><td>Depth map.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Point in camera coordinates.</dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- Copyright (c) Microsoft Corporation. All rights reserved.
      Licensed under the MIT License. -->
 <!-- HTML footer for doxygen 1.8.13-->

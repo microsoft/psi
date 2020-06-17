@@ -70,17 +70,16 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Microsoft.Psi.Imaging.Image Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible as to allocate new image in unmanaged memory, as to just wrap provided pointer to unmanaged memory, where an image is stored.  
+<p>Represents an image, stored in unmanaged memory.  
  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#details">More...</a></p>
 
-<p>Inherits IDisposable.</p>
+<p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">Microsoft.Psi.Imaging.ImageBase</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -90,108 +89,200 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ab43d802378828bd018c17bcbc7539702"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab43d802378828bd018c17bcbc7539702">Image</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html">UnmanagedBuffer</a> unmanagedBuffer, int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:ab43d802378828bd018c17bcbc7539702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab43d802378828bd018c17bcbc7539702">More...</a><br /></td></tr>
+<tr class="separator:ab43d802378828bd018c17bcbc7539702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0eacc513e36bd6814f3dc7951e9bef4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aa0eacc513e36bd6814f3dc7951e9bef4">Image</a> (IntPtr imageData, int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:aa0eacc513e36bd6814f3dc7951e9bef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aa0eacc513e36bd6814f3dc7951e9bef4">More...</a><br /></td></tr>
+<tr class="memdesc:aa0eacc513e36bd6814f3dc7951e9bef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aa0eacc513e36bd6814f3dc7951e9bef4">More...</a><br /></td></tr>
 <tr class="separator:aa0eacc513e36bd6814f3dc7951e9bef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dc0bfd711d2473a76b16da4e7ca8cbf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a5dc0bfd711d2473a76b16da4e7ca8cbf">Image</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html">UnmanagedBuffer</a> image, int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:a5dc0bfd711d2473a76b16da4e7ca8cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a5dc0bfd711d2473a76b16da4e7ca8cbf">More...</a><br /></td></tr>
-<tr class="separator:a5dc0bfd711d2473a76b16da4e7ca8cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cdd8526a5b422c9b58c4690ebce8fc1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3cdd8526a5b422c9b58c4690ebce8fc1">Image</a> (int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:a3cdd8526a5b422c9b58c4690ebce8fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3cdd8526a5b422c9b58c4690ebce8fc1">More...</a><br /></td></tr>
-<tr class="separator:a3cdd8526a5b422c9b58c4690ebce8fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b99f79a879b1ebd409e706f828b575c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a1b99f79a879b1ebd409e706f828b575c">Image</a> (int width, int height, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:a1b99f79a879b1ebd409e706f828b575c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a1b99f79a879b1ebd409e706f828b575c">More...</a><br /></td></tr>
+<tr class="memdesc:a1b99f79a879b1ebd409e706f828b575c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a1b99f79a879b1ebd409e706f828b575c">More...</a><br /></td></tr>
 <tr class="separator:a1b99f79a879b1ebd409e706f828b575c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e8384e512f13bd4243a6f9963fa1c1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a7e8384e512f13bd4243a6f9963fa1c1a">Image</a> (BitmapData bitmapData)</td></tr>
-<tr class="memdesc:a7e8384e512f13bd4243a6f9963fa1c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a7e8384e512f13bd4243a6f9963fa1c1a">More...</a><br /></td></tr>
-<tr class="separator:a7e8384e512f13bd4243a6f9963fa1c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8ef610de7245f8f993e1a6ac3f2b069"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab8ef610de7245f8f993e1a6ac3f2b069">Dispose</a> ()</td></tr>
-<tr class="memdesc:ab8ef610de7245f8f993e1a6ac3f2b069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispose the object.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab8ef610de7245f8f993e1a6ac3f2b069">More...</a><br /></td></tr>
-<tr class="separator:ab8ef610de7245f8f993e1a6ac3f2b069"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84dfc53ad1a0863ecec06f4862443717"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a84dfc53ad1a0863ecec06f4862443717">CopyTo</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> destImage)</td></tr>
-<tr class="memdesc:a84dfc53ad1a0863ecec06f4862443717"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy unmanaged image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a84dfc53ad1a0863ecec06f4862443717">More...</a><br /></td></tr>
-<tr class="separator:a84dfc53ad1a0863ecec06f4862443717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa141320a24c633637a703bbe9d1234e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aa141320a24c633637a703bbe9d1234e7">CopyTo</a> (byte[] destinationBuffer)</td></tr>
-<tr class="memdesc:aa141320a24c633637a703bbe9d1234e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the psi image to a byte array buffer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aa141320a24c633637a703bbe9d1234e7">More...</a><br /></td></tr>
-<tr class="separator:aa141320a24c633637a703bbe9d1234e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cdd8526a5b422c9b58c4690ebce8fc1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3cdd8526a5b422c9b58c4690ebce8fc1">Image</a> (int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:a3cdd8526a5b422c9b58c4690ebce8fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3cdd8526a5b422c9b58c4690ebce8fc1">More...</a><br /></td></tr>
+<tr class="separator:a3cdd8526a5b422c9b58c4690ebce8fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb5e58659ec218d8d07c0479d567edec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#adb5e58659ec218d8d07c0479d567edec">Image</a> (BitmapData bitmapData, bool makeCopy=false)</td></tr>
+<tr class="memdesc:adb5e58659ec218d8d07c0479d567edec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#adb5e58659ec218d8d07c0479d567edec">More...</a><br /></td></tr>
+<tr class="separator:adb5e58659ec218d8d07c0479d567edec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c8721e390452b23c33051c74e4a6ff1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a8c8721e390452b23c33051c74e4a6ff1">CopyFrom</a> (BitmapData bitmapData)</td></tr>
+<tr class="memdesc:a8c8721e390452b23c33051c74e4a6ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image contents from a specified source locked bitmap data.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a8c8721e390452b23c33051c74e4a6ff1">More...</a><br /></td></tr>
+<tr class="separator:a8c8721e390452b23c33051c74e4a6ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a054b2a71cbda702675e361e8f3b3292c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a054b2a71cbda702675e361e8f3b3292c">CopyFrom</a> (Bitmap bitmap)</td></tr>
+<tr class="memdesc:a054b2a71cbda702675e361e8f3b3292c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image contents from a specified bitmap.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a054b2a71cbda702675e361e8f3b3292c">More...</a><br /></td></tr>
+<tr class="separator:a054b2a71cbda702675e361e8f3b3292c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d2c8fd816e449e7e7ae9052e95e30c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a7d2c8fd816e449e7e7ae9052e95e30c2">CopyFrom</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> source)</td></tr>
+<tr class="memdesc:a7d2c8fd816e449e7e7ae9052e95e30c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image from a specified source image of the same size.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a7d2c8fd816e449e7e7ae9052e95e30c2">More...</a><br /></td></tr>
+<tr class="separator:a7d2c8fd816e449e7e7ae9052e95e30c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69ed30a27291ab7cb1d52f9e6f4a0ef5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a69ed30a27291ab7cb1d52f9e6f4a0ef5">CopyFrom</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> source)</td></tr>
+<tr class="memdesc:a69ed30a27291ab7cb1d52f9e6f4a0ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image from a specified source depth image of the same size.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a69ed30a27291ab7cb1d52f9e6f4a0ef5">More...</a><br /></td></tr>
+<tr class="separator:a69ed30a27291ab7cb1d52f9e6f4a0ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f1387179c0bd9f013842b017c5ae145"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a9f1387179c0bd9f013842b017c5ae145">DecodeFrom</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> encodedImage, <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_from_stream_decoder.html">IImageFromStreamDecoder</a> imageDecoder)</td></tr>
+<tr class="memdesc:a9f1387179c0bd9f013842b017c5ae145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes a specified encoded image with a specified decoder into the current image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a9f1387179c0bd9f013842b017c5ae145">More...</a><br /></td></tr>
+<tr class="separator:a9f1387179c0bd9f013842b017c5ae145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fad7f7552a690508f86c44b84775e61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a5fad7f7552a690508f86c44b84775e61">Encode</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_to_stream_encoder.html">IImageToStreamEncoder</a> imageEncoder)</td></tr>
+<tr class="memdesc:a5fad7f7552a690508f86c44b84775e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes the image using a specified encoder.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a5fad7f7552a690508f86c44b84775e61">More...</a><br /></td></tr>
+<tr class="separator:a5fad7f7552a690508f86c44b84775e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d7bab41963eb7d5aa9bbc371343d00e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a7d7bab41963eb7d5aa9bbc371343d00e">CopyTo</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> target)</td></tr>
+<tr class="memdesc:a7d7bab41963eb7d5aa9bbc371343d00e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image into a specified target image of the same size.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a7d7bab41963eb7d5aa9bbc371343d00e">More...</a><br /></td></tr>
+<tr class="separator:a7d7bab41963eb7d5aa9bbc371343d00e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac50b1ee63b4e9f1b1951271f26a7137c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac50b1ee63b4e9f1b1951271f26a7137c">CopyTo</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> target)</td></tr>
+<tr class="memdesc:ac50b1ee63b4e9f1b1951271f26a7137c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image into a target depth image of the same size.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac50b1ee63b4e9f1b1951271f26a7137c">More...</a><br /></td></tr>
+<tr class="separator:ac50b1ee63b4e9f1b1951271f26a7137c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1310cff901b731528447a631e30c3e03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a1310cff901b731528447a631e30c3e03">SetPixel</a> (int x, int y, int r, int g, int b, int a)</td></tr>
 <tr class="memdesc:a1310cff901b731528447a631e30c3e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a pixel in the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a1310cff901b731528447a631e30c3e03">More...</a><br /></td></tr>
 <tr class="separator:a1310cff901b731528447a631e30c3e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94cae5f7f03864a8dbfe5baf2fa5efe3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a94cae5f7f03864a8dbfe5baf2fa5efe3">CopyTo</a> (IntPtr destination, int width, int height, int dstStride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> destinationFormat)</td></tr>
-<tr class="memdesc:a94cae5f7f03864a8dbfe5baf2fa5efe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the psi image to an unmanaged buffer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a94cae5f7f03864a8dbfe5baf2fa5efe3">More...</a><br /></td></tr>
-<tr class="separator:a94cae5f7f03864a8dbfe5baf2fa5efe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59bc43635cdd28795399ad4f7c066a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ae59bc43635cdd28795399ad4f7c066a3">CopyFrom</a> (byte[] sourceBuffer)</td></tr>
-<tr class="memdesc:ae59bc43635cdd28795399ad4f7c066a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies data from a byte array buffer into the psi image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ae59bc43635cdd28795399ad4f7c066a3">More...</a><br /></td></tr>
-<tr class="separator:ae59bc43635cdd28795399ad4f7c066a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74dd5e693535755bec3661d5e304b1d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a74dd5e693535755bec3661d5e304b1d4">CopyFrom</a> (IntPtr sourcePtr)</td></tr>
-<tr class="memdesc:a74dd5e693535755bec3661d5e304b1d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies data from an unmanaged buffer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a74dd5e693535755bec3661d5e304b1d4">More...</a><br /></td></tr>
-<tr class="separator:a74dd5e693535755bec3661d5e304b1d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a054b2a71cbda702675e361e8f3b3292c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a054b2a71cbda702675e361e8f3b3292c">CopyFrom</a> (Bitmap bitmap)</td></tr>
-<tr class="memdesc:a054b2a71cbda702675e361e8f3b3292c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies data from an unmanaged buffer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a054b2a71cbda702675e361e8f3b3292c">More...</a><br /></td></tr>
-<tr class="separator:a054b2a71cbda702675e361e8f3b3292c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45d0d13492909216ade03a26bbbaccc6"><td class="memItemLeft" align="right" valign="top">Bitmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a45d0d13492909216ade03a26bbbaccc6">ToManagedImage</a> ()</td></tr>
-<tr class="memdesc:a45d0d13492909216ade03a26bbbaccc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create managed image from the unmanaged.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a45d0d13492909216ade03a26bbbaccc6">More...</a><br /></td></tr>
-<tr class="separator:a45d0d13492909216ade03a26bbbaccc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab30c9dd60120c857e3a4c34a12426489"><td class="memItemLeft" align="right" valign="top">Bitmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab30c9dd60120c857e3a4c34a12426489">ToManagedImage</a> (bool makeCopy)</td></tr>
-<tr class="memdesc:ab30c9dd60120c857e3a4c34a12426489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create managed image from the unmanaged.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab30c9dd60120c857e3a4c34a12426489">More...</a><br /></td></tr>
-<tr class="separator:ab30c9dd60120c857e3a4c34a12426489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4137a229f9f34e5f8b878cf14b857bb6"><td class="memItemLeft" align="right" valign="top">byte[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4137a229f9f34e5f8b878cf14b857bb6">ReadBytes</a> (int count, int offset=0)</td></tr>
-<tr class="memdesc:a4137a229f9f34e5f8b878cf14b857bb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads image data as a series of bytes.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4137a229f9f34e5f8b878cf14b857bb6">More...</a><br /></td></tr>
-<tr class="separator:a4137a229f9f34e5f8b878cf14b857bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa5d39d4c724673a9d1af7bd93749b2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#afa5d39d4c724673a9d1af7bd93749b2a">Crop</a> (int left, int top, int width, int height)</td></tr>
-<tr class="memdesc:afa5d39d4c724673a9d1af7bd93749b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a copy of the image cropped to the specified dimensions.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#afa5d39d4c724673a9d1af7bd93749b2a">More...</a><br /></td></tr>
-<tr class="separator:afa5d39d4c724673a9d1af7bd93749b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4683534a64982827e58500c6b7d20cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4683534a64982827e58500c6b7d20cac">SetPixel</a> (int x, int y, int gray)</td></tr>
+<tr class="memdesc:a4683534a64982827e58500c6b7d20cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a pixel in the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4683534a64982827e58500c6b7d20cac">More...</a><br /></td></tr>
+<tr class="separator:a4683534a64982827e58500c6b7d20cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a680f4d74a7b1d3cbba91272dbac5dc6d"><td class="memItemLeft" align="right" valign="top">override <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">ImageBase</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a680f4d74a7b1d3cbba91272dbac5dc6d">CreateEmptyOfSameSize</a> ()</td></tr>
+<tr class="separator:a680f4d74a7b1d3cbba91272dbac5dc6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">Microsoft.Psi.Imaging.ImageBase</a></td></tr>
+<tr class="memitem:a45fcd993ce4dd432ea54ba452c6e5271 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a45fcd993ce4dd432ea54ba452c6e5271">ImageBase</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html">UnmanagedBuffer</a> image, int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:a45fcd993ce4dd432ea54ba452c6e5271 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html" title="Represents an image, stored in unmanaged memory.">ImageBase</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a45fcd993ce4dd432ea54ba452c6e5271">More...</a><br /></td></tr>
+<tr class="separator:a45fcd993ce4dd432ea54ba452c6e5271 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1cc9de32e829ae27fd08c9a78404ef inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aac1cc9de32e829ae27fd08c9a78404ef">ImageBase</a> (IntPtr imageData, int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:aac1cc9de32e829ae27fd08c9a78404ef inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html" title="Represents an image, stored in unmanaged memory.">ImageBase</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aac1cc9de32e829ae27fd08c9a78404ef">More...</a><br /></td></tr>
+<tr class="separator:aac1cc9de32e829ae27fd08c9a78404ef inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1abb1028f903bdca05e76c7ac72e63fa inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a1abb1028f903bdca05e76c7ac72e63fa">ImageBase</a> (int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:a1abb1028f903bdca05e76c7ac72e63fa inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html" title="Represents an image, stored in unmanaged memory.">ImageBase</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a1abb1028f903bdca05e76c7ac72e63fa">More...</a><br /></td></tr>
+<tr class="separator:a1abb1028f903bdca05e76c7ac72e63fa inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a623f08306e7d3ba346320edb0476aa46 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a623f08306e7d3ba346320edb0476aa46">ImageBase</a> (int width, int height, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:a623f08306e7d3ba346320edb0476aa46 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html" title="Represents an image, stored in unmanaged memory.">ImageBase</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a623f08306e7d3ba346320edb0476aa46">More...</a><br /></td></tr>
+<tr class="separator:a623f08306e7d3ba346320edb0476aa46 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660aa574904c5e73ff7efd6d4d44ee95 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a660aa574904c5e73ff7efd6d4d44ee95">ImageBase</a> (BitmapData bitmapData, bool makeCopy=false)</td></tr>
+<tr class="memdesc:a660aa574904c5e73ff7efd6d4d44ee95 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html" title="Represents an image, stored in unmanaged memory.">ImageBase</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a660aa574904c5e73ff7efd6d4d44ee95">More...</a><br /></td></tr>
+<tr class="separator:a660aa574904c5e73ff7efd6d4d44ee95 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec096654c73f06bec2cadb2c4fea211 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#abec096654c73f06bec2cadb2c4fea211">Dispose</a> ()</td></tr>
+<tr class="memdesc:abec096654c73f06bec2cadb2c4fea211 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disposes the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#abec096654c73f06bec2cadb2c4fea211">More...</a><br /></td></tr>
+<tr class="separator:abec096654c73f06bec2cadb2c4fea211 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9db3ce4ae4d95a2d14eb79ecc56abc0 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#ad9db3ce4ae4d95a2d14eb79ecc56abc0">CopyTo</a> (byte[] destinationBuffer)</td></tr>
+<tr class="memdesc:ad9db3ce4ae4d95a2d14eb79ecc56abc0 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image to a destination byte array buffer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#ad9db3ce4ae4d95a2d14eb79ecc56abc0">More...</a><br /></td></tr>
+<tr class="separator:ad9db3ce4ae4d95a2d14eb79ecc56abc0 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a069a1726f56314c3976352e425694b inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a7a069a1726f56314c3976352e425694b">CopyTo</a> (IntPtr destination, int width, int height, int stride, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:a7a069a1726f56314c3976352e425694b inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies the image to a destination pointer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a7a069a1726f56314c3976352e425694b">More...</a><br /></td></tr>
+<tr class="separator:a7a069a1726f56314c3976352e425694b inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93f2359dc1037eff73c12f2424f80023 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a93f2359dc1037eff73c12f2424f80023">CopyFrom</a> (byte[] sourceBuffer)</td></tr>
+<tr class="memdesc:a93f2359dc1037eff73c12f2424f80023 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies data from a source byte array buffer into the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a93f2359dc1037eff73c12f2424f80023">More...</a><br /></td></tr>
+<tr class="separator:a93f2359dc1037eff73c12f2424f80023 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5bb500a174b93014366ec540046554d inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aa5bb500a174b93014366ec540046554d">CopyFrom</a> (IntPtr source)</td></tr>
+<tr class="memdesc:aa5bb500a174b93014366ec540046554d inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies data from a source pointer into the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aa5bb500a174b93014366ec540046554d">More...</a><br /></td></tr>
+<tr class="separator:aa5bb500a174b93014366ec540046554d inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06376001b43d8e549fb909b4194cffd3 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">Bitmap&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a06376001b43d8e549fb909b4194cffd3">ToBitmap</a> (bool makeCopy=true)</td></tr>
+<tr class="memdesc:a06376001b43d8e549fb909b4194cffd3 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Bitmap from the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a06376001b43d8e549fb909b4194cffd3">More...</a><br /></td></tr>
+<tr class="separator:a06376001b43d8e549fb909b4194cffd3 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f953f31ff7723425b651a7f24909f5 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">byte[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aa2f953f31ff7723425b651a7f24909f5">ReadBytes</a> (int count, int offset=0)</td></tr>
+<tr class="memdesc:aa2f953f31ff7723425b651a7f24909f5 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads image data as a series of bytes.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aa2f953f31ff7723425b651a7f24909f5">More...</a><br /></td></tr>
+<tr class="separator:aa2f953f31ff7723425b651a7f24909f5 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0701f1a35366b0cc4a72474be52d8ac2 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">ImageBase</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a0701f1a35366b0cc4a72474be52d8ac2">CreateEmptyOfSameSize</a> ()</td></tr>
+<tr class="memdesc:a0701f1a35366b0cc4a72474be52d8ac2 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty image of the same size.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a0701f1a35366b0cc4a72474be52d8ac2">More...</a><br /></td></tr>
+<tr class="separator:a0701f1a35366b0cc4a72474be52d8ac2 inherit pub_methods_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aae8f697d1cba626ff850f422f4b8e79f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aae8f697d1cba626ff850f422f4b8e79f">Create</a> (int width, int height, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:aae8f697d1cba626ff850f422f4b8e79f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate new image in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aae8f697d1cba626ff850f422f4b8e79f">More...</a><br /></td></tr>
-<tr class="separator:aae8f697d1cba626ff850f422f4b8e79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac46a8e185d9ae01aea86901c0498c3ea"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac46a8e185d9ae01aea86901c0498c3ea">FromManagedImage</a> (BitmapData imageData)</td></tr>
-<tr class="memdesc:ac46a8e185d9ae01aea86901c0498c3ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create unmanaged image from the specified managed image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac46a8e185d9ae01aea86901c0498c3ea">More...</a><br /></td></tr>
-<tr class="separator:ac46a8e185d9ae01aea86901c0498c3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a458507a963c4b4c09036e3a3c1d94ab2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a458507a963c4b4c09036e3a3c1d94ab2">FromManagedImage</a> (Bitmap image)</td></tr>
-<tr class="memdesc:a458507a963c4b4c09036e3a3c1d94ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create unmanaged image from the specified managed image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a458507a963c4b4c09036e3a3c1d94ab2">More...</a><br /></td></tr>
-<tr class="separator:a458507a963c4b4c09036e3a3c1d94ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abef3d5c552ccfdc1af0cfe339f6c12eb"><td class="memItemLeft" align="right" valign="top">static byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#abef3d5c552ccfdc1af0cfe339f6c12eb">Rgb2Gray</a> (byte r, byte g, byte b)</td></tr>
-<tr class="memdesc:abef3d5c552ccfdc1af0cfe339f6c12eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to convert RGB color into grayscale.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#abef3d5c552ccfdc1af0cfe339f6c12eb">More...</a><br /></td></tr>
-<tr class="separator:abef3d5c552ccfdc1af0cfe339f6c12eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bf6fe9c86b51fe42f5f43e390315378"><td class="memItemLeft" align="right" valign="top">static ushort&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a2bf6fe9c86b51fe42f5f43e390315378">Rgb2Gray</a> (ushort r, ushort g, ushort b)</td></tr>
-<tr class="memdesc:a2bf6fe9c86b51fe42f5f43e390315378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to convert RGB color into grayscale.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a2bf6fe9c86b51fe42f5f43e390315378">More...</a><br /></td></tr>
-<tr class="separator:a2bf6fe9c86b51fe42f5f43e390315378"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac20e61c0c89d53039fc6a326deeb35d6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac20e61c0c89d53039fc6a326deeb35d6">SetGrayscalePalette</a> (Bitmap image)</td></tr>
-<tr class="memdesc:ac20e61c0c89d53039fc6a326deeb35d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pallete of the 8 bpp indexed image to grayscale.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac20e61c0c89d53039fc6a326deeb35d6">More...</a><br /></td></tr>
-<tr class="separator:ac20e61c0c89d53039fc6a326deeb35d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ddbce259a244f3c206be0bfbc65bf4f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4ddbce259a244f3c206be0bfbc65bf4f">FromBitmap</a> (Bitmap bitmap)</td></tr>
+<tr class="memdesc:a4ddbce259a244f3c206be0bfbc65bf4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> from a specified bitmap.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4ddbce259a244f3c206be0bfbc65bf4f">More...</a><br /></td></tr>
+<tr class="separator:a4ddbce259a244f3c206be0bfbc65bf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:acf98b85e1c83d540f9ff8e7012b6f51f"><td class="memItemLeft" align="right" valign="top">IntPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#acf98b85e1c83d540f9ff8e7012b6f51f">ImageData</a> =&gt; this.image.Data</td></tr>
-<tr class="memdesc:acf98b85e1c83d540f9ff8e7012b6f51f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to image data in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#acf98b85e1c83d540f9ff8e7012b6f51f">More...</a><br /></td></tr>
-<tr class="separator:acf98b85e1c83d540f9ff8e7012b6f51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c6263107999fba6d644edcc83b0125d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a8c6263107999fba6d644edcc83b0125d">Width</a> =&gt; this.width</td></tr>
-<tr class="memdesc:a8c6263107999fba6d644edcc83b0125d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image width in pixels.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a8c6263107999fba6d644edcc83b0125d">More...</a><br /></td></tr>
-<tr class="separator:a8c6263107999fba6d644edcc83b0125d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3a72f1edf78b24657ef539adc0fc0f7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#af3a72f1edf78b24657ef539adc0fc0f7">Height</a> =&gt; this.height</td></tr>
-<tr class="memdesc:af3a72f1edf78b24657ef539adc0fc0f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image height in pixels.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#af3a72f1edf78b24657ef539adc0fc0f7">More...</a><br /></td></tr>
-<tr class="separator:af3a72f1edf78b24657ef539adc0fc0f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d1254e12d69f48a1c5acd4ac0d2dee1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3d1254e12d69f48a1c5acd4ac0d2dee1">Stride</a> =&gt; this.stride</td></tr>
-<tr class="memdesc:a3d1254e12d69f48a1c5acd4ac0d2dee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image stride (line size in bytes).  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a3d1254e12d69f48a1c5acd4ac0d2dee1">More...</a><br /></td></tr>
-<tr class="separator:a3d1254e12d69f48a1c5acd4ac0d2dee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22d13f499545b5b8db8b9b1f3f7ad08d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a22d13f499545b5b8db8b9b1f3f7ad08d">Size</a> =&gt; this.stride * this.height</td></tr>
-<tr class="memdesc:a22d13f499545b5b8db8b9b1f3f7ad08d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the image in bytes (stride times height).  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a22d13f499545b5b8db8b9b1f3f7ad08d">More...</a><br /></td></tr>
-<tr class="separator:a22d13f499545b5b8db8b9b1f3f7ad08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac39d29c100ea5cef758d6bdb02a5b34c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac39d29c100ea5cef758d6bdb02a5b34c">BitsPerPixel</a> =&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html#a4da6939d8e296f35b671f071e4f10765">PixelFormatHelper.GetBitsPerPixel</a>(this.pixelFormat)</td></tr>
-<tr class="memdesc:ac39d29c100ea5cef758d6bdb02a5b34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the bits per pixel in the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac39d29c100ea5cef758d6bdb02a5b34c">More...</a><br /></td></tr>
-<tr class="separator:ac39d29c100ea5cef758d6bdb02a5b34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a6f39ba6a25ced4d80e643fe357abca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4a6f39ba6a25ced4d80e643fe357abca">PixelFormat</a> =&gt; this.pixelFormat</td></tr>
-<tr class="memdesc:a4a6f39ba6a25ced4d80e643fe357abca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image pixel format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4a6f39ba6a25ced4d80e643fe357abca">More...</a><br /></td></tr>
-<tr class="separator:a4a6f39ba6a25ced4d80e643fe357abca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">Microsoft.Psi.Imaging.ImageBase</a></td></tr>
+<tr class="memitem:aa3a98e650aea1119cdf2430d4b4a5486 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html">UnmanagedBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aa3a98e650aea1119cdf2430d4b4a5486">UnmanagedBuffer</a> =&gt; this.image</td></tr>
+<tr class="memdesc:aa3a98e650aea1119cdf2430d4b4a5486 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to unmanaged buffer that wraps the image data in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aa3a98e650aea1119cdf2430d4b4a5486">More...</a><br /></td></tr>
+<tr class="separator:aa3a98e650aea1119cdf2430d4b4a5486 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0338da6e979766d3dfc073d02957d84b inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">IntPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a0338da6e979766d3dfc073d02957d84b">ImageData</a> =&gt; this.image.Data</td></tr>
+<tr class="memdesc:a0338da6e979766d3dfc073d02957d84b inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the image data in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a0338da6e979766d3dfc073d02957d84b">More...</a><br /></td></tr>
+<tr class="separator:a0338da6e979766d3dfc073d02957d84b inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05acebbd86d76bee7804d0eed1747abc inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a05acebbd86d76bee7804d0eed1747abc">Width</a> =&gt; this.width</td></tr>
+<tr class="memdesc:a05acebbd86d76bee7804d0eed1747abc inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image width in pixels.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a05acebbd86d76bee7804d0eed1747abc">More...</a><br /></td></tr>
+<tr class="separator:a05acebbd86d76bee7804d0eed1747abc inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4e05b574c612444e606ed2b4eb1d6dc inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#ab4e05b574c612444e606ed2b4eb1d6dc">Height</a> =&gt; this.height</td></tr>
+<tr class="memdesc:ab4e05b574c612444e606ed2b4eb1d6dc inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image height in pixels.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#ab4e05b574c612444e606ed2b4eb1d6dc">More...</a><br /></td></tr>
+<tr class="separator:ab4e05b574c612444e606ed2b4eb1d6dc inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeae5345bce26c49288b59f5b7cfb524d inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aeae5345bce26c49288b59f5b7cfb524d">Stride</a> =&gt; this.stride</td></tr>
+<tr class="memdesc:aeae5345bce26c49288b59f5b7cfb524d inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image stride (line size in bytes).  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#aeae5345bce26c49288b59f5b7cfb524d">More...</a><br /></td></tr>
+<tr class="separator:aeae5345bce26c49288b59f5b7cfb524d inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c6d41f493814af775c40c5791d2a6ed inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a5c6d41f493814af775c40c5791d2a6ed">Size</a> =&gt; this.stride * this.height</td></tr>
+<tr class="memdesc:a5c6d41f493814af775c40c5791d2a6ed inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the image in bytes (stride times height).  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a5c6d41f493814af775c40c5791d2a6ed">More...</a><br /></td></tr>
+<tr class="separator:a5c6d41f493814af775c40c5791d2a6ed inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eab64d8551b4b4fc2f6cef17a158c17 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a9eab64d8551b4b4fc2f6cef17a158c17">BitsPerPixel</a> =&gt; this.pixelFormat.GetBitsPerPixel()</td></tr>
+<tr class="memdesc:a9eab64d8551b4b4fc2f6cef17a158c17 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the bits per pixel in the image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a9eab64d8551b4b4fc2f6cef17a158c17">More...</a><br /></td></tr>
+<tr class="separator:a9eab64d8551b4b4fc2f6cef17a158c17 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39a71d37d79a95b628a8dca4f6201f21 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a39a71d37d79a95b628a8dca4f6201f21">PixelFormat</a> =&gt; this.pixelFormat</td></tr>
+<tr class="memdesc:a39a71d37d79a95b628a8dca4f6201f21 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets image pixel format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a39a71d37d79a95b628a8dca4f6201f21">More...</a><br /></td></tr>
+<tr class="separator:a39a71d37d79a95b628a8dca4f6201f21 inherit pub_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">Microsoft.Psi.Imaging.ImageBase</a></td></tr>
+<tr class="memitem:afab90e63f36ef08564d1432f9f597f8c inherit pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#afab90e63f36ef08564d1432f9f597f8c">ExceptionDescriptionUnexpectedPixelFormat</a> = &quot;Unexpected pixel format&quot;</td></tr>
+<tr class="memdesc:afab90e63f36ef08564d1432f9f597f8c inherit pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception message when unexpected pixel format is encountered.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#afab90e63f36ef08564d1432f9f597f8c">More...</a><br /></td></tr>
+<tr class="separator:afab90e63f36ef08564d1432f9f597f8c inherit pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4455af6eb9b60a7dd10daba673c85416 inherit pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a4455af6eb9b60a7dd10daba673c85416">ExceptionDescriptionSourceDestImageMismatch</a> = &quot;Source and destination images must be the same size&quot;</td></tr>
+<tr class="memdesc:a4455af6eb9b60a7dd10daba673c85416 inherit pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception message when source and destination image sizes don't match.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a4455af6eb9b60a7dd10daba673c85416">More...</a><br /></td></tr>
+<tr class="separator:a4455af6eb9b60a7dd10daba673c85416 inherit pub_static_attribs_class_microsoft_1_1_psi_1_1_imaging_1_1_image_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible as to allocate new image in unmanaged memory, as to just wrap provided pointer to unmanaged memory, where an image is stored. </p>
+<div class="textblock"><p>Represents an image, stored in unmanaged memory. </p>
+<p>Using this class it is possible as to allocate a new image in unmanaged memory, as to just wrap provided pointer to unmanaged memory, where an image is stored.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab43d802378828bd018c17bcbc7539702"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab43d802378828bd018c17bcbc7539702">&#9670;&nbsp;</a></span>Image() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Microsoft.Psi.Imaging.Image.Image </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html">UnmanagedBuffer</a>&#160;</td>
+          <td class="paramname"><em>unmanagedBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
+          <td class="paramname"><em>pixelFormat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">unmanagedBuffer</td><td>The unmanaged array containing the image.</td></tr>
+    <tr><td class="paramname">width</td><td>Image width in pixels.</td></tr>
+    <tr><td class="paramname">height</td><td>Image height in pixels.</td></tr>
+    <tr><td class="paramname">stride</td><td>Image stride (line size in bytes).</td></tr>
+    <tr><td class="paramname">pixelFormat</td><td>Image pixel format.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>&lt;note&gt;Using this constructor, make sure all specified image attributes are correct and correspond to unmanaged memory buffer. If some attributes are specified incorrectly, this may lead to exceptions working with the unmanaged memory.&lt;/note&gt;</p>
+
+</div>
+</div>
 <a id="aa0eacc513e36bd6814f3dc7951e9bef4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0eacc513e36bd6814f3dc7951e9bef4">&#9670;&nbsp;</a></span>Image() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0eacc513e36bd6814f3dc7951e9bef4">&#9670;&nbsp;</a></span>Image() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +325,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">imageData</td><td>Pointer to image data in unmanaged memory.</td></tr>
@@ -249,119 +340,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5dc0bfd711d2473a76b16da4e7ca8cbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5dc0bfd711d2473a76b16da4e7ca8cbf">&#9670;&nbsp;</a></span>Image() <span class="overload">[2/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Microsoft.Psi.Imaging.Image.Image </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_buffer.html">UnmanagedBuffer</a>&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>stride</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
-          <td class="paramname"><em>pixelFormat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>The unmanaged array containing the image.</td></tr>
-    <tr><td class="paramname">width</td><td>Image width in pixels.</td></tr>
-    <tr><td class="paramname">height</td><td>Image height in pixels.</td></tr>
-    <tr><td class="paramname">stride</td><td>Image stride (line size in bytes).</td></tr>
-    <tr><td class="paramname">pixelFormat</td><td>Image pixel format.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>&lt;note&gt;Using this constructor, make sure all specified image attributes are correct and correspond to unmanaged memory buffer. If some attributes are specified incorrectly, this may lead to exceptions working with the unmanaged memory.&lt;/note&gt;</p>
-
-</div>
-</div>
-<a id="a3cdd8526a5b422c9b58c4690ebce8fc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cdd8526a5b422c9b58c4690ebce8fc1">&#9670;&nbsp;</a></span>Image() <span class="overload">[3/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Microsoft.Psi.Imaging.Image.Image </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>stride</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
-          <td class="paramname"><em>pixelFormat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">width</td><td>Image width in pixels.</td></tr>
-    <tr><td class="paramname">height</td><td>Image height in pixels.</td></tr>
-    <tr><td class="paramname">stride</td><td>Image stride (line size in bytes).</td></tr>
-    <tr><td class="paramname">pixelFormat</td><td>Image pixel format.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>&lt;note&gt;Using this constructor, make sure all specified image attributes are correct and correspond to unmanaged memory buffer. If some attributes are specified incorrectly, this may lead to exceptions working with the unmanaged memory.&lt;/note&gt;</p>
-
-</div>
-</div>
 <a id="a1b99f79a879b1ebd409e706f828b575c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b99f79a879b1ebd409e706f828b575c">&#9670;&nbsp;</a></span>Image() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b99f79a879b1ebd409e706f828b575c">&#9670;&nbsp;</a></span>Image() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -392,7 +372,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>Width of image in pixels.</td></tr>
@@ -404,8 +384,60 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a7e8384e512f13bd4243a6f9963fa1c1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e8384e512f13bd4243a6f9963fa1c1a">&#9670;&nbsp;</a></span>Image() <span class="overload">[5/5]</span></h2>
+<a id="a3cdd8526a5b422c9b58c4690ebce8fc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cdd8526a5b422c9b58c4690ebce8fc1">&#9670;&nbsp;</a></span>Image() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Microsoft.Psi.Imaging.Image.Image </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>stride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
+          <td class="paramname"><em>pixelFormat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>Image width in pixels.</td></tr>
+    <tr><td class="paramname">height</td><td>Image height in pixels.</td></tr>
+    <tr><td class="paramname">stride</td><td>Image stride (line size in bytes).</td></tr>
+    <tr><td class="paramname">pixelFormat</td><td>Image pixel format.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>&lt;note&gt;Using this constructor, make sure all specified image attributes are correct and correspond to unmanaged memory buffer. If some attributes are specified incorrectly, this may lead to exceptions working with the unmanaged memory.&lt;/note&gt;</p>
+
+</div>
+</div>
+<a id="adb5e58659ec218d8d07c0479d567edec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb5e58659ec218d8d07c0479d567edec">&#9670;&nbsp;</a></span>Image() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,26 +446,38 @@ Public Attributes</h2></td></tr>
           <td class="memname">Microsoft.Psi.Imaging.Image.Image </td>
           <td>(</td>
           <td class="paramtype">BitmapData&#160;</td>
-          <td class="paramname"><em>bitmapData</em></td><td>)</td>
+          <td class="paramname"><em>bitmapData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>makeCopy</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible a...">Image</a> class. </p>
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bitmapData</td><td>Locked bitmap data.</td></tr>
+    <tr><td class="paramname">makeCopy</td><td>Indicates whether a copy is made (default is false).</td></tr>
   </table>
   </dd>
 </dl>
-<p>&lt;note&gt;Unlike <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ac46a8e185d9ae01aea86901c0498c3ea" title="Create unmanaged image from the specified managed image.">FromManagedImage(BitmapData)</a> method, this constructor does not make copy of managed image. This means that managed image must stay locked for the time of using the instance of unamanged image.&lt;/note&gt;</p>
+<p>When the <em>makeCopy</em>  parameter is false (default), the image simply wraps the bitmap data. As such, the bitmap data must stay locked for the duration of using the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> object. </p>
+<p>If the <em>makeCopy</em>  parameter is set to true, a copy of the bitmap data is made, and the bitmap data can be released right after the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> has been constructed. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a054b2a71cbda702675e361e8f3b3292c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a054b2a71cbda702675e361e8f3b3292c">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a054b2a71cbda702675e361e8f3b3292c">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -448,19 +492,19 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Copies data from an unmanaged buffer. </p>
+<p>Copies the image contents from a specified bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bitmap</td><td>A bitmap to copy from.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The method copies data from the specified bitmap into the unmanaged image The image must be allocated and must have the same size.</p>
+<p>The method copies data from the specified bitmap into the image. The image must be allocated and must have the same size.</p>
 
 </div>
 </div>
-<a id="ae59bc43635cdd28795399ad4f7c066a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae59bc43635cdd28795399ad4f7c066a3">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[2/3]</span></h2>
+<a id="a8c8721e390452b23c33051c74e4a6ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c8721e390452b23c33051c74e4a6ff1">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -468,26 +512,26 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Microsoft.Psi.Imaging.Image.CopyFrom </td>
           <td>(</td>
-          <td class="paramtype">byte[]&#160;</td>
-          <td class="paramname"><em>sourceBuffer</em></td><td>)</td>
+          <td class="paramtype">BitmapData&#160;</td>
+          <td class="paramname"><em>bitmapData</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Copies data from a byte array buffer into the psi image. </p>
+<p>Copies the image contents from a specified source locked bitmap data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sourceBuffer</td><td>The buffer to copy from.</td></tr>
+    <tr><td class="paramname">bitmapData</td><td>Source locked bitmap data.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The method copies data from the specified buffer into the unmanaged image The image must be allocated and must have the same size.</p>
+<p>The method copies data from the specified bitmap into the image. The image must be allocated and must have the same size as the specified bitmap data.</p>
 
 </div>
 </div>
-<a id="a74dd5e693535755bec3661d5e304b1d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74dd5e693535755bec3661d5e304b1d4">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[3/3]</span></h2>
+<a id="a69ed30a27291ab7cb1d52f9e6f4a0ef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69ed30a27291ab7cb1d52f9e6f4a0ef5">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -495,26 +539,53 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Microsoft.Psi.Imaging.Image.CopyFrom </td>
           <td>(</td>
-          <td class="paramtype">IntPtr&#160;</td>
-          <td class="paramname"><em>sourcePtr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a>&#160;</td>
+          <td class="paramname"><em>source</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Copies data from an unmanaged buffer. </p>
+<p>Copies the image from a specified source depth image of the same size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sourcePtr</td><td>A pointer to the unmanaged buffer to copy from.</td></tr>
+    <tr><td class="paramname">source</td><td>Source depth image to copy the image from.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The method copies data from the specified buffer into the unmanaged image The image must be allocated and must have the same size.</p>
+<p>The method copies the current image from the specified source depth image. The size of the images must be the same and the method implements a translation of pixel formats.</p>
 
 </div>
 </div>
-<a id="aa141320a24c633637a703bbe9d1234e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa141320a24c633637a703bbe9d1234e7">&#9670;&nbsp;</a></span>CopyTo() <span class="overload">[1/3]</span></h2>
+<a id="a7d2c8fd816e449e7e7ae9052e95e30c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d2c8fd816e449e7e7ae9052e95e30c2">&#9670;&nbsp;</a></span>CopyFrom() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Imaging.Image.CopyFrom </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
+          <td class="paramname"><em>source</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Copies the image from a specified source image of the same size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Source image to copy the image from.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The method copies the current image from the specified source image. The size of the images must be the same. Some differences in pixel formats are allowed and the method implements a translation of pixel formats.</p>
+
+</div>
+</div>
+<a id="ac50b1ee63b4e9f1b1951271f26a7137c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac50b1ee63b4e9f1b1951271f26a7137c">&#9670;&nbsp;</a></span>CopyTo() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -522,26 +593,26 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Microsoft.Psi.Imaging.Image.CopyTo </td>
           <td>(</td>
-          <td class="paramtype">byte[]&#160;</td>
-          <td class="paramname"><em>destinationBuffer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a>&#160;</td>
+          <td class="paramname"><em>target</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Copies the psi image to a byte array buffer. </p>
+<p>Copies the image into a target depth image of the same size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">destinationBuffer</td><td>The buffer to copy to.</td></tr>
+    <tr><td class="paramname">target</td><td>Target depth image to copy this image to.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The method copies current unmanaged image to the specified buffer. The buffer must be allocated and must have the same size.</p>
+<p>The method copies the current image into the specified depth image. The size of the images must be the same, and the image must have a <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafbaf5ad5dffd6003ed96447ed4b75d86bcb" title="Defines an grayscale image where each pixel is 16 bits.">PixelFormat.Gray_16bpp</a> pixel format.</p>
 
 </div>
 </div>
-<a id="a84dfc53ad1a0863ecec06f4862443717"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84dfc53ad1a0863ecec06f4862443717">&#9670;&nbsp;</a></span>CopyTo() <span class="overload">[2/3]</span></h2>
+<a id="a7d7bab41963eb7d5aa9bbc371343d00e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d7bab41963eb7d5aa9bbc371343d00e">&#9670;&nbsp;</a></span>CopyTo() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -550,195 +621,31 @@ Public Attributes</h2></td></tr>
           <td class="memname">void Microsoft.Psi.Imaging.Image.CopyTo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
-          <td class="paramname"><em>destImage</em></td><td>)</td>
+          <td class="paramname"><em>target</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Copy unmanaged image. </p>
+<p>Copies the image into a specified target image of the same size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">destImage</td><td>Destination image to copy this image to.</td></tr>
+    <tr><td class="paramname">target</td><td>Target image to copy this image to.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The method copies current unmanaged image to the specified image. Size of the destination image must be exactly the same. Some differences in pixel formats are allowed and the method implements a translation of pixel formats.</p>
+<p>The method copies the current image into the specified target image. The size of the images must be the same. Some differences in pixel formats are allowed and the method implements a translation of pixel formats.</p>
 
 </div>
 </div>
-<a id="a94cae5f7f03864a8dbfe5baf2fa5efe3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94cae5f7f03864a8dbfe5baf2fa5efe3">&#9670;&nbsp;</a></span>CopyTo() <span class="overload">[3/3]</span></h2>
+<a id="a680f4d74a7b1d3cbba91272dbac5dc6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a680f4d74a7b1d3cbba91272dbac5dc6d">&#9670;&nbsp;</a></span>CreateEmptyOfSameSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Microsoft.Psi.Imaging.Image.CopyTo </td>
-          <td>(</td>
-          <td class="paramtype">IntPtr&#160;</td>
-          <td class="paramname"><em>destination</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>dstStride</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
-          <td class="paramname"><em>destinationFormat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Copies the psi image to an unmanaged buffer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">destination</td><td>The destination buffer.</td></tr>
-    <tr><td class="paramname">width</td><td>The destination image width.</td></tr>
-    <tr><td class="paramname">height</td><td>The destination image height.</td></tr>
-    <tr><td class="paramname">dstStride</td><td>The destination image stride.</td></tr>
-    <tr><td class="paramname">destinationFormat</td><td>The destination pixel format.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aae8f697d1cba626ff850f422f4b8e79f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae8f697d1cba626ff850f422f4b8e79f">&#9670;&nbsp;</a></span>Create()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> Microsoft.Psi.Imaging.Image.Create </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
-          <td class="paramname"><em>pixelFormat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Allocate new image in unmanaged memory. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">width</td><td>Image width.</td></tr>
-    <tr><td class="paramname">height</td><td>Image height.</td></tr>
-    <tr><td class="paramname">pixelFormat</td><td>Image pixel format.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Return image allocated in unmanaged memory.</dd></dl>
-<p>Allocate new image with specified attributes in unmanaged memory.</p>
-
-</div>
-</div>
-<a id="afa5d39d4c724673a9d1af7bd93749b2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa5d39d4c724673a9d1af7bd93749b2a">&#9670;&nbsp;</a></span>Crop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&gt; Microsoft.Psi.Imaging.Image.Crop </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>left</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>top</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a copy of the image cropped to the specified dimensions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">left</td><td>The left of the region to crop.</td></tr>
-    <tr><td class="paramname">top</td><td>The top of the region to crop.</td></tr>
-    <tr><td class="paramname">width</td><td>The width of the region to crop.</td></tr>
-    <tr><td class="paramname">height</td><td>The height of the region to crop.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The cropped image.</dd></dl>
-
-</div>
-</div>
-<a id="ab8ef610de7245f8f993e1a6ac3f2b069"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8ef610de7245f8f993e1a6ac3f2b069">&#9670;&nbsp;</a></span>Dispose()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Microsoft.Psi.Imaging.Image.Dispose </td>
+          <td class="memname">override <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">ImageBase</a> Microsoft.Psi.Imaging.Image.CreateEmptyOfSameSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -746,14 +653,77 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Dispose the object. </p>
-<p>Frees unmanaged resources used by the object. The object becomes unusable after that.</p>
-<p>&lt;par&gt;&lt;note&gt;The method needs to be called only in the case if unmanaged image was allocated using <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#aae8f697d1cba626ff850f422f4b8e79f" title="Allocate new image in unmanaged memory.">Create</a> method. In the case if the class instance was created using constructor, this method does not free unmanaged memory.&lt;/note&gt;&lt;/par&gt; </p>
+<p></p>
 
 </div>
 </div>
-<a id="a458507a963c4b4c09036e3a3c1d94ab2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a458507a963c4b4c09036e3a3c1d94ab2">&#9670;&nbsp;</a></span>FromManagedImage() <span class="overload">[1/2]</span></h2>
+<a id="a9f1387179c0bd9f013842b017c5ae145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1387179c0bd9f013842b017c5ae145">&#9670;&nbsp;</a></span>DecodeFrom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Imaging.Image.DecodeFrom </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a>&#160;</td>
+          <td class="paramname"><em>encodedImage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_from_stream_decoder.html">IImageFromStreamDecoder</a>&#160;</td>
+          <td class="paramname"><em>imageDecoder</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes a specified encoded image with a specified decoder into the current image. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">encodedImage</td><td>The encoded image to decode.</td></tr>
+    <tr><td class="paramname">imageDecoder</td><td>The image decoder to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The image width, height and pixel format must match. The method should not be called concurrently.</p>
+
+</div>
+</div>
+<a id="a5fad7f7552a690508f86c44b84775e61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fad7f7552a690508f86c44b84775e61">&#9670;&nbsp;</a></span>Encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> Microsoft.Psi.Imaging.Image.Encode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_to_stream_encoder.html">IImageToStreamEncoder</a>&#160;</td>
+          <td class="paramname"><em>imageEncoder</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes the image using a specified encoder. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imageEncoder</td><td>The image encoder to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new, corresponding encoded image.</dd></dl>
+
+</div>
+</div>
+<a id="a4ddbce259a244f3c206be0bfbc65bf4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ddbce259a244f3c206be0bfbc65bf4f">&#9670;&nbsp;</a></span>FromBitmap()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -762,10 +732,10 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> Microsoft.Psi.Imaging.Image.FromManagedImage </td>
+          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> Microsoft.Psi.Imaging.Image.FromBitmap </td>
           <td>(</td>
           <td class="paramtype">Bitmap&#160;</td>
-          <td class="paramname"><em>image</em></td><td>)</td>
+          <td class="paramname"><em>bitmap</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -776,71 +746,40 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create unmanaged image from the specified managed image. </p>
+<p>Creates a new <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> from a specified bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">image</td><td>Source managed image.</td></tr>
+    <tr><td class="paramname">bitmap</td><td>A bitmap to create the image from.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns new unmanaged image, which is a copy of source managed image.</dd></dl>
-<p>The method creates an exact copy of specified managed image, but allocated in unmanaged memory.</p>
+<dl class="section return"><dt>Returns</dt><dd>A new image, which contains a copy of the specified bitmap.</dd></dl>
 
 </div>
 </div>
-<a id="ac46a8e185d9ae01aea86901c0498c3ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac46a8e185d9ae01aea86901c0498c3ea">&#9670;&nbsp;</a></span>FromManagedImage() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> Microsoft.Psi.Imaging.Image.FromManagedImage </td>
-          <td>(</td>
-          <td class="paramtype">BitmapData&#160;</td>
-          <td class="paramname"><em>imageData</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Create unmanaged image from the specified managed image. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">imageData</td><td>Source locked image data.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns new unmanaged image, which is a copy of source managed image.</dd></dl>
-<p>The method creates an exact copy of specified managed image, but allocated in unmanaged memory. This means that managed image may be unlocked right after call to this method.</p>
-
-</div>
-</div>
-<a id="a4137a229f9f34e5f8b878cf14b857bb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4137a229f9f34e5f8b878cf14b857bb6">&#9670;&nbsp;</a></span>ReadBytes()</h2>
+<a id="a4683534a64982827e58500c6b7d20cac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4683534a64982827e58500c6b7d20cac">&#9670;&nbsp;</a></span>SetPixel() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">byte [] Microsoft.Psi.Imaging.Image.ReadBytes </td>
+          <td class="memname">void Microsoft.Psi.Imaging.Image.SetPixel </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
+          <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>gray</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -850,161 +789,20 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads image data as a series of bytes. </p>
+<p>Sets a pixel in the image. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">count</td><td>Number of bytes to read.</td></tr>
-    <tr><td class="paramname">offset</td><td>Offset from start of image data.</td></tr>
+    <tr><td class="paramname">x</td><td>Pixel's X coordinate.</td></tr>
+    <tr><td class="paramname">y</td><td>Pixel's Y coordinate.</td></tr>
+    <tr><td class="paramname">gray</td><td>Gray value to set pixel to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Array of bytes read.</dd></dl>
-
-</div>
-</div>
-<a id="abef3d5c552ccfdc1af0cfe339f6c12eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abef3d5c552ccfdc1af0cfe339f6c12eb">&#9670;&nbsp;</a></span>Rgb2Gray() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static byte Microsoft.Psi.Imaging.Image.Rgb2Gray </td>
-          <td>(</td>
-          <td class="paramtype">byte&#160;</td>
-          <td class="paramname"><em>r</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">byte&#160;</td>
-          <td class="paramname"><em>g</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">byte&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Function to convert RGB color into grayscale. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">r</td><td>red component (Range=0..255).</td></tr>
-    <tr><td class="paramname">g</td><td>green component (Range=0..255).</td></tr>
-    <tr><td class="paramname">b</td><td>Blue component (Range=0..255).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Grayscale value (Range=0..255).</dd></dl>
-
-</div>
-</div>
-<a id="a2bf6fe9c86b51fe42f5f43e390315378"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bf6fe9c86b51fe42f5f43e390315378">&#9670;&nbsp;</a></span>Rgb2Gray() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static ushort Microsoft.Psi.Imaging.Image.Rgb2Gray </td>
-          <td>(</td>
-          <td class="paramtype">ushort&#160;</td>
-          <td class="paramname"><em>r</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ushort&#160;</td>
-          <td class="paramname"><em>g</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ushort&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Function to convert RGB color into grayscale. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">r</td><td>red component (Range=0..65535).</td></tr>
-    <tr><td class="paramname">g</td><td>green component (Range=0..65535).</td></tr>
-    <tr><td class="paramname">b</td><td>Blue component (Range=0..65535).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Grayscale value (Range=0..65535).</dd></dl>
-
-</div>
-</div>
-<a id="ac20e61c0c89d53039fc6a326deeb35d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac20e61c0c89d53039fc6a326deeb35d6">&#9670;&nbsp;</a></span>SetGrayscalePalette()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void Microsoft.Psi.Imaging.Image.SetGrayscalePalette </td>
-          <td>(</td>
-          <td class="paramtype">Bitmap&#160;</td>
-          <td class="paramname"><em>image</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set pallete of the 8 bpp indexed image to grayscale. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">image</td><td>Image to initialize.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The method initializes palette of <a class="el" href="">Format8bppIndexed</a> image with 256 gradients of gray color.</p>
 
 </div>
 </div>
 <a id="a1310cff901b731528447a631e30c3e03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1310cff901b731528447a631e30c3e03">&#9670;&nbsp;</a></span>SetPixel()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1310cff901b731528447a631e30c3e03">&#9670;&nbsp;</a></span>SetPixel() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1065,168 +863,6 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a45d0d13492909216ade03a26bbbaccc6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45d0d13492909216ade03a26bbbaccc6">&#9670;&nbsp;</a></span>ToManagedImage() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Bitmap Microsoft.Psi.Imaging.Image.ToManagedImage </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create managed image from the unmanaged. </p>
-<dl class="section return"><dt>Returns</dt><dd>Returns managed copy of the unmanaged image.</dd></dl>
-<p>The method creates a managed copy of the unmanaged image with the same size and pixel format (it calls <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#ab30c9dd60120c857e3a4c34a12426489" title="Create managed image from the unmanaged.">ToManagedImage(bool)</a> specifying <code>true</code> for the <b>makeCopy</b> parameter).</p>
-
-</div>
-</div>
-<a id="ab30c9dd60120c857e3a4c34a12426489"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab30c9dd60120c857e3a4c34a12426489">&#9670;&nbsp;</a></span>ToManagedImage() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Bitmap Microsoft.Psi.Imaging.Image.ToManagedImage </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>makeCopy</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create managed image from the unmanaged. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">makeCopy</td><td>Make a copy of the unmanaged image or not.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns managed copy of the unmanaged image.</dd></dl>
-<p>If the <em>makeCopy</em>  is set to <code>true</code>, then the method creates a managed copy of the unmanaged image, so the managed image stays valid even when the unmanaged image gets disposed. However, setting this parameter to <code>false</code> creates a managed image which is just a wrapper around the unmanaged image. So if unmanaged image is disposed, the managed image becomes no longer valid and accessing it will generate an exception.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac39d29c100ea5cef758d6bdb02a5b34c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac39d29c100ea5cef758d6bdb02a5b34c">&#9670;&nbsp;</a></span>BitsPerPixel</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.Imaging.Image.BitsPerPixel =&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html#a4da6939d8e296f35b671f071e4f10765">PixelFormatHelper.GetBitsPerPixel</a>(this.pixelFormat)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the bits per pixel in the image. </p>
-
-</div>
-</div>
-<a id="af3a72f1edf78b24657ef539adc0fc0f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3a72f1edf78b24657ef539adc0fc0f7">&#9670;&nbsp;</a></span>Height</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.Imaging.Image.Height =&gt; this.height</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets image height in pixels. </p>
-
-</div>
-</div>
-<a id="acf98b85e1c83d540f9ff8e7012b6f51f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf98b85e1c83d540f9ff8e7012b6f51f">&#9670;&nbsp;</a></span>ImageData</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IntPtr Microsoft.Psi.Imaging.Image.ImageData =&gt; this.image.Data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets a pointer to image data in unmanaged memory. </p>
-
-</div>
-</div>
-<a id="a4a6f39ba6a25ced4d80e643fe357abca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a6f39ba6a25ced4d80e643fe357abca">&#9670;&nbsp;</a></span>PixelFormat</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> Microsoft.Psi.Imaging.Image.PixelFormat =&gt; this.pixelFormat</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets image pixel format. </p>
-
-</div>
-</div>
-<a id="a22d13f499545b5b8db8b9b1f3f7ad08d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22d13f499545b5b8db8b9b1f3f7ad08d">&#9670;&nbsp;</a></span>Size</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.Imaging.Image.Size =&gt; this.stride * this.height</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the size of the image in bytes (stride times height). </p>
-
-</div>
-</div>
-<a id="a3d1254e12d69f48a1c5acd4ac0d2dee1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d1254e12d69f48a1c5acd4ac0d2dee1">&#9670;&nbsp;</a></span>Stride</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.Imaging.Image.Stride =&gt; this.stride</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets image stride (line size in bytes). </p>
-
-</div>
-</div>
-<a id="a8c6263107999fba6d644edcc83b0125d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c6263107999fba6d644edcc83b0125d">&#9670;&nbsp;</a></span>Width</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Microsoft.Psi.Imaging.Image.Width =&gt; this.width</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets image width in pixels. </p>
 
 </div>
 </div>

@@ -83,9 +83,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5652afa7ef3fd6900b053c4385a6ea04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a5652afa7ef3fd6900b053c4385a6ea04">MediaSource</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string filename)</td></tr>
-<tr class="memdesc:a5652afa7ef3fd6900b053c4385a6ea04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html" title="Component that streams video and audio from a media file.">MediaSource</a> class.  <a href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a5652afa7ef3fd6900b053c4385a6ea04">More...</a><br /></td></tr>
-<tr class="separator:a5652afa7ef3fd6900b053c4385a6ea04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61124d96e58acbbab68c78a6d07bd371"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a61124d96e58acbbab68c78a6d07bd371">MediaSource</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string filename, bool dropOutOfOrderPackets=false)</td></tr>
+<tr class="memdesc:a61124d96e58acbbab68c78a6d07bd371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html" title="Component that streams video and audio from a media file.">MediaSource</a> class.  <a href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a61124d96e58acbbab68c78a6d07bd371">More...</a><br /></td></tr>
+<tr class="separator:a61124d96e58acbbab68c78a6d07bd371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e86b34ac0e53bc4e578615f10dfe04c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a4e86b34ac0e53bc4e578615f10dfe04c">MediaSource</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, Stream input, DateTime? startTime=null, bool dropOutOfOrderPackets=false)</td></tr>
+<tr class="memdesc:a4e86b34ac0e53bc4e578615f10dfe04c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html" title="Component that streams video and audio from a media file.">MediaSource</a> class.  <a href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a4e86b34ac0e53bc4e578615f10dfe04c">More...</a><br /></td></tr>
+<tr class="separator:a4e86b34ac0e53bc4e578615f10dfe04c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0078245b0074126343e8dab1de9649af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a0078245b0074126343e8dab1de9649af">Dispose</a> ()</td></tr>
 <tr class="memdesc:a0078245b0074126343e8dab1de9649af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases the media player.  <a href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html#a0078245b0074126343e8dab1de9649af">More...</a><br /></td></tr>
 <tr class="separator:a0078245b0074126343e8dab1de9649af"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,8 +111,8 @@ Properties</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Component that streams video and audio from a media file. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5652afa7ef3fd6900b053c4385a6ea04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5652afa7ef3fd6900b053c4385a6ea04">&#9670;&nbsp;</a></span>MediaSource()</h2>
+<a id="a61124d96e58acbbab68c78a6d07bd371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61124d96e58acbbab68c78a6d07bd371">&#9670;&nbsp;</a></span>MediaSource() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,7 +127,13 @@ Properties</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>filename</em>&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dropOutOfOrderPackets</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -139,6 +148,58 @@ Properties</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline this component is a part of.</td></tr>
     <tr><td class="paramname">filename</td><td>Name of media file to play.</td></tr>
+    <tr><td class="paramname">dropOutOfOrderPackets</td><td>Optional flag specifying whether to drop out of order packets (defaults to <code>false</code>).</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4e86b34ac0e53bc4e578615f10dfe04c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e86b34ac0e53bc4e578615f10dfe04c">&#9670;&nbsp;</a></span>MediaSource() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Microsoft.Psi.Media.MediaSource.MediaSource </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a>&#160;</td>
+          <td class="paramname"><em>pipeline</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Stream&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">DateTime?&#160;</td>
+          <td class="paramname"><em>startTime</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dropOutOfOrderPackets</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_source.html" title="Component that streams video and audio from a media file.">MediaSource</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pipeline</td><td>Pipeline this component is a part of.</td></tr>
+    <tr><td class="paramname">input</td><td>Source stream of the media to consume.</td></tr>
+    <tr><td class="paramname">startTime</td><td>Optional date/time that the media started.</td></tr>
+    <tr><td class="paramname">dropOutOfOrderPackets</td><td>Optional flag specifying whether to drop out of order packets (defaults to <code>false</code>).</td></tr>
   </table>
   </dd>
 </dl>

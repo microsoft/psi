@@ -78,7 +78,7 @@ $(function() {
 <p>Component that projects 2D color-space points into 3D camera-space points in the depth camera's coordinate system.  
  <a href="class_microsoft_1_1_psi_1_1_calibration_1_1_project_to3_d.html#details">More...</a></p>
 
-<p>Inherits ConsumerProducer&lt;(Shared&lt; Image &gt;, List&lt; Point2D &gt;, IDepthDeviceCalibrationInfo), List&lt; Point3D &gt;&gt;.</p>
+<p>Inherits ConsumerProducer&lt;(Shared&lt; DepthImage &gt;, List&lt; Point2D &gt;, IDepthDeviceCalibrationInfo), List&lt; Point3D &gt;&gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -88,8 +88,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a0cc4ba5edb46d2d9b3e78490eca684f5"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_project_to3_d.html#a0cc4ba5edb46d2d9b3e78490eca684f5">Receive</a> ((<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>) data, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> e)</td></tr>
-<tr class="separator:a0cc4ba5edb46d2d9b3e78490eca684f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad47e085f23b1bf8aee34df18499ab0d1"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_project_to3_d.html#ad47e085f23b1bf8aee34df18499ab0d1">Receive</a> ((<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>) data, <a class="el" href="struct_microsoft_1_1_psi_1_1_envelope.html">Envelope</a> e)</td></tr>
+<tr class="separator:ad47e085f23b1bf8aee34df18499ab0d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Component that projects 2D color-space points into 3D camera-space points in the depth camera's coordinate system. </p>
@@ -122,8 +122,8 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0cc4ba5edb46d2d9b3e78490eca684f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cc4ba5edb46d2d9b3e78490eca684f5">&#9670;&nbsp;</a></span>Receive()</h2>
+<a id="ad47e085f23b1bf8aee34df18499ab0d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad47e085f23b1bf8aee34df18499ab0d1">&#9670;&nbsp;</a></span>Receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,7 +134,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="memname">override void Microsoft.Psi.Calibration.ProjectTo3D.Receive </td>
           <td>(</td>
-          <td class="paramtype">(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>)&#160;</td>
+          <td class="paramtype">(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;, List&lt; Point2D &gt;, <a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html">IDepthDeviceCalibrationInfo</a>)&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>

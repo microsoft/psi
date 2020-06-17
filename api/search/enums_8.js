@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['perfcountertype_5166',['PerfCounterType',['../namespace_microsoft_1_1_psi.html#a25628d2fb5fd2aa0a1a8ab1efde041f3',1,'Microsoft::Psi']]],
-  ['pipelineelementkind_5167',['PipelineElementKind',['../namespace_microsoft_1_1_psi_1_1_diagnostics.html#a426e8dd75e8b2e20df98e5ac55eb5c97',1,'Microsoft::Psi::Diagnostics']]],
-  ['pixelformat_5168',['PixelFormat',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb',1,'Microsoft::Psi::Imaging']]],
-  ['pixelformatid_5169',['PixelFormatId',['../namespace_microsoft_1_1_psi_1_1_media.html#aaa22d54403a8483f0cb21f233516c3f7',1,'Microsoft::Psi::Media']]],
-  ['priorityqueuecounters_5170',['PriorityQueueCounters',['../namespace_microsoft_1_1_psi_1_1_scheduling.html#abcc6c769d8d8674943c9d428b7067283',1,'Microsoft::Psi::Scheduling']]]
+  ['managedcameracontrolproperty_5339',['ManagedCameraControlProperty',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#a97a7aa398918222a2dde262c51984942',1,'Microsoft::Psi::Media_Interop']]],
+  ['managedcameracontrolpropertyflags_5340',['ManagedCameraControlPropertyFlags',['../namespace_microsoft_1_1_psi_1_1_media___interop.html#ad399b73fcf49e4a6579b5a3f3d51a8ed',1,'Microsoft::Psi::Media_Interop']]],
+  ['markerstyle_5341',['MarkerStyle',['../namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#aa81fa6ebfae2c3b643f600491b035833',1,'Microsoft::Psi::Visualization::Common']]],
+  ['metadatakind_5342',['MetadataKind',['../namespace_microsoft_1_1_psi.html#af4daa242227fb4ad466ccbc91561b41c',1,'Microsoft::Psi']]]
 ];

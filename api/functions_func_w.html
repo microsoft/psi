@@ -112,20 +112,26 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_circular_buffer_stream.html#ae00f2aa1e8a3d7958291f37c3134d9d5">Microsoft.Psi.Audio.CircularBufferStream</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_data_writer_class.html#a1fc05624bec50f9524aa4908834868ce">Microsoft.Psi.Audio.WaveDataWriterClass</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_audio_1_1_wave_file_helper.html#af53260e232d43621db3f94dd7d56d480">Microsoft.Psi.Audio.WaveFileHelper</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_writer.html#a1305c97c539437416d32b3a5a506a41a">Microsoft.Psi.Common.BufferWriter</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_writer.html#ae9b688ccdc3e2c59123df3ffbdebc01d">Microsoft.Psi.Common.BufferWriter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store_writer.html#a78553dfd508444eea0cf55837a59211b">Microsoft.Psi.Data.Json.JsonStoreWriter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_writer.html#aa1d6211780facaaaa1d82d2cc5872295">Microsoft.Psi.Persistence.StoreWriter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_synthesizer.html#aefb8aacbf0076ab4c5dae8d6d527585f">Microsoft.Psi.Speech.SystemSpeechSynthesizer</a>
 </li>
 <li>Write&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_ex.html#af008f3d47c7f660a6350462f53c37c5a">Microsoft.Psi.Common.BufferEx</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a8cb3865d85664a90b8c227d7aaeaf5ce">Microsoft.Psi.Data.Exporter</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_exporter.html#a7645ca7abfdf180e8309da24cdcce54f">Microsoft.Psi.Data.Json.JsonExporter</a>
 </li>
 <li>Write&lt; TIn &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_annotations_1_1_annotation_store.html#a9ab33dfc2e42454f83fe449f1ff68c40">Microsoft.Psi.Data.Annotations.AnnotationStore</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store.html#a277390dce10ed9c94c0b9826f6067841">Microsoft.Psi.Data.Json.JsonStore</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a2ae521729c26ced99caab2fcdc6d9067">Microsoft.Psi.Store</a>
+</li>
+<li>Write&lt; TMessage &gt;()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a5aff88485de53de6bcd9cd3f97e8ed37">Microsoft.Psi.Data.Exporter</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#abbfb418fce758683ba9a515cd1c0d325">Microsoft.Psi.Store</a>
+</li>
+<li>Write&lt; TMessage, TSupplementalMetadata &gt;()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a286756ee51b549e5bb2009f6432aad61">Microsoft.Psi.Data.Exporter</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#acede605f679930d2ed327813f4660259">Microsoft.Psi.Store</a>
 </li>
 <li>WriteAll()
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_writer.html#a2bee3b338f1ec508772792b6bd1b03c4">Microsoft.Psi.Data.ISimpleWriter</a>
@@ -135,9 +141,6 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ad9f3bc07c6135f43b38a7b413354b480">Microsoft.Psi::Media_Interop::MP4Writer</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#ab5b3b5dc198c7a96b5d79244b789af4f">Microsoft.Psi::Media_Interop::MP4WriterUnmanagedData</a>
 </li>
-<li>WriteEmitters&lt; T &gt;()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#ae64164e92fdcbbb8ffe56dc794c890b2">Microsoft.Psi.Data.Exporter</a>
-</li>
 <li>WriteEnvelopes&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#aab4697e746a653e16e716063a39bccd4">Microsoft.Psi.Data.Exporter</a>
 </li>
@@ -145,7 +148,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af335998df5ebae41656a42f30d6a571e">Microsoft.Psi.Store</a>
 </li>
 <li>WriteError()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_log_writer.html#a3f1b01f411a3543521bc961229c41573">Microsoft.Psi.Visualization.VisualizationLogWriter</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_log_writer.html#ac81af728f57ddffd21bfd2c0aa62bb0e">Microsoft.Psi.Visualization.VisualizationLogWriter</a>
 </li>
 <li>WriteEx()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_buffer_writer.html#ae8f7a03f983aefbdc033f5d5b2480204">Microsoft.Psi.Common.BufferWriter</a>

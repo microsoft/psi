@@ -80,12 +80,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a46794eb872f8e0aa59e989940c126a08"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#a46794eb872f8e0aa59e989940c126a08">GetIndexForTime</a> (DateTime currentTime, int count, Func&lt; int, DateTime &gt; timeAtIndex)</td></tr>
-<tr class="memdesc:a46794eb872f8e0aa59e989940c126a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the index id corresponding to a specified time for a collection of indices that are ordered by time.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#a46794eb872f8e0aa59e989940c126a08">More...</a><br /></td></tr>
-<tr class="separator:a46794eb872f8e0aa59e989940c126a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0e45ab255dcb3f4b479d2e118bf1206"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#ad0e45ab255dcb3f4b479d2e118bf1206">GetIndexForTime</a> (DateTime currentTime, int count, Func&lt; int, DateTime &gt; timeAtIndex, <a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973">InterpolationStyle</a> interpolationStyle)</td></tr>
-<tr class="memdesc:ad0e45ab255dcb3f4b479d2e118bf1206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the index id corresponding to a specified time for a collection of indices that are ordered by time.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#ad0e45ab255dcb3f4b479d2e118bf1206">More...</a><br /></td></tr>
-<tr class="separator:ad0e45ab255dcb3f4b479d2e118bf1206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c50334c195be726eebf80db5d4f3be"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#a08c50334c195be726eebf80db5d4f3be">GetIndexForTime</a> (DateTime currentTime, int count, Func&lt; int, DateTime &gt; timeAtIndex, <a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_helpers.html#a65895bc706358f35133a5cb5c7f128e2">SnappingBehavior</a> snappingBehavior=<a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_helpers.html#a65895bc706358f35133a5cb5c7f128e2a60494f02d440f316319dd0fad40ad007">SnappingBehavior.Nearest</a>)</td></tr>
+<tr class="memdesc:a08c50334c195be726eebf80db5d4f3be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the index id corresponding to a specified time for a collection of indices that are ordered by time.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#a08c50334c195be726eebf80db5d4f3be">More...</a><br /></td></tr>
+<tr class="separator:a08c50334c195be726eebf80db5d4f3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad4702cf220197af75d225d36b045308"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#aad4702cf220197af75d225d36b045308">GetIndexForTime</a> (DateTime currentTime, int count, Func&lt; int, DateTime &gt; timeAtIndex, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> cursorEpsilon)</td></tr>
 <tr class="memdesc:aad4702cf220197af75d225d36b045308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the index id corresponding to a specified time for a collection of indices that are ordered by time.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#aad4702cf220197af75d225d36b045308">More...</a><br /></td></tr>
 <tr class="separator:aad4702cf220197af75d225d36b045308"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -93,121 +90,8 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents helper methods for psi indices. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a46794eb872f8e0aa59e989940c126a08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46794eb872f8e0aa59e989940c126a08">&#9670;&nbsp;</a></span>GetIndexForTime() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime </td>
-          <td>(</td>
-          <td class="paramtype">DateTime&#160;</td>
-          <td class="paramname"><em>currentTime</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Func&lt; int, DateTime &gt;&#160;</td>
-          <td class="paramname"><em>timeAtIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the index id corresponding to a specified time for a collection of indices that are ordered by time. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">currentTime</td><td>The time to find the index for.</td></tr>
-    <tr><td class="paramname">count</td><td>The number of items in the index collection.</td></tr>
-    <tr><td class="paramname">timeAtIndex</td><td>A function that returns the time for a given index id.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The index id closest to the specified time, using the specified interpolation style.</dd></dl>
-
-</div>
-</div>
-<a id="ad0e45ab255dcb3f4b479d2e118bf1206"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0e45ab255dcb3f4b479d2e118bf1206">&#9670;&nbsp;</a></span>GetIndexForTime() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static int Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime </td>
-          <td>(</td>
-          <td class="paramtype">DateTime&#160;</td>
-          <td class="paramname"><em>currentTime</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Func&lt; int, DateTime &gt;&#160;</td>
-          <td class="paramname"><em>timeAtIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_common.html#a369d37ec9c4c5d2f7f030b2b7e1a3973">InterpolationStyle</a>&#160;</td>
-          <td class="paramname"><em>interpolationStyle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the index id corresponding to a specified time for a collection of indices that are ordered by time. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">currentTime</td><td>The time to find the index for.</td></tr>
-    <tr><td class="paramname">count</td><td>The number of items in the index collection.</td></tr>
-    <tr><td class="paramname">timeAtIndex</td><td>A function that returns the time for a given index id.</td></tr>
-    <tr><td class="paramname">interpolationStyle</td><td>The type of interpolation (Direct or Step) to use when resolving indices that don't exactly lie at the specified time.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The index id closest to the specified time, using the specified interpolation style.</dd></dl>
-
-</div>
-</div>
 <a id="aad4702cf220197af75d225d36b045308"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad4702cf220197af75d225d36b045308">&#9670;&nbsp;</a></span>GetIndexForTime() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aad4702cf220197af75d225d36b045308">&#9670;&nbsp;</a></span>GetIndexForTime() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,6 +143,66 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">count</td><td>The number of items in the index collection.</td></tr>
     <tr><td class="paramname">timeAtIndex</td><td>A function that returns the time for a given index id.</td></tr>
     <tr><td class="paramname">cursorEpsilon</td><td>The cursor epsilon to use to determine if an index is close enough to the specified time to be counted as a match.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The index id closest to the specified time, using the specified interpolation style.</dd></dl>
+
+</div>
+</div>
+<a id="a08c50334c195be726eebf80db5d4f3be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08c50334c195be726eebf80db5d4f3be">&#9670;&nbsp;</a></span>GetIndexForTime() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>currentTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; int, DateTime &gt;&#160;</td>
+          <td class="paramname"><em>timeAtIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_helpers.html#a65895bc706358f35133a5cb5c7f128e2">SnappingBehavior</a>&#160;</td>
+          <td class="paramname"><em>snappingBehavior</em> = <code><a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_helpers.html#a65895bc706358f35133a5cb5c7f128e2a60494f02d440f316319dd0fad40ad007">SnappingBehavior.Nearest</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the index id corresponding to a specified time for a collection of indices that are ordered by time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currentTime</td><td>The time to find the index for.</td></tr>
+    <tr><td class="paramname">count</td><td>The number of items in the index collection.</td></tr>
+    <tr><td class="paramname">timeAtIndex</td><td>A function that returns the time for a given index id.</td></tr>
+    <tr><td class="paramname">snappingBehavior</td><td>Timeline snapping behaviors.</td></tr>
   </table>
   </dd>
 </dl>

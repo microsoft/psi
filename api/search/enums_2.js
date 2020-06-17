@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['emittercounters_5155',['EmitterCounters',['../namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111b',1,'Microsoft::Psi']]]
+  ['depthcompressionmethod_5331',['DepthCompressionMethod',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a14ec4ef769772f3e620f08b8b97e466a',1,'Microsoft::Psi::Imaging']]]
 ];

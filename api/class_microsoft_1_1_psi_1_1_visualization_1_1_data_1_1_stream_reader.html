@@ -101,6 +101,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2292dcdf4ff3151dd53337f606a003e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a2292dcdf4ff3151dd53337f606a003e7">ReadInstantData</a> (<a class="el" href="interface_microsoft_1_1_psi_1_1_data_1_1_i_simple_reader.html">ISimpleReader</a> reader, DateTime cursorTime)</td></tr>
 <tr class="memdesc:a2292dcdf4ff3151dd53337f606a003e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads instant data from the stream at the given cursor time and notifies all registered instant visualization objects of the new data.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a2292dcdf4ff3151dd53337f606a003e7">More...</a><br /></td></tr>
 <tr class="separator:a2292dcdf4ff3151dd53337f606a003e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a361edb87da84ede66f6a87affe9e3ecf"><td class="memItemLeft" align="right" valign="top">DateTime?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a361edb87da84ede66f6a87affe9e3ecf">GetOriginatingTimeOfNearestInstantMessage</a> (DateTime time)</td></tr>
+<tr class="memdesc:a361edb87da84ede66f6a87affe9e3ecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets originating time of the message in a stream that's closest to a given time.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a361edb87da84ede66f6a87affe9e3ecf">More...</a><br /></td></tr>
+<tr class="separator:a361edb87da84ede66f6a87affe9e3ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71e6af39b070ce8196ade92853e685cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a71e6af39b070ce8196ade92853e685cf">Cancel</a> ()</td></tr>
 <tr class="memdesc:a71e6af39b070ce8196ade92853e685cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels this reader.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a71e6af39b070ce8196ade92853e685cf">More...</a><br /></td></tr>
 <tr class="separator:a71e6af39b070ce8196ade92853e685cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,7 +119,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aadf64785ecf1eb8e44ac7a5e3f77274f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open stream given a reader.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#aadf64785ecf1eb8e44ac7a5e3f77274f">More...</a><br /></td></tr>
 <tr class="separator:aadf64785ecf1eb8e44ac7a5e3f77274f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbb73d5158e093f9f924353d8e51389a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="struct_microsoft_1_1_psi_1_1_persistence_1_1_index_entry.html">IndexEntry</a> &gt;.ObservableKeyedView&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#acbb73d5158e093f9f924353d8e51389a">ReadIndex</a> (DateTime startTime, DateTime endTime)</td></tr>
-<tr class="memdesc:acbb73d5158e093f9f924353d8e51389a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a view of the indices identified by the matching start and end times and asychronously fills it in.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#acbb73d5158e093f9f924353d8e51389a">More...</a><br /></td></tr>
+<tr class="memdesc:acbb73d5158e093f9f924353d8e51389a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a view of the indices identified by the matching start and end times and asynchronously fills it in.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#acbb73d5158e093f9f924353d8e51389a">More...</a><br /></td></tr>
 <tr class="separator:acbb73d5158e093f9f924353d8e51389a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d06713f26e31eee96337aebfa18ad55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TItem &gt; &gt;.ObservableKeyedView&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a1d06713f26e31eee96337aebfa18ad55">ReadStream&lt; TItem &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html">ObservableKeyedCache</a>&lt; DateTime, <a class="el" href="class_microsoft_1_1_psi_1_1_message.html">Message</a>&lt; TItem &gt;&gt;.ObservableKeyedView.ViewMode viewMode, DateTime startTime, DateTime endTime, uint tailCount, Func&lt; DateTime, DateTime &gt; tailRange)</td></tr>
 <tr class="memdesc:a1d06713f26e31eee96337aebfa18ad55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a view of the messages identified by the matching parameters and asynchronously fills it in. View mode can be one of three values: Fixed - fixed range based on start and end times TailCount - sliding dynamic range that includes the tail of the underlying data based on quantity TailRange - sliding dynamic range that includes the tail of the underlying data based on function.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a1d06713f26e31eee96337aebfa18ad55">More...</a><br /></td></tr>
@@ -297,6 +300,28 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a361edb87da84ede66f6a87affe9e3ecf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a361edb87da84ede66f6a87affe9e3ecf">&#9670;&nbsp;</a></span>GetOriginatingTimeOfNearestInstantMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DateTime? <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html">Microsoft.Psi.Visualization.Data.StreamReader</a>&lt; T &gt;.GetOriginatingTimeOfNearestInstantMessage </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets originating time of the message in a stream that's closest to a given time. </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a441e23fcb591faba8e378c490ec5efbb">Microsoft.Psi.Visualization.Data.IStreamReader</a>.</p>
+
+</div>
+</div>
 <a id="a4693cd6799848e5a7dca95304d7e746e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4693cd6799848e5a7dca95304d7e746e">&#9670;&nbsp;</a></span>OnInstantViewRangeChanged()</h2>
 
@@ -377,7 +402,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a view of the indices identified by the matching start and end times and asychronously fills it in. </p>
+<p>Creates a view of the indices identified by the matching start and end times and asynchronously fills it in. </p>
 
 <p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#adc4ad0a9bd39951771c2380038800419">Microsoft.Psi.Visualization.Data.IStreamReader</a>.</p>
 

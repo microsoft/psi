@@ -168,25 +168,21 @@ $(function() {
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
 <div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ae11a972639c36426bbde4cdf64b59fd0">  103</a></span>&#160;                <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ae11a972639c36426bbde4cdf64b59fd0">~MP4Writer</a>()</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                    <span class="keywordflow">if</span> (unmanagedData != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                    {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                        <span class="keyword">delete</span> unmanagedData;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                        unmanagedData = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                    }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                }</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#a3c9cb0a3ca857d27718281ed240e553f">Open</a>(String ^fn, <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_configuration.html">MP4WriterConfiguration</a>^ config);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#a9bba8ecb4a61c220fe7a5a3e851f6be4">WriteVideoFrame</a>(LONGLONG timestamp, IntPtr imageData, UINT32 imgWidth, UINT32 imgHeight, <span class="keywordtype">int</span> pixelFormat);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ad9f3bc07c6135f43b38a7b413354b480">WriteAudioSample</a>(LONGLONG timestamp, IntPtr pcmData, UINT32 numDataBytes, IntPtr waveFormat);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ab84dfbae34dbe5c73b73072a82128179">Close</a>();</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                    <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ab84dfbae34dbe5c73b73072a82128179">Close</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#a3c9cb0a3ca857d27718281ed240e553f">Open</a>(String ^fn, <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_configuration.html">MP4WriterConfiguration</a>^ config);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#a9bba8ecb4a61c220fe7a5a3e851f6be4">WriteVideoFrame</a>(LONGLONG timestamp, IntPtr imageData, UINT32 imgWidth, UINT32 imgHeight, <span class="keywordtype">int</span> pixelFormat);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ad9f3bc07c6135f43b38a7b413354b480">WriteAudioSample</a>(LONGLONG timestamp, IntPtr pcmData, UINT32 numDataBytes, IntPtr waveFormat);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ab84dfbae34dbe5c73b73072a82128179">Close</a>();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                <span class="keyword">static</span> HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#a0c04bca93043c6f46d851b4217b05801">Startup</a>();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                <span class="keyword">static</span> HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ace058037c235e211fe74447f745a49ca">Shutdown</a>();</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            };</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                <span class="keyword">static</span> HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#a0c04bca93043c6f46d851b4217b05801">Startup</a>();</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <span class="keyword">static</span> HRESULT <a class="code" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer.html#ace058037c235e211fe74447f745a49ca">Shutdown</a>();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            };</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclass_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data_html_ab5b3b5dc198c7a96b5d79244b789af4f"><div class="ttname"><a href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#ab5b3b5dc198c7a96b5d79244b789af4f">Microsoft.Psi::Media_Interop::MP4WriterUnmanagedData::WriteAudioSample</a></div><div class="ttdeci">HRESULT WriteAudioSample(LONGLONG timestamp, IntPtr pcmData, UINT32 numDataBytes, IntPtr waveFormat)</div><div class="ttdef"><b>Definition:</b> MP4Writer.cpp:330</div></div>
 <div class="ttc" id="aclass_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data_html_ae1ebbabc8d7fa1ebe7980a21791ed7f5"><div class="ttname"><a href="class_microsoft_1_1_psi_1_1_media___interop_1_1_m_p4_writer_unmanaged_data.html#ae1ebbabc8d7fa1ebe7980a21791ed7f5">Microsoft.Psi::Media_Interop::MP4WriterUnmanagedData::CopyImageDataToMediaBuffer</a></div><div class="ttdeci">HRESULT CopyImageDataToMediaBuffer(IntPtr imageData, int format, BYTE *outputBuffer)</div><div class="ttdef"><b>Definition:</b> MP4Writer.cpp:194</div></div>

@@ -85,9 +85,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4140794451be8e9f9c93291992d0df6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a4140794451be8e9f9c93291992d0df6b">UpdateStreamBinding</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_session.html">Session</a> session)</td></tr>
 <tr class="memdesc:a4140794451be8e9f9c93291992d0df6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the binding between a stream visualization object and a data source.  <a href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a4140794451be8e9f9c93291992d0df6b">More...</a><br /></td></tr>
 <tr class="separator:a4140794451be8e9f9c93291992d0df6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65fc6bbd79565d341dfe221703d953e4"><td class="memItemLeft" align="right" valign="top">DateTime?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a65fc6bbd79565d341dfe221703d953e4">GetSnappedTime</a> (DateTime time)</td></tr>
-<tr class="memdesc:a65fc6bbd79565d341dfe221703d953e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a snapped time based on a given time.  <a href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a65fc6bbd79565d341dfe221703d953e4">More...</a><br /></td></tr>
-<tr class="separator:a65fc6bbd79565d341dfe221703d953e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94f608651df3e91ccbd100ef34712737"><td class="memItemLeft" align="right" valign="top">DateTime?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a94f608651df3e91ccbd100ef34712737">GetSnappedTime</a> (DateTime time, <a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_helpers.html#a65895bc706358f35133a5cb5c7f128e2">SnappingBehavior</a> snappingBehavior=SnappingBehavior.Nearest)</td></tr>
+<tr class="memdesc:a94f608651df3e91ccbd100ef34712737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a snapped time based on a given time.  <a href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a94f608651df3e91ccbd100ef34712737">More...</a><br /></td></tr>
+<tr class="separator:a94f608651df3e91ccbd100ef34712737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -107,8 +107,8 @@ Properties</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a stream visualization object. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a65fc6bbd79565d341dfe221703d953e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65fc6bbd79565d341dfe221703d953e4">&#9670;&nbsp;</a></span>GetSnappedTime()</h2>
+<a id="a94f608651df3e91ccbd100ef34712737"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94f608651df3e91ccbd100ef34712737">&#9670;&nbsp;</a></span>GetSnappedTime()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -117,8 +117,18 @@ Properties</h2></td></tr>
           <td class="memname">DateTime? Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.GetSnappedTime </td>
           <td>(</td>
           <td class="paramtype">DateTime&#160;</td>
-          <td class="paramname"><em>time</em></td><td>)</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_visualization_1_1_helpers.html#a65895bc706358f35133a5cb5c7f128e2">SnappingBehavior</a>&#160;</td>
+          <td class="paramname"><em>snappingBehavior</em> = <code>SnappingBehavior.Nearest</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -127,12 +137,13 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">time</td><td>The input time.</td></tr>
+    <tr><td class="paramname">snappingBehavior</td><td>Timeline snapping behavior.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The snapped time.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a15e46f0f9e7d4cd595e1a20a5215f26c">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#ae8dfbf37fa6976ed8260de339a814952">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ab03782214844d397898571b868edb719">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#ac653b7eea18853487ba3d6aadbf07473">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData &gt;</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html#ad1875553b631ac13e0a91373533c6fde">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData &gt;</a>.</p>
 
 </div>
 </div>

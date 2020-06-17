@@ -79,36 +79,134 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:acb0cb92ce0afe8736337fe9e0342ed52"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#acb0cb92ce0afe8736337fe9e0342ed52">Encode</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; source, Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html">IBitmapEncoder</a> &gt; encoderFn, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:acb0cb92ce0afe8736337fe9e0342ed52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from an Image to a compressed (encoded) image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#acb0cb92ce0afe8736337fe9e0342ed52">More...</a><br /></td></tr>
-<tr class="separator:acb0cb92ce0afe8736337fe9e0342ed52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#a9cb45b9c59406a0c5db2a277dce6b65e">EncodeJpeg</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; source, int quality=90, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from an Image to a compressed JPEG image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#a9cb45b9c59406a0c5db2a277dce6b65e">More...</a><br /></td></tr>
+<tr class="memdesc:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes an image to a JPEG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#a9cb45b9c59406a0c5db2a277dce6b65e">More...</a><br /></td></tr>
 <tr class="separator:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac626f64297eb93231f41a20a362261fe"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac626f64297eb93231f41a20a362261fe">EncodePng</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:ac626f64297eb93231f41a20a362261fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from an Image to a compressed PNG image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac626f64297eb93231f41a20a362261fe">More...</a><br /></td></tr>
+<tr class="memdesc:ac626f64297eb93231f41a20a362261fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes an image to a PNG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac626f64297eb93231f41a20a362261fe">More...</a><br /></td></tr>
 <tr class="separator:ac626f64297eb93231f41a20a362261fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aa8d67d7d1570d2aeab8a2b14f32ebc30">Decode</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes an image that was previously encoded.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aa8d67d7d1570d2aeab8a2b14f32ebc30">More...</a><br /></td></tr>
+<tr class="memdesc:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes an encoded image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aa8d67d7d1570d2aeab8a2b14f32ebc30">More...</a><br /></td></tr>
 <tr class="separator:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac27e66f092929cfddbad92961b2896eb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac27e66f092929cfddbad92961b2896eb">Encode</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; source, Func&lt; BitmapEncoder &gt; encoderFn, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:ac27e66f092929cfddbad92961b2896eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from an Image to a compressed (encoded) image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac27e66f092929cfddbad92961b2896eb">More...</a><br /></td></tr>
-<tr class="separator:ac27e66f092929cfddbad92961b2896eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae515512f75c0c7dfc0a308eadc2e6a5e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ae515512f75c0c7dfc0a308eadc2e6a5e">EncodePng</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ae515512f75c0c7dfc0a308eadc2e6a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a depth image to a PNG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ae515512f75c0c7dfc0a308eadc2e6a5e">More...</a><br /></td></tr>
+<tr class="separator:ae515512f75c0c7dfc0a308eadc2e6a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb35b9e97ff26a3fbc228dad302dd76"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aebb35b9e97ff26a3fbc228dad302dd76">Decode</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:aebb35b9e97ff26a3fbc228dad302dd76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes an encoded depth image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aebb35b9e97ff26a3fbc228dad302dd76">More...</a><br /></td></tr>
+<tr class="separator:aebb35b9e97ff26a3fbc228dad302dd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#a9cb45b9c59406a0c5db2a277dce6b65e">EncodeJpeg</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; source, int quality=90, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from an Image to a compressed JPEG image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#a9cb45b9c59406a0c5db2a277dce6b65e">More...</a><br /></td></tr>
+<tr class="memdesc:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes an image to a JPEG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#a9cb45b9c59406a0c5db2a277dce6b65e">More...</a><br /></td></tr>
 <tr class="separator:a9cb45b9c59406a0c5db2a277dce6b65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac626f64297eb93231f41a20a362261fe"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac626f64297eb93231f41a20a362261fe">EncodePng</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:ac626f64297eb93231f41a20a362261fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from an Image to a compressed PNG image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac626f64297eb93231f41a20a362261fe">More...</a><br /></td></tr>
+<tr class="memdesc:ac626f64297eb93231f41a20a362261fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes an image to a PNG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ac626f64297eb93231f41a20a362261fe">More...</a><br /></td></tr>
 <tr class="separator:ac626f64297eb93231f41a20a362261fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aa8d67d7d1570d2aeab8a2b14f32ebc30">Decode</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt;&gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes an image that was previously encoded.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aa8d67d7d1570d2aeab8a2b14f32ebc30">More...</a><br /></td></tr>
+<tr class="memdesc:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes an encoded image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aa8d67d7d1570d2aeab8a2b14f32ebc30">More...</a><br /></td></tr>
 <tr class="separator:aa8d67d7d1570d2aeab8a2b14f32ebc30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae515512f75c0c7dfc0a308eadc2e6a5e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ae515512f75c0c7dfc0a308eadc2e6a5e">EncodePng</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:ae515512f75c0c7dfc0a308eadc2e6a5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a depth image to a PNG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#ae515512f75c0c7dfc0a308eadc2e6a5e">More...</a><br /></td></tr>
+<tr class="separator:ae515512f75c0c7dfc0a308eadc2e6a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb35b9e97ff26a3fbc228dad302dd76"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aebb35b9e97ff26a3fbc228dad302dd76">Decode</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt; source, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:aebb35b9e97ff26a3fbc228dad302dd76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes an encoded depth image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#aebb35b9e97ff26a3fbc228dad302dd76">More...</a><br /></td></tr>
+<tr class="separator:aebb35b9e97ff26a3fbc228dad302dd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements stream operator methods for Imaging. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aebb35b9e97ff26a3fbc228dad302dd76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebb35b9e97ff26a3fbc228dad302dd76">&#9670;&nbsp;</a></span>Decode() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a>&gt; &gt; Microsoft.Psi.Imaging.ImagingOperators.Decode </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decodes an encoded depth image. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>A producer of encoded depth images to decode.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the decoded depth images.</dd></dl>
+
+</div>
+</div>
+<a id="aebb35b9e97ff26a3fbc228dad302dd76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebb35b9e97ff26a3fbc228dad302dd76">&#9670;&nbsp;</a></span>Decode() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a>&gt; &gt; Microsoft.Psi.Imaging.ImagingOperators.Decode </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decodes an encoded depth image. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>A producer of encoded depth images to decode.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the decoded depth images.</dd></dl>
+
+</div>
+</div>
 <a id="aa8d67d7d1570d2aeab8a2b14f32ebc30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8d67d7d1570d2aeab8a2b14f32ebc30">&#9670;&nbsp;</a></span>Decode() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8d67d7d1570d2aeab8a2b14f32ebc30">&#9670;&nbsp;</a></span>Decode() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,20 +239,20 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Decodes an image that was previously encoded. </p>
+<p>Decodes an encoded image. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to compress.</td></tr>
+    <tr><td class="paramname">source</td><td>A producer of encoded images to decode.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the decoded images.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the decoded images.</dd></dl>
 
 </div>
 </div>
 <a id="aa8d67d7d1570d2aeab8a2b14f32ebc30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8d67d7d1570d2aeab8a2b14f32ebc30">&#9670;&nbsp;</a></span>Decode() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8d67d7d1570d2aeab8a2b14f32ebc30">&#9670;&nbsp;</a></span>Decode() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,121 +285,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Decodes an image that was previously encoded. </p>
+<p>Decodes an encoded image. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to compress.</td></tr>
+    <tr><td class="paramname">source</td><td>A producer of encoded images to decode.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the decoded images.</dd></dl>
-
-</div>
-</div>
-<a id="ac27e66f092929cfddbad92961b2896eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac27e66f092929cfddbad92961b2896eb">&#9670;&nbsp;</a></span>Encode() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a>&gt; &gt; Microsoft.Psi.Imaging.ImagingOperators.Encode </td>
-          <td>(</td>
-          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>source</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Func&lt; BitmapEncoder &gt;&#160;</td>
-          <td class="paramname"><em>encoderFn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Converts from an Image to a compressed (encoded) image. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to encode.</td></tr>
-    <tr><td class="paramname">encoderFn</td><td>Method to perform encoding.</td></tr>
-    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the encoded images.</dd></dl>
-
-</div>
-</div>
-<a id="acb0cb92ce0afe8736337fe9e0342ed52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb0cb92ce0afe8736337fe9e0342ed52">&#9670;&nbsp;</a></span>Encode() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a>&gt; &gt; Microsoft.Psi.Imaging.ImagingOperators.Encode </td>
-          <td>(</td>
-          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>source</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Func&lt; <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html">IBitmapEncoder</a> &gt;&#160;</td>
-          <td class="paramname"><em>encoderFn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt;&#160;</td>
-          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Converts from an Image to a compressed (encoded) image. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to encode.</td></tr>
-    <tr><td class="paramname">encoderFn</td><td>Method to perform encoding.</td></tr>
-    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the encoded images.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the decoded images.</dd></dl>
 
 </div>
 </div>
@@ -345,16 +337,16 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts from an Image to a compressed JPEG image. </p>
+<p>Encodes an image to a JPEG format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to compress.</td></tr>
+    <tr><td class="paramname">source</td><td>A producer of images to encode.</td></tr>
     <tr><td class="paramname">quality</td><td>JPEG quality to use.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the JPEG images.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the JPEG images.</dd></dl>
 
 </div>
 </div>
@@ -398,21 +390,113 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts from an Image to a compressed JPEG image. </p>
+<p>Encodes an image to a JPEG format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to compress.</td></tr>
+    <tr><td class="paramname">source</td><td>A producer of images to encode.</td></tr>
     <tr><td class="paramname">quality</td><td>JPEG quality to use.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the JPEG images.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the JPEG images.</dd></dl>
+
+</div>
+</div>
+<a id="ae515512f75c0c7dfc0a308eadc2e6a5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae515512f75c0c7dfc0a308eadc2e6a5e">&#9670;&nbsp;</a></span>EncodePng() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a>&gt; &gt; Microsoft.Psi.Imaging.ImagingOperators.EncodePng </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encodes a depth image to a PNG format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>A producer of depth images to encode.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the PNG-encoded depth images.</dd></dl>
+
+</div>
+</div>
+<a id="ae515512f75c0c7dfc0a308eadc2e6a5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae515512f75c0c7dfc0a308eadc2e6a5e">&#9670;&nbsp;</a></span>EncodePng() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a>&gt; &gt; Microsoft.Psi.Imaging.ImagingOperators.EncodePng </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encodes a depth image to a PNG format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>A producer of depth images to encode.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the PNG-encoded depth images.</dd></dl>
 
 </div>
 </div>
 <a id="ac626f64297eb93231f41a20a362261fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac626f64297eb93231f41a20a362261fe">&#9670;&nbsp;</a></span>EncodePng() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac626f64297eb93231f41a20a362261fe">&#9670;&nbsp;</a></span>EncodePng() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -445,20 +529,20 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts from an Image to a compressed PNG image. </p>
+<p>Encodes an image to a PNG format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to compress.</td></tr>
+    <tr><td class="paramname">source</td><td>A producer of images to encoder.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the PNG images.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the PNG images.</dd></dl>
 
 </div>
 </div>
 <a id="ac626f64297eb93231f41a20a362261fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac626f64297eb93231f41a20a362261fe">&#9670;&nbsp;</a></span>EncodePng() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac626f64297eb93231f41a20a362261fe">&#9670;&nbsp;</a></span>EncodePng() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -491,15 +575,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Converts from an Image to a compressed PNG image. </p>
+<p>Encodes an image to a PNG format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">source</td><td>Source image to compress.</td></tr>
+    <tr><td class="paramname">source</td><td>A producer of images to encoder.</td></tr>
     <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a producer that generates the PNG images.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A producer that generates the PNG images.</dd></dl>
 
 </div>
 </div>

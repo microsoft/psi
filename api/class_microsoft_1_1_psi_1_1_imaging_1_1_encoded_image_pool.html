@@ -79,15 +79,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a6f6de8f607521b54d13a76320afec0c4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#a6f6de8f607521b54d13a76320afec0c4">GetOrCreate</a> ()</td></tr>
-<tr class="memdesc:a6f6de8f607521b54d13a76320afec0c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or creates an encoded image from the pool.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#a6f6de8f607521b54d13a76320afec0c4">More...</a><br /></td></tr>
-<tr class="separator:a6f6de8f607521b54d13a76320afec0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad603b5ff33058c662ccea31c80515a1e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#ad603b5ff33058c662ccea31c80515a1e">GetOrCreate</a> (int width, int height, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
+<tr class="memdesc:ad603b5ff33058c662ccea31c80515a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or creates an encoded image from the pool.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#ad603b5ff33058c662ccea31c80515a1e">More...</a><br /></td></tr>
+<tr class="separator:ad603b5ff33058c662ccea31c80515a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a pool of shared encoded images. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6f6de8f607521b54d13a76320afec0c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f6de8f607521b54d13a76320afec0c4">&#9670;&nbsp;</a></span>GetOrCreate()</h2>
+<a id="ad603b5ff33058c662ccea31c80515a1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad603b5ff33058c662ccea31c80515a1e">&#9670;&nbsp;</a></span>GetOrCreate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -98,8 +98,25 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a>&gt; Microsoft.Psi.Imaging.EncodedImagePool.GetOrCreate </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
+          <td class="paramname"><em>pixelFormat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -111,6 +128,14 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Gets or creates an encoded image from the pool. </p>
 <dl class="section return"><dt>Returns</dt><dd>A shared encoded image from the pool.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>The requested encoded image width.</td></tr>
+    <tr><td class="paramname">height</td><td>The requested encoded image height.</td></tr>
+    <tr><td class="paramname">pixelFormat</td><td>The requested encoded image pixel format.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

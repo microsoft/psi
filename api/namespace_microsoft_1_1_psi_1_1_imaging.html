@@ -68,6 +68,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -77,32 +78,83 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html">DepthImage</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a depth image, stored in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_compressor.html">DepthImageCompressor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a compressor used by the serialization layer for compressing streams of depth images in a generic fashion. This object should not be called directly, but instead is used by the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_1_1_custom_serializer.html" title="Custom serializer used for reading/writing depth images.">DepthImage.CustomSerializer</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_compressor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_decoder.html">DepthImageDecoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that decodes a depth image using a specified <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_from_stream_decoder.html" title="Defines a class that can decode a depth image.">IDepthImageFromStreamDecoder</a>.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_decoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_encoder.html">DepthImageEncoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that encodes an image using a specified <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_to_stream_encoder.html" title="Defines a class that can encode a depth image.">IDepthImageToStreamEncoder</a>.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_encoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_from_stream_decoder.html">DepthImageFromStreamDecoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a depth image decoder.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_from_stream_decoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_pool.html">DepthImagePool</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a pool of shared depth images.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_pool.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_to_png_stream_encoder.html">DepthImageToPngStreamEncoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a depth image encoder for PNG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_to_png_stream_encoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html">EncodedDepthImage</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines an encoded depth image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image_pool.html">EncodedDepthImagePool</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a pool of shared encoded depth images.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image_pool.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html">EncodedImage</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines an encoded image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html">EncodedImagePool</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a pool of shared encoded images.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html">IBitmapEncoder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmap encoder interface.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_bitmap_encoder.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_compressor.html">IDepthImageCompressor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a interface for depth image compressors.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_compressor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_from_stream_decoder.html">IDepthImageFromStreamDecoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a class that can decode a depth image.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_from_stream_decoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_to_stream_encoder.html">IDepthImageToStreamEncoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a class that can encode a depth image.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_depth_image_to_stream_encoder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html">IImageCompressor</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface implemented by the system specific assembly. For instance, Microsoft.Psi.Imaging.Windows will define an ImageCompressor that implements this interfaces.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a interface for image compressors.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_compressor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_from_stream_decoder.html">IImageFromStreamDecoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a class that can decode an image.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_from_stream_decoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_to_stream_encoder.html">IImageToStreamEncoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a class that can encode an image.  <a href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_to_stream_encoder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Image class represents wrapper of an image in unmanaged memory. Using this class it is possible as to allocate new image in unmanaged memory, as to just wrap provided pointer to unmanaged memory, where an image is stored.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an image, stored in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html">ImageBase</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an image, stored in unmanaged memory.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_compressor.html">ImageCompressor</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ImageCompressor defines an object used by the serialization layer for compressing streams of images in a generic fashion. This object should not be called directly but instead if used by Microsoft.Psi.Imaging.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_compressor.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a compressor used by the serialization layer for compressing streams of images in a generic fashion. This object should not be called directly, but instead is used by the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html" title="Custom serializer used for reading/writing images.">Image.CustomSerializer</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_compressor.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_decoder.html">ImageDecoder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipeline component for decoding an image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_decoder.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that decodes an image using a specified <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_from_stream_decoder.html" title="Defines a class that can decode an image.">IImageFromStreamDecoder</a>.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_decoder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_encoder.html">ImageEncoder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipeline component for encoding an image.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_encoder.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that encodes an image using a specified <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_to_stream_encoder.html" title="Defines a class that can encode an image.">IImageToStreamEncoder</a>.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_encoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_from_stream_decoder.html">ImageFromStreamDecoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements an image decoder.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_from_stream_decoder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html">ImagePool</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a pool of shared images.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_to_jpeg_stream_encoder.html">ImageToJpegStreamEncoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements an image encoder for JPEG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_to_jpeg_stream_encoder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_to_png_stream_encoder.html">ImageToPngStreamEncoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements an image encoder for PNG format.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_to_png_stream_encoder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html">ImageTransformer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Component that transforms an image given a specified transformer.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html#details">More...</a><br /></td></tr>
@@ -110,26 +162,28 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html">ImagingOperators</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements stream operator methods for Imaging.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_imaging_operators.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_jpeg_bitmap_encoder.html">JpegBitmapEncoder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">JPEG bitmap encoder.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_jpeg_bitmap_encoder.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_operators.html">Operators</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Various imaging operators.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_operators.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_extensions.html">PixelFormatExtensions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a set of extensions for getting info about a PixelFormat.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_extensions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html">PixelFormatHelper</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of static functions for manipulating pixel formats.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helpers.html">PixelFormatHelpers</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements helper functions for manipulating <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb" title="Defines the various pixel formats supported by the Image type.">PixelFormat</a> instances.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helpers.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_png_bitmap_encoder.html">PngBitmapEncoder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">PNG bitmap encoder.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_png_bitmap_encoder.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a61a7aae8f61fca357a8abcf79fcd122b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a61a7aae8f61fca357a8abcf79fcd122b">MediaPixelFormat</a> = System.Windows.Media.PixelFormat</td></tr>
+<tr class="separator:a61a7aae8f61fca357a8abcf79fcd122b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:a14ec4ef769772f3e620f08b8b97e466a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a14ec4ef769772f3e620f08b8b97e466a">DepthCompressionMethod</a> </td></tr>
+<tr class="memdesc:a14ec4ef769772f3e620f08b8b97e466a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines type of compression to use when serializing out a DepthImage.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a14ec4ef769772f3e620f08b8b97e466a">More...</a><br /></td></tr>
+<tr class="separator:a14ec4ef769772f3e620f08b8b97e466a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a9b9f860738a4507a3c95f332a14b93"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93">CompressionMethod</a> </td></tr>
-<tr class="memdesc:a1a9b9f860738a4507a3c95f332a14b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines type of compression to use when serializing out an Image.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93">More...</a><br /></td></tr>
+<tr class="memdesc:a1a9b9f860738a4507a3c95f332a14b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines type of compression to use when serializing out a DepthImage.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a1a9b9f860738a4507a3c95f332a14b93">More...</a><br /></td></tr>
 <tr class="separator:a1a9b9f860738a4507a3c95f332a14b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf1b34586521cceaf009b6caf35a4284"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284">SamplingMode</a> </td></tr>
 <tr class="memdesc:adf1b34586521cceaf009b6caf35a4284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sampling mode used by various imaging operators.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#adf1b34586521cceaf009b6caf35a4284">More...</a><br /></td></tr>
@@ -141,15 +195,30 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:a579b3fc93495e6cecd4fec2c7432d562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axis along which to flip an image.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a579b3fc93495e6cecd4fec2c7432d562">More...</a><br /></td></tr>
 <tr class="separator:a579b3fc93495e6cecd4fec2c7432d562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a222a914ab26d4a64291078a51af7dafb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> </td></tr>
-<tr class="memdesc:a222a914ab26d4a64291078a51af7dafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">PixelFormat defines.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">More...</a><br /></td></tr>
+<tr class="memdesc:a222a914ab26d4a64291078a51af7dafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the various pixel formats supported by the Image type.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">More...</a><br /></td></tr>
 <tr class="separator:a222a914ab26d4a64291078a51af7dafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2819f0265488b9a3042807f878692f4c"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a2819f0265488b9a3042807f878692f4c">TransformDelegate</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> src, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> dest)</td></tr>
-<tr class="memdesc:a2819f0265488b9a3042807f878692f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the delegate used to perform an image transformation.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a2819f0265488b9a3042807f878692f4c">More...</a><br /></td></tr>
-<tr class="separator:a2819f0265488b9a3042807f878692f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64474a9404e0cc891004233e4ec6f361"><td class="memItemLeft" align="right" valign="top">delegate void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a64474a9404e0cc891004233e4ec6f361">TransformDelegate</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> source, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> destination)</td></tr>
+<tr class="memdesc:a64474a9404e0cc891004233e4ec6f361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the delegate used to perform an image transformation.  <a href="namespace_microsoft_1_1_psi_1_1_imaging.html#a64474a9404e0cc891004233e4ec6f361">More...</a><br /></td></tr>
+<tr class="separator:a64474a9404e0cc891004233e4ec6f361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a61a7aae8f61fca357a8abcf79fcd122b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61a7aae8f61fca357a8abcf79fcd122b">&#9670;&nbsp;</a></span>MediaPixelFormat</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a61a7aae8f61fca357a8abcf79fcd122b">Microsoft.Psi.Imaging.MediaPixelFormat</a> = typedef System.Windows.Media.PixelFormat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a1a9b9f860738a4507a3c95f332a14b93"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1a9b9f860738a4507a3c95f332a14b93">&#9670;&nbsp;</a></span>CompressionMethod</h2>
@@ -171,13 +240,43 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Defines type of compression to use when serializing out an Image. </p>
+<p>Defines type of compression to use when serializing out a <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html" title="Represents a depth image, stored in unmanaged memory.">DepthImage</a>. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a907e06a16862d82ca6907a28a68d0ad6"></a>JPEG&#160;</td><td class="fielddoc"><p>Use JPEG compression </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a5023eac1d7fffa77b37c0e6797c97773"></a>Jpeg&#160;</td><td class="fielddoc"><p>Use JPEG compression. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a55505ba281b015ec31f03ccb151b2a34"></a>PNG&#160;</td><td class="fielddoc"><p>Use PNG compression </p>
+<tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93af8fd4f1b5b05c6b1cc6a661141fd4f54"></a>Png&#160;</td><td class="fielddoc"><p>Use PNG compression. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Use no compression </p>
+<tr><td class="fieldname"><a id="a1a9b9f860738a4507a3c95f332a14b93a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Use no compression. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a14ec4ef769772f3e620f08b8b97e466a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14ec4ef769772f3e620f08b8b97e466a">&#9670;&nbsp;</a></span>DepthCompressionMethod</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a14ec4ef769772f3e620f08b8b97e466a">Microsoft.Psi.Imaging.DepthCompressionMethod</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Defines type of compression to use when serializing out a <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image.html" title="Represents a depth image, stored in unmanaged memory.">DepthImage</a>. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a14ec4ef769772f3e620f08b8b97e466aaf8fd4f1b5b05c6b1cc6a661141fd4f54"></a>Png&#160;</td><td class="fielddoc"><p>Use PNG compression. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a14ec4ef769772f3e620f08b8b97e466aa6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Use no compression. </p>
 </td></tr>
 </table>
 
@@ -235,7 +334,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>PixelFormat defines. </p>
+<p>Defines the various pixel formats supported by the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html" title="Represents an image, stored in unmanaged memory.">Image</a> type. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a222a914ab26d4a64291078a51af7dafbaec0fc0100c4fc1ce4eea230c3dc10360"></a>Undefined&#160;</td><td class="fielddoc"><p>Used when the pixel format isn't defined. </p>
 </td></tr>
@@ -324,8 +423,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a2819f0265488b9a3042807f878692f4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2819f0265488b9a3042807f878692f4c">&#9670;&nbsp;</a></span>TransformDelegate()</h2>
+<a id="a64474a9404e0cc891004233e4ec6f361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64474a9404e0cc891004233e4ec6f361">&#9670;&nbsp;</a></span>TransformDelegate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -334,13 +433,13 @@ Functions</h2></td></tr>
           <td class="memname">delegate void Microsoft.Psi.Imaging.TransformDelegate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
+          <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a>&#160;</td>
-          <td class="paramname"><em>dest</em>&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -353,8 +452,8 @@ Functions</h2></td></tr>
 <p>Defines the delegate used to perform an image transformation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">src</td><td>Source image to be transformed.</td></tr>
-    <tr><td class="paramname">dest</td><td>Destination for transformed image.</td></tr>
+    <tr><td class="paramname">source</td><td>Source image to be transformed.</td></tr>
+    <tr><td class="paramname">destination</td><td>Destination for transformed image.</td></tr>
   </table>
   </dd>
 </dl>

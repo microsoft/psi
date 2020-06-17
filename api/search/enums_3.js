@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flipmode_5156',['FlipMode',['../namespace_microsoft_1_1_psi_1_1_imaging.html#a579b3fc93495e6cecd4fec2c7432d562',1,'Microsoft::Psi::Imaging']]]
+  ['emittercounters_5332',['EmitterCounters',['../namespace_microsoft_1_1_psi.html#abf9f7febd7b38f67e163b38e328a111b',1,'Microsoft::Psi']]]
 ];

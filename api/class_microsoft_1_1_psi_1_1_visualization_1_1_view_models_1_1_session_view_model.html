@@ -126,7 +126,7 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a4048587973fbc490569cadd825b1f23a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_session_view_model.html#a4048587973fbc490569cadd825b1f23a">More...</a><br /></td></tr>
 <tr class="separator:a4048587973fbc490569cadd825b1f23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e30b520510c961ab600cea2225f9b24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_session_view_model.html#a0e30b520510c961ab600cea2225f9b24">OriginatingTimeInterval</a></td></tr>
-<tr class="memdesc:a0e30b520510c961ab600cea2225f9b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the orginating time interval (earliest to latest) of the messages in this session.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_session_view_model.html#a0e30b520510c961ab600cea2225f9b24">More...</a><br /></td></tr>
+<tr class="memdesc:a0e30b520510c961ab600cea2225f9b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the originating time interval (earliest to latest) of the messages in this session.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_session_view_model.html#a0e30b520510c961ab600cea2225f9b24">More...</a><br /></td></tr>
 <tr class="separator:a0e30b520510c961ab600cea2225f9b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8f99e8af1c2051f4d4bb2fa92efec0f"><td class="memItemLeft" align="right" valign="top">ReadOnlyObservableCollection&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_partition_view_model.html">PartitionViewModel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_session_view_model.html#ab8f99e8af1c2051f4d4bb2fa92efec0f">PartitionViewModels</a> =&gt; this.partitionViewModels</td></tr>
 <tr class="memdesc:ab8f99e8af1c2051f4d4bb2fa92efec0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the collection of partitions in this session.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_view_models_1_1_session_view_model.html#ab8f99e8af1c2051f4d4bb2fa92efec0f">More...</a><br /></td></tr>
@@ -353,7 +353,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">storeName</td><td>The name of the annotation store.</td></tr>
     <tr><td class="paramname">storePath</td><td>The path of the annotation store.</td></tr>
-    <tr><td class="paramname">definition</td><td>The annotated event definition to use when creating new annoted events in the newly created annotation partition.</td></tr>
+    <tr><td class="paramname">definition</td><td>The annotated event definition to use when creating new annotated events in the newly created annotation partition.</td></tr>
     <tr><td class="paramname">partitionName</td><td>The partition name. Default is null.</td></tr>
   </table>
   </dd>
@@ -564,7 +564,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">                    .Where(p =&gt; p.OriginatingTimeInterval.Left &gt; DateTime.MinValue &amp;&amp; p.OriginatingTimeInterval.Right &lt; DateTime.MaxValue)</div>
 <div class="line">                    .Select(p =&gt; p.OriginatingTimeInterval))</div>
 </div><!-- fragment -->
-<p>Gets the orginating time interval (earliest to latest) of the messages in this session. </p>
+<p>Gets the originating time interval (earliest to latest) of the messages in this session. </p>
 
 </div>
 </div>

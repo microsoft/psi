@@ -84,6 +84,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af4a05a6ae37c4605f7a4ea0a7a35a7be"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html">VisualizerMetadata</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html#af4a05a6ae37c4605f7a4ea0a7a35a7be">Create</a> (Type visualizationObjectType, Dictionary&lt; Type, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_summarizers_1_1_summarizer_metadata.html">SummarizerMetadata</a> &gt; summarizers, List&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_adapters_1_1_stream_adapter_metadata.html">StreamAdapterMetadata</a> &gt; dataAdapters, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_log_writer.html">VisualizationLogWriter</a> logWriter)</td></tr>
 <tr class="memdesc:af4a05a6ae37c4605f7a4ea0a7a35a7be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates one or two visualizer metadatas depending on whether a "Visualize in new panel" icon source path was suplied by the visualization object.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html#af4a05a6ae37c4605f7a4ea0a7a35a7be">More...</a><br /></td></tr>
 <tr class="separator:af4a05a6ae37c4605f7a4ea0a7a35a7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1373c028ac9d4ed1bee23522c18623e4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html">VisualizerMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html#a1373c028ac9d4ed1bee23522c18623e4">GetClosestVisualizerMetadata</a> (Type dataType, IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html">VisualizerMetadata</a> &gt; metadatas)</td></tr>
+<tr class="memdesc:a1373c028ac9d4ed1bee23522c18623e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the visualizer metadata whose data type is hierarchically closest to a stream's data type. Metadata objects that don't use an adapter are prioritized first.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html#a1373c028ac9d4ed1bee23522c18623e4">More...</a><br /></td></tr>
+<tr class="separator:a1373c028ac9d4ed1bee23522c18623e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -184,6 +187,52 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of visualizer metadatas.</dd></dl>
+
+</div>
+</div>
+<a id="a1373c028ac9d4ed1bee23522c18623e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1373c028ac9d4ed1bee23522c18623e4">&#9670;&nbsp;</a></span>GetClosestVisualizerMetadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html">VisualizerMetadata</a> Microsoft.Psi.Visualization.VisualizerMetadata.GetClosestVisualizerMetadata </td>
+          <td>(</td>
+          <td class="paramtype">Type&#160;</td>
+          <td class="paramname"><em>dataType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IEnumerable&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html">VisualizerMetadata</a> &gt;&#160;</td>
+          <td class="paramname"><em>metadatas</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the visualizer metadata whose data type is hierarchically closest to a stream's data type. Metadata objects that don't use an adapter are prioritized first. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dataType</td><td>The data type of messages in the stream.</td></tr>
+    <tr><td class="paramname">metadatas</td><td>A list of metadatas to select from.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The metadata whose data type is closest (hierarchically, prioritizing non-adapters) to the message data type.</dd></dl>
 
 </div>
 </div>

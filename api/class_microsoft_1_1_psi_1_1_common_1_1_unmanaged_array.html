@@ -139,6 +139,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae488592c050fd35ddbd40303d70e7737"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#ae488592c050fd35ddbd40303d70e7737">Dispose</a> ()</td></tr>
 <tr class="memdesc:ae488592c050fd35ddbd40303d70e7737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees the underlying memory.  <a href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#ae488592c050fd35ddbd40303d70e7737">More...</a><br /></td></tr>
 <tr class="separator:ae488592c050fd35ddbd40303d70e7737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acccf0d1e27d1601ae34120b4e7315e89"><td class="memItemLeft" align="right" valign="top">IEnumerator&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#acccf0d1e27d1601ae34120b4e7315e89">GetEnumerator</a> ()</td></tr>
+<tr class="separator:acccf0d1e27d1601ae34120b4e7315e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -148,9 +150,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aab27832f05c37fd2d696fd771e118769"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#aab27832f05c37fd2d696fd771e118769">Length</a> =&gt; this.length</td></tr>
 <tr class="memdesc:aab27832f05c37fd2d696fd771e118769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of elements in the array.  <a href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#aab27832f05c37fd2d696fd771e118769">More...</a><br /></td></tr>
 <tr class="separator:aab27832f05c37fd2d696fd771e118769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a463e28de0723632a009f36a83d8eab79"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#a463e28de0723632a009f36a83d8eab79">Count</a> =&gt; this.length</td></tr>
+<tr class="memdesc:a463e28de0723632a009f36a83d8eab79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of elements in the array.  <a href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#a463e28de0723632a009f36a83d8eab79">More...</a><br /></td></tr>
+<tr class="separator:a463e28de0723632a009f36a83d8eab79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb568ea3cd30e8290703489c4a56b5e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#aeb568ea3cd30e8290703489c4a56b5e5">Size</a> =&gt; this.length * <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#a6eb6cf835ef46bdc6966537f77ecf1bf">ElementSize</a></td></tr>
 <tr class="memdesc:aeb568ea3cd30e8290703489c4a56b5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the allocated memory, in bytes.  <a href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#aeb568ea3cd30e8290703489c4a56b5e5">More...</a><br /></td></tr>
 <tr class="separator:aeb568ea3cd30e8290703489c4a56b5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad19c63c4375e27aa7e1c45ece6b95360"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#ad19c63c4375e27aa7e1c45ece6b95360">IsReadOnly</a> =&gt; this.isReadOnly</td></tr>
+<tr class="memdesc:ad19c63c4375e27aa7e1c45ece6b95360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value indicating whether the array can be modified or not.  <a href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#ad19c63c4375e27aa7e1c45ece6b95360">More...</a><br /></td></tr>
+<tr class="separator:ad19c63c4375e27aa7e1c45ece6b95360"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -680,6 +688,25 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="acccf0d1e27d1601ae34120b4e7315e89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acccf0d1e27d1601ae34120b4e7315e89">&#9670;&nbsp;</a></span>GetEnumerator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerator&lt;T&gt; <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html">Microsoft.Psi.Common.UnmanagedArray</a>&lt; T &gt;.GetEnumerator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
 <a id="a71b376102c6effe317ea5bec6cad1f05"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a71b376102c6effe317ea5bec6cad1f05">&#9670;&nbsp;</a></span>GetRef()</h2>
 
@@ -809,6 +836,22 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a463e28de0723632a009f36a83d8eab79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a463e28de0723632a009f36a83d8eab79">&#9670;&nbsp;</a></span>Count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html">Microsoft.Psi.Common.UnmanagedArray</a>&lt; T &gt;.Count =&gt; this.length</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the number of elements in the array. </p>
+
+</div>
+</div>
 <a id="a3250cbe6d522501ccb7a48d34f799da1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3250cbe6d522501ccb7a48d34f799da1">&#9670;&nbsp;</a></span>Data</h2>
 
@@ -846,6 +889,22 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The size, in bytes, of one array element, as returned by the MSIL sizeof instruction. </p>
+
+</div>
+</div>
+<a id="ad19c63c4375e27aa7e1c45ece6b95360"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad19c63c4375e27aa7e1c45ece6b95360">&#9670;&nbsp;</a></span>IsReadOnly</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html">Microsoft.Psi.Common.UnmanagedArray</a>&lt; T &gt;.IsReadOnly =&gt; this.isReadOnly</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a value indicating whether the array can be modified or not. </p>
 
 </div>
 </div>

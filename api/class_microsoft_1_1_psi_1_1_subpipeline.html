@@ -82,13 +82,19 @@ $(function() {
 
 <p>Inherits <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Microsoft.Psi.Pipeline</a>, and <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
-<p>Inherited by <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">Microsoft.Psi.Components.ParallelFixedLength&lt; TIn, TOut &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse_do.html">Microsoft.Psi.Components.ParallelSparseDo&lt; TIn, TBranchKey, TBranchIn &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse_select.html">Microsoft.Psi.Components.ParallelSparseSelect&lt; TIn, TBranchKey, TBranchIn, TBranchOut, TOut &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_variable_length.html">Microsoft.Psi.Components.ParallelVariableLength&lt; TIn, TOut &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Microsoft.Psi.Data.Exporter</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Microsoft.Psi.Data.Importer</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_exporter.html">Microsoft.Psi.Data.Json.JsonExporter</a>.</p>
+<p>Inherited by <a class="el" href="class_microsoft_1_1_psi_1_1_azure_kinect_1_1_azure_kinect_sensor.html">Microsoft.Psi.AzureKinect.AzureKinectSensor</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_fixed_length.html">Microsoft.Psi.Components.ParallelFixedLength&lt; TIn, TOut &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse_do.html">Microsoft.Psi.Components.ParallelSparseDo&lt; TIn, TBranchKey, TBranchIn &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_sparse_select.html">Microsoft.Psi.Components.ParallelSparseSelect&lt; TIn, TBranchKey, TBranchIn, TBranchOut, TOut &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_parallel_variable_length.html">Microsoft.Psi.Components.ParallelVariableLength&lt; TIn, TOut &gt;</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Microsoft.Psi.Data.Exporter</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Microsoft.Psi.Data.Importer</a>, and <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_exporter.html">Microsoft.Psi.Data.Json.JsonExporter</a>.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a5b1804b8107cce279387ec2cbcd66391"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#a5b1804b8107cce279387ec2cbcd66391">Subpipeline</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> parent, string name=null, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a> defaultDeliveryPolicy=null)</td></tr>
 <tr class="memdesc:a5b1804b8107cce279387ec2cbcd66391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html" title="Represents a graph of components and controls scheduling and message passing.">Subpipeline</a> class.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#a5b1804b8107cce279387ec2cbcd66391">More...</a><br /></td></tr>
 <tr class="separator:a5b1804b8107cce279387ec2cbcd66391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9ac530e7f6ad4c8eaffafcccc60440"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#a9f9ac530e7f6ad4c8eaffafcccc60440">Start</a> (Action&lt; DateTime &gt; notifyCompletionTime)</td></tr>
+<tr class="memdesc:a9f9ac530e7f6ad4c8eaffafcccc60440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize subpipeline as a finite source component.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#a9f9ac530e7f6ad4c8eaffafcccc60440">More...</a><br /></td></tr>
+<tr class="separator:a9f9ac530e7f6ad4c8eaffafcccc60440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab02c52ed44003fa9b7f9d025e7de11df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#ab02c52ed44003fa9b7f9d025e7de11df">Stop</a> (DateTime finalOriginatingTime, Action notifyCompleted)</td></tr>
+<tr class="memdesc:ab02c52ed44003fa9b7f9d025e7de11df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#ab02c52ed44003fa9b7f9d025e7de11df">More...</a><br /></td></tr>
+<tr class="separator:ab02c52ed44003fa9b7f9d025e7de11df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86064e732df4b3dafbd43721b6509c99"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_subpipeline.html#a86064e732df4b3dafbd43721b6509c99">ProposeReplayTime</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> originatingTimeInterval)</td></tr>
 <tr class="memdesc:a86064e732df4b3dafbd43721b6509c99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propose replay time.  <a href="class_microsoft_1_1_psi_1_1_subpipeline.html#a86064e732df4b3dafbd43721b6509c99">More...</a><br /></td></tr>
 <tr class="separator:a86064e732df4b3dafbd43721b6509c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -515,6 +521,67 @@ Additional Inherited Members</h2></td></tr>
 <p>Run pipeline (asynchronously). </p>
 
 <p>Reimplemented from <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aef5e16f1c1534527d04b6d53991d0715">Microsoft.Psi.Pipeline</a>.</p>
+
+</div>
+</div>
+<a id="a9f9ac530e7f6ad4c8eaffafcccc60440"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f9ac530e7f6ad4c8eaffafcccc60440">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Subpipeline.Start </td>
+          <td>(</td>
+          <td class="paramtype">Action&lt; DateTime &gt;&#160;</td>
+          <td class="paramname"><em>notifyCompletionTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize subpipeline as a finite source component. </p>
+<p>This is called by the parent subpipeline, if any.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notifyCompletionTime</td><td>Delegate to call to notify of completion time.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#a2fcc721c33d6cef16dfb2ac19f33a6cf">Microsoft.Psi.Components.ISourceComponent</a>.</p>
+
+</div>
+</div>
+<a id="ab02c52ed44003fa9b7f9d025e7de11df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab02c52ed44003fa9b7f9d025e7de11df">&#9670;&nbsp;</a></span>Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Subpipeline.Stop </td>
+          <td>(</td>
+          <td class="paramtype">DateTime&#160;</td>
+          <td class="paramname"><em>finalOriginatingTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>notifyCompleted</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called by the pipeline when shutting down. The component should stop generating new messages once this method completes. However, the component might still receive new messages (if it is subscribed to other components) after this call and is expected to handle them. </p>
+
+<p>Implements <a class="el" href="interface_microsoft_1_1_psi_1_1_components_1_1_i_source_component.html#afb35f77a0aa5949715b75ed467b7dbbd">Microsoft.Psi.Components.ISourceComponent</a>.</p>
 
 </div>
 </div>

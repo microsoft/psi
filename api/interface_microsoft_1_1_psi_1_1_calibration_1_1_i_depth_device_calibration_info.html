@@ -89,14 +89,20 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:ac49041869f81f56aed8f0f57243705e4"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#ac49041869f81f56aed8f0f57243705e4">ColorExtrinsics</a><code> [get]</code></td></tr>
-<tr class="memdesc:ac49041869f81f56aed8f0f57243705e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extrinsics defining the color camera's position with respect to the depth camera.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#ac49041869f81f56aed8f0f57243705e4">More...</a><br /></td></tr>
+<tr class="memdesc:ac49041869f81f56aed8f0f57243705e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extrinsics associated with the color camera, which describes how to transform points in world coordinates to color camera coordinates (world =&gt; camera).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#ac49041869f81f56aed8f0f57243705e4">More...</a><br /></td></tr>
 <tr class="separator:ac49041869f81f56aed8f0f57243705e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9198d818908431908339c49cd919c87f"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a9198d818908431908339c49cd919c87f">ColorPose</a><code> [get]</code></td></tr>
+<tr class="memdesc:a9198d818908431908339c49cd919c87f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pose of the color camera in the world, which is obtained by inverting the extrinsics matrix (camera =&gt; world).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a9198d818908431908339c49cd919c87f">More...</a><br /></td></tr>
+<tr class="separator:a9198d818908431908339c49cd919c87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a296b2af702a6ef3021a3cb9c2bbfbd1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a296b2af702a6ef3021a3cb9c2bbfbd1a">ColorIntrinsics</a><code> [get]</code></td></tr>
 <tr class="memdesc:a296b2af702a6ef3021a3cb9c2bbfbd1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the intrinsics associated with the color camera.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a296b2af702a6ef3021a3cb9c2bbfbd1a">More...</a><br /></td></tr>
 <tr class="separator:a296b2af702a6ef3021a3cb9c2bbfbd1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9edb3c3879639005ca56f7ff7ad93f37"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a9edb3c3879639005ca56f7ff7ad93f37">DepthExtrinsics</a><code> [get]</code></td></tr>
-<tr class="memdesc:a9edb3c3879639005ca56f7ff7ad93f37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extrinsics defining the depth camera's position in the world.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a9edb3c3879639005ca56f7ff7ad93f37">More...</a><br /></td></tr>
+<tr class="memdesc:a9edb3c3879639005ca56f7ff7ad93f37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the extrinsics associated with the depth camera, which describes how to transform points in world coordinates to depth camera coordinates (world =&gt; camera).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a9edb3c3879639005ca56f7ff7ad93f37">More...</a><br /></td></tr>
 <tr class="separator:a9edb3c3879639005ca56f7ff7ad93f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ff1396fcd74bd2f9f383f2886e0290"><td class="memItemLeft" align="right" valign="top">CoordinateSystem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a42ff1396fcd74bd2f9f383f2886e0290">DepthPose</a><code> [get]</code></td></tr>
+<tr class="memdesc:a42ff1396fcd74bd2f9f383f2886e0290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pose of the depth camera in the world, which is obtained by inverting the extrinsics matrix (camera =&gt; world).  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a42ff1396fcd74bd2f9f383f2886e0290">More...</a><br /></td></tr>
+<tr class="separator:a42ff1396fcd74bd2f9f383f2886e0290"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dc3f22afe8d441f0cdd027b73d538c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_camera_intrinsics.html">ICameraIntrinsics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a0dc3f22afe8d441f0cdd027b73d538c9">DepthIntrinsics</a><code> [get]</code></td></tr>
 <tr class="memdesc:a0dc3f22afe8d441f0cdd027b73d538c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the intrinsics associated with the depth camera.  <a href="interface_microsoft_1_1_psi_1_1_calibration_1_1_i_depth_device_calibration_info.html#a0dc3f22afe8d441f0cdd027b73d538c9">More...</a><br /></td></tr>
 <tr class="separator:a0dc3f22afe8d441f0cdd027b73d538c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,7 +160,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the extrinsics defining the color camera's position with respect to the depth camera. </p>
+<p>Gets the extrinsics associated with the color camera, which describes how to transform points in world coordinates to color camera coordinates (world =&gt; camera). </p>
 
 </div>
 </div>
@@ -182,6 +188,30 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a9198d818908431908339c49cd919c87f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9198d818908431908339c49cd919c87f">&#9670;&nbsp;</a></span>ColorPose</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CoordinateSystem Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.ColorPose</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the pose of the color camera in the world, which is obtained by inverting the extrinsics matrix (camera =&gt; world). </p>
+
+</div>
+</div>
 <a id="a9edb3c3879639005ca56f7ff7ad93f37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9edb3c3879639005ca56f7ff7ad93f37">&#9670;&nbsp;</a></span>DepthExtrinsics</h2>
 
@@ -202,7 +232,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the extrinsics defining the depth camera's position in the world. </p>
+<p>Gets the extrinsics associated with the depth camera, which describes how to transform points in world coordinates to depth camera coordinates (world =&gt; camera). </p>
 
 </div>
 </div>
@@ -227,6 +257,30 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the intrinsics associated with the depth camera. </p>
+
+</div>
+</div>
+<a id="a42ff1396fcd74bd2f9f383f2886e0290"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42ff1396fcd74bd2f9f383f2886e0290">&#9670;&nbsp;</a></span>DepthPose</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CoordinateSystem Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.DepthPose</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the pose of the depth camera in the world, which is obtained by inverting the extrinsics matrix (camera =&gt; world). </p>
 
 </div>
 </div>

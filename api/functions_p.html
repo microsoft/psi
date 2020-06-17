@@ -127,6 +127,9 @@ $(function() {
 <li>Parallel&lt; TIn, TBranchKey, TBranchIn &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ad1ee4a7f41a8e2c5aef77616e8ad5956">Microsoft.Psi.Operators</a>
 </li>
+<li>Parallel&lt; TIn, TBranchKey, TBranchIn, TBranchOut &gt;()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#ad4ce73d45d270975165c1fdc59d32a70">Microsoft.Psi.Operators</a>
+</li>
 <li>Parallel&lt; TIn, TBranchKey, TBranchIn, TBranchOut, TOut &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a93776f87879a8a13d37f74db99f4581f">Microsoft.Psi.Operators</a>
 </li>
@@ -323,7 +326,9 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_operators.html#a34a0efb703f4e200d0ee99f00cb820ca">Microsoft.Psi.Operators</a>
 </li>
 <li>PixelFormat
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html#a4a6f39ba6a25ced4d80e643fe357abca">Microsoft.Psi.Imaging.Image</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html#af4b13a57c3db3d7a29ace10ca343ac50">Microsoft.Psi.Imaging.EncodedDepthImage</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a0c6cbdf5dba72c09a8b121f5c632686f">Microsoft.Psi.Imaging.EncodedImage</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base.html#a39a71d37d79a95b628a8dca4f6201f21">Microsoft.Psi.Imaging.ImageBase</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_media_capture_configuration.html#a25e5b41b10beffe77e8b832082637841">Microsoft.Psi.Media.MediaCaptureConfiguration</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media_1_1_mpeg4_writer_configuration.html#a5f04fd1ef5e184ba997baf1244dc6cbe">Microsoft.Psi.Media.Mpeg4WriterConfiguration</a>
 </li>
@@ -377,11 +382,18 @@ $(function() {
 <li>Points3DVisualizationObject()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_points3_d_visualization_object.html#a919d65205ed7b7e7c0bc39b164d2d404">Microsoft.Psi.Visualization.VisualizationObjects.Points3DVisualizationObject</a>
 </li>
+<li>PointSize
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_depth_image_as3_d_point_cloud_visualization_object.html#aff2e5c260a63555c4e1b3f3f11cf8329">Microsoft.Psi.Visualization.VisualizationObjects.DepthImageAs3DPointCloudVisualizationObject</a>
+</li>
 <li>PointsVisual()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_views_1_1_visuals3_d_1_1_points_visual.html#a8e7f79841e5b14e5861651dd28121fc7">Microsoft.Psi.Visualization.Views.Visuals3D.PointsVisual</a>
 </li>
 <li>PointToCenter()
 : <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#aaca5f749af6828772eea9c71dfbbe06a">Microsoft.Msagl.WpfGraphControl.GraphViewer</a>
+</li>
+<li>PolygonResolution
+: <a class="el" href="class_microsoft_1_1_psi_1_1_azure_kinect_1_1_visualization_1_1_azure_kinect_body_visualization_object.html#a797f7d690fb018a8f46b8ece525afcf4">Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_visualization_1_1_kinect_body_visualization_object.html#a12081807c1e79506e5d095daabf0982d">Microsoft.Psi.Kinect.Visualization.KinectBodyVisualizationObject</a>
 </li>
 <li>Pool
 : <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_adapter.html#abaf7aeeaf7f3a9bcbbdd8e953c621631">Microsoft.Psi.Visualization.Data.IStreamAdapter</a>
@@ -408,11 +420,11 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_emitter.html#ab4d988ce627707f4b8c32155d02fb34f">Microsoft.Psi.Emitter&lt; T &gt;</a>
 </li>
 <li>PrepareCloningTarget()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#aba1c49c8f490196a950e20f2ca26ecfb">Microsoft.Psi.Imaging.Image.CustomSerializer</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base_1_1_custom_serializer.html#a56301921a4c93a34c6fe7ac916fd9497">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt; TImage &gt;</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_serialization_1_1_i_serializer.html#afcc74e228368fa89594b6fa43a488f40">Microsoft.Psi.Serialization.ISerializer&lt; T &gt;</a>
 </li>
 <li>PrepareDeserializationTarget()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_1_1_custom_serializer.html#a60e7c039b14eadcfc2b51c6172e5840e">Microsoft.Psi.Imaging.Image.CustomSerializer</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_base_1_1_custom_serializer.html#a9bf76f463c30707b81dd4844a464abdc">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt; TImage &gt;</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_serialization_1_1_i_serializer.html#ac7c0b8b92abb6cfea7ece1cc7c96c3ea">Microsoft.Psi.Serialization.ISerializer&lt; T &gt;</a>
 </li>
 <li>PreviousState
@@ -451,8 +463,11 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a24b543dcef1e4e26d520097eebc3b809">Microsoft.Psi.Pipeline</a>
 </li>
 <li>ProjectTo3D()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_project_to3_d.html#af3db4e04615c3f2b2496dad2f833ff1a">Microsoft.Psi.Calibration.ProjectTo3D</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aa86d4323f1c847d94d374cd96b9f9855">Microsoft.Psi.Kinect.KinectExtensions</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#a7278fb915111e08ec226fb15dfc27e04">Microsoft.Psi.Calibration.DepthExtensions</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_project_to3_d.html#af3db4e04615c3f2b2496dad2f833ff1a">Microsoft.Psi.Calibration.ProjectTo3D</a>
+</li>
+<li>ProjectToCameraSpace()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_calibration_1_1_depth_extensions.html#a721e26838cda45ff492d65821235205d">Microsoft.Psi.Calibration.DepthExtensions</a>
 </li>
 <li>PropertyChanged
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_base_1_1_observable_object.html#ad1ac4f6382ab85e0e493f6b3956e9529">Microsoft.Psi.Visualization.Base.ObservableObject</a>
@@ -479,10 +494,13 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_speech_1_1_system_speech_synthesizer_configuration.html#a5086f93606dfb3388c8daefed0c709e9">Microsoft.Psi.Speech.SystemSpeechSynthesizerConfiguration</a>
 </li>
 <li>Prototype
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object_collection_base.html#a2365b26b02e0331a9c6a120709357991">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObjectCollectionBase&lt; TVisObj, TData &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object_collection_base.html#aecd6e1453acf8a810e8cf3735a482cc2">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObjectCollectionBase&lt; TVisualizationObject, TData &gt;</a>
 </li>
 <li>PruneDeadViews()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache.html#afdc2620c9c5f75a997ad22945f9ac4a8">Microsoft.Psi.Visualization.Collections.ObservableKeyedCache&lt; TKey, TItem &gt;</a>
+</li>
+<li>PseudoColorize()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_operators.html#ab2823afc17c32d1b128d940b9fe67e1e">Microsoft.Psi.Imaging.Operators</a>
 </li>
 <li>PsiImage
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_common_1_1_display_image.html#a5ca9168b2f1809dedebf2f82c1b57542">Microsoft.Psi.Visualization.Common.DisplayImage</a>

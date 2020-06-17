@@ -84,7 +84,7 @@ $(function() {
 </li>
 <li>GenerateCustomPropertyDescriptors()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object.html#a0582947cd04d39b55c4cafef729a2135">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt; TData &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object_collection_base.html#a60cdb93d623db29904e9f44d71ba5ec2">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObjectCollectionBase&lt; TVisObj, TData &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object_collection_base.html#aa11398859701c56280b3fa068aaf60a5">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObjectCollectionBase&lt; TVisualizationObject, TData &gt;</a>
 </li>
 <li>GenerateNext()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_components_1_1_generator.html#a3340bb1ea5eaba3d4c41044347e4a311">Microsoft.Psi.Components.Generator&lt; T &gt;</a>
@@ -128,10 +128,10 @@ $(function() {
 </li>
 <li>GetBitsPerPixel()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_extensions.html#a3213470fd9425d8522868134ad0bd2f7">Microsoft.Psi.Imaging.PixelFormatExtensions</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html#a4da6939d8e296f35b671f071e4f10765">Microsoft.Psi.Imaging.PixelFormatHelper</a>
 </li>
 <li>GetBuffer()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a7737be9eefcabbed6035b7b34f91a848">Microsoft.Psi.Imaging.EncodedImage</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image.html#a25560fc83804fda44da6f7b997512e3b">Microsoft.Psi.Imaging.EncodedDepthImage</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#a7737be9eefcabbed6035b7b34f91a848">Microsoft.Psi.Imaging.EncodedImage</a>
 </li>
 <li>GetByDataType()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_map.html#aa27ed628bcbd985af487c5aa1b39c748">Microsoft.Psi.Visualization.VisualizerMap</a>
@@ -144,13 +144,15 @@ $(function() {
 </li>
 <li>GetBytesPerPixel()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_extensions.html#a72f4781f0dd59c548de938f548caa7c8">Microsoft.Psi.Imaging.PixelFormatExtensions</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_pixel_format_helper.html#a1f4fc1892b8bee6ee6d20a0e965cc5a5">Microsoft.Psi.Imaging.PixelFormatHelper</a>
 </li>
 <li>GetChunks()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_remoting_1_1_data_chunker.html#a0eefc5c22c3664acf296c6782fe48f78">Microsoft.Psi.Remoting.DataChunker</a>
 </li>
 <li>GetClassName()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object.html#a6fcd8f2b53b3fad7b3865c12d8200ae5">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt; TData &gt;</a>
+</li>
+<li>GetClosestVisualizerMetadata()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualizer_metadata.html#a1373c028ac9d4ed1bee23522c18623e4">Microsoft.Psi.Visualization.VisualizerMetadata</a>
 </li>
 <li>GetColorBpp()
 : <a class="el" href="struct_i_real_sense_device_unmanaged.html#a1802140285a2acdf09300ccbfba01842">IRealSenseDeviceUnmanaged</a>
@@ -196,6 +198,9 @@ $(function() {
 </li>
 <li>GetCurrentTimeFromElapsedTicks()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#aac57fa881009f2653b7046881087b5a7">Microsoft.Psi.Pipeline</a>
+</li>
+<li>GetDataType()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_context.html#a8585c931ccef7b494bc49c9754c89537">Microsoft.Psi.Visualization.VisualizationContext</a>
 </li>
 <li>GetDefaultDeliveryPolicy&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html#a50ceed2423335ebe7c1a0ba0f844ef56">Microsoft.Psi.Pipeline</a>
@@ -268,7 +273,8 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_behaviors_1_1_tree_view_item_behavior.html#af201f52e1e6f49b471de57f7e6e527a9">Microsoft.Psi.Visualization.Behaviors.TreeViewItemBehavior</a>
 </li>
 <li>GetEnumerator()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a6b29e6f09bbc163f24cf1757708f24ff">Microsoft.Psi.Operators.StreamEnumerable&lt; T &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#acccf0d1e27d1601ae34120b4e7315e89">Microsoft.Psi.Common.UnmanagedArray&lt; T &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_operators_1_1_stream_enumerable.html#a6b29e6f09bbc163f24cf1757708f24ff">Microsoft.Psi.Operators.StreamEnumerable&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_keyed_cache_1_1_observable_keyed_view.html#aefa985a7727d0c2026c88d4219070f47">Microsoft.Psi.Visualization.Collections.ObservableKeyedCache&lt; TKey, TItem &gt;.ObservableKeyedView</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_collections_1_1_observable_sorted_collection.html#a44bc5d00630f0ae9c662386c0fa929e0">Microsoft.Psi.Visualization.Collections.ObservableSortedCollection&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_r_g_b_camera_collection.html#a13aa80b63b62779f3a87440f778a5052">Microsoft.Psi::Media_Interop::RGBCameraCollection</a>
@@ -293,18 +299,15 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_serialization_1_1_type_schema.html#ab44aec3dcec4b1bfe4b7fd120bdec4eb">Microsoft.Psi.Serialization.TypeSchema</a>
 </li>
 <li>GetIndexForTime()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#a46794eb872f8e0aa59e989940c126a08">Microsoft.Psi.Visualization.Helpers.IndexHelper</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_helpers_1_1_index_helper.html#a08c50334c195be726eebf80db5d4f3be">Microsoft.Psi.Visualization.Helpers.IndexHelper</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_plot_visualization_object.html#ac363bb8756a2717df20f601b6356274c">Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject&lt; TData &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a33b6251b35a91299205f2cf28ef81d77">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>
 </li>
+<li>GetInstalledCount()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_azure_kinect_1_1_azure_kinect_sensor.html#afa07c75c81d3a4004eebf2776dd79357">Microsoft.Psi.AzureKinect.AzureKinectSensor</a>
+</li>
 <li>GetIntervalStartTime()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_summarizer.html#afa13a71374fef0e4f1b1b97e50ee559c">Microsoft.Psi.Visualization.Data.Summarizer&lt; TSrc, TDest &gt;</a>
-</li>
-<li>GetJointCoordinateSystem()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aace0706258ae68dbb3a2c4e4e5fc8b1c">Microsoft.Psi.Kinect.KinectExtensions</a>
-</li>
-<li>GetJointPosition()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aad87f76714c523e81cd5696d93a2ee6f">Microsoft.Psi.Kinect.KinectExtensions</a>
 </li>
 <li>GetLabelCreator()
 : <a class="el" href="class_microsoft_1_1_msagl_1_1_wpf_graph_control_1_1_graph_viewer.html#a62e0221815851fe82c69cf055e59f485">Microsoft.Msagl.WpfGraphControl.GraphViewer</a>
@@ -317,7 +320,7 @@ $(function() {
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_generator.html#a550db669345a5f93051662df48f2e931">Microsoft.Psi.Data.Json.JsonGenerator</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_json_1_1_json_store_reader.html#a89d24cb4a29714229fefaed13fb148f5">Microsoft.Psi.Data.Json.JsonStoreReader</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a9df7375db0daaa0d445a0925235226ce">Microsoft.Psi.Data.SimpleReader</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_reader.html#a1328e9f54798105836f4634cddb0f559">Microsoft.Psi.Persistence.StoreReader</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_persistence_1_1_store_reader.html#a1a7ecce8f1c3ac7bf30f457d7b0bbd49">Microsoft.Psi.Persistence.StoreReader</a>
 </li>
 <li>GetNext()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_updatable_visual3_d_list.html#a0f91a97d086881e851622ddb49228efe">Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DList&lt; TVisual &gt;</a>
@@ -326,13 +329,26 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_model_visual3_d_visualization_object.html#ace9f95cd33e91df29b791d9616974a09">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt; TData &gt;</a>
 </li>
 <li>GetOrCreate()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#a6f6de8f607521b54d13a76320afec0c4">Microsoft.Psi.Imaging.EncodedImagePool</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_pool.html#a9ab144dc82caa09b730c265e8eb825ea">Microsoft.Psi.Imaging.DepthImagePool</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_depth_image_pool.html#a02a10e65a2c60768f908f8a9112f83ff">Microsoft.Psi.Imaging.EncodedDepthImagePool</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image_pool.html#ad603b5ff33058c662ccea31c80515a1e">Microsoft.Psi.Imaging.EncodedImagePool</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html#a2aad1eaff8207008b62846cd226403f9">Microsoft.Psi.Imaging.ImagePool</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_keyed_shared_pool.html#acd58af6b11ca8dddd9ce0c3fcdacba07">Microsoft.Psi.KeyedSharedPool&lt; T, TKey &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_shared_array_pool.html#a089c9432bc6aff613bf62dface9fd74d">Microsoft.Psi.SharedArrayPool&lt; T &gt;</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_shared_pool.html#ac2307c457ef4ac1d15519db1c2469c8c">Microsoft.Psi.SharedPool&lt; T &gt;</a>
 , <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_pool.html#a37f4f8aa467fd1dddd330b0f2ad2005b">Microsoft.Psi.Visualization.Data.IPool</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_pool.html#a6bc36e169cd6235a40c59a71a4740d17">Microsoft.Psi.Visualization.Data.Pool&lt; T &gt;</a>
+</li>
+<li>GetOrCreateFrom()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_depth_image_pool.html#ac22b0faefc91e896fd33ec8bf10dd2bc">Microsoft.Psi.Imaging.DepthImagePool</a>
+</li>
+<li>GetOrCreateFromBitmap()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_pool.html#aa86aaece44f497e13097ef09195679e7">Microsoft.Psi.Imaging.ImagePool</a>
+</li>
+<li>GetOriginatingTimeOfNearestInstantMessage()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_data_manager.html#af96fe1c8fbf6957e31533b5f177753c8">Microsoft.Psi.Visualization.Data.DataManager</a>
+, <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_reader.html#a441e23fcb591faba8e378c490ec5efbb">Microsoft.Psi.Visualization.Data.IStreamReader</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_reader.html#a361edb87da84ede66f6a87affe9e3ecf">Microsoft.Psi.Visualization.Data.StreamReader&lt; T &gt;</a>
 </li>
 <li>GetPipelineCount()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_diagnostics_1_1_diagnostics_query_extensions.html#a15310fb29d0219d36071e115aaff342d">Microsoft.Psi.Diagnostics.DiagnosticsQueryExtensions</a>
@@ -341,7 +357,8 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_diagnostics_1_1_diagnostics_query_extensions.html#a041ecf2edca267d04b28cd79cda7d503">Microsoft.Psi.Diagnostics.DiagnosticsQueryExtensions</a>
 </li>
 <li>GetPixelFormat()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_decoder.html#aa5f182b9198acc61941957391471e694">Microsoft.Psi.Imaging.ImageDecoder</a>
+: <a class="el" href="interface_microsoft_1_1_psi_1_1_imaging_1_1_i_image_from_stream_decoder.html#aa19a160e3aa081f1b2c90f4a8ec03366">Microsoft.Psi.Imaging.IImageFromStreamDecoder</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_from_stream_decoder.html#aa76220e0938e2837faa8775c2682ba71">Microsoft.Psi.Imaging.ImageFromStreamDecoder</a>
 </li>
 <li>GetPool&lt; T &gt;()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_pool_manager.html#a0079a449ced2195c0b1c0698c36ca660">Microsoft.Psi.Visualization.Data.PoolManager</a>
@@ -371,18 +388,13 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_common_1_1_unmanaged_array.html#a71b376102c6effe317ea5bec6cad1f05">Microsoft.Psi.Common.UnmanagedArray&lt; T &gt;</a>
 </li>
 <li>GetSnappedTime()
-: <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a65fc6bbd79565d341dfe221703d953e4">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a15e46f0f9e7d4cd595e1a20a5215f26c">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#ae8dfbf37fa6976ed8260de339a814952">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData &gt;</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_instant_visualization_object.html#ad1875553b631ac13e0a91373533c6fde">Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject&lt; TData &gt;</a>
+, <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_i_stream_visualization_object.html#a94f608651df3e91ccbd100ef34712737">Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#ab03782214844d397898571b868edb719">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_timeline_visualization_object.html#ac653b7eea18853487ba3d6aadbf07473">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt; TData &gt;</a>
 </li>
 <li>GetStartTime()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_controls_1_1_timeline_canvas.html#a8ed8ad97af9c14787b64a2f316546ce9">Microsoft.Psi.Visualization.Controls.TimelineCanvas</a>
-</li>
-<li>GetStream()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_encoded_image.html#abc2448c321a811c9493ac388dcdb8d01">Microsoft.Psi.Imaging.EncodedImage</a>
-</li>
-<li>GetStreamType()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_context.html#ae3c7ffbe3fe9d4ae967ae4136dd65250">Microsoft.Psi.Visualization.VisualizationContext</a>
 </li>
 <li>GetStringProperty()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_media_foundation_utility.html#a1994d016ee13dbca72242aec9c2a92b3">Microsoft.Psi::Media_Interop::MediaFoundationUtility</a>
@@ -390,7 +402,11 @@ $(function() {
 <li>GetStringValue()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_audio_visualization_object.html#af01806f65603c15f7624961df3c0c0ae">Microsoft.Psi.Visualization.VisualizationObjects.AudioVisualizationObject</a>
 , <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_message_visualization_object.html#a8c88a0002895fe42725806ae906ab5ed">Microsoft.Psi.Visualization.VisualizationObjects.MessageVisualizationObject</a>
-, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_plot_visualization_object.html#ac45b05da6ffdfadd87c761369abb4212">Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject&lt; TData &gt;</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_plot_visualization_object.html#a503b43d5c304e16efe815000b22c8ae5">Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject&lt; TData &gt;</a>
+</li>
+<li>GetSupplementalMetadata&lt; T &gt;()
+: <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#ab671d546e856dcefa4309885390248b6">Microsoft.Psi.Data.Importer</a>
+, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a54268396d85cba483d2904b3de2064c9">Microsoft.Psi.Data.SimpleReader</a>
 </li>
 <li>GetTags()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_cognitive_services_1_1_vision_1_1_operators.html#ad8846ea0e8804ab5ee11efa90d1f0853">Microsoft.Psi.CognitiveServices.Vision.Operators</a>
@@ -402,13 +418,7 @@ $(function() {
 : <a class="el" href="class_microsoft_1_1_psi_1_1_clock.html#a1e3c0b8e1e537adafd9d42d854a71c68">Microsoft.Psi.Clock</a>
 </li>
 <li>GetTimeOfNearestMessage()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#aa3dadecd4d2b4edb24cbfc8297c39f98">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>
-</li>
-<li>GetTrackedJointPosition()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#aad82b1a6a52ce7ffebf4e3d754dc53f2">Microsoft.Psi.Kinect.KinectExtensions</a>
-</li>
-<li>GetTrackedJointPositionOrDefault()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#a4ae584b63aa2428712cad3eb33f98cb5">Microsoft.Psi.Kinect.KinectExtensions</a>
+: <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_visualization_objects_1_1_stream_visualization_object.html#a2f364f247f10ff27c6abf55a2e5a88be">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt; TData &gt;</a>
 </li>
 <li>GetTrackNumber()
 : <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_controls_1_1_timeline_canvas.html#a79ddd98e322d602a56967f7878147f3f">Microsoft.Psi.Visualization.Controls.TimelineCanvas</a>
@@ -459,18 +469,6 @@ $(function() {
 </li>
 <li>Guid
 : <a class="el" href="class_microsoft_1_1_psi_1_1_media___interop_1_1_video_format.html#ac6e8a5932f90246f35fe72b74933c914">Microsoft.Psi::Media_Interop::VideoFormat</a>
-</li>
-<li>GZipCompressDepthImage()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_depth_extensions.html#a23338d8fd0d6754199608e0c4720b689">Microsoft.Psi.Kinect.DepthExtensions</a>
-</li>
-<li>GZipCompressImageProjection()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#abb977e2df638a5fa7e6c21dfd969c62f">Microsoft.Psi.Kinect.KinectExtensions</a>
-</li>
-<li>GZipUncompressDepthImage()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_depth_extensions.html#afd97fdbc8df5f8341653393bb7d94054">Microsoft.Psi.Kinect.DepthExtensions</a>
-</li>
-<li>GZipUncompressImageProjection()
-: <a class="el" href="class_microsoft_1_1_psi_1_1_kinect_1_1_kinect_extensions.html#ab407d4cb8c1f508bfba15067df73baa0">Microsoft.Psi.Kinect.KinectExtensions</a>
 </li>
 </ul>
 </div><!-- contents -->

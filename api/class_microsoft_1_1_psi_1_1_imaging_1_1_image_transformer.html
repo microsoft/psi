@@ -82,9 +82,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad6c554c6dd304db596e5d46347bdbae1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html#ad6c554c6dd304db596e5d46347bdbae1">ImageTransformer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a2819f0265488b9a3042807f878692f4c">TransformDelegate</a> transformer, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat)</td></tr>
-<tr class="memdesc:ad6c554c6dd304db596e5d46347bdbae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html" title="Component that transforms an image given a specified transformer.">ImageTransformer</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html#ad6c554c6dd304db596e5d46347bdbae1">More...</a><br /></td></tr>
-<tr class="separator:ad6c554c6dd304db596e5d46347bdbae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe9da96830ecd9e3e1fcd6886b991676"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html#abe9da96830ecd9e3e1fcd6886b991676">ImageTransformer</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a64474a9404e0cc891004233e4ec6f361">TransformDelegate</a> transformer, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a> pixelFormat, System.Func&lt; int, int, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt; sharedImageAllocator=null)</td></tr>
+<tr class="memdesc:abe9da96830ecd9e3e1fcd6886b991676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html" title="Component that transforms an image given a specified transformer.">ImageTransformer</a> class.  <a href="class_microsoft_1_1_psi_1_1_imaging_1_1_image_transformer.html#abe9da96830ecd9e3e1fcd6886b991676">More...</a><br /></td></tr>
+<tr class="separator:abe9da96830ecd9e3e1fcd6886b991676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -95,8 +95,8 @@ Protected Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Component that transforms an image given a specified transformer. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad6c554c6dd304db596e5d46347bdbae1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6c554c6dd304db596e5d46347bdbae1">&#9670;&nbsp;</a></span>ImageTransformer()</h2>
+<a id="abe9da96830ecd9e3e1fcd6886b991676"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe9da96830ecd9e3e1fcd6886b991676">&#9670;&nbsp;</a></span>ImageTransformer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -110,14 +110,20 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a2819f0265488b9a3042807f878692f4c">TransformDelegate</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a64474a9404e0cc891004233e4ec6f361">TransformDelegate</a>&#160;</td>
           <td class="paramname"><em>transformer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>&#160;</td>
-          <td class="paramname"><em>pixelFormat</em>&#160;</td>
+          <td class="paramname"><em>pixelFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">System.Func&lt; int, int, <a class="el" href="namespace_microsoft_1_1_psi_1_1_imaging.html#a222a914ab26d4a64291078a51af7dafb">PixelFormat</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_imaging_1_1_image.html">Image</a> &gt;&gt;&#160;</td>
+          <td class="paramname"><em>sharedImageAllocator</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -133,6 +139,7 @@ Protected Member Functions</h2></td></tr>
     <tr><td class="paramname">pipeline</td><td>Pipeline this component is a part of.</td></tr>
     <tr><td class="paramname">transformer</td><td>Function for transforming the source image.</td></tr>
     <tr><td class="paramname">pixelFormat</td><td>Pixel format for destination image.</td></tr>
+    <tr><td class="paramname">sharedImageAllocator </td><td>Optional image allocator for creating new shared image.</td></tr>
   </table>
   </dd>
 </dl>

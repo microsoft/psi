@@ -106,6 +106,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9df7375db0daaa0d445a0925235226ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html">PsiStreamMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a9df7375db0daaa0d445a0925235226ce">GetMetadata</a> (string streamName)</td></tr>
 <tr class="memdesc:a9df7375db0daaa0d445a0925235226ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a metadata descriptor for the specified storage stream.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a9df7375db0daaa0d445a0925235226ce">More...</a><br /></td></tr>
 <tr class="separator:a9df7375db0daaa0d445a0925235226ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54268396d85cba483d2904b3de2064c9"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a54268396d85cba483d2904b3de2064c9">GetSupplementalMetadata&lt; T &gt;</a> (string streamName)</td></tr>
+<tr class="memdesc:a54268396d85cba483d2904b3de2064c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the supplemental metadata for a specified storage stream.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a54268396d85cba483d2904b3de2064c9">More...</a><br /></td></tr>
+<tr class="separator:a54268396d85cba483d2904b3de2064c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a669635b2ad5743779cc78df14e58cc65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a669635b2ad5743779cc78df14e58cc65">Contains</a> (string streamName)</td></tr>
 <tr class="memdesc:a669635b2ad5743779cc78df14e58cc65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the specified storage stream exist in this store.  <a href="class_microsoft_1_1_psi_1_1_data_1_1_simple_reader.html#a669635b2ad5743779cc78df14e58cc65">More...</a><br /></td></tr>
 <tr class="separator:a669635b2ad5743779cc78df14e58cc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -345,6 +348,39 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The metadata describing the specified stream.</dd></dl>
+
+</div>
+</div>
+<a id="a54268396d85cba483d2904b3de2064c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54268396d85cba483d2904b3de2064c9">&#9670;&nbsp;</a></span>GetSupplementalMetadata&lt; T &gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">T Microsoft.Psi.Data.SimpleReader.GetSupplementalMetadata&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>streamName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the supplemental metadata for a specified storage stream. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of supplemental metadata.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">streamName</td><td>The name of the storage stream.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The metadata associated with the storage stream.</dd></dl>
 
 </div>
 </div>

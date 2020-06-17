@@ -96,8 +96,11 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:affb8740fe72892f1e6c3940e4e37e6a8"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="interface_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_i_stream_adapter.html">IStreamAdapter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html#affb8740fe72892f1e6c3940e4e37e6a8">Default</a> = new <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html">StreamAdapter</a>&lt;TDest, TDest&gt;((src, env) =&gt; src)</td></tr>
-<tr class="memdesc:affb8740fe72892f1e6c3940e4e37e6a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets default stream adapater.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html#affb8740fe72892f1e6c3940e4e37e6a8">More...</a><br /></td></tr>
+<tr class="memdesc:affb8740fe72892f1e6c3940e4e37e6a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets default stream adapter.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html#affb8740fe72892f1e6c3940e4e37e6a8">More...</a><br /></td></tr>
 <tr class="separator:affb8740fe72892f1e6c3940e4e37e6a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab211d105ce07485f70db3439665a94e8"><td class="memItemLeft" align="right" valign="top">static readonly bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html#ab211d105ce07485f70db3439665a94e8">SourceIsSharedType</a> = typeof(TSrc).IsGenericType &amp;&amp; typeof(TSrc).GetGenericTypeDefinition() == typeof(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;&gt;)</td></tr>
+<tr class="memdesc:ab211d105ce07485f70db3439665a94e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating whether type parameter TSrc is Shared{} or not.  <a href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html#ab211d105ce07485f70db3439665a94e8">More...</a><br /></td></tr>
+<tr class="separator:ab211d105ce07485f70db3439665a94e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -266,7 +269,31 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets default stream adapater. </p>
+<p>Gets default stream adapter. </p>
+
+</div>
+</div>
+<a id="ab211d105ce07485f70db3439665a94e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab211d105ce07485f70db3439665a94e8">&#9670;&nbsp;</a></span>SourceIsSharedType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly bool <a class="el" href="class_microsoft_1_1_psi_1_1_visualization_1_1_data_1_1_stream_adapter.html">Microsoft.Psi.Visualization.Data.StreamAdapter</a>&lt; TSrc, TDest &gt;.SourceIsSharedType = typeof(TSrc).IsGenericType &amp;&amp; typeof(TSrc).GetGenericTypeDefinition() == typeof(<a class="el" href="class_microsoft_1_1_psi_1_1_shared.html">Shared</a>&lt;&gt;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Flag indicating whether type parameter TSrc is Shared{} or not. </p>
 
 </div>
 </div>

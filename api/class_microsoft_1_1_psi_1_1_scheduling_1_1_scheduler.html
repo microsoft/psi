@@ -77,12 +77,16 @@ $(function() {
 
 <p>Maintains a queue of workitems and schedules worker threads to empty them.  
  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#details">More...</a></p>
+
+<p>Inherits IDisposable.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a936f95cbce8cbd4224a780e9d78b8844"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a936f95cbce8cbd4224a780e9d78b8844">Scheduler</a> (Func&lt; Exception, bool &gt; errorHandler, int threadCount=0, bool allowSchedulingOnExternalThreads=false, string name=&quot;default&quot;, Clock clock=null)</td></tr>
 <tr class="memdesc:a936f95cbce8cbd4224a780e9d78b8844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new instance of the <a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html" title="Maintains a queue of workitems and schedules worker threads to empty them.">Scheduler</a> class.  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a936f95cbce8cbd4224a780e9d78b8844">More...</a><br /></td></tr>
 <tr class="separator:a936f95cbce8cbd4224a780e9d78b8844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade1058bb43cf775c79f5b9232d281fe8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#ade1058bb43cf775c79f5b9232d281fe8">Dispose</a> ()</td></tr>
+<tr class="separator:ade1058bb43cf775c79f5b9232d281fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55e1e7e54098e385da366d54422d46d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a55e1e7e54098e385da366d54422d46d7">TryExecute&lt; T &gt;</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_synchronization_lock.html">SynchronizationLock</a> synchronizationObject, Action&lt; T &gt; action, T argument, DateTime startTime, <a class="el" href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler_context.html">SchedulerContext</a> context)</td></tr>
 <tr class="memdesc:a55e1e7e54098e385da366d54422d46d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to execute the delegate immediately, on the calling thread, without scheduling.  <a href="class_microsoft_1_1_psi_1_1_scheduling_1_1_scheduler.html#a55e1e7e54098e385da366d54422d46d7">More...</a><br /></td></tr>
 <tr class="separator:a55e1e7e54098e385da366d54422d46d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,6 +186,25 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ade1058bb43cf775c79f5b9232d281fe8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade1058bb43cf775c79f5b9232d281fe8">&#9670;&nbsp;</a></span>Dispose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Microsoft.Psi.Scheduling.Scheduler.Dispose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
 <a id="a0839cff0faa3d68d9c4d5d6ffe062b77"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0839cff0faa3d68d9c4d5d6ffe062b77">&#9670;&nbsp;</a></span>EnablePerfCounters()</h2>
 

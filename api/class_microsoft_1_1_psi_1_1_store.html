@@ -85,9 +85,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a33a73e2fb58f468e2c2252f815c15cd2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Importer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a33a73e2fb58f468e2c2252f815c15cd2">Open</a> (<a class="el" href="class_microsoft_1_1_psi_1_1_pipeline.html">Pipeline</a> pipeline, string name, string rootPath)</td></tr>
 <tr class="memdesc:a33a73e2fb58f468e2c2252f815c15cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a multi-stream store for read and returns an Importer instance which can be used to inspect the store and open the streams. The store metadata is available immediately after this call (before the pipeline is running) via the <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html#a29ffcec9197319088b9609e7ab363059" title="Gets the metadata of all the storage streams in this store.">Importer.AvailableStreams</a> property.  <a href="class_microsoft_1_1_psi_1_1_store.html#a33a73e2fb58f468e2c2252f815c15cd2">More...</a><br /></td></tr>
 <tr class="separator:a33a73e2fb58f468e2c2252f815c15cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ae521729c26ced99caab2fcdc6d9067"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a2ae521729c26ced99caab2fcdc6d9067">Write&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TIn &gt; deliveryPolicy=null)</td></tr>
-<tr class="memdesc:a2ae521729c26ced99caab2fcdc6d9067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream store.  <a href="class_microsoft_1_1_psi_1_1_store.html#a2ae521729c26ced99caab2fcdc6d9067">More...</a><br /></td></tr>
-<tr class="separator:a2ae521729c26ced99caab2fcdc6d9067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbfb418fce758683ba9a515cd1c0d325"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TMessage &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#abbfb418fce758683ba9a515cd1c0d325">Write&lt; TMessage &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TMessage &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:abbfb418fce758683ba9a515cd1c0d325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream store.  <a href="class_microsoft_1_1_psi_1_1_store.html#abbfb418fce758683ba9a515cd1c0d325">More...</a><br /></td></tr>
+<tr class="separator:abbfb418fce758683ba9a515cd1c0d325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acede605f679930d2ed327813f4660259"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TMessage &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#acede605f679930d2ed327813f4660259">Write&lt; TMessage, TSupplementalMetadata &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TMessage &gt; source, TSupplementalMetadata supplementalMetadataValue, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, bool largeMessages=false, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt; deliveryPolicy=null)</td></tr>
+<tr class="memdesc:acede605f679930d2ed327813f4660259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the specified stream to a multi-stream store.  <a href="class_microsoft_1_1_psi_1_1_store.html#acede605f679930d2ed327813f4660259">More...</a><br /></td></tr>
+<tr class="separator:acede605f679930d2ed327813f4660259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af335998df5ebae41656a42f30d6a571e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af335998df5ebae41656a42f30d6a571e">WriteEnvelopes&lt; TIn &gt;</a> (this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt; source, string name, <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a> writer, <a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TIn &gt; deliveryPolicy=null)</td></tr>
 <tr class="memdesc:af335998df5ebae41656a42f30d6a571e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the envelopes for the specified stream to a multi-stream store.  <a href="class_microsoft_1_1_psi_1_1_store.html#af335998df5ebae41656a42f30d6a571e">More...</a><br /></td></tr>
 <tr class="separator:af335998df5ebae41656a42f30d6a571e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,15 +100,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a1c89163356f2e48bbfca86a7546c85a8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a1c89163356f2e48bbfca86a7546c85a8">IsClosed</a> (string name, string path)</td></tr>
 <tr class="memdesc:a1c89163356f2e48bbfca86a7546c85a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether all streams in a store have been marked as "closed".  <a href="class_microsoft_1_1_psi_1_1_store.html#a1c89163356f2e48bbfca86a7546c85a8">More...</a><br /></td></tr>
 <tr class="separator:a1c89163356f2e48bbfca86a7546c85a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7ea58fa8e610120d363e23c3eb9b812"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#ab7ea58fa8e610120d363e23c3eb9b812">Repair</a> (string name, string path, bool deleteOldStore=true)</td></tr>
-<tr class="memdesc:ab7ea58fa8e610120d363e23c3eb9b812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repairs an invalid store.  <a href="class_microsoft_1_1_psi_1_1_store.html#ab7ea58fa8e610120d363e23c3eb9b812">More...</a><br /></td></tr>
-<tr class="separator:ab7ea58fa8e610120d363e23c3eb9b812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75897c2b8fe21f5bee011f9f302fb4fe"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a75897c2b8fe21f5bee011f9f302fb4fe">Repair</a> (string name, string path, bool deleteOriginalStore=true)</td></tr>
+<tr class="memdesc:a75897c2b8fe21f5bee011f9f302fb4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repairs an invalid store in place.  <a href="class_microsoft_1_1_psi_1_1_store.html#a75897c2b8fe21f5bee011f9f302fb4fe">More...</a><br /></td></tr>
+<tr class="separator:a75897c2b8fe21f5bee011f9f302fb4fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cce7385eb0b4c5d202859cb9d333e72"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a6cce7385eb0b4c5d202859cb9d333e72">Crop</a> ((string Name, string Path) input,(string Name, string Path) output, TimeSpan start, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> length, bool createSubdirectory=true, IProgress&lt; double &gt; progress=null, Action&lt; string &gt; loggingCallback=null)</td></tr>
 <tr class="memdesc:a6cce7385eb0b4c5d202859cb9d333e72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crops a store between the extents of a specified interval, generating a new store.  <a href="class_microsoft_1_1_psi_1_1_store.html#a6cce7385eb0b4c5d202859cb9d333e72">More...</a><br /></td></tr>
 <tr class="separator:a6cce7385eb0b4c5d202859cb9d333e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4645c812050d21e22d2420e5f7864fe2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a4645c812050d21e22d2420e5f7864fe2">Crop</a> ((string Name, string Path) input,(string Name, string Path) output, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> cropInterval, bool createSubdirectory=true, IProgress&lt; double &gt; progress=null, Action&lt; string &gt; loggingCallback=null)</td></tr>
-<tr class="memdesc:a4645c812050d21e22d2420e5f7864fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crops a store between the extents of a specified interval, generating a new store.  <a href="class_microsoft_1_1_psi_1_1_store.html#a4645c812050d21e22d2420e5f7864fe2">More...</a><br /></td></tr>
+<tr class="memdesc:a4645c812050d21e22d2420e5f7864fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crops a store between the extents of a specified originating time interval, generating a new store.  <a href="class_microsoft_1_1_psi_1_1_store.html#a4645c812050d21e22d2420e5f7864fe2">More...</a><br /></td></tr>
 <tr class="separator:a4645c812050d21e22d2420e5f7864fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a837980da60c8c0addd005c8518fd3959"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a837980da60c8c0addd005c8518fd3959">CropInPlace</a> ((string Name, string Path) input, TimeSpan start, <a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a> length, bool deleteOriginalStore=true, IProgress&lt; double &gt; progress=null, Action&lt; string &gt; loggingCallback=null)</td></tr>
+<tr class="memdesc:a837980da60c8c0addd005c8518fd3959"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crops a store in place between the extents of a specified interval.  <a href="class_microsoft_1_1_psi_1_1_store.html#a837980da60c8c0addd005c8518fd3959">More...</a><br /></td></tr>
+<tr class="separator:a837980da60c8c0addd005c8518fd3959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8285377f5eddc04c707bf8c02c121e59"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a8285377f5eddc04c707bf8c02c121e59">CropInPlace</a> ((string Name, string Path) input, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> cropInterval, bool deleteOriginalStore=true, IProgress&lt; double &gt; progress=null, Action&lt; string &gt; loggingCallback=null)</td></tr>
+<tr class="memdesc:a8285377f5eddc04c707bf8c02c121e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crops a store in place between the extents of a specified originating time interval.  <a href="class_microsoft_1_1_psi_1_1_store.html#a8285377f5eddc04c707bf8c02c121e59">More...</a><br /></td></tr>
+<tr class="separator:a8285377f5eddc04c707bf8c02c121e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae595e23436eaefd8d2e0d1e28d50ad20"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#ae595e23436eaefd8d2e0d1e28d50ad20">Copy</a> ((string Name, string Path) input,(string Name, string Path) output, Func&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Importer</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> &gt; cropIntervalFunction=null, Predicate&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html">PsiStreamMetadata</a> &gt; includeStreamPredicate=null, bool createSubdirectory=true, IProgress&lt; double &gt; progress=null, Action&lt; string &gt; loggingCallback=null)</td></tr>
+<tr class="memdesc:ae595e23436eaefd8d2e0d1e28d50ad20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a store, or a subset of it.  <a href="class_microsoft_1_1_psi_1_1_store.html#ae595e23436eaefd8d2e0d1e28d50ad20">More...</a><br /></td></tr>
+<tr class="separator:ae595e23436eaefd8d2e0d1e28d50ad20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a235dc33ffb44390fd62e80a434e926a9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_microsoft_1_1_psi_1_1_store.html#a235dc33ffb44390fd62e80a434e926a9">Concatenate</a> (IEnumerable&lt;(string Name, string Path)&gt; storeFiles,(string Name, string Path) output, IProgress&lt; double &gt; progress=null, Action&lt; string &gt; loggingCallback=null)</td></tr>
 <tr class="memdesc:a235dc33ffb44390fd62e80a434e926a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenates a set of stores, generating a new store.  <a href="class_microsoft_1_1_psi_1_1_store.html#a235dc33ffb44390fd62e80a434e926a9">More...</a><br /></td></tr>
 <tr class="separator:a235dc33ffb44390fd62e80a434e926a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +191,86 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae595e23436eaefd8d2e0d1e28d50ad20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae595e23436eaefd8d2e0d1e28d50ad20">&#9670;&nbsp;</a></span>Copy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Microsoft.Psi.Store.Copy </td>
+          <td>(</td>
+          <td class="paramtype">(string Name, string Path)&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(string Name, string Path)&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_importer.html">Importer</a>, <a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a> &gt;&#160;</td>
+          <td class="paramname"><em>cropIntervalFunction</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Predicate&lt; <a class="el" href="class_microsoft_1_1_psi_1_1_psi_stream_metadata.html">PsiStreamMetadata</a> &gt;&#160;</td>
+          <td class="paramname"><em>includeStreamPredicate</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>createSubdirectory</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IProgress&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>progress</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>loggingCallback</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copies a store, or a subset of it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The name and path of the store to crop.</td></tr>
+    <tr><td class="paramname">output</td><td>The name and path of the cropped store.</td></tr>
+    <tr><td class="paramname">cropIntervalFunction</td><td>An optional function that defines an originating time interval to copy. By default, the extents of the entire store.</td></tr>
+    <tr><td class="paramname">includeStreamPredicate</td><td>An optional predicate that specifies which streams to include. By default, include all streams. By default, all streams are copied.</td></tr>
+    <tr><td class="paramname">createSubdirectory</td><td>Indicates whether to create a numbered subdirectory for each cropped store generated by multiple calls to this method. </td></tr>
+    <tr><td class="paramname">progress</td><td>An optional progress reporter for progress updates.</td></tr>
+    <tr><td class="paramname">loggingCallback</td><td>An optional callback to which human-friendly information will be logged.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af445066b425d592506950f389474acf6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af445066b425d592506950f389474acf6">&#9670;&nbsp;</a></span>Create()</h2>
 
@@ -243,7 +335,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An Exporter instance that can be used to write streams.</dd></dl>
-<p>The Exporter maintains a collection of serializers it knows about, which it uses to serialize the data it writes to the store. By default, the Exporter derives the correct serializers from the type argument passed to <a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html#a8cb3865d85664a90b8c227d7aaeaf5ce" title="Writes the messages from the specified stream to the matching storage stream in this store.">Exporter.Write&lt;T&gt;(Emitter&lt;T&gt;, string, bool, DeliveryPolicy&lt;T&gt;)</a>. In other words, for the most part simply knowing the stream type is sufficient to determine all the types needed to serialize the messages in the stream. Use the KnownSerializers parameter to override the default behavior and provide a custom set of serializers. </p>
+<p>The Exporter maintains a collection of serializers it knows about, which it uses to serialize the data it writes to the store. By default, the Exporter derives the correct serializers from the TMessage type argument passed to Exporter.Write. In other words, for the most part simply knowing the stream type is sufficient to determine all the types needed to serialize the messages in the stream. Use the KnownSerializers parameter to override the default behavior and provide a custom set of serializers. </p>
 
 </div>
 </div>
@@ -305,12 +397,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Crops a store between the extents of a specified interval, generating a new store. </p>
+<p>Crops a store between the extents of a specified originating time interval, generating a new store. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">input</td><td>The name and path of the store to crop.</td></tr>
     <tr><td class="paramname">output</td><td>The name and path of the cropped store.</td></tr>
-    <tr><td class="paramname">cropInterval</td><td>The time interval to which to crop the store.</td></tr>
+    <tr><td class="paramname">cropInterval</td><td>The originating time interval to which to crop the store.</td></tr>
     <tr><td class="paramname">createSubdirectory</td><td>Indicates whether to create a numbered subdirectory for each cropped store generated by multiple calls to this method. </td></tr>
     <tr><td class="paramname">progress</td><td>An optional progress reporter for progress updates.</td></tr>
     <tr><td class="paramname">loggingCallback</td><td>An optional callback to which human-friendly information will be logged.</td></tr>
@@ -392,6 +484,145 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">start</td><td>Start of crop interval relative to beginning of store.</td></tr>
     <tr><td class="paramname">length</td><td>Length of crop interval.</td></tr>
     <tr><td class="paramname">createSubdirectory</td><td>Indicates whether to create a numbered subdirectory for each cropped store generated by multiple calls to this method. </td></tr>
+    <tr><td class="paramname">progress</td><td>An optional progress reporter for progress updates.</td></tr>
+    <tr><td class="paramname">loggingCallback</td><td>An optional callback to which human-friendly information will be logged.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8285377f5eddc04c707bf8c02c121e59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8285377f5eddc04c707bf8c02c121e59">&#9670;&nbsp;</a></span>CropInPlace() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Microsoft.Psi.Store.CropInPlace </td>
+          <td>(</td>
+          <td class="paramtype">(string Name, string Path)&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_time_interval.html">TimeInterval</a>&#160;</td>
+          <td class="paramname"><em>cropInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>deleteOriginalStore</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IProgress&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>progress</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>loggingCallback</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Crops a store in place between the extents of a specified originating time interval. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The name and path of the store to crop.</td></tr>
+    <tr><td class="paramname">cropInterval</td><td>The originating time interval to which to crop the store.</td></tr>
+    <tr><td class="paramname">deleteOriginalStore</td><td>Indicates whether the original store should be deleted.</td></tr>
+    <tr><td class="paramname">progress</td><td>An optional progress reporter for progress updates.</td></tr>
+    <tr><td class="paramname">loggingCallback</td><td>An optional callback to which human-friendly information will be logged.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a837980da60c8c0addd005c8518fd3959"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a837980da60c8c0addd005c8518fd3959">&#9670;&nbsp;</a></span>CropInPlace() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void Microsoft.Psi.Store.CropInPlace </td>
+          <td>(</td>
+          <td class="paramtype">(string Name, string Path)&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TimeSpan&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_relative_time_interval.html">RelativeTimeInterval</a>&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>deleteOriginalStore</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IProgress&lt; double &gt;&#160;</td>
+          <td class="paramname"><em>progress</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>loggingCallback</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Crops a store in place between the extents of a specified interval. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>The name and path of the store to crop.</td></tr>
+    <tr><td class="paramname">start</td><td>Start of crop interval relative to beginning of store.</td></tr>
+    <tr><td class="paramname">length</td><td>Length of crop interval.</td></tr>
+    <tr><td class="paramname">deleteOriginalStore</td><td>Indicates whether the original store should be deleted.</td></tr>
     <tr><td class="paramname">progress</td><td>An optional progress reporter for progress updates.</td></tr>
     <tr><td class="paramname">loggingCallback</td><td>An optional callback to which human-friendly information will be logged.</td></tr>
   </table>
@@ -554,8 +785,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab7ea58fa8e610120d363e23c3eb9b812"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7ea58fa8e610120d363e23c3eb9b812">&#9670;&nbsp;</a></span>Repair()</h2>
+<a id="a75897c2b8fe21f5bee011f9f302fb4fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75897c2b8fe21f5bee011f9f302fb4fe">&#9670;&nbsp;</a></span>Repair()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -579,7 +810,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>deleteOldStore</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>deleteOriginalStore</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -594,12 +825,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Repairs an invalid store. </p>
+<p>Repairs an invalid store in place. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name of the store to check.</td></tr>
     <tr><td class="paramname">path</td><td>The path of the store to check.</td></tr>
-    <tr><td class="paramname">deleteOldStore</td><td>Indicates whether the original store should be deleted.</td></tr>
+    <tr><td class="paramname">deleteOriginalStore</td><td>Indicates whether the original store should be deleted.</td></tr>
   </table>
   </dd>
 </dl>
@@ -711,8 +942,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ae521729c26ced99caab2fcdc6d9067"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ae521729c26ced99caab2fcdc6d9067">&#9670;&nbsp;</a></span>Write&lt; TIn &gt;()</h2>
+<a id="abbfb418fce758683ba9a515cd1c0d325"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbfb418fce758683ba9a515cd1c0d325">&#9670;&nbsp;</a></span>Write&lt; TMessage &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -721,9 +952,9 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TIn&gt; Microsoft.Psi.Store.Write&lt; TIn &gt; </td>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TMessage&gt; Microsoft.Psi.Store.Write&lt; TMessage &gt; </td>
           <td>(</td>
-          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TIn &gt;&#160;</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TMessage &gt;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
         </tr>
         <tr>
@@ -747,7 +978,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TIn &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt;&#160;</td>
           <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
@@ -766,13 +997,94 @@ Static Public Member Functions</h2></td></tr>
 <p>Writes the specified stream to a multi-stream store. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TIn</td><td>The type of messages in the stream.</td></tr>
+    <tr><td class="paramname">TMessage</td><td>The type of messages in the stream.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>The source stream to write.</td></tr>
+    <tr><td class="paramname">name</td><td>The name of the persisted stream.</td></tr>
+    <tr><td class="paramname">writer</td><td>The store writer, created by e.g. <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af445066b425d592506950f389474acf6" title="Creates a new multi-stream store and returns an Exporter instance which can be used to write streams ...">Store.Create(Pipeline, string, string, bool, KnownSerializers)</a>.</td></tr>
+    <tr><td class="paramname">largeMessages</td><td>Indicates whether the stream contains large messages (typically &gt;4k). If true, the messages will be written to the large message file.</td></tr>
+    <tr><td class="paramname">deliveryPolicy</td><td>An optional delivery policy.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The input stream.</dd></dl>
+
+</div>
+</div>
+<a id="acede605f679930d2ed327813f4660259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acede605f679930d2ed327813f4660259">&#9670;&nbsp;</a></span>Write&lt; TMessage, TSupplementalMetadata &gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt;TMessage&gt; Microsoft.Psi.Store.Write&lt; TMessage, TSupplementalMetadata &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_microsoft_1_1_psi_1_1_i_producer.html">IProducer</a>&lt; TMessage &gt;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TSupplementalMetadata&#160;</td>
+          <td class="paramname"><em>supplementalMetadataValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_data_1_1_exporter.html">Exporter</a>&#160;</td>
+          <td class="paramname"><em>writer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>largeMessages</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_microsoft_1_1_psi_1_1_delivery_policy.html">DeliveryPolicy</a>&lt; TMessage &gt;&#160;</td>
+          <td class="paramname"><em>deliveryPolicy</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes the specified stream to a multi-stream store. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TMessage</td><td>The type of messages in the stream.</td></tr>
+    <tr><td class="paramname">TSupplementalMetadata</td><td>The type of supplemental stream metadata.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The source stream to write.</td></tr>
+    <tr><td class="paramname">supplementalMetadataValue</td><td>Supplemental metadata value.</td></tr>
     <tr><td class="paramname">name</td><td>The name of the persisted stream.</td></tr>
     <tr><td class="paramname">writer</td><td>The store writer, created by e.g. <a class="el" href="class_microsoft_1_1_psi_1_1_store.html#af445066b425d592506950f389474acf6" title="Creates a new multi-stream store and returns an Exporter instance which can be used to write streams ...">Store.Create(Pipeline, string, string, bool, KnownSerializers)</a>.</td></tr>
     <tr><td class="paramname">largeMessages</td><td>Indicates whether the stream contains large messages (typically &gt;4k). If true, the messages will be written to the large message file.</td></tr>
