@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Represents a string with duration visualization object.
     /// </summary>
     [VisualizationObject("Visualize Strings With Duration")]
-    public abstract class StringWithDurationVisualizationObject : TimelineVisualizationObject<Tuple<string, TimeSpan>>
+    public class StringWithDurationVisualizationObject : TimelineVisualizationObject<Tuple<string, TimeSpan>>
     {
         /// <inheritdoc />
         [IgnoreDataMember]
