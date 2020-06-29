@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Calibration
             Point3D pointInWorldSpace = new Point3D(x, y, z);
             Point3D cameraOriginInWorldSpace = new Point3D(colorExtrinsicsInverse[0, 3], colorExtrinsicsInverse[1, 3], colorExtrinsicsInverse[2, 3]);
             Line3D rgbLine = new Line3D(cameraOriginInWorldSpace, pointInWorldSpace);
-            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo, rgbLine, depthImage.Resource, 0.1);
+            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo, rgbLine, depthImage.Resource, 0.001);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Microsoft.Psi.Calibration
                 float meshDistance = DepthExtensions.GetMeshDepthAtPoint(calibration, depthImage, hypothesisPoint, undistort);
 
                 // if the mesh distance is less than the distance to the point we've hit the mesh
-                if (!float.IsNaN(meshDistance) && (meshDistance < hypothesisPoint.Z))
+                if (!float.IsNaN(meshDistance) && (meshDistance < hypothesisPoint.X))
                 {
                     return hypothesisPoint;
                 }
