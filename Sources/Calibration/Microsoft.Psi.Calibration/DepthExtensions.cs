@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Calibration
             Point3D pointInWorldSpace = new Point3D(x, y, z);
             Point3D cameraOriginInWorldSpace = new Point3D(colorExtrinsicsInverse[0, 3], colorExtrinsicsInverse[1, 3], colorExtrinsicsInverse[2, 3]);
             Line3D rgbLine = new Line3D(cameraOriginInWorldSpace, pointInWorldSpace);
-            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo, rgbLine, depthImage.Resource, 0.001);
+            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo, rgbLine, depthImage.Resource, 0.05);
         }
 
         /// <summary>
