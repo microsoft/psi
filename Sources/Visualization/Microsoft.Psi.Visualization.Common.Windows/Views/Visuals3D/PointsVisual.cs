@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                     if (i < points.Count)
                     {
                         var point = points[i];
-                        this.spheres[i].Transform = new TranslateTransform3D(-point.Z, point.X, point.Y);
+                        this.spheres[i].Transform = new TranslateTransform3D(point.X, point.Y, point.Z);
                         this.spheres[i].Visible = true;
                     }
                     else
