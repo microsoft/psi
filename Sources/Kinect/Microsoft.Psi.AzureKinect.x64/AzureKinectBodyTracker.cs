@@ -19,6 +19,8 @@ namespace Microsoft.Psi.AzureKinect
     /// before arriving at the tracker. Unencoded or non-lossy (e.g. PNG) encoding are okay.</remarks>
     public sealed class AzureKinectBodyTracker : ConsumerProducer<(Shared<DepthImage> Depth, Shared<Image> IR), List<AzureKinectBody>>, IDisposable
     {
+        private static readonly object TrackerCreationLock = new object();
+
         private readonly AzureKinectBodyTrackerConfiguration configuration;
         private readonly List<AzureKinectBody> currentBodies = new List<AzureKinectBody>();
         private readonly Capture capture = new Capture();
@@ -113,11 +115,15 @@ namespace Microsoft.Psi.AzureKinect
 
         private void InitializeTracker(Calibration calibration)
         {
-            this.tracker = Tracker.Create(calibration, new TrackerConfiguration()
+            // Static Lock to prevent external error when creating multiple trackers simultanously.
+            lock (TrackerCreationLock)
             {
-                SensorOrientation = this.configuration.SensorOrientation,
-                ProcessingMode = this.configuration.CpuOnlyMode ? TrackerProcessingMode.Cpu : TrackerProcessingMode.Gpu,
-            });
+                this.tracker = Tracker.Create(calibration, new TrackerConfiguration()
+                {
+                    SensorOrientation = this.configuration.SensorOrientation,
+                    ProcessingMode = this.configuration.CpuOnlyMode ? TrackerProcessingMode.Cpu : TrackerProcessingMode.Gpu,
+                });
+            }
 
             this.tracker.SetTemporalSmooting(this.configuration.TemporalSmoothing);
         }
