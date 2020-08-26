@@ -3,67 +3,54 @@
 ![Build status](https://dev.azure.com/msresearch/psi/_apis/build/status/psi-github-ci?branchName=master)
 [![Join the chat at https://gitter.im/Microsoft/psi](https://badges.gitter.im/Microsoft/psi.svg)](https://gitter.im/Microsoft/psi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Platform for Situated Intelligence** is an open, extensible framework that enables the development, fielding and study of multimodal, integrative-AI systems.
+**Platform for Situated Intelligence** (or in short, \\psi) is an open, extensible framework that enables the development, fielding and study of multimodal, integrative-AI systems.
+The framework alleviates the engineering challenges that arise when developing systems and applications that process multimodal streaming sensor data (such as audio, video, depth, etc.) and need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
 
-In recent years, we have seen significant progress with machine learning techniques on various perceptual and control problems. At the same time, building end-to-end, multimodal, integrative-AI systems that leverage multiple technologies and act autonomously or interact with people in the open world remains a challenging, error-prone and time-consuming engineering task. Numerous challenges stem from the sheer complexity of these systems and are amplified by the lack of appropriate infrastructure and development tools.
+![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-1280.gif)
 
-The Platform for Situated Intelligence project aims to address these issues and provide a basis for __developing, fielding and studying multimodal, integrative-AI systems__. The platform consists of three layers. The **Runtime** layer provides a parallel programming model centered around temporal streams of data, and enables easy development of components and applications using .NET, while retaining the performance properties of natively written, carefully tuned systems. A set of **Tools** enable multimodal data visualization, annotations, analytics, tuning and machine learning scenarios. Finally, an open ecosystem of **Components** encapsulate various AI technologies and allow for quick compositing of integrative-AI applications.
+The framework includes: 
+-	**infrastructure** for working with multimodal, temporally streaming data, and a programming paradigm for concurrent, coordinated computation that simplifies application development.
+-	**tools** for multimodal data visualization, annotation, and processing, which support and accelerate debugging and maintenance.
+-	**components** for various sensors, processing technologies, and effectors, enabling rapid prototyping and reuse.
 
-For more information about the goals of the project, the types of systems that you can build using it, and the various layers see [Platform for Situated Intelligence Overview](https://github.com/microsoft/psi/wiki/Platform-Overview).
+[A more detailed overview](https://github.com/microsoft/psi/wiki/Platform-Overview) of the framework is available in the wiki.
 
-# Using and Building
+# Getting Started
 
-Platform for Situated Intelligence is built on the .NET Framework. Large parts of it are built on .NET Standard and therefore run both on Windows and Linux, whereas some components are specific and available only to one operating system.
+The core infrastructure in Platform for Situated Intelligence is built on .NET Standard and therefore runs both on Windows and Linux  Some components and tools are more specific and are available only on one or the other operating system.
 
-You can build applications based on Platform for Situated Intelligence either by leveraging nuget packages, or by cloning and building the code. Below are instructions:
+You can get started building \\psi applications in two ways:
+ - [leveraging \\psi NuGet packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages), or
+ - [cloning and building the source code](https://github.com/microsoft/psi/wiki/Building-the-Codebase). 
 
-* [Using \\psi via Nuget packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages)
-* [Building the \\psi codebase](https://github.com/microsoft/psi/wiki/Building-the-Codebase)
-
-# Documentation and Getting Started
-
-The documentation for Platform for Situated Intelligence is available in the [github project wiki](https://github.com/microsoft/psi/wiki). The documentation is still under construction and in various phases of completion. If you need further explanation in any area, please open an issue and label it `documentation`, as this will help us target our documentation development efforts to the highest priority needs.
-
-To learn about Platform for Situated Intelligence, we recommend you begin with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction), which provides a guided walk-through for some of the main concepts in \\psi. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk. We recommend that you first work through the examples in this tutorial to familiarize yourself with these core concepts. 
-
-In addition, a number of tutorials, samples, and other resources can help you learn more about the framework, as described below:
-
-__Tutorials__. Several [tutorials](https://github.com/microsoft/psi/wiki/Tutorials) are available to help you get started with using Platform for Situated Intelligence. You can begin with the [Writing Components](https://github.com/microsoft/psi/wiki/Writing-Components) tutorial, which explains how to write new \\psi components, and the [Pipeline-Execution](https://github.com/microsoft/psi/wiki/Pipeline-Execution) and [Delivery Policies](https://github.com/microsoft/psi/wiki/Delivery-Policies) tutorials, which describe how to control the execution of pipelines and how to control throughput on streams in your application. A number of additional tutorials provide information about the set of [basic stream operators](https://github.com/microsoft/psi/wiki/Basic-Stream-Operators) available in the framework, as well as operators for [stream fusion and merging](https://github.com/microsoft/psi/wiki/Stream-Fusion-and-Merging), [interpolation and sampling](https://github.com/microsoft/psi/wiki/Interpolation-and-Sampling), [windowing](https://github.com/microsoft/psi/wiki/Windowing-Operators), and [stream generation](https://github.com/microsoft/psi/wiki/Stream-Generators).
-
-__Other Topics__. Several documents provide information about various specialized scenarios such as running distributed applications via [remoting](https://github.com/microsoft/psi/wiki/Remoting), [bridging to Python, JS, etc.](https://github.com/microsoft/psi/wiki/Interop), [shared objects and memory management](https://github.com/microsoft/psi/wiki/Shared-Objects), etc.
-
-__Samples__. Besides the tutorials and other topics, it may be helpful to look through the set of [Samples](https://github.com/microsoft/psi/wiki/Samples) provided. While some of the samples address specialized topics such as how to leverage speech recognition components or how to bridge to ROS, reading them will give you more insight into programming with \\psi. In addition, some of the samples have a corresponding detailed walkthrough that explains how the samples are constructed and function, and provide further pointers to documentation and learning materials. Going through these walkthroughs can also help you learn more about programming with Platform for Situated Intelligence.
-
-__Components__. Additional useful information regarding available packages and components can be found in the [NuGet packages list](https://github.com/microsoft/psi/wiki/List-of-NuGet-Packages) and in the [component list](https://github.com/microsoft/psi/wiki/List-of-Components) pages. The latter page also has pointers to other repositories by third parties containing other \psi components.
-
-__API Reference__. An additional [API Reference](https://microsoft.github.io/psi/api/classes.html) is also available. 
+To learn more about \\psi and how to build applications with it, we recommend you start with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction) tutorial, which will walk you through for some of the main concepts. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk.
+More documentation is available in the [github project wiki](https://github.com/microsoft/psi/wiki). It contains various informational resources, including [tutorials]( https://github.com/microsoft/psi/wiki/Tutorials), [samples]( https://github.com/microsoft/psi/wiki/Samples), and [other specialized topics]( https://github.com/microsoft/psi/wiki/Other-Topics) that can help you learn more about the framework. 
 
 # Getting Help
-
-If you find a reproducible bug or if you would like to request a new feature or additional documentation, please file an [issue on the github repo](https://github.com/microsoft/psi/issues). If you do so, please first check whether a corresponding issue has already been filed. Use the [`bug`](https://github.com/microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce. Use the [`feature request`](https://github.com/microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/microsoft/psi/labels/documentation) label to request additional documentation. 
+If you find a bug or if you would like to request a new feature or additional documentation, please file an [issue in github](https://github.com/microsoft/psi/issues). Use the [`bug`](https://github.com/microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce the bug. Use the [`feature request`](https://github.com/microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/microsoft/psi/labels/documentation) label to request additional documentation. 
 
 # Contributing
 
-We hope the community can help improve and evolve Platform for Situated Intelligence, and we welcome contributions in a variety of forms: from simply using it and filing issues and bugs, to writing and releasing your own new components, to creating pull requests for bug fixes or new features, etc. The [Contributing Guidelines](https://github.com/microsoft/psi/wiki/Contributing) page in the wiki describes in more detail a variety of ways in which you can get involved, how the source code is organized, and other useful things to know before starting to make source code changes.
+We are looking forward to engaging with the community to improve and evolve Platform for Situated Intelligence! We welcome contributions in many forms: from simply using it and filing issues and bugs, to writing and releasing your own new components, to creating pull requests for bug fixes or new features. The [Contributing Guidelines](https://github.com/microsoft/psi/wiki/Contributing) page in the wiki describes many ways in which you can get involved, and some useful things to know before contributing to the code base.
+
+To find more information about our future plans, please see the [Roadmap](https://github.com/microsoft/psi/wiki/Roadmap) document.
 
 # Who is Using
 
-Platform for Situated Intelligence is currently being used in a number of industry and academic research labs, including (but not limited to):
-* in the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
-* in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
-* in the [Speech Language and Interactive Machines](https://coen.boisestate.edu/slim/) research group at Boise State University.
-* in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/), Northwestern University. 
-* in the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
-* in the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
-* in the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
+Platform for Situated Intelligence is currently being used in several industry and academic research labs, including (but not limited to):
+* the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
+* the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
+* the [Speech Language and Interactive Machines](https://coen.boisestate.edu/slim/) research group at Boise State University.
+* the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/), Northwestern University. 
+* the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
+* the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
+* the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
 
-If you would like to be added to this list, just add a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
+If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
 
 # Disclaimer
 
-The codebase is currently in beta and various aspects of the platform are at different levels of completion and robustness. There are probably still bugs in the code and we will likely be making breaking API changes. We plan to continuously improve the framework and we encourage the community to contribute.
-
-The [Roadmap](https://github.com/microsoft/psi/wiki/Roadmap) document provides more information about our future plans. 
+The codebase is currently in beta and various aspects of the framework are under active development. There are probably still bugs in the code and we may make breaking API changes. 
 
 # License
 
@@ -75,4 +62,5 @@ This project may contain trademarks or logos for projects, products, or services
 
 # Acknowledgments
 
-We would like to thank our internal collaborators and external early adopters, including (but not limited to): [Daniel McDuff](http://alumni.media.mit.edu/~djmcduff/), [Kael Rowan](https://www.microsoft.com/en-us/research/people/kaelr/), [Lev Nachmanson](https://www.microsoft.com/en-us/research/people/levnach/) and [Mike Barnett](https://www.microsoft.com/en-us/research/people/mbarnett) at MSR, Chirag Raman and Louis-Phillipe Morency in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at CMU, as well as adopters in the [SLIM research group](https://coen.boisestate.edu/slim/) at Boise State and in the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/) at Northwestern University.
+We would like to thank our internal collaborators and external early adopters, including (but not limited to): [Daniel McDuff](http://alumni.media.mit.edu/~djmcduff/), [Kael Rowan](https://www.microsoft.com/en-us/research/people/kaelr/), [Lev Nachmanson](https://www.microsoft.com/en-us/research/people/levnach/) and [Mike Barnett](https://www.microsoft.com/en-us/research/people/mbarnett) at MSR, Chirag Raman and Louis-Phillipe Morency in the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at CMU, as well as researchers in the [SLIM research group](https://coen.boisestate.edu/slim/) at Boise State and the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/) at Northwestern University.
+
