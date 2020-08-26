@@ -11,8 +11,6 @@ The framework includes:
 -	**tools** for multimodal data visualization, annotation, and processing, which support and accelerate debugging and maintenance.
 -	**components** for various sensors, processing technologies, and effectors, enabling rapid prototyping and reuse.
 
-[A more detailed overview](https://github.com/microsoft/psi/wiki/Platform-Overview) of the framework is available in the wiki.
-
 # Getting Started
 
 The core infrastructure in Platform for Situated Intelligence is built on .NET Standard and therefore runs both on Windows and Linux  Some components and tools are more specific and are available only on one or the other operating system.
