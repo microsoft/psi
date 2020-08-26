@@ -6,8 +6,6 @@
 **Platform for Situated Intelligence** (or in short, \\psi) is an open, extensible framework that enables the development, fielding and study of multimodal, integrative-AI systems.
 The framework alleviates the engineering challenges that arise when developing systems and applications that process multimodal streaming sensor data (such as audio, video, depth, etc.) and need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
 
-![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-1280.gif)
-
 The framework includes: 
 -	**infrastructure** for working with multimodal, temporally streaming data, and a programming paradigm for concurrent, coordinated computation that simplifies application development.
 -	**tools** for multimodal data visualization, annotation, and processing, which support and accelerate debugging and maintenance.
