@@ -12,6 +12,22 @@ namespace Microsoft.Psi.AzureKinect
     public class AzureKinectSensorConfiguration
     {
         /// <summary>
+        /// Enum for powerline frequency.
+        /// </summary>
+        public enum PowerlineFrequencyTypes
+        {
+            /// <summary>
+            /// For powerline with 50Hz Frequency. (e.g. UK, Germany, Italy, etc).
+            /// </summary>
+            FiftyHz = 1,
+
+            /// <summary>
+            /// For powerline with 60Hz Frequency. (e.g. US, etc).
+            /// </summary>
+            SixtyHz = 2,
+        }
+
+        /// <summary>
         /// Gets or sets the index of the device to open.
         /// </summary>
         public int DeviceIndex { get; set; } = 0; // K4A_DEVICE_DEFAULT = 0
@@ -43,6 +59,34 @@ namespace Microsoft.Psi.AzureKinect
         /// Gets or sets a value indicating whether color and depth captures should be strictly synchronized.
         /// </summary>
         public bool SynchronizedImagesOnly { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the sensor is operating standalone or in sync mode.
+        /// </summary>
+        public WiredSyncMode WiredSyncMode { get; set; } = WiredSyncMode.Standalone;
+
+        /// <summary>
+        /// Gets or sets the delay before publishing when receiving signal from the master sensor.
+        /// </summary>
+        public TimeSpan SuboridinateDelayOffMaster { get; set; } = TimeSpan.Zero;
+
+        /// <summary>
+        /// Gets or sets the delay between capturing the color image and depth image.
+        /// <remarks>Used in synchronization mode to make sure the infarred sensors
+        /// does not interfere with each other.</remarks>
+        /// </summary>
+        public TimeSpan DepthDelayOffColor { get; set; } = TimeSpan.Zero;
+
+        /// <summary>
+        /// Gets or sets the color sensors's exposure. Zero or negative means the exposure time is set automatically.
+        /// </summary>
+        public TimeSpan Exposure { get; set; } = TimeSpan.MinValue;
+
+        /// <summary>
+        /// Gets or sets the sensor's powerline frequency.
+        /// <remarks>See AzureKinect's documentation for more information.</remarks>
+        /// </summary>
+        public PowerlineFrequencyTypes PowerlineFrequency { get; set; } = PowerlineFrequencyTypes.SixtyHz;
 
         /// <summary>
         /// Gets or sets a value indicating whether the color stream is emitted.

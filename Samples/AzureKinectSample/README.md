@@ -35,6 +35,11 @@ Notice that at construction time we can configure the frame rate (`CameraFPS`) a
 - **BodyTrackerConfiguration:** The body tracker configuration (default null). If null, no body tracking is performed.
 - **DeviceCaptureTimeout:** The timeout used for device capture (default 1 minute).
 - **FrameRateReportingFrequency:** The frequency at which frame rate is reported on the `FrameRate` emitter (default 2 seconds).
+- **Exposure:** Expore of the color sensor (default `0` which is automatic).
+- **PowerlineFrequency:** The power adapters frequency (default sixtyHz).
+- **WiredSyncMode:** Whether the sensor is operating in standalone mode or sycned (default standalone).
+- **DepthDelayOffColor:** The delay between capture of color image and depth image (default `0`).
+- **SuboridinateDelayOffMaster:** The delay between the primary sensor capturing a image and the subordinate sensor taking its image.
 
 For this demonstration we'll be resizing the color images to render as ASCII art at the console for a cross-platform solution. The `ColorImage` stream is of `Shared<Image>` on which several operators exist for cropping, transforming, encoding, etc. Below, we use the `Resize()` operator to scale the image down to 80 by 45 pixels, and then we apply a `Do()` operator in which we convert the image to ASCII art:
 

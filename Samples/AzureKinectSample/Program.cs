@@ -25,6 +25,14 @@ namespace AzureKinectSample
         /// </summary>
         public static void Main()
         {
+            SingleSensor();
+        }
+
+        /// <summary>
+        /// Main Example using a Single Azure Sensor.
+        /// </summary>
+        public static void SingleSensor()
+        {
             // camera resolution settings
             const ColorResolution resolution = ColorResolution.R720p;
             const int widthSource = 1280;
@@ -159,6 +167,47 @@ namespace AzureKinectSample
                 Console.Clear();
                 pipeline.RunAsync();
                 Console.ReadLine(); // press Enter to end
+            }
+        }
+
+        /// <summary>
+        /// Example of Wire Syncing multiple Azure Kinect.
+        /// </summary>
+        public static void AzureKinectSync()
+        {
+            using (var p = Pipeline.Create())
+            {
+                // The minimum time between depth sensors accroding to AzureKinect Samples.
+                // https://github.com/microsoft/Azure-Kinect-Sensor-SDK/blob/develop/examples/green_screen/main.cpp
+                var minTimeBetweenDepthImageSensors = TimeSpan.FromTicks(1600);
+
+                var sensor1 = new AzureKinectSensor(p, new AzureKinectSensorConfiguration()
+                {
+                    DeviceIndex = 0,
+                    WiredSyncMode = WiredSyncMode.Master,
+                    PowerlineFrequency = AzureKinectSensorConfiguration.PowerlineFrequencyTypes.SixtyHz,
+                    Exposure = TimeSpan.FromTicks(80000),
+                    DepthDelayOffColor = minTimeBetweenDepthImageSensors / 2,
+                });
+
+                var sensor2 = new AzureKinectSensor(p, new AzureKinectSensorConfiguration()
+                {
+                    DeviceIndex = 1,
+                    WiredSyncMode = WiredSyncMode.Subordinate,
+                    PowerlineFrequency = AzureKinectSensorConfiguration.PowerlineFrequencyTypes.SixtyHz,
+                    Exposure = TimeSpan.FromTicks(80000),
+                    DepthDelayOffColor = -1 * (minTimeBetweenDepthImageSensors / 2),
+                });
+
+                // Check if the difference between Color Images from sycned sensors is less than 1 milliseconds.
+                // Even thought it is synced, originating time might be different due to processing speed/USB speed, etc.
+                sensor1.ColorImage.Join(sensor2.ColorImage, TimeSpan.FromMilliseconds(1)).Do(m =>
+                {
+                    Console.WriteLine("Color Image Streams Synced up to 1ms difference");
+                });
+
+                p.RunAsync();
+                Console.ReadLine(); // Press Enter to exit.
             }
         }
     }

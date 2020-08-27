@@ -165,6 +165,29 @@ namespace Microsoft.Psi.AzureKinect
             notifyCompletionTime(DateTime.MaxValue);
 
             this.device = Device.Open(this.configuration.DeviceIndex);
+
+            // check the synchronization arguments
+            if (this.configuration.WiredSyncMode != WiredSyncMode.Standalone)
+            {
+                if (this.configuration.WiredSyncMode == WiredSyncMode.Master && !this.device.SyncOutJackConnected)
+                {
+                    throw new ArgumentException("Invalid configuration: Cannot set Sensor as Master if SyncOut Jack is not connected");
+                }
+
+                if (this.configuration.WiredSyncMode == WiredSyncMode.Subordinate && !this.device.SyncInJackConnected)
+                {
+                    throw new ArgumentException("Invalid configuration: Cannot set Sensor as Subordinate if SyncIn Jack is not connected");
+                }
+            }
+
+            if (this.configuration.Exposure > TimeSpan.Zero)
+            {
+                // one tick is 100 nano seconds (0.1 microseconds). The exposure is set in microseconds.
+                this.device.SetColorControl(ColorControlCommand.ExposureTimeAbsolute, ColorControlMode.Manual, (int)(this.configuration.Exposure.Ticks / 10));
+            }
+
+            this.device.SetColorControl(ColorControlCommand.PowerlineFrequency, ColorControlMode.Manual, (int)this.configuration.PowerlineFrequency);
+
             this.device.StartCameras(new DeviceConfiguration()
             {
                 ColorFormat = this.configuration.ColorFormat,
@@ -172,6 +195,9 @@ namespace Microsoft.Psi.AzureKinect
                 DepthMode = this.configuration.DepthMode,
                 CameraFPS = this.configuration.CameraFPS,
                 SynchronizedImagesOnly = this.configuration.SynchronizedImagesOnly,
+                WiredSyncMode = this.configuration.WiredSyncMode,
+                SuboridinateDelayOffMaster = this.configuration.SuboridinateDelayOffMaster,
+                DepthDelayOffColor = this.configuration.DepthDelayOffColor,
             });
 
             this.captureThread = new Thread(new ThreadStart(this.CaptureThreadProc));
