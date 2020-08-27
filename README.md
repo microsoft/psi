@@ -4,18 +4,18 @@
 [![Join the chat at https://gitter.im/Microsoft/psi](https://badges.gitter.im/Microsoft/psi.svg)](https://gitter.im/Microsoft/psi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **Platform for Situated Intelligence** (or in short, \\psi) is an open, extensible framework that enables the development, fielding and study of multimodal, integrative-AI systems.
-The framework alleviates the engineering challenges that arise when developing systems and applications that process multimodal streaming sensor data (such as audio, video, depth, etc.) and need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
-
-![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-10fps.gif)
+The framework alleviates the engineering challenges that arise when developing applications that process multimodal streaming sensor data (such as audio, video, depth, etc.) and need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
 
 The framework includes: 
 -	**infrastructure** for working with multimodal, temporally streaming data, and a programming paradigm for concurrent, coordinated computation that simplifies application development.
 -	**tools** for multimodal data visualization, annotation, and processing, which support and accelerate debugging and maintenance.
 -	**components** for various sensors, processing technologies, and effectors, enabling rapid prototyping and reuse.
 
+![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
+
 # Getting Started
 
-The core infrastructure in Platform for Situated Intelligence is built on .NET Standard and therefore runs both on Windows and Linux  Some components and tools are more specific and are available only on one or the other operating system.
+The core infrastructure in Platform for Situated Intelligence is built on .NET Standard and therefore runs both on Windows and Linux. Some components and tools are more specific and are available only on one or the other operating system.
 
 You can get started building \\psi applications in two ways:
  - [leveraging \\psi NuGet packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages), or
