@@ -128,7 +128,13 @@ namespace Microsoft.Psi.Imaging
         public void CopyFrom(BitmapData bitmapData)
         {
             CheckPixelFormat(bitmapData.PixelFormat);
-            this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, this.UnmanagedBuffer.Size);
+            int numBytes = bitmapData.Height * bitmapData.Stride;
+            if (numBytes > this.UnmanagedBuffer.Size)
+            {
+                throw new InvalidOperationException("Buffer too small.");
+            }
+
+            this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
         }
 
         /// <summary>
@@ -145,7 +151,13 @@ namespace Microsoft.Psi.Imaging
                 PixelFormatHelper.ToSystemPixelFormat(this.PixelFormat));
             try
             {
-                this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, this.UnmanagedBuffer.Size);
+                int numBytes = bitmapData.Height * bitmapData.Stride;
+                if (numBytes > this.UnmanagedBuffer.Size)
+                {
+                    throw new InvalidOperationException("Buffer too small.");
+                }
+
+                this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
             }
             finally
             {

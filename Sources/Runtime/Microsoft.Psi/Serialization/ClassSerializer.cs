@@ -91,7 +91,19 @@ namespace Microsoft.Psi.Serialization
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clone(T instance, ref T target, SerializationContext context)
         {
-            this.cloneImpl(instance, ref target, context);
+            try
+            {
+                this.cloneImpl(instance, ref target, context);
+            }
+            catch (NotSupportedException)
+            {
+                if (instance.GetType().BaseType == typeof(MulticastDelegate))
+                {
+                    throw new NotSupportedException("Cannot clone Func/Action/Delegate. A common cause is posting or cloning IEnumerables holding closure references. A solution is to reify with `.ToList()` or similar before posting/cloning.");
+                }
+
+                throw;
+            }
         }
 
         /// <summary>

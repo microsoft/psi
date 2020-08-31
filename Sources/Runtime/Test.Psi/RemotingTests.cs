@@ -113,10 +113,10 @@ namespace Test.Psi
         }
 
         /// <summary>
-        /// Starts the Test.Psi.exe process with the specified entry point (needs to be a public method)
+        /// Starts the Test.Psi.exe process with the specified entry point (needs to be a public method).
         /// </summary>
         /// <param name="entryPoint">The name of a public method. Doesn't need to have the [TestMethod] annotation.</param>
-        /// <returns>A process. Caller should ensure the process terminates (e.g via process.Kill)</returns>
+        /// <returns>A process. Caller should ensure the process terminates (e.g via process.Kill).</returns>
         private Process StartServer(string entryPoint)
         {
             var fileName = Assembly.GetExecutingAssembly().Location;

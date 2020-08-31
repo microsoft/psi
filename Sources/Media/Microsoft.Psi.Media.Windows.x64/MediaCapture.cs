@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Media
 {
     using System;
     using System.Diagnostics;
+    using System.Text;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Imaging;
@@ -75,7 +76,7 @@ namespace Microsoft.Psi.Media
         /// <param name="captureAudio">Should we create an audio capture device.</param>
         /// <param name="deviceId">Device ID.</param>
         /// <param name="useInSharedMode">Indicates whether camera is shared amongst multiple applications.</param>
-        public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 15, bool captureAudio = false, string deviceId = null, bool useInSharedMode = false)
+        public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 30, bool captureAudio = false, string deviceId = null, bool useInSharedMode = false)
             : this(pipeline)
         {
             this.configuration = new MediaCaptureConfiguration()
@@ -256,7 +257,7 @@ namespace Microsoft.Psi.Media
                 this.camera.CaptureSample((data, length, timestamp) =>
                 {
                     var time = DateTime.FromFileTimeUtc(timestamp);
-                    using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp);
+                    using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp);
                     sharedImage.Resource.CopyFrom(data);
 
                     var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(timestamp);
@@ -265,7 +266,22 @@ namespace Microsoft.Psi.Media
             }
             else
             {
-                throw new ArgumentException("Camera specification not found");
+                // Requested camera capture format was not found. Construct an exception message with a list of supported formats.
+                var exceptionMessageBuilder = new StringBuilder();
+
+                if (string.IsNullOrEmpty(this.configuration.DeviceId))
+                {
+                    exceptionMessageBuilder.Append($"No cameras were found that support the requested capture format of {this.configuration.Width}x{this.configuration.Height} @ {this.configuration.Framerate} fps. ");
+                }
+                else
+                {
+                    exceptionMessageBuilder.Append($"The specified camera {this.configuration.DeviceId} does not support the requested capture format of {this.configuration.Width}x{this.configuration.Height} @ {this.configuration.Framerate} fps. ");
+                }
+
+                exceptionMessageBuilder.AppendLine("Use one of the following supported camera capture formats instead:");
+                this.AppendSupportedCaptureFormats(exceptionMessageBuilder);
+
+                throw new ArgumentException(exceptionMessageBuilder.ToString());
             }
         }
 
@@ -347,6 +363,26 @@ namespace Microsoft.Psi.Media
             }
 
             return propValue;
+        }
+
+        /// <summary>
+        /// Appends the list of supported capture formats for all devices. Used to build a more informative
+        /// exception message when the requested capture format is not found.
+        /// </summary>
+        /// <param name="stringBuilder">The <see cref="StringBuilder"/> object to which to append the list.</param>
+        /// <remarks>Assumes <see cref="MediaCaptureDevice.Initialize"/> has already been called.</remarks>
+        private void AppendSupportedCaptureFormats(StringBuilder stringBuilder)
+        {
+            foreach (var device in MediaCaptureDevice.AllDevices)
+            {
+                if (device.Attach(this.configuration.UseInSharedMode))
+                {
+                    foreach (var format in device.Formats)
+                    {
+                        stringBuilder.AppendLine($"{device.FriendlyName}: {format.nWidth}x{format.nHeight} @ {format.nFrameRateNumerator / format.nFrameRateDenominator} fps");
+                    }
+                }
+            }
         }
     }
 }

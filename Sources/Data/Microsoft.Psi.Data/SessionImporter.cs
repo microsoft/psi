@@ -17,11 +17,13 @@ namespace Microsoft.Psi.Data
         {
             foreach (var partition in session.Partitions)
             {
-                this.importers.Add(partition.Name, Store.Open(pipeline, partition.StoreName, partition.StorePath));
+                var reader = StreamReader.Create(partition.StoreName, partition.StorePath, partition.StreamReaderTypeName);
+                var importer = new Importer(pipeline, reader);
+                this.importers.Add(partition.Name, importer);
             }
 
-            this.OriginatingTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.OriginatingTimeInterval));
-            this.ActiveTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.ActiveTimeInterval));
+            this.MessageOriginatingTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.MessageOriginatingTimeInterval));
+            this.MessageCreationTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.MessageCreationTimeInterval));
             this.Name = session.Name;
         }
 
@@ -33,12 +35,12 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Gets the originating time interval (earliest to latest) of the messages in the session.
         /// </summary>
-        public TimeInterval OriginatingTimeInterval { get; private set; }
+        public TimeInterval MessageOriginatingTimeInterval { get; private set; }
 
         /// <summary>
         /// Gets the interval between the creation time of the first and last message in the session.
         /// </summary>
-        public TimeInterval ActiveTimeInterval { get; private set; }
+        public TimeInterval MessageCreationTimeInterval { get; private set; }
 
         /// <summary>
         /// Gets a dictionary of named importers.

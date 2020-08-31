@@ -32,7 +32,7 @@ namespace Microsoft.Psi
         /// <returns>Stream of latency (time span) values.</returns>
         public static IProducer<TimeSpan> Latency<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
         {
-            return source.Select((_, e) => e.Time - e.OriginatingTime, deliveryPolicy);
+            return source.Select((_, e) => e.CreationTime - e.OriginatingTime, deliveryPolicy);
         }
 
         /// <summary>

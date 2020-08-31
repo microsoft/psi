@@ -277,6 +277,30 @@ namespace Test.Psi.Imaging.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TestImage2_Rotate_110_Loose
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage2_Rotate_110_Loose", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage2_Rotate_Neg10_Loose
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage2_Rotate_Neg10_Loose", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TestImage2_DrawRect
         {
             get

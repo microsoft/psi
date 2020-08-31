@@ -87,11 +87,30 @@ namespace Microsoft.Psi.Serialization
         // emits code to clone all the fields (public, private, readonly) that meet the specified criteria
         internal static void EmitCloneFields(Type type, KnownSerializers serializers, ILGenerator il)
         {
+            var cloningFlags = serializers.GetCloningFlags(type);
+
             // simply invoke the type serializer for each relevant field
-            foreach (FieldInfo field in GetClonableFields(type))
+            foreach (FieldInfo field in GetAllFields(type))
             {
+                // fields with NonSerialized attribute should be skipped if SkipNonSerializedFields is set
+                if (field.IsNotSerialized && cloningFlags.HasFlag(CloningFlags.SkipNonSerializedFields))
+                {
+                    continue;
+                }
+
+                // emit exceptions for other non-clonable fields
+                else if ((field.FieldType == typeof(IntPtr) || field.FieldType == typeof(UIntPtr)) && !cloningFlags.HasFlag(CloningFlags.CloneIntPtrFields))
+                {
+                    EmitException(typeof(NotSupportedException), $"Cannot clone field:{field.Name} because cloning of {field.FieldType.Name} fields is disabled by default. To enable cloning of {field.FieldType.Name} fields for the containing type, register the type {type.AssemblyQualifiedName} with the {CloningFlags.CloneIntPtrFields} flag.", il);
+                }
+                else if (field.FieldType.IsPointer && !cloningFlags.HasFlag(CloningFlags.ClonePointerFields))
+                {
+                    EmitException(typeof(NotSupportedException), $"Cannot clone field:{field.Name} because cloning of pointer fields is disabled by default. To enable cloning of pointer fields for the containing type, register the type {type.AssemblyQualifiedName} with the {CloningFlags.ClonePointerFields} flag.", il);
+                }
+
+                // emit cloning code for clonable fields
                 // argument legend: 0 = source, 1 = ref target, 2 = context
-                if (IsSimpleValueType(field.FieldType) || field.FieldType == typeof(string))
+                else if (IsSimpleValueType(field.FieldType) || field.FieldType == typeof(string) || field.FieldType.IsPointer)
                 {
                     // for primitive types, simply copy the value from one field to the other
                     il.Emit(OpCodes.Ldarg_1); // target
@@ -132,6 +151,19 @@ namespace Microsoft.Psi.Serialization
             }
 
             il.Emit(OpCodes.Ret);
+        }
+
+        /// <summary>
+        /// Emits code to throw an exception with the specified message.
+        /// </summary>
+        /// <param name="type">The type of the exception to throw.</param>
+        /// <param name="message">The message that describes the error.</param>
+        /// <param name="il">The IL generator of the method in which to throw the exception.</param>
+        internal static void EmitException(Type type, string message, ILGenerator il)
+        {
+            il.Emit(OpCodes.Ldstr, message);
+            il.Emit(OpCodes.Newobj, type.GetConstructor(new[] { typeof(string) }));
+            il.Emit(OpCodes.Throw);
         }
 
         // clones a struct into a boxed struct
@@ -223,7 +255,7 @@ namespace Microsoft.Psi.Serialization
             LocalBuilder localBuilder = null;
 
             // enumerate all fields and deserialize each of them
-            foreach (MemberInfo member in members ?? GetClonableFields(type))
+            foreach (MemberInfo member in members ?? GetSerializableFields(type))
             {
                 // inner loop generates this code for each field or property:
                 // var handler = GetHandlerFromIndex(index);
@@ -356,7 +388,7 @@ namespace Microsoft.Psi.Serialization
         internal static void EmitSerializeFields(Type type, KnownSerializers serializers, ILGenerator il, IEnumerable<MemberInfo> members = null)
         {
             // enumerate all fields and serialize each of them
-            foreach (MemberInfo member in members ?? GetClonableFields(type))
+            foreach (MemberInfo member in members ?? GetSerializableFields(type))
             {
                 // inner loop generates this code for each field or property:
                 // var handler = GetHandlerFromIndex(index);
@@ -400,7 +432,7 @@ namespace Microsoft.Psi.Serialization
         internal static void EmitClearFields(Type type, KnownSerializers serializers, ILGenerator il)
         {
             // simply invoke the type serializer for each relevant field
-            foreach (FieldInfo field in GetClonableFields(type))
+            foreach (FieldInfo field in GetSerializableFields(type))
             {
                 // optimization to omit clearing field types which do not require clearing prior to reuse
                 if (!IsClearRequired(field.FieldType, serializers))
@@ -438,11 +470,10 @@ namespace Microsoft.Psi.Serialization
         internal static bool IsSimpleValueType(Type type)
         {
             return
-                IsPrimitiveOrEnum(type)
-                ||
+                IsPrimitiveOrEnum(type) ||
                     (type.IsValueType &&
                     !type.IsGenericTypeDefinition &&
-                    GetAllFields(type).All(fi => IsClonable(fi) && IsPrimitiveOrEnum(fi.FieldType)));
+                    GetAllFields(type).All(fi => IsSerializable(fi) && IsPrimitiveOrEnum(fi.FieldType)));
         }
 
         // true if the type is either primitive (byte, int etc.) or enum.
@@ -459,7 +490,7 @@ namespace Microsoft.Psi.Serialization
                 IsSimpleValueType(type) ||
                     (!type.IsArray &&
                     !type.IsGenericTypeDefinition &&
-                    GetAllFields(type).All(fi => IsClonable(fi) && fi.IsInitOnly && IsImmutableType(fi.FieldType)));
+                    GetAllFields(type).All(fi => IsSerializable(fi) && fi.IsInitOnly && IsImmutableType(fi.FieldType)));
 
             // when changing this definition, make sure a Shared<> instance is not recognized as immutable
         }
@@ -491,7 +522,7 @@ namespace Microsoft.Psi.Serialization
                 type != typeof(string) &&
                     ((type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Shared<>)) ||
                     (type.IsArray && IsClearRequired(type.GetElementType(), serializers)) ||
-                    GetClonableFields(type).Any(fi => IsClearRequired(fi.FieldType, serializers)));
+                    GetSerializableFields(type).Any(fi => IsClearRequired(fi.FieldType, serializers)));
 
             // cache the result
             handler.IsClearRequired = result;
@@ -528,14 +559,14 @@ namespace Microsoft.Psi.Serialization
             return allFields;
         }
 
-        internal static bool IsClonable(FieldInfo field)
+        internal static bool IsSerializable(FieldInfo field)
         {
             return !field.FieldType.IsPointer && !field.IsNotSerialized;
         }
 
-        internal static IEnumerable<FieldInfo> GetClonableFields(Type type)
+        internal static IEnumerable<FieldInfo> GetSerializableFields(Type type)
         {
-            return GetAllFields(type).Where(fi => IsClonable(fi));
+            return GetAllFields(type).Where(fi => IsSerializable(fi));
         }
 
         internal static SerializationHandler GetHandlerFromIndex(SerializationContext context, int index)

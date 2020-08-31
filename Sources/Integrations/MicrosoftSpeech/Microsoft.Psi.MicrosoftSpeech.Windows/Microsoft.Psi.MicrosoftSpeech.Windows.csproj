@@ -45,7 +45,7 @@
     </Reference>
   </ItemGroup>
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation" ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''" />
+    <Warning Text="In order to build this project you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation" ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''" />
     <CreateProperty Value="" Condition="'$(MsSpeechSdkDir)'==''">
       <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
     </CreateProperty>

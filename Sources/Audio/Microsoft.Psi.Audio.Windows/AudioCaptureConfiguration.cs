@@ -119,6 +119,6 @@ namespace Microsoft.Psi.Audio
         /// Use this to specify a different format for the <see cref="AudioBuffer"/> Out stream of
         /// the <see cref="AudioCapture"/> component.
         /// </remarks>
-        public WaveFormat OutputFormat { get; set; } = null;
+        public WaveFormat Format { get; set; } = null;
     }
 }

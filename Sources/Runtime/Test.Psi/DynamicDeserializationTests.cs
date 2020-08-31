@@ -143,14 +143,14 @@ namespace Test.Psi
             using (var p = Pipeline.Create())
             {
                 var gen = Generators.Return(p, instance);
-                var exporter = Store.Create(p, "Test", this.path);
+                var exporter = PsiStore.Create(p, "Test", this.path);
                 exporter.Write(gen.Out, "Data", true);
                 p.Run();
             }
 
             using (var p = Pipeline.Create())
             {
-                var importer = Store.Open(p, "Test", this.path);
+                var importer = PsiStore.Open(p, "Test", this.path);
                 var data = importer.OpenDynamicStream("Data");
                 var result = data.ToEnumerable();
                 p.Run();

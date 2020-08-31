@@ -570,9 +570,9 @@ namespace Microsoft.Psi.Media
         internal static void StreamOff(int fd)
         {
             var type = BufferType.VideoCapture; // note: only video capture supported
-            if (NativeMethods.StreamOff(fd, VIDIOC(IOCWRITE, Marshal.SizeOf(type), 19) /* VIDIOC_STREAMOFF */, ref type) != 0)
+            if (NativeMethods.StreamOff(fd, VIDIOC(IOCWRITE, sizeof(uint), 19) /* VIDIOC_STREAMOFF */, ref type) != 0)
             {
-                throw new ArgumentException("StreamOn failed.");
+                throw new ArgumentException("StreamOff failed.");
             }
         }
 

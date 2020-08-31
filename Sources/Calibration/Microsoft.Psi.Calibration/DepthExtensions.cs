@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Calibration
         /// <param name="depthDeviceCalibrationInfo">Defines the calibration information (extrinsics and intrinsics) for the depth device.</param>
         /// <param name="point2D">Pixel coordinates in the color camera.</param>
         /// <param name="depthImage">Depth map.</param>
-        /// <returns>Point in camera coordinates.</returns>
+        /// <returns>Point in 3D depth camera coordinates, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</returns>
         public static Point3D? ProjectToCameraSpace(IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo, Point2D point2D, Shared<DepthImage> depthImage)
         {
             var colorExtrinsicsInverse = depthDeviceCalibrationInfo.ColorPose;
@@ -28,10 +28,10 @@ namespace Microsoft.Psi.Calibration
             double x = pointInCameraSpace.X * colorExtrinsicsInverse[0, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[0, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[0, 2] + colorExtrinsicsInverse[0, 3];
             double y = pointInCameraSpace.X * colorExtrinsicsInverse[1, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[1, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[1, 2] + colorExtrinsicsInverse[1, 3];
             double z = pointInCameraSpace.X * colorExtrinsicsInverse[2, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[2, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[2, 2] + colorExtrinsicsInverse[2, 3];
-            Point3D pointInWorldSpace = new Point3D(x, y, z);
-            Point3D cameraOriginInWorldSpace = new Point3D(colorExtrinsicsInverse[0, 3], colorExtrinsicsInverse[1, 3], colorExtrinsicsInverse[2, 3]);
-            Line3D rgbLine = new Line3D(cameraOriginInWorldSpace, pointInWorldSpace);
-            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo, rgbLine, depthImage.Resource, 0.05);
+            var pointInDepthCameraSpace = new Point3D(x, y, z);
+            var colorCameraOriginInDepthCameraSpace = new Point3D(colorExtrinsicsInverse[0, 3], colorExtrinsicsInverse[1, 3], colorExtrinsicsInverse[2, 3]);
+            var searchLine = new Line3D(colorCameraOriginInDepthCameraSpace, pointInDepthCameraSpace);
+            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo.DepthIntrinsics, searchLine, depthImage.Resource);
         }
 
         /// <summary>
@@ -51,27 +51,27 @@ namespace Microsoft.Psi.Calibration
         /// <summary>
         /// Performs a ray/mesh intersection with the depth map.
         /// </summary>
-        /// <param name="calibration">Defines the calibration (extrinsics and intrinsics) for the depth camera.</param>
+        /// <param name="depthIntrinsics">The intrinsics for the depth camera.</param>
         /// <param name="line">Ray to intersect against depth map.</param>
         /// <param name="depthImage">Depth map to ray cast against.</param>
+        /// <param name="maxDistance">The maximum distance to search for.</param>
         /// <param name="skipFactor">Distance to march on each step along ray.</param>
         /// <param name="undistort">Whether undistortion should be applied to the point.</param>
         /// <returns>Returns point of intersection.</returns>
-        internal static Point3D? IntersectLineWithDepthMesh(IDepthDeviceCalibrationInfo calibration, Line3D line, DepthImage depthImage, double skipFactor, bool undistort = true)
+        public static Point3D? IntersectLineWithDepthMesh(ICameraIntrinsics depthIntrinsics, Line3D line, DepthImage depthImage, double maxDistance = 5, double skipFactor = 0.05, bool undistort = true)
         {
             // max distance to check for intersection with the scene
-            double totalDistance = 5;
             var delta = skipFactor * (line.EndPoint - line.StartPoint).Normalize();
 
             // size of increment along the ray
-            int maxSteps = (int)(totalDistance / delta.Length);
+            int maxSteps = (int)(maxDistance / delta.Length);
             var hypothesisPoint = line.StartPoint;
             for (int i = 0; i < maxSteps; i++)
             {
                 hypothesisPoint += delta;
 
                 // get the mesh distance at the extended point
-                float meshDistance = DepthExtensions.GetMeshDepthAtPoint(calibration, depthImage, hypothesisPoint, undistort);
+                float meshDistance = DepthExtensions.GetMeshDepthAtPoint(depthIntrinsics, depthImage, hypothesisPoint, undistort);
 
                 // if the mesh distance is less than the distance to the point we've hit the mesh
                 if (!float.IsNaN(meshDistance) && (meshDistance < hypothesisPoint.X))
@@ -83,9 +83,9 @@ namespace Microsoft.Psi.Calibration
             return null;
         }
 
-        private static float GetMeshDepthAtPoint(IDepthDeviceCalibrationInfo calibration, DepthImage depthImage, Point3D point, bool undistort)
+        private static float GetMeshDepthAtPoint(ICameraIntrinsics depthIntrinsics, DepthImage depthImage, Point3D point, bool undistort)
         {
-            Point2D depthSpacePoint = calibration.DepthIntrinsics.ToPixelSpace(point, undistort);
+            Point2D depthSpacePoint = depthIntrinsics.ToPixelSpace(point, undistort);
 
             int x = (int)Math.Round(depthSpacePoint.X);
             int y = (int)Math.Round(depthSpacePoint.Y);

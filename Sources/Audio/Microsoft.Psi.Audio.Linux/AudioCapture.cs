@@ -46,6 +46,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         private DateTime lastPostedAudioTime = DateTime.MinValue;
 
+        private Thread background;
+        private volatile bool isStopping;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioCapture"/> class.
         /// </summary>
@@ -65,6 +68,17 @@ namespace Microsoft.Psi.Audio
         /// <param name="configurationFilename">The component configuration file.</param>
         public AudioCapture(Pipeline pipeline, string configurationFilename = null)
             : this(pipeline, (configurationFilename == null) ? new AudioCaptureConfiguration() : new ConfigurationHelper<AudioCaptureConfiguration>(configurationFilename).Configuration)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class with a specified output format and device name.
+        /// </summary>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="outputFormat">The output format to use.</param>
+        /// <param name="deviceName">The name of the audio device.</param>
+        public AudioCapture(Pipeline pipeline, WaveFormat outputFormat, string deviceName = "plughw:0,0")
+            : this(pipeline, new AudioCaptureConfiguration() { Format = outputFormat, DeviceName = deviceName })
         {
         }
 
@@ -113,14 +127,14 @@ namespace Microsoft.Psi.Audio
                 this.configuration.Format.Channels,
                 LinuxAudioInterop.ConvertFormat(this.configuration.Format));
 
-            new Thread(new ThreadStart(() =>
+            this.background = new Thread(new ThreadStart(() =>
             {
                 const int blockSize = 256;
                 var format = this.configuration.Format;
                 var length = blockSize * format.BitsPerSample / 8;
                 var buf = new byte[length];
 
-                while (this.audioDevice != null)
+                while (!this.isStopping)
                 {
                     try
                     {
@@ -149,7 +163,10 @@ namespace Microsoft.Psi.Audio
                     // post the data to the output stream
                     this.audioBuffers.Post(this.buffer, originatingTime);
                 }
-            })) { IsBackground = true }.Start();
+            })) { IsBackground = true };
+
+            this.isStopping = false;
+            this.background.Start();
         }
 
         /// <inheritdoc/>
@@ -161,6 +178,10 @@ namespace Microsoft.Psi.Audio
 
         private void Stop()
         {
+            // stop any running background thread and wait for it to terminate
+            this.isStopping = true;
+            this.background?.Join();
+
             var audioDevice = Interlocked.Exchange(ref this.audioDevice, null);
             if (audioDevice != null)
             {

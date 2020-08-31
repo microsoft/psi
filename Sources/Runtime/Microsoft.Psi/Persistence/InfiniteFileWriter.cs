@@ -17,8 +17,6 @@ namespace Microsoft.Psi.Persistence
         internal const string ActiveWriterMutexFormat = @"Global\ActiveWriterMutex_{0}_{1}";
         private const string PulseEventFormat = @"Global\PulseEvent_{0}_{1}";
         private readonly object syncRoot = new object();
-        private readonly string path;
-        private readonly string fileName;
         private string extentName;
         private int extentSize;
         private byte* startPointer;
@@ -39,31 +37,17 @@ namespace Microsoft.Psi.Persistence
         private int priorExtentQueueLength;
         private object viewDisposeLock = new object();
 
-        public InfiniteFileWriter(string path, string fileName, int extentSize, bool append = false)
-            : this(path, fileName, extentSize)
-        {
-            this.path = path;
-            if (append)
-            {
-                this.LoadLastExtent();
-            }
-            else
-            {
-                this.CreateNewExtent();
-            }
-        }
-
         public InfiniteFileWriter(string fileName, int extentSize, int retentionQueueLength)
             : this(null, fileName, extentSize)
         {
             this.priorExtentQueueLength = retentionQueueLength;
             this.priorExtents = new Queue<MemoryMappedFile>(retentionQueueLength);
-            this.CreateNewExtent();
         }
 
-        private InfiniteFileWriter(string path, string fileName, int extentSize)
+        public InfiniteFileWriter(string path, string fileName, int extentSize)
         {
-            this.fileName = fileName;
+            this.Path = path;
+            this.FileName = fileName;
             this.extentSize = extentSize + sizeof(int); // eof marker
             this.localWritePulse = new EventWaitHandle(false, EventResetMode.ManualReset);
             new Thread(new ThreadStart(() =>
@@ -89,13 +73,15 @@ namespace Microsoft.Psi.Persistence
             {
                 throw new IOException("The file is already opened in write mode.");
             }
+
+            this.CreateNewExtent();
         }
 
-        public string FileName => this.fileName;
+        public string FileName { get; }
 
-        public string Path => this.path;
+        public string Path { get; }
 
-        public bool IsVolatile => this.path == null;
+        public bool IsVolatile => this.Path == null;
 
         public int CurrentExtentId => this.fileId - 1;
 
@@ -252,29 +238,27 @@ namespace Microsoft.Psi.Persistence
 
         private static string MakeHandleName(string format, string path, string fileName)
         {
-            var name = string.Format(format, path?.ToLower().GetHashCode(), fileName.ToLower());
+            var name = string.Format(format, path?.ToLower().GetDeterministicHashCode(), fileName.ToLower());
             if (name.Length > 260)
             {
                 // exceeded the name length limit
-                return string.Format(format, path?.ToLower().GetHashCode(), fileName.ToLower().GetHashCode());
+                return string.Format(format, path?.ToLower().GetDeterministicHashCode(), fileName.ToLower().GetDeterministicHashCode());
             }
 
             return name;
         }
 
-        private void LoadLastExtent() => throw new NotImplementedException();
-
         private void CreateNewExtent()
         {
             int newFileId = this.fileId;
             this.fileId++;
-            this.extentName = string.Format(FileNameFormat, this.fileName, newFileId);
+            this.extentName = string.Format(FileNameFormat, this.FileName, newFileId);
 
             // create a new file first, just in case anybody is reading
             MemoryMappedFile newMMF;
             if (!this.IsVolatile)
             {
-                this.extentName = System.IO.Path.Combine(this.path, this.extentName);
+                this.extentName = System.IO.Path.Combine(this.Path, this.extentName);
                 var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
                 newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
             }

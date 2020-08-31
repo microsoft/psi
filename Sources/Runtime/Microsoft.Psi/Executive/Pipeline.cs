@@ -287,34 +287,17 @@ namespace Microsoft.Psi
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
         /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
+        /// <param name="diagnosticsConfiguration">Optional diagnostics configuration information.</param>
         /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(string name = null, DeliveryPolicy deliveryPolicy = null, int threadCount = 0, bool allowSchedulingOnExternalThreads = false, bool enableDiagnostics = false, DiagnosticsConfiguration diagnosticsConfig = null)
+        public static Pipeline Create(
+            string name = null,
+            DeliveryPolicy deliveryPolicy = null,
+            int threadCount = 0,
+            bool allowSchedulingOnExternalThreads = false,
+            bool enableDiagnostics = false,
+            DiagnosticsConfiguration diagnosticsConfiguration = null)
         {
-            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads, enableDiagnostics, diagnosticsConfig);
-        }
-
-        /// <summary>
-        /// Create pipeline.
-        /// </summary>
-        /// <param name="name">Pipeline name.</param>
-        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
-        /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(string name, bool enableDiagnostics, DiagnosticsConfiguration diagnosticsConfig = null)
-        {
-            return Create(name, null, 0, false, enableDiagnostics, diagnosticsConfig);
-        }
-
-        /// <summary>
-        /// Create pipeline.
-        /// </summary>
-        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <param name="diagnosticsConfig">Optional diagnostics configuration information.</param>
-        /// <returns>Created pipeline.</returns>
-        public static Pipeline Create(bool enableDiagnostics, DiagnosticsConfiguration diagnosticsConfig = null)
-        {
-            return Create(null, enableDiagnostics, diagnosticsConfig);
+            return new Pipeline(name, deliveryPolicy, threadCount, allowSchedulingOnExternalThreads, enableDiagnostics, diagnosticsConfiguration);
         }
 
         /// <summary>
@@ -672,6 +655,14 @@ namespace Microsoft.Psi
         public DateTime ConvertFromRealTime(DateTime time)
         {
             return this.Clock.ToVirtualTime(time);
+        }
+
+        /// <summary>
+        /// Set last stream ID.
+        /// </summary>
+        internal static void SetLastStreamId(int lastStreamId)
+        {
+            Pipeline.lastStreamId = lastStreamId;
         }
 
         internal Emitter<T> CreateEmitterWithFixedStreamId<T>(object owner, string name, int streamId, Emitter<T>.ValidateMessageHandler messageValidator)

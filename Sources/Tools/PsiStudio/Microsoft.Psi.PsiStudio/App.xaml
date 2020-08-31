@@ -9,8 +9,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Microsoft.Psi.Visualization.Common.Windows;component/Themes/PsiStudioDark.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Microsoft.Psi.Visualization.Common.Windows;component/Themes/PropertyGrid.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Themes/PsiStudioDark.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Themes/PropertyGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

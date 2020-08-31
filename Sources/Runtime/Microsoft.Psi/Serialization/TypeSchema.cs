@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Serialization
     using System.Reflection;
     using System.Runtime.Serialization;
     using Microsoft.Psi.Common;
+    using Microsoft.Psi.Persistence;
 
     /// <summary>
     /// Defines the delegate for a <see cref="SchemaGenerator"/>.
@@ -141,7 +142,7 @@ namespace Microsoft.Psi.Serialization
                 // use binary serialization approach (all fields and only fields) when the type is not data contract capable
                 members.AddRange(
                     Generator
-                    .GetClonableFields(type)
+                    .GetSerializableFields(type)
                     .Select(f => new TypeMemberSchema(f.Name, f.FieldType.AssemblyQualifiedName, !Attribute.IsDefined(f, typeof(OptionalFieldAttribute)), f)));
             }
             else
@@ -250,33 +251,8 @@ namespace Microsoft.Psi.Serialization
         /// <returns>A hash of the contract name.</returns>
         public static int GetId(string contractName)
         {
-            // inspired by string.GetHashCode()
-            // see https://referencesource.microsoft.com/#mscorlib/system/string.cs,0a17bbac4851d0d4
-            // we are not using string.GetHashCode because 1) it promises to not be stable between versions and 2) we only have room for 30 bits when storing the id
-            unsafe
-            {
-                fixed (char* src = contractName)
-                {
-                    int hash1 = (5381 << 16) + 5381;
-                    int hash2 = hash1;
-                    int* pint = (int*)src;
-                    int len = contractName.Length;
-                    while (len > 2)
-                    {
-                        hash1 = ((hash1 << 5) + hash1 + (hash1 >> 27)) ^ pint[0];
-                        hash2 = ((hash2 << 5) + hash2 + (hash2 >> 27)) ^ pint[1];
-                        pint += 2;
-                        len -= 4;
-                    }
-
-                    if (len > 0)
-                    {
-                        hash1 = ((hash1 << 5) + hash1 + (hash1 >> 27)) ^ pint[0];
-                    }
-
-                    return (hash1 + (hash2 * 1566083941)) & 0x3FFFFFFF; // persistence needs two bits, so restrict the id to 30.
-                }
-            }
+            // persistence needs two bits, so restrict the id to 30.
+            return contractName.GetDeterministicHashCode() & 0x3FFFFFFF;
         }
 
         /// <summary>
@@ -318,7 +294,14 @@ namespace Microsoft.Psi.Serialization
             {
                 if (other.TypeName != this.TypeName)
                 {
-                    throw new SerializationException($"The schema {other.Name} version {other.Version} (implemented by {other.TypeName}) is missing the following members required in the current version of {this.TypeName}: {string.Join(",", requiredAndMissing)}");
+                    if (TypeResolutionHelper.RemoveCoreAssemblyName(other.TypeName) == TypeResolutionHelper.RemoveCoreAssemblyName(this.TypeName))
+                    {
+                        throw new SerializationException($"The type {other.TypeName} is not serialization format-compatible across framework versions as it is missing the following members required in the current version of {this.TypeName}: {string.Join(",", requiredAndMissing)}");
+                    }
+                    else
+                    {
+                        throw new SerializationException($"The schema {other.Name} version {other.Version} (implemented by {other.TypeName}) is missing the following members required in the current version of {this.TypeName}: {string.Join(",", requiredAndMissing)}");
+                    }
                 }
                 else
                 {
@@ -332,7 +315,14 @@ namespace Microsoft.Psi.Serialization
             {
                 if (other.TypeName != this.TypeName)
                 {
-                    throw new SerializationException($"The schema {other.Name} version {other.Version} (implemented by {other.TypeName}) contains the following members which are not present in the current version of {this.TypeName}: {string.Join(",", requiredAndMissing)}");
+                    if (TypeResolutionHelper.RemoveCoreAssemblyName(other.TypeName) == TypeResolutionHelper.RemoveCoreAssemblyName(this.TypeName))
+                    {
+                        throw new SerializationException($"The type {other.TypeName} is not serialization format-compatible across framework versions as it contains the following members which are not present in the current version of {this.TypeName}: {string.Join(",", requiredAndMissing)}");
+                    }
+                    else
+                    {
+                        throw new SerializationException($"The schema {other.Name} version {other.Version} (implemented by {other.TypeName}) contains the following members which are not present in the current version of {this.TypeName}: {string.Join(",", requiredAndMissing)}");
+                    }
                 }
                 else
                 {
@@ -349,7 +339,12 @@ namespace Microsoft.Psi.Serialization
         /// <returns>A collection of <see cref="MemberInfo"/> objects.</returns>
         public IEnumerable<MemberInfo> GetCompatibleMemberSet(TypeSchema targetSchema = null)
         {
-            if (targetSchema == null || targetSchema.IsPartial)
+            // NOTE: Since the "Time" field in Microsoft.Psi.Envelope was renamed to "CreationTime", we fail
+            // to load stores into PsiStudio that were created with the earlier envelope format.  Since we only
+            // renamed the field and did not add, remove, or otherwise change any fields or their ordering, it's
+            // safe to map the old Envelope's schema to the target schema.  However, we should implement a
+            // better solution going forward using a custom serializer for Envelope.
+            if (targetSchema == null || targetSchema.IsPartial || targetSchema.Name.StartsWith("Microsoft.Psi.Envelope"))
             {
                 return this.Members.Select(t => t.MemberInfo);
             }

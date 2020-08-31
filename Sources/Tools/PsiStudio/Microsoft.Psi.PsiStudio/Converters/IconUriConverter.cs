@@ -6,7 +6,7 @@ namespace Microsoft.Psi.PsiStudio.Converters
     using System;
     using System.Globalization;
     using System.Windows.Data;
-    using Microsoft.Psi.Visualization.Common;
+    using Microsoft.Psi.Visualization;
 
     /// <summary>
     /// Converts icon names to the equivalent pack uri icon path in visualization common.

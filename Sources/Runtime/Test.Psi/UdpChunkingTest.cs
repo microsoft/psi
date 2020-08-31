@@ -125,7 +125,7 @@ namespace Test.Robotics.Runtime
         }
 
         /// <summary>
-        /// Data interleaving test - two large sets of chunks interleaved (both fail)
+        /// Data interleaving test - two large sets of chunks interleaved (both fail).
         /// </summary>
         [TestMethod]
         [Timeout(60000)]

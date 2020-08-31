@@ -268,8 +268,8 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="envelope">Message envelope.</param>
             public void MessageEnqueued(int queueSize, Envelope envelope)
             {
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
@@ -279,9 +279,9 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="envelope">Message envelope.</param>
             public void MessageDropped(int queueSize, Envelope envelope)
             {
-                this.receiverDiagnostics.AddDroppedMessage(envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddDroppedMessage(envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
@@ -303,10 +303,10 @@ namespace Microsoft.Psi.Diagnostics
             public DateTime MessageProcessStart(Pipeline pipeline, int queueSize, Envelope envelope, int messageSize)
             {
                 var time = pipeline.GetCurrentTime();
-                this.receiverDiagnostics.AddProcessedMessage(envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtReceiver(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageSize(messageSize, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddProcessedMessage(envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtReceiver(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageSize(messageSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
                 return time;
             }
 
@@ -330,7 +330,7 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="messageSize">Message size (bytes).</param>
             public void MessageProcessedSynchronously(Pipeline pipeline, int queueSize, Envelope envelope, int messageSize)
             {
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.Time, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
                 this.MessageProcessComplete(pipeline, this.MessageProcessStart(pipeline, queueSize, envelope, messageSize));
             }
         }

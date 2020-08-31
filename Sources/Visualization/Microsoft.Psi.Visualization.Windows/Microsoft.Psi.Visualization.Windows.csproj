@@ -1,0 +1,420 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RootNamespace>Microsoft.Psi.Visualization</RootNamespace>
+    <Description>Provides base data structures for visualization APIs for Platform for Situated Intelligence.</Description>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\net472\Microsoft.Psi.Visualization.Windows.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningsAsErrors />
+    <DefineConstants>TRACE;RELEASE;NET47</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\net472\Microsoft.Psi.Visualization.Windows.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DefineConstants>TRACE;DEBUG;NET47</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Icons\2d.png" />
+    <None Remove="Icons\3d.png" />
+    <None Remove="Icons\annotation-unbound.png" />
+    <None Remove="Icons\annotation.png" />
+    <None Remove="Icons\blank.png" />
+    <None Remove="Icons\bring-forward.png" />
+    <None Remove="Icons\bring-to-front.png" />
+    <None Remove="Icons\collapse-all.png" />
+    <None Remove="Icons\cursor-follow.png" />
+    <None Remove="Icons\dataset-invalid.png" />
+    <None Remove="Icons\dataset-open.png" />
+    <None Remove="Icons\dataset-remove.png" />
+    <None Remove="Icons\dataset-repairing.png" />
+    <None Remove="Icons\dataset-save.png" />
+    <None Remove="Icons\dataset.png" />
+    <None Remove="Icons\diagnostics-live.png" />
+    <None Remove="Icons\diagnostics.png" />
+    <None Remove="Icons\expand-all.png" />
+    <None Remove="Icons\group-live.png" />
+    <None Remove="Icons\group.png" />
+    <None Remove="Icons\latency.png" />
+    <None Remove="Icons\layout-open.png" />
+    <None Remove="Icons\layout-save-as.png" />
+    <None Remove="Icons\layout-save.png" />
+    <None Remove="Icons\layout.png" />
+    <None Remove="Icons\legend.png" />
+    <None Remove="Icons\live-button-off.png" />
+    <None Remove="Icons\live-button-on.png" />
+    <None Remove="Icons\messages.png" />
+    <None Remove="Icons\move-to-beginning.png" />
+    <None Remove="Icons\move-to-end.png" />
+    <None Remove="Icons\panel-2d.png" />
+    <None Remove="Icons\panel-3d.png" />
+    <None Remove="Icons\panel-clear.png" />
+    <None Remove="Icons\panel-hide.png" />
+    <None Remove="Icons\panel-latency.png" />
+    <None Remove="Icons\panel-legend.png" />
+    <None Remove="Icons\panel-matrix-1.png" />
+    <None Remove="Icons\panel-matrix-2.png" />
+    <None Remove="Icons\panel-matrix-3.png" />
+    <None Remove="Icons\panel-messages.png" />
+    <None Remove="Icons\panel-move-down.png" />
+    <None Remove="Icons\panel-move-to-bottom.png" />
+    <None Remove="Icons\panel-move-to-top.png" />
+    <None Remove="Icons\panel-move-up.png" />
+    <None Remove="Icons\panel-partial-bindings.png" />
+    <None Remove="Icons\panel-placeholder.png" />
+    <None Remove="Icons\panel-remove-all.png" />
+    <None Remove="Icons\panel-remove.png" />
+    <None Remove="Icons\panel-stream.png" />
+    <None Remove="Icons\panel-timeline.png" />
+    <None Remove="Icons\panel-unhide.png" />
+    <None Remove="Icons\partition-add-live.png" />
+    <None Remove="Icons\partition-add.png" />
+    <None Remove="Icons\partition-annotation-live.png" />
+    <None Remove="Icons\partition-annotation.png" />
+    <None Remove="Icons\partition-create-live.png" />
+    <None Remove="Icons\partition-create.png" />
+    <None Remove="Icons\partition-from-store-live.png" />
+    <None Remove="Icons\partition-from-store.png" />
+    <None Remove="Icons\partition-invalid-live.png" />
+    <None Remove="Icons\partition-invalid.png" />
+    <None Remove="Icons\partition-live.png" />
+    <None Remove="Icons\partition-mp4-live.png" />
+    <None Remove="Icons\partition-mp4.png" />
+    <None Remove="Icons\partition-remove-live.png" />
+    <None Remove="Icons\partition-remove.png" />
+    <None Remove="Icons\partition-repairing-live.png" />
+    <None Remove="Icons\partition-repairing.png" />
+    <None Remove="Icons\partition-stream-live.png" />
+    <None Remove="Icons\partition-stream.png" />
+    <None Remove="Icons\partition.png" />
+    <None Remove="Icons\pause.png" />
+    <None Remove="Icons\PipelineDiagnosticsBack.png" />
+    <None Remove="Icons\PipelineDiagnosticsExpandView.png" />
+    <None Remove="Icons\PipelineDiagnosticsHome.png" />
+    <None Remove="Icons\play-repeat.png" />
+    <None Remove="Icons\play.png" />
+    <None Remove="Icons\playback-speed-decrease.png" />
+    <None Remove="Icons\playback-speed-increase.png" />
+    <None Remove="Icons\selection-remove.png" />
+    <None Remove="Icons\send-backward.png" />
+    <None Remove="Icons\send-to-back.png" />
+    <None Remove="Icons\session-add.png" />
+    <None Remove="Icons\session-create.png" />
+    <None Remove="Icons\session-current.png" />
+    <None Remove="Icons\session-from-store.png" />
+    <None Remove="Icons\session-invalid.png" />
+    <None Remove="Icons\session-remove.png" />
+    <None Remove="Icons\session-repairing.png" />
+    <None Remove="Icons\session-stream.png" />
+    <None Remove="Icons\session.png" />
+    <None Remove="Icons\settings.png" />
+    <None Remove="Icons\speed.png" />
+    <None Remove="Icons\stop.png" />
+    <None Remove="Icons\store-open.png" />
+    <None Remove="Icons\stream-audio-live.png" />
+    <None Remove="Icons\stream-audio-muted-live.png" />
+    <None Remove="Icons\stream-audio-muted.png" />
+    <None Remove="Icons\stream-audio.png" />
+    <None Remove="Icons\stream-group-live.png" />
+    <None Remove="Icons\stream-group.png" />
+    <None Remove="Icons\stream-live.png" />
+    <None Remove="Icons\stream-member-live.png" />
+    <None Remove="Icons\stream-member-snap-live.png" />
+    <None Remove="Icons\stream-member-snap.png" />
+    <None Remove="Icons\stream-member-unbound-live.png" />
+    <None Remove="Icons\stream-member-unbound.png" />
+    <None Remove="Icons\stream-member.png" />
+    <None Remove="Icons\stream-not-found-live.png" />
+    <None Remove="Icons\stream-not-found.png" />
+    <None Remove="Icons\stream-snap-live.png" />
+    <None Remove="Icons\stream-snap.png" />
+    <None Remove="Icons\stream-unbound-live.png" />
+    <None Remove="Icons\stream-unbound.png" />
+    <None Remove="Icons\stream.png" />
+    <None Remove="Icons\synchronize.png" />
+    <None Remove="Icons\timing-absolute.png" />
+    <None Remove="Icons\timing-relative-selection.png" />
+    <None Remove="Icons\timing-relative-session.png" />
+    <None Remove="Icons\zoom-to-panel.png" />
+    <None Remove="Icons\zoom-to-selection.png" />
+    <None Remove="Icons\zoom-to-session.png" />
+    <None Remove="Icons\zoom-to-stream.png" />
+    <None Remove="Icons\zoom.png" />
+    <None Remove="stylecop.json" />
+    <None Remove="Themes\Brushes.xaml" />
+    <None Remove="Themes\Buttons.xaml" />
+    <None Remove="Themes\CollectionControl.xaml" />
+    <None Remove="Themes\ColorPicker.xaml" />
+    <None Remove="Themes\Common.xaml" />
+    <None Remove="Themes\DateTimeUpDown.xaml" />
+    <None Remove="Themes\Glyphs.xaml" />
+    <None Remove="Themes\NumericUpDown.xaml" />
+    <None Remove="Themes\PropertyGrid.xaml" />
+    <None Remove="Themes\PsiStudioDark.xaml" />
+    <None Remove="Themes\TimeSpanUpDown.xaml" />
+    <None Remove="Themes\WatermarkTextBox.xaml" />
+    <None Remove="Views\InstantVisualizationContainerView.xaml" />
+    <None Remove="Views\InstantVisualizationPlaceholderPanelView.xaml" />
+    <None Remove="Views\NavigatorView.xaml" />
+    <None Remove="Views\TimelineSegmentView.xaml" />
+    <None Remove="Views\TimelineView.xaml" />
+    <None Remove="Views\TimelineVisualizationPanelView.xaml" />
+    <None Remove="Views\VisualizationContainerView.xaml" />
+    <None Remove="Views\Visuals2D\AudioVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\ImageVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\MessageVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\DoubleVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\DecimalVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\FloatVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\IntVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\LongVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\NullableDoubleVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\NullableIntVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\NullableDecimalVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\NullableFloatVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\NumericPlot\NullableLongVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\ScatterPlotVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\ScatterRectangleVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\SpeechRecognitionVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\StringWithDurationVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\TimeIntervalAnnotationVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\TimeIntervalVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals3D\AnimatedModelVisual.xaml" />
+    <None Remove="Views\Visuals3D\SpriteVisual.xaml" />
+    <None Remove="Views\Visuals3D\XYPanelVisual.xaml" />
+    <None Remove="Views\XYVisualizationPanelView.xaml" />
+    <None Remove="Views\XYZVisualizationPanelView.xaml" />
+    <None Remove="Windows\CreateAnnotationStreamWindow.xaml" />
+    <None Remove="Windows\LayoutNameWindow.xaml" />
+    <None Remove="Windows\LoadingDatasetWindow.xaml" />
+    <None Remove="Windows\MessageBoxWindow.xaml" />
+    <None Remove="Windows\ProgressWindow.xaml" />
+    <None Remove="Windows\SaveStoreWindow.xaml" />
+    <None Remove="Windows\RunBatchProcessingTaskWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HelixToolkit.Wpf" Version="2.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Include="C5" Version="2.5.3" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.6.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.1" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj" />
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
+    <ProjectReference Include="..\..\Calibration\Microsoft.Psi.Calibration\Microsoft.Psi.Calibration.csproj" />
+    <ProjectReference Include="..\..\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj" />
+    <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
+    <ProjectReference Include="..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
+    <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
+    <ProjectReference Include="..\..\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj" />
+    <ProjectReference Include="..\Microsoft.Msagl.WpfGraphControl\Microsoft.Msagl.WpfGraphControl.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>    
+    <Page Include="Themes\Brushes.xaml" />
+    <Page Include="Themes\Buttons.xaml" />
+    <Page Include="Themes\CollectionControl.xaml" />
+    <Page Include="Themes\ColorPicker.xaml" />
+    <Page Include="Themes\Common.xaml" />
+    <Page Include="Themes\DateTimeUpDown.xaml" />
+    <Page Include="Themes\Glyphs.xaml" />
+    <Page Include="Themes\NumericUpDown.xaml" />
+    <Page Include="Themes\PropertyGrid.xaml" />
+    <Page Include="Themes\PsiStudioDark.xaml" />
+    <Page Include="Themes\TimeSpanUpDown.xaml" />
+    <Page Include="Themes\WatermarkTextBox.xaml" />
+    <Page Include="Views\InstantVisualizationContainerView.xaml" />
+    <Page Include="Views\InstantVisualizationPlaceholderPanelView.xaml" />
+    <Page Include="Views\NavigatorView.xaml" />
+    <Page Include="Views\TimelineSegmentView.xaml" />
+    <Page Include="Views\TimelineView.xaml" />
+    <Page Include="Views\TimelineVisualizationPanelView.xaml" />
+    <Page Include="Views\VisualizationContainerView.xaml" />
+    <Page Include="Views\Visuals2D\AudioVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\DoubleVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\DecimalVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\LongVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\IntVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\FloatVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\NullableDecimalVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\NullableFloatVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\NullableDoubleVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\NullableLongVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\NumericPlot\NullableIntVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\ImageVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\MessageVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\ScatterPlotVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\ScatterRectangleVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\SpeechRecognitionVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\StringWithDurationVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\TimeIntervalAnnotationVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\TimeIntervalVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals3D\AnimatedModelVisual.xaml" />
+    <Page Include="Views\Visuals3D\SpriteVisual.xaml" />
+    <Page Include="Views\Visuals3D\XYPanelVisual.xaml" />
+    <Page Include="Views\XYVisualizationPanelView.xaml" />
+    <Page Include="Views\XYZVisualizationPanelView.xaml" />
+    <Page Include="Windows\CreateAnnotationStreamWindow.xaml" />
+    <Page Include="Windows\LoadingDatasetWindow.xaml" />
+    <Page Include="Windows\MessageBoxWindow.xaml" />
+    <Page Include="Windows\ProgressWindow.xaml" />
+    <Page Include="Windows\SaveStoreWindow.xaml" />
+    <Page Include="Windows\RunBatchProcessingTaskWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\2d.png" />
+    <Resource Include="Icons\3d.png" />
+    <Resource Include="Icons\annotation.png" />
+    <Resource Include="Icons\annotation-unbound.png" />
+    <Resource Include="Icons\blank.png" />
+    <Resource Include="Icons\bring-forward.png" />
+    <Resource Include="Icons\bring-to-front.png" />
+    <Resource Include="Icons\collapse-all.png" />
+    <Resource Include="Icons\cursor-follow.png" />
+    <Resource Include="Icons\dataset-invalid.png" />
+    <Resource Include="Icons\dataset-open.png" />
+    <Resource Include="Icons\dataset-remove.png" />
+    <Resource Include="Icons\dataset-repairing.png" />
+    <Resource Include="Icons\dataset-save.png" />
+    <Resource Include="Icons\dataset.png" />
+    <Resource Include="Icons\diagnostics-live.png" />
+    <Resource Include="Icons\diagnostics.png" />
+    <Resource Include="Icons\expand-all.png" />
+    <Resource Include="Icons\group-live.png" />
+    <Resource Include="Icons\group.png" />
+    <Resource Include="Icons\latency.png" />
+    <Resource Include="Icons\layout-open.png" />
+    <Resource Include="Icons\layout-save-as.png" />
+    <Resource Include="Icons\layout-save.png" />
+    <Resource Include="Icons\layout.png" />
+    <Resource Include="Icons\legend.png" />
+    <Resource Include="Icons\live-button-off.png" />
+    <Resource Include="Icons\live-button-on.png" />
+    <Resource Include="Icons\messages.png" />
+    <Resource Include="Icons\move-to-beginning.png" />
+    <Resource Include="Icons\move-to-end.png" />
+    <Resource Include="Icons\panel-2d.png" />
+    <Resource Include="Icons\panel-3d.png" />
+    <Resource Include="Icons\panel-clear.png" />
+    <Resource Include="Icons\panel-hide.png" />
+    <Resource Include="Icons\panel-latency.png" />
+    <Resource Include="Icons\panel-legend.png" />
+    <Resource Include="Icons\panel-matrix-1.png" />
+    <Resource Include="Icons\panel-matrix-2.png" />
+    <Resource Include="Icons\panel-matrix-3.png" />
+    <Resource Include="Icons\panel-messages.png" />
+    <Resource Include="Icons\panel-move-down.png" />
+    <Resource Include="Icons\panel-move-to-bottom.png" />
+    <Resource Include="Icons\panel-move-to-top.png" />
+    <Resource Include="Icons\panel-move-up.png" />
+    <Resource Include="Icons\panel-partial-bindings.png" />
+    <Resource Include="Icons\panel-placeholder.png" />
+    <Resource Include="Icons\panel-remove-all.png" />
+    <Resource Include="Icons\panel-remove.png" />
+    <Resource Include="Icons\panel-stream.png" />
+    <Resource Include="Icons\panel-timeline.png" />
+    <Resource Include="Icons\panel-unhide.png" />
+    <Resource Include="Icons\partition-add-live.png" />
+    <Resource Include="Icons\partition-add.png" />
+    <Resource Include="Icons\partition-annotation-live.png" />
+    <Resource Include="Icons\partition-annotation.png" />
+    <Resource Include="Icons\partition-create-live.png" />
+    <Resource Include="Icons\partition-create.png" />
+    <Resource Include="Icons\partition-from-store-live.png" />
+    <Resource Include="Icons\partition-from-store.png" />
+    <Resource Include="Icons\partition-invalid-live.png" />
+    <Resource Include="Icons\partition-invalid.png" />
+    <Resource Include="Icons\partition-live.png" />
+    <Resource Include="Icons\partition-mp4-live.png" />
+    <Resource Include="Icons\partition-mp4.png" />
+    <Resource Include="Icons\partition-remove-live.png" />
+    <Resource Include="Icons\partition-remove.png" />
+    <Resource Include="Icons\partition-repairing-live.png" />
+    <Resource Include="Icons\partition-repairing.png" />
+    <Resource Include="Icons\partition-stream-live.png" />
+    <Resource Include="Icons\partition-stream.png" />
+    <Resource Include="Icons\partition.png" />
+    <Resource Include="Icons\pause.png" />
+    <Resource Include="Icons\PipelineDiagnosticsBack.png" />
+    <Resource Include="Icons\PipelineDiagnosticsExpandView.png" />
+    <Resource Include="Icons\PipelineDiagnosticsHome.png" />
+    <Resource Include="Icons\play-repeat.png" />
+    <Resource Include="Icons\play.png" />
+    <Resource Include="Icons\playback-speed-decrease.png" />
+    <Resource Include="Icons\playback-speed-increase.png" />
+    <Resource Include="Icons\selection-remove.png" />
+    <Resource Include="Icons\send-backward.png" />
+    <Resource Include="Icons\send-to-back.png" />
+    <Resource Include="Icons\session-add.png" />
+    <Resource Include="Icons\session-create.png" />
+    <Resource Include="Icons\session-current.png" />
+    <Resource Include="Icons\session-from-store.png" />
+    <Resource Include="Icons\session-invalid.png" />
+    <Resource Include="Icons\session-remove.png" />
+    <Resource Include="Icons\session-repairing.png" />
+    <Resource Include="Icons\session-stream.png" />
+    <Resource Include="Icons\session.png" />
+    <Resource Include="Icons\settings.png" />
+    <Resource Include="Icons\speed.png" />
+    <Resource Include="Icons\stop.png" />
+    <Resource Include="Icons\store-open.png" />
+    <Resource Include="Icons\stream-audio-live.png" />
+    <Resource Include="Icons\stream-audio-muted-live.png" />
+    <Resource Include="Icons\stream-audio-muted.png" />
+    <Resource Include="Icons\stream-audio.png" />
+    <Resource Include="Icons\stream-member-live.png" />
+    <Resource Include="Icons\stream-member-snap-live.png" />
+    <Resource Include="Icons\stream-member-snap.png" />
+    <Resource Include="Icons\stream-member-unbound-live.png" />
+    <Resource Include="Icons\stream-member-unbound.png" />
+    <Resource Include="Icons\stream-member.png" />
+    <Resource Include="Icons\stream-group-live.png" />
+    <Resource Include="Icons\stream-group.png" />
+    <Resource Include="Icons\stream-live.png" />
+    <Resource Include="Icons\stream-not-found-live.png" />
+    <Resource Include="Icons\stream-not-found.png" />
+    <Resource Include="Icons\stream-snap-live.png" />
+    <Resource Include="Icons\stream-snap.png" />
+    <Resource Include="Icons\stream-unbound-live.png" />
+    <Resource Include="Icons\stream-unbound.png" />
+    <Resource Include="Icons\stream.png" />
+    <Resource Include="Icons\synchronize.png" />
+    <Resource Include="Icons\timing-absolute.png" />
+    <Resource Include="Icons\timing-relative-selection.png" />
+    <Resource Include="Icons\timing-relative-session.png" />
+    <Resource Include="Icons\zoom-to-panel.png" />
+    <Resource Include="Icons\zoom-to-selection.png" />
+    <Resource Include="Icons\zoom-to-session.png" />
+    <Resource Include="Icons\zoom-to-stream.png" />
+    <Resource Include="Icons\zoom.png" />
+  </ItemGroup>
+</Project>

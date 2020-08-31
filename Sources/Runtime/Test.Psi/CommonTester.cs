@@ -17,8 +17,8 @@ namespace Test.Psi
         [Timeout(60000)]
         public void TimestampedTest()
         {
-            Envelope e1 = new Envelope() { OriginatingTime = Time.GetCurrentTime(), SequenceId = 15, SourceId = 23, Time = Time.GetCurrentTime() };
-            Envelope e2 = new Envelope() { OriginatingTime = Time.GetCurrentTime(), SequenceId = 10, SourceId = 13, Time = Time.GetCurrentTime() };
+            Envelope e1 = new Envelope() { OriginatingTime = Time.GetCurrentTime(), SequenceId = 15, SourceId = 23, CreationTime = Time.GetCurrentTime() };
+            Envelope e2 = new Envelope() { OriginatingTime = Time.GetCurrentTime(), SequenceId = 10, SourceId = 13, CreationTime = Time.GetCurrentTime() };
             Assert.IsTrue(new Message<int>(5, e1) == new Message<int>(5, e1));
             Assert.IsTrue(new Message<int>(5, e1) != new Message<int>(5, e2));
             Assert.IsTrue(new Message<int>(5, e1) != new Message<int>(6, e1));

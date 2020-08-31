@@ -9,7 +9,6 @@ namespace Microsoft.Psi.PsiStudio
     using System.Windows.Controls;
     using System.Windows.Input;
     using Microsoft.Psi.Visualization;
-    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -41,15 +40,17 @@ namespace Microsoft.Psi.PsiStudio
 
             // Set the data context
             this.DataContext = viewModel;
-
-            // Register the known serializers, this is necessary for some .NET Core types
-            PipelineDiagnosticsVisualizationModel.RegisterKnownSerializationTypes();
         }
 
         /// <inheritdoc/>
         protected override void OnClosing(CancelEventArgs e)
         {
-            (this.DataContext as MainWindowViewModel).OnClosing();
+            // Notify the main window that we're closing the application.  The return value indicates whether the user elected to cancel closing.
+            if (!(this.DataContext as MainWindowViewModel).OnClosing())
+            {
+                e.Cancel = true;
+            }
+
             base.OnClosing(e);
         }
 

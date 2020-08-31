@@ -27,7 +27,9 @@ namespace Test.Psi.Imaging
         private Image testImage2_FlipHoriz = Image.FromBitmap(Properties.Resources.TestImage2_FlipHoriz);
         private Image testImage2_FlipVert = Image.FromBitmap(Properties.Resources.TestImage2_FlipVert);
         private Image testImage2_Rotate_Neg10 = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_Neg10);
+        private Image testImage2_Rotate_Neg10_Loose = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_Neg10_Loose);
         private Image testImage2_Rotate_110 = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_110);
+        private Image testImage2_Rotate_110_Loose = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_110_Loose);
         private Image testImage2_DrawRect = Image.FromBitmap(Properties.Resources.TestImage2_DrawRect);
         private Image testImage2_DrawLine = Image.FromBitmap(Properties.Resources.TestImage2_DrawLine);
         private Image testImage2_DrawCircle = Image.FromBitmap(Properties.Resources.TestImage2_DrawCircle);
@@ -82,6 +84,14 @@ namespace Test.Psi.Imaging
                     Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(110.0f, SamplingMode.Point).Do((img) =>
                     {
                         this.AssertAreImagesEqual(this.testImage2_Rotate_110, img.Resource);
+                    });
+                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(-10.0f, SamplingMode.Point, RotationFitMode.Loose).Do((img) =>
+                    {
+                        this.AssertAreImagesEqual(this.testImage2_Rotate_Neg10_Loose, img.Resource);
+                    });
+                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(110.0f, SamplingMode.Point, RotationFitMode.Loose).Do((img) =>
+                    {
+                        this.AssertAreImagesEqual(this.testImage2_Rotate_110_Loose, img.Resource);
                     });
                     pipeline.Run();
                 }
@@ -364,6 +374,29 @@ namespace Test.Psi.Imaging
             var decodedImage = encodedImage.Decode(new ImageFromStreamDecoder());
             var decodedImage2 = encodedImage.Decode(new ImageFromStreamDecoder());
             this.AssertAreImagesEqual(decodedImage, decodedImage2);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Test_Resize()
+        {
+            // Resize using nearest-neighbor
+            this.AssertAreImagesEqual(this.testImage_50_25_Cubic, this.testImage.Resize(
+                this.testImage_50_25_Cubic.Width,
+                this.testImage_50_25_Cubic.Height,
+                SamplingMode.Bicubic));
+
+            // Scale using bilinear
+            this.AssertAreImagesEqual(this.testImage_150_125_Point, this.testImage.Resize(
+                this.testImage_150_125_Point.Width,
+                this.testImage_150_125_Point.Height,
+                SamplingMode.Point));
+
+            // Scale using bicubic
+            this.AssertAreImagesEqual(this.testImage_25_200_Linear, this.testImage.Resize(
+                this.testImage_25_200_Linear.Width,
+                this.testImage_25_200_Linear.Height,
+                SamplingMode.Bilinear));
         }
 
         [TestMethod]

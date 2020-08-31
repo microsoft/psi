@@ -1954,7 +1954,7 @@ namespace Test.Psi
             var log = new List<string>();
             PipelineDiagnostics graph = null;
 
-            using (var p = Pipeline.Create(true, new DiagnosticsConfiguration() { SamplingInterval = TimeSpan.FromMilliseconds(1) }))
+            using (var p = Pipeline.Create(enableDiagnostics: true, diagnosticsConfiguration: new DiagnosticsConfiguration() { SamplingInterval = TimeSpan.FromMilliseconds(1) }))
             {
                 /*
                  *         .........

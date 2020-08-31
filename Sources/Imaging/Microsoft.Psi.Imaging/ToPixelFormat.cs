@@ -42,7 +42,7 @@ namespace Microsoft.Psi.Imaging
             }
             else
             {
-                using var image = this.sharedImageAllocator (sharedImage.Resource.Width, sharedImage.Resource.Height, this.pixelFormat);
+                using var image = this.sharedImageAllocator(sharedImage.Resource.Width, sharedImage.Resource.Height, this.pixelFormat);
                 sharedImage.Resource.CopyTo(image.Resource);
                 this.Out.Post(image, e.OriginatingTime);
             }

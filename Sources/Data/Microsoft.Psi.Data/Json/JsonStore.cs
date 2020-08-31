@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <summary>
-        /// Opens a multi-stream JSON store for read and returns an <see cref="JsonGenerator"/> instance which can be used to inspect the store and open the streams.
+        /// Opens a JSON store for read and returns an <see cref="JsonGenerator"/> instance which can be used to inspect the store and open the streams.
         /// </summary>
         /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="JsonGenerator"/>.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>

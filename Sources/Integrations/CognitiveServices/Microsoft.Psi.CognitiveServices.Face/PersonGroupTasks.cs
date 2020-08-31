@@ -25,7 +25,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="directory">The directory in which to look for images (organize by per-person subdirectories).</param>
         /// <param name="deleteExisting">Whether to delete existing group (if any).</param>
         /// <param name="throttleMs">The time to wait between calls.</param>
-        [Task(nameof(TrainPersonGroup), "Create, add faces to, and train person group in Azure.")]
+        [BatchProcessingTask(nameof(TrainPersonGroup), "Create, add faces to, and train person group in Azure.")]
         public static void TrainPersonGroup(string subscriptionKey, string endpoint, string groupId, string groupName, string directory, bool deleteExisting, int throttleMs)
         {
             PersonGroup.Create(subscriptionKey, endpoint, groupId, groupName, deleteExisting, Console.WriteLine, throttleMs).Wait();
@@ -41,7 +41,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="endpoint">The Azure service endpoint.</param>
         /// <param name="groupId">The group id.</param>
         /// <param name="throttleMs">The time to wait between calls.</param>
-        [Task(nameof(DeletePersonGroup), "Delete person group in Azure.")]
+        [BatchProcessingTask(nameof(DeletePersonGroup), "Delete person group in Azure.")]
         public static void DeletePersonGroup(string subscriptionKey, string endpoint, string groupId, int throttleMs)
         {
             PersonGroup.Delete(subscriptionKey, endpoint, groupId, Console.WriteLine, throttleMs).Wait();
@@ -55,7 +55,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="endpoint">The Azure service endpoint.</param>
         /// <param name="groupId">The group id.</param>
         /// <param name="directory">The directory from which to look for test images.</param>
-        [Task(nameof(TestPersonGroup), "Test person group in Azure.")]
+        [BatchProcessingTask(nameof(TestPersonGroup), "Test person group in Azure.")]
         public static void TestPersonGroup(string subscriptionKey, string endpoint, string groupId, string directory)
         {
             using (var pipeline = Pipeline.Create())

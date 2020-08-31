@@ -37,10 +37,10 @@ namespace Microsoft.Psi.Data.Json
             : base(extension)
         {
             this.Name = name;
-            this.Path = StoreCommon.GetPathToLatestVersion(name, path);
+            this.Path = PsiStoreCommon.GetPathToLatestVersion(name, path);
 
             // load catalog
-            string metadataPath = System.IO.Path.Combine(this.Path, StoreCommon.GetCatalogFileName(this.Name) + this.Extension);
+            string metadataPath = System.IO.Path.Combine(this.Path, PsiStoreCommon.GetCatalogFileName(this.Name) + this.Extension);
             using (var file = File.OpenText(metadataPath))
             using (var reader = new JsonTextReader(file))
             {
@@ -268,7 +268,7 @@ namespace Microsoft.Psi.Data.Json
             this.descriptor = descriptor;
 
             // load data
-            string dataPath = System.IO.Path.Combine(this.Path, StoreCommon.GetDataFileName(this.Name) + this.Extension);
+            string dataPath = System.IO.Path.Combine(this.Path, PsiStoreCommon.GetDataFileName(this.Name) + this.Extension);
             this.streamReader?.Dispose();
             this.streamReader = File.OpenText(dataPath);
             this.jsonReader = new JsonTextReader(this.streamReader);

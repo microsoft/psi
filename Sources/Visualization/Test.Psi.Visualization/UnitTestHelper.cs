@@ -31,6 +31,23 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
+        /// Assert that the basis collection and test collection have the same size and contents.
+        /// </summary>
+        /// <param name="basis">The basis collection.</param>
+        /// <param name="test">The test collection.</param>
+        /// <param name="size">The expected size of the collections.</param>
+        /// <typeparam name="T">Type of list elements.</typeparam>
+        public static void AssertAreEqual<T>(IReadOnlyList<T> basis, IReadOnlyList<T> test, int size)
+        {
+            Assert.AreEqual(test.Count, size);
+            Assert.AreEqual(basis.Count, test.Count);
+            for (var i = 0; i < test.Count; i++)
+            {
+                Assert.AreEqual(basis[i], test[i]);
+            }
+        }
+
+        /// <summary>
         /// Tests method for an expected exception being thrown.
         /// </summary>
         /// <param name="action">Method under test.</param>

@@ -96,7 +96,7 @@ namespace Microsoft.Psi
         /// </summary>
         public DateTime Time
         {
-            get { return this.envelope.Time; }
+            get { return this.envelope.CreationTime; }
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
             "SourceId": 1,
             "SequenceId": 0,
             "OriginatingTime": "2017-11-01T09:15:30.12345Z",
-            "Time": "2017-11-01T09:15:30.12345Z"
+            "CreationTime": "2017-11-01T09:15:30.12345Z"
         },
         "Data": {
             "ArrayValue": [
@@ -32,7 +32,7 @@
             "SourceId": 2,
             "SequenceId": 0,
             "OriginatingTime": "2017-11-01T09:15:30.12345Z",
-            "Time": "2017-11-01T09:15:30.12345Z"
+            "CreationTime": "2017-11-01T09:15:30.12345Z"
         },
         "Data": {
             "ArrayValue": [
@@ -60,7 +60,7 @@
             "SourceId": 1,
             "SequenceId": 1,
             "OriginatingTime": "2017-11-01T09:15:34.12345Z",
-            "Time": "2017-11-01T09:15:34.12345Z"
+            "CreationTime": "2017-11-01T09:15:34.12345Z"
         },
         "Data": {
             "ArrayValue": [
@@ -88,7 +88,7 @@
             "SourceId": 2,
             "SequenceId": 1,
             "OriginatingTime": "2017-11-01T09:15:34.12345Z",
-            "Time": "2017-11-01T09:15:34.12345Z"
+            "CreationTime": "2017-11-01T09:15:34.12345Z"
         },
         "Data": {
             "ArrayValue": [

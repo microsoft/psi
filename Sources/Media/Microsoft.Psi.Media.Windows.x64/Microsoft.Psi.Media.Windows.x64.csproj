@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(OutDir)\Microsoft.Psi.Media_Interop.Windows.x64.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutDir)\Microsoft.Psi.Media_Interop.Windows.x64.pdb" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutDir)\Microsoft.Psi.Media_Interop.Windows.x64.xml" Pack="true" PackagePath="lib\$(TargetFramework)" />
   </ItemGroup>
 </Project>

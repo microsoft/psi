@@ -1,0 +1,38 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<Window x:Class="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        Title="Loading Dataset"
+        WindowStartupLocation="CenterOwner" 
+        WindowStyle="None"
+        BorderBrush="DodgerBlue"
+        BorderThickness="1"
+        Background="{StaticResource WindowBackgroundBrush}">
+
+    <Grid MinWidth="400" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Running Task:" HorizontalAlignment="Right"/>
+        <Label Grid.Row="0" Grid.Column="1" Name="TaskNameLabel" Content="..." />
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
+            <Label Name="PercentCompleteLabel" Content="20.0%"/>
+        </StackPanel>
+        <Label Grid.Row="1" Grid.Column="0" Content="On:" HorizontalAlignment="Right"/>
+        <Label Grid.Row="1" Grid.Column="1" Name="TargetLabel" Content="..." />
+        <ProgressBar Name="ProgressBar" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height ="12" IsIndeterminate="False" Margin="5,10" Value="0" />
+    </Grid>
+</Window>

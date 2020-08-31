@@ -16,22 +16,19 @@
 
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.Resources>
-            <Style TargetType="Label">
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                 <Setter Property="HorizontalAlignment" Value="Right" />
-                <Setter Property="Margin" Value="10,2,2,2" />
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
-            <Style TargetType="TextBox">
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="Margin" Value="2,2,10,2" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Width" Value="180" />
             </Style>
 
-            <Style TargetType="Button">
-                <Setter Property="Height" Value="20" />
-                <Setter Property="VerticalAlignment" Value="Center" />
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Height" Value="22" />
                 <Setter Property="Width" Value="80" />
             </Style>
         </Grid.Resources>
@@ -42,16 +39,15 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="LeftColumn" />
-            <ColumnDefinition Width="Auto" SharedSizeGroup="MiddleColumn" />
-            <ColumnDefinition Width="Auto" SharedSizeGroup="RightColumn" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Target="{Binding ElementName=LayoutNameTextBox}">Layout Name</Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Name="LayoutNameTextBox" Foreground="{StaticResource ForegroundBrush}"/>
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,2,10,10">
-            <Button Name="OKButton" Click="OKButton_Click" IsDefault="True" Margin="0,0,2,0">OK</Button>
-            <Button IsCancel="True" Margin="2,0,0,0">Cancel</Button>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="LayoutNameTextBox" Margin="5,10,4,5" Foreground="{StaticResource ForegroundBrush}"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="OKButton" Click="OKButton_Click" IsDefault="True" Margin="5">OK</Button>
+            <Button IsCancel="True" Margin="5">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>

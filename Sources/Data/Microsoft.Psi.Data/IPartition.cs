@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Data
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -34,6 +35,11 @@ namespace Microsoft.Psi.Data
         /// Gets the store path of this partition.
         /// </summary>
         string StorePath { get; }
+
+        /// <summary>
+        /// Gets the type name of the IStreamReader for this partition.
+        /// </summary>
+        string StreamReaderTypeName { get; }
 
         /// <summary>
         /// Gets an enumerable of stream metadata contained in this partition.

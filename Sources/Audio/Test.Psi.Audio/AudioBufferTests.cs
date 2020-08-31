@@ -95,12 +95,12 @@ namespace Test.Psi.Audio
             AudioBuffer bresult = default(AudioBuffer);
 
             var p1 = Pipeline.Create();
-            var store = Store.Create(p1, "audio", null);
+            var store = PsiStore.Create(p1, "audio", null);
             Generators.Return(p1, buffer).Write("audio", store);
             p1.RunAsync();
 
             var p2 = Pipeline.Create();
-            var store2 = Store.Open(p2, "audio", null);
+            var store2 = PsiStore.Open(p2, "audio", null);
             store2.OpenStream<AudioBuffer>("audio").Do(b => bresult = b);
             p2.RunAsync();
             System.Threading.Thread.Sleep(100);

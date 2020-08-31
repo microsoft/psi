@@ -43,7 +43,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromExistingStore("Session_0", "PsiStore", StorePath);
+            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -55,7 +55,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second session with a different name
-            var session1 = dataset.AddSessionFromExistingStore("Session_1", "NewStore", StorePath);
+            var session1 = dataset.AddSessionFromPsiStore("NewStore", StorePath, "Session_1");
             Assert.AreEqual(2, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
             Assert.AreEqual("Session_1", dataset.Sessions[1].Name);
@@ -77,7 +77,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromExistingStore("Session_0", "PsiStore", StorePath);
+            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -85,7 +85,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second session with a duplicate name
-            var session1 = dataset.AddSessionFromExistingStore("Session_0", "NewStore", StorePath); // should throw
+            var session1 = dataset.AddSessionFromPsiStore("NewStore", StorePath, "Session_0"); // should throw
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromExistingStore("Session_0", "PsiStore", StorePath);
+            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -112,7 +112,7 @@ namespace Test.Psi.Data
 
             // create a second dataset from the new store and append it to the first
             var dataset1 = new Dataset();
-            var session1 = dataset1.AddSessionFromExistingStore("Session_1", "NewStore", StorePath);
+            var session1 = dataset1.AddSessionFromPsiStore("NewStore", StorePath, "Session_1");
 
             dataset.Append(dataset1);
             Assert.AreEqual(2, dataset.Sessions.Count);
@@ -136,7 +136,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromExistingStore("Session_0", "PsiStore", StorePath);
+            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -145,7 +145,7 @@ namespace Test.Psi.Data
 
             // create a second dataset with a duplicate session name and append it to the first
             var dataset1 = new Dataset();
-            var session1 = dataset1.AddSessionFromExistingStore("Session_0", "NewStore", StorePath);
+            var session1 = dataset1.AddSessionFromPsiStore("NewStore", StorePath, "Session_0");
 
             dataset.Append(dataset1); // should throw
         }
@@ -162,7 +162,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a partition
-            var partition0 = session.AddStorePartition("PsiStore", StorePath, "Partition_0");
+            var partition0 = session.AddPsiStorePartition("PsiStore", StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -176,7 +176,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second partition with a different name
-            var partition1 = session.AddStorePartition("NewStore", StorePath, "Partition_1");
+            var partition1 = session.AddPsiStorePartition("NewStore", StorePath, "Partition_1");
             Assert.AreEqual(2, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
             Assert.AreEqual("Partition_1", session.Partitions[1].Name);
@@ -201,7 +201,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a partition
-            var partition0 = session.AddStorePartition("PsiStore", StorePath, "Partition_0");
+            var partition0 = session.AddPsiStorePartition("PsiStore", StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -209,7 +209,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second partition with a duplicate name
-            var partition1 = session.AddStorePartition("NewStore", StorePath, "Partition_0"); // should throw
+            var partition1 = session.AddPsiStorePartition("NewStore", StorePath, "Partition_0"); // should throw
         }
 
         [TestMethod]
@@ -222,7 +222,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session and assume it loaded correctly if it has a partition containing a stream
-            dataset.AddSessionFromExistingStore("Session_0", "PsiStore", Path.GetFullPath(StorePath));
+            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.IsTrue(dataset.Sessions[0].Partitions[0].AvailableStreams.Count() > 0);
 
             // save dataset with absolute store paths
@@ -252,7 +252,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session and assume it loaded correctly if it has a partition containing a stream
-            dataset.AddSessionFromExistingStore("Session_0", "PsiStore", Path.GetFullPath(StorePath));
+            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.IsTrue(dataset.Sessions[0].Partitions[0].AvailableStreams.Count() > 0);
 
             // save dataset with relative store paths
@@ -281,17 +281,18 @@ namespace Test.Psi.Data
             var session = dataset.CreateSession();
 
             // generate a test store
-            GenerateTestStore("OriginalStore", StorePath);
+            var originalStoreName = "OriginalStore";
+            GenerateTestStore(originalStoreName, StorePath);
 
             // add a partition
-            var partition0 = session.AddStorePartition("OriginalStore", StorePath, "Partition_0");
+            var partition0 = session.AddPsiStorePartition(originalStoreName, StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
             int multiplier = 7;
 
             // create a derived partition which contains the values from the original stream multiplied by a multiplier
-            await session.CreateDerivedPartitionAsync(
+            await session.CreateDerivedPsiPartitionAsync(
                 (pipeline, importer, exporter, parameter) =>
                 {
                     var inputStream = importer.OpenStream<int>("Root");
@@ -305,16 +306,16 @@ namespace Test.Psi.Data
 
             // should have created a new store partition
             Assert.AreEqual(2, session.Partitions.Count);
-            Assert.IsTrue(Store.Exists("OriginalStore", StorePath));
-            Assert.IsTrue(Store.Exists("DerivedStore", StorePath));
+            Assert.IsTrue(PsiStore.Exists("OriginalStore", StorePath));
+            Assert.IsTrue(PsiStore.Exists("DerivedStore", StorePath));
 
             // verify partition metadata
-            var originalPartition = session.Partitions[0] as StorePartition;
+            var originalPartition = session.Partitions[0] as Partition<PsiStoreStreamReader>;
             Assert.AreEqual("Partition_0", originalPartition.Name);
             Assert.AreEqual("OriginalStore", originalPartition.StoreName);
-            Assert.AreEqual(StorePath, originalPartition.StorePath);
+            Assert.AreEqual($"{StorePath}{Path.DirectorySeparatorChar}OriginalStore.0000", originalPartition.StorePath);
 
-            var derivedPartition = session.Partitions[1] as StorePartition;
+            var derivedPartition = session.Partitions[1] as Partition<PsiStoreStreamReader>;
             Assert.AreEqual("Partition_1", derivedPartition.Name);
             Assert.AreEqual("DerivedStore", derivedPartition.StoreName);
             Assert.AreEqual(StorePath, derivedPartition.StorePath);
@@ -328,7 +329,7 @@ namespace Test.Psi.Data
             // read stream values from the partitions
             using (var pipeline = Pipeline.Create())
             {
-                var originalPartitionImporter = Store.Open(pipeline, originalPartition.StoreName, originalPartition.StorePath);
+                var originalPartitionImporter = PsiStore.Open(pipeline, originalPartition.StoreName, originalPartition.StorePath);
                 originalPartitionImporter.OpenStream<int>("Root").Do(
                     (i, e) =>
                     {
@@ -336,7 +337,7 @@ namespace Test.Psi.Data
                         originalTimes.Add(e.OriginatingTime);
                     });
 
-                var derivedPartitionImporter = Store.Open(pipeline, derivedPartition.StoreName, derivedPartition.StorePath);
+                var derivedPartitionImporter = PsiStore.Open(pipeline, derivedPartition.StoreName, derivedPartition.StorePath);
                 derivedPartitionImporter.OpenStream<int>("DerivedStream").Do(
                     (i, e) =>
                     {
@@ -367,10 +368,11 @@ namespace Test.Psi.Data
             var session = dataset.CreateSession();
 
             // generate a test store
-            GenerateTestStore("OriginalStore", StorePath);
+            var originalStoreName = "OriginalStore";
+            GenerateTestStore(originalStoreName, StorePath);
 
             // add a partition
-            var partition0 = session.AddStorePartition("OriginalStore", StorePath, "Partition_0");
+            var partition0 = session.AddPsiStorePartition(originalStoreName, StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -382,7 +384,7 @@ namespace Test.Psi.Data
                 var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
 
                 // create a derived partition which contains the values from the original stream multiplied by a multiplier
-                await session.CreateDerivedPartitionAsync(
+                await session.CreateDerivedPsiPartitionAsync(
                     (pipeline, importer, exporter, parameter) =>
                     {
                         var inputStream = importer.OpenStream<int>("Root");
@@ -390,7 +392,7 @@ namespace Test.Psi.Data
 
                         // add a dummy source and propose a long time interval so that the operation will block (and eventually be canceled)
                         var generator = Generators.Repeat(pipeline, 0, int.MaxValue, TimeSpan.FromMilliseconds(1000));
-                        var replayTimeInterval = TimeInterval.LeftBounded(importer.OriginatingTimeInterval.Left);
+                        var replayTimeInterval = TimeInterval.LeftBounded(importer.MessageOriginatingTimeInterval.Left);
                         pipeline.ProposeReplayTime(replayTimeInterval);
                     },
                     multiplier,
@@ -406,14 +408,14 @@ namespace Test.Psi.Data
             {
                 // should NOT have created a new partition (but original partition should be intact)
                 Assert.AreEqual(1, session.Partitions.Count);
-                Assert.IsTrue(Store.Exists("OriginalStore", StorePath));
-                Assert.IsFalse(Store.Exists("DerivedStore", StorePath));
+                Assert.IsTrue(PsiStore.Exists("OriginalStore", StorePath));
+                Assert.IsFalse(PsiStore.Exists("DerivedStore", StorePath));
 
                 // verify original partition metadata
-                var originalPartition = session.Partitions[0] as StorePartition;
+                var originalPartition = session.Partitions[0] as Partition<PsiStoreStreamReader>;
                 Assert.AreEqual("Partition_0", originalPartition.Name);
                 Assert.AreEqual("OriginalStore", originalPartition.StoreName);
-                Assert.AreEqual(StorePath, originalPartition.StorePath);
+                Assert.AreEqual($"{StorePath}{Path.DirectorySeparatorChar}OriginalStore.0000", originalPartition.StorePath);
 
                 throw;
             }
@@ -423,7 +425,7 @@ namespace Test.Psi.Data
         {
             using (var p = Pipeline.Create())
             {
-                var store = Store.Create(p, storeName, storePath);
+                var store = PsiStore.Create(p, storeName, storePath);
                 var root = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(1)).Write("Root", store);
                 p.Run();
             }

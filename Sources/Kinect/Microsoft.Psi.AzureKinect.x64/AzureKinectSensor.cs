@@ -33,25 +33,22 @@ namespace Microsoft.Psi.AzureKinect
             DeliveryPolicy bodyTrackerDeliveryPolicy = null)
             : base(pipeline, nameof(AzureKinectSensor), defaultDeliveryPolicy ?? DeliveryPolicy.LatestMessage)
         {
-            if (configuration == null)
-            {
-                configuration = new AzureKinectSensorConfiguration();
-            }
+            this.Configuration = configuration ?? new AzureKinectSensorConfiguration();
 
-            if (configuration.BodyTrackerConfiguration != null)
+            if (this.Configuration.BodyTrackerConfiguration != null)
             {
                 if (!configuration.OutputCalibration)
                 {
                     throw new Exception($"The body tracker requires that the {nameof(AzureKinectSensor)} component must be configured to output calibration.");
                 }
 
-                if (!configuration.OutputInfrared || !configuration.OutputDepth)
+                if (!this.Configuration.OutputInfrared || !this.Configuration.OutputDepth)
                 {
                     throw new Exception($"The body tracker requires that the {nameof(AzureKinectSensor)} component must be configured to output both Depth and IR streams.");
                 }
             }
 
-            var azureKinectCore = new AzureKinectCore(this, configuration);
+            var azureKinectCore = new AzureKinectCore(this, this.Configuration);
 
             // Connect the sensor streams
             this.ColorImage = azureKinectCore.ColorImage.BridgeTo(pipeline, nameof(this.ColorImage)).Out;
@@ -64,9 +61,9 @@ namespace Microsoft.Psi.AzureKinect
             this.AzureKinectSensorCalibration = azureKinectCore.AzureKinectSensorCalibration.BridgeTo(pipeline, nameof(this.AzureKinectSensorCalibration)).Out;
 
             // Pipe captures and calibration to the body tracker
-            if (configuration.BodyTrackerConfiguration != null)
+            if (this.Configuration.BodyTrackerConfiguration != null)
             {
-                var bodyTracker = new AzureKinectBodyTracker(this, configuration.BodyTrackerConfiguration);
+                var bodyTracker = new AzureKinectBodyTracker(this, this.Configuration.BodyTrackerConfiguration);
                 azureKinectCore.DepthAndIRImages.PipeTo(bodyTracker, bodyTrackerDeliveryPolicy ?? DeliveryPolicy.LatestMessage);
                 azureKinectCore.AzureKinectSensorCalibration.PipeTo(bodyTracker.AzureKinectSensorCalibration, DeliveryPolicy.Unlimited);
                 this.Bodies = bodyTracker.BridgeTo(pipeline, nameof(this.Bodies)).Out;
@@ -183,6 +180,11 @@ namespace Microsoft.Psi.AzureKinect
         }
 
         // Note: the following emitters mirror those in AzureKinectSensorCore
+
+        /// <summary>
+        /// Gets the sensor configuration.
+        /// </summary>
+        public AzureKinectSensorConfiguration Configuration { get; } = null;
 
         /// <summary>
         /// Gets the current image from the color camera.
