@@ -25,7 +25,11 @@ namespace AzureKinectSample
         /// </summary>
         public static void Main()
         {
+            // Single Sensor Example
             SingleSensor();
+
+            // Multiple Sensor Sync Example
+            // AzureKinectSync();
         }
 
         /// <summary>
@@ -184,6 +188,7 @@ namespace AzureKinectSample
                 var sensor1 = new AzureKinectSensor(p, new AzureKinectSensorConfiguration()
                 {
                     DeviceIndex = 0,
+                    CameraFPS = FPS.FPS15,
                     WiredSyncMode = WiredSyncMode.Master,
                     PowerlineFrequency = AzureKinectSensorConfiguration.PowerlineFrequencyTypes.SixtyHz,
                     Exposure = TimeSpan.FromTicks(80000),
@@ -193,17 +198,19 @@ namespace AzureKinectSample
                 var sensor2 = new AzureKinectSensor(p, new AzureKinectSensorConfiguration()
                 {
                     DeviceIndex = 1,
+                    CameraFPS = FPS.FPS15,
                     WiredSyncMode = WiredSyncMode.Subordinate,
                     PowerlineFrequency = AzureKinectSensorConfiguration.PowerlineFrequencyTypes.SixtyHz,
                     Exposure = TimeSpan.FromTicks(80000),
                     DepthDelayOffColor = -1 * (minTimeBetweenDepthImageSensors / 2),
                 });
 
-                // Check if the difference between Color Images from sycned sensors is less than 1 milliseconds.
+                // Check if the difference between Color Images from sycned sensors is less than 5 milliseconds.
                 // Even thought it is synced, originating time might be different due to processing speed/USB speed, etc.
-                sensor1.ColorImage.Join(sensor2.ColorImage, TimeSpan.FromMilliseconds(1)).Do(m =>
+                // The best way to judge whether the images are sync or not is to have both images recording a stopwatch and compare the images.
+                sensor1.ColorImage.Join(sensor2.ColorImage, TimeSpan.FromMilliseconds(5)).Do(m =>
                 {
-                    Console.WriteLine("Color Image Streams Synced up to 1ms difference");
+                    Console.WriteLine("Color Image Streams Synced up to 5ms difference");
                 });
 
                 p.RunAsync();
