@@ -24,6 +24,7 @@ namespace Microsoft.Psi.AzureKinect
     /// </summary>
     internal sealed class AzureKinectCore : ISourceComponent, IDisposable
     {
+        private static readonly object CameraOpenLock = new object();
         private readonly Pipeline pipeline;
         private readonly AzureKinectSensorConfiguration configuration;
 
@@ -164,7 +165,11 @@ namespace Microsoft.Psi.AzureKinect
             // notify that this is an infinite source component
             notifyCompletionTime(DateTime.MaxValue);
 
-            this.device = Device.Open(this.configuration.DeviceIndex);
+            // Prevent device open race condition.
+            lock (CameraOpenLock)
+            {
+                this.device = Device.Open(this.configuration.DeviceIndex);
+            }
 
             // check the synchronization arguments
             if (this.configuration.WiredSyncMode != WiredSyncMode.Standalone)
