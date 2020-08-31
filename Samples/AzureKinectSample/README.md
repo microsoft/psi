@@ -353,7 +353,7 @@ calibration.PipeTo(bodyTracker.AzureKinectSensorCalibration);
 var bodies = bodyTracker.Bodies;
 ```
 
-## Wired Synchronization of Multiple Azure Kinect Sensors
+## Wired Hardware Synchronization of Multiple Azure Kinect Sensors
 To run this part of the example, you must manually comment out the single kinect example (`SingleSensor`) and reenable the multi sync example (`AzureKinectSync`).
 ```csharp
         public static void Main()
