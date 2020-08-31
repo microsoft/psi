@@ -1,6 +1,6 @@
 ﻿# Azure Kinect Sample
 
-This sample consist of two programs. The first one demonstrates how to use the Azure Kinect sensor with body tracking and how to use the `Join()` and `Pair()` operators to synchronize and fuse streams. The second one demonstrates how to use the hardware synchronization with multiple Azure Kinect sensors.
+This sample consist of two parts. The first one demonstrates how to use the Azure Kinect sensor with body tracking and how to use the `Join()` and `Pair()` operators to synchronize and fuse streams. The second one demonstrates how to enable wired hardware synchronization with multiple Azure Kinect sensors.
 
 # Using the Color Image Stream
 
