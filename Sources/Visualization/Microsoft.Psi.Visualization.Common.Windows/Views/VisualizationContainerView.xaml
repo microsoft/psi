@@ -45,6 +45,7 @@
             HeadersVisibility="None"
             HorizontalContentAlignment="Stretch"            
             HorizontalScrollBarVisibility="Disabled"
+            IsReadOnly="True"
             ItemsSource="{Binding Panels}"
             RowBackground="Transparent"
             SelectionMode="Single"
