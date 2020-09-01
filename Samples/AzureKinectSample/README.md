@@ -358,6 +358,7 @@ var bodies = bodyTracker.Bodies;
 The `AzureKinectBodyTracker` and `AzureKinectSensor` components emit all calibration, joint, and body orientation information in the coordinate system basis of MathNet.Spatial. This is a different basis assumption from that used by the sensor technology underneath for [joints](https://docs.microsoft.com/en-us/azure/Kinect-dk/body-joints) and for the [sensor itself](https://docs.microsoft.com/en-us/azure/Kinect-dk/coordinate-systems).
 
 All coordinate systems are immediately rebased inside the component such that the X-axis represents "forward", the Y-axis represents "left", and Z-axis represents "up". All coordinate system information emitted by these components adhere to this basis.
+```
 
         	Z
         	|   X
