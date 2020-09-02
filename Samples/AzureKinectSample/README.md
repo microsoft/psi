@@ -1,6 +1,6 @@
 ﻿# Azure Kinect Sample
 
-This sample demonstrates how to use the Azure Kinect sensor with body tracking and how to use the `Join()` and `Pair()` operators to synchronize and fuse streams.
+This sample consist of two parts. The first one demonstrates how to use the Azure Kinect sensor with body tracking and how to use the `Join()` and `Pair()` operators to synchronize and fuse streams. The second one demonstrates how to enable wired hardware synchronization with multiple Azure Kinect sensors.
 
 # Using the Color Image Stream
 
@@ -364,3 +364,20 @@ All coordinate systems are immediately rebased inside the component such that th
         	|  /
         	| /
  	 Y <----+
+```
+
+## Wired Hardware Synchronization of Multiple Azure Kinect Sensors
+To run this part of the example, you must manually comment out the single kinect example (`SingleSensor`) and reenable the multi sync example (`AzureKinectSync`).
+```csharp
+        public static void Main()
+        {
+            // Single Sensor Example
+            // SingleSensor();
+
+            // Multiple Sensor Sync Example
+            AzureKinectSync();
+        }
+```
+The example starts two Azure Kinect sensors with one being the primary and the second being a subordinate sensor. This done by setting the `WiredSyncMode` to `master` for the primary sensor and `subordinate` for the subordinate sensors. The synchronization cables must be connected correctly for this to work. You can find more information about the synchronization cables [here](https://docs.microsoft.com/en-us/azure/Kinect-dk/multi-camera-sync).
+
+Once they start, the two sensors will try to take their color image at the same time. However, the actual time it reach /Psi and the pipeline might be different due to other physical constraints. Extra care must also be taken to make sure the depth sensors from multiple azure kinects do not interfere with each other. You can change when the depth images are taken by changing the `DepthDelayOffColor` parameter.
