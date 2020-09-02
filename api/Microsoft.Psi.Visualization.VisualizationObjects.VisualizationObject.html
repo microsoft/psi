@@ -1,0 +1,872 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class VisualizationObject
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class VisualizationObject
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject" class="text-break">Class VisualizationObject
+  </h1>
+  <div class="markdown level0 summary"><p>Base class for visualization objects.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><span class="xref">VisualizationObject</span></div>
+      <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject&lt;TData&gt;</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class VisualizationObject : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L42">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.#ctor">VisualizationObject()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VisualizationObject()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CanSnapToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CanSnapToStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CanSnapToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CanSnapToStream">CanSnapToStream</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this visualization object can use the snap to stream functionality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public virtual bool CanSnapToStream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Container*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Container">Container</h4>
+  <div class="markdown level1 summary"><p>Gets the parent VisualizationContainer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public VisualizationContainer Container { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.html">VisualizationContainer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L153">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ContractResolver*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ContractResolver">ContractResolver</h4>
+  <div class="markdown level1 summary"><p>Gets the contract resolver. Default is null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+protected virtual IContractResolver ContractResolver { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IContractResolver</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.DefaultViewTemplate*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.DefaultViewTemplate">DefaultViewTemplate</h4>
+  <div class="markdown level1 summary"><p>Gets the default DataTemplate that is used within a VisualizationPanel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public abstract DataTemplate DefaultViewTemplate { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.datatemplate">DataTemplate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L111">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IconSource_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IconSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IconSource" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IconSource">IconSource</h4>
+  <div class="markdown level1 summary"><p>Gets the path to the visualization object's icon.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public virtual string IconSource { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L132">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsAudioStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsAudioStream">IsAudioStream</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this visualization object is an audio stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public virtual bool IsAudioStream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L146">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsConnected*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsConnected">IsConnected</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this visualization object is connected to a panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public bool IsConnected { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsSnappedToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsSnappedToStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsSnappedToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsSnappedToStream">IsSnappedToStream</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this visualization object is currently the one being snapped to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public virtual bool IsSnappedToStream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L52">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Name*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the name of the visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L104">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Navigator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Navigator">Navigator</h4>
+  <div class="markdown level1 summary"><p>Gets the navigator this object is bound to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public Navigator Navigator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Navigation.Navigator.html">Navigator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L88">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Panel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Panel">Panel</h4>
+  <div class="markdown level1 summary"><p>Gets the parent VisualizationPanel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public VisualizationPanel Panel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L139">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ShowZoomToStreamMenuItem_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ShowZoomToStreamMenuItem*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ShowZoomToStreamMenuItem" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ShowZoomToStreamMenuItem">ShowZoomToStreamMenuItem</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether to display the zoom to stream menuitem for this stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public virtual bool ShowZoomToStreamMenuItem { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L63">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Visible*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Visible">Visible</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the visualization object is visible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool Visible { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L170">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.GetAdditionalContextMenuItems*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.GetAdditionalContextMenuItems">GetAdditionalContextMenuItems()</h4>
+  <div class="markdown level1 summary"><p>Called by the containing visualization panel when its context menu is opening to
+allow the visualization object to add additional menuitems to the context menu.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual IEnumerable&lt;MenuItem&gt; GetAdditionalContextMenuItems()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.menuitem">MenuItem</a>&gt;</td>
+        <td><p>A collection of additional context menu items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L233">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_InitNew_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.InitNew*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_InitNew" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.InitNew">InitNew()</h4>
+  <div class="markdown level1 summary"><p>Initialize properties for visualization objects as part of object construction or after deserialization.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void InitNew()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L258">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnAddToPanel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnAddToPanel">OnAddToPanel()</h4>
+  <div class="markdown level1 summary"><p>Implements a response to a notification the visualization object has been added to a panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnAddToPanel()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L217">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorChanged(System.Object,Microsoft.Psi.Visualization.Navigation.NavigatorTimeChangedEventArgs)">OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Overideable method to allow derived VisualizationObjects to react to cursor changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnCursorChanged(object sender, NavigatorTimeChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The source of the event.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Navigation.NavigatorTimeChangedEventArgs.html">NavigatorTimeChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>An object that contains navigator changed event data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L226">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorModeChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorModeChanged(System.Object,Microsoft.Psi.Visualization.Navigation.CursorModeChangedEventArgs)">OnCursorModeChanged(Object, CursorModeChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Notifies the visualization object that the cursor mode has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnCursorModeChanged(object sender, CursorModeChangedEventArgs cursorModeEventArgs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The object that triggered the change event.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Navigation.CursorModeChangedEventArgs.html">CursorModeChangedEventArgs</a></td>
+        <td><span class="parametername">cursorModeEventArgs</span></td>
+        <td><p>The old and new cursor modes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L251">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnPropertyChanged(Object, PropertyChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Implements a response to a notification that a property of the visualization object has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender of the notification.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The details of the notification.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L242">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanging*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanging(System.Object,System.ComponentModel.PropertyChangingEventArgs)">OnPropertyChanging(Object, PropertyChangingEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Implements a response to a notification that a property of the visualization object is changing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnPropertyChanging(object sender, PropertyChangingEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender of the notification.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangingeventargs">PropertyChangingEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The details of the notification.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L267">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnRemoveFromPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnRemoveFromPanel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnRemoveFromPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnRemoveFromPanel">OnRemoveFromPanel()</h4>
+  <div class="markdown level1 summary"><p>Implements a response to a notification the visualization object has been removed from the panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnRemoveFromPanel()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L160">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleSnapToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToggleSnapToStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleSnapToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToggleSnapToStream">ToggleSnapToStream()</h4>
+  <div class="markdown level1 summary"><p>Snaps or unsnaps the navigation cursor to the visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public virtual void ToggleSnapToStream()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L176">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L22" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

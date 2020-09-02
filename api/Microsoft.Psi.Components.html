@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Microsoft.Psi.Components
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Microsoft.Psi.Components
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Components">
+  
+  <h1 id="Microsoft_Psi_Components" data-uid="Microsoft.Psi.Components" class="text-break">Namespace Microsoft.Psi.Components
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Aggregator-3.html">Aggregator&lt;TState, TIn, TOut&gt;</a></h4>
+      <section><p>A stateful transform.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html">AsyncConsumerProducer&lt;TIn, TOut&gt;</a></h4>
+      <section><p>A simple transform component.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.BranchTerminationPolicy-2.html">BranchTerminationPolicy&lt;TBranchKey, TBranchIn&gt;</a></h4>
+      <section><p>Static class containing branch termination functions for the parallel sparse operators.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Connector-1.html">Connector&lt;T&gt;</a></h4>
+      <section><p>A pass-through component, that can relay messages from one pipeline to another and can be used when
+writing composite components via subpipelines. The composite component can create input and output
+connectors instead of receivers.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer&lt;TIn, TOut&gt;</a></h4>
+      <section><p>This is the base class for any component that transforms an input type into an output type.
+Derive from thsi class if your component has more than one input or more than one output.
+Otherwise, use one of the the <see cref="!:Operators.Select&lt;TIn, TOut>(IProducer&lt;TIn>, System.Func&lt;TIn, Envelope, TOut>, DeliveryPolicy&lt;TIn>)"></see>
+or <see cref="!:Operators.Process&lt;TIn, TOut>(IProducer&lt;TIn>, System.Action&lt;TIn, Envelope, Emitter&lt;TOut>>, DeliveryPolicy&lt;TIn>)"></see> operators.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.DynamicWindow-3.html">DynamicWindow&lt;TWindow, TInput, TOutput&gt;</a></h4>
+      <section><p>Component that implements a dynamic window stream operator.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.EventSource-2.html">EventSource&lt;TEventHandler, TOut&gt;</a></h4>
+      <section><p>A generator component that publishes messages of a specified type whenever an event is raised.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Fuse-4.html">Fuse&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;</a></h4>
+      <section><p>Component that fuses multiple streams based on a specified interpolator.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Generator.html">Generator</a></h4>
+      <section><p>Generates a sequence of messages at the pace dictated by the pipeline.
+Use this base class when your generator has multiple output streams.
+Use the static functions of the <a class="xref" href="Microsoft.Psi.Generators.html">Generators</a> class for the single-stream case.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Generator-1.html">Generator&lt;T&gt;</a></h4>
+      <section><p>Generates messages by lazily enumerating a sequence of data,
+at the pace dictated by the pipeline.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Join-3.html">Join&lt;TPrimary, TSecondary, TOut&gt;</a></h4>
+      <section><p>Component that joins multiple streams using a reproducible interpolator.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Join-4.html">Join&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;</a></h4>
+      <section><p>Component that joins multiple streams using a reproducible interpolator.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Merge-1.html">Merge&lt;T&gt;</a></h4>
+      <section><p>Merge one or more streams (T) into a single stream (Message{T}) interleaved in wall-clock time.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Merger-2.html">Merger&lt;TIn, TKey&gt;</a></h4>
+      <section><p>Combines the input messages from multiple inputs; invoking given lambda for each.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Pair-3.html">Pair&lt;TPrimary, TSecondary, TOut&gt;</a></h4>
+      <section><p>Performs a wall-clock based pairing of streams; taking the last (or provided initial) value from the secondary.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ParallelFixedLength-2.html">ParallelFixedLength&lt;TIn, TOut&gt;</a></h4>
+      <section><p>Creates and applies a sub-pipeline to each element in the input array. The input array must have the same length across all messages.
+The sub-pipelines have index affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same index.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ParallelSparseDo-3.html">ParallelSparseDo&lt;TIn, TBranchKey, TBranchIn&gt;</a></h4>
+      <section><p>Creates and executes parallel subpipelines based on an input stream and a splitter function.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ParallelSparseSelect-5.html">ParallelSparseSelect&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;</a></h4>
+      <section><p>Transforms a stream of messages by splitting it into a set of sub-streams (indexed by a branch key),
+applying a sub-pipeline to each of these streams, and assembling the results into a corresponding
+output stream.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ParallelSparseSplitter-4.html">ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;</a></h4>
+      <section><p>Implements the splitter for the <a class="xref" href="Microsoft.Psi.Components.ParallelSparseDo-3.html">ParallelSparseDo&lt;TIn, TBranchKey, TBranchIn&gt;</a>
+and <a class="xref" href="Microsoft.Psi.Components.ParallelSparseSelect-5.html">ParallelSparseSelect&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;</a> components.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ParallelVariableLength-2.html">ParallelVariableLength&lt;TIn, TOut&gt;</a></h4>
+      <section><p>Creates and applies a sub-pipeline to each element in the input array. The input array can have variable length.
+The sub-pipelines have index affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same index in the array.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Processor-2.html">Processor&lt;TIn, TOut&gt;</a></h4>
+      <section><p>Component that wraps a transform delegate which processes input messages and optionally publishes results.
+There is no assumption regarding the number of input messages needed to produce a result, or the number of output messages
+resulting from one input message.
+If the transform is stateful, special care needs to be taken when storing input message data.
+The input message payload is only valid for the duration of the transform call.
+If the data needs to be stored beyond the scope of this method,
+use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">DeepClone&lt;T&gt;(T, ref T)</a> to create a private copy.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.RelativeIndexWindow-2.html">RelativeIndexWindow&lt;TInput, TOutput&gt;</a></h4>
+      <section><p>Implements an index-based windowing component.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.RelativeTimeWindow-2.html">RelativeTimeWindow&lt;TInput, TOutput&gt;</a></h4>
+      <section><p>Implements a time-based windowing component.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.SimpleConsumer-1.html">SimpleConsumer&lt;TIn&gt;</a></h4>
+      <section><p>A simple consumer.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Splitter-2.html">Splitter&lt;TIn, TKey&gt;</a></h4>
+      <section><p>Sends the input message to at most one of the dynamic outputs, selected using the specified output selector.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Timer.html">Timer</a></h4>
+      <section><p>A simple producer component that wakes up on a predefined interval and publishes a simple message.
+This is useful for components that need to poll some resource. Such components can simply subscribe to this
+clock component rather than registering a timer on their own.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Timer-1.html">Timer&lt;TOut&gt;</a></h4>
+      <section><p>A simple producer component that wakes up on a predefined interval and publishes one message.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.Zip-1.html">Zip&lt;T&gt;</a></h4>
+      <section><p>Zip one or more streams (T) into a single stream while ensuring delivery in originating time order.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer&lt;TIn, TOut&gt;</a></h4>
+      <section><p>Interface representing a component that is both a consumer and producer of messages.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></h4>
+      <section><p>Interface indicating that a component is a &quot;source&quot; of messages (e.g. sensor inputs, generators, etc.), or otherwise
+posts messages from outside a receiver (e.g. from an internal thread or an event handler that is not in response to
+incoming messages). Components that implement this interface should advise the pipeline when they are done posting
+messages via the <code>notifyCompletionTime</code> action delegate that is supplied when the pipeline calls the
+<a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html#Microsoft_Psi_Components_ISourceComponent_Start_Action_DateTime__">Start(Action&lt;DateTime&gt;)</a> method. This delegate may be saved and invoked later once the pipeline completion time is known,
+or in the case of components that do not have the concept of &quot;completion&quot; (i.e. infinite sources), it may be invoked
+immediately with a completion time of <see cref="!:DateTime.MaxValue"></see>. Reactive components that generate messages only
+in response to incoming messages should not implement this interface. A pipeline containing source components will
+shut down only once all sources have notified the pipeline of completion (or earlier if explicitly stopped/disposed).</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

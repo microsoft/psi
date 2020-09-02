@@ -1,0 +1,1013 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ImageBase
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ImageBase
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Imaging.ImageBase">
+  
+  
+  <h1 id="Microsoft_Psi_Imaging_ImageBase" data-uid="Microsoft.Psi.Imaging.ImageBase" class="text-break">Class ImageBase
+  </h1>
+  <div class="markdown level0 summary"><p>Represents an image, stored in unmanaged memory.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ImageBase</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class ImageBase : IDisposable</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Using this class it is possible as to allocate a new image in unmanaged memory,
+as to just wrap provided pointer to unmanaged memory, where an image is stored.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L116">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase__ctor_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase__ctor_BitmapData_System_Boolean_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor(BitmapData,System.Boolean)">ImageBase(BitmapData, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImageBase(BitmapData bitmapData, bool makeCopy = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BitmapData</span></td>
+        <td><span class="parametername">bitmapData</span></td>
+        <td><p>Locked bitmap data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">makeCopy</span></td>
+        <td><p>Indicates whether a copy is made (default is false).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase__ctor_BitmapData_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When the <code data-dev-comment-type="paramref" class="paramref">makeCopy</code> parameter is false (default), the image simply wraps
+the bitmap data. As such, the bitmap data must stay locked for the duration of using the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> object.
+</p>
+<p>If the <code data-dev-comment-type="paramref" class="paramref">makeCopy</code> parameter is set to true, a copy of the bitmap
+data is made, and the bitmap data can be released right after the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> has been constructed.
+</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L72">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase__ctor_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase__ctor_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor(IntPtr,System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">ImageBase(IntPtr, Int32, Int32, Int32, PixelFormat)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImageBase(IntPtr imageData, int width, int height, int stride, PixelFormat pixelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">imageData</span></td>
+        <td><p>Pointer to image data in unmanaged memory.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>Image stride (line size in bytes).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td><span class="parametername">pixelFormat</span></td>
+        <td><p>Image pixel format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase__ctor_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
+    and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
+    this may lead to exceptions working with the unmanaged memory.</p></div></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L47">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase__ctor_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor(Microsoft.Psi.Common.UnmanagedBuffer,System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">ImageBase(UnmanagedBuffer, Int32, Int32, Int32, PixelFormat)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImageBase(UnmanagedBuffer image, int width, int height, int stride, PixelFormat pixelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The unmanaged array containing the image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>Image stride (line size in bytes).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td><span class="parametername">pixelFormat</span></td>
+        <td><p>Image pixel format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
+    and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
+    this may lead to exceptions working with the unmanaged memory.</p></div></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L98">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase__ctor_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase__ctor_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor(System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">ImageBase(Int32, Int32, PixelFormat)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImageBase(int width, int height, PixelFormat pixelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Width of image in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Height of image in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td><span class="parametername">pixelFormat</span></td>
+        <td><p>Pixel format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase__ctor_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase__ctor_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.#ctor(System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">ImageBase(Int32, Int32, Int32, PixelFormat)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ImageBase(int width, int height, int stride, PixelFormat pixelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>Image stride (line size in bytes).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td><span class="parametername">pixelFormat</span></td>
+        <td><p>Image pixel format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase__ctor_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
+    and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
+    this may lead to exceptions working with the unmanaged memory.</p></div></p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L28">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_ExceptionDescriptionSourceDestImageMismatch" data-uid="Microsoft.Psi.Imaging.ImageBase.ExceptionDescriptionSourceDestImageMismatch">ExceptionDescriptionSourceDestImageMismatch</h4>
+  <div class="markdown level1 summary"><p>Exception message when source and destination image sizes don't match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string ExceptionDescriptionSourceDestImageMismatch = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L23">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_ExceptionDescriptionUnexpectedPixelFormat" data-uid="Microsoft.Psi.Imaging.ImageBase.ExceptionDescriptionUnexpectedPixelFormat">ExceptionDescriptionUnexpectedPixelFormat</h4>
+  <div class="markdown level1 summary"><p>Exception message when unexpected pixel format is encountered.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string ExceptionDescriptionUnexpectedPixelFormat = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L160">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_BitsPerPixel_" data-uid="Microsoft.Psi.Imaging.ImageBase.BitsPerPixel*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_BitsPerPixel" data-uid="Microsoft.Psi.Imaging.ImageBase.BitsPerPixel">BitsPerPixel</h4>
+  <div class="markdown level1 summary"><p>Gets the bits per pixel in the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int BitsPerPixel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L145">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_Height_" data-uid="Microsoft.Psi.Imaging.ImageBase.Height*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_Height" data-uid="Microsoft.Psi.Imaging.ImageBase.Height">Height</h4>
+  <div class="markdown level1 summary"><p>Gets image height in pixels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Height { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L135">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_ImageData_" data-uid="Microsoft.Psi.Imaging.ImageBase.ImageData*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_ImageData" data-uid="Microsoft.Psi.Imaging.ImageBase.ImageData">ImageData</h4>
+  <div class="markdown level1 summary"><p>Gets a pointer to the image data in unmanaged memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IntPtr ImageData { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L165">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.PixelFormat*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_PixelFormat" data-uid="Microsoft.Psi.Imaging.ImageBase.PixelFormat">PixelFormat</h4>
+  <div class="markdown level1 summary"><p>Gets image pixel format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PixelFormat PixelFormat { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L155">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_Size_" data-uid="Microsoft.Psi.Imaging.ImageBase.Size*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_Size" data-uid="Microsoft.Psi.Imaging.ImageBase.Size">Size</h4>
+  <div class="markdown level1 summary"><p>Gets the size of the image in bytes (stride times height).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Size { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L150">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_Stride_" data-uid="Microsoft.Psi.Imaging.ImageBase.Stride*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_Stride" data-uid="Microsoft.Psi.Imaging.ImageBase.Stride">Stride</h4>
+  <div class="markdown level1 summary"><p>Gets image stride (line size in bytes).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Stride { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L130">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_UnmanagedBuffer_" data-uid="Microsoft.Psi.Imaging.ImageBase.UnmanagedBuffer*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_UnmanagedBuffer" data-uid="Microsoft.Psi.Imaging.ImageBase.UnmanagedBuffer">UnmanagedBuffer</h4>
+  <div class="markdown level1 summary"><p>Gets a pointer to unmanaged buffer that wraps the image data in unmanaged memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnmanagedBuffer UnmanagedBuffer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L140">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_Width_" data-uid="Microsoft.Psi.Imaging.ImageBase.Width*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_Width" data-uid="Microsoft.Psi.Imaging.ImageBase.Width">Width</h4>
+  <div class="markdown level1 summary"><p>Gets image width in pixels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Width { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L316">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_IntPtr_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom(IntPtr)">CopyFrom(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Copies data from a source pointer into the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(IntPtr source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>A source pointer to copy the image data from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_IntPtr__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies data from the specified buffer into the unmanaged image
+    The image must be allocated and must have the same size.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L305">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom(System.Byte[])">CopyFrom(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Copies data from a source byte array buffer into the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(byte[] sourceBuffer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">sourceBuffer</span></td>
+        <td><p>The buffer to copy the image from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies data from the specified buffer into the image.
+The image must be allocated and must have the same size.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L196">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_CopyTo_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyTo_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo(IntPtr,System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">CopyTo(IntPtr, Int32, Int32, Int32, PixelFormat)</h4>
+  <div class="markdown level1 summary"><p>Copies the image to a destination pointer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(IntPtr destination, int width, int height, int stride, PixelFormat pixelFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The destination pointer to copy the image to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>The destination width.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>The destination height.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>The destination stride.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td><span class="parametername">pixelFormat</span></td>
+        <td><p>The destination pixel format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L183">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_CopyTo_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyTo_System_Byte___" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo(System.Byte[])">CopyTo(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Copies the image to a destination byte array buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(byte[] destinationBuffer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">destinationBuffer</span></td>
+        <td><p>The destination buffer to copy the image to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_CopyTo_System_Byte____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies current unmanaged image to the specified buffer.
+The buffer must be allocated and must have the same size.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L417">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.ImageBase.CreateEmptyOfSameSize*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.ImageBase.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
+  <div class="markdown level1 summary"><p>Creates an empty image of the same size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract ImageBase CreateEmptyOfSameSize()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></td>
+        <td><p>An empty image of the same size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L171">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_Dispose_" data-uid="Microsoft.Psi.Imaging.ImageBase.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_Dispose" data-uid="Microsoft.Psi.Imaging.ImageBase.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Disposes the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_Dispose_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Frees unmanaged resources used by the object. The image becomes unusable after that.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L408">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_ReadBytes_" data-uid="Microsoft.Psi.Imaging.ImageBase.ReadBytes*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_ReadBytes_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.ImageBase.ReadBytes(System.Int32,System.Int32)">ReadBytes(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Reads image data as a series of bytes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] ReadBytes(int count, int offset = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>Number of bytes to read.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>Offset from start of image data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><p>Array of bytes read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L330">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageBase_ToBitmap_" data-uid="Microsoft.Psi.Imaging.ImageBase.ToBitmap*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageBase_ToBitmap_System_Boolean_" data-uid="Microsoft.Psi.Imaging.ImageBase.ToBitmap(System.Boolean)">ToBitmap(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a <see cref="!:Bitmap"></see> from the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bitmap ToBitmap(bool makeCopy = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">makeCopy</span></td>
+        <td><p>Indicates whether to make a copy of the image data or not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Bitmap</span></td>
+        <td><p>A corresponding <see cref="!:Bitmap"></see> image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImageBase_ToBitmap_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the <code data-dev-comment-type="paramref" class="paramref">makeCopy</code> parameter is set to <span class="xref">true</span>, then the method
+creates a copy of the image, so the <see cref="!:Bitmap"></see> stays valid even when the
+image gets disposed. However, setting this parameter to <span class="xref">false</span> creates a <see cref="!:Bitmap"></see> image which is just a wrapper around the image data. In this case, if the image is disposed, the
+will no longer be valid and accessing it will generate an exception.</p>
+</div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

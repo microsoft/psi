@@ -1,0 +1,584 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class JsonGenerator
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class JsonGenerator
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Data.Json.JsonGenerator">
+  
+  
+  <h1 id="Microsoft_Psi_Data_Json_JsonGenerator" data-uid="Microsoft.Psi.Data.Json.JsonGenerator" class="text-break">Class JsonGenerator
+  </h1>
+  <div class="markdown level0 summary"><p>Defines a component that plays back data from a JSON store.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.Generator.html">Generator</a></div>
+    <div class="level2"><span class="xref">JsonGenerator</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Microsoft.Psi.Components.Generator.Start(Action&lt;&gt;)</span>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_Stop_DateTime_Action_">Generator.Stop(DateTime, Action)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.Json.html">Microsoft.Psi.Data.Json</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Data.dll</h6>
+  <h5 id="Microsoft_Psi_Data_Json_JsonGenerator_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class JsonGenerator : Generator, ISourceComponent, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L38">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_Json_JsonStoreReader_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Data.Json.JsonStoreReader)">JsonGenerator(Pipeline, JsonStoreReader)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Json.JsonGenerator.html">JsonGenerator</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected JsonGenerator(Pipeline pipeline, JsonStoreReader reader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>Pipeline this component is a part of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Json.JsonStoreReader.html">JsonStoreReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The underlying store reader.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L28">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">JsonGenerator(Pipeline, String, String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Json.JsonGenerator.html">JsonGenerator</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JsonGenerator(Pipeline pipeline, string name, string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>Pipeline this component is a part of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the application that generated the persisted files, or the root name of the files.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The directory in which the main persisted file resides.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_AvailableStreams_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.AvailableStreams*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_AvailableStreams" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.AvailableStreams">AvailableStreams</h4>
+  <div class="markdown level1 summary"><p>Gets an enumerable of stream metadata contained in the underlying data store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IStreamMetadata&gt; AvailableStreams { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_Name_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Name*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Name" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the application that generated the persisted files, or the root name of the files.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L66">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_OriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OriginatingTimeInterval">OriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in the underlying data store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval OriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L56">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_Path_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Path*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Path" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Path">Path</h4>
+  <div class="markdown level1 summary"><p>Gets the directory in which the main persisted file resides.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Path { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L73">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_Contains_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Contains*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Contains_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Contains(System.String)">Contains(String)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the underlying data store contains the specified stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>true if store contains the specified stream, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L76">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_Dispose_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Dispose" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L130">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_GenerateNext_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GenerateNext*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_GenerateNext_DateTime_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GenerateNext(DateTime)">GenerateNext(DateTime)</h4>
+  <div class="markdown level1 summary"><p>GenerateNext is called by the Generator base class when the next sample should be read.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override DateTime GenerateNext(DateTime currentTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">currentTime</span></td>
+        <td><p>The originating time of the message that triggered the current call to GenerateNext.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><p>The originating time at which to read the next sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_GetMetadata_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GetMetadata*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_GetMetadata_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GetMetadata(System.String)">GetMetadata(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the stream metadata for the specified stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IStreamMetadata GetMetadata(string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a></td>
+        <td><p>The stream metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonGenerator_OpenStream_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OpenStream*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_OpenStream__1_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OpenStream``1(System.String)">OpenStream&lt;T&gt;(String)</h4>
+  <div class="markdown level1 summary"><p>Opens the specified stream for reading and returns an emitter for use in the pipeline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;T&gt; OpenStream&lt;T&gt;(string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;T&gt;</td>
+        <td><p>The newly created emitter that generates messages from the stream of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of data in underlying stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

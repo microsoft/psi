@@ -1,0 +1,863 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class VisualizationContext
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class VisualizationContext
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.VisualizationContext">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_VisualizationContext" data-uid="Microsoft.Psi.Visualization.VisualizationContext" class="text-break">Class VisualizationContext
+  </h1>
+  <div class="markdown level0 summary"><p>Data context for visualization.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><span class="xref">VisualizationContext</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.html">Microsoft.Psi.Visualization</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_VisualizationContext_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class VisualizationContext : ObservableObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L75">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModel_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModel" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModel">DatasetViewModel</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the current dataset view model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DatasetViewModel DatasetViewModel { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModels_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModels*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModels" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModels">DatasetViewModels</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of dataset view models.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableCollection&lt;DatasetViewModel&gt; DatasetViewModels { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1">ObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_Instance_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.Instance*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_Instance" data-uid="Microsoft.Psi.Visualization.VisualizationContext.Instance">Instance</h4>
+  <div class="markdown level1 summary"><p>Gets the visualization context singleton.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VisualizationContext Instance { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationContext.html">VisualizationContext</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonImage_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonImage*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonImage" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonImage">PlayPauseButtonImage</h4>
+  <div class="markdown level1 summary"><p>Gets the  image to display on the Play/Pause button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PlayPauseButtonImage { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L102">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonToolTip_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonToolTip*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonToolTip" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonToolTip">PlayPauseButtonToolTip</h4>
+  <div class="markdown level1 summary"><p>Gets the  image to display on the Play/Pause button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PlayPauseButtonToolTip { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L65">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_PluginMap_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PluginMap*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PluginMap" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PluginMap">PluginMap</h4>
+  <div class="markdown level1 summary"><p>Gets the plugin map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PluginMap PluginMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.PluginMap.html">PluginMap</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L84">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_VisualizationContainer_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizationContainer*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_VisualizationContainer" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizationContainer">VisualizationContainer</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the visualization container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VisualizationContainer VisualizationContainer { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.html">VisualizationContainer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L137">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_ClearLayout_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ClearLayout*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_ClearLayout" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ClearLayout">ClearLayout()</h4>
+  <div class="markdown level1 summary"><p>Clears the current layout.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearLayout()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L454">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_DisplayObjectProperties_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DisplayObjectProperties*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_DisplayObjectProperties_System_Object_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DisplayObjectProperties(System.Object)">DisplayObjectProperties(Object)</h4>
+  <div class="markdown level1 summary"><p>Called by an object to request that its properties be displayed by the owner of this visualization context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DisplayObjectProperties(object requestingObject)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">requestingObject</span></td>
+        <td><p>The object that is requesting its properties be displayed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L149">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_GetDataType_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.GetDataType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_GetDataType_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.GetDataType(System.String)">GetDataType(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the message data type for a stream.  If the data type is unknown (i.e. the assembly
+that contains the message type is not currently being referenced by PsiStudio, then
+we return the generic object type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Type GetDataType(string typeName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">typeName</span></td>
+        <td><p>The type name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><p>The type of messages in the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L413">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_IsDatasetLoaded_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.IsDatasetLoaded*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_IsDatasetLoaded" data-uid="Microsoft.Psi.Visualization.VisualizationContext.IsDatasetLoaded">IsDatasetLoaded()</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether a dataset is currently loaded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDatasetLoaded()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if a dataset is currently loaded, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L332">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_OpenDatasetAsync_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenDatasetAsync*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_OpenDatasetAsync_System_String_System_Boolean_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenDatasetAsync(System.String,System.Boolean)">OpenDatasetAsync(String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously opens a previously persisted dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task OpenDatasetAsync(string filename, bool showStatusWindow = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>Fully qualified path to dataset file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">showStatusWindow</span></td>
+        <td><p>Indicates whether to show the status window.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><p>A task that represents the asynchronous operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L110">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_OpenLayout_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenLayout*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_OpenLayout_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenLayout(System.String,System.String)">OpenLayout(String, String)</h4>
+  <div class="markdown level1 summary"><p>Opens a previously persisted layout file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OpenLayout(string path, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path to the layout to open.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the layout to open.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the layout was successfully loaded, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L396">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_PlayOrPause_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayOrPause*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PlayOrPause" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayOrPause">PlayOrPause()</h4>
+  <div class="markdown level1 summary"><p>Pause or resume playback of streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PlayOrPause()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L160">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_RunDatasetBatchProcessingTaskAsync_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunDatasetBatchProcessingTaskAsync*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RunDatasetBatchProcessingTaskAsync_Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Microsoft_Psi_Visualization_Tasks_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunDatasetBatchProcessingTaskAsync(Microsoft.Psi.Visualization.ViewModels.DatasetViewModel,Microsoft.Psi.Visualization.Tasks.BatchProcessingTaskMetadata)">RunDatasetBatchProcessingTaskAsync(DatasetViewModel, BatchProcessingTaskMetadata)</h4>
+  <div class="markdown level1 summary"><p>Asychronously runs a specified batch processing task over a dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task RunDatasetBatchProcessingTaskAsync(DatasetViewModel datasetViewModel, BatchProcessingTaskMetadata batchProcessingTaskMetadata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a></td>
+        <td><span class="parametername">datasetViewModel</span></td>
+        <td><p>The dataset view model.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Tasks.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></td>
+        <td><span class="parametername">batchProcessingTaskMetadata</span></td>
+        <td><p>Batch task processing metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><p>A task that represents the asynchronous batch processing operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L207">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_RunSessionBatchProcessingTask_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunSessionBatchProcessingTask*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RunSessionBatchProcessingTask_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Microsoft_Psi_Visualization_Tasks_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunSessionBatchProcessingTask(Microsoft.Psi.Visualization.ViewModels.SessionViewModel,Microsoft.Psi.Visualization.Tasks.BatchProcessingTaskMetadata)">RunSessionBatchProcessingTask(SessionViewModel, BatchProcessingTaskMetadata)</h4>
+  <div class="markdown level1 summary"><p>Runs a specified batch processing task over a session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task RunSessionBatchProcessingTask(SessionViewModel sessionViewModel, BatchProcessingTaskMetadata batchProcessingTaskMetadata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td><span class="parametername">sessionViewModel</span></td>
+        <td><p>The session view model.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Tasks.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></td>
+        <td><span class="parametername">batchProcessingTaskMetadata</span></td>
+        <td><p>Batch task processing metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><p>A task that represents the asynchronous batch processing operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L421">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_ToggleLiveMode_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ToggleLiveMode*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_ToggleLiveMode" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ToggleLiveMode">ToggleLiveMode()</h4>
+  <div class="markdown level1 summary"><p>Toggle into or out of live mode.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ToggleLiveMode()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L254">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_VisualizeStream_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizeStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_VisualizeStream_Microsoft_Psi_Visualization_ViewModels_StreamTreeNode_Microsoft_Psi_Visualization_VisualizerMetadata_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizeStream(Microsoft.Psi.Visualization.ViewModels.StreamTreeNode,Microsoft.Psi.Visualization.VisualizerMetadata,Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel)">VisualizeStream(StreamTreeNode, VisualizerMetadata, VisualizationPanel)</h4>
+  <div class="markdown level1 summary"><p>Visualizes a streaming the visualization container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void VisualizeStream(StreamTreeNode streamTreeNode, VisualizerMetadata visualizerMetadata, VisualizationPanel visualizationPanel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamTreeNode.html">StreamTreeNode</a></td>
+        <td><span class="parametername">streamTreeNode</span></td>
+        <td><p>The stream to visualize.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizerMetadata.html">VisualizerMetadata</a></td>
+        <td><span class="parametername">visualizerMetadata</span></td>
+        <td><p>The visualizer metadata to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></td>
+        <td><span class="parametername">visualizationPanel</span></td>
+        <td><p>The visualization panel to add the stream to (or null).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L438">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_ZoomToStreamExtents_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ZoomToStreamExtents*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_ZoomToStreamExtents_Microsoft_Psi_Visualization_ViewModels_StreamTreeNode_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ZoomToStreamExtents(Microsoft.Psi.Visualization.ViewModels.StreamTreeNode)">ZoomToStreamExtents(StreamTreeNode)</h4>
+  <div class="markdown level1 summary"><p>Zoom to the extents of the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ZoomToStreamExtents(StreamTreeNode streamTreeNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamTreeNode.html">StreamTreeNode</a></td>
+        <td><span class="parametername">streamTreeNode</span></td>
+        <td><p>The stream to zoom to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L55">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RequestDisplayObjectProperties" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RequestDisplayObjectProperties">RequestDisplayObjectProperties</h4>
+  <div class="markdown level1 summary"><p>An event that fires when an object requests that its properties be displayed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;RequestDisplayObjectPropertiesEventArgs&gt; RequestDisplayObjectProperties</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.RequestDisplayObjectPropertiesEventArgs.html">RequestDisplayObjectPropertiesEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L30" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

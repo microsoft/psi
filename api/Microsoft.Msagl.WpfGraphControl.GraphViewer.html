@@ -1,0 +1,2554 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GraphViewer
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GraphViewer
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer">
+  
+  
+  <h1 id="Microsoft_Msagl_WpfGraphControl_GraphViewer" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer" class="text-break">Class GraphViewer
+  </h1>
+  <div class="markdown level0 summary"><p>Graph viewer.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GraphViewer</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Msagl.WpfGraphControl.html">Microsoft.Msagl.WpfGraphControl</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Msagl.WpfGraphControl.dll</h6>
+  <h5 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GraphViewer : IViewer, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L78">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer__ctor_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.#ctor*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer__ctor" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.#ctor">GraphViewer()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Msagl.WpfGraphControl.GraphViewer.html">GraphViewer</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GraphViewer()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L389">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ArrowheadLength_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ArrowheadLength*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ArrowheadLength" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ArrowheadLength">ArrowheadLength</h4>
+  <div class="markdown level1 summary"><p>Gets arrowhead length.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ArrowheadLength { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L312">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CancelToken_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CancelToken*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CancelToken" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CancelToken">CancelToken</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the cancel token used to cancel a long running layout.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CancelToken CancelToken { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancelToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L416">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ClientViewportMappedToGraph_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ClientViewportMappedToGraph*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ClientViewportMappedToGraph" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ClientViewportMappedToGraph">ClientViewportMappedToGraph</h4>
+  <div class="markdown level1 summary"><p>Gets client viewport mapped to graph.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Core.Geometry.Rectangle ClientViewportMappedToGraph { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Rectangle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L251">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CurrentScale_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CurrentScale*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CurrentScale" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CurrentScale">CurrentScale</h4>
+  <div class="markdown level1 summary"><p>Gets current scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double CurrentScale { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L430">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CurrentXOffset_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CurrentXOffset*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CurrentXOffset" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CurrentXOffset">CurrentXOffset</h4>
+  <div class="markdown level1 summary"><p>Gets current X offset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double CurrentXOffset { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L438">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CurrentYOffset_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CurrentYOffset*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CurrentYOffset" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CurrentYOffset">CurrentYOffset</h4>
+  <div class="markdown level1 summary"><p>Gets current Y offset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double CurrentYOffset { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L259">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiX_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiX*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiX" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiX">DpiX</h4>
+  <div class="markdown level1 summary"><p>Gets X DPI.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double DpiX { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L146">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiXStatic_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiXStatic*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiXStatic" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiXStatic">DpiXStatic</h4>
+  <div class="markdown level1 summary"><p>Gets X DPI.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double DpiXStatic { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L267">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiY_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiY*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiY" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiY">DpiY</h4>
+  <div class="markdown level1 summary"><p>Gets Y DPI.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double DpiY { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L162">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiYStatic_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiYStatic*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DpiYStatic" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DpiYStatic">DpiYStatic</h4>
+  <div class="markdown level1 summary"><p>Gets Y DPI.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double DpiYStatic { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L208">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Entities_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Entities*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Entities" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Entities">Entities</h4>
+  <div class="markdown level1 summary"><p>Gets graph entities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IViewerObject&gt; Entities { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<span class="xref">IViewerObject</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L397">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Graph_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Graph*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Graph" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Graph">Graph</h4>
+  <div class="markdown level1 summary"><p>Gets or sets graph being viewed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Graph Graph { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Graph</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L227">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_GraphCanvas_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.GraphCanvas*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_GraphCanvas" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.GraphCanvas">GraphCanvas</h4>
+  <div class="markdown level1 summary"><p>Gets the canvas to draw the graph.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Canvas GraphCanvas { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.canvas">Canvas</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L371">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_InsertingEdge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.InsertingEdge*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_InsertingEdge" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.InsertingEdge">InsertingEdge</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether inserting edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InsertingEdge { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L366">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LayoutEditingEnabled_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LayoutEditingEnabled*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LayoutEditingEnabled" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LayoutEditingEnabled">LayoutEditingEnabled</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the layout editing with the mouse is enabled if and only if this field is set to false.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool LayoutEditingEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L235">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LayoutEditor_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LayoutEditor*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LayoutEditor" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LayoutEditor">LayoutEditor</h4>
+  <div class="markdown level1 summary"><p>Gets layout editor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LayoutEditor LayoutEditor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">LayoutEditor</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L361">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LineThicknessForEditing_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LineThicknessForEditing*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LineThicknessForEditing" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LineThicknessForEditing">LineThicknessForEditing</h4>
+  <div class="markdown level1 summary"><p>Gets or sets line thickness for editing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LineThicknessForEditing { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L183">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ModifierKeys_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ModifierKeys*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ModifierKeys" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ModifierKeys">ModifierKeys</h4>
+  <div class="markdown level1 summary"><p>Gets modifier keys being held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Drawing.ModifierKeys ModifierKeys { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.ModifierKeys</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L451">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MouseHitTolerance_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MouseHitTolerance*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MouseHitTolerance" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MouseHitTolerance">MouseHitTolerance</h4>
+  <div class="markdown level1 summary"><p>Gets mouse hit tolerance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double MouseHitTolerance { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L303">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NeedToCalculateLayout_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NeedToCalculateLayout*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NeedToCalculateLayout" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NeedToCalculateLayout">NeedToCalculateLayout</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether layout needs to be calculated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool NeedToCalculateLayout { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L321">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NeedToRemoveOverlapOnly_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NeedToRemoveOverlapOnly*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NeedToRemoveOverlapOnly" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NeedToRemoveOverlapOnly">NeedToRemoveOverlapOnly</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether layout is done, but the overlap is removed for graphs with geometry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool NeedToRemoveOverlapOnly { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L326">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ObjectUnderMouseCursor_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ObjectUnderMouseCursor*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ObjectUnderMouseCursor" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ObjectUnderMouseCursor">ObjectUnderMouseCursor</h4>
+  <div class="markdown level1 summary"><p>Gets current object under the mouse cursor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerObject ObjectUnderMouseCursor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L178">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RunLayoutAsync_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RunLayoutAsync*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RunLayoutAsync" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RunLayoutAsync">RunLayoutAsync</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to layout in a task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RunLayoutAsync { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L446">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_TargetPortCircle_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.TargetPortCircle*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_TargetPortCircle" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.TargetPortCircle">TargetPortCircle</h4>
+  <div class="markdown level1 summary"><p>Gets or sets target port circle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Ellipse TargetPortCircle { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.ellipse">Ellipse</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L275">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Transform_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Transform*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Transform" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Transform">Transform</h4>
+  <div class="markdown level1 summary"><p>Gets or sets plane transformation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PlaneTransformation Transform { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">PlaneTransformation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L376">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UnderlyingPolylineCircleRadius_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.UnderlyingPolylineCircleRadius*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UnderlyingPolylineCircleRadius" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.UnderlyingPolylineCircleRadius">UnderlyingPolylineCircleRadius</h4>
+  <div class="markdown level1 summary"><p>Gets underlying polyline circle radius.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double UnderlyingPolylineCircleRadius { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L384">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ViewerGraph_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ViewerGraph*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ViewerGraph" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ViewerGraph">ViewerGraph</h4>
+  <div class="markdown level1 summary"><p>Gets or sets viewer graph.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerGraph ViewerGraph { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerGraph</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L243">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ZoomFactor_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ZoomFactor*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ZoomFactor" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ZoomFactor">ZoomFactor</h4>
+  <div class="markdown level1 summary"><p>Gets zoom factor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ZoomFactor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L779">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_AddEdge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.AddEdge*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_AddEdge_IViewerEdge_System_Boolean_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.AddEdge(IViewerEdge,System.Boolean)">AddEdge(IViewerEdge, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Add edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddEdge(IViewerEdge edge, bool registerForUndo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerEdge</span></td>
+        <td><span class="parametername">edge</span></td>
+        <td><p>Edge to be added.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">registerForUndo</span></td>
+        <td><p>Whether to register for undo.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L803">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_AddNode_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.AddNode*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_AddNode_IViewerNode_System_Boolean_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.AddNode(IViewerNode,System.Boolean)">AddNode(IViewerNode, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Add a node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddNode(IViewerNode node, bool registerForUndo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>Node to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">registerForUndo</span></td>
+        <td><p>Whether to register for undo.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L823">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_AddNode_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.AddNode*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_AddNode_Microsoft_Msagl_Drawing_Node_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.AddNode(Microsoft.Msagl.Drawing.Node)">AddNode(Drawing.Node)</h4>
+  <div class="markdown level1 summary"><p>Add node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerObject AddNode(Drawing.Node drawingNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Node</span></td>
+        <td><span class="parametername">drawingNode</span></td>
+        <td><p>Drawing node to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerObject</span></td>
+        <td><p>Viewer object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1113">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_BindToPanel_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.BindToPanel*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_BindToPanel_System_Windows_Controls_Panel_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.BindToPanel(System.Windows.Controls.Panel)">BindToPanel(Panel)</h4>
+  <div class="markdown level1 summary"><p>adds the main panel of the viewer to the children of the parent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void BindToPanel(Panel panel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.panel">Panel</a></td>
+        <td><span class="parametername">panel</span></td>
+        <td><p>Panel to which to bind.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1128">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ClearGraphViewer_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ClearGraphViewer*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ClearGraphViewer" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ClearGraphViewer">ClearGraphViewer()</h4>
+  <div class="markdown level1 summary"><p>Clear graph viewer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearGraphViewer()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L641">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateAndRegisterFrameworkElementOfDrawingNode_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateAndRegisterFrameworkElementOfDrawingNode*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateAndRegisterFrameworkElementOfDrawingNode_Microsoft_Msagl_Drawing_Node_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateAndRegisterFrameworkElementOfDrawingNode(Microsoft.Msagl.Drawing.Node)">CreateAndRegisterFrameworkElementOfDrawingNode(Drawing.Node)</h4>
+  <div class="markdown level1 summary"><p>Create and register framework element of drawing node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FrameworkElement CreateAndRegisterFrameworkElementOfDrawingNode(Drawing.Node node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Node</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>Drawing node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.frameworkelement">FrameworkElement</a></td>
+        <td><p>Framework element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L793">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateEdgeWithGivenGeometry_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateEdgeWithGivenGeometry*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateEdgeWithGivenGeometry_Microsoft_Msagl_Drawing_Edge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateEdgeWithGivenGeometry(Microsoft.Msagl.Drawing.Edge)">CreateEdgeWithGivenGeometry(Drawing.Edge)</h4>
+  <div class="markdown level1 summary"><p>Create edge with given geometry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerEdge CreateEdgeWithGivenGeometry(Drawing.Edge drawingEdge)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Edge</span></td>
+        <td><span class="parametername">drawingEdge</span></td>
+        <td><p>Edge geometry.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerEdge</span></td>
+        <td><p>Edge.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L624">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateIViewerNode_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateIViewerNode*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateIViewerNode_Microsoft_Msagl_Drawing_Node_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateIViewerNode(Microsoft.Msagl.Drawing.Node)">CreateIViewerNode(Drawing.Node)</h4>
+  <div class="markdown level1 summary"><p>Create viewer node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerNode CreateIViewerNode(Drawing.Node drawingNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Node</span></td>
+        <td><span class="parametername">drawingNode</span></td>
+        <td><p>Drawing node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerNode</span></td>
+        <td><p>Viewer node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1006">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateIViewerNode_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateIViewerNode*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateIViewerNode_Microsoft_Msagl_Drawing_Node_Microsoft_Msagl_Core_Geometry_Point_System_Object_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateIViewerNode(Microsoft.Msagl.Drawing.Node,Microsoft.Msagl.Core.Geometry.Point,System.Object)">CreateIViewerNode(Drawing.Node, Core.Geometry.Point, Object)</h4>
+  <div class="markdown level1 summary"><p>Create viewer node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerNode CreateIViewerNode(Drawing.Node drawingNode, Core.Geometry.Point center, object visualElement)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Node</span></td>
+        <td><span class="parametername">drawingNode</span></td>
+        <td><p>Drawing node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><span class="parametername">center</span></td>
+        <td><p>Center point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">visualElement</span></td>
+        <td><p>Visual element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerNode</span></td>
+        <td><p>Viewer node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L488">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateMenuItem_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateMenuItem*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_CreateMenuItem_System_String_VoidDelegate_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.CreateMenuItem(System.String,VoidDelegate)">CreateMenuItem(String, VoidDelegate)</h4>
+  <div class="markdown level1 summary"><p>Create menu item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static object CreateMenuItem(string title, VoidDelegate voidVoidDelegate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">title</span></td>
+        <td><p>Menu title.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">VoidDelegate</span></td>
+        <td><span class="parametername">voidVoidDelegate</span></td>
+        <td><p>Menu delegate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>Menu item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L517">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Dispose_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Dispose*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Dispose" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L670">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawImage_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawImage*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawImage_System_String_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawImage(System.String)">DrawImage(String)</h4>
+  <div class="markdown level1 summary"><p>Draw image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Image DrawImage(string fileName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>Image file name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.image">Image</a></td>
+        <td><p>Image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L946">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawRubberEdge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawRubberEdge*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawRubberEdge_EdgeGeometry_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawRubberEdge(EdgeGeometry)">DrawRubberEdge(EdgeGeometry)</h4>
+  <div class="markdown level1 summary"><p>Draw rubber edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DrawRubberEdge(EdgeGeometry edgeGeometry)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EdgeGeometry</span></td>
+        <td><span class="parametername">edgeGeometry</span></td>
+        <td><p>Edge geometry.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L983">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawRubberLine_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawRubberLine*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawRubberLine_Microsoft_Msagl_Core_Geometry_Point_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawRubberLine(Microsoft.Msagl.Core.Geometry.Point)">DrawRubberLine(Core.Geometry.Point)</h4>
+  <div class="markdown level1 summary"><p>Draw rubber line.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DrawRubberLine(Core.Geometry.Point rubberEnd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><span class="parametername">rubberEnd</span></td>
+        <td><p>Rubber end point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L758">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawRubberLine_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawRubberLine*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_DrawRubberLine_MsaglMouseEventArgs_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.DrawRubberLine(MsaglMouseEventArgs)">DrawRubberLine(MsaglMouseEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Draw rubber line.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DrawRubberLine(MsaglMouseEventArgs args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MsaglMouseEventArgs</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Mouse event args.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L749">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_GetLabelCreator_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.GetLabelCreator*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_GetLabelCreator_DrawingObject_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.GetLabelCreator(DrawingObject)">GetLabelCreator(DrawingObject)</h4>
+  <div class="markdown level1 summary"><p>Get label creator function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;DrawingObject, FrameworkElement&gt; GetLabelCreator(DrawingObject drawingObject)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DrawingObject</span></td>
+        <td><span class="parametername">drawingObject</span></td>
+        <td><p>Drawing object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<span class="xref">DrawingObject</span>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.frameworkelement">FrameworkElement</a>&gt;</td>
+        <td><p>Label creator function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1093">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Invalidate_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Invalidate*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Invalidate" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Invalidate">Invalidate()</h4>
+  <div class="markdown level1 summary"><p>Invalidate graph viewer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Invalidate()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1085">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Invalidate_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Invalidate*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_Invalidate_IViewerObject_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.Invalidate(IViewerObject)">Invalidate(IViewerObject)</h4>
+  <div class="markdown level1 summary"><p>Invalidate child object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Invalidate(IViewerObject objectToInvalidate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerObject</span></td>
+        <td><span class="parametername">objectToInvalidate</span></td>
+        <td><p>Child object to invalidate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L503">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MeasureText_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MeasureText*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MeasureText_System_String_System_Windows_Media_FontFamily_System_Double_System_Windows_Media_Visual_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MeasureText(System.String,System.Windows.Media.FontFamily,System.Double,System.Windows.Media.Visual)">MeasureText(String, FontFamily, Double, Visual)</h4>
+  <div class="markdown level1 summary"><p>Measure string of text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Size MeasureText(string text, FontFamily family, double size, Visual visual)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">text</span></td>
+        <td><p>Text to measure.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.fontfamily">FontFamily</a></td>
+        <td><span class="parametername">family</span></td>
+        <td><p>Font family.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Font size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.visual">Visual</a></td>
+        <td><span class="parametername">visual</span></td>
+        <td><p>Visual element used to determine pixels per density-independent-pixel.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.size">Size</a></td>
+        <td><p>Text size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1071">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NodeToCenter_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NodeToCenter*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NodeToCenter_Microsoft_Msagl_Drawing_Node_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NodeToCenter(Microsoft.Msagl.Drawing.Node)">NodeToCenter(Drawing.Node)</h4>
+  <div class="markdown level1 summary"><p>Pan node to center.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void NodeToCenter(Drawing.Node node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Node</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>Node to center.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1055">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NodeToCenterWithScale_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NodeToCenterWithScale*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_NodeToCenterWithScale_Microsoft_Msagl_Drawing_Node_System_Double_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.NodeToCenterWithScale(Microsoft.Msagl.Drawing.Node,System.Double)">NodeToCenterWithScale(Drawing.Node, Double)</h4>
+  <div class="markdown level1 summary"><p>Pan node to center with scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void NodeToCenterWithScale(Drawing.Node node, double scale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Node</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>Node to center.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td><p>Scale factor.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L598">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_OnDragEnd_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.OnDragEnd*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_OnDragEnd_System_Collections_Generic_IEnumerable_IViewerObject__" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.OnDragEnd(System.Collections.Generic.IEnumerable{IViewerObject})">OnDragEnd(IEnumerable&lt;IViewerObject&gt;)</h4>
+  <div class="markdown level1 summary"><p>On drag end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnDragEnd(IEnumerable&lt;IViewerObject&gt; changedObjects)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<span class="xref">IViewerObject</span>&gt;</td>
+        <td><span class="parametername">changedObjects</span></td>
+        <td><p>Changed object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1044">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_PointToCenter_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.PointToCenter*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_PointToCenter_Microsoft_Msagl_Core_Geometry_Point_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.PointToCenter(Microsoft.Msagl.Core.Geometry.Point)">PointToCenter(Core.Geometry.Point)</h4>
+  <div class="markdown level1 summary"><p>Moves the point to the center of the viewport.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PointToCenter(Core.Geometry.Point sourcePoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><span class="parametername">sourcePoint</span></td>
+        <td><p>Source point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L607">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_PopupMenus_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.PopupMenus*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_PopupMenus_System_Tuple_System_String_VoidDelegate____" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.PopupMenus(System.Tuple{System.String,VoidDelegate}[])">PopupMenus(Tuple&lt;String, VoidDelegate&gt;[])</h4>
+  <div class="markdown level1 summary"><p>Set popup menus.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PopupMenus(params Tuple&lt;string, VoidDelegate&gt;[] menuItems)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.tuple-2">Tuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <span class="xref">VoidDelegate</span>&gt;[]</td>
+        <td><span class="parametername">menuItems</span></td>
+        <td><p>Menu items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L730">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RegisterLabelCreator_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RegisterLabelCreator*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RegisterLabelCreator_DrawingObject_System_Func_DrawingObject_System_Windows_FrameworkElement__" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RegisterLabelCreator(DrawingObject,System.Func{DrawingObject,System.Windows.FrameworkElement})">RegisterLabelCreator(DrawingObject, Func&lt;DrawingObject, FrameworkElement&gt;)</h4>
+  <div class="markdown level1 summary"><p>Register label creator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterLabelCreator(DrawingObject drawingObject, Func&lt;DrawingObject, FrameworkElement&gt; func)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DrawingObject</span></td>
+        <td><span class="parametername">drawingObject</span></td>
+        <td><p>Drawing object.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<span class="xref">DrawingObject</span>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.frameworkelement">FrameworkElement</a>&gt;</td>
+        <td><span class="parametername">func</span></td>
+        <td><p>Function from drawing object to framework element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L837">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveEdge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveEdge*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveEdge_IViewerEdge_System_Boolean_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveEdge(IViewerEdge,System.Boolean)">RemoveEdge(IViewerEdge, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Remove edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveEdge(IViewerEdge edge, bool registerForUndo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerEdge</span></td>
+        <td><span class="parametername">edge</span></td>
+        <td><p>Edge to remove.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">registerForUndo</span></td>
+        <td><p>Whether to register for undo.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L857">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveNode_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveNode*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveNode_IViewerNode_System_Boolean_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveNode(IViewerNode,System.Boolean)">RemoveNode(IViewerNode, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Remove node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveNode(IViewerNode node, bool registerForUndo)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerNode</span></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>Node to remove.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">registerForUndo</span></td>
+        <td><p>Whether to register for undo.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L927">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveSourcePortEdgeRouting_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveSourcePortEdgeRouting*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveSourcePortEdgeRouting" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveSourcePortEdgeRouting">RemoveSourcePortEdgeRouting()</h4>
+  <div class="markdown level1 summary"><p>Remove source port edge routing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveSourcePortEdgeRouting()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L936">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveTargetPortEdgeRouting_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveTargetPortEdgeRouting*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RemoveTargetPortEdgeRouting" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RemoveTargetPortEdgeRouting">RemoveTargetPortEdgeRouting()</h4>
+  <div class="markdown level1 summary"><p>Remove target port edge routing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveTargetPortEdgeRouting()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L881">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RouteEdge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RouteEdge*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_RouteEdge_Microsoft_Msagl_Drawing_Edge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.RouteEdge(Microsoft.Msagl.Drawing.Edge)">RouteEdge(Drawing.Edge)</h4>
+  <div class="markdown level1 summary"><p>Route edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IViewerEdge RouteEdge(Drawing.Edge drawingEdge)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Drawing.Edge</span></td>
+        <td><span class="parametername">drawingEdge</span></td>
+        <td><p>Drawing edge to route.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IViewerEdge</span></td>
+        <td><p>Viewer edge.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1102">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ScreenToSource_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ScreenToSource*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ScreenToSource_MsaglMouseEventArgs_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ScreenToSource(MsaglMouseEventArgs)">ScreenToSource(MsaglMouseEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Screen point (under mouse) to source point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Core.Geometry.Point ScreenToSource(MsaglMouseEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MsaglMouseEventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Mouse event args.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><p>Source point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L652">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_SetInitialTransform_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.SetInitialTransform*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_SetInitialTransform" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.SetInitialTransform">SetInitialTransform()</h4>
+  <div class="markdown level1 summary"><p>zooms to the default view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetInitialTransform()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L893">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_SetSourcePortForEdgeRouting_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.SetSourcePortForEdgeRouting*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_SetSourcePortForEdgeRouting_Microsoft_Msagl_Core_Geometry_Point_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.SetSourcePortForEdgeRouting(Microsoft.Msagl.Core.Geometry.Point)">SetSourcePortForEdgeRouting(Core.Geometry.Point)</h4>
+  <div class="markdown level1 summary"><p>Set source port for edge routing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSourcePortForEdgeRouting(Core.Geometry.Point portLocation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><span class="parametername">portLocation</span></td>
+        <td><p>Port location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L911">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_SetTargetPortForEdgeRouting_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.SetTargetPortForEdgeRouting*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_SetTargetPortForEdgeRouting_Microsoft_Msagl_Core_Geometry_Point_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.SetTargetPortForEdgeRouting(Microsoft.Msagl.Core.Geometry.Point)">SetTargetPortForEdgeRouting(Core.Geometry.Point)</h4>
+  <div class="markdown level1 summary"><p>Set target port for edge routing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTargetPortForEdgeRouting(Core.Geometry.Point portLocation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><span class="parametername">portLocation</span></td>
+        <td><p>Point of port location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1120">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_StartDrawingRubberLine_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.StartDrawingRubberLine*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_StartDrawingRubberLine_Microsoft_Msagl_Core_Geometry_Point_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.StartDrawingRubberLine(Microsoft.Msagl.Core.Geometry.Point)">StartDrawingRubberLine(Core.Geometry.Point)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StartDrawingRubberLine(Core.Geometry.Point startingPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Msagl.Core.Geometry.Point</span></td>
+        <td><span class="parametername">startingPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L971">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_StopDrawingRubberEdge_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.StopDrawingRubberEdge*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_StopDrawingRubberEdge" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.StopDrawingRubberEdge">StopDrawingRubberEdge()</h4>
+  <div class="markdown level1 summary"><p>Stop drawing rubber edge.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopDrawingRubberEdge()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L766">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_StopDrawingRubberLine_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.StopDrawingRubberLine*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_StopDrawingRubberLine" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.StopDrawingRubberLine">StopDrawingRubberLine()</h4>
+  <div class="markdown level1 summary"><p>Stop drawing rubber line.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopDrawingRubberLine()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L739">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UnregisterLabelCreator_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.UnregisterLabelCreator*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UnregisterLabelCreator_DrawingObject_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.UnregisterLabelCreator(DrawingObject)">UnregisterLabelCreator(DrawingObject)</h4>
+  <div class="markdown level1 summary"><p>Unregister label creator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterLabelCreator(DrawingObject drawingObject)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DrawingObject</span></td>
+        <td><span class="parametername">drawingObject</span></td>
+        <td><p>Drawing object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L529">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UpdateGraphInPlace_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.UpdateGraphInPlace*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UpdateGraphInPlace_Graph_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.UpdateGraphInPlace(Graph)">UpdateGraphInPlace(Graph)</h4>
+  <div class="markdown level1 summary"><p>Update graph being viewed in place (assuming structure hasn't changed, otherwise triggers full re-layout).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateGraphInPlace(Graph graph)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Graph</span></td>
+        <td><span class="parametername">graph</span></td>
+        <td><p>Graph being viewed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_UpdateGraphInPlace_Graph__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This updates only the labels and color attributes, unless a structural change is detected.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L1032">View Source</a>
+  </span>
+  <a id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ZoomAbout_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ZoomAbout*"></a>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ZoomAbout_System_Double_System_Windows_Point_" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ZoomAbout(System.Double,System.Windows.Point)">ZoomAbout(Double, Point)</h4>
+  <div class="markdown level1 summary"><p>Keeps centerOfZoom pinned to the screen and changes the scale by zoomFactor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ZoomAbout(double zoomFactor, Point centerOfZoom)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">zoomFactor</span></td>
+        <td><p>Zoom factor.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.point">Point</a></td>
+        <td><span class="parametername">centerOfZoom</span></td>
+        <td><p>Center point of zoom.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L111">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_GraphChanged" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.GraphChanged">GraphChanged</h4>
+  <div class="markdown level1 summary"><p>Graph changed event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler GraphChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L106">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LayoutComplete" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LayoutComplete">LayoutComplete</h4>
+  <div class="markdown level1 summary"><p>Layout completed event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler LayoutComplete</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L101">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_LayoutStarted" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.LayoutStarted">LayoutStarted</h4>
+  <div class="markdown level1 summary"><p>Layout started event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler LayoutStarted</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L121">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MouseDown" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MouseDown">MouseDown</h4>
+  <div class="markdown level1 summary"><p>Mouse down event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;MsaglMouseEventArgs&gt; MouseDown</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<span class="xref">MsaglMouseEventArgs</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L126">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MouseMove" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MouseMove">MouseMove</h4>
+  <div class="markdown level1 summary"><p>Mouse move event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;MsaglMouseEventArgs&gt; MouseMove</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<span class="xref">MsaglMouseEventArgs</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L131">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MouseUp" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MouseUp">MouseUp</h4>
+  <div class="markdown level1 summary"><p>Mouse up event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;MsaglMouseEventArgs&gt; MouseUp</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<span class="xref">MsaglMouseEventArgs</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L136">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_MouseWheel" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.MouseWheel">MouseWheel</h4>
+  <div class="markdown level1 summary"><p>Mouse wheel event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;MsaglMouseEventArgs&gt; MouseWheel</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<span class="xref">MsaglMouseEventArgs</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L141">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ObjectUnderMouseCursorChanged" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ObjectUnderMouseCursorChanged">ObjectUnderMouseCursorChanged</h4>
+  <div class="markdown level1 summary"><p>Object (node/edge/label) under mouse cursor changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ObjectUnderMouseCursorChangedEventArgs&gt; ObjectUnderMouseCursorChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<span class="xref">ObjectUnderMouseCursorChangedEventArgs</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L116">View Source</a>
+  </span>
+  <h4 id="Microsoft_Msagl_WpfGraphControl_GraphViewer_ViewChangeEvent" data-uid="Microsoft.Msagl.WpfGraphControl.GraphViewer.ViewChangeEvent">ViewChangeEvent</h4>
+  <div class="markdown level1 summary"><p>View changed event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;EventArgs&gt; ViewChangeEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">EventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Msagl.WpfGraphControl/GraphViewer.cs/#L42" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

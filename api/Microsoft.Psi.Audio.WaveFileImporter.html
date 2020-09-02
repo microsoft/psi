@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class WaveFileImporter
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class WaveFileImporter
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Audio.WaveFileImporter">
+  
+  
+  <h1 id="Microsoft_Psi_Audio_WaveFileImporter" data-uid="Microsoft.Psi.Audio.WaveFileImporter" class="text-break">Class WaveFileImporter
+  </h1>
+  <div class="markdown level0 summary"><p>Component that reads messages from a WAVE file and publishes them on a stream.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a></div>
+    <div class="level2"><span class="xref">WaveFileImporter</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Name">Importer.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Path">Importer.Path</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Serializers">Importer.Serializers</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_AvailableStreams">Importer.AvailableStreams</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_MessageCreationTimeInterval">Importer.MessageCreationTimeInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_MessageOriginatingTimeInterval">Importer.MessageOriginatingTimeInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Dispose">Importer.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_GetMetadata_System_String_">Importer.GetMetadata(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_GetSupplementalMetadata__1_System_String_">Importer.GetSupplementalMetadata&lt;T&gt;(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Contains_System_String_">Importer.Contains(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_CopyStream_System_String_Microsoft_Psi_Data_Exporter_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Message_Microsoft_Psi_Common_BufferReader___">Importer.CopyStream(String, Exporter, DeliveryPolicy&lt;Message&lt;BufferReader&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_OpenStream__1_System_String_">Importer.OpenStream&lt;T&gt;(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_OpenDynamicStream_System_String_">Importer.OpenDynamicStream(String)</a>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Data.Importer.Start(Action&lt;&gt;)</span>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Stop_DateTime_Action_">Importer.Stop(DateTime, Action)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Audio.html">Microsoft.Psi.Audio</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Audio.dll</h6>
+  <h5 id="Microsoft_Psi_Audio_WaveFileImporter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class WaveFileImporter : Importer, ISourceComponent, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileImporter.cs/#L23">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Audio_WaveFileImporter__ctor_" data-uid="Microsoft.Psi.Audio.WaveFileImporter.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Audio_WaveFileImporter__ctor_Microsoft_Psi_Pipeline_System_String_System_String_DateTime_System_Int32_" data-uid="Microsoft.Psi.Audio.WaveFileImporter.#ctor(Microsoft.Psi.Pipeline,System.String,System.String,DateTime,System.Int32)">WaveFileImporter(Pipeline, String, String, DateTime, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.WaveFileImporter.html">WaveFileImporter</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WaveFileImporter(Pipeline pipeline, string name, string path, DateTime startTime, int audioBufferSizeMs = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the application that generated the persisted files, or the root name of the files.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The directory in which the main persisted file resides or will reside, or null to open a volatile data store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">startTime</span></td>
+        <td><p>Starting time for streams of data..</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">audioBufferSizeMs</span></td>
+        <td><p>The size of each data buffer in milliseconds.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileImporter.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

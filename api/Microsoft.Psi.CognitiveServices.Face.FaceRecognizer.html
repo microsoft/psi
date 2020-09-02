@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FaceRecognizer
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FaceRecognizer
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer">
+  
+  
+  <h1 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer" class="text-break">Class FaceRecognizer
+  </h1>
+  <div class="markdown level0 summary"><p>Component that performs face recognition via <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html">AsyncConsumerProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;, <span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;&gt;&gt;</div>
+    <div class="level2"><span class="xref">FaceRecognizer</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;, <span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;&gt;&gt;</div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html#Microsoft_Psi_Components_AsyncConsumerProducer_2_In">AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(String Name, Double Confidence)&gt;&gt;&gt;.In</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html#Microsoft_Psi_Components_AsyncConsumerProducer_2_Out">AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(String Name, Double Confidence)&gt;&gt;&gt;.Out</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html#Microsoft_Psi_Components_AsyncConsumerProducer_2_ReceiveAsync__0_Microsoft_Psi_Envelope_">AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(String Name, Double Confidence)&gt;&gt;&gt;.ReceiveAsync(Shared&lt;Image&gt;, Envelope)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.CognitiveServices.Face.html">Microsoft.Psi.CognitiveServices.Face</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.CognitiveServices.Face.dll</h6>
+  <h5 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class FaceRecognizer : AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(string Name, double Confidence)&gt;&gt;&gt;, IConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(string Name, double Confidence)&gt;&gt;&gt;, IConsumer&lt;Shared&lt;Image&gt;&gt;, IProducer&lt;IList&lt;IList&lt;(string Name, double Confidence)&gt;&gt;&gt;, IDisposable</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The component takes in a stream of images and produces a stream of messages containing detected faces and candidate identities of each
+person in the image. A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
+subscription key is required to use this component. In addition, a person group needs to be created ahead of time, and the id of the person group
+passed to the component via the configuration. For more information, and to see how to create person groups, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a></p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L54">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer__ctor_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.#ctor*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.CognitiveServices.Face.FaceRecognizerConfiguration)">FaceRecognizer(Pipeline, FaceRecognizerConfiguration)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.html">FaceRecognizer</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FaceRecognizer(Pipeline pipeline, FaceRecognizerConfiguration configuration)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.CognitiveServices.Face.FaceRecognizerConfiguration.html">FaceRecognizerConfiguration</a></td>
+        <td><span class="parametername">configuration</span></td>
+        <td><p>The component configuration.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L73">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_RateLimitExceeded_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.RateLimitExceeded*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_RateLimitExceeded" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.RateLimitExceeded">RateLimitExceeded</h4>
+  <div class="markdown level1 summary"><p>Gets a stream that indicates the rate limit for the service calls was exceeded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;bool&gt; RateLimitExceeded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_RateLimitExceeded_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A value of true is posted on the stream each time the rate limit for calling Cognitive Services FACE API is exceeded.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L78">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_Dispose_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.Dispose*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_Dispose" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Disposes the face recognizer component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L85">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_ReceiveAsync_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.ReceiveAsync*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_ReceiveAsync_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image__Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.ReceiveAsync(Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image},Microsoft.Psi.Envelope)">ReceiveAsync(Shared&lt;Image&gt;, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Async receiver to be implemented by subclass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task ReceiveAsync(Shared&lt;Image&gt; data, Envelope e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;</td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td><p>Async task.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Components.AsyncConsumerProducer&lt;Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.Image&gt;, IList&lt;IList&lt;System.ValueTuple&lt;System.String, System.Double&gt;&gt;&gt;&gt;.ReceiveAsync(Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.Image&gt;, Microsoft.Psi.Envelope)</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer&lt;TIn, TOut&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer&lt;TIn&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L27" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

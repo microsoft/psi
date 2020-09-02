@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MicrosoftSpeechIntentDetector
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MicrosoftSpeechIntentDetector
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector">
+  
+  
+  <h1 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector" class="text-break">Class MicrosoftSpeechIntentDetector
+  </h1>
+  <div class="markdown level0 summary"><p>Component that performs grammar-based intent detection using the speech recognition engine from the Microsoft Speech Platform SDK.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Language.IntentData.html">IntentData</a>&gt;</div>
+    <div class="level2"><span class="xref">MicrosoftSpeechIntentDetector</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Language.IntentData.html">IntentData</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Language.IntentData.html">IntentData</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_In">ConsumerProducer&lt;String, IntentData&gt;.In</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;String, IntentData&gt;.Out</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;String, IntentData&gt;.Receive(String, Envelope)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MicrosoftSpeech.html">Microsoft.Psi.MicrosoftSpeech</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.MicrosoftSpeech.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class MicrosoftSpeechIntentDetector : ConsumerProducer&lt;string, IntentData&gt;, IConsumerProducer&lt;string, IntentData&gt;, IConsumer&lt;string&gt;, IProducer&lt;IntentData&gt;, ISourceComponent, IDisposable</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Separate download and installation of the Microsoft Speech Platform runtime and language pack are required in order to use this component.</p>
+<ul>
+<li>Click <a href="http://go.microsoft.com/fwlink/?LinkID=223568">here</a> to download the Microsoft Speech Platform runtime.</li>
+<li>Click <a href="http://go.microsoft.com/fwlink/?LinkID=223569">here</a> to download the Microsoft Speech Platform language pack.</li>
+</ul>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L42">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetectorConfiguration_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetectorConfiguration)">MicrosoftSpeechIntentDetector(Pipeline, MicrosoftSpeechIntentDetectorConfiguration)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.html">MicrosoftSpeechIntentDetector</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MicrosoftSpeechIntentDetector(Pipeline pipeline, MicrosoftSpeechIntentDetectorConfiguration configuration)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetectorConfiguration.html">MicrosoftSpeechIntentDetectorConfiguration</a></td>
+        <td><span class="parametername">configuration</span></td>
+        <td><p>The component configuration.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L66">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor(Microsoft.Psi.Pipeline,System.String)">MicrosoftSpeechIntentDetector(Pipeline, String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.html">MicrosoftSpeechIntentDetector</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MicrosoftSpeechIntentDetector(Pipeline pipeline, string configurationFilename = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The Psi pipeline.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">configurationFilename</span></td>
+        <td><p>The name of the configuration file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_LoadGrammarCompleted_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.LoadGrammarCompleted*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_LoadGrammarCompleted" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.LoadGrammarCompleted">LoadGrammarCompleted</h4>
+  <div class="markdown level1 summary"><p>Gets the output stream of load grammar completed events.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;LoadGrammarCompletedEventArgs&gt; LoadGrammarCompleted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<span class="xref">Microsoft.Speech.Recognition.LoadGrammarCompletedEventArgs</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammarNames_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammarNames*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammarNames" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammarNames">ReceiveGrammarNames</h4>
+  <div class="markdown level1 summary"><p>Gets the receiver for new grammars (by name).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;string[]&gt; ReceiveGrammarNames { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Receiver-1.html">Receiver</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L76">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammars*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammars" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammars">ReceiveGrammars</h4>
+  <div class="markdown level1 summary"><p>Gets the receiver for new grammars.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;IEnumerable&lt;string&gt;&gt; ReceiveGrammars { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Receiver-1.html">Receiver</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L123">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_DisableAllGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.DisableAllGrammars*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_DisableAllGrammars" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.DisableAllGrammars">DisableAllGrammars()</h4>
+  <div class="markdown level1 summary"><p>Disable all of the grammars loaded on this recognition engine.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DisableAllGrammars()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L132">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Dispose_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Dispose*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Dispose" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L112">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_EnableGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.EnableGrammars*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_EnableGrammars_Microsoft_Psi_Message_System_String____" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.EnableGrammars(Microsoft.Psi.Message{System.String[]})">EnableGrammars(Message&lt;String[]&gt;)</h4>
+  <div class="markdown level1 summary"><p>Enable all the grammars indicated by name, disabling all others.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EnableGrammars(Message&lt;string[]&gt; grammarNames)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>[]&gt;</td>
+        <td><span class="parametername">grammarNames</span></td>
+        <td><p>Speech grammars.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L163">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Receive_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Receive*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Receive_System_String_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Receive(System.String,Microsoft.Psi.Envelope)">Receive(String, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Override this method to process the incomming message and potentially publish one or more output messages.
+The input message payload is only valid for the duration of the call.
+If the data needs to be stored beyond the scope of this method,
+use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">DeepClone&lt;T&gt;(T, ref T)</a> to create a private copy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Receive(string text, Envelope e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">text</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Components.ConsumerProducer&lt;System.String, Microsoft.Psi.Language.IntentData&gt;.Receive(System.String, Microsoft.Psi.Envelope)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_SetGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.SetGrammars*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_SetGrammars_Microsoft_Psi_Message_System_Collections_Generic_IEnumerable_System_String___" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.SetGrammars(Microsoft.Psi.Message{System.Collections.Generic.IEnumerable{System.String}})">SetGrammars(Message&lt;IEnumerable&lt;String&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Replace grammars with given.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetGrammars(Message&lt;IEnumerable&lt;string&gt;&gt; srgsXmlGrammars)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">srgsXmlGrammars</span></td>
+        <td><p>A collection of XML-format speech grammars that conform to the SRGS 1.0 specification.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L150">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Start_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Start*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Start_System_Action_System_DateTime__" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Start(System.Action{System.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Start(Action&lt;DateTime&gt; notifyCompletionTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">notifyCompletionTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L157">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Stop_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Stop*"></a>
+  <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Stop_System_DateTime_System_Action_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Stop(System.DateTime,System.Action)">Stop(DateTime, Action)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">finalOriginatingTime</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action">Action</a></td>
+        <td><span class="parametername">notifyCompleted</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer&lt;TIn, TOut&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer&lt;TIn&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L25" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NearestAvailableInterpolator&lt;T&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NearestAvailableInterpolator&lt;T&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator`1">
+  
+  
+  <h1 id="Microsoft_Psi_Common_Interpolators_NearestAvailableInterpolator_1" data-uid="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator`1" class="text-break">Class NearestAvailableInterpolator&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a greedy interpolator that selects the nearest value from a specified window. The
+interpolator only considers messages available in the window on the secondary stream at
+the moment the primary stream message arrives. As such, it belongs to the class of greedy
+interpolators and does not guarantee reproducible results.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Interpolator-2.html">Interpolator</a>&lt;T, T&gt;</div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.GreedyInterpolator-2.html">GreedyInterpolator</a>&lt;T, T&gt;</div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.GreedyInterpolator-1.html">GreedyInterpolator</a>&lt;T&gt;</div>
+    <div class="level4"><span class="xref">NearestAvailableInterpolator&lt;T&gt;</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interpolator-2.html#Microsoft_Psi_Interpolator_2_Interpolate_DateTime_IEnumerable_Microsoft_Psi_Message__0___System_Nullable_DateTime__">Interpolator&lt;T, T&gt;.Interpolate(DateTime, IEnumerable&lt;Message&lt;T&gt;&gt;, Nullable&lt;DateTime&gt;)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.Interpolators.html">Microsoft.Psi.Common.Interpolators</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Common_Interpolators_NearestAvailableInterpolator_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class NearestAvailableInterpolator&lt;T&gt; : GreedyInterpolator&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/NearestAvailableInterpolator.cs/#L29">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_Interpolators_NearestAvailableInterpolator_1__ctor_" data-uid="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator`1.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Common_Interpolators_NearestAvailableInterpolator_1__ctor_Microsoft_Psi_RelativeTimeInterval_System_Boolean__0_" data-uid="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator`1.#ctor(Microsoft.Psi.RelativeTimeInterval,System.Boolean,`0)">NearestAvailableInterpolator(RelativeTimeInterval, Boolean, T)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator-1.html">NearestAvailableInterpolator&lt;T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NearestAvailableInterpolator(RelativeTimeInterval relativeTimeInterval, bool orDefault, T defaultValue = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">relativeTimeInterval</span></td>
+        <td><p>The relative time interval within which to search for the first message.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">orDefault</span></td>
+        <td><p>Indicates whether to output a default value when no result is found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">defaultValue</span></td>
+        <td><p>An optional default value to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/NearestAvailableInterpolator.cs/#L37">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_Interpolators_NearestAvailableInterpolator_1_Interpolate_" data-uid="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator`1.Interpolate*"></a>
+  <h4 id="Microsoft_Psi_Common_Interpolators_NearestAvailableInterpolator_1_Interpolate_DateTime_IEnumerable_Microsoft_Psi_Message__0___System_Nullable_DateTime__" data-uid="Microsoft.Psi.Common.Interpolators.NearestAvailableInterpolator`1.Interpolate(DateTime,IEnumerable{Microsoft.Psi.Message{`0}},System.Nullable{DateTime})">Interpolate(DateTime, IEnumerable&lt;Message&lt;T&gt;&gt;, Nullable&lt;DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Interpolates a set of messages at a given time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override InterpolationResult&lt;T&gt; Interpolate(DateTime interpolationTime, IEnumerable&lt;Message&lt;T&gt;&gt; messages, DateTime? closedOriginatingTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">interpolationTime</span></td>
+        <td><p>The time to interpolate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">messages</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">DateTime</span>&gt;</td>
+        <td><span class="parametername">closedOriginatingTime</span></td>
+        <td><p>An optional date-time that, when present, indicates at what time the stream was closed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.InterpolationResult-1.html">InterpolationResult</a>&lt;T&gt;</td>
+        <td><p>An interpolation result <a class="xref" href="Microsoft.Psi.InterpolationResult-1.html">InterpolationResult&lt;T&gt;</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interpolator&lt;T, T&gt;.Interpolate(DateTime, IEnumerable&lt;Microsoft.Psi.Message&lt;T&gt;&gt;, System.Nullable&lt;DateTime&gt;)</span></div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/NearestAvailableInterpolator.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

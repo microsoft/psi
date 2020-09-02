@@ -1,0 +1,396 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Shared&lt;T&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Shared&lt;T&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Shared`1">
+  
+  
+  <h1 id="Microsoft_Psi_Shared_1" data-uid="Microsoft.Psi.Shared`1" class="text-break">Class Shared&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Provides a container that tracks the usage of a shared resource (such as a large memory allocation).
+Follow the Cloning pattern and use the Shared.DeepClone extension method instead of direct assignment
+to create long-lived references to the same shared resource.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Shared&lt;T&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IFormattable</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Shared_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Shared&lt;T&gt; : IDisposable, IFormattable where T : class</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of data held by this container.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Shared_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The .Net model of delayed memory management via garbage collection is ill suited for frequent large allocations.
+The memory allocated for an object can only reused after the object is garbage collected.
+Since garbage collection is relatively infrequent, and independent of the lifespan of the allocated objects,
+the time interval between the object becoming available for garbage collection
+(that is, when nobody alive references it anymore) and the memory becoming available for reuse
+can be quite large. More importantly, the memory is only reclaimed as a
+result of a garbage collection pass, with a cost proportional to the number of objects allocated since
+the last garbage collection pass. The generational model of the .Net garbage collector mitigates this issue
+to some extent, but not enough to avoid large garbage collection pauses in memory-intensive streaming systems,
+e.g. when allocating video frames at frame rate.
+The Shared class is designed to provide full control over memory allocations,
+to make it possible to exchange buffers between concurrent components but also reuse them once they are not needed anymore.
+It uses explicit reference counting to decide when the memory can be released back to an allocation pool,
+without having to rely on the garbage collector.
+The behavior of Shared is as follows:</p>
+<ul>
+<li>when a Shared instance is instantiated, the reference count of the resource is set to 1.</li>
+<li>when a Shared instance is cloned (via Shared.DeepClone or Shared.AddRef), the reference count is incremented by 1.</li>
+<li>when a Shared instance is disposed (via Shared.Dispose or by the &quot;using&quot; keyword) the reference count is decremented by 1.</li>
+<li>the ref count is not affected when using the assignment operator (e.g. var copy = shared).
+Thus, for it to function properly, the handling of Shared instances requires following special rules:</li>
+<li>avoid using the assignment operator to capture references to a Shared instance beyond local scope.</li>
+<li>call myShared.AddRef() to create a new reference to the underlying resource, and remember to call Dispose when done with it.</li>
+<li>use myShared.DeepClone(ref this.myStoredCopy) to store a long-lived reference to a Shared instance in a class field.
+DeepClone will Dispose the target object first if needed, before cloning.</li>
+<li>there is no need to clone or AddRef when posting a Shared instance to a message stream.</li>
+<li>never store a long-lived reference to the underlying resource.
+Note that Shared doesn't provide any facilities for concurrent access to the underlying resource.
+Once a resource is wrapped in a Shared object, it should be considered read-only.</li>
+</ul>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L137">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_Resource_" data-uid="Microsoft.Psi.Shared`1.Resource*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_Resource" data-uid="Microsoft.Psi.Shared`1.Resource">Resource</h4>
+  <div class="markdown level1 summary"><p>Gets underlying resource.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Resource { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L142">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_SharedPool_" data-uid="Microsoft.Psi.Shared`1.SharedPool*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_SharedPool" data-uid="Microsoft.Psi.Shared`1.SharedPool">SharedPool</h4>
+  <div class="markdown level1 summary"><p>Gets the shared object pool.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SharedPool&lt;T&gt; SharedPool { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.SharedPool-1.html">SharedPool</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L176">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_AddRef_" data-uid="Microsoft.Psi.Shared`1.AddRef*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_AddRef" data-uid="Microsoft.Psi.Shared`1.AddRef">AddRef()</h4>
+  <div class="markdown level1 summary"><p>Add reference.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Shared&lt;T&gt; AddRef()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;T&gt;</td>
+        <td><p>Shared resource.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L147">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_Dispose_" data-uid="Microsoft.Psi.Shared`1.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_Dispose" data-uid="Microsoft.Psi.Shared`1.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_Finalize_" data-uid="Microsoft.Psi.Shared`1.Finalize*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_Finalize" data-uid="Microsoft.Psi.Shared`1.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Finalizes an instance of the <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared&lt;T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L185">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_ToString_" data-uid="Microsoft.Psi.Shared`1.ToString*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_ToString" data-uid="Microsoft.Psi.Shared`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L191">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Shared_1_ToString_" data-uid="Microsoft.Psi.Shared`1.ToString*"></a>
+  <h4 id="Microsoft_Psi_Shared_1_ToString_System_String_IFormatProvider_" data-uid="Microsoft.Psi.Shared`1.ToString(System.String,IFormatProvider)">ToString(String, IFormatProvider)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string format, IFormatProvider formatProvider)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IFormatProvider</span></td>
+        <td><span class="parametername">formatProvider</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IFormattable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Shared.cs/#L77" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

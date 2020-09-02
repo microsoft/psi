@@ -1,0 +1,1250 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DataManager
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DataManager
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.Data.DataManager">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_Data_DataManager" data-uid="Microsoft.Psi.Visualization.Data.DataManager" class="text-break">Class DataManager
+  </h1>
+  <div class="markdown level0 summary"><p>Provides cached-controlled read access to data stores used by the visualization runtime.
+Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a>s and <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummaryManager.html">StreamSummaryManager</a>s.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">DataManager</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_Data_DataManager_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DataManager : IDisposable</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L28">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Instance" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Instance">Instance</h4>
+  <div class="markdown level1 summary"><p>The singleton instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.DataManager.html">DataManager</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly DataManager Instance</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.DataManager.html">DataManager</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L359">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_CloseStore_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.CloseStore*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_CloseStore_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.CloseStore(System.String,System.String)">CloseStore(String, String)</h4>
+  <div class="markdown level1 summary"><p>Closes all readers on a store to allow the store to be moved or updated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseStore(string storeName, string storePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storeName</span></td>
+        <td><p>The name of the store to close.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storePath</span></td>
+        <td><p>The path to the store to close.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L80">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_Dispose_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Dispose" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L69">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_Finalize_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Finalize*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Finalize" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Finalizes an instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.DataManager.html">DataManager</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L375">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_GetOriginatingTimeOfNearestInstantMessage_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetOriginatingTimeOfNearestInstantMessage*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetOriginatingTimeOfNearestInstantMessage_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetOriginatingTimeOfNearestInstantMessage(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime)">GetOriginatingTimeOfNearestInstantMessage(StreamSource, DateTime)</h4>
+  <div class="markdown level1 summary"><p>Gets originating time of the message in a stream that's closest to a given time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime? GetOriginatingTimeOfNearestInstantMessage(StreamSource streamSource, DateTime time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The time for which to return the message with the closest originating time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><p>The originating time of the message closest to time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L312">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadata_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadata*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadata__1_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadata``1(Microsoft.Psi.Visualization.Data.StreamSource)">GetSupplementalMetadata&lt;TSupplementalMetadata&gt;(StreamSource)</h4>
+  <div class="markdown level1 summary"><p>Gets the supplemental metadata for a stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TSupplementalMetadata GetSupplementalMetadata&lt;TSupplementalMetadata&gt;(StreamSource streamSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSupplementalMetadata</span></td>
+        <td><p>The supplemental metadata for the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TSupplementalMetadata</span></td>
+        <td><p>The type of the supplemental metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L166">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_OnInstantViewRangeChanged_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.OnInstantViewRangeChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_OnInstantViewRangeChanged_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.OnInstantViewRangeChanged(Microsoft.Psi.TimeInterval)">OnInstantViewRangeChanged(TimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Notifies the data manager that the possible range of data that may be read has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnInstantViewRangeChanged(TimeInterval viewRange)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">viewRange</span></td>
+        <td><p>The new view range of the navigator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L147">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadInstantData_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadInstantData*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadInstantData_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadInstantData(System.DateTime)">ReadInstantData(DateTime)</h4>
+  <div class="markdown level1 summary"><p>Reads the data for all instant data targets and calls them back
+when the data is ready. This method is only called by the UI thread.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ReadInstantData(DateTime cursorTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">cursorTime</span></td>
+        <td><p>The time of the visualization container's cursor.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L182">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,System.DateTime)">ReadStream&lt;T&gt;(StreamSource, DateTime, DateTime)</h4>
+  <div class="markdown level1 summary"><p>Creates a view of the messages identified by the matching start and end times and asynchronously fills it in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, Message&lt;T&gt;&gt;.ObservableKeyedView ReadStream&lt;T&gt;(StreamSource streamSource, DateTime startTime, DateTime endTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">startTime</span></td>
+        <td><p>Start time of messages to read.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">endTime</span></td>
+        <td><p>End time of messages to read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>Observable view of data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the message to read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L218">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.Func{System.DateTime,System.DateTime})">ReadStream&lt;T&gt;(StreamSource, Func&lt;DateTime, DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a view of the messages identified by the matching tail range and asynchronously fills it in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, Message&lt;T&gt;&gt;.ObservableKeyedView ReadStream&lt;T&gt;(StreamSource streamSource, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">tailRange</span></td>
+        <td><p>Function to determine range included in tail.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>Observable view of data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the message to read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_UInt32_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.UInt32)">ReadStream&lt;T&gt;(StreamSource, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Creates a view of the messages identified by the matching tail count and asynchronously fills it in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, Message&lt;T&gt;&gt;.ObservableKeyedView ReadStream&lt;T&gt;(StreamSource streamSource, uint tailCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">tailCount</span></td>
+        <td><p>Number of messages to included in tail.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>Observable view of data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the message to read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L263">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_System_DateTime_System_TimeSpan_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,System.DateTime,System.TimeSpan)">ReadSummary&lt;T&gt;(StreamSource, DateTime, DateTime, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Gets a view over the specified time range of the cached summary data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, DateTime startTime, DateTime endTime, TimeSpan interval)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">startTime</span></td>
+        <td><p>The start time of the view range.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">endTime</span></td>
+        <td><p>The end time of the view range.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td><span class="parametername">interval</span></td>
+        <td><p>The time interval each summary value should cover.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>A view over the cached summary data that covers the specified time range.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The summary data type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L297">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_TimeSpan_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.TimeSpan,System.Func{System.DateTime,System.DateTime})">ReadSummary&lt;T&gt;(StreamSource, TimeSpan, Func&lt;DateTime, DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets a view over the specified time range of the cached summary data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, TimeSpan interval, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td><span class="parametername">interval</span></td>
+        <td><p>The time interval each summary value should cover.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">tailRange</span></td>
+        <td><p>Tail duration function. Computes the view range start time given an end time. Applies to live view mode only.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>A view over the cached summary data that covers the specified time range.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The summary data type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L280">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_TimeSpan_System_UInt32_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.TimeSpan,System.UInt32)">ReadSummary&lt;T&gt;(StreamSource, TimeSpan, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Gets a view over the specified time range of the cached summary data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, TimeSpan interval, uint tailCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td><span class="parametername">interval</span></td>
+        <td><p>The time interval each summary value should cover.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">tailCount</span></td>
+        <td><p>Number of items to include in view.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>A view over the cached summary data that covers the specified time range.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The summary data type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterInstantDataTarget*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterInstantDataTarget__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_RelativeTimeInterval_System_Action_System_Object_Microsoft_Psi_Visualization_Data_StreamCacheEntry__Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterInstantDataTarget``1(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.RelativeTimeInterval,System.Action{System.Object,Microsoft.Psi.Visualization.Data.StreamCacheEntry},Microsoft.Psi.TimeInterval)">RegisterInstantDataTarget&lt;TTarget&gt;(StreamSource, RelativeTimeInterval, Action&lt;Object, StreamCacheEntry&gt;, TimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Registers an instant data target to be notified when new data for a stream is available.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid RegisterInstantDataTarget&lt;TTarget&gt;(StreamSource streamSource, RelativeTimeInterval cursorEpsilon, Action&lt;object, StreamCacheEntry&gt; callback, TimeInterval viewRange)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>Information about the stream source and the required stream adapter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">cursorEpsilon</span></td>
+        <td><p>The epsilon window to use when reading data at a given time.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCacheEntry.html">StreamCacheEntry</a>&gt;</td>
+        <td><span class="parametername">callback</span></td>
+        <td><p>The method to call when new data is available.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">viewRange</span></td>
+        <td><p>The initial time range over which data is expected.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><p>A registration token that must be used by the target to unregister from updates or to modify the read epsilon.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TTarget</span></td>
+        <td><p>The type of data the target requires.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L234">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterSummaryDataConsumer_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterSummaryDataConsumer*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterSummaryDataConsumer_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterSummaryDataConsumer(Microsoft.Psi.Visualization.Data.StreamSource)">RegisterSummaryDataConsumer(StreamSource)</h4>
+  <div class="markdown level1 summary"><p>Registers a consumer of summary data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid RegisterSummaryDataConsumer(StreamSource streamSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>A stream source that indicates the store and stream summary data that the client consumes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><p>A unique consumer id that should be provided when the consumer unregisters from the stream summary manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L345">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_SaveStore_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SaveStore*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_SaveStore_System_String_System_String_System_IProgress_System_Double__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SaveStore(System.String,System.String,System.IProgress{System.Double})">SaveStore(String, String, IProgress&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Saves all changes to a store to disk.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SaveStore(string storeName, string storePath, IProgress&lt;double&gt; progress)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storeName</span></td>
+        <td><p>The name of the store to save.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storePath</span></td>
+        <td><p>The path to the store to save.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iprogress-1">IProgress</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>A progress interface to report back to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L121">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterInstantDataTarget*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterInstantDataTarget_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterInstantDataTarget(System.Guid)">UnregisterInstantDataTarget(Guid)</h4>
+  <div class="markdown level1 summary"><p>Unregisters instant data target from being notified when the current value of a stream changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterInstantDataTarget(Guid registrationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><span class="parametername">registrationToken</span></td>
+        <td><p>The registration token that the target was given when it was initially registered.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L246">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterSummaryDataConsumer_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterSummaryDataConsumer*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterSummaryDataConsumer_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterSummaryDataConsumer(System.Guid)">UnregisterSummaryDataConsumer(Guid)</h4>
+  <div class="markdown level1 summary"><p>Unregisters a consumer of summary data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterSummaryDataConsumer(Guid consumerId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><span class="parametername">consumerId</span></td>
+        <td><p>The id that was returned to the consumer when it registered as a summary data consumer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L134">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_UpdateInstantDataTargetEpsilon_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateInstantDataTargetEpsilon*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UpdateInstantDataTargetEpsilon_System_Guid_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateInstantDataTargetEpsilon(System.Guid,Microsoft.Psi.RelativeTimeInterval)">UpdateInstantDataTargetEpsilon(Guid, RelativeTimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Updates the cursor epsilon for a registered instant visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateInstantDataTargetEpsilon(Guid registrationToken, RelativeTimeInterval epsilon)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><span class="parametername">registrationToken</span></td>
+        <td><p>The registration token that the target was given when it was initially registered.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">epsilon</span></td>
+        <td><p>A relative time interval specifying the window around a message time that may be considered a match.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L325">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_UpdateStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UpdateStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_Collections_Generic_IEnumerable_Microsoft_Psi_Visualization_Data_StreamUpdate___0___" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.Collections.Generic.IEnumerable{Microsoft.Psi.Visualization.Data.StreamUpdate{``0}})">UpdateStream&lt;T&gt;(StreamSource, IEnumerable&lt;StreamUpdate&lt;T&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Performs a series of updates to the messages in a stream.  Stream bindings that use
+either a stream adapter or a stream summarizer are not permitted to update a stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateStream&lt;T&gt;(StreamSource streamSource, IEnumerable&lt;StreamUpdate&lt;T&gt;&gt; updates)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.Data.StreamUpdate-1.html">StreamUpdate</a>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">updates</span></td>
+        <td><p>A collection of updates to perform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the message to read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L77">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_DataStoreStatusChanged" data-uid="Microsoft.Psi.Visualization.Data.DataManager.DataStoreStatusChanged">DataStoreStatusChanged</h4>
+  <div class="markdown level1 summary"><p>Event that fires when a data store's dirty/clean status has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;DataStoreStatusChangedEventArgs&gt; DataStoreStatusChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.DataStoreStatusChangedEventArgs.html">DataStoreStatusChangedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L23" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1045 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ParallelFixedLength&lt;TIn, TOut&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ParallelFixedLength&lt;TIn, TOut&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2">
+  
+  
+  <h1 id="Microsoft_Psi_Components_ParallelFixedLength_2" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2" class="text-break">Class ParallelFixedLength&lt;TIn, TOut&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Creates and applies a sub-pipeline to each element in the input array. The input array must have the same length across all messages.
+The sub-pipelines have index affinity, meaning the same sub-pipeline is re-used across multiple messages for the entry with the same index.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Subpipeline.html">Subpipeline</a></div>
+    <div class="level3"><span class="xref">ParallelFixedLength&lt;TIn, TOut&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
+    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;TIn[]&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TOut[]&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ParentPipeline">Subpipeline.ParentPipeline</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Create_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy_">Subpipeline.Create(Pipeline, String, DeliveryPolicy)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Start_Action_DateTime__">Subpipeline.Start(Action&lt;DateTime&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Stop_DateTime_Action_">Subpipeline.Stop(DateTime, Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ProposeReplayTime_Microsoft_Psi_TimeInterval_">Subpipeline.ProposeReplayTime(TimeInterval)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_CreateInputConnectorFrom__1_Microsoft_Psi_Pipeline_System_String_">Subpipeline.CreateInputConnectorFrom&lt;T&gt;(Pipeline, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_CreateOutputConnectorTo__1_Microsoft_Psi_Pipeline_System_String_">Subpipeline.CreateOutputConnectorTo&lt;T&gt;(Pipeline, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ToString">Subpipeline.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_Clock_IProgress_System_Double__">Subpipeline.RunAsync(ReplayDescriptor, Clock, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineRun">Pipeline.PipelineRun</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineCompleted">Pipeline.PipelineCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ComponentCompleted">Pipeline.ComponentCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineExceptionNotHandled">Pipeline.PipelineExceptionNotHandled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Id">Pipeline.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Name">Pipeline.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ReplayDescriptor">Pipeline.ReplayDescriptor</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Diagnostics">Pipeline.Diagnostics</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_StartTime">Pipeline.StartTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ProgressReportInterval">Pipeline.ProgressReportInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_LatestFiniteSourceCompletionTime">Pipeline.LatestFiniteSourceCompletionTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_NoRemainingCompletableComponents">Pipeline.NoRemainingCompletableComponents</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Create_System_String_Microsoft_Psi_DeliveryPolicy_System_Int32_System_Boolean_System_Boolean_Microsoft_Psi_Diagnostics_DiagnosticsConfiguration_">Pipeline.Create(String, DeliveryPolicy, Int32, Boolean, Boolean, DiagnosticsConfiguration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultDeliveryPolicy__1">Pipeline.GetDefaultDeliveryPolicy&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultMessageValidator__1">Pipeline.GetDefaultMessageValidator&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action___0_Microsoft_Psi_Envelope__System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;T, Envelope&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action___0__System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;T&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action_Microsoft_Psi_Message___0___System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;Message&lt;T&gt;&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func___0_Microsoft_Psi_Envelope_Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;T, Envelope, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func___0_Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;T, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func_Microsoft_Psi_Message___0__Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;Message&lt;T&gt;, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateEmitter__1_System_Object_System_String_Microsoft_Psi_Emitter___0__ValidateMessageHandler_">Pipeline.CreateEmitter&lt;T&gt;(Object, String, Emitter.ValidateMessageHandler&lt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_System_Int32_">Pipeline.WaitAll(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_TimeSpan_">Pipeline.WaitAll(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Dispose">Pipeline.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_ReplayDescriptor_">Pipeline.Run(ReplayDescriptor)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_TimeInterval_System_Boolean_">Pipeline.Run(TimeInterval, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_DateTime_System_Boolean_">Pipeline.Run(DateTime, DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_System_Boolean_">Pipeline.Run(DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_IProgress_System_Double__">Pipeline.RunAsync(ReplayDescriptor, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_TimeInterval_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(TimeInterval, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_DateTime_DateTime_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(DateTime, DateTime, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_DateTime_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(DateTime, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTime">Pipeline.GetCurrentTime()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTimeFromElapsedTicks_System_Int64_">Pipeline.GetCurrentTimeFromElapsedTicks(Int64)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_TimeSpan_">Pipeline.ConvertToRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_DateTime_">Pipeline.ConvertToRealTime(DateTime)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_TimeSpan_">Pipeline.ConvertFromRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_DateTime_">Pipeline.ConvertFromRealTime(DateTime)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Components.html">Microsoft.Psi.Components</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Components_ParallelFixedLength_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ParallelFixedLength&lt;TIn, TOut&gt; : Subpipeline, ISourceComponent, IConsumer&lt;TIn[]&gt;, IProducer&lt;TOut[]&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td><p>The input message type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td><p>The result type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelFixedLength.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelFixedLength_2__ctor_" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelFixedLength_2__ctor_Microsoft_Psi_Pipeline_System_Int32_Action_System_Int32_Microsoft_Psi_IProducer__0___System_String_Microsoft_Psi_DeliveryPolicy_" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.#ctor(Microsoft.Psi.Pipeline,System.Int32,Action{System.Int32,Microsoft.Psi.IProducer{`0}},System.String,Microsoft.Psi.DeliveryPolicy)">ParallelFixedLength(Pipeline, Int32, Action&lt;Int32, IProducer&lt;TIn&gt;&gt;, String, DeliveryPolicy)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.ParallelFixedLength-2.html">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ParallelFixedLength(Pipeline pipeline, int vectorSize, Action&lt;int, IProducer&lt;TIn&gt;&gt; action, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>Pipeline to which this component belongs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">vectorSize</span></td>
+        <td><p>Vector size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;&gt;</td>
+        <td><span class="parametername">action</span></td>
+        <td><p>Action to apply to output producers.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name for this component (defaults to ParallelFixedLength).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy.html">DeliveryPolicy</a></td>
+        <td><span class="parametername">defaultDeliveryPolicy</span></td>
+        <td><p>Pipeline-level default delivery policy to be used by this component (defaults to <a class="xref" href="Microsoft.Psi.DeliveryPolicy.html#Microsoft_Psi_DeliveryPolicy_Unlimited">Unlimited</a> if unspecified).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelFixedLength.cs/#L58">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelFixedLength_2__ctor_" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelFixedLength_2__ctor_Microsoft_Psi_Pipeline_System_Int32_Func_System_Int32_Microsoft_Psi_IProducer__0__Microsoft_Psi_IProducer__1___System_Boolean__1_System_String_Microsoft_Psi_DeliveryPolicy_" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.#ctor(Microsoft.Psi.Pipeline,System.Int32,Func{System.Int32,Microsoft.Psi.IProducer{`0},Microsoft.Psi.IProducer{`1}},System.Boolean,`1,System.String,Microsoft.Psi.DeliveryPolicy)">ParallelFixedLength(Pipeline, Int32, Func&lt;Int32, IProducer&lt;TIn&gt;, IProducer&lt;TOut&gt;&gt;, Boolean, TOut, String, DeliveryPolicy)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.ParallelFixedLength-2.html">ParallelFixedLength&lt;TIn, TOut&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ParallelFixedLength(Pipeline pipeline, int vectorSize, Func&lt;int, IProducer&lt;TIn&gt;, IProducer&lt;TOut&gt;&gt; transform, bool outputDefaultIfDropped, TOut defaultValue = null, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>Pipeline to which this component belongs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">vectorSize</span></td>
+        <td><p>Vector size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;, <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TOut&gt;&gt;</td>
+        <td><span class="parametername">transform</span></td>
+        <td><p>Function mapping keyed input producers to output producers.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">outputDefaultIfDropped</span></td>
+        <td><p>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TOut</span></td>
+        <td><span class="parametername">defaultValue</span></td>
+        <td><p>Default value to use when messages are dropped in processing one of the input elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name for this component (defaults to ParallelFixedLength).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy.html">DeliveryPolicy</a></td>
+        <td><span class="parametername">defaultDeliveryPolicy</span></td>
+        <td><p>Pipeline-level default delivery policy to be used by this component (defaults to <a class="xref" href="Microsoft.Psi.DeliveryPolicy.html#Microsoft_Psi_DeliveryPolicy_Unlimited">Unlimited</a> if unspecified).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelFixedLength.cs/#L84">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelFixedLength_2_In_" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.In*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelFixedLength_2_In" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.In">In</h4>
+  <div class="markdown level1 summary"><p>Gets the input we receive messages on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;TIn[]&gt; In { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Receiver-1.html">Receiver</a>&lt;TIn[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelFixedLength.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelFixedLength_2_Out_" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.Out*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelFixedLength_2_Out" data-uid="Microsoft.Psi.Components.ParallelFixedLength`2.Out">Out</h4>
+  <div class="markdown level1 summary"><p>Gets the stream to write messages to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;TOut[]&gt; Out { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;TOut[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer&lt;TIn&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.PsiStore.html#Microsoft_Psi_PsiStore_Write__1_Microsoft_Psi_IProducer___0__System_String_Microsoft_Psi_Data_Exporter_System_Boolean_Microsoft_Psi_DeliveryPolicy___0__">PsiStore.Write&lt;TMessage&gt;(IProducer&lt;TMessage&gt;, String, Exporter, Boolean, DeliveryPolicy&lt;TMessage&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.PsiStore.html#Microsoft_Psi_PsiStore_Write__2_Microsoft_Psi_IProducer___0____1_System_String_Microsoft_Psi_Data_Exporter_System_Boolean_Microsoft_Psi_DeliveryPolicy___0__">PsiStore.Write&lt;TMessage, TSupplementalMetadata&gt;(IProducer&lt;TMessage&gt;, TSupplementalMetadata, String, Exporter, Boolean, DeliveryPolicy&lt;TMessage&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.PsiStore.html#Microsoft_Psi_PsiStore_WriteEnvelopes__1_Microsoft_Psi_IProducer___0__System_String_Microsoft_Psi_Data_Exporter_Microsoft_Psi_DeliveryPolicy___0__">PsiStore.WriteEnvelopes&lt;TIn&gt;(IProducer&lt;TIn&gt;, String, Exporter, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.DebugExtensions.html#Microsoft_Psi_DebugExtensions_DebugView__1_Microsoft_Psi_IProducer___0__System_String_Microsoft_Psi_DeliveryPolicy___0__">DebugExtensions.DebugView&lt;T&gt;(IProducer&lt;T&gt;, String, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.DebugExtensions.html#Microsoft_Psi_DebugExtensions_DumpStructure_Microsoft_Psi_Pipeline_System_String_">DebugExtensions.DumpStructure(Pipeline, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Aggregate__2_Microsoft_Psi_IProducer___0____1_Func___1___0___1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Aggregate&lt;TIn, TOut&gt;(IProducer&lt;TIn&gt;, TOut, Func&lt;TOut, TIn, TOut&gt;, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Aggregate__3_Microsoft_Psi_IProducer___0____1_Func___1___0___1__Func___1___2__Microsoft_Psi_DeliveryPolicy___0__">Operators.Aggregate&lt;TIn, TAcc, TOut&gt;(IProducer&lt;TIn&gt;, TAcc, Func&lt;TAcc, TIn, TAcc&gt;, Func&lt;TAcc, TOut&gt;, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Aggregate__1_Microsoft_Psi_IProducer___0__Func___0___0___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Aggregate&lt;T&gt;(IProducer&lt;T&gt;, Func&lt;T, T, T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Aggregate__3_Microsoft_Psi_IProducer___1____0_Func___0___1_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter___2____0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Aggregate&lt;TAccumulate, TIn, TOut&gt;(IProducer&lt;TIn&gt;, TAccumulate, Func&lt;TAccumulate, TIn, Envelope, Emitter&lt;TOut&gt;, TAccumulate&gt;, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_PipeTo__2_Microsoft_Psi_IProducer___0____1_Microsoft_Psi_DeliveryPolicy___0__">Operators.PipeTo&lt;TIn, TC&gt;(IProducer&lt;TIn&gt;, TC, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_CreateConnector__1_Microsoft_Psi_Pipeline_System_String_">Operators.CreateConnector&lt;T&gt;(Pipeline, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_BridgeTo__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy___0__">Operators.BridgeTo&lt;T&gt;(IProducer&lt;T&gt;, Pipeline, String, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Name__1_Microsoft_Psi_IProducer___0__System_String_">Operators.Name&lt;T&gt;(IProducer&lt;T&gt;, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_ToEnumerable__1_Microsoft_Psi_IProducer___0__Func___0_System_Boolean__Microsoft_Psi_DeliveryPolicy___0__">Operators.ToEnumerable&lt;T&gt;(IProducer&lt;T&gt;, Func&lt;T, Boolean&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_Interpolator___1___2__Func___0___2___3__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Fuse&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, Interpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation, TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_Interpolator___1___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Fuse&lt;TPrimary, TSecondary, TInterpolation&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, Interpolator&lt;TSecondary, TInterpolation&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___Microsoft_Psi_Interpolator_System_ValueTuple___1___2__System_ValueTuple___1___2___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Fuse&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, Interpolator&lt;(TSecondaryItem1, TSecondaryItem2), (TSecondaryItem1, TSecondaryItem2)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___Microsoft_Psi_Interpolator_System_ValueTuple___1___2___3__System_ValueTuple___1___2___3___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Fuse&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, Interpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___Microsoft_Psi_Interpolator_System_ValueTuple___1___2___3___4__System_ValueTuple___1___2___3___4___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Fuse&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, Interpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___Microsoft_Psi_Interpolator_System_ValueTuple___1___2___3___4___5__System_ValueTuple___1___2___3___4___5___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Fuse&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, Interpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_Interpolator_System_ValueTuple___1___2___3___4___5___6__System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Fuse&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, Interpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6), (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Fuse__4_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_Interpolator___1___2__Func___0___2_____3__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Fuse&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, Interpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation[], TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Interpolate__2_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_Interpolator___0___1__System_Nullable_DateTime__Microsoft_Psi_DeliveryPolicy___0__">Operators.Interpolate&lt;T, TInterpolation&gt;(IProducer&lt;T&gt;, TimeSpan, Interpolator&lt;T, TInterpolation&gt;, Nullable&lt;DateTime&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Interpolate__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_Interpolator___0___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Interpolate&lt;T, TClock, TInterpolation&gt;(IProducer&lt;T&gt;, IProducer&lt;TClock&gt;, Interpolator&lt;T, TInterpolation&gt;, DeliveryPolicy&lt;T&gt;, DeliveryPolicy&lt;TClock&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sample__1_Microsoft_Psi_IProducer___0__TimeSpan_TimeSpan_System_Nullable_DateTime__Microsoft_Psi_DeliveryPolicy___0__">Operators.Sample&lt;T&gt;(IProducer&lt;T&gt;, TimeSpan, TimeSpan, Nullable&lt;DateTime&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sample__1_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_RelativeTimeInterval_System_Nullable_DateTime__Microsoft_Psi_DeliveryPolicy___0__">Operators.Sample&lt;T&gt;(IProducer&lt;T&gt;, TimeSpan, RelativeTimeInterval, Nullable&lt;DateTime&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sample__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Sample&lt;T, TClock&gt;(IProducer&lt;T&gt;, IProducer&lt;TClock&gt;, TimeSpan, DeliveryPolicy&lt;T&gt;, DeliveryPolicy&lt;TClock&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sample__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Sample&lt;T, TClock&gt;(IProducer&lt;T&gt;, IProducer&lt;TClock&gt;, RelativeTimeInterval, DeliveryPolicy&lt;T&gt;, DeliveryPolicy&lt;TClock&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_ReproducibleInterpolator___1__Func___0___1___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Join&lt;TPrimary, TSecondary, TOut&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, ReproducibleInterpolator&lt;TSecondary&gt;, Func&lt;TPrimary, TSecondary, TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Join&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Join&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, TimeSpan, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Join&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_ReproducibleInterpolator___1__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Join&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, ReproducibleInterpolator&lt;TSecondary&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___Microsoft_Psi_ReproducibleInterpolator_System_ValueTuple___1___2___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, ReproducibleInterpolator&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, TimeSpan, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___Microsoft_Psi_ReproducibleInterpolator_System_ValueTuple___1___2___3___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, ReproducibleInterpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, TimeSpan, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___Microsoft_Psi_ReproducibleInterpolator_System_ValueTuple___1___2___3___4___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, ReproducibleInterpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, TimeSpan, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___Microsoft_Psi_ReproducibleInterpolator_System_ValueTuple___1___2___3___4___5___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, ReproducibleInterpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, TimeSpan, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_ReproducibleInterpolator_System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, ReproducibleInterpolator&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, TimeSpan, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Join&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_ReproducibleInterpolator___1___2__Func___0___2_____3__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Join&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, ReproducibleInterpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation[], TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Merge__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Merge&lt;T&gt;(IProducer&lt;T&gt;, IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_ToObservable__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.ToObservable&lt;T&gt;(IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Func___0___1___2____1_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Pair&lt;TPrimary, TSecondary, TOut&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, Func&lt;TPrimary, TSecondary, TOut&gt;, TSecondary, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Func___0___1___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Pair&lt;TPrimary, TSecondary, TOut&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, Func&lt;TPrimary, TSecondary, TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1____1_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Pair&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, TSecondary, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Pair&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;TSecondary&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___System_ValueTuple___1___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, (TSecondaryItem1, TSecondaryItem2), DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___System_ValueTuple___1___2___3__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3), DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___System_ValueTuple___1___2___3___4__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4), DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__5_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___System_ValueTuple___1___2___3___4___5__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5), DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__6_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___System_ValueTuple___1___2___3___4___5___6__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, (TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6), DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Pair__7_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___4___5___6___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3___4___5___6___">Operators.Pair&lt;TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6&gt;(IProducer&lt;TPrimary&gt;, IProducer&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Where__1_Microsoft_Psi_IProducer___0__Func___0_Microsoft_Psi_Envelope_System_Boolean__Microsoft_Psi_DeliveryPolicy___0__">Operators.Where&lt;T&gt;(IProducer&lt;T&gt;, Func&lt;T, Envelope, Boolean&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Where__1_Microsoft_Psi_IProducer___0__Predicate___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Where&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_First__1_Microsoft_Psi_IProducer___0__System_Int32_Microsoft_Psi_DeliveryPolicy___0__">Operators.First&lt;T&gt;(IProducer&lt;T&gt;, Int32, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_First__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.First&lt;T&gt;(IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Process__2_Microsoft_Psi_IProducer___0__Action___0_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter___1___Microsoft_Psi_DeliveryPolicy___0__">Operators.Process&lt;TIn, TOut&gt;(IProducer&lt;TIn&gt;, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt;, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Select__2_Microsoft_Psi_IProducer___0__Func___0_Microsoft_Psi_Envelope___1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Select&lt;TIn, TOut&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, Envelope, TOut&gt;, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Select__2_Microsoft_Psi_IProducer___0__Func___0___1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Select&lt;TIn, TOut&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, TOut&gt;, DeliveryPolicy&lt;TIn&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Do__1_Microsoft_Psi_IProducer___0__Action___0_Microsoft_Psi_Envelope__Microsoft_Psi_DeliveryPolicy___0__">Operators.Do&lt;T&gt;(IProducer&lt;T&gt;, Action&lt;T, Envelope&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Do__1_Microsoft_Psi_IProducer___0__Action___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Do&lt;T&gt;(IProducer&lt;T&gt;, Action&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Count__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.Count&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Count__1_Microsoft_Psi_IProducer___0__Predicate___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Count&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_LongCount__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.LongCount&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_LongCount__1_Microsoft_Psi_IProducer___0__Predicate___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.LongCount&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0__IComparer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Min&lt;T&gt;(IProducer&lt;T&gt;, IComparer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0__Predicate___0__IComparer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Min&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, IComparer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0__Predicate___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Min&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0__IComparer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Max&lt;T&gt;(IProducer&lt;T&gt;, IComparer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0__Predicate___0__IComparer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Max&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, IComparer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0__Predicate___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Max&lt;T&gt;(IProducer&lt;T&gt;, Predicate&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Count__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.Count&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_LongCount__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.LongCount&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Int32__Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int32&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int32___Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int32&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Int64__Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int64&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int64___Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int64&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Single__Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Single&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Single___Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Single&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Double__Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Double&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Double___Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Double&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Decimal__Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Decimal&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Sum__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Decimal___Microsoft_Psi_DeliveryPolicy___0____">Operators.Sum&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Decimal&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Int32__Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int32&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int32___Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int32&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Int64__Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int64&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int64___Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int64&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Single__Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Single&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Single___Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Single&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Double__Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Double&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Double___Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Double&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Decimal__Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Decimal&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Decimal___Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Decimal&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Min__2_Microsoft_Psi_IProducer___0____Func___0___1__Microsoft_Psi_DeliveryPolicy___0____">Operators.Min&lt;TSource, TResult&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, TResult&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Int32__Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int32&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int32___Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int32&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Int64__Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int64&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int64___Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int64&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Single__Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Single&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Single___Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Single&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Double__Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Double&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Double___Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Double&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Decimal__Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Decimal&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Decimal___Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Decimal&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__1_Microsoft_Psi_IProducer___0____Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Max__2_Microsoft_Psi_IProducer___0____Func___0___1__Microsoft_Psi_DeliveryPolicy___0____">Operators.Max&lt;TSource, TResult&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, TResult&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Int32__Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int32&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int32___Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int32&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Int64__Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int64&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int64___Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int64&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Single__Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Single&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Single___Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Single&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Double__Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Double&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Double___Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Double&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Decimal__Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Decimal&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Average__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Decimal___Microsoft_Psi_DeliveryPolicy___0____">Operators.Average&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Decimal&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Int32__Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int32&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int32___Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int32&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Int64__Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Int64&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Int64___Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Int64&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Single__Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Single&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Single___Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Single&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Double__Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Double&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Double___Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Double&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Decimal__Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Decimal&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Std__1_Microsoft_Psi_IProducer___0____Func___0_System_Nullable_System_Decimal___Microsoft_Psi_DeliveryPolicy___0____">Operators.Std&lt;TSource&gt;(IProducer&lt;TSource[]&gt;, Func&lt;TSource, Nullable&lt;Decimal&gt;&gt;, DeliveryPolicy&lt;TSource[]&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Count__1_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_DeliveryPolicy___0__">Operators.Count&lt;TSource&gt;(IProducer&lt;TSource&gt;, TimeSpan, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_LongCount__1_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_DeliveryPolicy___0__">Operators.LongCount&lt;TSource&gt;(IProducer&lt;TSource&gt;, TimeSpan, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_TimeOf__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.TimeOf&lt;T&gt;(IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Latency__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Latency&lt;T&gt;(IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Delay__1_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_DeliveryPolicy___0__">Operators.Delay&lt;T&gt;(IProducer&lt;T&gt;, TimeSpan, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__2_Microsoft_Psi_IProducer___0____System_Int32_Func_System_Int32_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1___System_Boolean___1_Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TOut&gt;(IProducer&lt;TIn[]&gt;, Int32, Func&lt;Int32, IProducer&lt;TIn&gt;, IProducer&lt;TOut&gt;&gt;, Boolean, TOut, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__1_Microsoft_Psi_IProducer___0____System_Int32_Action_System_Int32_Microsoft_Psi_IProducer___0___Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn&gt;(IProducer&lt;TIn[]&gt;, Int32, Action&lt;Int32, IProducer&lt;TIn&gt;&gt;, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__2_Microsoft_Psi_IProducer___0____System_Int32_Func_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1___System_Boolean___1_Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TOut&gt;(IProducer&lt;TIn[]&gt;, Int32, Func&lt;IProducer&lt;TIn&gt;, IProducer&lt;TOut&gt;&gt;, Boolean, TOut, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__1_Microsoft_Psi_IProducer___0____System_Int32_Action_Microsoft_Psi_IProducer___0___Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn&gt;(IProducer&lt;TIn[]&gt;, Int32, Action&lt;IProducer&lt;TIn&gt;&gt;, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__2_Microsoft_Psi_IProducer___0____Func_System_Int32_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1___System_Boolean___1_Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TOut&gt;(IProducer&lt;TIn[]&gt;, Func&lt;Int32, IProducer&lt;TIn&gt;, IProducer&lt;TOut&gt;&gt;, Boolean, TOut, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__1_Microsoft_Psi_IProducer___0____Action_System_Int32_Microsoft_Psi_IProducer___0___Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn&gt;(IProducer&lt;TIn[]&gt;, Action&lt;Int32, IProducer&lt;TIn&gt;&gt;, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__2_Microsoft_Psi_IProducer___0____Func_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1___System_Boolean___1_Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TOut&gt;(IProducer&lt;TIn[]&gt;, Func&lt;IProducer&lt;TIn&gt;, IProducer&lt;TOut&gt;&gt;, Boolean, TOut, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__1_Microsoft_Psi_IProducer___0____Action_Microsoft_Psi_IProducer___0___Microsoft_Psi_DeliveryPolicy___0____System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn&gt;(IProducer&lt;TIn[]&gt;, Action&lt;IProducer&lt;TIn&gt;&gt;, DeliveryPolicy&lt;TIn[]&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__5_Microsoft_Psi_IProducer___0__Func___0_Dictionary___1___2___Func___1_Microsoft_Psi_IProducer___2__Microsoft_Psi_IProducer___3___Func_Dictionary___1___3____4__System_Boolean___3_Microsoft_Psi_DeliveryPolicy___0__Func___1_Dictionary___1___2__DateTime_System_ValueTuple_System_Boolean_DateTime___System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Func&lt;TBranchKey, IProducer&lt;TBranchIn&gt;, IProducer&lt;TBranchOut&gt;&gt;, Func&lt;Dictionary&lt;TBranchKey, TBranchOut&gt;, TOut&gt;, Boolean, TBranchOut, DeliveryPolicy&lt;TIn&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__3_Microsoft_Psi_IProducer___0__Func___0_Dictionary___1___2___Action___1_Microsoft_Psi_IProducer___2___Microsoft_Psi_DeliveryPolicy___0__Func___1_Dictionary___1___2__DateTime_System_ValueTuple_System_Boolean_DateTime___System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TBranchKey, TBranchIn&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Action&lt;TBranchKey, IProducer&lt;TBranchIn&gt;&gt;, DeliveryPolicy&lt;TIn&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__5_Microsoft_Psi_IProducer___0__Func___0_Dictionary___1___2___Func_Microsoft_Psi_IProducer___2__Microsoft_Psi_IProducer___3___Func_Dictionary___1___3____4__System_Boolean___3_Microsoft_Psi_DeliveryPolicy___0__Func___1_Dictionary___1___2__DateTime_System_ValueTuple_System_Boolean_DateTime___System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Func&lt;IProducer&lt;TBranchIn&gt;, IProducer&lt;TBranchOut&gt;&gt;, Func&lt;Dictionary&lt;TBranchKey, TBranchOut&gt;, TOut&gt;, Boolean, TBranchOut, DeliveryPolicy&lt;TIn&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__4_Microsoft_Psi_IProducer___0__Func___0_Dictionary___1___2___Func_Microsoft_Psi_IProducer___2__Microsoft_Psi_IProducer___3___System_Boolean___3_Microsoft_Psi_DeliveryPolicy___0__Func___1_Dictionary___1___2__DateTime_System_ValueTuple_System_Boolean_DateTime___System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Func&lt;IProducer&lt;TBranchIn&gt;, IProducer&lt;TBranchOut&gt;&gt;, Boolean, TBranchOut, DeliveryPolicy&lt;TIn&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Parallel__3_Microsoft_Psi_IProducer___0__Func___0_Dictionary___1___2___Action_Microsoft_Psi_IProducer___2___Microsoft_Psi_DeliveryPolicy___0__Func___1_Dictionary___1___2__DateTime_System_ValueTuple_System_Boolean_DateTime___System_String_Microsoft_Psi_DeliveryPolicy_">Operators.Parallel&lt;TIn, TBranchKey, TBranchIn&gt;(IProducer&lt;TIn&gt;, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Action&lt;IProducer&lt;TBranchIn&gt;&gt;, DeliveryPolicy&lt;TIn&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;, String, DeliveryPolicy)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IntInterval_Func_IEnumerable_Microsoft_Psi_Message___0_____1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource, TOutput&gt;(IProducer&lt;TSource&gt;, IntInterval, Func&lt;IEnumerable&lt;Message&lt;TSource&gt;&gt;, TOutput&gt;, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__2_Microsoft_Psi_IProducer___0__System_Int32_System_Int32_Func_IEnumerable_Microsoft_Psi_Message___0_____1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource, TOutput&gt;(IProducer&lt;TSource&gt;, Int32, Int32, Func&lt;IEnumerable&lt;Message&lt;TSource&gt;&gt;, TOutput&gt;, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_IntInterval_Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource&gt;(IProducer&lt;TSource&gt;, IntInterval, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__1_Microsoft_Psi_IProducer___0__System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource&gt;(IProducer&lt;TSource&gt;, Int32, Int32, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_RelativeTimeInterval_Func_IEnumerable_Microsoft_Psi_Message___0_____1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource, TOutput&gt;(IProducer&lt;TSource&gt;, RelativeTimeInterval, Func&lt;IEnumerable&lt;Message&lt;TSource&gt;&gt;, TOutput&gt;, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__2_Microsoft_Psi_IProducer___0__TimeSpan_TimeSpan_Func_IEnumerable_Microsoft_Psi_Message___0_____1__Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource, TOutput&gt;(IProducer&lt;TSource&gt;, TimeSpan, TimeSpan, Func&lt;IEnumerable&lt;Message&lt;TSource&gt;&gt;, TOutput&gt;, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource&gt;(IProducer&lt;TSource&gt;, RelativeTimeInterval, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__1_Microsoft_Psi_IProducer___0__TimeSpan_TimeSpan_Microsoft_Psi_DeliveryPolicy___0__">Operators.Window&lt;TSource&gt;(IProducer&lt;TSource&gt;, TimeSpan, TimeSpan, DeliveryPolicy&lt;TSource&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__3_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Func_Microsoft_Psi_Message___1__System_ValueTuple_Microsoft_Psi_TimeInterval_DateTime___Func_Microsoft_Psi_Message___1__IEnumerable_Microsoft_Psi_Message___0_____2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Window&lt;TSource, TWindow, TOutput&gt;(IProducer&lt;TSource&gt;, IProducer&lt;TWindow&gt;, Func&lt;Message&lt;TWindow&gt;, (TimeInterval, DateTime)&gt;, Func&lt;Message&lt;TWindow&gt;, IEnumerable&lt;Message&lt;TSource&gt;&gt;, TOutput&gt;, DeliveryPolicy&lt;TSource&gt;, DeliveryPolicy&lt;TWindow&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Window__2_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___1__Func_Microsoft_Psi_Message___1__System_ValueTuple_Microsoft_Psi_TimeInterval_DateTime___Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__">Operators.Window&lt;TSource, TWindow&gt;(IProducer&lt;TSource&gt;, IProducer&lt;TWindow&gt;, Func&lt;Message&lt;TWindow&gt;, (TimeInterval, DateTime)&gt;, DeliveryPolicy&lt;TSource&gt;, DeliveryPolicy&lt;TWindow&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_Zip__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__">Operators.Zip&lt;T&gt;(IProducer&lt;T&gt;, IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelFixedLength.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

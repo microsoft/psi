@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class KnownSerializers
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class KnownSerializers
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Serialization.KnownSerializers">
+  
+  
+  <h1 id="Microsoft_Psi_Serialization_KnownSerializers" data-uid="Microsoft.Psi.Serialization.KnownSerializers" class="text-break">Class KnownSerializers
+  </h1>
+  <div class="markdown level0 summary"><p>Represents the registry of all serializers.
+The <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_Default">Default</a> contains system-wide serializers for the current version of the type system.
+Serializers explicitly registered with this instance are used by all other instances unless an override is specified.
+When deserializing from a persisted file, the <a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a> instance returned by
+the <a class="xref" href="Microsoft.Psi.Data.PsiImporter.html">PsiImporter</a> will create its own KnownSerializer instance, and register serializers
+compatible with the store being open.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">KnownSerializers</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Serialization.html">Microsoft.Psi.Serialization</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Serialization_KnownSerializers_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class KnownSerializers : object</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Serialization_KnownSerializers_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The following rules are applied when searching for a suitable serializer:</p>
+<ul>
+<li>registered serializer for the concrete type</li>
+<li>annotated serializer on the concrete type</li>
+<li>registered serializer for the generic type the current type is constructed from</li>
+<li>annotated serializer on the generic type the current type is constructed from</li>
+<li>auto-generated serializer</li>
+</ul>
+<p>When deserializing a polymorphic field, the field's object value might have a different type than the declared (static)
+type of the field (e.g the field is declared as IEnumerable{int} and is assigned an int[]).
+In such cases the runtime might not be able to find the correct type to use,
+and can only instantiate the correct deserializer if one of the following is true:</p>
+<ul>
+<li>a serializer has been explicitly registered for the object type or contract using <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_Register__2_Microsoft_Psi_Serialization_CloningFlags_">Register&lt;T, TSerializer&gt;(CloningFlags)</a></li>
+<li>a type has been explicitly registered with an explicit contract name <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_Register__1_System_String_Microsoft_Psi_Serialization_CloningFlags_">Register&lt;T&gt;(String, CloningFlags)</a> or <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_Register__2_System_String_Microsoft_Psi_Serialization_CloningFlags_">Register&lt;T, TSerializer&gt;(String, CloningFlags)</a>.</li>
+</ul>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L139">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers__ctor_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers__ctor_Microsoft_Psi_Common_RuntimeInfo_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.#ctor(Microsoft.Psi.Common.RuntimeInfo)">KnownSerializers(RuntimeInfo)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html">KnownSerializers</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public KnownSerializers(RuntimeInfo runtimeVersion = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
+        <td><span class="parametername">runtimeVersion</span></td>
+        <td><p>The version of the runtime to be compatible with. This dictates the behavior of automatic serialization.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L71">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Default" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Default">Default</h4>
+  <div class="markdown level1 summary"><p>The default set of types and serializer creation rules globally known to the serialization subsystem.
+Custom serializers can be added directly to this set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly KnownSerializers Default</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html">KnownSerializers</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L192">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RuntimeVersion*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RuntimeVersion">RuntimeVersion</h4>
+  <div class="markdown level1 summary"><p>Gets the version of the serialization subsystem this serializer set is compatible with.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RuntimeInfo RuntimeVersion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L197">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_Schemas_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Schemas*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Schemas" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Schemas">Schemas</h4>
+  <div class="markdown level1 summary"><p>Gets the set of schemas in use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;string, TypeSchema&gt; Schemas { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L215">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register_Type_System_String_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register(Type,System.String,Microsoft.Psi.Serialization.CloningFlags)">Register(Type, String, CloningFlags)</h4>
+  <div class="markdown level1 summary"><p>Registers a given type with the specified contract name.
+Use this overload to deserialize data persisted before a type name change.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Register(Type type, string contractName, CloningFlags cloningFlags = default(CloningFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>The type to use when deserializing objects with the specified contract.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">contractName</span></td>
+        <td><p>The name to remap. This can be a full type name or a contract name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.CloningFlags.html">CloningFlags</a></td>
+        <td><span class="parametername">cloningFlags</span></td>
+        <td><p>Optional flags that control the cloning behavior for this type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L248">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__1_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``1(Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T&gt;(CloningFlags)</h4>
+  <div class="markdown level1 summary"><p>Registers a type that the serialization system would not be able find or resolve.
+Use this overload when type T is required in a polymorphic context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Register&lt;T&gt;(CloningFlags cloningFlags = default(CloningFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.CloningFlags.html">CloningFlags</a></td>
+        <td><span class="parametername">cloningFlags</span></td>
+        <td><p>Optional flags that control the cloning behavior for this type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type to serialize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Serialization_KnownSerializers_Register__1_Microsoft_Psi_Serialization_CloningFlags__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When deserializing a polymorphic field, the field's object value might have a different type than the declared (static)
+type of the field (e.g the field is declared as IEnumerable{int} and is assigned a MyCustomCollection{int}).
+Pre-registering the type allows the runtime to find it in such circumstances.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L206">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__1_System_String_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``1(System.String,Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T&gt;(String, CloningFlags)</h4>
+  <div class="markdown level1 summary"><p>Registers type T with the specified contract name.
+Use this overload to deserialize data persisted before a type name change.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Register&lt;T&gt;(string contractName, CloningFlags cloningFlags = default(CloningFlags))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">contractName</span></td>
+        <td><p>The name to remap. This can be a full type name or a contract name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.CloningFlags.html">CloningFlags</a></td>
+        <td><span class="parametername">cloningFlags</span></td>
+        <td><p>Optional flags that control the cloning behavior for this type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type to use when deserializing objects with the specified contract.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L259">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__2_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``2(Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T, TSerializer&gt;(CloningFlags)</h4>
+  <div class="markdown level1 summary"><p>Registers a serializer based on type.
+Use this overload to register a custom implementation of <a class="xref" href="Microsoft.Psi.Serialization.ISerializer-1.html">ISerializer&lt;T&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Register&lt;T, TSerializer&gt;(CloningFlags cloningFlags = default(CloningFlags))
+    where TSerializer : ISerializer&lt;T&gt;, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.CloningFlags.html">CloningFlags</a></td>
+        <td><span class="parametername">cloningFlags</span></td>
+        <td><p>Optional flags that control the cloning behavior for this type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type being serialized.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSerializer</span></td>
+        <td><p>The corresponding type of serializer to use, which replaces any <a class="xref" href="Microsoft.Psi.Serialization.SerializerAttribute.html">SerializerAttribute</a> annotation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L272">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__2_System_String_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``2(System.String,Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T, TSerializer&gt;(String, CloningFlags)</h4>
+  <div class="markdown level1 summary"><p>Registers a type and serializer for the specified contract type.
+Use this overload to deserialize data persisted before a type name change.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Register&lt;T, TSerializer&gt;(string contractName, CloningFlags cloningFlags = default(CloningFlags))
+    where TSerializer : ISerializer&lt;T&gt;, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">contractName</span></td>
+        <td><p>The previous contract name of type T.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.CloningFlags.html">CloningFlags</a></td>
+        <td><span class="parametername">cloningFlags</span></td>
+        <td><p>Optional flags that control the cloning behavior for this type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type being serialized.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSerializer</span></td>
+        <td><p>The corresponding type of serializer to use, which replaces any <a class="xref" href="Microsoft.Psi.Serialization.SerializerAttribute.html">SerializerAttribute</a> annotation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L285">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_RegisterGenericSerializer_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RegisterGenericSerializer*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_RegisterGenericSerializer_Type_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RegisterGenericSerializer(Type)">RegisterGenericSerializer(Type)</h4>
+  <div class="markdown level1 summary"><p>Registers a generic serializer, that is, a serializer defined for a generic type.
+The generic serializer must implement <a class="xref" href="Microsoft.Psi.Serialization.ISerializer-1.html">ISerializer&lt;T&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterGenericSerializer(Type genericSerializer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">genericSerializer</span></td>
+        <td><p>The type of generic serializer to register.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L187">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_SchemaAdded" data-uid="Microsoft.Psi.Serialization.KnownSerializers.SchemaAdded">SchemaAdded</h4>
+  <div class="markdown level1 summary"><p>Event which fires when each new type schema has been added.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;TypeSchema&gt; SchemaAdded</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span>&lt;<a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L38" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,2059 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Interval&lt;TPoint, TSpan, TEndpoint, T&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Interval&lt;TPoint, TSpan, TEndpoint, T&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Interval`4">
+  
+  
+  <h1 id="Microsoft_Psi_Interval_4" data-uid="Microsoft.Psi.Interval`4" class="text-break">Class Interval&lt;TPoint, TSpan, TEndpoint, T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents an interval with bounded/unbounded and inclusive/exclusive end points.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Interval&lt;TPoint, TSpan, TEndpoint, T&gt;</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.IntInterval.html">IntInterval</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.RealInterval.html">RealInterval</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Interval_4_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class Interval&lt;TPoint, TSpan, TEndpoint, T&gt; : object, IInterval&lt;TPoint, TSpan, TEndpoint, T&gt; where TPoint : IComparable where TEndpoint : IIntervalEndpoint&lt;TPoint&gt; where T : Interval&lt;TPoint, TSpan, TEndpoint, T&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TPoint</span></td>
+        <td><p>Type of point values.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSpan</span></td>
+        <td><p>Type of spans between point values.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TEndpoint</span></td>
+        <td><p>Explicit endpoint type (instance of IIntervalEndpoint{TPoint}).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Concrete type implementing this interface.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L26">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4__ctor_" data-uid="Microsoft.Psi.Interval`4.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Interval_4__ctor__2__2_" data-uid="Microsoft.Psi.Interval`4.#ctor(`2,`2)">Interval(TEndpoint, TEndpoint)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Interval-4.html">Interval&lt;TPoint, TSpan, TEndpoint, T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Interval(TEndpoint left, TEndpoint right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEndpoint</span></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Left interval endpoint.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TEndpoint</span></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Right interval endpoint.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L162">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Center_" data-uid="Microsoft.Psi.Interval`4.Center*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Center" data-uid="Microsoft.Psi.Interval`4.Center">Center</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating the center of the interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual TPoint Center { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Center_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Throws when interval is unbounded.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L101">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsClosed_" data-uid="Microsoft.Psi.Interval`4.IsClosed*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsClosed" data-uid="Microsoft.Psi.Interval`4.IsClosed">IsClosed</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether Left and Right are both inclusive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsClosed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L113">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsDegenerate_" data-uid="Microsoft.Psi.Interval`4.IsDegenerate*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsDegenerate" data-uid="Microsoft.Psi.Interval`4.IsDegenerate">IsDegenerate</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the interval represents a single point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDegenerate { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IsDegenerate_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as !IsProper.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L126">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsEmpty_" data-uid="Microsoft.Psi.Interval`4.IsEmpty*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsEmpty" data-uid="Microsoft.Psi.Interval`4.IsEmpty">IsEmpty</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the interval represents a single point with closed endpoints.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEmpty { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IsEmpty_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as !IsProperty.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L79">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsFinite_" data-uid="Microsoft.Psi.Interval`4.IsFinite*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsFinite" data-uid="Microsoft.Psi.Interval`4.IsFinite">IsFinite</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the interval is bounded at both ends.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFinite { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L139">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsHalfBounded_" data-uid="Microsoft.Psi.Interval`4.IsHalfBounded*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsHalfBounded" data-uid="Microsoft.Psi.Interval`4.IsHalfBounded">IsHalfBounded</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the interval is unbounded at one end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsHalfBounded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IsHalfBounded_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as !Left.Bounded || !Right.Bounded.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L150">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsNegative_" data-uid="Microsoft.Psi.Interval`4.IsNegative*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsNegative" data-uid="Microsoft.Psi.Interval`4.IsNegative">IsNegative</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the interval is negative.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNegative { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsOpen_" data-uid="Microsoft.Psi.Interval`4.IsOpen*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsOpen" data-uid="Microsoft.Psi.Interval`4.IsOpen">IsOpen</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether neither Left nor Right are inclusive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsOpen { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L46">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Left_" data-uid="Microsoft.Psi.Interval`4.Left*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Left" data-uid="Microsoft.Psi.Interval`4.Left">Left</h4>
+  <div class="markdown level1 summary"><p>Gets left endpoint value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TPoint Left { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Left_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For convenience (same as LeftEnpoint.Point).</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L40">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_LeftEndpoint_" data-uid="Microsoft.Psi.Interval`4.LeftEndpoint*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_LeftEndpoint" data-uid="Microsoft.Psi.Interval`4.LeftEndpoint">LeftEndpoint</h4>
+  <div class="markdown level1 summary"><p>Gets left interval endpoint.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TEndpoint LeftEndpoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEndpoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L188">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_PointMaxValue_" data-uid="Microsoft.Psi.Interval`4.PointMaxValue*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_PointMaxValue" data-uid="Microsoft.Psi.Interval`4.PointMaxValue">PointMaxValue</h4>
+  <div class="markdown level1 summary"><p>Gets the point maximum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TPoint PointMaxValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L183">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_PointMinValue_" data-uid="Microsoft.Psi.Interval`4.PointMinValue*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_PointMinValue" data-uid="Microsoft.Psi.Interval`4.PointMinValue">PointMinValue</h4>
+  <div class="markdown level1 summary"><p>Gets the point minimum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TPoint PointMinValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Right_" data-uid="Microsoft.Psi.Interval`4.Right*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Right" data-uid="Microsoft.Psi.Interval`4.Right">Right</h4>
+  <div class="markdown level1 summary"><p>Gets right endpoint value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TPoint Right { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Right_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For convenience (same as LeftEnpoint.Point).</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L54">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_RightEndpoint_" data-uid="Microsoft.Psi.Interval`4.RightEndpoint*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_RightEndpoint" data-uid="Microsoft.Psi.Interval`4.RightEndpoint">RightEndpoint</h4>
+  <div class="markdown level1 summary"><p>Gets right interval endpoint.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TEndpoint RightEndpoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEndpoint</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Span_" data-uid="Microsoft.Psi.Interval`4.Span*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Span" data-uid="Microsoft.Psi.Interval`4.Span">Span</h4>
+  <div class="markdown level1 summary"><p>Gets the span (or &quot;diameter&quot;) of the interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TSpan Span { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L203">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_SpanMaxValue_" data-uid="Microsoft.Psi.Interval`4.SpanMaxValue*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_SpanMaxValue" data-uid="Microsoft.Psi.Interval`4.SpanMaxValue">SpanMaxValue</h4>
+  <div class="markdown level1 summary"><p>Gets the span maximum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TSpan SpanMaxValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L198">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_SpanMinValue_" data-uid="Microsoft.Psi.Interval`4.SpanMinValue*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_SpanMinValue" data-uid="Microsoft.Psi.Interval`4.SpanMinValue">SpanMinValue</h4>
+  <div class="markdown level1 summary"><p>Gets the span minimum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TSpan SpanMinValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L193">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_SpanZeroValue_" data-uid="Microsoft.Psi.Interval`4.SpanZeroValue*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_SpanZeroValue" data-uid="Microsoft.Psi.Interval`4.SpanZeroValue">SpanZeroValue</h4>
+  <div class="markdown level1 summary"><p>Gets the span zero value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TSpan SpanZeroValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L445">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ComparePoints_" data-uid="Microsoft.Psi.Interval`4.ComparePoints*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ComparePoints__0__0_" data-uid="Microsoft.Psi.Interval`4.ComparePoints(`0,`0)">ComparePoints(TPoint, TPoint)</h4>
+  <div class="markdown level1 summary"><p>Compare points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract int ComparePoints(TPoint a, TPoint b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Less (-1), greater (+1) or equal (0).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L391">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Coverage_" data-uid="Microsoft.Psi.Interval`4.Coverage*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Coverage_IEnumerable_Microsoft_Psi_Interval__0__1__2__3___Func__2__2__3__Microsoft_Psi_Interval__0__1__2__3__" data-uid="Microsoft.Psi.Interval`4.Coverage(IEnumerable{Microsoft.Psi.Interval{`0,`1,`2,`3}},Func{`2,`2,`3},Microsoft.Psi.Interval{`0,`1,`2,`3})">Coverage(IEnumerable&lt;Interval&lt;TPoint, TSpan, TEndpoint, T&gt;&gt;, Func&lt;TEndpoint, TEndpoint, T&gt;, Interval&lt;TPoint, TSpan, TEndpoint, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determine coverage from minimum left to maximum right.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static T Coverage(IEnumerable&lt;Interval&lt;TPoint, TSpan, TEndpoint, T&gt;&gt; intervals, Func&lt;TEndpoint, TEndpoint, T&gt; ctor, Interval&lt;TPoint, TSpan, TEndpoint, T&gt; empty)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.Interval-4.html">Interval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;&gt;</td>
+        <td><span class="parametername">intervals</span></td>
+        <td><p>Sequence of intervals.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TEndpoint, TEndpoint, T&gt;</td>
+        <td><span class="parametername">ctor</span></td>
+        <td><p>Constructor function for interval type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interval-4.html">Interval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">empty</span></td>
+        <td><p>Empty instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Interval from minimum left to maximum right value (or empty).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Coverage_IEnumerable_Microsoft_Psi_Interval__0__1__2__3___Func__2__2__3__Microsoft_Psi_Interval__0__1__2__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Returns empty interval when sequence is empty or contains only empty intervals.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L476">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Difference_" data-uid="Microsoft.Psi.Interval`4.Difference*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Difference__0__0_" data-uid="Microsoft.Psi.Interval`4.Difference(`0,`0)">Difference(TPoint, TPoint)</h4>
+  <div class="markdown level1 summary"><p>Determine span between two given points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TSpan Difference(TPoint x, TPoint y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>First point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Second point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><p>Span between points.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L338">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IntersectsWith_" data-uid="Microsoft.Psi.Interval`4.IntersectsWith*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IntersectsWith_Microsoft_Psi_IInterval__0__1__2__3__" data-uid="Microsoft.Psi.Interval`4.IntersectsWith(Microsoft.Psi.IInterval{`0,`1,`2,`3})">IntersectsWith(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determine whether this interval intersects another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IntersectsWith(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Other interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Whether there is an intersection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IntersectsWith_Microsoft_Psi_IInterval__0__1__2__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as !Disjoint(...)</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L352">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsDisjointFrom_" data-uid="Microsoft.Psi.Interval`4.IsDisjointFrom*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsDisjointFrom_Microsoft_Psi_IInterval__0__1__2__3__" data-uid="Microsoft.Psi.Interval`4.IsDisjointFrom(Microsoft.Psi.IInterval{`0,`1,`2,`3})">IsDisjointFrom(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determine whether this interval is disjoint with another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDisjointFrom(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Other interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Whether there is an intersection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IsDisjointFrom_Microsoft_Psi_IInterval__0__1__2__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as !Intersects(...)</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L374">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsProperSubsetOf_" data-uid="Microsoft.Psi.Interval`4.IsProperSubsetOf*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsProperSubsetOf_Microsoft_Psi_IInterval__0__1__2__3__" data-uid="Microsoft.Psi.Interval`4.IsProperSubsetOf(Microsoft.Psi.IInterval{`0,`1,`2,`3})">IsProperSubsetOf(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determine whether this interval is a proper subset of another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsProperSubsetOf(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Other interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Whether this is a subset of the other.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IsProperSubsetOf_Microsoft_Psi_IInterval__0__1__2__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Subset and not equal (see <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsSubsetOf_Microsoft_Psi_IInterval__0__1__2__3__">IsSubsetOf(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;)</a>).</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L363">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_IsSubsetOf_" data-uid="Microsoft.Psi.Interval`4.IsSubsetOf*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_IsSubsetOf_Microsoft_Psi_IInterval__0__1__2__3__" data-uid="Microsoft.Psi.Interval`4.IsSubsetOf(Microsoft.Psi.IInterval{`0,`1,`2,`3})">IsSubsetOf(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determine whether this interval is a subset of another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSubsetOf(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Other interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Whether this is a subset of the other.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_IsSubsetOf_Microsoft_Psi_IInterval__0__1__2__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Subset may be equal (see <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsProperSubsetOf_Microsoft_Psi_IInterval__0__1__2__3__">IsProperSubsetOf(IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;)</a>).</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L460">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_NegateSpan_" data-uid="Microsoft.Psi.Interval`4.NegateSpan*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_NegateSpan__1_" data-uid="Microsoft.Psi.Interval`4.NegateSpan(`1)">NegateSpan(TSpan)</h4>
+  <div class="markdown level1 summary"><p>Negate span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TSpan NegateSpan(TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span to be negated.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><p>Negated span.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L235">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_PointIsWithin_" data-uid="Microsoft.Psi.Interval`4.PointIsWithin*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_PointIsWithin__0_" data-uid="Microsoft.Psi.Interval`4.PointIsWithin(`0)">PointIsWithin(TPoint)</h4>
+  <div class="markdown level1 summary"><p>Determines whether a point is within the interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool PointIsWithin(TPoint point)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>Point value to be tested.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Whether the point is within the interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_PointIsWithin__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Taking into account the inclusive/exclusive endpoints.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L260">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Scale_" data-uid="Microsoft.Psi.Interval`4.Scale*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Scale__1__1_" data-uid="Microsoft.Psi.Interval`4.Scale(`1,`1)">Scale(TSpan, TSpan)</h4>
+  <div class="markdown level1 summary"><p>Scale endpoints by span distances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract T Scale(TSpan left, TSpan right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Span by which to scale left.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Span by which to scale right.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Scaled interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L505">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Scale_" data-uid="Microsoft.Psi.Interval`4.Scale*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Scale__1__1_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3__" data-uid="Microsoft.Psi.Interval`4.Scale(`1,`1,Func{`0,System.Boolean,System.Boolean,`0,System.Boolean,System.Boolean,`3})">Scale(TSpan, TSpan, Func&lt;TPoint, Boolean, Boolean, TPoint, Boolean, Boolean, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Scale by a span distance (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected T Scale(TSpan left, TSpan right, Func&lt;TPoint, bool, bool, TPoint, bool, bool, T&gt; ctor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Span by which to scale left.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Span by which to scale right.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TPoint, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, TPoint, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, T&gt;</td>
+        <td><span class="parametername">ctor</span></td>
+        <td><p>Constructor function for concrete instance (T).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed T.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Scale__1__1_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Calls <code>ctor</code> function with constructor args.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L525">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Scale_" data-uid="Microsoft.Psi.Interval`4.Scale*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Scale_System_Double_System_Double_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3__" data-uid="Microsoft.Psi.Interval`4.Scale(System.Double,System.Double,Func{`0,System.Boolean,System.Boolean,`0,System.Boolean,System.Boolean,`3})">Scale(Double, Double, Func&lt;TPoint, Boolean, Boolean, TPoint, Boolean, Boolean, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Scale by a factor (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected T Scale(double left, double right, Func&lt;TPoint, bool, bool, TPoint, bool, bool, T&gt; ctor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Factor by which to scale left.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Factor by which to scale right.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TPoint, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, TPoint, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, T&gt;</td>
+        <td><span class="parametername">ctor</span></td>
+        <td><p>Constructor function for concrete instance (T).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed T.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Scale_System_Double_System_Double_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Calls <code>ctor</code> function with constructor args.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L268">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Scale_" data-uid="Microsoft.Psi.Interval`4.Scale*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Scale_System_Single_System_Single_" data-uid="Microsoft.Psi.Interval`4.Scale(System.Single,System.Single)">Scale(Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Scale endpoints by factors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract T Scale(float left, float right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Factor by which to scale left.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Factor by which to scale right.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Scaled interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L295">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleCenter_" data-uid="Microsoft.Psi.Interval`4.ScaleCenter*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleCenter__1_" data-uid="Microsoft.Psi.Interval`4.ScaleCenter(`1)">ScaleCenter(TSpan)</h4>
+  <div class="markdown level1 summary"><p>Scale center point by a span distance (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ScaleCenter(TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L306">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleCenter_" data-uid="Microsoft.Psi.Interval`4.ScaleCenter*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleCenter_System_Single_" data-uid="Microsoft.Psi.Interval`4.ScaleCenter(System.Single)">ScaleCenter(Single)</h4>
+  <div class="markdown level1 summary"><p>Scale center point by a factor (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ScaleCenter(float factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td><p>Factor by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L275">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleLeft_" data-uid="Microsoft.Psi.Interval`4.ScaleLeft*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleLeft__1_" data-uid="Microsoft.Psi.Interval`4.ScaleLeft(`1)">ScaleLeft(TSpan)</h4>
+  <div class="markdown level1 summary"><p>Scale left point by a span distance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ScaleLeft(TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L285">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleLeft_" data-uid="Microsoft.Psi.Interval`4.ScaleLeft*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleLeft_System_Single_" data-uid="Microsoft.Psi.Interval`4.ScaleLeft(System.Single)">ScaleLeft(Single)</h4>
+  <div class="markdown level1 summary"><p>Scale left point by a factor (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ScaleLeft(float factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td><p>Factor by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L317">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleRight_" data-uid="Microsoft.Psi.Interval`4.ScaleRight*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleRight__1_" data-uid="Microsoft.Psi.Interval`4.ScaleRight(`1)">ScaleRight(TSpan)</h4>
+  <div class="markdown level1 summary"><p>Scale right point by a span distance (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ScaleRight(TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L327">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleRight_" data-uid="Microsoft.Psi.Interval`4.ScaleRight*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleRight_System_Single_" data-uid="Microsoft.Psi.Interval`4.ScaleRight(System.Single)">ScaleRight(Single)</h4>
+  <div class="markdown level1 summary"><p>Scale right point by a factor (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T ScaleRight(float factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td><p>Factor by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L453">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_ScaleSpan_" data-uid="Microsoft.Psi.Interval`4.ScaleSpan*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_ScaleSpan__1_System_Double_" data-uid="Microsoft.Psi.Interval`4.ScaleSpan(`1,System.Double)">ScaleSpan(TSpan, Double)</h4>
+  <div class="markdown level1 summary"><p>Scale a span by a given factor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TSpan ScaleSpan(TSpan span, double factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td><p>Factor by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><p>Scaled span.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L252">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Translate_" data-uid="Microsoft.Psi.Interval`4.Translate*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Translate__1_" data-uid="Microsoft.Psi.Interval`4.Translate(`1)">Translate(TSpan)</h4>
+  <div class="markdown level1 summary"><p>Translate by a span distance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract T Translate(TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Translated interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Translate__1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Unbound points do not change.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L485">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_Translate_" data-uid="Microsoft.Psi.Interval`4.Translate*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_Translate__1_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3__" data-uid="Microsoft.Psi.Interval`4.Translate(`1,Func{`0,System.Boolean,System.Boolean,`0,System.Boolean,System.Boolean,`3})">Translate(TSpan, Func&lt;TPoint, Boolean, Boolean, TPoint, Boolean, Boolean, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Translate by a span distance (helper for concrete instances).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected T Translate(TSpan span, Func&lt;TPoint, bool, bool, TPoint, bool, bool, T&gt; ctor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TPoint, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, TPoint, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, T&gt;</td>
+        <td><span class="parametername">ctor</span></td>
+        <td><p>Constructor function for concrete instance (T).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Constructed T.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_Translate__1_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Calls <code>ctor</code> function with constructor args.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L468">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_TranslatePoint_" data-uid="Microsoft.Psi.Interval`4.TranslatePoint*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_TranslatePoint__0__1_" data-uid="Microsoft.Psi.Interval`4.TranslatePoint(`0,`1)">TranslatePoint(TPoint, TSpan)</h4>
+  <div class="markdown level1 summary"><p>Translate point by given span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract TPoint TranslatePoint(TPoint point, TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>Point value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TPoint</span></td>
+        <td><p>Translated point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L212">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_op_Addition_" data-uid="Microsoft.Psi.Interval`4.op_Addition*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_op_Addition_Microsoft_Psi_Interval__0__1__2__3___1_" data-uid="Microsoft.Psi.Interval`4.op_Addition(Microsoft.Psi.Interval{`0,`1,`2,`3},`1)">Addition(Interval&lt;TPoint, TSpan, TEndpoint, T&gt;, TSpan)</h4>
+  <div class="markdown level1 summary"><p>Translate by a span distance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T operator +(Interval&lt;TPoint, TSpan, TEndpoint, T&gt; interval, TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interval-4.html">Interval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">interval</span></td>
+        <td><p>Interval to translate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Translated interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_op_Addition_Microsoft_Psi_Interval__0__1__2__3___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Unbound points do not change.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L224">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interval_4_op_Subtraction_" data-uid="Microsoft.Psi.Interval`4.op_Subtraction*"></a>
+  <h4 id="Microsoft_Psi_Interval_4_op_Subtraction_Microsoft_Psi_Interval__0__1__2__3___1_" data-uid="Microsoft.Psi.Interval`4.op_Subtraction(Microsoft.Psi.Interval{`0,`1,`2,`3},`1)">Subtraction(Interval&lt;TPoint, TSpan, TEndpoint, T&gt;, TSpan)</h4>
+  <div class="markdown level1 summary"><p>Translate by a span distance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T operator -(Interval&lt;TPoint, TSpan, TEndpoint, T&gt; interval, TSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interval-4.html">Interval</a>&lt;TPoint, TSpan, TEndpoint, T&gt;</td>
+        <td><span class="parametername">interval</span></td>
+        <td><p>Interval to translate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Translated interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Interval_4_op_Subtraction_Microsoft_Psi_Interval__0__1__2__3___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Unbound points do not change.</p>
+</div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/Interval.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

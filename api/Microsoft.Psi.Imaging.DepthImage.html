@@ -1,0 +1,880 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DepthImage
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DepthImage
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Imaging.DepthImage">
+  
+  
+  <h1 id="Microsoft_Psi_Imaging_DepthImage" data-uid="Microsoft.Psi.Imaging.DepthImage" class="text-break">Class DepthImage
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a depth image, stored in unmanaged memory.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></div>
+    <div class="level2"><span class="xref">DepthImage</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_ExceptionDescriptionUnexpectedPixelFormat">ImageBase.ExceptionDescriptionUnexpectedPixelFormat</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_ExceptionDescriptionSourceDestImageMismatch">ImageBase.ExceptionDescriptionSourceDestImageMismatch</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_UnmanagedBuffer">ImageBase.UnmanagedBuffer</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_ImageData">ImageBase.ImageData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Width">ImageBase.Width</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Height">ImageBase.Height</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Stride">ImageBase.Stride</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Size">ImageBase.Size</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_BitsPerPixel">ImageBase.BitsPerPixel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_PixelFormat">ImageBase.PixelFormat</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Dispose">ImageBase.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyTo_System_Byte___">ImageBase.CopyTo(Byte[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyTo_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_">ImageBase.CopyTo(IntPtr, Int32, Int32, Int32, PixelFormat)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___">ImageBase.CopyFrom(Byte[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_IntPtr_">ImageBase.CopyFrom(IntPtr)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_ToBitmap_System_Boolean_">ImageBase.ToBitmap(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_ReadBytes_System_Int32_System_Int32_">ImageBase.ReadBytes(Int32, Int32)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DepthImage : ImageBase</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Using this class it is possible as to allocate a new depth image in unmanaged memory,
+as to just wrap provided pointer to unmanaged memory, where an image is stored.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L88">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_BitmapData_System_Boolean_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(BitmapData,System.Boolean)">DepthImage(BitmapData, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthImage(BitmapData bitmapData, bool makeCopy = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BitmapData</span></td>
+        <td><span class="parametername">bitmapData</span></td>
+        <td><p>Locked bitmap data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">makeCopy</span></td>
+        <td><p>Indicates whether a copy is made (default is false).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_BitmapData_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When the <code data-dev-comment-type="paramref" class="paramref">makeCopy</code> parameter is false (default), the depth image simply wraps
+the bitmap data. As such, the bitmap data must stay locked for the duration of using the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> object.
+</p>
+<p>If the <code data-dev-comment-type="paramref" class="paramref">makeCopy</code> parameter is set to true, a copy of the bitmap
+data is made, and the bitmap data can be released right after the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> has been constructed.
+</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L46">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_IntPtr_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(IntPtr,System.Int32,System.Int32,System.Int32)">DepthImage(IntPtr, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthImage(IntPtr imageData, int width, int height, int stride)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">imageData</span></td>
+        <td><p>Pointer to image data in unmanaged memory.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Depth image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Depth image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>Depth image stride (line size in bytes).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_IntPtr_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
+    and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
+    this may lead to exceptions working with the unmanaged memory.</p></div></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(Microsoft.Psi.Common.UnmanagedBuffer,System.Int32,System.Int32,System.Int32)">DepthImage(UnmanagedBuffer, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthImage(UnmanagedBuffer unmanagedBuffer, int width, int height, int stride)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><span class="parametername">unmanagedBuffer</span></td>
+        <td><p>The unmanaged array containing the image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Depth image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Depth image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>Depth image stride (line size in bytes).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
+    and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
+    this may lead to exceptions working with the unmanaged memory.</p></div></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L56">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(System.Int32,System.Int32)">DepthImage(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthImage(int width, int height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Depth image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Depth image height in pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(System.Int32,System.Int32,System.Int32)">DepthImage(Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthImage(int width, int height, int stride)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>Depth image width in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>Depth image height in pixels.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stride</span></td>
+        <td><p>Depth image stride (line size in bytes).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
+    and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
+    this may lead to exceptions working with the unmanaged memory.</p></div></p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L146">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Bitmap)">CopyFrom(Bitmap)</h4>
+  <div class="markdown level1 summary"><p>Copies the depth image contents from a specified bitmap.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(Bitmap bitmap)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Bitmap</span></td>
+        <td><span class="parametername">bitmap</span></td>
+        <td><p>A bitmap to copy from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Bitmap__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies data from the specified bitmap into the image.
+    The image must be allocated and must have the same size.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L128">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_BitmapData_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(BitmapData)">CopyFrom(BitmapData)</h4>
+  <div class="markdown level1 summary"><p>Copies the depth image contents from a specified source locked bitmap data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(BitmapData bitmapData)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BitmapData</span></td>
+        <td><span class="parametername">bitmapData</span></td>
+        <td><p>Source locked bitmap data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_BitmapData__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies data from the specified bitmap into the depth image.
+    The depth image must be allocated and must have the same size as the specified
+    bitmap data.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L174">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Microsoft.Psi.Imaging.DepthImage)">CopyFrom(DepthImage)</h4>
+  <div class="markdown level1 summary"><p>Copies the depth image from a specified source depth image of the same size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(DepthImage source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Source depth image to copy the depth image from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_DepthImage__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies the current depth image from the specified source depth image.
+    The size of the images must be the same.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L185">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Microsoft.Psi.Imaging.Image)">CopyFrom(Image)</h4>
+  <div class="markdown level1 summary"><p>Copies the depth image from a specified source image of the same size and <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html#Microsoft_Psi_Imaging_PixelFormat_Gray_16bpp">Gray_16bpp</a> format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(Image source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Source image to copy the depth image from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_Image__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies the current depth image from the specified source image.
+    The size of the images must be the same, and the source image must have <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html#Microsoft_Psi_Imaging_PixelFormat_Gray_16bpp">Gray_16bpp</a> format.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L224">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CopyTo_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo(Microsoft.Psi.Imaging.DepthImage)">CopyTo(DepthImage)</h4>
+  <div class="markdown level1 summary"><p>Copies the depth image into a target depth image of the same size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(DepthImage target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target depth image to copy this depth image to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_DepthImage__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies the current depth image into the specified depth image.
+    The size of the images must be the same.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L235">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CopyTo_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo(Microsoft.Psi.Imaging.Image)">CopyTo(Image)</h4>
+  <div class="markdown level1 summary"><p>Copies the depth image into a target image of the same size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(Image target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target image to copy this depth image to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_Image__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies the current depth image into the specified image.
+    The size of the images must be the same. The method implements a translation of pixel formats.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L277">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
+  <div class="markdown level1 summary"><p>Creates an empty image of the same size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override ImageBase CreateEmptyOfSameSize()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></td>
+        <td><p>An empty image of the same size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize">ImageBase.CreateEmptyOfSameSize()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CreateFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateFrom(Bitmap)">CreateFrom(Bitmap)</h4>
+  <div class="markdown level1 summary"><p>Create a new <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> from a specified bitmap.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DepthImage CreateFrom(Bitmap bitmap)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Bitmap</span></td>
+        <td><span class="parametername">bitmap</span></td>
+        <td><p>A bitmap to create the depth image from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><p>A new depth image, which contains a copy of the specified bitmap.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L196">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.DecodeFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_Microsoft_Psi_Imaging_EncodedDepthImage_Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.DepthImage.DecodeFrom(Microsoft.Psi.Imaging.EncodedDepthImage,Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder)">DecodeFrom(EncodedDepthImage, IDepthImageFromStreamDecoder)</h4>
+  <div class="markdown level1 summary"><p>Decodes a specified encoded depth image with a specified decoder into the current depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DecodeFrom(EncodedDepthImage encodedDepthImage, IDepthImageFromStreamDecoder depthImageDecoder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImage.html">EncodedDepthImage</a></td>
+        <td><span class="parametername">encodedDepthImage</span></td>
+        <td><p>The encoded depth image to decode.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></td>
+        <td><span class="parametername">depthImageDecoder</span></td>
+        <td><p>The depth image decoder to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_Microsoft_Psi_Imaging_EncodedDepthImage_Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The depth image width, height and pixel format must match. The method should not be called concurrently.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L211">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_Encode_" data-uid="Microsoft.Psi.Imaging.DepthImage.Encode*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_Encode_Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.DepthImage.Encode(Microsoft.Psi.Imaging.IDepthImageToStreamEncoder)">Encode(IDepthImageToStreamEncoder)</h4>
+  <div class="markdown level1 summary"><p>Encodes the depth image using a specified encoder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EncodedDepthImage Encode(IDepthImageToStreamEncoder depthImageEncoder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></td>
+        <td><span class="parametername">depthImageEncoder</span></td>
+        <td><p>The depth image encoder to use.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImage.html">EncodedDepthImage</a></td>
+        <td><p>A new, corresponding encoded depth image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L246">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_SetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_SetPixel_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel(System.Int32,System.Int32,System.Int32)">SetPixel(Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets a pixel in the depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPixel(int x, int y, int gray)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Pixel's X coordinate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Pixel's Y coordinate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">gray</span></td>
+        <td><p>Gray value to set pixel to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_DepthImage_System_Int32_System_Int32_System_Int32_System_Int32_">Operators.Crop(DepthImage, Int32, Int32, Int32, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage_System_Int32_System_Int32_System_Int32_System_Int32_">Operators.Crop(DepthImage, DepthImage, Int32, Int32, Int32, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_System_ValueTuple_System_UInt16_System_UInt16__">Operators.PseudoColorize(DepthImage, (UInt16 MinValue, UInt16 MaxValue))</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_Image_System_ValueTuple_System_UInt16_System_UInt16__">Operators.PseudoColorize(DepthImage, Image, (UInt16 MinValue, UInt16 MaxValue))</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

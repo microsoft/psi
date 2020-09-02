@@ -1,0 +1,1840 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RelativeTimeInterval
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RelativeTimeInterval
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.RelativeTimeInterval">
+  
+  
+  <h1 id="Microsoft_Psi_RelativeTimeInterval" data-uid="Microsoft.Psi.RelativeTimeInterval" class="text-break">Class RelativeTimeInterval
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a TimeSpan interval with bounded/unbounded and inclusive/exclusive end points.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Interval-4.html">Interval</a>&lt;<span class="xref">TimeSpan</span>, <span class="xref">TimeSpan</span>, <a class="xref" href="Microsoft.Psi.IntervalEndpoint-1.html">IntervalEndpoint</a>&lt;<span class="xref">TimeSpan</span>&gt;, <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a>&gt;</div>
+    <div class="level2"><span class="xref">RelativeTimeInterval</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval</a>&lt;<span class="xref">TimeSpan</span>, <span class="xref">TimeSpan</span>, <a class="xref" href="Microsoft.Psi.IntervalEndpoint-1.html">IntervalEndpoint</a>&lt;<span class="xref">TimeSpan</span>&gt;, <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a>&gt;</div>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_LeftEndpoint">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.LeftEndpoint</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Left">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Left</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_RightEndpoint">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.RightEndpoint</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Right">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Right</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Span">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Span</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsFinite">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsFinite</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsOpen">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsOpen</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsClosed">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsClosed</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsDegenerate">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsDegenerate</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsEmpty">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsEmpty</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsHalfBounded">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsHalfBounded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsNegative">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsNegative</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Center">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Center</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_PointMinValue">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.PointMinValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_PointMaxValue">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.PointMaxValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_SpanZeroValue">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.SpanZeroValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_SpanMinValue">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.SpanMinValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_SpanMaxValue">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.SpanMaxValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_PointIsWithin__0_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.PointIsWithin(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Translate__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Translate(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Scale__1__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Scale(TimeSpan, TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Scale_System_Single_System_Single_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Scale(Single, Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleLeft__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleLeft(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleLeft_System_Single_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleLeft(Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleCenter__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleCenter(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleCenter_System_Single_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleCenter(Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleRight__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleRight(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleRight_System_Single_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleRight(Single)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IntersectsWith_Microsoft_Psi_IInterval__0__1__2__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IntersectsWith(IInterval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsDisjointFrom_Microsoft_Psi_IInterval__0__1__2__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsDisjointFrom(IInterval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsSubsetOf_Microsoft_Psi_IInterval__0__1__2__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsSubsetOf(IInterval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_IsProperSubsetOf_Microsoft_Psi_IInterval__0__1__2__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.IsProperSubsetOf(IInterval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Coverage_IEnumerable_Microsoft_Psi_Interval__0__1__2__3___Func__2__2__3__Microsoft_Psi_Interval__0__1__2__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Coverage(IEnumerable&lt;Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;&gt;, Func&lt;IntervalEndpoint&lt;TimeSpan&gt;, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;, Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ComparePoints__0__0_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ComparePoints(TimeSpan, TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_ScaleSpan__1_System_Double_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.ScaleSpan(TimeSpan, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_NegateSpan__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.NegateSpan(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_TranslatePoint__0__1_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.TranslatePoint(TimeSpan, TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Difference__0__0_">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Difference(TimeSpan, TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Translate__1_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Translate(TimeSpan, Func&lt;TimeSpan, Boolean, Boolean, TimeSpan, Boolean, Boolean, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Scale__1__1_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Scale(TimeSpan, TimeSpan, Func&lt;TimeSpan, Boolean, Boolean, TimeSpan, Boolean, Boolean, RelativeTimeInterval&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Interval-4.html#Microsoft_Psi_Interval_4_Scale_System_Double_System_Double_Func__0_System_Boolean_System_Boolean__0_System_Boolean_System_Boolean__3__">Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;.Scale(Double, Double, Func&lt;TimeSpan, Boolean, Boolean, TimeSpan, Boolean, Boolean, RelativeTimeInterval&gt;)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_RelativeTimeInterval_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RelativeTimeInterval : Interval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;, IInterval&lt;TimeSpan, TimeSpan, IntervalEndpoint&lt;TimeSpan&gt;, RelativeTimeInterval&gt;, IEquatable&lt;RelativeTimeInterval&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L82">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval__ctor_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval__ctor_Microsoft_Psi_IntervalEndpoint_TimeSpan__Microsoft_Psi_IntervalEndpoint_TimeSpan__" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor(Microsoft.Psi.IntervalEndpoint{TimeSpan},Microsoft.Psi.IntervalEndpoint{TimeSpan})">RelativeTimeInterval(IntervalEndpoint&lt;TimeSpan&gt;, IntervalEndpoint&lt;TimeSpan&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RelativeTimeInterval(IntervalEndpoint&lt;TimeSpan&gt; leftEndpoint, IntervalEndpoint&lt;TimeSpan&gt; rightEndpoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IntervalEndpoint-1.html">IntervalEndpoint</a>&lt;<span class="xref">TimeSpan</span>&gt;</td>
+        <td><span class="parametername">leftEndpoint</span></td>
+        <td><p>Left endpoint.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IntervalEndpoint-1.html">IntervalEndpoint</a>&lt;<span class="xref">TimeSpan</span>&gt;</td>
+        <td><span class="parametername">rightEndpoint</span></td>
+        <td><p>Right endpoint.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval__ctor_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval__ctor_TimeSpan_System_Boolean_System_Boolean_TimeSpan_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor(TimeSpan,System.Boolean,System.Boolean,TimeSpan,System.Boolean,System.Boolean)">RelativeTimeInterval(TimeSpan, Boolean, Boolean, TimeSpan, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RelativeTimeInterval(TimeSpan leftPoint, bool leftInclusive, bool leftBounded, TimeSpan rightPoint, bool rightInclusive, bool rightBounded)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">leftPoint</span></td>
+        <td><p>Left bound point (or min value if unbound).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">leftInclusive</span></td>
+        <td><p>Whether left point is inclusive (always false if unbound).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">leftBounded</span></td>
+        <td><p>Whether left point is bounded.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">rightPoint</span></td>
+        <td><p>Right bound point (or min value if unbound).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">rightInclusive</span></td>
+        <td><p>Whether right point is inclusive (always false if unbound).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">rightBounded</span></td>
+        <td><p>Whether right point is bounded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L56">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval__ctor_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval__ctor_TimeSpan_System_Boolean_TimeSpan_System_Boolean_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor(TimeSpan,System.Boolean,TimeSpan,System.Boolean)">RelativeTimeInterval(TimeSpan, Boolean, TimeSpan, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RelativeTimeInterval(TimeSpan leftPoint, bool leftInclusive, TimeSpan rightPoint, bool rightInclusive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">leftPoint</span></td>
+        <td><p>Left bound point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">leftInclusive</span></td>
+        <td><p>Whether left point is inclusive.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">rightPoint</span></td>
+        <td><p>Right bound point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">rightInclusive</span></td>
+        <td><p>Whether right point is inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L44">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval__ctor_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval__ctor_TimeSpan_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.#ctor(TimeSpan,TimeSpan)">RelativeTimeInterval(TimeSpan, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RelativeTimeInterval(TimeSpan leftPoint, TimeSpan rightPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">leftPoint</span></td>
+        <td><p>Left bound point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">rightPoint</span></td>
+        <td><p>Right bound point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_RelativeTimeInterval__ctor_TimeSpan_TimeSpan__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Defaults to inclusive.</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L23">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Empty" data-uid="Microsoft.Psi.RelativeTimeInterval.Empty">Empty</h4>
+  <div class="markdown level1 summary"><p>Canonical empty instance (bounded, non-inclusive, single point).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly RelativeTimeInterval Empty</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L17">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Infinite" data-uid="Microsoft.Psi.RelativeTimeInterval.Infinite">Infinite</h4>
+  <div class="markdown level1 summary"><p>Canonical infinite interval (unbounded on both ends).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly RelativeTimeInterval Infinite</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L29">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Zero" data-uid="Microsoft.Psi.RelativeTimeInterval.Zero">Zero</h4>
+  <div class="markdown level1 summary"><p>Zero interval (unbounded but inclusive, zero value).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly RelativeTimeInterval Zero</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L98">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_PointMaxValue_" data-uid="Microsoft.Psi.RelativeTimeInterval.PointMaxValue*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_PointMaxValue" data-uid="Microsoft.Psi.RelativeTimeInterval.PointMaxValue">PointMaxValue</h4>
+  <div class="markdown level1 summary"><p>Gets the point maximum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan PointMaxValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.PointMaxValue</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_PointMinValue_" data-uid="Microsoft.Psi.RelativeTimeInterval.PointMinValue*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_PointMinValue" data-uid="Microsoft.Psi.RelativeTimeInterval.PointMinValue">PointMinValue</h4>
+  <div class="markdown level1 summary"><p>Gets the point minimum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan PointMinValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.PointMinValue</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_SpanMaxValue_" data-uid="Microsoft.Psi.RelativeTimeInterval.SpanMaxValue*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_SpanMaxValue" data-uid="Microsoft.Psi.RelativeTimeInterval.SpanMaxValue">SpanMaxValue</h4>
+  <div class="markdown level1 summary"><p>Gets the span maximum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan SpanMaxValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.SpanMaxValue</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L114">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_SpanMinValue_" data-uid="Microsoft.Psi.RelativeTimeInterval.SpanMinValue*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_SpanMinValue" data-uid="Microsoft.Psi.RelativeTimeInterval.SpanMinValue">SpanMinValue</h4>
+  <div class="markdown level1 summary"><p>Gets the span minimum value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan SpanMinValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.SpanMinValue</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_SpanZeroValue_" data-uid="Microsoft.Psi.RelativeTimeInterval.SpanZeroValue*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_SpanZeroValue" data-uid="Microsoft.Psi.RelativeTimeInterval.SpanZeroValue">SpanZeroValue</h4>
+  <div class="markdown level1 summary"><p>Gets the span zero value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan SpanZeroValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.SpanZeroValue</span></div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L354">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_ComparePoints_" data-uid="Microsoft.Psi.RelativeTimeInterval.ComparePoints*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_ComparePoints_TimeSpan_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.ComparePoints(TimeSpan,TimeSpan)">ComparePoints(TimeSpan, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Compare points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override int ComparePoints(TimeSpan a, TimeSpan b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Less (-1), greater (+1) or equal (0).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.ComparePoints(TimeSpan, TimeSpan)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Coverage_" data-uid="Microsoft.Psi.RelativeTimeInterval.Coverage*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Coverage_IEnumerable_Microsoft_Psi_RelativeTimeInterval__" data-uid="Microsoft.Psi.RelativeTimeInterval.Coverage(IEnumerable{Microsoft.Psi.RelativeTimeInterval})">Coverage(IEnumerable&lt;RelativeTimeInterval&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determine coverage from minimum left to maximum right.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval Coverage(IEnumerable&lt;RelativeTimeInterval&gt; intervals)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a>&gt;</td>
+        <td><span class="parametername">intervals</span></td>
+        <td><p>Sequence of intervals.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>Interval from minimum left to maximum right value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_RelativeTimeInterval_Coverage_IEnumerable_Microsoft_Psi_RelativeTimeInterval___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Returns negative interval from max to min point when sequence is empty.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L343">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Difference_" data-uid="Microsoft.Psi.RelativeTimeInterval.Difference*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Difference_TimeSpan_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.Difference(TimeSpan,TimeSpan)">Difference(TimeSpan, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Determine span between two given points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan Difference(TimeSpan x, TimeSpan y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>First point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Second point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><p>Span between points.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.Difference(TimeSpan, TimeSpan)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L289">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Equals_" data-uid="Microsoft.Psi.RelativeTimeInterval.Equals*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Equals_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.RelativeTimeInterval.Equals(Microsoft.Psi.RelativeTimeInterval)">Equals(RelativeTimeInterval)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(RelativeTimeInterval other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L283">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Equals_" data-uid="Microsoft.Psi.RelativeTimeInterval.Equals*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Equals_System_Object_" data-uid="Microsoft.Psi.RelativeTimeInterval.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L178">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Future_" data-uid="Microsoft.Psi.RelativeTimeInterval.Future*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Future" data-uid="Microsoft.Psi.RelativeTimeInterval.Future">Future()</h4>
+  <div class="markdown level1 summary"><p>Returns a relative time interval describing the future. The returned interval includes the present moment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval Future()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A relative time interval describing the future.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L189">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Future_" data-uid="Microsoft.Psi.RelativeTimeInterval.Future*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Future_TimeSpan_System_Boolean_" data-uid="Microsoft.Psi.RelativeTimeInterval.Future(TimeSpan,System.Boolean)">Future(TimeSpan, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Returns a relative time interval of a specified duration in the future. The returned interval includes the present moment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval Future(TimeSpan duration, bool inclusive = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">duration</span></td>
+        <td><p>The duration of the time interval.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">inclusive</span></td>
+        <td><p>Indicates if the interval should be inclusive of the right endpoint.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A relative time interval of a specified duration in the future.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L297">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_GetHashCode_" data-uid="Microsoft.Psi.RelativeTimeInterval.GetHashCode*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_GetHashCode" data-uid="Microsoft.Psi.RelativeTimeInterval.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L222">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_LeftBounded_" data-uid="Microsoft.Psi.RelativeTimeInterval.LeftBounded*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_LeftBounded_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.LeftBounded(TimeSpan)">LeftBounded(TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Constructor helper for left-bound instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval LeftBounded(TimeSpan left)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Left bound point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A left-bound instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_RelativeTimeInterval_LeftBounded_TimeSpan__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Defaults to inclusive.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L211">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_LeftBounded_" data-uid="Microsoft.Psi.RelativeTimeInterval.LeftBounded*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_LeftBounded_TimeSpan_System_Boolean_" data-uid="Microsoft.Psi.RelativeTimeInterval.LeftBounded(TimeSpan,System.Boolean)">LeftBounded(TimeSpan, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Constructor helper for left-bound instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval LeftBounded(TimeSpan left, bool inclusive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Left bound point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">inclusive</span></td>
+        <td><p>Whether left point is inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A left-bound instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L321">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_NegateSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.NegateSpan*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_NegateSpan_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.NegateSpan(TimeSpan)">NegateSpan(TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Negate span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan NegateSpan(TimeSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span to be negated.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><p>Negated span.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.NegateSpan(TimeSpan)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L158">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Past_" data-uid="Microsoft.Psi.RelativeTimeInterval.Past*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Past" data-uid="Microsoft.Psi.RelativeTimeInterval.Past">Past()</h4>
+  <div class="markdown level1 summary"><p>Returns a relative time interval describing the past. The returned interval includes the present moment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval Past()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A relative time interval describing the past.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L169">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Past_" data-uid="Microsoft.Psi.RelativeTimeInterval.Past*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Past_TimeSpan_System_Boolean_" data-uid="Microsoft.Psi.RelativeTimeInterval.Past(TimeSpan,System.Boolean)">Past(TimeSpan, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Returns a relative time interval of a specified duration in the past. The returned interval includes the present moment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval Past(TimeSpan duration, bool inclusive = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">duration</span></td>
+        <td><p>The duration of the time interval.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">inclusive</span></td>
+        <td><p>Indicates if the interval should be inclusive of the left endpoint.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A relative time interval of a specified duration in the past.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L244">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_RightBounded_" data-uid="Microsoft.Psi.RelativeTimeInterval.RightBounded*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_RightBounded_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.RightBounded(TimeSpan)">RightBounded(TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Constructor helper for right-bound instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval RightBounded(TimeSpan right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Right bound point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A right-bound instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_RelativeTimeInterval_RightBounded_TimeSpan__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Defaults to inclusive.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L233">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_RightBounded_" data-uid="Microsoft.Psi.RelativeTimeInterval.RightBounded*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_RightBounded_TimeSpan_System_Boolean_" data-uid="Microsoft.Psi.RelativeTimeInterval.RightBounded(TimeSpan,System.Boolean)">RightBounded(TimeSpan, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Constructor helper for right-bound instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RelativeTimeInterval RightBounded(TimeSpan right, bool inclusive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Right bound point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">inclusive</span></td>
+        <td><p>Whether right point is inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>A right-bound instance of the <a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a> class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L277">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Scale_" data-uid="Microsoft.Psi.RelativeTimeInterval.Scale*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Scale_System_Single_System_Single_" data-uid="Microsoft.Psi.RelativeTimeInterval.Scale(System.Single,System.Single)">Scale(Single, Single)</h4>
+  <div class="markdown level1 summary"><p>Scale endpoints by factors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override RelativeTimeInterval Scale(float left, float right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Factor by which to scale left.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Factor by which to scale right.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>Scaled interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.Scale(System.Single, System.Single)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L266">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Scale_" data-uid="Microsoft.Psi.RelativeTimeInterval.Scale*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Scale_TimeSpan_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.Scale(TimeSpan,TimeSpan)">Scale(TimeSpan, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Scale endpoints by span distances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override RelativeTimeInterval Scale(TimeSpan left, TimeSpan right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>Span by which to scale left.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>Span by which to scale right.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>Scaled interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.Scale(TimeSpan, TimeSpan)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L311">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_ScaleSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.ScaleSpan*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_ScaleSpan_TimeSpan_System_Double_" data-uid="Microsoft.Psi.RelativeTimeInterval.ScaleSpan(TimeSpan,System.Double)">ScaleSpan(TimeSpan, Double)</h4>
+  <div class="markdown level1 summary"><p>Scale a span by a given factor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan ScaleSpan(TimeSpan span, double factor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">factor</span></td>
+        <td><p>Factor by which to scale.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><p>Scaled span.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.ScaleSpan(TimeSpan, System.Double)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L255">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_Translate_" data-uid="Microsoft.Psi.RelativeTimeInterval.Translate*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_Translate_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.Translate(TimeSpan)">Translate(TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Translate by a span distance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override RelativeTimeInterval Translate(TimeSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><p>Translated interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.Translate(TimeSpan)</span></div>
+  <h5 id="Microsoft_Psi_RelativeTimeInterval_Translate_TimeSpan__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Unbound points do not change.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L332">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_TranslatePoint_" data-uid="Microsoft.Psi.RelativeTimeInterval.TranslatePoint*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_TranslatePoint_TimeSpan_TimeSpan_" data-uid="Microsoft.Psi.RelativeTimeInterval.TranslatePoint(TimeSpan,TimeSpan)">TranslatePoint(TimeSpan, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Translate point by given span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override TimeSpan TranslatePoint(TimeSpan point, TimeSpan span)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>Point value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">span</span></td>
+        <td><p>Span by which to translate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><p>Translated point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Interval&lt;TimeSpan, TimeSpan, Microsoft.Psi.IntervalEndpoint&lt;TimeSpan&gt;, Microsoft.Psi.RelativeTimeInterval&gt;.TranslatePoint(TimeSpan, TimeSpan)</span></div>
+  <h3 id="operators">Operators
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L149">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_op_Addition_" data-uid="Microsoft.Psi.RelativeTimeInterval.op_Addition*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_op_Addition_DateTime_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.RelativeTimeInterval.op_Addition(DateTime,Microsoft.Psi.RelativeTimeInterval)">Addition(DateTime, RelativeTimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Construct TimeInterval relative to an origin (DateTime).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TimeInterval operator +(DateTime origin, RelativeTimeInterval relative)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">origin</span></td>
+        <td><p>Origin time point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">relative</span></td>
+        <td><p>Relative endpoints.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><p>Translated interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L133">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_op_Equality_" data-uid="Microsoft.Psi.RelativeTimeInterval.op_Equality*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_op_Equality_Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.RelativeTimeInterval.op_Equality(Microsoft.Psi.RelativeTimeInterval,Microsoft.Psi.RelativeTimeInterval)">Equality(RelativeTimeInterval, RelativeTimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Equality operator that returns true if the operands are equal, false otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(RelativeTimeInterval x, RelativeTimeInterval y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The first operand.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>The second operand.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>A value indicating whether the operands are equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L141">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_RelativeTimeInterval_op_Inequality_" data-uid="Microsoft.Psi.RelativeTimeInterval.op_Inequality*"></a>
+  <h4 id="Microsoft_Psi_RelativeTimeInterval_op_Inequality_Microsoft_Psi_RelativeTimeInterval_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.RelativeTimeInterval.op_Inequality(Microsoft.Psi.RelativeTimeInterval,Microsoft.Psi.RelativeTimeInterval)">Inequality(RelativeTimeInterval, RelativeTimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Inequality operator that returns true if the operands are not equal, false otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(RelativeTimeInterval x, RelativeTimeInterval y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The first operand.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>The second operand.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>A value indicating whether the operands are not equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IInterval-4.html">IInterval&lt;TPoint, TSpan, TEndpoint, T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Intervals/RelativeTimeInterval.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

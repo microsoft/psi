@@ -1,0 +1,976 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PsiStreamMetadata
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PsiStreamMetadata
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.PsiStreamMetadata">
+  
+  
+  <h1 id="Microsoft_Psi_PsiStreamMetadata" data-uid="Microsoft.Psi.PsiStreamMetadata" class="text-break">Class PsiStreamMetadata
+  </h1>
+  <div class="markdown level0 summary"><p>Represents metadata used in storing stream data in a Psi store.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Metadata.html">Metadata</a></div>
+    <div class="level2"><span class="xref">PsiStreamMetadata</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Name">Metadata.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Id">Metadata.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_TypeName">Metadata.TypeName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerTypeName">Metadata.SerializerTypeName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Version">Metadata.Version</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerVersion">Metadata.SerializerVersion</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Kind">Metadata.Kind</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_CustomFlags">Metadata.CustomFlags</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_PsiStreamMetadata_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PsiStreamMetadata : Metadata, IStreamMetadata</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L153">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_AverageFrequency_" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageFrequency*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_AverageFrequency" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageFrequency">AverageFrequency</h4>
+  <div class="markdown level1 summary"><p>Gets the average frequency of messages written to this stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double AverageFrequency { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L93">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_AverageLatency_" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageLatency*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_AverageLatency" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageLatency">AverageLatency</h4>
+  <div class="markdown level1 summary"><p>Gets the average latency of messages in the stream, in microseconds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int AverageLatency { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_AverageMessageSize_" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageMessageSize*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_AverageMessageSize" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageMessageSize">AverageMessageSize</h4>
+  <div class="markdown level1 summary"><p>Gets the average size of messages in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int AverageMessageSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L69">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_ClosedTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.ClosedTime*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_ClosedTime" data-uid="Microsoft.Psi.PsiStreamMetadata.ClosedTime">ClosedTime</h4>
+  <div class="markdown level1 summary"><p>Gets the time when the stream was closed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime ClosedTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L78">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_FirstMessageCreationTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageCreationTime*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_FirstMessageCreationTime" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageCreationTime">FirstMessageCreationTime</h4>
+  <div class="markdown level1 summary"><p>Gets the first creation time of a message in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime FirstMessageCreationTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_PsiStreamMetadata_FirstMessageCreationTime_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="Microsoft.Psi.Envelope.html#Microsoft_Psi_Envelope_CreationTime">CreationTime</a></div>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L84">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_FirstMessageOriginatingTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_FirstMessageOriginatingTime" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageOriginatingTime">FirstMessageOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the first originating time of a message in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime FirstMessageOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_PsiStreamMetadata_FirstMessageOriginatingTime_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="Microsoft.Psi.Envelope.html#Microsoft_Psi_Envelope_OriginatingTime">OriginatingTime</a></div>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_IsClosed_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsClosed*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_IsClosed" data-uid="Microsoft.Psi.PsiStreamMetadata.IsClosed">IsClosed</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the stream has been closed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsClosed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L124">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_IsIndexed_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsIndexed*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_IsIndexed" data-uid="Microsoft.Psi.PsiStreamMetadata.IsIndexed">IsIndexed</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the stream is indexed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsIndexed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L115">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_IsPersisted_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPersisted*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_IsPersisted" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPersisted">IsPersisted</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the stream is persisted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPersisted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L133">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_IsPolymorphic_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPolymorphic*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_IsPolymorphic" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPolymorphic">IsPolymorphic</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the stream is persisted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPolymorphic { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_LastMessageCreationTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageCreationTime*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_LastMessageCreationTime" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageCreationTime">LastMessageCreationTime</h4>
+  <div class="markdown level1 summary"><p>Gets the last creation time of a message in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime LastMessageCreationTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_PsiStreamMetadata_LastMessageCreationTime_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="Microsoft.Psi.Envelope.html#Microsoft_Psi_Envelope_CreationTime">CreationTime</a></div>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_LastMessageOriginatingTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_LastMessageOriginatingTime" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageOriginatingTime">LastMessageOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the last originating time of a message in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime LastMessageOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_PsiStreamMetadata_LastMessageOriginatingTime_seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="Microsoft.Psi.Envelope.html#Microsoft_Psi_Envelope_OriginatingTime">OriginatingTime</a></div>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L96">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_MessageCount_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCount*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageCount" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCount">MessageCount</h4>
+  <div class="markdown level1 summary"><p>Gets the number of messages in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MessageCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L164">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCreationTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageCreationTimeInterval" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the interval between the creation times of the first and last messages written to this stream.
+If the stream contains no messages, an empty interval is returned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageCreationTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L170">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageOriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the interval between the originating times of the first and last messages written to this stream.
+If the stream contains no messages, an empty interval is returned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageOriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L64">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_OpenedTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.OpenedTime*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_OpenedTime" data-uid="Microsoft.Psi.PsiStreamMetadata.OpenedTime">OpenedTime</h4>
+  <div class="markdown level1 summary"><p>Gets the time when the stream was opened.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime OpenedTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L72">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_PartitionName_" data-uid="Microsoft.Psi.PsiStreamMetadata.PartitionName*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_PartitionName" data-uid="Microsoft.Psi.PsiStreamMetadata.PartitionName">PartitionName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the partition where the stream is stored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PartitionName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L75">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_PartitionPath_" data-uid="Microsoft.Psi.PsiStreamMetadata.PartitionPath*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_PartitionPath" data-uid="Microsoft.Psi.PsiStreamMetadata.PartitionPath">PartitionPath</h4>
+  <div class="markdown level1 summary"><p>Gets the path of the partition where the stream is stored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PartitionPath { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L101">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_RuntimeTypes_" data-uid="Microsoft.Psi.PsiStreamMetadata.RuntimeTypes*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_RuntimeTypes" data-uid="Microsoft.Psi.PsiStreamMetadata.RuntimeTypes">RuntimeTypes</h4>
+  <div class="markdown level1 summary"><p>Gets a dictionary of runtime type names referenced in stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;int, string&gt; RuntimeTypes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L158">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_StreamTimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.StreamTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_StreamTimeInterval" data-uid="Microsoft.Psi.PsiStreamMetadata.StreamTimeInterval">StreamTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the time interval this stream was in existence (from open to close).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval StreamTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L148">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_SupplementalMetadataTypeName_" data-uid="Microsoft.Psi.PsiStreamMetadata.SupplementalMetadataTypeName*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_SupplementalMetadataTypeName" data-uid="Microsoft.Psi.PsiStreamMetadata.SupplementalMetadataTypeName">SupplementalMetadataTypeName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the type of supplemental metadata for the stream the metadata represents.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string SupplementalMetadataTypeName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L225">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata_" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata__1" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata``1">GetSupplementalMetadata&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Gets supplemental stream metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetSupplementalMetadata&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Supplemental metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of supplemental metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L205">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata_" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata__1_Microsoft_Psi_Serialization_KnownSerializers_" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata``1(Microsoft.Psi.Serialization.KnownSerializers)">GetSupplementalMetadata&lt;T&gt;(KnownSerializers)</h4>
+  <div class="markdown level1 summary"><p>Gets supplemental stream metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetSupplementalMetadata&lt;T&gt;(KnownSerializers serializers)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html">KnownSerializers</a></td>
+        <td><span class="parametername">serializers</span></td>
+        <td><p>Known serializers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>Supplemental metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of supplemental metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L173">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_Update_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_Update_Microsoft_Psi_Envelope_System_Int32_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update(Microsoft.Psi.Envelope,System.Int32)">Update(Envelope, Int32)</h4>
+  <div class="markdown level1 summary"><p>Updates this stream metadata with the specified envelope and size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update(Envelope envelope, int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The envelope.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L190">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_Update_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_Update_Microsoft_Psi_TimeInterval_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update(Microsoft.Psi.TimeInterval,Microsoft.Psi.TimeInterval)">Update(TimeInterval, TimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Updates this stream metadata with the times and originating times of the first and last messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update(TimeInterval messagesTimeInterval, TimeInterval messagesOriginatingTimeInterval)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">messagesTimeInterval</span></td>
+        <td><p>A TimeInterval representing the times of the first and last messages in the stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">messagesOriginatingTimeInterval</span></td>
+        <td><p>A TimeInterval representing the originating times of the first and last messages in the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L41" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

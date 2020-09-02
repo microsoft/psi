@@ -1,0 +1,929 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Store
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Store
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Store">
+  
+  
+  <h1 id="Microsoft_Psi_Store" data-uid="Microsoft.Psi.Store" class="text-break">Class Store
+  </h1>
+  <div class="markdown level0 summary"><p>OBSOLETE. Provides static methods to access multi-stream stores.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Store</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Store_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Store : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L191">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Concatenate_" data-uid="Microsoft.Psi.Store.Concatenate*"></a>
+  <h4 id="Microsoft_Psi_Store_Concatenate_IEnumerable_System_ValueTuple_System_String_System_String___System_ValueTuple_System_String_System_String__IProgress_System_Double__Action_System_String__" data-uid="Microsoft.Psi.Store.Concatenate(IEnumerable{System.ValueTuple{System.String,System.String}},System.ValueTuple{System.String,System.String},IProgress{System.Double},Action{System.String})">Concatenate(IEnumerable&lt;(String Name, String Path)&gt;, (String Name, String Path), IProgress&lt;Double&gt;, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Concatenates a set of stores, generating a new store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Concatenate(IEnumerable&lt;(string Name, string Path)&gt; storeFiles, (string Name, string Path) output, IProgress&lt;double&gt; progress = null, Action&lt;string&gt; loggingCallback = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</td>
+        <td><span class="parametername">storeFiles</span></td>
+        <td><p>Set of store files (name, path pairs) to concatenate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">output</span></td>
+        <td><p>Output store (name, path pair).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>An optional progress reporter for progress updates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingCallback</span></td>
+        <td><p>An optional callback to which human-friendly information will be logged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Store_Concatenate_IEnumerable_System_ValueTuple_System_String_System_String___System_ValueTuple_System_String_System_String__IProgress_System_Double__Action_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Streams of the same name across stores must also have the same types as well as non-intersecting originating times.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L170">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Copy_" data-uid="Microsoft.Psi.Store.Copy*"></a>
+  <h4 id="Microsoft_Psi_Store_Copy_System_ValueTuple_System_String_System_String__System_ValueTuple_System_String_System_String__Func_Microsoft_Psi_Data_Importer_Microsoft_Psi_TimeInterval__Predicate_Microsoft_Psi_IStreamMetadata__System_Boolean_IProgress_System_Double__Action_System_String__" data-uid="Microsoft.Psi.Store.Copy(System.ValueTuple{System.String,System.String},System.ValueTuple{System.String,System.String},Func{Microsoft.Psi.Data.Importer,Microsoft.Psi.TimeInterval},Predicate{Microsoft.Psi.IStreamMetadata},System.Boolean,IProgress{System.Double},Action{System.String})">Copy((String Name, String Path), (String Name, String Path), Func&lt;Importer, TimeInterval&gt;, Predicate&lt;IStreamMetadata&gt;, Boolean, IProgress&lt;Double&gt;, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Copies a store, or a subset of it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Copy((string Name, string Path) input, (string Name, string Path) output, Func&lt;Importer, TimeInterval&gt; cropIntervalFunction = null, Predicate&lt;IStreamMetadata&gt; includeStreamPredicate = null, bool createSubdirectory = true, IProgress&lt;double&gt; progress = null, Action&lt;string&gt; loggingCallback = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The name and path of the store to crop.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">output</span></td>
+        <td><p>The name and path of the cropped store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a>, <a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a>&gt;</td>
+        <td><span class="parametername">cropIntervalFunction</span></td>
+        <td><p>An optional function that defines an originating time interval to copy. By default, the extents of the entire store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Predicate</span>&lt;<a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a>&gt;</td>
+        <td><span class="parametername">includeStreamPredicate</span></td>
+        <td><p>An optional predicate that specifies which streams to include. By default, include all streams. By default, all streams are copied.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">createSubdirectory</span></td>
+        <td><p>Indicates whether to create a numbered subdirectory for each cropped store
+generated by multiple calls to this method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>An optional progress reporter for progress updates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingCallback</span></td>
+        <td><p>An optional callback to which human-friendly information will be logged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L26">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Create_" data-uid="Microsoft.Psi.Store.Create*"></a>
+  <h4 id="Microsoft_Psi_Store_Create_Microsoft_Psi_Pipeline_System_String_System_String_System_Boolean_Microsoft_Psi_Serialization_KnownSerializers_" data-uid="Microsoft.Psi.Store.Create(Microsoft.Psi.Pipeline,System.String,System.String,System.Boolean,Microsoft.Psi.Serialization.KnownSerializers)">Create(Pipeline, String, String, Boolean, KnownSerializers)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Creates a new multi-stream store and returns an <a class="xref" href="Microsoft.Psi.Data.Exporter.html">Exporter</a> instance
+which can be used to write streams to this store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Exporter Create(Pipeline pipeline, string name, string rootPath, bool createSubdirectory = true, KnownSerializers serializers = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a> that owns the <a class="xref" href="Microsoft.Psi.Data.Exporter.html">Exporter</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the store to create.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">rootPath</span></td>
+        <td><p>The path to use. If null, an in-memory store is created.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">createSubdirectory</span></td>
+        <td><p>Indicates whether to create a numbered subdirectory for each execution of the pipeline.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html">KnownSerializers</a></td>
+        <td><span class="parametername">serializers</span></td>
+        <td><p>An optional collection of custom serializers to use instead of the default ones.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Exporter.html">Exporter</a></td>
+        <td><p>An <a class="xref" href="Microsoft.Psi.Data.Exporter.html">Exporter</a> instance that can be used to write streams.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Crop_" data-uid="Microsoft.Psi.Store.Crop*"></a>
+  <h4 id="Microsoft_Psi_Store_Crop_System_ValueTuple_System_String_System_String__System_ValueTuple_System_String_System_String__Microsoft_Psi_TimeInterval_System_Boolean_IProgress_System_Double__Action_System_String__" data-uid="Microsoft.Psi.Store.Crop(System.ValueTuple{System.String,System.String},System.ValueTuple{System.String,System.String},Microsoft.Psi.TimeInterval,System.Boolean,IProgress{System.Double},Action{System.String})">Crop((String Name, String Path), (String Name, String Path), TimeInterval, Boolean, IProgress&lt;Double&gt;, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Crops a store between the extents of a specified originating time interval, generating a new store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Crop((string Name, string Path) input, (string Name, string Path) output, TimeInterval cropInterval, bool createSubdirectory = true, IProgress&lt;double&gt; progress = null, Action&lt;string&gt; loggingCallback = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The name and path of the store to crop.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">output</span></td>
+        <td><p>The name and path of the cropped store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">cropInterval</span></td>
+        <td><p>The originating time interval to which to crop the store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">createSubdirectory</span></td>
+        <td><p>Indicates whether to create a numbered subdirectory for each cropped store
+generated by multiple calls to this method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>An optional progress reporter for progress updates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingCallback</span></td>
+        <td><p>An optional callback to which human-friendly information will be logged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L104">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Crop_" data-uid="Microsoft.Psi.Store.Crop*"></a>
+  <h4 id="Microsoft_Psi_Store_Crop_System_ValueTuple_System_String_System_String__System_ValueTuple_System_String_System_String__TimeSpan_Microsoft_Psi_RelativeTimeInterval_System_Boolean_IProgress_System_Double__Action_System_String__" data-uid="Microsoft.Psi.Store.Crop(System.ValueTuple{System.String,System.String},System.ValueTuple{System.String,System.String},TimeSpan,Microsoft.Psi.RelativeTimeInterval,System.Boolean,IProgress{System.Double},Action{System.String})">Crop((String Name, String Path), (String Name, String Path), TimeSpan, RelativeTimeInterval, Boolean, IProgress&lt;Double&gt;, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Crops a store between the extents of a specified interval, generating a new store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Crop((string Name, string Path) input, (string Name, string Path) output, TimeSpan start, RelativeTimeInterval length, bool createSubdirectory = true, IProgress&lt;double&gt; progress = null, Action&lt;string&gt; loggingCallback = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The name and path of the store to crop.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">output</span></td>
+        <td><p>The name and path of the cropped store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>Start of crop interval relative to beginning of store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>Length of crop interval.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">createSubdirectory</span></td>
+        <td><p>Indicates whether to create a numbered subdirectory for each cropped store
+generated by multiple calls to this method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>An optional progress reporter for progress updates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingCallback</span></td>
+        <td><p>An optional callback to which human-friendly information will be logged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L151">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_CropInPlace_" data-uid="Microsoft.Psi.Store.CropInPlace*"></a>
+  <h4 id="Microsoft_Psi_Store_CropInPlace_System_ValueTuple_System_String_System_String__Microsoft_Psi_TimeInterval_System_Boolean_IProgress_System_Double__Action_System_String__" data-uid="Microsoft.Psi.Store.CropInPlace(System.ValueTuple{System.String,System.String},Microsoft.Psi.TimeInterval,System.Boolean,IProgress{System.Double},Action{System.String})">CropInPlace((String Name, String Path), TimeInterval, Boolean, IProgress&lt;Double&gt;, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Crops a store in place between the extents of a specified originating time interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void CropInPlace((string Name, string Path) input, TimeInterval cropInterval, bool deleteOriginalStore = true, IProgress&lt;double&gt; progress = null, Action&lt;string&gt; loggingCallback = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The name and path of the store to crop.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">cropInterval</span></td>
+        <td><p>The originating time interval to which to crop the store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">deleteOriginalStore</span></td>
+        <td><p>Indicates whether the original store should be deleted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>An optional progress reporter for progress updates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingCallback</span></td>
+        <td><p>An optional callback to which human-friendly information will be logged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L137">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_CropInPlace_" data-uid="Microsoft.Psi.Store.CropInPlace*"></a>
+  <h4 id="Microsoft_Psi_Store_CropInPlace_System_ValueTuple_System_String_System_String__TimeSpan_Microsoft_Psi_RelativeTimeInterval_System_Boolean_IProgress_System_Double__Action_System_String__" data-uid="Microsoft.Psi.Store.CropInPlace(System.ValueTuple{System.String,System.String},TimeSpan,Microsoft.Psi.RelativeTimeInterval,System.Boolean,IProgress{System.Double},Action{System.String})">CropInPlace((String Name, String Path), TimeSpan, RelativeTimeInterval, Boolean, IProgress&lt;Double&gt;, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Crops a store in place between the extents of a specified interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void CropInPlace((string Name, string Path) input, TimeSpan start, RelativeTimeInterval length, bool deleteOriginalStore = true, IProgress&lt;double&gt; progress = null, Action&lt;string&gt; loggingCallback = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The name and path of the store to crop.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>Start of crop interval relative to beginning of store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>Length of crop interval.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">deleteOriginalStore</span></td>
+        <td><p>Indicates whether the original store should be deleted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>An optional progress reporter for progress updates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingCallback</span></td>
+        <td><p>An optional callback to which human-friendly information will be logged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Exists_" data-uid="Microsoft.Psi.Store.Exists*"></a>
+  <h4 id="Microsoft_Psi_Store_Exists_System_String_System_String_" data-uid="Microsoft.Psi.Store.Exists(System.String,System.String)">Exists(String, String)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Indicates whether the specified store file exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Exists(string name, string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the store to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path of the store to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Returns true if the store exists.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L73">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_IsClosed_" data-uid="Microsoft.Psi.Store.IsClosed*"></a>
+  <h4 id="Microsoft_Psi_Store_IsClosed_System_String_System_String_" data-uid="Microsoft.Psi.Store.IsClosed(System.String,System.String)">IsClosed(String, String)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Indicates whether all streams in a store have been marked as &quot;closed&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsClosed(string name, string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the store to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path of the store to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Returns true if all streams in the store are marked as closed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Open_" data-uid="Microsoft.Psi.Store.Open*"></a>
+  <h4 id="Microsoft_Psi_Store_Open_Microsoft_Psi_Pipeline_System_String_System_String_Microsoft_Psi_Data_IStreamReader_" data-uid="Microsoft.Psi.Store.Open(Microsoft.Psi.Pipeline,System.String,System.String,Microsoft.Psi.Data.IStreamReader)">Open(Pipeline, String, String, IStreamReader)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Opens a multi-stream store for read and returns an <a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a> instance
+which can be used to inspect the store and open the streams.
+The store metadata is available immediately after this call (before the pipeline is running) via the <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_AvailableStreams">AvailableStreams</a> property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Importer Open(Pipeline pipeline, string name, string rootPath, IStreamReader streamReader = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a> that owns the <a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the store to open (the same as the catalog file name).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">rootPath</span></td>
+        <td><p>The path to the store.
+This can be one of:</p>
+<ul>
+<li>a full path to a directory containing the store</li>
+<li>a root path containing one or more versions of the store, each in its own subdirectory,
+in which case the latest store is opened.</li>
+<li>a null string, in which case an in-memory store is opened.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></td>
+        <td><span class="parametername">streamReader</span></td>
+        <td><p>Optional stream reader (default PsiStoreStreamReader).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a></td>
+        <td><p>An <a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a> instance that can be used to open streams and read messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L85">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_Repair_" data-uid="Microsoft.Psi.Store.Repair*"></a>
+  <h4 id="Microsoft_Psi_Store_Repair_System_String_System_String_System_Boolean_" data-uid="Microsoft.Psi.Store.Repair(System.String,System.String,System.Boolean)">Repair(String, String, Boolean)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Repairs an invalid store in place.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Repair(string name, string path, bool deleteOriginalStore = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the store to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path of the store to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">deleteOriginalStore</span></td>
+        <td><p>Indicates whether the original store should be deleted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L216">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_TryGetStreamMetadata_" data-uid="Microsoft.Psi.Store.TryGetStreamMetadata*"></a>
+  <h4 id="Microsoft_Psi_Store_TryGetStreamMetadata_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_IStreamMetadata__" data-uid="Microsoft.Psi.Store.TryGetStreamMetadata(Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.IStreamMetadata@)">TryGetStreamMetadata(Pipeline, String, out IStreamMetadata)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Returns the metadata associated with the specified stream, if the stream is persisted to a store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryGetStreamMetadata(Pipeline pipeline, string streamName, out IStreamMetadata metadata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The current pipeline.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream to retrieve metadata about.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a></td>
+        <td><span class="parametername">metadata</span></td>
+        <td><p>Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the stream is persisted to a store, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L204">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Store_TryGetStreamMetadata_" data-uid="Microsoft.Psi.Store.TryGetStreamMetadata*"></a>
+  <h4 id="Microsoft_Psi_Store_TryGetStreamMetadata__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_IStreamMetadata__" data-uid="Microsoft.Psi.Store.TryGetStreamMetadata``1(Microsoft.Psi.IProducer{``0},Microsoft.Psi.IStreamMetadata@)">TryGetStreamMetadata&lt;T&gt;(IProducer&lt;T&gt;, out IStreamMetadata)</h4>
+  <div class="markdown level1 summary"><p>OBSOLETE. Returns the metadata associated with the specified stream, if the stream is persisted to a store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryGetStreamMetadata&lt;T&gt;(IProducer&lt;T&gt; source, out IStreamMetadata metadata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The stream to retrieve metadata about.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a></td>
+        <td><span class="parametername">metadata</span></td>
+        <td><p>Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the stream is persisted to a store, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of stream messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Store.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

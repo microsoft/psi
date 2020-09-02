@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2" class="text-break">Class UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a visualization object that contains a dictionary of 3D visuals.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.threading.dispatcherobject">DispatcherObject</a></div>
+    <div class="level2"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject">DependencyObject</a></div>
+    <div class="level3"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d">Visual3D</a></div>
+    <div class="level4"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d">ModelVisual3D</a></div>
+    <div class="level5"><span class="xref">UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">IAnimatable</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.contentproperty">ModelVisual3D.ContentProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.transformproperty">ModelVisual3D.TransformProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.getvisual3dchild#System_Windows_Media_Media3D_ModelVisual3D_GetVisual3DChild_System_Int32_">ModelVisual3D.GetVisual3DChild(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.system-windows-markup-iaddchild-addchild#System_Windows_Media_Media3D_ModelVisual3D_System_Windows_Markup_IAddChild_AddChild_System_Object_">ModelVisual3D.IAddChild.AddChild(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.system-windows-markup-iaddchild-addtext#System_Windows_Media_Media3D_ModelVisual3D_System_Windows_Markup_IAddChild_AddText_System_String_">ModelVisual3D.IAddChild.AddText(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.visual3dchildrencount#System_Windows_Media_Media3D_ModelVisual3D_Visual3DChildrenCount">ModelVisual3D.Visual3DChildrenCount</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.children#System_Windows_Media_Media3D_ModelVisual3D_Children">ModelVisual3D.Children</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.content#System_Windows_Media_Media3D_ModelVisual3D_Content">ModelVisual3D.Content</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d.transform#System_Windows_Media_Media3D_ModelVisual3D_Transform">ModelVisual3D.Transform</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.addvisual3dchild#System_Windows_Media_Media3D_Visual3D_AddVisual3DChild_System_Windows_Media_Media3D_Visual3D_">Visual3D.AddVisual3DChild(Visual3D)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.removevisual3dchild#System_Windows_Media_Media3D_Visual3D_RemoveVisual3DChild_System_Windows_Media_Media3D_Visual3D_">Visual3D.RemoveVisual3DChild(Visual3D)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.onvisualparentchanged#System_Windows_Media_Media3D_Visual3D_OnVisualParentChanged_System_Windows_DependencyObject_">Visual3D.OnVisualParentChanged(DependencyObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.onvisualchildrenchanged#System_Windows_Media_Media3D_Visual3D_OnVisualChildrenChanged_System_Windows_DependencyObject_System_Windows_DependencyObject_">Visual3D.OnVisualChildrenChanged(DependencyObject, DependencyObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.isancestorof#System_Windows_Media_Media3D_Visual3D_IsAncestorOf_System_Windows_DependencyObject_">Visual3D.IsAncestorOf(DependencyObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.isdescendantof#System_Windows_Media_Media3D_Visual3D_IsDescendantOf_System_Windows_DependencyObject_">Visual3D.IsDescendantOf(DependencyObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.findcommonvisualancestor#System_Windows_Media_Media3D_Visual3D_FindCommonVisualAncestor_System_Windows_DependencyObject_">Visual3D.FindCommonVisualAncestor(DependencyObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.transformtoancestor#System_Windows_Media_Media3D_Visual3D_TransformToAncestor_System_Windows_Media_Media3D_Visual3D_">Visual3D.TransformToAncestor(Visual3D)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.transformtodescendant#System_Windows_Media_Media3D_Visual3D_TransformToDescendant_System_Windows_Media_Media3D_Visual3D_">Visual3D.TransformToDescendant(Visual3D)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.transformtoancestor#System_Windows_Media_Media3D_Visual3D_TransformToAncestor_System_Windows_Media_Visual_">Visual3D.TransformToAncestor(Visual)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.applyanimationclock#System_Windows_Media_Media3D_Visual3D_ApplyAnimationClock_System_Windows_DependencyProperty_System_Windows_Media_Animation_AnimationClock_">Visual3D.ApplyAnimationClock(DependencyProperty, AnimationClock)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.applyanimationclock#System_Windows_Media_Media3D_Visual3D_ApplyAnimationClock_System_Windows_DependencyProperty_System_Windows_Media_Animation_AnimationClock_System_Windows_Media_Animation_HandoffBehavior_">Visual3D.ApplyAnimationClock(DependencyProperty, AnimationClock, HandoffBehavior)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.beginanimation#System_Windows_Media_Media3D_Visual3D_BeginAnimation_System_Windows_DependencyProperty_System_Windows_Media_Animation_AnimationTimeline_">Visual3D.BeginAnimation(DependencyProperty, AnimationTimeline)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.beginanimation#System_Windows_Media_Media3D_Visual3D_BeginAnimation_System_Windows_DependencyProperty_System_Windows_Media_Animation_AnimationTimeline_System_Windows_Media_Animation_HandoffBehavior_">Visual3D.BeginAnimation(DependencyProperty, AnimationTimeline, HandoffBehavior)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.getanimationbasevalue#System_Windows_Media_Media3D_Visual3D_GetAnimationBaseValue_System_Windows_DependencyProperty_">Visual3D.GetAnimationBaseValue(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.visual3dmodel#System_Windows_Media_Media3D_Visual3D_Visual3DModel">Visual3D.Visual3DModel</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.visual3d.hasanimatedproperties#System_Windows_Media_Media3D_Visual3D_HasAnimatedProperties">Visual3D.HasAnimatedProperties</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.equals#System_Windows_DependencyObject_Equals_System_Object_">DependencyObject.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.gethashcode#System_Windows_DependencyObject_GetHashCode">DependencyObject.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.getvalue#System_Windows_DependencyObject_GetValue_System_Windows_DependencyProperty_">DependencyObject.GetValue(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.setvalue#System_Windows_DependencyObject_SetValue_System_Windows_DependencyProperty_System_Object_">DependencyObject.SetValue(DependencyProperty, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.setcurrentvalue#System_Windows_DependencyObject_SetCurrentValue_System_Windows_DependencyProperty_System_Object_">DependencyObject.SetCurrentValue(DependencyProperty, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.setvalue#System_Windows_DependencyObject_SetValue_System_Windows_DependencyPropertyKey_System_Object_">DependencyObject.SetValue(DependencyPropertyKey, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.clearvalue#System_Windows_DependencyObject_ClearValue_System_Windows_DependencyProperty_">DependencyObject.ClearValue(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.clearvalue#System_Windows_DependencyObject_ClearValue_System_Windows_DependencyPropertyKey_">DependencyObject.ClearValue(DependencyPropertyKey)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.coercevalue#System_Windows_DependencyObject_CoerceValue_System_Windows_DependencyProperty_">DependencyObject.CoerceValue(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.invalidateproperty#System_Windows_DependencyObject_InvalidateProperty_System_Windows_DependencyProperty_">DependencyObject.InvalidateProperty(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.onpropertychanged#System_Windows_DependencyObject_OnPropertyChanged_System_Windows_DependencyPropertyChangedEventArgs_">DependencyObject.OnPropertyChanged(DependencyPropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.shouldserializeproperty#System_Windows_DependencyObject_ShouldSerializeProperty_System_Windows_DependencyProperty_">DependencyObject.ShouldSerializeProperty(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.readlocalvalue#System_Windows_DependencyObject_ReadLocalValue_System_Windows_DependencyProperty_">DependencyObject.ReadLocalValue(DependencyProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.getlocalvalueenumerator#System_Windows_DependencyObject_GetLocalValueEnumerator">DependencyObject.GetLocalValueEnumerator()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.dependencyobjecttype#System_Windows_DependencyObject_DependencyObjectType">DependencyObject.DependencyObjectType</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencyobject.issealed#System_Windows_DependencyObject_IsSealed">DependencyObject.IsSealed</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.threading.dispatcherobject.dispatcher#System_Windows_Threading_DispatcherObject_Dispatcher">DispatcherObject.Dispatcher</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class UpdatableVisual3DDictionary&lt;TKey, TVisual&gt; : ModelVisual3D, DUCE.IResource, IVisual3DContainer, IAnimatable, IAddChild where TVisual : Visual3D, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TKey</span></td>
+        <td><p>The type of keys in the dictionary.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TVisual</span></td>
+        <td><p>The type of visual in the dictionary.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/UpdatableVisual3DDictionary{TKey,TVisual}.cs/#L36">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2__ctor_Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary__0__1__NewVisualHandler_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary{`0,`1}.NewVisualHandler)">UpdatableVisual3DDictionary(UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;.NewVisualHandler)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary-2.html">UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UpdatableVisual3DDictionary(UpdatableVisual3DDictionary&lt;TKey, TVisual&gt;.NewVisualHandler newVisualHandler)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary-2.NewVisualHandler.html">UpdatableVisual3DDictionary.NewVisualHandler</a>&lt;&gt;</td>
+        <td><span class="parametername">newVisualHandler</span></td>
+        <td><p>The delegate that identifies the method to call when a new TVisual
+needs to be initialized.  This parameter can be null if no initialization is required.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/UpdatableVisual3DDictionary{TKey,TVisual}.cs/#L59">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_Item_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.Item*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_Item__0_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.Item(`0)">Item[TKey]</h4>
+  <div class="markdown level1 summary"><p>Gets the visual at the specified index.  If no visual yet exists at the index one
+will be created and the newVisualHandler method will be called to initialize it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TVisual this[TKey key] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>The key of the visual to return.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TVisual</span></td>
+        <td><p>The visual at the specified index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/UpdatableVisual3DDictionary{TKey,TVisual}.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_Values_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.Values*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_Values" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.Values">Values</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of visuals in the dictionary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;TKey, TVisual&gt;.ValueCollection Values { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2.valuecollection">Dictionary.ValueCollection</a>&lt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/UpdatableVisual3DDictionary{TKey,TVisual}.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_BeginUpdate_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.BeginUpdate*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_BeginUpdate" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.BeginUpdate">BeginUpdate()</h4>
+  <div class="markdown level1 summary"><p>Begins an update of the elements of the collection.  Once all required elements have been updated call EndUpdate() to purge any surplus visuals.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void BeginUpdate()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/UpdatableVisual3DDictionary{TKey,TVisual}.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_EndUpdate_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.EndUpdate*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_UpdatableVisual3DDictionary_2_EndUpdate" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary`2.EndUpdate">EndUpdate()</h4>
+  <div class="markdown level1 summary"><p>Called when updates to the collection are completed.  Any
+extra child visuals will be removed from the collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EndUpdate()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Extensions.DependencyObjectExtensions.html#Microsoft_Psi_Visualization_Extensions_DependencyObjectExtensions_FindChild__1_System_Windows_DependencyObject_System_String_">DependencyObjectExtensions.FindChild&lt;T&gt;(DependencyObject, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/UpdatableVisual3DDictionary{TKey,TVisual}.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

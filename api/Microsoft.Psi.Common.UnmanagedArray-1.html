@@ -1,0 +1,1100 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class UnmanagedArray&lt;T&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class UnmanagedArray&lt;T&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Common.UnmanagedArray`1">
+  
+  
+  <h1 id="Microsoft_Psi_Common_UnmanagedArray_1" data-uid="Microsoft.Psi.Common.UnmanagedArray`1" class="text-break">Class UnmanagedArray&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Provides efficient, array-style access to data stored in unmanaged memory.
+The element type can be any simple value type (a primitive type or a struct with no reference-type fields.
+The simple value types supported by this class can only contain fields of primitive types or other simple value types.
+For efficient reading and writing of complex types, see the <a class="xref" href="Microsoft.Psi.Serialization.html">Microsoft.Psi.Serialization</a> namespace.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">UnmanagedArray&lt;T&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.html">Microsoft.Psi.Common</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Common_UnmanagedArray_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class UnmanagedArray&lt;T&gt; : IList&lt;T&gt;, IDisposable where T : struct</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type. Must be a blitable, simple value type (a struct with no reference-type fields).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L40">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1__ctor_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1__ctor_IntPtr_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.#ctor(IntPtr,System.Int32,System.Boolean)">UnmanagedArray(IntPtr, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.UnmanagedArray-1.html">UnmanagedArray&lt;T&gt;</a> class from an existing allocation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnmanagedArray(IntPtr buffer, int size, bool isReadOnly = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>The unmanaged buffer to wrap.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size, in bytes, of the unmanaged memory allocation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isReadOnly</span></td>
+        <td><p>True if the array should be read-only.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1__ctor_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1__ctor_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.#ctor(System.Int32,System.Boolean)">UnmanagedArray(Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.UnmanagedArray-1.html">UnmanagedArray&lt;T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnmanagedArray(int length, bool zeroMemory = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The array length (in number of elements) to allocate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">zeroMemory</span></td>
+        <td><p>Indicates whether the allocated array should be set to 0 before returning.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L27">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_ElementSize" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.ElementSize">ElementSize</h4>
+  <div class="markdown level1 summary"><p>The size, in bytes, of one array element, as returned by the MSIL sizeof instruction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly int ElementSize</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Count_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Count*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Count" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Count">Count</h4>
+  <div class="markdown level1 summary"><p>Gets the number of elements in the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L79">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Data_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Data*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Data" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Data">Data</h4>
+  <div class="markdown level1 summary"><p>Gets the pointer to the underlying memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IntPtr Data { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_IsReadOnly_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.IsReadOnly*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_IsReadOnly" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.IsReadOnly">IsReadOnly</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the array can be modified or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsReadOnly { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Item_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Item*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Item_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the value of the element at the specified index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T this[int index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index of the element to set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The value of the element at the specified index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L84">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Length_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Length*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Length" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Length">Length</h4>
+  <div class="markdown level1 summary"><p>Gets the number of elements in the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Length { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Size_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Size*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Size" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Size">Size</h4>
+  <div class="markdown level1 summary"><p>Gets the size of the allocated memory, in bytes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Size { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L211">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Clear_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Clear*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Clear" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Clear">Clear()</h4>
+  <div class="markdown level1 summary"><p>Clears the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L179">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Clear_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Clear*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Clear_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Clear(System.Int32,System.Int32)">Clear(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Clears the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear(int start, int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The index of the first element to clear.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The number of elements to clear.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L359">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Copy_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Copy*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Copy__0___" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Copy(`0[])">Copy(T[])</h4>
+  <div class="markdown level1 summary"><p>Copies all the elements of the specified one-dimensional array to the current array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Copy(T[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source one-dimensional array.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L369">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Copy_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Copy*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Copy__0___System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Copy(`0[],System.Int32)">Copy(T[], Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies all the elements of the specified one-dimensional array to the current array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Copy(T[] source, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source one-dimensional array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index in the destination array at which copying begins.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L325">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Copy_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Copy*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Copy__0___System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Copy(`0[],System.Int32,System.Int32,System.Int32)">Copy(T[], Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies the specified number of elements from a one-dimensional array to the current array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Copy(T[] source, int srcIndex, int destIndex, int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source one-dimensional array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">srcIndex</span></td>
+        <td><p>The index in the source array at which copying begins.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">destIndex</span></td>
+        <td><p>The index in the destination array at which copying begins.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The number of elements to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L252">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo__0___" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo(`0[])">CopyTo(T[])</h4>
+  <div class="markdown level1 summary"><p>Copies all the elements of the current one-dimensional array to the specified one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(T[] destination)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The one-dimensional array that is the destination of the elements copied from the current array.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L262">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo__0___System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo(`0[],System.Int32)">CopyTo(T[], Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies all the elements of the current one-dimensional array to the specified one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(T[] destination, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The one-dimensional array that is the destination of the elements copied from the current array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index in the destination array at which copying begins.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L223">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo__0___System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo(`0[],System.Int32,System.Int32,System.Int32)">CopyTo(T[], Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies the elements of the current one-dimensional array to the specified one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(T[] destination, int srcIndex, int destIndex, int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The one-dimensional array that is the destination of the elements copied from the current array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">srcIndex</span></td>
+        <td><p>The index in the source array at which copying begins.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">destIndex</span></td>
+        <td><p>The index in the destination array at which copying begins.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The number of elements to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L303">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_Microsoft_Psi_Common_UnmanagedArray__0__" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo(Microsoft.Psi.Common.UnmanagedArray{`0})">CopyTo(UnmanagedArray&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Copies all the elements of the current one-dimensional array to the specified one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(UnmanagedArray&lt;T&gt; destination)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedArray-1.html">UnmanagedArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The one-dimensional array that is the destination of the elements copied from the current array.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L313">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_Microsoft_Psi_Common_UnmanagedArray__0__System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo(Microsoft.Psi.Common.UnmanagedArray{`0},System.Int32)">CopyTo(UnmanagedArray&lt;T&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies all the elements of the current one-dimensional array to the specified one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(UnmanagedArray&lt;T&gt; destination, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedArray-1.html">UnmanagedArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The one-dimensional array that is the destination of the elements copied from the current array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index in the destination array at which copying begins.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L274">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_CopyTo_Microsoft_Psi_Common_UnmanagedArray__0__System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.CopyTo(Microsoft.Psi.Common.UnmanagedArray{`0},System.Int32,System.Int32,System.Int32)">CopyTo(UnmanagedArray&lt;T&gt;, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies the elements of the current one-dimensional array to the specified one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(UnmanagedArray&lt;T&gt; destination, int srcIndex, int destIndex, int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedArray-1.html">UnmanagedArray</a>&lt;T&gt;</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The one-dimensional array that is the destination of the elements copied from the current array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">srcIndex</span></td>
+        <td><p>The index in the source array at which copying begins.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">destIndex</span></td>
+        <td><p>The index in the destination array at which copying begins.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The number of elements to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L418">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Dispose_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Dispose" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Frees the underlying memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L71">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Finalize_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Finalize*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Finalize" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Finalizes an instance of the <a class="xref" href="Microsoft.Psi.Common.UnmanagedArray-1.html">UnmanagedArray&lt;T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L461">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_GetEnumerator_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.GetEnumerator*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_GetEnumerator" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;T&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L159">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_GetRef_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.GetRef*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_GetRef_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.GetRef(System.Int32)">GetRef(Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets a reference to the element at the specified index.
+Note that this method call is not inlined by the JIT compiler, potentially making it slower than get+set via the indexer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetRef(int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>The index of the element to get.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>A reference to the element at the specified index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L379">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_Resize_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Resize*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_Resize_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.Resize(System.Int32,System.Boolean)">Resize(Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Resizes the underlying buffer, preserving the existing data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Resize(int length, bool zeroMemory = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The new length, in count of elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">zeroMemory</span></td>
+        <td><p>Indicates whether the trailing end of the new allocation should be set to 0 before returning.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L140">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_UncheckedGet_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.UncheckedGet*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_UncheckedGet_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.UncheckedGet(System.Int32)">UncheckedGet(Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the value at the specified index, without performing bounds checking.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T UncheckedGet(int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Index of the element to get.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The value at the specified index.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L149">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedArray_1_UncheckedSet_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.UncheckedSet*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedArray_1_UncheckedSet_System_Int32__0_" data-uid="Microsoft.Psi.Common.UnmanagedArray`1.UncheckedSet(System.Int32,`0)">UncheckedSet(Int32, T)</h4>
+  <div class="markdown level1 summary"><p>Sets a value at the specified index, without performing bounds checking.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UncheckedSet(int index, T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Index of the element to set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value to set the element to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedArray.cs/#L20" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

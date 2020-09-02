@@ -1,0 +1,718 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AzureKinectBodyVisualizationObject
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AzureKinectBodyVisualizationObject
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject">
+  
+  
+  <h1 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject" class="text-break">Class AzureKinectBodyVisualizationObject
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a visualization object for Azure Kinect bodies.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
+    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<a class="xref" href="Microsoft.Psi.AzureKinect.AzureKinectBody.html">AzureKinectBody</a>&gt;</div>
+    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html">InstantVisualizationObject</a>&lt;<a class="xref" href="Microsoft.Psi.AzureKinect.AzureKinectBody.html">AzureKinectBody</a>&gt;</div>
+    <div class="level6"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html">Instant3DVisualizationObject</a>&lt;<a class="xref" href="Microsoft.Psi.AzureKinect.AzureKinectBody.html">AzureKinectBody</a>&gt;</div>
+    <div class="level7"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html">ModelVisual3DVisualizationObject</a>&lt;<a class="xref" href="Microsoft.Psi.AzureKinect.AzureKinectBody.html">AzureKinectBody</a>&gt;</div>
+    <div class="level8"><span class="xref">AzureKinectBodyVisualizationObject</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.I3DVisualizationObject.html">I3DVisualizationObject</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IModelVisual3DVisualizationObject.html">IModelVisual3DVisualizationObject</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">ICustomTypeDescriptor</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_ModelView">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.ModelView</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_CustomPropertyDescriptors">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.CustomPropertyDescriptors</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_RegisterChildPropertyChangedNotifications_Microsoft_Psi_Visualization_VisualizationObjects_IModelVisual3DVisualizationObject_System_String_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.RegisterChildPropertyChangedNotifications(IModelVisual3DVisualizationObject, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_OnChildPropertyChanged_System_String_System_Object_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.OnChildPropertyChanged(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_SetDescendantProperty_System_String_System_Object_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.SetDescendantProperty(String, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetAttributes">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetAttributes()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetClassName">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetClassName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetComponentName">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetComponentName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetConverter">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetConverter()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetDefaultEvent">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetDefaultEvent()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetDefaultProperty">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetDefaultProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetEditor_System_Type_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetEditor(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetEvents">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetEvents()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetEvents_System_Attribute___">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetEvents(Attribute[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetProperties">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetProperties_System_Attribute___">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetProperties(Attribute[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetPropertyOwner_System_ComponentModel_PropertyDescriptor_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetPropertyOwner(PropertyDescriptor)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_InitNew">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.InitNew()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_UpdateChildVisibility_System_Windows_Media_Media3D_Visual3D_System_Boolean_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.UpdateChildVisibility(Visual3D, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_SynthesizeMessage__1___0_">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.SynthesizeMessage&lt;T&gt;(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GetNextPropertyPathSegment_System_String_System_String__System_String__">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GetNextPropertyPathSegment(String, String, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_GenerateCustomPropertyDescriptors">ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;.GenerateCustomPropertyDescriptors()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_Instant3DVisualizationObject_1_DefaultViewTemplate">Instant3DVisualizationObject&lt;AzureKinectBody&gt;.DefaultViewTemplate</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_Instant3DVisualizationObject_1_Visual3D">Instant3DVisualizationObject&lt;AzureKinectBody&gt;.Visual3D</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_Instant3DVisualizationObject_1_ContractResolver">Instant3DVisualizationObject&lt;AzureKinectBody&gt;.ContractResolver</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_CursorEpsilonMs">InstantVisualizationObject&lt;AzureKinectBody&gt;.CursorEpsilonMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_CursorEpsilon">InstantVisualizationObject&lt;AzureKinectBody&gt;.CursorEpsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_GetSnappedTime_System_DateTime_Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">InstantVisualizationObject&lt;AzureKinectBody&gt;.GetSnappedTime(DateTime, SnappingBehavior)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_OnInstantDataChanged_System_Object_Microsoft_Psi_Visualization_Data_StreamCacheEntry_">InstantVisualizationObject&lt;AzureKinectBody&gt;.OnInstantDataChanged(Object, StreamCacheEntry)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_OnStreamBound">InstantVisualizationObject&lt;AzureKinectBody&gt;.OnStreamBound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_OnStreamUnbound">InstantVisualizationObject&lt;AzureKinectBody&gt;.OnStreamUnbound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;AzureKinectBody&gt;.CanSnapToStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommand">StreamVisualizationObject&lt;AzureKinectBody&gt;.ToggleSnapToStreamCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand">StreamVisualizationObject&lt;AzureKinectBody&gt;.ZoomToStreamCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue">StreamVisualizationObject&lt;AzureKinectBody&gt;.CurrentValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentData">StreamVisualizationObject&lt;AzureKinectBody&gt;.CurrentData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime">StreamVisualizationObject&lt;AzureKinectBody&gt;.CurrentOriginatingTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Data">StreamVisualizationObject&lt;AzureKinectBody&gt;.Data</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding">StreamVisualizationObject&lt;AzureKinectBody&gt;.StreamBinding</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamSource">StreamVisualizationObject&lt;AzureKinectBody&gt;.StreamSource</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterType">StreamVisualizationObject&lt;AzureKinectBody&gt;.StreamAdapterType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterDisplayName">StreamVisualizationObject&lt;AzureKinectBody&gt;.StreamAdapterDisplayName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerType">StreamVisualizationObject&lt;AzureKinectBody&gt;.SummarizerType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerTypeDisplayName">StreamVisualizationObject&lt;AzureKinectBody&gt;.SummarizerTypeDisplayName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_RequiresSupplementalMetadata">StreamVisualizationObject&lt;AzureKinectBody&gt;.RequiresSupplementalMetadata</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsBound">StreamVisualizationObject&lt;AzureKinectBody&gt;.IsBound</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ShowZoomToStreamMenuItem">StreamVisualizationObject&lt;AzureKinectBody&gt;.ShowZoomToStreamMenuItem</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamExtents">StreamVisualizationObject&lt;AzureKinectBody&gt;.StreamExtents</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IconSource">StreamVisualizationObject&lt;AzureKinectBody&gt;.IconSource</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsSnappedToStream">StreamVisualizationObject&lt;AzureKinectBody&gt;.IsSnappedToStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommandText">StreamVisualizationObject&lt;AzureKinectBody&gt;.ToggleSnapToStreamCommandText</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;AzureKinectBody&gt;.IsLive</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsShared">StreamVisualizationObject&lt;AzureKinectBody&gt;.IsShared</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___System_Boolean_">StreamVisualizationObject&lt;AzureKinectBody&gt;.SetCurrentValue(Nullable&lt;Message&lt;AzureKinectBody&gt;&gt;, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream">StreamVisualizationObject&lt;AzureKinectBody&gt;.ToggleSnapToStream()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">StreamVisualizationObject&lt;AzureKinectBody&gt;.UpdateStreamSource(SessionViewModel)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetTimeOfNearestMessage_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">StreamVisualizationObject&lt;AzureKinectBody&gt;.GetTimeOfNearestMessage(DateTime, Int32, Func&lt;Int32, DateTime&gt;, SnappingBehavior)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__">StreamVisualizationObject&lt;AzureKinectBody&gt;.GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamVisualizationObject&lt;AzureKinectBody&gt;.OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnRemoveFromPanel">StreamVisualizationObject&lt;AzureKinectBody&gt;.OnRemoveFromPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible">VisualizationObject.Visible</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container">VisualizationObject.Container</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel">VisualizationObject.Panel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator">VisualizationObject.Navigator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream">VisualizationObject.IsAudioStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected">VisualizationObject.IsConnected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems">VisualizationObject.GetAdditionalContextMenuItems()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString">VisualizationObject.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">VisualizationObject.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">VisualizationObject.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel">VisualizationObject.OnAddToPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.AzureKinect.Visualization.html">Microsoft.Psi.AzureKinect.Visualization</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.AzureKinect.Visualization.Windows.x64.dll</h6>
+  <h5 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[VisualizationObject(&quot;Azure Kinect Body&quot;, null, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/stream.png&quot;, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/panel-stream.png&quot;, &quot;%StreamName%&quot;, false)]
+public class AzureKinectBodyVisualizationObject : ModelVisual3DVisualizationObject&lt;AzureKinectBody&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, I3DVisualizationObject, IModelVisual3DVisualizationObject, ICustomTypeDescriptor</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject__ctor_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.#ctor*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject__ctor" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.#ctor">AzureKinectBodyVisualizationObject()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.html">AzureKinectBodyVisualizationObject</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AzureKinectBodyVisualizationObject()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L115">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_BillboardHeightCm_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.BillboardHeightCm*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_BillboardHeightCm" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.BillboardHeightCm">BillboardHeightCm</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the height at which to draw the billboard (cm).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double BillboardHeightCm { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L79">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_BoneDiameterMm_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.BoneDiameterMm*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_BoneDiameterMm" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.BoneDiameterMm">BoneDiameterMm</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the bone diameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double BoneDiameterMm { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_Color_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.Color*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_Color" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.Color">Color</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the color.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public Color Color { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.color">Color</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_InferredJointsOpacity_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.InferredJointsOpacity*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_InferredJointsOpacity" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.InferredJointsOpacity">InferredJointsOpacity</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the inferred joints opacity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double InferredJointsOpacity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L91">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_JointRadiusMm_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.JointRadiusMm*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_JointRadiusMm" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.JointRadiusMm">JointRadiusMm</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the joint diameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double JointRadiusMm { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L128">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_PolygonResolution_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.PolygonResolution*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_PolygonResolution" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.PolygonResolution">PolygonResolution</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the number of divisions to use when rendering polygons for joints and bones.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public int PolygonResolution { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L103">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_ShowBillboard_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.ShowBillboard*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_ShowBillboard" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.ShowBillboard">ShowBillboard</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show a billboard with information about the body.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowBillboard { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L148">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_NotifyPropertyChanged_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.NotifyPropertyChanged*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_NotifyPropertyChanged_System_String_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.NotifyPropertyChanged(System.String)">NotifyPropertyChanged(String)</h4>
+  <div class="markdown level1 summary"><p>Called when a property other than CurrentValue changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void NotifyPropertyChanged(string propertyName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td><p>The name of the property that changed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt;Microsoft.Psi.AzureKinect.AzureKinectBody&gt;.NotifyPropertyChanged(System.String)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L137">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_UpdateData_" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.UpdateData*"></a>
+  <h4 id="Microsoft_Psi_AzureKinect_Visualization_AzureKinectBodyVisualizationObject_UpdateData" data-uid="Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.UpdateData">UpdateData()</h4>
+  <div class="markdown level1 summary"><p>Called when the current stream data has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void UpdateData()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt;Microsoft.Psi.AzureKinect.AzureKinectBody&gt;.UpdateData()</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.I3DVisualizationObject.html">I3DVisualizationObject</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IModelVisual3DVisualizationObject.html">IModelVisual3DVisualizationObject</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">System.ComponentModel.ICustomTypeDescriptor</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.Visualization/AzureKinectBodyVisualizationObject.cs/#L21" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

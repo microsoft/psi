@@ -1,0 +1,767 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Subpipeline
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Subpipeline
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Subpipeline">
+  
+  
+  <h1 id="Microsoft_Psi_Subpipeline" data-uid="Microsoft.Psi.Subpipeline" class="text-break">Class Subpipeline
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a graph of components and controls scheduling and message passing.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></div>
+    <div class="level2"><span class="xref">Subpipeline</span></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.AzureKinect.AzureKinectSensor.html">AzureKinectSensor</a></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.Components.ParallelFixedLength-2.html">ParallelFixedLength&lt;TIn, TOut&gt;</a></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.Components.ParallelSparseDo-3.html">ParallelSparseDo&lt;TIn, TBranchKey, TBranchIn&gt;</a></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.Components.ParallelSparseSelect-5.html">ParallelSparseSelect&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;</a></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.Components.ParallelVariableLength-2.html">ParallelVariableLength&lt;TIn, TOut&gt;</a></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.Data.Exporter.html">Exporter</a></div>
+      <div class="level3"><a class="xref" href="Microsoft.Psi.Data.Json.JsonExporter.html">JsonExporter</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineRun">Pipeline.PipelineRun</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineCompleted">Pipeline.PipelineCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ComponentCompleted">Pipeline.ComponentCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineExceptionNotHandled">Pipeline.PipelineExceptionNotHandled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Id">Pipeline.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Name">Pipeline.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ReplayDescriptor">Pipeline.ReplayDescriptor</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Diagnostics">Pipeline.Diagnostics</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_StartTime">Pipeline.StartTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ProgressReportInterval">Pipeline.ProgressReportInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_LatestFiniteSourceCompletionTime">Pipeline.LatestFiniteSourceCompletionTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_NoRemainingCompletableComponents">Pipeline.NoRemainingCompletableComponents</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Create_System_String_Microsoft_Psi_DeliveryPolicy_System_Int32_System_Boolean_System_Boolean_Microsoft_Psi_Diagnostics_DiagnosticsConfiguration_">Pipeline.Create(String, DeliveryPolicy, Int32, Boolean, Boolean, DiagnosticsConfiguration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultDeliveryPolicy__1">Pipeline.GetDefaultDeliveryPolicy&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultMessageValidator__1">Pipeline.GetDefaultMessageValidator&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action___0_Microsoft_Psi_Envelope__System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;T, Envelope&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action___0__System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;T&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action_Microsoft_Psi_Message___0___System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;Message&lt;T&gt;&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func___0_Microsoft_Psi_Envelope_Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;T, Envelope, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func___0_Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;T, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func_Microsoft_Psi_Message___0__Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;Message&lt;T&gt;, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateEmitter__1_System_Object_System_String_Microsoft_Psi_Emitter___0__ValidateMessageHandler_">Pipeline.CreateEmitter&lt;T&gt;(Object, String, Emitter.ValidateMessageHandler&lt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_System_Int32_">Pipeline.WaitAll(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_TimeSpan_">Pipeline.WaitAll(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Dispose">Pipeline.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_ReplayDescriptor_">Pipeline.Run(ReplayDescriptor)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_TimeInterval_System_Boolean_">Pipeline.Run(TimeInterval, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_DateTime_System_Boolean_">Pipeline.Run(DateTime, DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_System_Boolean_">Pipeline.Run(DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_IProgress_System_Double__">Pipeline.RunAsync(ReplayDescriptor, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_TimeInterval_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(TimeInterval, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_DateTime_DateTime_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(DateTime, DateTime, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_DateTime_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(DateTime, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTime">Pipeline.GetCurrentTime()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTimeFromElapsedTicks_System_Int64_">Pipeline.GetCurrentTimeFromElapsedTicks(Int64)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_TimeSpan_">Pipeline.ConvertToRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_DateTime_">Pipeline.ConvertToRealTime(DateTime)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_TimeSpan_">Pipeline.ConvertFromRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_DateTime_">Pipeline.ConvertFromRealTime(DateTime)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Subpipeline_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Subpipeline : Pipeline, ISourceComponent</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Subpipeline_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This is essentially a pipeline as a component within other pipelines.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline__ctor_" data-uid="Microsoft.Psi.Subpipeline.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline__ctor_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy_" data-uid="Microsoft.Psi.Subpipeline.#ctor(Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.DeliveryPolicy)">Subpipeline(Pipeline, String, DeliveryPolicy)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Subpipeline.html">Subpipeline</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Subpipeline(Pipeline parent, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>Parent pipeline.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Subpipeline name (inherits &quot;Sub<parent>&quot; name if unspecified)</parent>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy.html">DeliveryPolicy</a></td>
+        <td><span class="parametername">defaultDeliveryPolicy</span></td>
+        <td><p>Pipeline-level default delivery policy (defaults to <a class="xref" href="Microsoft.Psi.DeliveryPolicy.html#Microsoft_Psi_DeliveryPolicy_Unlimited">Unlimited</a> if unspecified).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_ParentPipeline_" data-uid="Microsoft.Psi.Subpipeline.ParentPipeline*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_ParentPipeline" data-uid="Microsoft.Psi.Subpipeline.ParentPipeline">ParentPipeline</h4>
+  <div class="markdown level1 summary"><p>Gets the parent pipeline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Pipeline ParentPipeline { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L58">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_Create_" data-uid="Microsoft.Psi.Subpipeline.Create*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_Create_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy_" data-uid="Microsoft.Psi.Subpipeline.Create(Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.DeliveryPolicy)">Create(Pipeline, String, DeliveryPolicy)</h4>
+  <div class="markdown level1 summary"><p>Create subpipeline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Subpipeline Create(Pipeline parent, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td><p>Parent pipeline.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Subpipeline name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy.html">DeliveryPolicy</a></td>
+        <td><span class="parametername">defaultDeliveryPolicy</span></td>
+        <td><p>Pipeline-level default delivery policy (defaults to <a class="xref" href="Microsoft.Psi.DeliveryPolicy.html#Microsoft_Psi_DeliveryPolicy_Unlimited">Unlimited</a> if unspecified).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Subpipeline.html">Subpipeline</a></td>
+        <td><p>Created subpipeline.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_CreateInputConnectorFrom_" data-uid="Microsoft.Psi.Subpipeline.CreateInputConnectorFrom*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_CreateInputConnectorFrom__1_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Subpipeline.CreateInputConnectorFrom``1(Microsoft.Psi.Pipeline,System.String)">CreateInputConnectorFrom&lt;T&gt;(Pipeline, String)</h4>
+  <div class="markdown level1 summary"><p>Creates an input connector for a subpipeline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Connector&lt;T&gt; CreateInputConnectorFrom&lt;T&gt;(Pipeline fromPipeline, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">fromPipeline</span></td>
+        <td><p>The pipeline from which the input connector receives data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the input connector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Components.Connector-1.html">Connector</a>&lt;T&gt;</td>
+        <td><p>The newly created input connector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of messages for the input connector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_CreateOutputConnectorTo_" data-uid="Microsoft.Psi.Subpipeline.CreateOutputConnectorTo*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_CreateOutputConnectorTo__1_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Subpipeline.CreateOutputConnectorTo``1(Microsoft.Psi.Pipeline,System.String)">CreateOutputConnectorTo&lt;T&gt;(Pipeline, String)</h4>
+  <div class="markdown level1 summary"><p>Creates an output connector for a subpipeline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Connector&lt;T&gt; CreateOutputConnectorTo&lt;T&gt;(Pipeline toPipeline, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">toPipeline</span></td>
+        <td><p>The pipeline to which the output connector sends data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the output connector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Components.Connector-1.html">Connector</a>&lt;T&gt;</td>
+        <td><p>The newly created output connector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of messages for the output connector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_ProposeReplayTime_" data-uid="Microsoft.Psi.Subpipeline.ProposeReplayTime*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_ProposeReplayTime_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Subpipeline.ProposeReplayTime(Microsoft.Psi.TimeInterval)">ProposeReplayTime(TimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Propose replay time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void ProposeReplayTime(TimeInterval originatingTimeInterval)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">originatingTimeInterval</span></td>
+        <td><p>Originating time interval.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ProposeReplayTime_Microsoft_Psi_TimeInterval_">Pipeline.ProposeReplayTime(TimeInterval)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L156">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_RunAsync_" data-uid="Microsoft.Psi.Subpipeline.RunAsync*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_Clock_IProgress_System_Double__" data-uid="Microsoft.Psi.Subpipeline.RunAsync(Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.Clock,IProgress{System.Double})">RunAsync(ReplayDescriptor, Clock, IProgress&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Run pipeline (asynchronously).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock, IProgress&lt;double&gt; progress)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.ReplayDescriptor.html">ReplayDescriptor</a></td>
+        <td><span class="parametername">descriptor</span></td>
+        <td><p>Replay descriptor.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Clock.html">Clock</a></td>
+        <td><span class="parametername">clock</span></td>
+        <td><p>Clock to use (in the case of a shared scheduler - e.g. subpipeline).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">progress</span></td>
+        <td><p>Progress reporter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDisposable</span></td>
+        <td><p>Disposable used to terminate pipeline.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_Clock_IProgress_System_Double__">Pipeline.RunAsync(ReplayDescriptor, Clock, IProgress&lt;Double&gt;)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_Start_" data-uid="Microsoft.Psi.Subpipeline.Start*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_Start_Action_DateTime__" data-uid="Microsoft.Psi.Subpipeline.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initialize subpipeline as a finite source component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Start(Action&lt;DateTime&gt; notifyCompletionTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<span class="xref">DateTime</span>&gt;</td>
+        <td><span class="parametername">notifyCompletionTime</span></td>
+        <td><p>Delegate to call to notify of completion time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Subpipeline_Start_Action_DateTime___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is called by the parent subpipeline, if any.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L78">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_Stop_" data-uid="Microsoft.Psi.Subpipeline.Stop*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Subpipeline.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
+  <div class="markdown level1 summary"><p>Called by the pipeline when shutting down. The component should stop generating new messages once this
+method completes. However, the component might still receive new messages (if it is subscribed to other
+components) after this call and is expected to handle them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">finalOriginatingTime</span></td>
+        <td><p>The last originating time of any message which may be posted, after which the component should stop
+posting non-reactive source messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span></td>
+        <td><span class="parametername">notifyCompleted</span></td>
+        <td><p>Delegate to call to notify the pipeline that the component has completed posting non-reactive source
+messages. This delegate should be called once the component has posted its last non-reactive source
+message, but only up to (and possibly including) <code data-dev-comment-type="paramref" class="paramref">finalOriginatingTime</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L134">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Subpipeline_ToString_" data-uid="Microsoft.Psi.Subpipeline.ToString*"></a>
+  <h4 id="Microsoft_Psi_Subpipeline_ToString" data-uid="Microsoft.Psi.Subpipeline.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Subpipeline_ToString_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Return subpipeline name as component name.</p>
+</div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.DebugExtensions.html#Microsoft_Psi_DebugExtensions_DumpStructure_Microsoft_Psi_Pipeline_System_String_">DebugExtensions.DumpStructure(Pipeline, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_CreateConnector__1_Microsoft_Psi_Pipeline_System_String_">Operators.CreateConnector&lt;T&gt;(Pipeline, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Executive/Subpipeline.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1535 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MainWindowViewModel
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MainWindowViewModel
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel">
+  
+  
+  <h1 id="Microsoft_Psi_PsiStudio_MainWindowViewModel" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel" class="text-break">Class MainWindowViewModel
+  </h1>
+  <div class="markdown level0 summary"><p>Represents the view model for the main window of the psi studio application.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><span class="xref">MainWindowViewModel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.PsiStudio.html">Microsoft.Psi.PsiStudio</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.PsiStudio.dll</h6>
+  <h5 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MainWindowViewModel : ObservableObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L120">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel__ctor_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.#ctor*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel__ctor" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.#ctor">MainWindowViewModel()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.PsiStudio.MainWindowViewModel.html">MainWindowViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MainWindowViewModel()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L146">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ApplicationName_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ApplicationName*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ApplicationName" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ApplicationName">ApplicationName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of this application for use when constructing paths etc.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string ApplicationName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L151">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_AppSettings_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.AppSettings*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_AppSettings" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.AppSettings">AppSettings</h4>
+  <div class="markdown level1 summary"><p>Gets the application settings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStudioSettings AppSettings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStudio.PsiStudioSettings.html">PsiStudioSettings</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L982">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_AvailableLayouts_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.AvailableLayouts*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_AvailableLayouts" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.AvailableLayouts">AvailableLayouts</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the collection of available layouts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;LayoutInfo&gt; AvailableLayouts { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.Psi.PsiStudio.LayoutInfo.html">LayoutInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L531">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ClearSelectionCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ClearSelectionCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ClearSelectionCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ClearSelectionCommand">ClearSelectionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the clear selection command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ClearSelectionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L902">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ClosedCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ClosedCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ClosedCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ClosedCommand">ClosedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the closed command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ClosedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L740">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CollapseDatasetsTreeCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CollapseDatasetsTreeCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CollapseDatasetsTreeCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CollapseDatasetsTreeCommand">CollapseDatasetsTreeCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the collapse all command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand CollapseDatasetsTreeCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L776">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CollapseVisualizationsTreeCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CollapseVisualizationsTreeCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CollapseVisualizationsTreeCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CollapseVisualizationsTreeCommand">CollapseVisualizationsTreeCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the collapse visualizations tree command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand CollapseVisualizationsTreeCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L946">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CreateAnnotationStreamCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CreateAnnotationStreamCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CreateAnnotationStreamCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CreateAnnotationStreamCommand">CreateAnnotationStreamCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the create annotation stream command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand CreateAnnotationStreamCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L998">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CurrentLayout_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CurrentLayout*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CurrentLayout" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CurrentLayout">CurrentLayout</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the current layout.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LayoutInfo CurrentLayout { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStudio.LayoutInfo.html">LayoutInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L161">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_DatasetViewModels_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.DatasetViewModels*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_DatasetViewModels" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.DatasetViewModels">DatasetViewModels</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of dataset view models.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableCollection&lt;DatasetViewModel&gt; DatasetViewModels { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1">ObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L631">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_DecreasePlaySpeedCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.DecreasePlaySpeedCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_DecreasePlaySpeedCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.DecreasePlaySpeedCommand">DecreasePlaySpeedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the decrease play speed command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand DecreasePlaySpeedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L928">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ExitCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ExitCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ExitCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ExitCommand">ExitCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the exit command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ExitCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L722">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ExpandDatasetsTreeCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ExpandDatasetsTreeCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ExpandDatasetsTreeCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ExpandDatasetsTreeCommand">ExpandDatasetsTreeCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the expand all command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ExpandDatasetsTreeCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L758">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ExpandVisualizationsTreeCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ExpandVisualizationsTreeCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ExpandVisualizationsTreeCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ExpandVisualizationsTreeCommand">ExpandVisualizationsTreeCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the expand visualizations tree command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ExpandVisualizationsTreeCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L611">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_IncreasePlaySpeedCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.IncreasePlaySpeedCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_IncreasePlaySpeedCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.IncreasePlaySpeedCommand">IncreasePlaySpeedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the increase play speed command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand IncreasePlaySpeedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L437">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_Insert1CellInstantPanelCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.Insert1CellInstantPanelCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_Insert1CellInstantPanelCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.Insert1CellInstantPanelCommand">Insert1CellInstantPanelCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the insert 1 cell instant panel command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand Insert1CellInstantPanelCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L455">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_Insert2CellInstantPanelCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.Insert2CellInstantPanelCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_Insert2CellInstantPanelCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.Insert2CellInstantPanelCommand">Insert2CellInstantPanelCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the insert 2 cell instant panel command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand Insert2CellInstantPanelCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L473">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_Insert3CellInstantPanelCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.Insert3CellInstantPanelCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_Insert3CellInstantPanelCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.Insert3CellInstantPanelCommand">Insert3CellInstantPanelCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the insert 3 cell instant panel command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand Insert3CellInstantPanelCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L419">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_InsertTimelinePanelCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.InsertTimelinePanelCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_InsertTimelinePanelCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.InsertTimelinePanelCommand">InsertTimelinePanelCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the insert timeline panel command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand InsertTimelinePanelCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L299">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_JumpLeftCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.JumpLeftCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_JumpLeftCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.JumpLeftCommand">JumpLeftCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the jump cursor left command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand JumpLeftCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L279">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_JumpRightCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.JumpRightCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_JumpRightCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.JumpRightCommand">JumpRightCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the jump cursor right command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand JumpRightCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L591">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_MoveCursorToSelectionEndCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.MoveCursorToSelectionEndCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_MoveCursorToSelectionEndCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.MoveCursorToSelectionEndCommand">MoveCursorToSelectionEndCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command to move the cursor to the selection end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand MoveCursorToSelectionEndCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L551">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_MoveCursorToSelectionStartCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.MoveCursorToSelectionStartCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_MoveCursorToSelectionStartCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.MoveCursorToSelectionStartCommand">MoveCursorToSelectionStartCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command to move the cursor to the selection start.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand MoveCursorToSelectionStartCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L259">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_NudgeLeftCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.NudgeLeftCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_NudgeLeftCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.NudgeLeftCommand">NudgeLeftCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the nudge cursor left command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand NudgeLeftCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L239">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_NudgeRightCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.NudgeRightCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_NudgeRightCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.NudgeRightCommand">NudgeRightCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the nudge cursor right command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand NudgeRightCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L354">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_OpenDatasetCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.OpenDatasetCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_OpenDatasetCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.OpenDatasetCommand">OpenDatasetCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the open dataset command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand OpenDatasetCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L319">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_OpenStoreCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.OpenStoreCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_OpenStoreCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.OpenStoreCommand">OpenStoreCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the open store command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand OpenStoreCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_PlayPauseCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.PlayPauseCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_PlayPauseCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.PlayPauseCommand">PlayPauseCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the play/pause command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand PlayPauseCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L386">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SaveDatasetCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SaveDatasetCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SaveDatasetCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SaveDatasetCommand">SaveDatasetCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the save dataset command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand SaveDatasetCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L700">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SaveLayoutAsCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SaveLayoutAsCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SaveLayoutAsCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SaveLayoutAsCommand">SaveLayoutAsCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the save layout command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand SaveLayoutAsCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L671">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SaveLayoutCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SaveLayoutCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SaveLayoutCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SaveLayoutCommand">SaveLayoutCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the save layout command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand SaveLayoutCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L847">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SelectedDatasetChangedCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SelectedDatasetChangedCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SelectedDatasetChangedCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SelectedDatasetChangedCommand">SelectedDatasetChangedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the selected dataset changed command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand&lt;RoutedPropertyChangedEventArgs&lt;object&gt;&gt; SelectedDatasetChangedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.routedpropertychangedeventargs-1">RoutedPropertyChangedEventArgs</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L166">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SelectedPropertiesObject_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SelectedPropertiesObject*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SelectedPropertiesObject" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SelectedPropertiesObject">SelectedPropertiesObject</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the current object shown in the properties window.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object SelectedPropertiesObject { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L812">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SelectedVisualizationChangedCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SelectedVisualizationChangedCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SelectedVisualizationChangedCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SelectedVisualizationChangedCommand">SelectedVisualizationChangedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the selected visualization changed command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand&lt;RoutedPropertyChangedEventArgs&lt;object&gt;&gt; SelectedVisualizationChangedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.routedpropertychangedeventargs-1">RoutedPropertyChangedEventArgs</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L794">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SynchronizeTreesCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SynchronizeTreesCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_SynchronizeTreesCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.SynchronizeTreesCommand">SynchronizeTreesCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the synchronize trees command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand SynchronizeTreesCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L175">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_TitleText_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.TitleText*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_TitleText" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.TitleText">TitleText</h4>
+  <div class="markdown level1 summary"><p>Gets the text to display in the application's titlebar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string TitleText { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L220">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ToggleCursorFollowsMouseComand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ToggleCursorFollowsMouseComand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ToggleCursorFollowsMouseComand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ToggleCursorFollowsMouseComand">ToggleCursorFollowsMouseComand</h4>
+  <div class="markdown level1 summary"><p>Gets the toggle cursor follows mouse command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ToggleCursorFollowsMouseComand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L651">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ToggleLiveModeCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ToggleLiveModeCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ToggleLiveModeCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ToggleLiveModeCommand">ToggleLiveModeCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the toggle live mode command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ToggleLiveModeCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L571">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_TogglePlayRepeatCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.TogglePlayRepeatCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_TogglePlayRepeatCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.TogglePlayRepeatCommand">TogglePlayRepeatCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the toggle play repeat command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand TogglePlayRepeatCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L871">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_TreeSelectedCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.TreeSelectedCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_TreeSelectedCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.TreeSelectedCommand">TreeSelectedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command that executes after the user clicks on either the datasets or the visualizations tree views.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand&lt;string&gt; TreeSelectedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L156">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_VisualizationContainer_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.VisualizationContainer*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_VisualizationContainer" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.VisualizationContainer">VisualizationContainer</h4>
+  <div class="markdown level1 summary"><p>Gets the visualization container.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VisualizationContainer VisualizationContainer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.html">VisualizationContainer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L511">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ZoomToSelectionCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ZoomToSelectionCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ZoomToSelectionCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ZoomToSelectionCommand">ZoomToSelectionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the zoom to selection command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ZoomToSelectionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L491">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ZoomToSessionExtentsCommand_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ZoomToSessionExtentsCommand*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_ZoomToSessionExtentsCommand" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.ZoomToSessionExtentsCommand">ZoomToSessionExtentsCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the zoom to session extents command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L1061">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CreateAnnotationStream_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CreateAnnotationStream*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_CreateAnnotationStream" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.CreateAnnotationStream">CreateAnnotationStream()</h4>
+  <div class="markdown level1 summary"><p>Creates a new annotation stream in a partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateAnnotationStream()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L1032">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_MainWindowViewModel_OnClosing_" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.OnClosing*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_MainWindowViewModel_OnClosing" data-uid="Microsoft.Psi.PsiStudio.MainWindowViewModel.OnClosing">OnClosing()</h4>
+  <div class="markdown level1 summary"><p>Called when the main application window is closing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OnClosing()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the application should continue closing, or false if closing has been cancelled by the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/MainWindowViewModel.cs/#L34" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

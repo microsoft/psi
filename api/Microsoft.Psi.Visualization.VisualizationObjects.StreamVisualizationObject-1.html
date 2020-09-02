@@ -1,0 +1,1293 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StreamVisualizationObject&lt;TData&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StreamVisualizationObject&lt;TData&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1" class="text-break">Class StreamVisualizationObject&lt;TData&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a stream visualization object.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
+    <div class="level4"><span class="xref">StreamVisualizationObject&lt;TData&gt;</span></div>
+      <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html">InstantVisualizationObject&lt;TData&gt;</a></div>
+      <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html">TimelineVisualizationObject&lt;TData&gt;</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible">VisualizationObject.Visible</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate">VisualizationObject.DefaultViewTemplate</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container">VisualizationObject.Container</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel">VisualizationObject.Panel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator">VisualizationObject.Navigator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream">VisualizationObject.IsAudioStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected">VisualizationObject.IsConnected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver">VisualizationObject.ContractResolver</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems">VisualizationObject.GetAdditionalContextMenuItems()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString">VisualizationObject.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">VisualizationObject.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">VisualizationObject.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_InitNew">VisualizationObject.InitNew()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObject.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel">VisualizationObject.OnAddToPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class StreamVisualizationObject&lt;TData&gt; : VisualizationObject, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TData</span></td>
+        <td><p>The type of the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.#ctor">StreamVisualizationObject()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject&lt;TData&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamVisualizationObject()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L66">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CanSnapToStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CanSnapToStream">CanSnapToStream</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this visualization object can use the snap to stream functionality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public override bool CanSnapToStream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CanSnapToStream">VisualizationObject.CanSnapToStream</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentData_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CurrentData*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentData" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CurrentData">CurrentData</h4>
+  <div class="markdown level1 summary"><p>Gets the current data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public TData CurrentData { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TData</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CurrentOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CurrentOriginatingTime">CurrentOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time of the current data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public DateTime CurrentOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L111">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CurrentValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.CurrentValue">CurrentValue</h4>
+  <div class="markdown level1 summary"><p>Gets the current value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public Message&lt;TData&gt;? CurrentValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;TData&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L132">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Data_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.Data*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Data" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.Data">Data</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the data view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public ObservableKeyedCache&lt;DateTime, Message&lt;TData&gt;&gt;.ObservableKeyedView Data { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L241">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IconSource_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IconSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IconSource" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IconSource">IconSource</h4>
+  <div class="markdown level1 summary"><p>Gets the path to the visualization object's icon.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public override string IconSource { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IconSource">VisualizationObject.IconSource</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L228">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsBound_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsBound*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsBound" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsBound">IsBound</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the visualization object is currently bound to a datasource.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public bool IsBound { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L299">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsLive*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsLive">IsLive</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the source of the stream visualization object is live.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public bool IsLive { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L306">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsShared_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsShared*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsShared" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsShared">IsShared</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether type parameter T is Shared{} or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool IsShared { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L287">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsSnappedToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsSnappedToStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsSnappedToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.IsSnappedToStream">IsSnappedToStream</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this visualization object is currently the one being snapped to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public override bool IsSnappedToStream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsSnappedToStream">VisualizationObject.IsSnappedToStream</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L221">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_RequiresSupplementalMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.RequiresSupplementalMetadata*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_RequiresSupplementalMetadata" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.RequiresSupplementalMetadata">RequiresSupplementalMetadata</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the visualization object requires the stream's supplemental metadata to be readable and valid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public virtual bool RequiresSupplementalMetadata { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L233">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ShowZoomToStreamMenuItem_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ShowZoomToStreamMenuItem*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ShowZoomToStreamMenuItem" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ShowZoomToStreamMenuItem">ShowZoomToStreamMenuItem</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether to display the zoom to stream menuitem for this stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool ShowZoomToStreamMenuItem { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ShowZoomToStreamMenuItem">VisualizationObject.ShowZoomToStreamMenuItem</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L199">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterDisplayName_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamAdapterDisplayName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterDisplayName" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamAdapterDisplayName">StreamAdapterDisplayName</h4>
+  <div class="markdown level1 summary"><p>Gets the adapter type name (used by property browser).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(true)]
+[IgnoreDataMember]
+public string StreamAdapterDisplayName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L192">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterType_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamAdapterType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterType" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamAdapterType">StreamAdapterType</h4>
+  <div class="markdown level1 summary"><p>Gets the adapter type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public Type StreamAdapterType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L164">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamBinding*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamBinding">StreamBinding</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the stream binding.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[DataMember]
+public StreamBinding StreamBinding { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamBinding.html">StreamBinding</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L236">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamExtents_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamExtents*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamExtents" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamExtents">StreamExtents</h4>
+  <div class="markdown level1 summary"><p>Gets the extents of the visualization object from first message originating time to last message originating time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public TimeInterval StreamExtents { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L173">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamSource_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamSource" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.StreamSource">StreamSource</h4>
+  <div class="markdown level1 summary"><p>Gets the source for the stream data, or null if the visualization object is not currently bound to a source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public StreamSource StreamSource { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L208">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerType_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.SummarizerType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerType" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.SummarizerType">SummarizerType</h4>
+  <div class="markdown level1 summary"><p>Gets the summarizer type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public Type SummarizerType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L215">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerTypeDisplayName_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.SummarizerTypeDisplayName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerTypeDisplayName" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.SummarizerTypeDisplayName">SummarizerTypeDisplayName</h4>
+  <div class="markdown level1 summary"><p>Gets the summarizer type name (used by property browser).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(true)]
+[IgnoreDataMember]
+public string SummarizerTypeDisplayName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L73">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ToggleSnapToStreamCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ToggleSnapToStreamCommand">ToggleSnapToStreamCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the snap to stream command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ToggleSnapToStreamCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L294">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommandText_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ToggleSnapToStreamCommandText*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommandText" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ToggleSnapToStreamCommandText">ToggleSnapToStreamCommandText</h4>
+  <div class="markdown level1 summary"><p>Gets the text to display in the snap to stream menu item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public string ToggleSnapToStreamCommandText { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L91">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ZoomToStreamCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ZoomToStreamCommand">ZoomToStreamCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the zoom to stream command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ZoomToStreamCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L456">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetIndexForTime_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.GetIndexForTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.GetIndexForTime(System.DateTime,System.Int32,System.Func{System.Int32,System.DateTime})">GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Finds the index that is either exactly at currentTime, or closest to currentTime.
+Uses binary search to find exact match or location where match should be.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual int GetIndexForTime(DateTime currentTime, int count, Func&lt;int, DateTime&gt; timeAtIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">currentTime</span></td>
+        <td><p>Time to search for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>Number of entries to search within.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">timeAtIndex</span></td>
+        <td><p>Function that returns an index given a time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Best matching index or -1 if no qualifying match was found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L423">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetSnappedTime_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.GetSnappedTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetSnappedTime_System_DateTime_Microsoft_Psi_Visualization_Helpers_SnappingBehavior_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.GetSnappedTime(System.DateTime,Microsoft.Psi.Visualization.Helpers.SnappingBehavior)">GetSnappedTime(DateTime, SnappingBehavior)</h4>
+  <div class="markdown level1 summary"><p>Gets a snapped time based on a given time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The input time.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Helpers.SnappingBehavior.html">SnappingBehavior</a></td>
+        <td><span class="parametername">snappingBehavior</span></td>
+        <td><p>Timeline snapping behavior.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><p>The snapped time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L437">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetTimeOfNearestMessage_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.GetTimeOfNearestMessage*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetTimeOfNearestMessage_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_SnappingBehavior_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.GetTimeOfNearestMessage(System.DateTime,System.Int32,System.Func{System.Int32,System.DateTime},Microsoft.Psi.Visualization.Helpers.SnappingBehavior)">GetTimeOfNearestMessage(DateTime, Int32, Func&lt;Int32, DateTime&gt;, SnappingBehavior)</h4>
+  <div class="markdown level1 summary"><p>Returns the timestamp of the Message that's closest to currentTime.  Used by the &quot;Snap To Stream&quot; functionality.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected DateTime? GetTimeOfNearestMessage(DateTime currentTime, int count, Func&lt;int, DateTime&gt; timeAtIndex, SnappingBehavior snappingBehavior)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">currentTime</span></td>
+        <td><p>The time underneath the mouse cursor.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>Number of entries to search within.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">timeAtIndex</span></td>
+        <td><p>Function that returns an index given a time.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Helpers.SnappingBehavior.html">SnappingBehavior</a></td>
+        <td><span class="parametername">snappingBehavior</span></td>
+        <td><p>Timeline snapping behavior.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><p>The timestamp of the message that's temporally closest to currentTime.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L465">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnDataCollectionChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnDataCollectionChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when data collection contents have changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnDataCollectionChanged(NotifyCollectionChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.specialized.notifycollectionchangedeventargs">NotifyCollectionChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Collection changed event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L484">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnRemoveFromPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnRemoveFromPanel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnRemoveFromPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnRemoveFromPanel">OnRemoveFromPanel()</h4>
+  <div class="markdown level1 summary"><p>Implements a response to a notification the visualization object has been removed from the panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnRemoveFromPanel()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnRemoveFromPanel">VisualizationObject.OnRemoveFromPanel()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L495">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnStreamBound_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnStreamBound*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnStreamBound" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnStreamBound">OnStreamBound()</h4>
+  <div class="markdown level1 summary"><p>Called when the stream visualization object is bound to a data source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnStreamBound()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L502">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnStreamUnbound_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnStreamUnbound*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnStreamUnbound" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.OnStreamUnbound">OnStreamUnbound()</h4>
+  <div class="markdown level1 summary"><p>Called when the stream visualization object is unbound from a data source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnStreamUnbound()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L313">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.SetCurrentValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___System_Boolean_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.SetCurrentValue(System.Nullable{Microsoft.Psi.Message{`0}},System.Boolean)">SetCurrentValue(Nullable&lt;Message&lt;TData&gt;&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets the current value for the visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetCurrentValue(Message&lt;TData&gt;? value, bool incrementSharedRefCount = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;TData&gt;&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value to use as the new current value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">incrementSharedRefCount</span></td>
+        <td><p>True if the reference count of shared data should be automatically incremented, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L346">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ToggleSnapToStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.ToggleSnapToStream">ToggleSnapToStream()</h4>
+  <div class="markdown level1 summary"><p>Snaps or unsnaps the navigation cursor to the visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void ToggleSnapToStream()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleSnapToStream">VisualizationObject.ToggleSnapToStream()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L376">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.UpdateStreamSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject`1.UpdateStreamSource(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">UpdateStreamSource(SessionViewModel)</h4>
+  <div class="markdown level1 summary"><p>Updates the binding between a stream visualization object and a data source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateStreamSource(SessionViewModel activeSession)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td><span class="parametername">activeSession</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/StreamVisualizationObject{TData}.cs/#L25" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

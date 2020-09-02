@@ -1,0 +1,680 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class TypeSchema
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class TypeSchema
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Serialization.TypeSchema">
+  
+  
+  <h1 id="Microsoft_Psi_Serialization_TypeSchema" data-uid="Microsoft.Psi.Serialization.TypeSchema" class="text-break">Class TypeSchema
+  </h1>
+  <div class="markdown level0 summary"><p>The schema definition used when serializing and deserializing a type.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Metadata.html">Metadata</a></div>
+    <div class="level2"><span class="xref">TypeSchema</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Name">Metadata.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Id">Metadata.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_TypeName">Metadata.TypeName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerTypeName">Metadata.SerializerTypeName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Version">Metadata.Version</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerVersion">Metadata.SerializerVersion</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Kind">Metadata.Kind</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_CustomFlags">Metadata.CustomFlags</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Serialization.html">Microsoft.Psi.Serialization</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Serialization_TypeSchema_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class TypeSchema : Metadata</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L67">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema__ctor_" data-uid="Microsoft.Psi.Serialization.TypeSchema.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema__ctor_System_String_System_Int32_System_String_Microsoft_Psi_Serialization_TypeFlags_IEnumerable_Microsoft_Psi_Serialization_TypeMemberSchema__System_Int32_System_String_System_Int32_" data-uid="Microsoft.Psi.Serialization.TypeSchema.#ctor(System.String,System.Int32,System.String,Microsoft.Psi.Serialization.TypeFlags,IEnumerable{Microsoft.Psi.Serialization.TypeMemberSchema},System.Int32,System.String,System.Int32)">TypeSchema(String, Int32, String, TypeFlags, IEnumerable&lt;TypeMemberSchema&gt;, Int32, String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TypeSchema(string name, int id, string typeName, TypeFlags flags, IEnumerable&lt;TypeMemberSchema&gt; members, int version, string serializerTypeName = null, int serializerVersion = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The contract name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The id, as generated by <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html#Microsoft_Psi_Serialization_TypeSchema_GetId_System_String_">GetId(String)</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">typeName</span></td>
+        <td><p>The assembly-qualified type name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeFlags.html">TypeFlags</a></td>
+        <td><span class="parametername">flags</span></td>
+        <td><p>The type flags.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.Serialization.TypeMemberSchema.html">TypeMemberSchema</a>&gt;</td>
+        <td><span class="parametername">members</span></td>
+        <td><p>The serializable members of the type, in the correct order.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">version</span></td>
+        <td><p>The schema version, usually representing the version of the code that generated this schema.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">serializerTypeName</span></td>
+        <td><p>The name of the serializer that produced the schema.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">serializerVersion</span></td>
+        <td><p>The version of the serializer that produced the schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_Flags_" data-uid="Microsoft.Psi.Serialization.TypeSchema.Flags*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_Flags" data-uid="Microsoft.Psi.Serialization.TypeSchema.Flags">Flags</h4>
+  <div class="markdown level1 summary"><p>Gets the type flags.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TypeFlags Flags { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeFlags.html">TypeFlags</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L92">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_IsPartial_" data-uid="Microsoft.Psi.Serialization.TypeSchema.IsPartial*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_IsPartial" data-uid="Microsoft.Psi.Serialization.TypeSchema.IsPartial">IsPartial</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether type is partial.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPartial { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_Members_" data-uid="Microsoft.Psi.Serialization.TypeSchema.Members*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_Members" data-uid="Microsoft.Psi.Serialization.TypeSchema.Members">Members</h4>
+  <div class="markdown level1 summary"><p>Gets the serializable members of the type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TypeMemberSchema[] Members { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeMemberSchema.html">TypeMemberSchema</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_FromType_" data-uid="Microsoft.Psi.Serialization.TypeSchema.FromType*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_FromType_Type_Microsoft_Psi_Common_RuntimeInfo_Type_System_Int32_" data-uid="Microsoft.Psi.Serialization.TypeSchema.FromType(Type,Microsoft.Psi.Common.RuntimeInfo,Type,System.Int32)">FromType(Type, RuntimeInfo, Type, Int32)</h4>
+  <div class="markdown level1 summary"><p>Generates a schema for the specified type.
+If the type is DataContract-compatible (and version &gt; 0), the schema is based on DataContract rules (see <a href="https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/serializable-types?view=netframework-4.7">https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/serializable-types?view=netframework-4.7</a>)
+If not, the schema is based on binary serialization rules (see <a href="https://docs.microsoft.com/en-us/dotnet/api/system.serializableattribute?view=netframework-4.7">https://docs.microsoft.com/en-us/dotnet/api/system.serializableattribute?view=netframework-4.7</a>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TypeSchema FromType(Type type, RuntimeInfo runtimeVersion, Type serializer, int serializerVersion)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>The type to generate the schema for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
+        <td><span class="parametername">runtimeVersion</span></td>
+        <td><p>The version of the schema generation rules to use (same as <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion">RuntimeVersion</a>).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">serializer</span></td>
+        <td><p>The type of the serializer that will use this schema.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">serializerVersion</span></td>
+        <td><p>The version of the serializer that will use this schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a></td>
+        <td><p>A schema describing the serialization information for the specified type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L340">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_GetCompatibleMemberSet_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetCompatibleMemberSet*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_GetCompatibleMemberSet_Microsoft_Psi_Serialization_TypeSchema_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetCompatibleMemberSet(Microsoft.Psi.Serialization.TypeSchema)">GetCompatibleMemberSet(TypeSchema)</h4>
+  <div class="markdown level1 summary"><p>Retrieves the <see cref="!:MemberInfo"></see> information for each member of the type schema, based on a target schema specification.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;MemberInfo&gt; GetCompatibleMemberSet(TypeSchema targetSchema = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a></td>
+        <td><span class="parametername">targetSchema</span></td>
+        <td><p>The schema specification describing which members and in which order to enumerate.
+If null, all members are returned in their original order.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">MemberInfo</span>&gt;</td>
+        <td><p>A collection of <see cref="!:MemberInfo"></see> objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L220">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_GetContractName_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetContractName*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_GetContractName_Type_Microsoft_Psi_Common_RuntimeInfo_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetContractName(Type,Microsoft.Psi.Common.RuntimeInfo)">GetContractName(Type, RuntimeInfo)</h4>
+  <div class="markdown level1 summary"><p>Returns the contract name for a given type, which is either the DataContract name, if available, or the assembly-qualified type name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string GetContractName(Type type, RuntimeInfo runtimeVersion)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>The type to generate the name for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
+        <td><span class="parametername">runtimeVersion</span></td>
+        <td><p>The version of the schema generation rules to use (same as <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion">RuntimeVersion</a>).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The DataContract name, if available, or the assembly-qualified type name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L252">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_GetId_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetId*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_GetId_System_String_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetId(System.String)">GetId(String)</h4>
+  <div class="markdown level1 summary"><p>Returns a unique ID for the given contract name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int GetId(string contractName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">contractName</span></td>
+        <td><p>The contract name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A hash of the contract name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L242">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_GetId_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetId*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_GetId_Type_Microsoft_Psi_Common_RuntimeInfo_" data-uid="Microsoft.Psi.Serialization.TypeSchema.GetId(Type,Microsoft.Psi.Common.RuntimeInfo)">GetId(Type, RuntimeInfo)</h4>
+  <div class="markdown level1 summary"><p>Generates a unique ID for the type, based on the type's contract name
+(DataContract name, if available, or the assembly-qualified type name).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int GetId(Type type, RuntimeInfo runtimeVersion)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>The type to generate an ID for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
+        <td><span class="parametername">runtimeVersion</span></td>
+        <td><p>The version of the schema generation rules to use (same as <a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html#Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion">RuntimeVersion</a>).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A hash of the type's contract name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L264">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_SetSerializerInfo_" data-uid="Microsoft.Psi.Serialization.TypeSchema.SetSerializerInfo*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_SetSerializerInfo_System_String_System_Int32_" data-uid="Microsoft.Psi.Serialization.TypeSchema.SetSerializerInfo(System.String,System.Int32)">SetSerializerInfo(String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the serializer name and version, which a serializer needs to be able to interpret
+when initialized with an older schema.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSerializerInfo(string serializerType, int serializerVersion)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">serializerType</span></td>
+        <td><p>The serialize type name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">serializerVersion</span></td>
+        <td><p>The serializer version.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L275">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_TypeSchema_ValidateCompatibleWith_" data-uid="Microsoft.Psi.Serialization.TypeSchema.ValidateCompatibleWith*"></a>
+  <h4 id="Microsoft_Psi_Serialization_TypeSchema_ValidateCompatibleWith_Microsoft_Psi_Serialization_TypeSchema_" data-uid="Microsoft.Psi.Serialization.TypeSchema.ValidateCompatibleWith(Microsoft.Psi.Serialization.TypeSchema)">ValidateCompatibleWith(TypeSchema)</h4>
+  <div class="markdown level1 summary"><p>Validate whether two schemas are compatible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ValidateCompatibleWith(TypeSchema other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Other type schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Serialization_TypeSchema_ValidateCompatibleWith_Microsoft_Psi_Serialization_TypeSchema__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Schemas are compatible if all required fields are present in both (regardless of type).</p>
+</div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/TypeSchema.cs/#L50" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,946 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SessionViewModel
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SessionViewModel
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel" class="text-break">Class SessionViewModel
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a view model of a session.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><span class="xref">SessionViewModel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SessionViewModel : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L45">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel__ctor_Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Microsoft_Psi_Data_Session_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.#ctor(Microsoft.Psi.Visualization.ViewModels.DatasetViewModel,Microsoft.Psi.Data.Session)">SessionViewModel(DatasetViewModel, Session)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SessionViewModel(DatasetViewModel datasetViewModel, Session session)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a></td>
+        <td><span class="parametername">datasetViewModel</span></td>
+        <td><p>The view model of the dataset to which this session belongs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a></td>
+        <td><span class="parametername">session</span></td>
+        <td><p>The session for which to create the view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L161">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_AddPartitionCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.AddPartitionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_AddPartitionCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.AddPartitionCommand">AddPartitionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the add partition command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand AddPartitionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L145">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ContainsLivePartitions_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ContainsLivePartitions*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ContainsLivePartitions" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ContainsLivePartitions">ContainsLivePartitions</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this session contains live partitions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public bool ContainsLivePartitions { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L182">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ContextMenuOpeningCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ContextMenuOpeningCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ContextMenuOpeningCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ContextMenuOpeningCommand">ContextMenuOpeningCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command that executes when opening the session context menu.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public RelayCommand&lt;StackPanel&gt; ContextMenuOpeningCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.stackpanel">StackPanel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L64">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_DatasetViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.DatasetViewModel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_DatasetViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.DatasetViewModel">DatasetViewModel</h4>
+  <div class="markdown level1 summary"><p>Gets the dataset viewmodel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public DatasetViewModel DatasetViewModel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FirstMessageOriginatingTime_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FirstMessageOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FirstMessageOriginatingTime" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FirstMessageOriginatingTime">FirstMessageOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time of the first message in the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public DateTime? FirstMessageOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FirstMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FirstMessageOriginatingTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FirstMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FirstMessageOriginatingTimeString">FirstMessageOriginatingTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the originating time of the first message in the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FirstMessageOriginatingTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L139">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_IsCurrentSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.IsCurrentSession*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_IsCurrentSession" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.IsCurrentSession">IsCurrentSession</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this session is the parent dataset's current session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public bool IsCurrentSession { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L111">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_LastMessageOriginatingTime_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.LastMessageOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_LastMessageOriginatingTime" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.LastMessageOriginatingTime">LastMessageOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time of the last message in the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public DateTime? LastMessageOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_LastMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.LastMessageOriginatingTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_LastMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.LastMessageOriginatingTimeString">LastMessageOriginatingTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the originating time of the last message in the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string LastMessageOriginatingTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Name_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.Name*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Name" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the session name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L123">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.OriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_OriginatingTimeInterval" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.OriginatingTimeInterval">OriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public TimeInterval OriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L133">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_PartitionViewModels_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.PartitionViewModels*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_PartitionViewModels" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.PartitionViewModels">PartitionViewModels</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of partitions in this session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public ReadOnlyObservableCollection&lt;PartitionViewModel&gt; PartitionViewModels { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.readonlyobservablecollection-1">ReadOnlyObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html">PartitionViewModel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L168">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemoveSessionCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemoveSessionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemoveSessionCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemoveSessionCommand">RemoveSessionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the remove session command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand RemoveSessionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L188">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Session_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.Session*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Session" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.Session">Session</h4>
+  <div class="markdown level1 summary"><p>Gets the underlying session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Session Session { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L117">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_UiElementOpacity_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.UiElementOpacity*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_UiElementOpacity" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.UiElementOpacity">UiElementOpacity</h4>
+  <div class="markdown level1 summary"><p>Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public double UiElementOpacity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L175">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_VisualizeSessionCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.VisualizeSessionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_VisualizeSessionCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.VisualizeSessionCommand">VisualizeSessionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the visualize session command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand VisualizeSessionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L235">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_AddPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.AddPartition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_AddPartition" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.AddPartition">AddPartition()</h4>
+  <div class="markdown level1 summary"><p>Adds a new partition to the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddPartition()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L226">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_AddStorePartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.AddStorePartition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_AddStorePartition_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.AddStorePartition(Microsoft.Psi.Data.IStreamReader,System.String)">AddStorePartition(IStreamReader, String)</h4>
+  <div class="markdown level1 summary"><p>Creates and a new store partition but does not add it to the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddStorePartition(IStreamReader streamReader, string partitionName = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></td>
+        <td><span class="parametername">streamReader</span></td>
+        <td><p>The stream reader for the data store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">partitionName</span></td>
+        <td><p>The partition name. Default is null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L305">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FindStream_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FindStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FindStream_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FindStream(System.String,System.String)">FindStream(String, String)</h4>
+  <div class="markdown level1 summary"><p>Searches for a stream tree node within a session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamTreeNode FindStream(string partitionName, string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">partitionName</span></td>
+        <td><p>The name of the partition containing the stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream to search for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamTreeNode.html">StreamTreeNode</a></td>
+        <td><p>A stream tree node representing the stream, or null if the stream does not exist in the session.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L290">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_GetStreamSource_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.GetStreamSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_GetStreamSource_Microsoft_Psi_Visualization_Data_StreamBinding_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.GetStreamSource(Microsoft.Psi.Visualization.Data.StreamBinding)">GetStreamSource(StreamBinding)</h4>
+  <div class="markdown level1 summary"><p>Attempts to find a stream source in the session that matches a stream binding.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamSource GetStreamSource(StreamBinding streamBinding)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamBinding.html">StreamBinding</a></td>
+        <td><span class="parametername">streamBinding</span></td>
+        <td><p>A stream binding that describes the stream to bind to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><p>A stream source if a source was found to bind to, otherwise returns null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L261">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemovePartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemovePartition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemovePartition_Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemovePartition(Microsoft.Psi.Visualization.ViewModels.PartitionViewModel)">RemovePartition(PartitionViewModel)</h4>
+  <div class="markdown level1 summary"><p>Removes a specified partition from the underlying session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemovePartition(PartitionViewModel partitionViewModel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html">PartitionViewModel</a></td>
+        <td><span class="parametername">partitionViewModel</span></td>
+        <td><p>The view model of the partition to be removed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L271">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemoveSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemoveSession*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemoveSession" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemoveSession">RemoveSession()</h4>
+  <div class="markdown level1 summary"><p>Removes this session from the dataset it belongs to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveSession()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L317">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ToString_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ToString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ToString" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L193">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Update_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.Update*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Update" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.Update">Update()</h4>
+  <div class="markdown level1 summary"><p>Updates the session view model based on the latest version of the corresponding session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L27" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

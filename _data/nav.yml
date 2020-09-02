@@ -1,6 +1,0 @@
-main:
-    - { url: '/psi/tutorials', text: 'Tutorials' }
-    - { url: '/psi/topics', text: 'Topics' }
-    - { url: '/psi/samples', text: 'Samples' }
-    - { url: '/psi/api/classes.html', text: 'API' }
-    - { url: 'https://github.com/microsoft/psi', text: 'Code' }

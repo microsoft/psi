@@ -1,0 +1,671 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface ICameraIntrinsics
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface ICameraIntrinsics
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics">
+  
+  
+  <h1 id="Microsoft_Psi_Calibration_ICameraIntrinsics" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics" class="text-break">Interface ICameraIntrinsics
+  </h1>
+  <div class="markdown level0 summary"><p>ICameraIntrinsics defines our interface for specifying the intrinsics
+for a camera (i.e. converting from camera space coordinates into pixel
+coordinates).</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Calibration.html">Microsoft.Psi.Calibration</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Calibration.dll</h6>
+  <h5 id="Microsoft_Psi_Calibration_ICameraIntrinsics_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ICameraIntrinsics</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L59">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ClosedFormDistorts_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ClosedFormDistorts*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ClosedFormDistorts" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ClosedFormDistorts">ClosedFormDistorts</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the closed form equation of the Brown-Conrady Distortion model
+distorts or undistorts. i.e. if true then:
+Xdistorted = Xundistorted * (1+K1<em>R2+K2</em>R3+...
+otherwise:
+Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ClosedFormDistorts { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L40">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLength_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLength*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLength" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLength">FocalLength</h4>
+  <div class="markdown level1 summary"><p>Gets the focal length (in pixels).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double FocalLength { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L45">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLengthXY_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLengthXY*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLengthXY" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLengthXY">FocalLengthXY</h4>
+  <div class="markdown level1 summary"><p>Gets or the focal length separated in X and Y (in pixels).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Point2D FocalLengthXY { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L69">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageHeight_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageHeight*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageHeight" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageHeight">ImageHeight</h4>
+  <div class="markdown level1 summary"><p>Gets the height of the camera's image (in pixels).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ImageHeight { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L64">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageWidth_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageWidth*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageWidth" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageWidth">ImageWidth</h4>
+  <div class="markdown level1 summary"><p>Gets the width of the camera's image (in pixels).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ImageWidth { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L25">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_InvTransform_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.InvTransform*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_InvTransform" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.InvTransform">InvTransform</h4>
+  <div class="markdown level1 summary"><p>Gets the inverse of instrinsics matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Matrix&lt;double&gt; InvTransform { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L50">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_PrincipalPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.PrincipalPoint*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_PrincipalPoint" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.PrincipalPoint">PrincipalPoint</h4>
+  <div class="markdown level1 summary"><p>Gets the principal point (in pixels).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Point2D PrincipalPoint { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L30">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_RadialDistortion_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.RadialDistortion*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_RadialDistortion" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.RadialDistortion">RadialDistortion</h4>
+  <div class="markdown level1 summary"><p>Gets the radial distortion parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Vector&lt;double&gt; RadialDistortion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L35">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_TangentialDistortion_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TangentialDistortion*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_TangentialDistortion" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TangentialDistortion">TangentialDistortion</h4>
+  <div class="markdown level1 summary"><p>Gets the tangential distortion parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Vector&lt;double&gt; TangentialDistortion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L20">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_Transform_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.Transform*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_Transform" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.Transform">Transform</h4>
+  <div class="markdown level1 summary"><p>Gets the intrinsics matrix. This transform converts camera coordinates (in the camera's local space) into
+normalized device coordinates (NDC) ranging from -1 .. +1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Matrix&lt;double&gt; Transform { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L107">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_DistortPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.DistortPoint*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_DistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.DistortPoint(Point2D,Point2D@)">DistortPoint(Point2D, out Point2D)</h4>
+  <div class="markdown level1 summary"><p>Applies the distortion model to a point in the camera post-projection coordinates.</p>
+<p>The undistortion is defined by the following equations:
+Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd
+Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd
+where:
+Xd,Yd - distorted point's coordinates
+Xu,Yu - undistorted point's coordinates
+K0,K1 - radial distortion coefficients
+T0,T1 - tangential distortion coefficients
+r - sqrt(Xd<em>Xd+Yd</em>Yd)</p>
+<p>Newton's method is used to find the inverse of this. That is
+Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool DistortPoint(Point2D undistortedPt, out Point2D distortedPt)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">undistortedPt</span></td>
+        <td><p>The undistorted point in camera post-projection coordinates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">distortedPt</span></td>
+        <td><p>The distorted point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if 'distortedPt' contains the distorted point, or false if the algorithm did not converge.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToCameraSpace_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToCameraSpace*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToCameraSpace_Point2D_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToCameraSpace(Point2D,System.Double,System.Boolean)">ToCameraSpace(Point2D, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Unprojects a point from pixel space into 3D space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Point3D ToCameraSpace(Point2D point2D, double depth, bool undistort)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">point2D</span></td>
+        <td><p>Point in pixel space.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depth</span></td>
+        <td><p>Depth at pixel.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">undistort</span></td>
+        <td><p>Indicates whether to apply undistortion.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><p>Point in 3D space, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L77">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToPixelSpace_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToPixelSpace*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToPixelSpace_Point3D_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToPixelSpace(Point3D,System.Boolean)">ToPixelSpace(Point3D, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Projects a 3D point into the pixel space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Point2D ToPixelSpace(Point3D point3D, bool distort)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point3D</span></td>
+        <td><p>Point in 3D space, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">distort</span></td>
+        <td><p>Indicates whether to apply distortion.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><p>Point in pixel space.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_UndistortPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.UndistortPoint*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_UndistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.UndistortPoint(Point2D,Point2D@)">UndistortPoint(Point2D, out Point2D)</h4>
+  <div class="markdown level1 summary"><p>Applies the camera's radial and tangential undistortion to the specified (distorted) point.</p>
+<p>The undistortion is defined by the following equations:
+Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd
+Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd
+where:
+Xd,Yd - distorted point's coordinates
+Xu,Yu - undistorted point's coordinates
+K0,K1 - radial distortion coefficients
+T0,T1 - tangential distortion coefficients.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool UndistortPoint(Point2D distortedPt, out Point2D undistortedPt)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">distortedPt</span></td>
+        <td><p>Distorted point in camera post-projection coordinates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">undistortedPt</span></td>
+        <td><p>Returns the undistorted point in camera post-projection coordinates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if 'undistortedPoint' contains the undistorted point, or false if the algorithm did not converge.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

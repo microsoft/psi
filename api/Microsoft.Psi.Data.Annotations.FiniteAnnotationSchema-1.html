@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FiniteAnnotationSchema&lt;T&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FiniteAnnotationSchema&lt;T&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1">
+  
+  
+  <h1 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1" class="text-break">Class FiniteAnnotationSchema&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a finite annotation schema.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema-1.html">AnnotationSchema</a>&lt;T&gt;</div>
+    <div class="level2"><span class="xref">FiniteAnnotationSchema&lt;T&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationSchema.html">IAnnotationSchema</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema-1.html#Microsoft_Psi_Data_Annotations_AnnotationSchema_1_Name">AnnotationSchema&lt;T&gt;.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema-1.html#Microsoft_Psi_Data_Annotations_AnnotationSchema_1_DefaultValue">AnnotationSchema&lt;T&gt;.DefaultValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema-1.html#Microsoft_Psi_Data_Annotations_AnnotationSchema_1_Metadata">AnnotationSchema&lt;T&gt;.Metadata</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.Annotations.html">Microsoft.Psi.Data.Annotations</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Data.dll</h6>
+  <h5 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class FiniteAnnotationSchema&lt;T&gt; : AnnotationSchema&lt;T&gt;, IAnnotationSchema</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The datatype of the values in the schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L22">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1__ctor_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1__ctor_System_String_List_Microsoft_Psi_Data_Annotations_FiniteAnnotationSchemaValue__0____0_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.#ctor(System.String,List{Microsoft.Psi.Data.Annotations.FiniteAnnotationSchemaValue{`0}},`0)">FiniteAnnotationSchema(String, List&lt;FiniteAnnotationSchemaValue&lt;T&gt;&gt;, T)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema-1.html">FiniteAnnotationSchema&lt;T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FiniteAnnotationSchema(string name, List&lt;FiniteAnnotationSchemaValue&lt;T&gt;&gt; schemaValues, T defaultValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the finite annotation schema.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchemaValue-1.html">FiniteAnnotationSchemaValue</a>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">schemaValues</span></td>
+        <td><p>The collection of values for the schema.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">defaultValue</span></td>
+        <td><p>The default value for new instances of the schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L29">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_IsFiniteAnnotationSchema_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.IsFiniteAnnotationSchema*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_IsFiniteAnnotationSchema" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.IsFiniteAnnotationSchema">IsFiniteAnnotationSchema</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the annotation schema is a finite annotation schema.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsFiniteAnnotationSchema { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Data.Annotations.AnnotationSchema&lt;T&gt;.IsFiniteAnnotationSchema</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L34">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_SchemaValues_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.SchemaValues*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_SchemaValues" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.SchemaValues">SchemaValues</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the list of schema values in the schema.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;FiniteAnnotationSchemaValue&lt;T&gt;&gt; SchemaValues { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchemaValue-1.html">FiniteAnnotationSchemaValue</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_Values_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.Values*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_Values" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.Values">Values</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of valid values for the finite annotation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Values { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_GetMetadata_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.GetMetadata*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_GetMetadata__0_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.GetMetadata(`0)">GetMetadata(T)</h4>
+  <div class="markdown level1 summary"><p>Gets the schema metadata for a given schema value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override AnnotationSchemaValueMetadata GetMetadata(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value for which to retrieve the schema value metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchemaValueMetadata.html">AnnotationSchemaValueMetadata</a></td>
+        <td><p>The metadata for the schema value, or null if the valule is not valid.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Data.Annotations.AnnotationSchema&lt;T&gt;.GetMetadata(T)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L43">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_IsValid_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.IsValid*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_IsValid__0_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.IsValid(`0)">IsValid(T)</h4>
+  <div class="markdown level1 summary"><p>Determines whether a value is a valid schema value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsValid(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value to validate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the value is a valid schema value, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Data.Annotations.AnnotationSchema&lt;T&gt;.IsValid(T)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_SetMetadata_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.SetMetadata*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_FiniteAnnotationSchema_1_SetMetadata__0_Microsoft_Psi_Data_Annotations_AnnotationSchemaValueMetadata_" data-uid="Microsoft.Psi.Data.Annotations.FiniteAnnotationSchema`1.SetMetadata(`0,Microsoft.Psi.Data.Annotations.AnnotationSchemaValueMetadata)">SetMetadata(T, AnnotationSchemaValueMetadata)</h4>
+  <div class="markdown level1 summary"><p>Sets the metadata for a given annotation schema value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMetadata(T value, AnnotationSchemaValueMetadata metadata)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The schema value for which to set the metadata.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchemaValueMetadata.html">AnnotationSchemaValueMetadata</a></td>
+        <td><span class="parametername">metadata</span></td>
+        <td><p>The metadata to associate with the value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationSchema.html">IAnnotationSchema</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/FiniteAnnotationSchema{T}.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

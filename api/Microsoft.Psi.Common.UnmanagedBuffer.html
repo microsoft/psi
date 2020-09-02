@@ -1,0 +1,713 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class UnmanagedBuffer
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class UnmanagedBuffer
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Common.UnmanagedBuffer">
+  
+  
+  <h1 id="Microsoft_Psi_Common_UnmanagedBuffer" data-uid="Microsoft.Psi.Common.UnmanagedBuffer" class="text-break">Class UnmanagedBuffer
+  </h1>
+  <div class="markdown level0 summary"><p>Unmanaged buffer wrapper class.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">UnmanagedBuffer</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.html">Microsoft.Psi.Common</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Common_UnmanagedBuffer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class UnmanagedBuffer : IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L45">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_Data_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Data*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Data" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Data">Data</h4>
+  <div class="markdown level1 summary"><p>Gets a pointer to underlying data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IntPtr Data { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L50">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_Size_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Size*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Size" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Size">Size</h4>
+  <div class="markdown level1 summary"><p>Gets size of underlying data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Size { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_Allocate_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Allocate*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Allocate_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Allocate(System.Int32)">Allocate(Int32)</h4>
+  <div class="markdown level1 summary"><p>Allocate unmanaged buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnmanagedBuffer Allocate(int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Size (bytes) to allocate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><p>Allocated unmanaged buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L112">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_Clone_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Clone*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Clone" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clone unmanaged buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnmanagedBuffer Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><p>Cloned unmanaged buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L226">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(IntPtr,System.Int32)">CopyFrom(IntPtr, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copy from address.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(IntPtr source, int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Source address from which to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Size (bytes) to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L189">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_Microsoft_Psi_Common_UnmanagedBuffer_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(Microsoft.Psi.Common.UnmanagedBuffer)">CopyFrom(UnmanagedBuffer)</h4>
+  <div class="markdown level1 summary"><p>Copy from unmanaged buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(UnmanagedBuffer source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Unmanaged buffer from which to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L207">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_System_Byte___" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(System.Byte[])">CopyFrom(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Copy from managed array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(byte[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Managed array from which to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L175">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(IntPtr,System.Int32)">CopyTo(IntPtr, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copy unmanaged buffer to address.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(IntPtr destination, int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>Destination address to which to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Size (bytes) to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L123">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_Microsoft_Psi_Common_UnmanagedBuffer_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(Microsoft.Psi.Common.UnmanagedBuffer)">CopyTo(UnmanagedBuffer)</h4>
+  <div class="markdown level1 summary"><p>Copy this unmanaged buffer to another instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(UnmanagedBuffer destination)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>Destination instance to which to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L156">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_System_Byte___" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(System.Byte[])">CopyTo(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Copy unmanaged buffer to managed array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(byte[] destination)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>Destination array to which to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CreateCopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CreateCopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CreateCopyFrom_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CreateCopyFrom(IntPtr,System.Int32)">CreateCopyFrom(IntPtr, Int32)</h4>
+  <div class="markdown level1 summary"><p>Create a copy of existing unmanaged memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnmanagedBuffer CreateCopyFrom(IntPtr data, int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">data</span></td>
+        <td><p>Pointer to data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Data size (bytes).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><p>Wrapped copy of unmanaged buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L101">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_CreateCopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CreateCopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CreateCopyFrom_System_Byte___" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CreateCopyFrom(System.Byte[])">CreateCopyFrom(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Create a copy of existing managed data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnmanagedBuffer CreateCopyFrom(byte[] data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>Data to be copied.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><p>Wrapped copy to unmanaged buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L237">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_Dispose_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Dispose" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L37">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_Finalize_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Finalize*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Finalize" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Finalizes an instance of the <a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L145">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_ReadBytes_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.ReadBytes*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_ReadBytes_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.ReadBytes(System.Int32,System.Int32)">ReadBytes(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Read bytes from unmanaged buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] ReadBytes(int count, int offset = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>Count of bytes to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>Offset into buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><p>Bytes having been copied.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L78">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_UnmanagedBuffer_WrapIntPtr_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.WrapIntPtr*"></a>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_WrapIntPtr_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.WrapIntPtr(IntPtr,System.Int32)">WrapIntPtr(IntPtr, Int32)</h4>
+  <div class="markdown level1 summary"><p>Wrap existing unmanaged memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnmanagedBuffer WrapIntPtr(IntPtr data, int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">data</span></td>
+        <td><p>Pointer to data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Data size (bytes).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.UnmanagedBuffer.html">UnmanagedBuffer</a></td>
+        <td><p>Wrapped unmanaged buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

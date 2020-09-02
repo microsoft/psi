@@ -1,0 +1,1132 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PartitionViewModel
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PartitionViewModel
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel" class="text-break">Class PartitionViewModel
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a view model of a partition.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><span class="xref">PartitionViewModel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class PartitionViewModel : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel__ctor_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Microsoft_Psi_Data_IPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.#ctor(Microsoft.Psi.Visualization.ViewModels.SessionViewModel,Microsoft.Psi.Data.IPartition)">PartitionViewModel(SessionViewModel, IPartition)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html">PartitionViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PartitionViewModel(SessionViewModel sessionViewModel, IPartition partition)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td><span class="parametername">sessionViewModel</span></td>
+        <td><p>The view model of the session to which this partition belongs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IPartition.html">IPartition</a></td>
+        <td><span class="parametername">partition</span></td>
+        <td><p>The partition for which to create the view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L278">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_ContextMenuOpeningCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.ContextMenuOpeningCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_ContextMenuOpeningCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.ContextMenuOpeningCommand">ContextMenuOpeningCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command that executes when opening the partition context menu.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public RelayCommand&lt;StackPanel&gt; ContextMenuOpeningCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.stackpanel">StackPanel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L144">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_DisplayName_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.DisplayName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_DisplayName" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.DisplayName">DisplayName</h4>
+  <div class="markdown level1 summary"><p>Gets the display name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string DisplayName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L186">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_FirstMessageOriginatingTime_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.FirstMessageOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_FirstMessageOriginatingTime" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.FirstMessageOriginatingTime">FirstMessageOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time of the first message in the partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public DateTime? FirstMessageOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L164">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_FirstMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.FirstMessageOriginatingTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_FirstMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.FirstMessageOriginatingTimeString">FirstMessageOriginatingTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the originating time of the first message in the partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FirstMessageOriginatingTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L259">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IconSource_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IconSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IconSource" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IconSource">IconSource</h4>
+  <div class="markdown level1 summary"><p>Gets the icon to use in UI representations of this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string IconSource { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L210">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IsDirty_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IsDirty*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IsDirty" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IsDirty">IsDirty</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the partition is dirty (i.e. has uncommitted changes).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public bool IsDirty { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L226">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IsLivePartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IsLivePartition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IsLivePartition" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IsLivePartition">IsLivePartition</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether this partition is currently receiving new messages from an active writer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public bool IsLivePartition { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L247">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IsPsiPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IsPsiPartition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_IsPsiPartition" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.IsPsiPartition">IsPsiPartition</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether this partition is a \psi partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public bool IsPsiPartition { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L192">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_LastMessageOriginatingTime_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.LastMessageOriginatingTime*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_LastMessageOriginatingTime" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.LastMessageOriginatingTime">LastMessageOriginatingTime</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time of the last message in the partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public DateTime? LastMessageOriginatingTime { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L172">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_LastMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.LastMessageOriginatingTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_LastMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.LastMessageOriginatingTimeString">LastMessageOriginatingTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the originating time of the last message in the partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string LastMessageOriginatingTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Name_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Name*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Name" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the partition name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L180">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.OriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_OriginatingTimeInterval" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.OriginatingTimeInterval">OriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public TimeInterval OriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L271">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_RemovePartitionCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.RemovePartitionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_RemovePartitionCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.RemovePartitionCommand">RemovePartitionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the remove partition command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand RemovePartitionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SaveChangesCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SaveChangesCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SaveChangesCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SaveChangesCommand">SaveChangesCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the save partition command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand SaveChangesCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L198">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SessionViewModel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SessionViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SessionViewModel">SessionViewModel</h4>
+  <div class="markdown level1 summary"><p>Gets the session that this partition belongs to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public SessionViewModel SessionViewModel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L204">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StoreName_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StoreName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StoreName" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StoreName">StoreName</h4>
+  <div class="markdown level1 summary"><p>Gets the store name of this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string StoreName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L150">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StorePath_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StorePath*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StorePath" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StorePath">StorePath</h4>
+  <div class="markdown level1 summary"><p>Gets the store path of this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string StorePath { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L157">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StreamReaderTypeName_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StreamReaderTypeName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StreamReaderTypeName" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StreamReaderTypeName">StreamReaderTypeName</h4>
+  <div class="markdown level1 summary"><p>Gets the stream reader type name of this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string StreamReaderTypeName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L216">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StreamTreeRoot_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StreamTreeRoot*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_StreamTreeRoot" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.StreamTreeRoot">StreamTreeRoot</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the root stream tree node of this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public StreamTreeNode StreamTreeRoot { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamTreeNode.html">StreamTreeNode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L265">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_UiElementOpacity_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.UiElementOpacity*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_UiElementOpacity" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.UiElementOpacity">UiElementOpacity</h4>
+  <div class="markdown level1 summary"><p>Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public double UiElementOpacity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L419">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_ChangeStoreStatus_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.ChangeStoreStatus*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_ChangeStoreStatus_System_Boolean_System_String___" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.ChangeStoreStatus(System.Boolean,System.String[])">ChangeStoreStatus(Boolean, String[])</h4>
+  <div class="markdown level1 summary"><p>Called when the status of the data store backing this partition changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ChangeStoreStatus(bool isDirty, string[] streamNames)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isDirty</span></td>
+        <td><p>If true then the store and streams are now dirty.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>[]</td>
+        <td><span class="parametername">streamNames</span></td>
+        <td><p>The list of names of streams in the partition whose status has changed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L438">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Dispose_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Dispose" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Finalize_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Finalize*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Finalize" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Finalizes an instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html">PartitionViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L334">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_FindStream_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.FindStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_FindStream_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.FindStream(System.String)">FindStream(String)</h4>
+  <div class="markdown level1 summary"><p>Searches for a stream within a partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamTreeNode FindStream(string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream to search for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamTreeNode.html">StreamTreeNode</a></td>
+        <td><p>A stream tree node representing the stream, or null if the stream does not exist in the partition.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L291">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_GetStreamSource_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.GetStreamSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_GetStreamSource_Microsoft_Psi_Visualization_Data_StreamBinding_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.GetStreamSource(Microsoft.Psi.Visualization.Data.StreamBinding)">GetStreamSource(StreamBinding)</h4>
+  <div class="markdown level1 summary"><p>Attempts to find a stream source in the partition that matches a stream binding.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamSource GetStreamSource(StreamBinding streamBinding)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamBinding.html">StreamBinding</a></td>
+        <td><span class="parametername">streamBinding</span></td>
+        <td><p>A stream binding that describes the stream to bind to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><p>A stream source if a source was found to bind to, otherwise returns null.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L395">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_PromptSaveChangesAndContinue_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.PromptSaveChangesAndContinue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_PromptSaveChangesAndContinue" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.PromptSaveChangesAndContinue">PromptSaveChangesAndContinue()</h4>
+  <div class="markdown level1 summary"><p>Prompts the user to save changes if the partition is dirty before continuing with an operation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool PromptSaveChangesAndContinue()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the current operation should continue, false if the current operation should be cancelled.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L380">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_RemovePartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.RemovePartition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_RemovePartition" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.RemovePartition">RemovePartition()</h4>
+  <div class="markdown level1 summary"><p>Removes this partition from the session that it belongs to. If the partition
+has unsaved changes, the user will be prompted to save them before continuing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RemovePartition()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the partiton was removed, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L347">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SaveChanges_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SaveChanges*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SaveChanges" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SaveChanges">SaveChanges()</h4>
+  <div class="markdown level1 summary"><p>Saves all uncommitted changes of all streams in the partition to the store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SaveChanges()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L315">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SelectNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SelectNode*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_SelectNode_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.SelectNode(System.String)">SelectNode(String)</h4>
+  <div class="markdown level1 summary"><p>Finds a node in the partition by name and selects it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SelectNode(string nodeName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">nodeName</span></td>
+        <td><p>The full name of the node to select.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the stream was found and selected, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L444">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_ToString_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.ToString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_ToString" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L41" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4">
+  
+  
+  <h1 id="Microsoft_Psi_Components_ParallelSparseSplitter_4" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4" class="text-break">Class ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Implements the splitter for the <a class="xref" href="Microsoft.Psi.Components.ParallelSparseDo-3.html">ParallelSparseDo&lt;TIn, TBranchKey, TBranchIn&gt;</a>
+and <a class="xref" href="Microsoft.Psi.Components.ParallelSparseSelect-5.html">ParallelSparseSelect&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;</a> components.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;TIn&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Components.html">Microsoft.Psi.Components</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Components_ParallelSparseSplitter_4_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt; : object, IConsumer&lt;TIn&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td><p>The input message type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TBranchKey</span></td>
+        <td><p>The key type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TBranchIn</span></td>
+        <td><p>The branch input message type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TBranchOut</span></td>
+        <td><p>The branch output message type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelSparseSplitter.cs/#L63">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelSparseSplitter_4__ctor_" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelSparseSplitter_4__ctor_Microsoft_Psi_Pipeline_Func__0_Dictionary__1__2___Action__1_Microsoft_Psi_IProducer__2___Func__1_Dictionary__1__2__DateTime_System_ValueTuple_System_Boolean_DateTime___" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.#ctor(Microsoft.Psi.Pipeline,Func{`0,Dictionary{`1,`2}},Action{`1,Microsoft.Psi.IProducer{`2}},Func{`1,Dictionary{`1,`2},DateTime,System.ValueTuple{System.Boolean,DateTime}})">ParallelSparseSplitter(Pipeline, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Action&lt;TBranchKey, IProducer&lt;TBranchIn&gt;&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.ParallelSparseSplitter-4.html">ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ParallelSparseSplitter(Pipeline pipeline, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt; splitter, Action&lt;TBranchKey, IProducer&lt;TBranchIn&gt;&gt; action, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (bool, DateTime)&gt; branchTerminationPolicy)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TIn, <span class="xref">Dictionary</span>&lt;TBranchKey, TBranchIn&gt;&gt;</td>
+        <td><span class="parametername">splitter</span></td>
+        <td><p>A function that generates a dictionary of key-value pairs for each given input message.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;TBranchKey, <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TBranchIn&gt;&gt;</td>
+        <td><span class="parametername">action</span></td>
+        <td><p>Action to perform in parallel.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TBranchKey, <span class="xref">Dictionary</span>&lt;TBranchKey, TBranchIn&gt;, <span class="xref">DateTime</span>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <span class="xref">DateTime</span>&gt;&gt;</td>
+        <td><span class="parametername">branchTerminationPolicy</span></td>
+        <td><p>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelSparseSplitter.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelSparseSplitter_4__ctor_" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelSparseSplitter_4__ctor_Microsoft_Psi_Pipeline_Func__0_Dictionary__1__2___Func__1_Microsoft_Psi_IProducer__2__Microsoft_Psi_IProducer__3___Func__1_Dictionary__1__2__DateTime_System_ValueTuple_System_Boolean_DateTime___Action_Microsoft_Psi_IProducer__3___" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.#ctor(Microsoft.Psi.Pipeline,Func{`0,Dictionary{`1,`2}},Func{`1,Microsoft.Psi.IProducer{`2},Microsoft.Psi.IProducer{`3}},Func{`1,Dictionary{`1,`2},DateTime,System.ValueTuple{System.Boolean,DateTime}},Action{Microsoft.Psi.IProducer{`3}})">ParallelSparseSplitter(Pipeline, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt;, Func&lt;TBranchKey, IProducer&lt;TBranchIn&gt;, IProducer&lt;TBranchOut&gt;&gt;, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (Boolean, DateTime)&gt;, Action&lt;IProducer&lt;TBranchOut&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.ParallelSparseSplitter-4.html">ParallelSparseSplitter&lt;TIn, TBranchKey, TBranchIn, TBranchOut&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ParallelSparseSplitter(Pipeline pipeline, Func&lt;TIn, Dictionary&lt;TBranchKey, TBranchIn&gt;&gt; splitter, Func&lt;TBranchKey, IProducer&lt;TBranchIn&gt;, IProducer&lt;TBranchOut&gt;&gt; transform, Func&lt;TBranchKey, Dictionary&lt;TBranchKey, TBranchIn&gt;, DateTime, (bool, DateTime)&gt; branchTerminationPolicy, Action&lt;IProducer&lt;TBranchOut&gt;&gt; connectToJoin)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TIn, <span class="xref">Dictionary</span>&lt;TBranchKey, TBranchIn&gt;&gt;</td>
+        <td><span class="parametername">splitter</span></td>
+        <td><p>A function that splits the input by generating a dictionary of key-value pairs for each given input message.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TBranchKey, <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TBranchIn&gt;, <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TBranchOut&gt;&gt;</td>
+        <td><span class="parametername">transform</span></td>
+        <td><p>Function mapping keyed input producers to output producers.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TBranchKey, <span class="xref">Dictionary</span>&lt;TBranchKey, TBranchIn&gt;, <span class="xref">DateTime</span>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <span class="xref">DateTime</span>&gt;&gt;</td>
+        <td><span class="parametername">branchTerminationPolicy</span></td>
+        <td><p>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TBranchOut&gt;&gt;</td>
+        <td><span class="parametername">connectToJoin</span></td>
+        <td><p>Action that connects the results of a parallel branch back to join.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelSparseSplitter.cs/#L82">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelSparseSplitter_4_ActiveBranches_" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.ActiveBranches*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelSparseSplitter_4_ActiveBranches" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.ActiveBranches">ActiveBranches</h4>
+  <div class="markdown level1 summary"><p>Gets the active branches emitter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;Dictionary&lt;TBranchKey, int&gt;&gt; ActiveBranches { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<span class="xref">Dictionary</span>&lt;TBranchKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelSparseSplitter.cs/#L77">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_ParallelSparseSplitter_4_In_" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.In*"></a>
+  <h4 id="Microsoft_Psi_Components_ParallelSparseSplitter_4_In" data-uid="Microsoft.Psi.Components.ParallelSparseSplitter`4.In">In</h4>
+  <div class="markdown level1 summary"><p>Gets the input we receive messages on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;TIn&gt; In { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Receiver-1.html">Receiver</a>&lt;TIn&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer&lt;TIn&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/ParallelSparseSplitter.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

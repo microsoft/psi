@@ -1,0 +1,617 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Serializer
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Serializer
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Serializer">
+  
+  
+  <h1 id="Microsoft_Psi_Serializer" data-uid="Microsoft.Psi.Serializer" class="text-break">Class Serializer
+  </h1>
+  <div class="markdown level0 summary"><p>The main entry point into the serialization subsystem. Provides methods to serialize, deserialize and clone objects.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Serializer</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Serializer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Serializer : object</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Serializer_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>For efficiency reasons the Serializer doesn't serialize any type information, and as a result it requires the user to identify the type being deserialized.
+In the case of polymorphic fields, the serializer collects type information in the Schema instance passed in to Serialize.
+The caller needs to provide this type info back when calling Deserialize.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L126">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_Clear_" data-uid="Microsoft.Psi.Serializer.Clear*"></a>
+  <h4 id="Microsoft_Psi_Serializer_Clear__1___0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serializer.Clear``1(``0@,Microsoft.Psi.Serialization.SerializationContext)">Clear&lt;T&gt;(ref T, SerializationContext)</h4>
+  <div class="markdown level1 summary"><p>Clears the instance in preparation for caching it for future reuse as a cloning or deserialization target.
+The method is expected to call Serializer.Clear on all reference-type fields.
+This method is for custom serializers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Clear&lt;T&gt;(ref T target, SerializationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>The instance to clear.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>A context object containing accumulated type mappings and object references.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to clear.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_Clone_" data-uid="Microsoft.Psi.Serializer.Clone*"></a>
+  <h4 id="Microsoft_Psi_Serializer_Clone__1___0___0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serializer.Clone``1(``0,``0@,Microsoft.Psi.Serialization.SerializationContext)">Clone&lt;T&gt;(T, ref T, SerializationContext)</h4>
+  <div class="markdown level1 summary"><p>Makes a deep clone of the given object graph into the target object graph,
+avoiding any allocations, provided that the target object graph has the same shape.
+Call this override from within custom serializers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Clone&lt;T&gt;(T instance, ref T target, SerializationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>An existing instance to clone into.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>An optional serialization context.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L111">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_DeepClone_" data-uid="Microsoft.Psi.Serializer.DeepClone*"></a>
+  <h4 id="Microsoft_Psi_Serializer_DeepClone__1___0_" data-uid="Microsoft.Psi.Serializer.DeepClone``1(``0)">DeepClone&lt;T&gt;(T)</h4>
+  <div class="markdown level1 summary"><p>Creates a deep clone of the given object.
+Except for the case of simple value types, this method allocates a new object tree to clone into.
+This can become a performance bottleneck when the clone operation needs to be executed many times.
+In these cases, the other Clone overrides which avoid allocations perform significantly better.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T DeepClone&lt;T&gt;(this T instance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The deep-clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_DeepClone_" data-uid="Microsoft.Psi.Serializer.DeepClone*"></a>
+  <h4 id="Microsoft_Psi_Serializer_DeepClone__1___0___0__" data-uid="Microsoft.Psi.Serializer.DeepClone``1(``0,``0@)">DeepClone&lt;T&gt;(T, ref T)</h4>
+  <div class="markdown level1 summary"><p>Makes a deep clone of the given object graph into the target object graph,
+avoiding any allocations (provided that the target object tree has the same shape).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void DeepClone&lt;T&gt;(this T instance, ref T target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>An existing instance to clone into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L95">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_DeepClone_" data-uid="Microsoft.Psi.Serializer.DeepClone*"></a>
+  <h4 id="Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__" data-uid="Microsoft.Psi.Serializer.DeepClone``1(``0,Microsoft.Psi.IRecyclingPool{``0})">DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a deep clone of the given object.
+The method will clone into an unused target instance obtained from the specified recycler.
+The caller should return the clone to the recycler when done.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T DeepClone&lt;T&gt;(this T instance, IRecyclingPool&lt;T&gt; recycler)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IRecyclingPool-1.html">IRecyclingPool</a>&lt;T&gt;</td>
+        <td><span class="parametername">recycler</span></td>
+        <td><p>An object recycling cache.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The deep-clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to clone.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L44">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_Deserialize_" data-uid="Microsoft.Psi.Serializer.Deserialize*"></a>
+  <h4 id="Microsoft_Psi_Serializer_Deserialize__1_Microsoft_Psi_Common_BufferReader___0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serializer.Deserialize``1(Microsoft.Psi.Common.BufferReader,``0@,Microsoft.Psi.Serialization.SerializationContext)">Deserialize&lt;T&gt;(BufferReader, ref T, SerializationContext)</h4>
+  <div class="markdown level1 summary"><p>Deserializes the given instance from the specified stream.
+Call this override from within custom serializers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Deserialize&lt;T&gt;(BufferReader reader, ref T target, SerializationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.BufferReader.html">BufferReader</a></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The stream reader to deserialize from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>An optional existing instance to clone into.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>A context object containing accumulated type and object references.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to deserialize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L143">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_IsImmutableType_" data-uid="Microsoft.Psi.Serializer.IsImmutableType*"></a>
+  <h4 id="Microsoft_Psi_Serializer_IsImmutableType__1" data-uid="Microsoft.Psi.Serializer.IsImmutableType``1">IsImmutableType&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Returns true if the type is immutable (it is a primitive type or all its fields are read-only immutable types).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsImmutableType&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the type is immutable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type to analyze.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L29">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serializer_Serialize_" data-uid="Microsoft.Psi.Serializer.Serialize*"></a>
+  <h4 id="Microsoft_Psi_Serializer_Serialize__1_Microsoft_Psi_Common_BufferWriter___0_Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serializer.Serialize``1(Microsoft.Psi.Common.BufferWriter,``0,Microsoft.Psi.Serialization.SerializationContext)">Serialize&lt;T&gt;(BufferWriter, T, SerializationContext)</h4>
+  <div class="markdown level1 summary"><p>Serializes the given instance to the specified stream.
+Call this override from within custom serializers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Serialize&lt;T&gt;(BufferWriter writer, T instance, SerializationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.BufferWriter.html">BufferWriter</a></td>
+        <td><span class="parametername">writer</span></td>
+        <td><p>The stream writer to serialize to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to serialize.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>A context object containing accumulated type and object references.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object to serialize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/Serializer.cs/#L19" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

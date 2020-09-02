@@ -1,0 +1,967 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DatasetViewModel
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DatasetViewModel
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel" class="text-break">Class DatasetViewModel
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a view model of a dataset.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><span class="xref">DatasetViewModel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DatasetViewModel : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor">DatasetViewModel()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DatasetViewModel()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L45">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_Microsoft_Psi_Data_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor(Microsoft.Psi.Data.Dataset)">DatasetViewModel(Dataset)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DatasetViewModel(Dataset dataset)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a></td>
+        <td><span class="parametername">dataset</span></td>
+        <td><p>The dataset for which to create the view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L139">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ContextMenuOpeningCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ContextMenuOpeningCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ContextMenuOpeningCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ContextMenuOpeningCommand">ContextMenuOpeningCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command that executes when opening the dataset context menu.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public RelayCommand&lt;StackPanel&gt; ContextMenuOpeningCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.stackpanel">StackPanel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionCommand">CreateSessionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the create session command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand CreateSessionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L132">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStoreCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStoreCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStoreCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStoreCommand">CreateSessionFromStoreCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the create session command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand CreateSessionFromStoreCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CurrentSessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CurrentSessionViewModel*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CurrentSessionViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CurrentSessionViewModel">CurrentSessionViewModel</h4>
+  <div class="markdown level1 summary"><p>Gets the current session view model for this dataset view model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public SessionViewModel CurrentSessionViewModel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L145">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Dataset*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Dataset" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Dataset">Dataset</h4>
+  <div class="markdown level1 summary"><p>Gets the underlying dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dataset Dataset { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L98">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_FileName_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.FileName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_FileName" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.FileName">FileName</h4>
+  <div class="markdown level1 summary"><p>Gets the filename of the underlying dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FileName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Name_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Name*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Name" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the name of this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L115">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.OriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_OriginatingTimeInterval" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.OriginatingTimeInterval">OriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public TimeInterval OriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SessionViewModels_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SessionViewModels*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SessionViewModels" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SessionViewModels">SessionViewModels</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of sessions in this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public ReadOnlyObservableCollection&lt;SessionViewModel&gt; SessionViewModels { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.readonlyobservablecollection-1">ReadOnlyObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L182">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStore_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStore*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStore_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStore(Microsoft.Psi.Data.IStreamReader,System.String)">CreateFromStore(IStreamReader, String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new dataset from an existing data store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DatasetViewModel CreateFromStore(IStreamReader streamReader, string partitionName = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></td>
+        <td><span class="parametername">streamReader</span></td>
+        <td><p>The stream reader of the data store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">partitionName</span></td>
+        <td><p>The partition name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a></td>
+        <td><p>The newly created dataset view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L196">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStoreAsync_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStoreAsync*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStoreAsync_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStoreAsync(Microsoft.Psi.Data.IStreamReader,System.String)">CreateFromStoreAsync(IStreamReader, String)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously creates a new dataset from an existing data store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Task&lt;DatasetViewModel&gt; CreateFromStoreAsync(IStreamReader streamReader, string partitionName = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></td>
+        <td><span class="parametername">streamReader</span></td>
+        <td><p>The stream reader of the data store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">partitionName</span></td>
+        <td><p>The partition name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a>&gt;</td>
+        <td><p>A task that represents the asynchronous operation. The value of the TResult parameter
+contains the newly created dataset view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L287">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSession*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSession" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSession">CreateSession()</h4>
+  <div class="markdown level1 summary"><p>Creates a new session within the dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateSession()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L296">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore">CreateSessionFromStore()</h4>
+  <div class="markdown level1 summary"><p>Creates a new session from a store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateSessionFromStore()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L322">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore_System_String_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore(System.String,Microsoft.Psi.Data.IStreamReader,System.String)">CreateSessionFromStore(String, IStreamReader, String)</h4>
+  <div class="markdown level1 summary"><p>Creates and adds a session to this dataset using the specified parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateSessionFromStore(string sessionName, IStreamReader streamReader, string partitionName = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">sessionName</span></td>
+        <td><p>The name of the session.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></td>
+        <td><span class="parametername">streamReader</span></td>
+        <td><p>The stream reader for the data store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">partitionName</span></td>
+        <td><p>The partition name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L152">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Load_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Load*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Load_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Load(System.String)">Load(String)</h4>
+  <div class="markdown level1 summary"><p>Loads a dataset from the specified file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DatasetViewModel Load(string filename)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>The name of the file that contains the dataset to be loaded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a></td>
+        <td><p>The newly loaded dataset view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L169">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_LoadAsync_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.LoadAsync*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_LoadAsync_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.LoadAsync(System.String)">LoadAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously loads a dataset from the specified file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Task&lt;DatasetViewModel&gt; LoadAsync(string filename)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>The name of the file that contains the dataset to be loaded.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a>&gt;</td>
+        <td><p>A task that represents the asynchronous operation. The value of the TResult parameter
+contains the newly loaded dataset view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L354">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_RemoveSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.RemoveSession*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_RemoveSession_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.RemoveSession(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">RemoveSession(SessionViewModel)</h4>
+  <div class="markdown level1 summary"><p>Removes the specified session from the underlying dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveSession(SessionViewModel sessionViewModel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td><span class="parametername">sessionViewModel</span></td>
+        <td><p>The view model of the session to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L332">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Save_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Save*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Save_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Save(System.String)">Save(String)</h4>
+  <div class="markdown level1 summary"><p>Saves this dataset to the specified file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Save(string filename)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>The name of the file to save this dataset into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L343">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SaveAsync_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SaveAsync*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SaveAsync_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SaveAsync(System.String)">SaveAsync(String)</h4>
+  <div class="markdown level1 summary"><p>Asynchronously saves this dataset to the specified file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task SaveAsync(string filename)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>The name of the file to save this dataset into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><p>A task that represents the asynchronous operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L368">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ToString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ToString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ToString" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L206">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Update_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Update*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Update" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Update">Update()</h4>
+  <div class="markdown level1 summary"><p>Updates the dataset view model based on the latest version of the dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L249">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_VisualizeSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.VisualizeSession*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_VisualizeSession_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.VisualizeSession(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">VisualizeSession(SessionViewModel)</h4>
+  <div class="markdown level1 summary"><p>Sets a session to be the current session being visualized.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void VisualizeSession(SessionViewModel sessionViewModel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a></td>
+        <td><span class="parametername">sessionViewModel</span></td>
+        <td><p>The SessionViewModel to visualize.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L29" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

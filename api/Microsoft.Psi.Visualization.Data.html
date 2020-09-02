@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Microsoft.Psi.Visualization.Data
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Microsoft.Psi.Visualization.Data
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.Data">
+  
+  <h1 id="Microsoft_Psi_Visualization_Data" data-uid="Microsoft.Psi.Visualization.Data" class="text-break">Namespace Microsoft.Psi.Visualization.Data
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.AdaptingInstantDataProvider-2.html">AdaptingInstantDataProvider&lt;TSource, TDestination&gt;</a></h4>
+      <section><p>Represents a data provider that can provide adapted data to instant data targets.
+Data of type TSrc supplied to the provider is converted to data of type TDest
+by the stream adapter and then routed to all instant data targets.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.DataManager.html">DataManager</a></h4>
+      <section><p>Provides cached-controlled read access to data stores used by the visualization runtime.
+Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a>s and <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummaryManager.html">StreamSummaryManager</a>s.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a></h4>
+      <section><p>Represents an object used to read data stores. Reads data stores by reading their underlying streams.
+Attempts to batch reads through a data store where possible.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader-1.html">EpsilonInstantStreamReader&lt;T&gt;</a></h4>
+      <section><p>Represents a stream reader which can read instant data based on a fixed cursor epsilon, and
+which then pushes the read data to a collection of adapting data providers.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.InstantDataTarget.html">InstantDataTarget</a></h4>
+      <section><p>Represents an instant data target.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData.html">IntervalData</a></h4>
+      <section><p>Static class containing factory methods for IntervalData{T}.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.Pool-1.html">Pool&lt;T&gt;</a></h4>
+      <section><p>Represents an allocation pool for a set of shared objects.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.PoolManager.html">PoolManager</a></h4>
+      <section><p>Represents a singleton object that manages a set of shared object allocation pools based on object type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.ReadRequest.html">ReadRequest</a></h4>
+      <section><p>Represents a read request on a stream.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html">StreamAdapter&lt;TSource, TDestination&gt;</a></h4>
+      <section><p>Represents an object that adapts messages from one type to another.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamBinding.html">StreamBinding</a></h4>
+      <section><p>Represents information needed to uniquely identify and open a stream.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCache-1.html">StreamCache&lt;T&gt;</a></h4>
+      <section><p>Represents an object used to read streams.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCacheEntry.html">StreamCacheEntry</a></h4>
+      <section><p>Class describing a cached indexed reader thunk.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></h4>
+      <section><p>Represents the source of a stream's data.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummary-2.html">StreamSummary&lt;TSource, TDestination&gt;</a></h4>
+      <section><p>Represents the summarized data of a stream generated from a specified summarizer type.
+Incoming data is summarized over a fixed interval and the resulting summarized values
+are stored in the cache as <a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData.html">IntervalData</a> items.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummaryManager.html">StreamSummaryManager</a></h4>
+      <section><p>Represents a collection of stream summary caches, each at a different zoom level, for a single stream in a store.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamUpdate-1.html">StreamUpdate&lt;T&gt;</a></h4>
+      <section><p>Represents an update to a message in a stream.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamUpdateWithView-1.html">StreamUpdateWithView&lt;T&gt;</a></h4>
+      <section><p>Represents a stream update with an attached view of the cache.  The view covers only the stream update itself and exists to
+ensure that the data in the data cache retains a reference to ensure it does not get deleted during a purge of the data cache.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.Summarizer-2.html">Summarizer&lt;TSource, TDestination&gt;</a></h4>
+      <section><p>Base class for summarizers that perform interval-based data summarization over a series of data values.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData-1.html">IntervalData&lt;T&gt;</a></h4>
+      <section><p>Struct representing a summary of data over a time span.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IAdaptingInstantDataProvider-1.html">IAdaptingInstantDataProvider&lt;TSource&gt;</a></h4>
+      <section><p>Represents a data provider that can provide adapted data to instant data targets.
+Data of type TSrc supplied to the provider is converted to data of type TDest
+by the stream adapter and then routed to all instant data targets.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IPool.html">IPool</a></h4>
+      <section><p>Represents an allocation pool for a set of shared objects.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></h4>
+      <section><p>Represents an object that adapts messages from one type to another.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamCache.html">IStreamCache</a></h4>
+      <section><p>Represents an object used to read streams.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamSummary.html">IStreamSummary</a></h4>
+      <section><p>Represents the summarized data of a stream generated from a specified summarizer type.
+Incoming data is summarized over a fixed interval and the resulting summarized values
+are stored in the cache as <a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData.html">IntervalData</a> items.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.ISummarizer.html">ISummarizer</a></h4>
+      <section><p>Represents summarizers that perform interval-based data summarization over a series of data values.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.ISummarizer-2.html">ISummarizer&lt;TSource, TDestination&gt;</a></h4>
+      <section><p>Represents summarizers that perform interval-based data summarization over a series of data values.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummarySearchMode.html">StreamSummarySearchMode</a></h4>
+      <section><p>An enumeration that defines the different modes for searching a stream summary.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamUpdateType.html">StreamUpdateType</a></h4>
+      <section><p>The type of a stream update.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

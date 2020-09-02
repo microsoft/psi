@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Machine&lt;TInput, TOutput, TContext&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Machine&lt;TInput, TOutput, TContext&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3">
+  
+  
+  <h1 id="Microsoft_Psi_FiniteStateMachine_Machine_3" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3" class="text-break">Class Machine&lt;TInput, TOutput, TContext&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>The Machine is an abstract class expected to be implemented with app-specific methods
+representing inputs to the system and setting up the initial states and transitions
+of the system. Machine contains the current State and (for convenience) the current
+context. A single Update() method is expected to be called with context changes
+due to external inputs.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Machine&lt;TInput, TOutput, TContext&gt;</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.FiniteStateMachine.html">Microsoft.Psi.FiniteStateMachine</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.FiniteStateMachine.dll</h6>
+  <h5 id="Microsoft_Psi_FiniteStateMachine_Machine_3_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class Machine&lt;TInput, TOutput, TContext&gt; : object where TContext : IContext&lt;TInput, TOutput&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInput</span></td>
+        <td><p>Inputs to the FSM from the outside world.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOutput</span></td>
+        <td><p>Output from the FSM to the outside world.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TContext</span></td>
+        <td><p>Concrete context type implementing IContext.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/Machine.cs/#L27">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_FiniteStateMachine_Machine_3_Context_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.Context*"></a>
+  <h4 id="Microsoft_Psi_FiniteStateMachine_Machine_3_Context" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.Context">Context</h4>
+  <div class="markdown level1 summary"><p>Gets or sets current context.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TContext Context { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TContext</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/Machine.cs/#L22">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_FiniteStateMachine_Machine_3_State_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.State*"></a>
+  <h4 id="Microsoft_Psi_FiniteStateMachine_Machine_3_State" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.State">State</h4>
+  <div class="markdown level1 summary"><p>Gets current state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected State&lt;TContext&gt; State { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.FiniteStateMachine.State-1.html">State</a>&lt;TContext&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/Machine.cs/#L64">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_FiniteStateMachine_Machine_3_ContextUpdated_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.ContextUpdated*"></a>
+  <h4 id="Microsoft_Psi_FiniteStateMachine_Machine_3_ContextUpdated_System_String__2_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.ContextUpdated(System.String,`2)">ContextUpdated(String, TContext)</h4>
+  <div class="markdown level1 summary"><p>Report state changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void ContextUpdated(string state, TContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>Current state name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TContext</span></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>Current context.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/Machine.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_FiniteStateMachine_Machine_3_Initialize_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.Initialize*"></a>
+  <h4 id="Microsoft_Psi_FiniteStateMachine_Machine_3_Initialize__2_Microsoft_Psi_FiniteStateMachine_State__2__" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.Initialize(`2,Microsoft.Psi.FiniteStateMachine.State{`2})">Initialize(TContext, State&lt;TContext&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes Machine with initial context and state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Initialize(TContext context, State&lt;TContext&gt; state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TContext</span></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>Initial context.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.FiniteStateMachine.State-1.html">State</a>&lt;TContext&gt;</td>
+        <td><span class="parametername">state</span></td>
+        <td><p>Initial state.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_FiniteStateMachine_Machine_3_Initialize__2_Microsoft_Psi_FiniteStateMachine_State__2___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Causes transition to initial state; firing onEnter if appropriate.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/Machine.cs/#L34">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_FiniteStateMachine_Machine_3_Update_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.Update*"></a>
+  <h4 id="Microsoft_Psi_FiniteStateMachine_Machine_3_Update__0_" data-uid="Microsoft.Psi.FiniteStateMachine.Machine`3.Update(`0)">Update(TInput)</h4>
+  <div class="markdown level1 summary"><p>Update the state machine.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual TOutput Update(TInput input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInput</span></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>Input portion of context.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TOutput</span></td>
+        <td><p>Output portion of context.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/Machine.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

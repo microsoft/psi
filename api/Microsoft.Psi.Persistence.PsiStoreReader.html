@@ -1,0 +1,1130 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PsiStoreReader
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PsiStoreReader
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Persistence.PsiStoreReader">
+  
+  
+  <h1 id="Microsoft_Psi_Persistence_PsiStoreReader" data-uid="Microsoft.Psi.Persistence.PsiStoreReader" class="text-break">Class PsiStoreReader
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a reader that allows access to the multiple streams persisted in a single store.
+The store reader abstracts read/write access to streams,
+and provides the means to read only some of the streams present in the store.
+The reader loads and exposes the metadata associated with the store prior to reading any data.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">PsiStoreReader</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Persistence.html">Microsoft.Psi.Persistence</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Persistence_PsiStoreReader_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PsiStoreReader : IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader__ctor_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader__ctor_Microsoft_Psi_Persistence_PsiStoreReader_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.#ctor(Microsoft.Psi.Persistence.PsiStoreReader)">PsiStoreReader(PsiStoreReader)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Persistence.PsiStoreReader.html">PsiStoreReader</a> class.
+This provides a fast way to create a reader,
+by reusing the metadata and index already loaded by an existing store reader.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStoreReader(PsiStoreReader other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Persistence.PsiStoreReader.html">PsiStoreReader</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Another reader pointing to the same store.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L38">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader__ctor_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader__ctor_System_String_System_String_Action_IEnumerable_Microsoft_Psi_Metadata__Microsoft_Psi_Common_RuntimeInfo__System_Boolean_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.#ctor(System.String,System.String,Action{IEnumerable{Microsoft.Psi.Metadata},Microsoft.Psi.Common.RuntimeInfo},System.Boolean)">PsiStoreReader(String, String, Action&lt;IEnumerable&lt;Metadata&gt;, RuntimeInfo&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Persistence.PsiStoreReader.html">PsiStoreReader</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStoreReader(string name, string path, Action&lt;IEnumerable&lt;Metadata&gt;, RuntimeInfo&gt; metadataUpdateHandler, bool autoOpenAllStreams = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the application that generated the persisted files, or the root name of the files.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.Metadata.html">Metadata</a>&gt;, <a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a>&gt;</td>
+        <td><span class="parametername">metadataUpdateHandler</span></td>
+        <td><p>Delegate to call.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">autoOpenAllStreams</span></td>
+        <td><p>Automatically open all streams.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_AutoOpenAllStreams_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.AutoOpenAllStreams*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_AutoOpenAllStreams" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.AutoOpenAllStreams">AutoOpenAllStreams</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the reader should read all the messages in the store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AutoOpenAllStreams { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L71">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_AvailableStreams_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.AvailableStreams*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_AvailableStreams" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.AvailableStreams">AvailableStreams</h4>
+  <div class="markdown level1 summary"><p>Gets the set of streams in this store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;PsiStreamMetadata&gt; AvailableStreams { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L91">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.MessageCreationTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_MessageCreationTimeInterval" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the interval between the creation times of the first and last messages written to this store, across all streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageCreationTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L96">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.MessageOriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the interval between the originating times of the first and last messages written to this store, across all streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageOriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L76">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_Name_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Name*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_Name" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_Path_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Path*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_Path" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Path">Path</h4>
+  <div class="markdown level1 summary"><p>Gets the path to the store (this is the path to the directory containing the data, index and catalog files).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Path { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L101">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_RuntimeVersion_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.RuntimeVersion*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_RuntimeVersion" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.RuntimeVersion">RuntimeVersion</h4>
+  <div class="markdown level1 summary"><p>Gets the version of the runtime used to write to this store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RuntimeInfo RuntimeVersion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L189">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_CloseAllStreams_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.CloseAllStreams*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_CloseAllStreams" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.CloseAllStreams">CloseAllStreams()</h4>
+  <div class="markdown level1 summary"><p>Closes all the streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseAllStreams()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L181">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_CloseStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.CloseStream*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_CloseStream_System_Int32_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.CloseStream(System.Int32)">CloseStream(Int32)</h4>
+  <div class="markdown level1 summary"><p>Closes the specified stream. Messages from this stream will be skipped.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseStream(int id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The id of the stream to close.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L171">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_CloseStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.CloseStream*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_CloseStream_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.CloseStream(System.String)">CloseStream(String)</h4>
+  <div class="markdown level1 summary"><p>Closes the specified stream. Messages from this stream will be skipped.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseStream(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the stream to close.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L199">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_Contains_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Contains*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_Contains_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Contains(System.String)">Contains(String)</h4>
+  <div class="markdown level1 summary"><p>Checks whether the specified stream exist in this store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream to look for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if a stream with the specified name exists, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L237">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_Dispose_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_Dispose" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Closes all associated files.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L262">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_GetLiveStoreExtents_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.GetLiveStoreExtents*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_GetLiveStoreExtents" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.GetLiveStoreExtents">GetLiveStoreExtents()</h4>
+  <div class="markdown level1 summary"><p>Gets the current temporal extents of the store by time and originating time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (TimeInterval, TimeInterval) GetLiveStoreExtents()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a>, <a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a>&gt;</td>
+        <td><p>A pair of TimeInterval objects that represent the times and originating times of the first and last messages currently in the store.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L224">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_GetMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.GetMetadata*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_GetMetadata_System_Int32_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.GetMetadata(System.Int32)">GetMetadata(Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns a metadata descriptor for the specified stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStreamMetadata GetMetadata(int id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The id of the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
+        <td><p>The metadata describing the specified stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L209">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_GetMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.GetMetadata*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_GetMetadata_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.GetMetadata(System.String)">GetMetadata(String)</h4>
+  <div class="markdown level1 summary"><p>Returns a metadata descriptor for the specified stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStreamMetadata GetMetadata(string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
+        <td><p>The metadata describing the specified stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L124">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_IsMoreDataExpected_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.IsMoreDataExpected*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_IsMoreDataExpected" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.IsMoreDataExpected">IsMoreDataExpected()</h4>
+  <div class="markdown level1 summary"><p>Indicates whether this store is still being written to by an active writer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsMoreDataExpected()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if an active writer is still writing to this store, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_IsStoreLive_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.IsStoreLive*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_IsStoreLive_System_String_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.IsStoreLive(System.String,System.String)">IsStoreLive(String, String)</h4>
+  <div class="markdown level1 summary"><p>Indicates whether the specified data store has an active writer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsStoreLive(string storeName, string storePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storeName</span></td>
+        <td><p>The store name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storePath</span></td>
+        <td><p>The store path.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>Returns true if there is an active data file writer to this store.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L303">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_MoveNext_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.MoveNext*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_MoveNext_Microsoft_Psi_Envelope__" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.MoveNext(Microsoft.Psi.Envelope@)">MoveNext(out Envelope)</h4>
+  <div class="markdown level1 summary"><p>Positions the reader to the next message from any one of the enabled streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MoveNext(out Envelope envelope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The envelope associated with the message read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if there are more messages, false if no more messages are available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L155">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.OpenStream*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_OpenStream_Microsoft_Psi_PsiStreamMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.OpenStream(Microsoft.Psi.PsiStreamMetadata)">OpenStream(PsiStreamMetadata)</h4>
+  <div class="markdown level1 summary"><p>Opens the specified stream for reading.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OpenStream(PsiStreamMetadata meta)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
+        <td><span class="parametername">meta</span></td>
+        <td><p>The metadata describing the stream to open.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the stream was successfully opened, false if no matching stream could be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L143">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.OpenStream*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_OpenStream_System_Int32_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.OpenStream(System.Int32)">OpenStream(Int32)</h4>
+  <div class="markdown level1 summary"><p>Opens the specified stream for reading.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStreamMetadata OpenStream(int id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>The id of the stream to open.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
+        <td><p>The metadata describing the opened stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L131">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.OpenStream*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_OpenStream_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.OpenStream(System.String)">OpenStream(String)</h4>
+  <div class="markdown level1 summary"><p>Opens the specified stream for reading.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStreamMetadata OpenStream(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the stream to open.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
+        <td><p>The metadata describing the opened stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L361">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_Read_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Read*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_Read_System_Byte____" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Read(System.Byte[]@)">Read(ref Byte[])</h4>
+  <div class="markdown level1 summary"><p>Reads the next message from any one of the enabled streams (in serialized form) into the specified buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Read(ref byte[] buffer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>A buffer to read into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Number of bytes read into the specified buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L390">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_ReadAt_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.ReadAt*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_ReadAt_Microsoft_Psi_Data_IndexEntry_System_Byte____" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.ReadAt(Microsoft.Psi.Data.IndexEntry,System.Byte[]@)">ReadAt(IndexEntry, ref Byte[])</h4>
+  <div class="markdown level1 summary"><p>Reads the message from the specified position, without changing the current cursor position.
+Cannot be used together with MoveNext/Read.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ReadAt(IndexEntry indexEntry, ref byte[] buffer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IndexEntry.html">IndexEntry</a></td>
+        <td><span class="parametername">indexEntry</span></td>
+        <td><p>The position to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>A buffer to read into.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Number of bytes read into the specified buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L409">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_ReadIndex_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.ReadIndex*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_ReadIndex" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.ReadIndex">ReadIndex()</h4>
+  <div class="markdown level1 summary"><p>Returns the position of the next message from any one of the enabled streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IndexEntry ReadIndex()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IndexEntry.html">IndexEntry</a></td>
+        <td><p>The position of the message, excluding the envelope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L250">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreReader_Seek_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Seek*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreReader_Seek_Microsoft_Psi_TimeInterval_System_Boolean_" data-uid="Microsoft.Psi.Persistence.PsiStoreReader.Seek(Microsoft.Psi.TimeInterval,System.Boolean)">Seek(TimeInterval, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Moves the reader to the start of the specified interval and restricts the read to messages within the interval.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Seek(TimeInterval interval, bool useOriginatingTime = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">interval</span></td>
+        <td><p>The interval for reading data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">useOriginatingTime</span></td>
+        <td><p>Indicates whether the interval refers to originating times or creation times.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreReader.cs/#L19" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

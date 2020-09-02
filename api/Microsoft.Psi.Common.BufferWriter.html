@@ -1,0 +1,1231 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class BufferWriter
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class BufferWriter
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Common.BufferWriter">
+  
+  
+  <h1 id="Microsoft_Psi_Common_BufferWriter" data-uid="Microsoft.Psi.Common.BufferWriter" class="text-break">Class BufferWriter
+  </h1>
+  <div class="markdown level0 summary"><p>Auto-resizable buffer (similar to MemoryStream) but with methods to copy pointers any primitive arrays, not just byte[].
+This class is typically used in conjunction with <a class="xref" href="Microsoft.Psi.Common.BufferReader.html">BufferReader</a>.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">BufferWriter</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.html">Microsoft.Psi.Common</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
+  <h5 id="Microsoft_Psi_Common_BufferWriter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class BufferWriter : object</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter__ctor_" data-uid="Microsoft.Psi.Common.BufferWriter.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter__ctor_System_Byte___" data-uid="Microsoft.Psi.Common.BufferWriter.#ctor(System.Byte[])">BufferWriter(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.BufferWriter.html">BufferWriter</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BufferWriter(byte[] buffer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>The underlying buffer to use in the beginning. The underlying buffer will change once it becomes insufficient.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L22">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter__ctor_" data-uid="Microsoft.Psi.Common.BufferWriter.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter__ctor_System_Int32_" data-uid="Microsoft.Psi.Common.BufferWriter.#ctor(System.Int32)">BufferWriter(Int32)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.BufferWriter.html">BufferWriter</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BufferWriter(int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The initial size of the underlying buffer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Buffer_" data-uid="Microsoft.Psi.Common.BufferWriter.Buffer*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Buffer" data-uid="Microsoft.Psi.Common.BufferWriter.Buffer">Buffer</h4>
+  <div class="markdown level1 summary"><p>Gets the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public byte[] Buffer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L40">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Position_" data-uid="Microsoft.Psi.Common.BufferWriter.Position*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Position" data-uid="Microsoft.Psi.Common.BufferWriter.Position">Position</h4>
+  <div class="markdown level1 summary"><p>Gets the current position of the writer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Position { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Size_" data-uid="Microsoft.Psi.Common.BufferWriter.Size*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Size" data-uid="Microsoft.Psi.Common.BufferWriter.Size">Size</h4>
+  <div class="markdown level1 summary"><p>Gets the current size of the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Size { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L73">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Reset_" data-uid="Microsoft.Psi.Common.BufferWriter.Reset*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Reset" data-uid="Microsoft.Psi.Common.BufferWriter.Reset">Reset()</h4>
+  <div class="markdown level1 summary"><p>Resets the writer without reallocating the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Reset()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L438">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_DateTime_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(DateTime)">Write(DateTime)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type DateTime to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(DateTime source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L490">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(Microsoft.Psi.Envelope)">Write(Envelope)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Envelope to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(Envelope envelope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L330">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Boolean_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Boolean)">Write(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type bool to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(bool source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L156">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Boolean___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Boolean[])">Write(Boolean[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type Bool to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(bool[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L306">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Byte_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Byte)">Write(Byte)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type byte to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(byte source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Byte___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Byte[])">Write(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of bytes to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(byte[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array of bytes to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L450">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Char_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Char)">Write(Char)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Char to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(char source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L246">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Char___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Char[])">Write(Char[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type char to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(char[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L426">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Double_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Double)">Write(Double)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Double to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(double source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L171">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Double___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Double[])">Write(Double[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type Double to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(double[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L342">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Int16_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Int16)">Write(Int16)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Int16 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(short source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int16">Int16</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L201">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Int16___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Int16[])">Write(Int16[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type Int16 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(short[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int16">Int16</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L366">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Int32_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Int32)">Write(Int32)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Int32 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(int source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L216">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Int32___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Int32[])">Write(Int32[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type Int32 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(int[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L390">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Int64_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Int64)">Write(Int64)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Int64 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(long source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L231">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Int64___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Int64[])">Write(Int64[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type Int64 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(long[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L318">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_SByte_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.SByte)">Write(SByte)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type sbyte to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(sbyte source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.sbyte">SByte</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L141">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_SByte___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.SByte[])">Write(SByte[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type SByte to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(sbyte[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.sbyte">SByte</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L414">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Single_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Single)">Write(Single)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type Single to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(float source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L186">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Single___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Single[])">Write(Single[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type Single to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(float[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L462">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_String_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.String)">Write(String)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type String to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L354">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_UInt16_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.UInt16)">Write(UInt16)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type UInt16 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(ushort source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L261">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_UInt16___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.UInt16[])">Write(UInt16[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type UInt16 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(ushort[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L378">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_UInt32_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.UInt32)">Write(UInt32)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type UInt32 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(uint source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L276">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_UInt32___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.UInt32[])">Write(UInt32[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type UInt32 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(uint[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L402">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_UInt64_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.UInt64)">Write(UInt64)</h4>
+  <div class="markdown level1 summary"><p>Writes a value of type UInt64 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(ulong source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The value to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L291">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_UInt64___" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.UInt64[])">Write(UInt64[])</h4>
+  <div class="markdown level1 summary"><p>Writes an array of values of type UInt64 to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(ulong[] source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint64">UInt64</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L83">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_Write_" data-uid="Microsoft.Psi.Common.BufferWriter.Write*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_Write_System_Void__System_Int32_" data-uid="Microsoft.Psi.Common.BufferWriter.Write(System.Void*,System.Int32)">Write(Void*, Int32)</h4>
+  <div class="markdown level1 summary"><p>Writes the specified number of bytes from the specified address.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(void *source, int lenghtInBytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.void">Void</a>*</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The pointer to the memory to copy into the buffer.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">lenghtInBytes</span></td>
+        <td><p>The number of bytes to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L116">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_BufferWriter_WriteEx_" data-uid="Microsoft.Psi.Common.BufferWriter.WriteEx*"></a>
+  <h4 id="Microsoft_Psi_Common_BufferWriter_WriteEx_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.BufferWriter.WriteEx(System.Byte[],System.Int32,System.Int32)">WriteEx(Byte[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Writes a portion of an array of bytes to the underlying buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void WriteEx(byte[] source, int start, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The array of bytes to read from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The index into the source array to start reading from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The count of bytes to write.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BufferWriter.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a>&nbsp;|&nbsp;<a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a>&nbsp;|&nbsp;&#9400;&nbsp;Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
