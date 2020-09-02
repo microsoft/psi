@@ -10,6 +10,7 @@ namespace Microsoft.Psi.PsiStudio
     using System.Windows;
     using System.Xml;
     using System.Xml.Serialization;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
@@ -197,7 +198,7 @@ namespace Microsoft.Psi.PsiStudio
                 try
                 {
                     XmlDocument settingsDocument = new XmlDocument() { XmlResolver = null };
-                    TextReader textReader = new StreamReader(this.settingsFilename);
+                    TextReader textReader = new System.IO.StreamReader(this.settingsFilename);
                     XmlReader reader = XmlReader.Create(textReader, new XmlReaderSettings() { XmlResolver = null });
                     settingsDocument.Load(reader);
 

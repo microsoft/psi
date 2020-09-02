@@ -61,12 +61,12 @@ namespace Microsoft.Psi
         /// <summary>
         /// Gets the time when the stream was opened.
         /// </summary>
-        public DateTime Opened { get; internal set; }
+        public DateTime OpenedTime { get; internal set; }
 
         /// <summary>
         /// Gets the time when the stream was closed.
         /// </summary>
-        public DateTime Closed { get; internal set; }
+        public DateTime ClosedTime { get; internal set; }
 
         /// <inheritdoc />
         public string PartitionName { get; internal set; }
@@ -75,10 +75,10 @@ namespace Microsoft.Psi
         public string PartitionPath { get; internal set; }
 
         /// <inheritdoc />
-        public DateTime FirstMessageTime { get; internal set; }
+        public DateTime FirstMessageCreationTime { get; internal set; }
 
         /// <inheritdoc />
-        public DateTime LastMessageTime { get; internal set; }
+        public DateTime LastMessageCreationTime { get; internal set; }
 
         /// <inheritdoc />
         public DateTime FirstMessageOriginatingTime { get; internal set; }
@@ -150,24 +150,24 @@ namespace Microsoft.Psi
         /// <summary>
         /// Gets the average frequency of messages written to this stream.
         /// </summary>
-        public double AverageFrequency => (this.LastMessageTime - this.FirstMessageTime).TotalMilliseconds / (double)(this.MessageCount - 1);
+        public double AverageFrequency => (this.LastMessageCreationTime - this.FirstMessageCreationTime).TotalMilliseconds / (double)(this.MessageCount - 1);
 
         /// <summary>
-        /// Gets the time interval this stream was opened (from open to close).
+        /// Gets the time interval this stream was in existence (from open to close).
         /// </summary>
-        public TimeInterval Lifetime => new TimeInterval(this.Opened, this.Closed);
+        public TimeInterval StreamTimeInterval => new TimeInterval(this.OpenedTime, this.ClosedTime);
 
         /// <summary>
         /// Gets the interval between the creation times of the first and last messages written to this stream.
         /// If the stream contains no messages, an empty interval is returned.
         /// </summary>
-        public TimeInterval ActiveLifetime => this.MessageCount == 0 ? TimeInterval.Empty : new TimeInterval(this.FirstMessageTime, this.LastMessageTime);
+        public TimeInterval MessageCreationTimeInterval => this.MessageCount == 0 ? TimeInterval.Empty : new TimeInterval(this.FirstMessageCreationTime, this.LastMessageCreationTime);
 
         /// <summary>
         /// Gets the interval between the originating times of the first and last messages written to this stream.
         /// If the stream contains no messages, an empty interval is returned.
         /// </summary>
-        public TimeInterval OriginatingLifetime => this.MessageCount == 0 ? TimeInterval.Empty : new TimeInterval(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime);
+        public TimeInterval MessageOriginatingTimeInterval => this.MessageCount == 0 ? TimeInterval.Empty : new TimeInterval(this.FirstMessageOriginatingTime, this.LastMessageOriginatingTime);
 
         /// <inheritdoc />
         public void Update(Envelope envelope, int size)
@@ -175,22 +175,22 @@ namespace Microsoft.Psi
             if (this.FirstMessageOriginatingTime == default(DateTime))
             {
                 this.FirstMessageOriginatingTime = envelope.OriginatingTime;
-                this.FirstMessageTime = envelope.Time;
-                this.Opened = envelope.Time;
+                this.FirstMessageCreationTime = envelope.CreationTime;
+                this.OpenedTime = envelope.CreationTime;
             }
 
             this.LastMessageOriginatingTime = envelope.OriginatingTime;
-            this.LastMessageTime = envelope.Time;
+            this.LastMessageCreationTime = envelope.CreationTime;
             this.MessageCount++;
-            this.AverageLatency = (int)((((long)this.AverageLatency * (this.MessageCount - 1)) + ((envelope.Time - envelope.OriginatingTime).Ticks / TicksPerMicrosecond)) / this.MessageCount);
+            this.AverageLatency = (int)((((long)this.AverageLatency * (this.MessageCount - 1)) + ((envelope.CreationTime - envelope.OriginatingTime).Ticks / TicksPerMicrosecond)) / this.MessageCount);
             this.AverageMessageSize = (int)((((long)this.AverageMessageSize * (this.MessageCount - 1)) + size) / this.MessageCount);
         }
 
         /// <inheritdoc />
         public void Update(TimeInterval messagesTimeInterval, TimeInterval messagesOriginatingTimeInterval)
         {
-            this.FirstMessageTime = messagesTimeInterval.Left;
-            this.LastMessageTime = messagesTimeInterval.Right;
+            this.FirstMessageCreationTime = messagesTimeInterval.Left;
+            this.LastMessageCreationTime = messagesTimeInterval.Right;
 
             this.FirstMessageOriginatingTime = messagesOriginatingTimeInterval.Left;
             this.LastMessageOriginatingTime = messagesOriginatingTimeInterval.Right;
@@ -202,14 +202,14 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of supplemental metadata.</typeparam>
         /// <param name="serializers">Known serializers.</param>
         /// <returns>Supplemental metadata.</returns>
-        internal T GetSupplementalMetadata<T>(KnownSerializers serializers)
+        public T GetSupplementalMetadata<T>(KnownSerializers serializers)
         {
             if (string.IsNullOrEmpty(this.SupplementalMetadataTypeName))
             {
                 throw new InvalidOperationException("Stream does not contain supplemental metadata.");
             }
 
-            if (typeof(T) != Type.GetType(this.SupplementalMetadataTypeName))
+            if (typeof(T) != TypeResolutionHelper.GetVerifiedType(this.SupplementalMetadataTypeName))
             {
                 throw new InvalidCastException($"Supplemental metadata type mismatch ({this.SupplementalMetadataTypeName}).");
             }
@@ -219,6 +219,12 @@ namespace Microsoft.Psi
             var target = default(T);
             handler.Deserialize(reader, ref target, new SerializationContext(serializers));
             return target;
+        }
+
+        /// <inheritdoc />
+        public T GetSupplementalMetadata<T>()
+        {
+            return this.GetSupplementalMetadata<T>(KnownSerializers.Default);
         }
 
         /// <summary>
@@ -252,11 +258,11 @@ namespace Microsoft.Psi
         // order of fields is important for backwards compat and must be the same as the order in Serialize, don't change!
         internal new void Deserialize(BufferReader metadataBuffer)
         {
-            this.Opened = metadataBuffer.ReadDateTime();
-            this.Closed = metadataBuffer.ReadDateTime();
+            this.OpenedTime = metadataBuffer.ReadDateTime();
+            this.ClosedTime = metadataBuffer.ReadDateTime();
             this.MessageCount = metadataBuffer.ReadInt32();
-            this.FirstMessageTime = metadataBuffer.ReadDateTime();
-            this.LastMessageTime = metadataBuffer.ReadDateTime();
+            this.FirstMessageCreationTime = metadataBuffer.ReadDateTime();
+            this.LastMessageCreationTime = metadataBuffer.ReadDateTime();
             this.FirstMessageOriginatingTime = metadataBuffer.ReadDateTime();
             this.LastMessageOriginatingTime = metadataBuffer.ReadDateTime();
             this.AverageMessageSize = metadataBuffer.ReadInt32();
@@ -283,11 +289,11 @@ namespace Microsoft.Psi
         internal override void Serialize(BufferWriter metadataBuffer)
         {
             base.Serialize(metadataBuffer);
-            metadataBuffer.Write(this.Opened);
-            metadataBuffer.Write(this.Closed);
+            metadataBuffer.Write(this.OpenedTime);
+            metadataBuffer.Write(this.ClosedTime);
             metadataBuffer.Write(this.MessageCount);
-            metadataBuffer.Write(this.FirstMessageTime);
-            metadataBuffer.Write(this.LastMessageTime);
+            metadataBuffer.Write(this.FirstMessageCreationTime);
+            metadataBuffer.Write(this.LastMessageCreationTime);
             metadataBuffer.Write(this.FirstMessageOriginatingTime);
             metadataBuffer.Write(this.LastMessageOriginatingTime);
             metadataBuffer.Write(this.AverageMessageSize);

@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Serialization
         /// its parent.
         /// Note that targetSchema is a partial schema, without any MemberInfo information.
         /// To obtain MemberInfo information, generate a schema from the runtime type
-        /// using <see cref="TypeSchema.FromType(Type, RuntimeInfo, System.Type, int)"/>.
+        /// using <see cref="TypeSchema.FromType(Type, RuntimeInfo, Type, int)"/>.
         /// </remarks>
         TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema);
 

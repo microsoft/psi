@@ -25,17 +25,17 @@ namespace Microsoft.Psi.Serialization
 
         public void Serialize(BufferWriter writer, T instance, SerializationContext context)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException($"Serialization is not supported for type: {typeof(T).AssemblyQualifiedName}");
         }
 
         public void Deserialize(BufferReader reader, ref T target, SerializationContext context)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException($"Deserialization is not supported for type: {typeof(T).AssemblyQualifiedName}");
         }
 
         public void PrepareDeserializationTarget(BufferReader reader, ref T target, SerializationContext context)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException($"Deserialization is not supported for type: {typeof(T).AssemblyQualifiedName}");
         }
 
         public void PrepareCloningTarget(T instance, ref T target, SerializationContext context)

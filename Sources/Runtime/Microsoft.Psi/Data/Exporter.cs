@@ -13,13 +13,16 @@ namespace Microsoft.Psi.Data
 
     /// <summary>
     /// Component that writes messages to a multi-stream store.
+    /// </summary>
+    /// <remarks>
     /// The store can be backed by a file on disk, can be ephemeral (in-memory) for inter-process communication
     /// or can be a network protocol for cross-machine communication.
-    /// Instances of this component can be created using <see cref="Store.Create(Pipeline, string, string, bool, Serialization.KnownSerializers)"/>.
-    /// </summary>
-    public sealed class Exporter : Subpipeline, IDisposable
+    /// </remarks>
+    public abstract class Exporter : Subpipeline, IDisposable
     {
-        private readonly StoreWriter writer;
+        internal static readonly string StreamMetadataNamespace = "store\\metadata";
+
+        private readonly PsiStoreWriter writer;
         private readonly Merger<Message<BufferReader>, string> merger;
         private readonly Pipeline pipeline;
         private readonly ManualResetEvent throttle = new ManualResetEvent(true);
@@ -28,7 +31,7 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="Exporter"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline that owns this instance.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
         /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store.</param>
@@ -36,12 +39,12 @@ namespace Microsoft.Psi.Data
         /// A collection of known serializers, or null to infer it from the data being written to the store.
         /// The known serializer set can be accessed and modified afterwards via the <see cref="Serializers"/> property.
         /// </param>
-        internal Exporter(Pipeline pipeline, string name, string path, bool createSubdirectory = true, KnownSerializers serializers = null)
+        protected internal Exporter(Pipeline pipeline, string name, string path, bool createSubdirectory = true, KnownSerializers serializers = null)
             : base(pipeline, $"{nameof(Exporter)}[{name}]")
         {
             this.pipeline = pipeline;
             this.serializers = serializers ?? new KnownSerializers();
-            this.writer = new StoreWriter(name, path, createSubdirectory);
+            this.writer = new PsiStoreWriter(name, path, createSubdirectory);
 
             // write the version info
             this.writer.WriteToCatalog(this.serializers.RuntimeVersion);
@@ -72,7 +75,7 @@ namespace Microsoft.Psi.Data
 
         /// <summary>
         /// Gets the set of types that this Importer can deserialize.
-        /// Types can be added or re-mapped using the <see cref="KnownSerializers.Register{T}(string)"/> method.
+        /// Types can be added or re-mapped using the <see cref="KnownSerializers.Register{T}(string, CloningFlags)"/> method.
         /// </summary>
         public KnownSerializers Serializers => this.serializers;
 
@@ -96,11 +99,11 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Writes the messages from the specified stream to the matching storage stream in this store.
+        /// Writes the messages from the specified stream to the matching stream in this store.
         /// </summary>
         /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
         /// <param name="source">The source stream to write.</param>
-        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="name">The name of the stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         public void Write<TMessage>(Emitter<TMessage> source, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
@@ -109,14 +112,14 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Writes the messages from the specified stream to the matching storage stream in this store.
+        /// Writes the messages from the specified stream to the matching stream in this store.
         /// Additionally stores supplemental metadata value.
         /// </summary>
         /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
         /// <typeparam name="TSupplementalMetadata">The type of supplemental stream metadata.</typeparam>
         /// <param name="source">The source stream to write.</param>
         /// <param name="supplementalMetadataValue">Supplemental metadata value.</param>
-        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="name">The name of the stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         public void Write<TMessage, TSupplementalMetadata>(Emitter<TMessage> source, TSupplementalMetadata supplementalMetadataValue, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
@@ -130,7 +133,7 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <typeparam name="T">The type of messages in the stream.</typeparam>
         /// <param name="source">The source stream to write.</param>
-        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="name">The name of the stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         public void WriteEnvelopes<T>(Emitter<T> source, string name, DeliveryPolicy<T> deliveryPolicy = null)
         {
@@ -153,7 +156,7 @@ namespace Microsoft.Psi.Data
             var meta = this.writer.OpenStream(source.Id, name, false, handler.Name);
 
             // register this stream with the store catalog
-            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, name, meta);
+            this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, name, meta);
 
             // hook up the serializer
             var serializer = new SerializerComponent<int>(this, this.serializers);
@@ -167,11 +170,11 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Writes the messages from the specified stream to the matching storage stream in this store.
+        /// Writes the messages from the specified stream to the matching stream in this store.
         /// </summary>
         /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
         /// <param name="source">The source stream to write.</param>
-        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="name">The name of the stream.</param>
         /// <param name="metadata">Source stream metadata.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         internal void Write<TMessage>(Emitter<TMessage> source, string name, PsiStreamMetadata metadata, DeliveryPolicy<TMessage> deliveryPolicy = null)
@@ -195,11 +198,11 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Writes the messages from the specified stream to the matching storage stream in this store.
+        /// Writes the messages from the specified stream to the matching stream in this store.
         /// </summary>
         /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>
         /// <param name="source">The source stream to write.</param>
-        /// <param name="name">The name of the storage stream.</param>
+        /// <param name="name">The name of the stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>Stream metadata.</returns>
@@ -224,7 +227,7 @@ namespace Microsoft.Psi.Data
             var meta = this.writer.OpenStream(source.Id, name, largeMessages, handler.Name);
 
             // register this stream with the store catalog
-            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, name, meta);
+            this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, name, meta);
 
             // hook up the serializer
             var serializer = new SerializerComponent<TMessage>(this, this.serializers);

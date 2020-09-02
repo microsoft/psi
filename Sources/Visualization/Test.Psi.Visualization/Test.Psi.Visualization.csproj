@@ -64,9 +64,9 @@
       <Project>{F843DAFA-A02B-4B63-8985-6890E513312E}</Project>
       <Name>Test.Psi.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj">
+    <ProjectReference Include="..\Microsoft.Psi.Visualization.Windows\Microsoft.Psi.Visualization.Windows.csproj">
       <Project>{d69636ba-cce9-4a85-845e-a378a2b03d62}</Project>
-      <Name>Microsoft.Psi.Visualization.Common.Windows</Name>
+      <Name>Microsoft.Psi.Visualization.Windows</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

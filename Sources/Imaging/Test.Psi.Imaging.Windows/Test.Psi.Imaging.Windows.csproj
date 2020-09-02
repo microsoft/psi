@@ -158,7 +158,9 @@
     <Content Include="Resources\TestImage2_Mask.bmp" />
     <Content Include="Resources\TestImage2_RedChannel.bmp" />
     <Content Include="Resources\TestImage2_Rotate_110.bmp" />
+    <Content Include="Resources\TestImage2_Rotate_110_Loose.bmp" />
     <Content Include="Resources\TestImage2_Rotate_Neg10.bmp" />
+    <Content Include="Resources\TestImage2_Rotate_Neg10_Loose.bmp" />
     <Content Include="Resources\TestImage2_Threshold.bmp" />
     <Content Include="Resources\TestImage_Scale_150_125_Point.bmp" />
     <Content Include="Resources\TestImage_Scale_25_200_Linear.bmp" />

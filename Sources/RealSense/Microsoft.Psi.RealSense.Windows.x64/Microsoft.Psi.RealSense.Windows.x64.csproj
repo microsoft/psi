@@ -84,7 +84,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="OldBuild" DependsOnTargets="$(OldBuildDependsOn)" />
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable RealSenseSDKDir to point to your Intel RealSense SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(RealSenseSDKDir)'==''" />
+    <Warning Text="In order to build this project you must define the environment variable RealSenseSDKDir to point to your Intel RealSense SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(RealSenseSDKDir)'==''" />
     <CallTarget Targets="OldBuild" Condition="'$(RealSenseSDKDir)'!=''" />
   </Target>
   <PropertyGroup>

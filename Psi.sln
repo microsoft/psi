@@ -124,11 +124,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.PsiStudio", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.PsiStudio", "Sources\Tools\PsiStudio\Test.Psi.PsiStudio\Test.Psi.PsiStudio.csproj", "{5600A9AF-934C-4225-B05D-F11DBC29E0FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Visualization.Common.Windows", "Sources\Visualization\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj", "{D69636BA-CCE9-4A85-845E-A378A2B03D62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Visualization.Windows", "Sources\Visualization\Microsoft.Psi.Visualization.Windows\Microsoft.Psi.Visualization.Windows.csproj", "{D69636BA-CCE9-4A85-845E-A378A2B03D62}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Windows", "Sources\Runtime\Microsoft.Psi.Windows\Microsoft.Psi.Windows.csproj", "{B7C52FC7-9678-442B-9B1E-F19F09B05606}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Speech", "Sources\Speech\Test.Psi.Speech\Test.Psi.Speech.csproj", "{E951F93F-5915-47B2-850E-2F61775E322B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Psi.Visualization", "Sources\Visualization\Test.Psi.Visualization\Test.Psi.Visualization.csproj", "{3F40EF71-126D-4D2B-84DB-37A574091B13}"
 EndProject
@@ -149,6 +147,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Imaging.Linux", "Sources\Imaging\Microsoft.Psi.Imaging.Linux\Microsoft.Psi.Imaging.Linux.csproj", "{B9F00634-88A1-40EF-9DAD-814A307AD81F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Windows", "Sources\Runtime\Test.Psi.Windows\Test.Psi.Windows.csproj", "{BE194924-7162-405D-BF6E-E6086BAA12F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2CC39BCB-7798-474C-AC97-1C5F664101E2} = {2CC39BCB-7798-474C-AC97-1C5F664101E2}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfSample", "Samples\WpfSample\WpfSample.csproj", "{65DF8A90-AF28-4F59-BF48-AF1E681397A4}"
 EndProject
@@ -205,6 +206,20 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureKinectSample", "Samples\AzureKinectSample\AzureKinectSample.csproj", "{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Kinect.Visualization.Windows", "Sources\Kinect\Microsoft.Psi.Kinect.Visualization.Windows\Microsoft.Psi.Kinect.Visualization.Windows.csproj", "{F31606FF-3737-45DC-8E89-6256AACD841F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.LiveCharts.Visualization.Windows", "Sources\Visualization\Microsoft.Psi.LiveCharts.Visualization.Windows\Microsoft.Psi.LiveCharts.Visualization.Windows.csproj", "{5AC206E0-6B2E-4DBC-9B8A-74A47C907C6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Onnx", "Onnx", "{EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.Cpu", "Sources\Integrations\Onnx\Microsoft.Psi.Onnx.Cpu\Microsoft.Psi.Onnx.Cpu.csproj", "{D18F494B-3639-4094-BD5E-BE8D81D5CD39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.Gpu", "Sources\Integrations\Onnx\Microsoft.Psi.Onnx.Gpu\Microsoft.Psi.Onnx.Gpu.csproj", "{CAE417E8-0E2D-499D-B11D-78A95155AF8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.ModelRunners.Cpu", "Sources\Integrations\Onnx\Microsoft.Psi.Onnx.ModelRunners.Cpu\Microsoft.Psi.Onnx.ModelRunners.Cpu.csproj", "{D649D56B-777C-4246-8D59-C32749D94D39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.ModelRunners.Gpu", "Sources\Integrations\Onnx\Microsoft.Psi.Onnx.ModelRunners.Gpu\Microsoft.Psi.Onnx.ModelRunners.Gpu.csproj", "{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Onnx", "Sources\Integrations\Onnx\Test.Psi.Onnx\Test.Psi.Onnx.csproj", "{A0677BEA-ADB1-4950-89E6-89483D621A52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -348,10 +363,6 @@ Global
 		{B7C52FC7-9678-442B-9B1E-F19F09B05606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7C52FC7-9678-442B-9B1E-F19F09B05606}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7C52FC7-9678-442B-9B1E-F19F09B05606}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E951F93F-5915-47B2-850E-2F61775E322B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E951F93F-5915-47B2-850E-2F61775E322B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E951F93F-5915-47B2-850E-2F61775E322B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E951F93F-5915-47B2-850E-2F61775E322B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F40EF71-126D-4D2B-84DB-37A574091B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F40EF71-126D-4D2B-84DB-37A574091B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F40EF71-126D-4D2B-84DB-37A574091B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -460,6 +471,30 @@ Global
 		{F31606FF-3737-45DC-8E89-6256AACD841F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F31606FF-3737-45DC-8E89-6256AACD841F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F31606FF-3737-45DC-8E89-6256AACD841F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AC206E0-6B2E-4DBC-9B8A-74A47C907C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC206E0-6B2E-4DBC-9B8A-74A47C907C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC206E0-6B2E-4DBC-9B8A-74A47C907C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC206E0-6B2E-4DBC-9B8A-74A47C907C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D18F494B-3639-4094-BD5E-BE8D81D5CD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18F494B-3639-4094-BD5E-BE8D81D5CD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18F494B-3639-4094-BD5E-BE8D81D5CD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18F494B-3639-4094-BD5E-BE8D81D5CD39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAE417E8-0E2D-499D-B11D-78A95155AF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAE417E8-0E2D-499D-B11D-78A95155AF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAE417E8-0E2D-499D-B11D-78A95155AF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAE417E8-0E2D-499D-B11D-78A95155AF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D649D56B-777C-4246-8D59-C32749D94D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D649D56B-777C-4246-8D59-C32749D94D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D649D56B-777C-4246-8D59-C32749D94D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D649D56B-777C-4246-8D59-C32749D94D39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -518,7 +553,6 @@ Global
 		{5600A9AF-934C-4225-B05D-F11DBC29E0FF} = {0E72598E-2A93-4439-B732-8763CD99F2C3}
 		{D69636BA-CCE9-4A85-845E-A378A2B03D62} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
 		{B7C52FC7-9678-442B-9B1E-F19F09B05606} = {3F77CC04-2E58-452B-8107-0C93E7944D4E}
-		{E951F93F-5915-47B2-850E-2F61775E322B} = {BABB7492-D236-4F1E-81C8-AB300CE1AD84}
 		{3F40EF71-126D-4D2B-84DB-37A574091B13} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
 		{A04D4DFC-2843-4BC4-96A0-F03631700506} = {BED75944-5B42-45E4-8347-46CEEEFC865F}
 		{0C0D11F0-04C4-41D3-AF43-7C2ACA90214A} = {BED75944-5B42-45E4-8347-46CEEEFC865F}
@@ -549,6 +583,13 @@ Global
 		{C91D0412-1BB2-40D2-8DCA-A48B6C5B7E67} = {CB8286F5-167B-4416-8FE9-9B97FCF146D5}
 		{66639311-E7BE-4A5B-A35B-9BFF6D3F69F2} = {1AA38339-B349-4AA7-A0A9-F92ADCFDB2DF}
 		{F31606FF-3737-45DC-8E89-6256AACD841F} = {CB8286F5-167B-4416-8FE9-9B97FCF146D5}
+		{5AC206E0-6B2E-4DBC-9B8A-74A47C907C6A} = {2CA9B0AD-E127-47A6-AF23-D567C64FBA79}
+		{EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4} = {916962DE-E7D5-4FBB-8B62-42872488ED9E}
+		{D18F494B-3639-4094-BD5E-BE8D81D5CD39} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
+		{CAE417E8-0E2D-499D-B11D-78A95155AF8A} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
+		{D649D56B-777C-4246-8D59-C32749D94D39} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
+		{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
+		{A0677BEA-ADB1-4950-89E6-89483D621A52} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

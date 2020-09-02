@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Remoting
         private readonly bool allowSequenceRestart;
         private readonly EventWaitHandle connected = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-        private StoreWriter storeWriter;
+        private PsiStoreWriter storeWriter;
         private bool replayRemoteLatestStart; // special replayStart of `DateTime.UtcNow` at exporter side
         private long replayStart; // advanced upon each message for restart
         private Dictionary<int, int> lastSequenceIdPerStream = new Dictionary<int, int>();
@@ -43,7 +43,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="port">TCP port on which to connect (default 11411).</param>
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         public RemoteImporter(Pipeline pipeline, TimeInterval replay, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(name => Store.Open(pipeline, name, null), replay, false, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
+            : this(name => PsiStore.Open(pipeline, name, null), replay, false, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
         {
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
         public RemoteImporter(Pipeline pipeline, DateTime replayEnd, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(name => Store.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, replayEnd), true, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
+            : this(name => PsiStore.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, replayEnd), true, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
         {
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
         public RemoteImporter(Pipeline pipeline, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(name => Store.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
+            : this(name => PsiStore.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
         {
         }
 
@@ -123,7 +123,7 @@ namespace Microsoft.Psi.Remoting
             this.host = host;
             this.port = port;
             this.allowSequenceRestart = allowSequenceRestart;
-            this.storeWriter = new StoreWriter(name, path);
+            this.storeWriter = new PsiStoreWriter(name, path);
             this.StartMetaClient();
         }
 
@@ -281,7 +281,7 @@ namespace Microsoft.Psi.Remoting
                             if (lastSequenceId >= sequenceId)
                             {
                                 sequenceId = lastSequenceId + 1;
-                                envelope = new Envelope(envelope.OriginatingTime, envelope.Time, sourceId, sequenceId);
+                                envelope = new Envelope(envelope.OriginatingTime, envelope.CreationTime, sourceId, sequenceId);
                             }
 
                             this.lastSequenceIdPerStream[sourceId] = sequenceId;

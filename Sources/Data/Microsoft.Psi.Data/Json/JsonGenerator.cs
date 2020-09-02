@@ -107,7 +107,7 @@ namespace Microsoft.Psi.Data.Json
             var metadata = this.reader.OpenStream(streamName);
 
             // register this stream with the store catalog
-            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, streamName, metadata);
+            this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, streamName, metadata);
 
             // create emitter
             var emitter = this.pipeline.CreateEmitter<T>(this, streamName);

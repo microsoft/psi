@@ -21,7 +21,19 @@ namespace Microsoft.Psi
         /// <returns>The requested type, or null if the type was not found.</returns>
         public static Type GetVerifiedType(string typeName)
         {
-            return Type.GetType(typeName, AssemblyResolver, null);
+            var type = Type.GetType(typeName, AssemblyResolver, null);
+
+            if (type == null)
+            {
+                // Unable to resolve type. Attempt to resolve base class library types
+                // defined in mscorlib/System.Private.CoreLib by removing the assembly name.
+                // Type.GetType will attempt to resolve types without assembly names from
+                // mscorlib/System.Private.CoreLib or the currently executing assembly.
+                typeName = RemoveCoreAssemblyName(typeName);
+                type = Type.GetType(typeName, AssemblyResolver, null);
+            }
+
+            return type;
         }
 
         /// <summary>
@@ -36,6 +48,23 @@ namespace Microsoft.Psi
 
             // strip out all assembly names (including in nested type parameters)
             typeName = Regex.Replace(typeName, @",\s[^,\[\]\*]+", string.Empty);
+
+            return typeName;
+        }
+
+        /// <summary>
+        /// Removes all mscorlib/System.Private.CoreLib assembly names from an assembly-qualified
+        /// type name while keeping all other assembly names intact. This is primarily to facilitate
+        /// creation of base class library types across different .NET runtimes (e.g. Core and Framework).
+        /// </summary>
+        /// <param name="assemblyQualifiedName">A string representing the assembly-qualified name of a type.</param>
+        /// <returns>The fully qualified name of the type, including its namespace but not the assembly name.</returns>
+        internal static string RemoveCoreAssemblyName(string assemblyQualifiedName)
+        {
+            string typeName = assemblyQualifiedName;
+
+            // strip out mscorlib and System.Private.CoreLib assembly names only
+            typeName = Regex.Replace(typeName, @",\s(mscorlib|System\.Private\.CoreLib)[^\[\]\*]+", string.Empty);
 
             return typeName;
         }

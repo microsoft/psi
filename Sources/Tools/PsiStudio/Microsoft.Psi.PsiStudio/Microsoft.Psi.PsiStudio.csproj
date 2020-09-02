@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <ApplicationIcon />
+    <ApplicationIcon>Psi.ico</ApplicationIcon>
     <OutputType>WinExe</OutputType>
     <StartupObject />
   </PropertyGroup>
@@ -25,11 +25,9 @@
     <None Remove="App.xaml" />
     <None Remove="MainWindow.xaml" />
     <None Remove="stylecop.json" />
-    <None Remove="Windows\AddAnnotationWindow.xaml" />
     <None Remove="Windows\AdditionalAssembliesWindow.xaml" />
     <None Remove="Windows\LayoutNameWindow.xaml" />
     <None Remove="Windows\LoadingDatasetWindow.xaml" />
-    <None Remove="Windows\SetAnnotationValueWindow.xaml" />
     <None Remove="Windows\SettingsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -40,10 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
-    <Page Include="Windows\AddAnnotationWindow.xaml" />
     <Page Include="Windows\AdditionalAssembliesWindow.xaml" />
     <Page Include="Windows\LayoutNameWindow.xaml" />
-    <Page Include="Windows\SetAnnotationValueWindow.xaml" />
     <Page Include="Windows\SettingsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +48,7 @@
     <ProjectReference Include="..\..\..\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
     <ProjectReference Include="..\..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
     <ProjectReference Include="..\..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
-    <ProjectReference Include="..\..\..\Visualization\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj" />
+    <ProjectReference Include="..\..\..\Visualization\Microsoft.Psi.Visualization.Windows\Microsoft.Psi.Visualization.Windows.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

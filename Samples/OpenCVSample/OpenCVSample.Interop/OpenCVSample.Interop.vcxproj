@@ -155,7 +155,7 @@ copy $(OpenCVDlls) $(OutDir)..\..\..\OpenCVSample\bin\Release</Command>
   </ImportGroup>
   <Target Name="OldBuild" DependsOnTargets="$(OldBuildDependsOn)" />
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable OpenCVDir_V4 to point to your OpenCV SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir_V4)'==''" />
+    <Warning Text="In order to build this project you must define the environment variable OpenCVDir_V4 to point to your OpenCV SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir_V4)'==''" />
     <CallTarget Targets="OldBuild" Condition="'$(OpenCVDir_V4)'!=''" />
   </Target>
   <PropertyGroup>

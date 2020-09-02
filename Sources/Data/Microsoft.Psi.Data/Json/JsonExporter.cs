@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonExporter"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline that owns this instance.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
         /// <param name="createSubdirectory">If true, a numbered sub-directory is created for this store.</param>
@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonExporter"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline that owns this instance.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="writer">The underlying store writer.</param>
         protected JsonExporter(Pipeline pipeline, string name, JsonStoreWriter writer)
@@ -93,7 +93,7 @@ namespace Microsoft.Psi.Data.Json
             var metadata = this.writer.OpenStream(source.Id, name, typeof(T).AssemblyQualifiedName);
 
             // register this stream with the store catalog
-            this.pipeline.ConfigurationStore.Set(Store.StreamMetadataNamespace, name, metadata);
+            this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, name, metadata);
 
             // hook up the serializer
             var serializer = new JsonSerializerComponent<T>(this.pipeline);

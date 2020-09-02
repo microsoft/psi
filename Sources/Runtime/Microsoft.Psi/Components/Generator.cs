@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Components
         private Action<DateTime> notifyCompletionTime;
         private Action notifyCompleted;
         private DateTime finalMessageTime = DateTime.MaxValue;
-        private DateTime nextMessageTime = DateTime.MinValue;
+        private DateTime nextMessageOriginatingTime = DateTime.MinValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator"/> class.
@@ -92,7 +92,7 @@ namespace Microsoft.Psi.Components
             this.notifyCompleted = notifyCompleted;
 
             // if next message would be past the final message time, stop immediately and notify completion
-            if (this.nextMessageTime > this.finalMessageTime)
+            if (this.nextMessageOriginatingTime > this.finalMessageTime)
             {
                 this.stopped = true;
                 this.notifyCompleted();
@@ -119,16 +119,16 @@ namespace Microsoft.Psi.Components
 
             try
             {
-                this.nextMessageTime = this.GenerateNext(envelope.OriginatingTime);
+                this.nextMessageOriginatingTime = this.GenerateNext(envelope.OriginatingTime);
 
                 // impose strictly increasing times for the loopback message as required by the runtime
-                if (this.nextMessageTime <= envelope.OriginatingTime)
+                if (this.nextMessageOriginatingTime <= envelope.OriginatingTime)
                 {
-                    this.nextMessageTime = envelope.OriginatingTime.AddTicks(1);
+                    this.nextMessageOriginatingTime = envelope.OriginatingTime.AddTicks(1);
                 }
 
                 // stop if nextMessageTime is past finalMessageTime or is equal to DateTime.MaxValue (which indicates that there is no more data)
-                if (this.nextMessageTime > this.finalMessageTime || this.nextMessageTime == DateTime.MaxValue)
+                if (this.nextMessageOriginatingTime > this.finalMessageTime || this.nextMessageOriginatingTime == DateTime.MaxValue)
                 {
                     this.stopped = true;
 
@@ -143,7 +143,7 @@ namespace Microsoft.Psi.Components
                     return;
                 }
 
-                this.loopBackOut.Post(counter + 1, this.nextMessageTime);
+                this.loopBackOut.Post(counter + 1, this.nextMessageOriginatingTime);
             }
             catch
             {
@@ -152,7 +152,7 @@ namespace Microsoft.Psi.Components
                 // (including this generator), so setting this.nextMessageTime to DateTime.MaxValue signals to the component
                 // to call notifyCompleted as soon as the pipeline calls its Stop() method, rather than wait for further
                 // loopback messages pending completion (since there won't be any forthcoming).
-                this.nextMessageTime = DateTime.MaxValue;
+                this.nextMessageOriginatingTime = DateTime.MaxValue;
                 throw;
             }
         }

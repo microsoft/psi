@@ -338,7 +338,7 @@ This component consumes `DepthImage` and `InfraredImage` streams as well as a th
 For instace, assuming these streams were persisted into a store, we can open them up as follows: 
 
 ```csharp
-var store = Store.Open(pipeline, "MyRecording", @"C:\Data");
+var store = PsiStore.Open(pipeline, "MyRecording", @"C:\Data");
 var depth = store.OpenStream<Shared<DepthImage>>("DepthImage"); // DepthImage
 var infrared = store.OpenStream<Shared<Image>>("InfraredStream"); // ColorImage
 var calibration = store.OpenStream<Calibration>("AzureKinectSensorCalibration"); // AzureKinectSensorCalibration
@@ -352,3 +352,15 @@ calibration.PipeTo(bodyTracker.AzureKinectSensorCalibration);
 
 var bodies = bodyTracker.Bodies;
 ```
+
+## A Note About Coordinate Systems
+
+The `AzureKinectBodyTracker` and `AzureKinectSensor` components emit all calibration, joint, and body orientation information in the coordinate system basis of MathNet.Spatial. This is a different basis assumption from that used by the sensor technology underneath for [joints](https://docs.microsoft.com/en-us/azure/Kinect-dk/body-joints) and for the [sensor itself](https://docs.microsoft.com/en-us/azure/Kinect-dk/coordinate-systems).
+
+All coordinate systems are immediately rebased inside the component such that the X-axis represents "forward", the Y-axis represents "left", and Z-axis represents "up". All coordinate system information emitted by these components adhere to this basis.
+
+        	Z
+        	|   X
+        	|  /
+        	| /
+ 	 Y <----+

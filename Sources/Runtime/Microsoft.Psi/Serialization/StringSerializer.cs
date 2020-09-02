@@ -8,15 +8,13 @@ namespace Microsoft.Psi.Serialization
     /// <summary>
     /// Simple string serializer.
     /// </summary>
-    /// <remarks>Don't use this as a template for other custom serializers!!!.</remarks>
     internal sealed class StringSerializer : ISerializer<string>
     {
         private const int Version = 0;
 
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
-            // schema is not used, since the behavior of arrays is hard-coded
-            return null;
+            return targetSchema ?? TypeSchema.FromType(typeof(string), serializers.RuntimeVersion, this.GetType(), Version);
         }
 
         public void Clone(string instance, ref string target, SerializationContext context)

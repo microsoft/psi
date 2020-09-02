@@ -6,7 +6,6 @@ namespace Test.Psi
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.IO;
     using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
@@ -64,7 +63,7 @@ namespace Test.Psi
             {
                 using (var p = Pipeline.Create())
                 {
-                    var store = Store.Create(p, "Store", null);
+                    var store = PsiStore.Create(p, "Store", null);
                     Generators.Return(p, new double[] { 1, 2, 3 }).Select(l => l.Select(d => d + 1)).Write("Test", store);
                     p.Run();
                 }
@@ -73,7 +72,7 @@ namespace Test.Psi
             {
                 Assert.AreEqual(1, ex.InnerExceptions.Count);
                 Assert.IsTrue(ex.InnerExceptions[0].GetType() == typeof(NotSupportedException));
-                Assert.IsTrue(ex.InnerExceptions[0].Message.StartsWith("Cannot serialize Func"));
+                Assert.IsTrue(ex.InnerExceptions[0].Message.StartsWith("Cannot clone Func"));
                 return;
             }
 
@@ -223,6 +222,63 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void SerializeSimpleArray()
+        {
+            var intArray = new[] { 1, 2, 3, 4, 5 };
+
+            var clonedArray = intArray.DeepClone();
+            CollectionAssert.AreEqual(intArray, clonedArray);
+
+            var buf = new byte[256];
+            clonedArray = this.SerializationClone(intArray, buf);
+            CollectionAssert.AreEqual(intArray, clonedArray);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SerializeMultiDimArray()
+        {
+            var twoDimArray = new int[,]
+            {
+                { 0, 1 },
+                { 2, 3 },
+                { 4, 5 },
+            };
+
+            // Multi-dimensional arrays are not yet supported so this should throw.
+            // Remove this try-catch block once support has been added for these.
+            try
+            {
+                var clonedArray = twoDimArray.DeepClone();
+                CollectionAssert.AreEqual(twoDimArray, clonedArray);
+                Assert.AreEqual(twoDimArray.Rank, clonedArray.Rank);
+                for (int rank = 0; rank < twoDimArray.Rank; rank++)
+                {
+                    Assert.AreEqual(twoDimArray.GetLowerBound(rank), clonedArray.GetLowerBound(rank));
+                    Assert.AreEqual(twoDimArray.GetUpperBound(rank), clonedArray.GetUpperBound(rank));
+                }
+
+                var buf = new byte[256];
+                clonedArray = this.SerializationClone(twoDimArray, buf);
+                CollectionAssert.AreEqual(twoDimArray, clonedArray);
+                Assert.AreEqual(twoDimArray.Rank, clonedArray.Rank);
+                for (int rank = 0; rank < twoDimArray.Rank; rank++)
+                {
+                    Assert.AreEqual(twoDimArray.GetLowerBound(rank), clonedArray.GetLowerBound(rank));
+                    Assert.AreEqual(twoDimArray.GetUpperBound(rank), clonedArray.GetUpperBound(rank));
+                }
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsTrue(ex.Message.StartsWith("Multi-dimensional arrays are currently not supported"));
+                return;
+            }
+
+            Assert.Fail("Should have thrown above");
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void SerializeEnumerables()
         {
             var list = new List<int>(new[] { 1, 2, 3, 4, 5 });
@@ -265,13 +321,15 @@ namespace Test.Psi
             var list = new List<int>(new[] { 1, 2, 3, 4, 5 });
             var source = list.Where(i => i % 2 == 0).Select(i => i * i);
 
-            var clone = source.DeepClone();
-            Assert.AreEqual(0, clone.Except(source).Count());
-
-            // var buf = new byte[256];
-            // source = list.Where(i => i % 2 == 0).Select(i => i * i); // make sure it's not expanded
-            // clone = SerializationClone(source, buf);
-            // Assert.AreEqual(0, clone.Intersect(source).Count());
+            try
+            {
+                var clone = source.DeepClone();
+                Assert.Fail("Should have thrown while attempting to clone IEnumerable query");
+            }
+            catch (NotSupportedException ex)
+            {
+                Assert.IsTrue(ex.Message.StartsWith("Cannot clone Func"));
+            }
         }
 
         [TestMethod]

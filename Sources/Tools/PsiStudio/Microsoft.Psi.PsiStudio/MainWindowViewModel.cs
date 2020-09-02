@@ -11,8 +11,11 @@ namespace Microsoft.Psi.PsiStudio
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
+    using System.Threading.Tasks;
     using System.Windows;
     using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Psi.Data;
+    using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.PsiStudio.Windows;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
@@ -30,10 +33,26 @@ namespace Microsoft.Psi.PsiStudio
     /// </summary>
     public class MainWindowViewModel : ObservableObject
     {
+        /// <summary>
+        /// The path to the PsiStudio data in the MyDocuments folder.
+        /// </summary>
+        private static string psiStudioDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
+
+        /// <summary>
+        /// The path to the layouts directory.
+        /// </summary>
+        private static string layoutsPath = Path.Combine(psiStudioDocumentsPath, "Layouts");
+
+        /// <summary>
+        /// The path to the annotations definitions directory.
+        /// </summary>
+        private static string annotationDefinitionsPath = Path.Combine(psiStudioDocumentsPath, "AnnotationDefinitions");
+
         private readonly TimeSpan nudgeTimeSpan = TimeSpan.FromSeconds(1 / 30.0);
         private readonly TimeSpan jumpTimeSpan = TimeSpan.FromSeconds(1 / 6.0);
-        private readonly string newLayoutName = "<New Layout>";
+        private readonly string newLayoutName = "<New>";
         private List<LayoutInfo> availableLayouts = new List<LayoutInfo>();
+        private List<AnnotationDefinition> annotationDefinitions;
         private LayoutInfo currentLayout = null;
 
         /// <summary>
@@ -70,8 +89,10 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand insert1CellInstantPanelCommand;
         private RelayCommand insert2CellInstantPanelCommand;
         private RelayCommand insert3CellInstantPanelCommand;
+        private RelayCommand createAnnotationStreamCommand;
         private RelayCommand zoomToSessionExtentsCommand;
         private RelayCommand zoomToSelectionCommand;
+        private RelayCommand clearSelectionCommand;
         private RelayCommand moveToSelectionStartCommand;
         private RelayCommand togglePlayRepeatCommand;
         private RelayCommand moveToSelectionEndCommand;
@@ -91,7 +112,6 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand closedCommand;
         private RelayCommand exitCommand;
 
-        ////private RelayCommand insertAnnotationCommand;
         ////private RelayCommand showSettingsWindowComand;
 
         /// <summary>
@@ -100,7 +120,7 @@ namespace Microsoft.Psi.PsiStudio
         public MainWindowViewModel()
         {
             // Create and load the settings
-            this.AppSettings = PsiStudioSettings.Load(Path.Combine(PsiStudioDocumentsPath, "PsiStudioSettings.xml"));
+            this.AppSettings = PsiStudioSettings.Load(Path.Combine(psiStudioDocumentsPath, "PsiStudioSettings.xml"));
 
             // Wait until the main window is visible before initializing the visualizer
             // map as we may need to display some message boxes during this process.
@@ -110,23 +130,20 @@ namespace Microsoft.Psi.PsiStudio
             VisualizationContext.Instance.PropertyChanging += this.VisualizationContext_PropertyChanging;
             VisualizationContext.Instance.PropertyChanged += this.VisualizationContext_PropertyChanged;
 
+            // Listen for events that occur when some part of a visualization object requests to have its properties displayed in the property browser.
+            VisualizationContext.Instance.RequestDisplayObjectProperties += (sender, e) => this.SelectedPropertiesObject = e.Object;
+
+            // Listen for events that occur when a store/stream becomes dirty or clean
+            DataManager.Instance.DataStoreStatusChanged += this.DataStoreStatusChanged;
+
             // Load the available layouts
             this.UpdateLayoutList();
-
-            // Set the current layout if it's in the available layouts, otherwise make "new layout" the current layout
-            LayoutInfo lastLayout = this.AvailableLayouts.FirstOrDefault(l => l.Name == this.AppSettings.CurrentLayoutName);
-            this.currentLayout = lastLayout ?? this.AvailableLayouts[0];
         }
 
         /// <summary>
         /// Gets the name of this application for use when constructing paths etc.
         /// </summary>
         public static string ApplicationName => "PsiStudio";
-
-        /// <summary>
-        /// Gets the path to the PsiStudio data in the MyDocuments folder.
-        /// </summary>
-        public static string PsiStudioDocumentsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
         /// <summary>
         /// Gets the application settings.
@@ -190,7 +207,7 @@ namespace Microsoft.Psi.PsiStudio
                 {
                     this.playPauseCommand = new RelayCommand(
                         () => VisualizationContext.Instance.PlayOrPause(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                        () => this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
                 return this.playPauseCommand;
@@ -310,10 +327,11 @@ namespace Microsoft.Psi.PsiStudio
                     this.openStoreCommand = new RelayCommand(
                         async () =>
                         {
+                            var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
                             OpenFileDialog dlg = new OpenFileDialog
                             {
                                 DefaultExt = ".psi",
-                                Filter = "Psi Store (.psi)|*.psi",
+                                Filter = string.Join("|", formats.Select(f => $"{f.Name}|*{f.Extensions}")),
                             };
 
                             bool? result = dlg.ShowDialog(Application.Current.MainWindow);
@@ -321,6 +339,7 @@ namespace Microsoft.Psi.PsiStudio
                             {
                                 string filename = dlg.FileName;
                                 await VisualizationContext.Instance.OpenDatasetAsync(filename);
+                                this.EnsureStreamMemberNodesVisible();
                             }
                         });
                 }
@@ -352,6 +371,7 @@ namespace Microsoft.Psi.PsiStudio
                             {
                                 string filename = dlg.FileName;
                                 await VisualizationContext.Instance.OpenDatasetAsync(filename);
+                                this.EnsureStreamMemberNodesVisible();
                             }
                         });
                 }
@@ -498,7 +518,7 @@ namespace Microsoft.Psi.PsiStudio
                 {
                     this.zoomToSelectionCommand = new RelayCommand(
                         () => this.VisualizationContainer.Navigator.ZoomToSelection(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                        () => this.VisualizationContainer.Navigator.CanZoomToSelection());
                 }
 
                 return this.zoomToSelectionCommand;
@@ -506,19 +526,39 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the move to selection start command.
+        /// Gets the clear selection command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand MoveToSelectionStartCommand
+        public RelayCommand ClearSelectionCommand
+        {
+            get
+            {
+                if (this.clearSelectionCommand == null)
+                {
+                    this.clearSelectionCommand = new RelayCommand(
+                        () => this.VisualizationContainer.Navigator.ClearSelection(),
+                        () => this.VisualizationContainer.Navigator.CanClearSelection());
+                }
+
+                return this.clearSelectionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the command to move the cursor to the selection start.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand MoveCursorToSelectionStartCommand
         {
             get
             {
                 if (this.moveToSelectionStartCommand == null)
                 {
                     this.moveToSelectionStartCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.MoveToSelectionStart(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                        () => this.VisualizationContainer.Navigator.MoveCursorToSelectionStart(),
+                        () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionStart());
                 }
 
                 return this.moveToSelectionStartCommand;
@@ -546,19 +586,19 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Gets the move to selection end command.
+        /// Gets the command to move the cursor to the selection end.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand MoveToSelectionEndCommand
+        public RelayCommand MoveCursorToSelectionEndCommand
         {
             get
             {
                 if (this.moveToSelectionEndCommand == null)
                 {
                     this.moveToSelectionEndCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.MoveToSelectionEnd(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+                        () => this.VisualizationContainer.Navigator.MoveCursorToSelectionEnd(),
+                        () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionEnd());
                 }
 
                 return this.moveToSelectionEndCommand;
@@ -900,25 +940,23 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
-        /*/// <summary>
-        /// Gets the insert annotation command.
+        /// <summary>
+        /// Gets the create annotation stream command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand InsertAnnotationCommand
+        public RelayCommand CreateAnnotationStreamCommand
         {
             get
             {
-                if (this.insertAnnotationCommand == null)
+                if (this.createAnnotationStreamCommand == null)
                 {
-                    this.insertAnnotationCommand = new RelayCommand(
-                        () => this.AddAnnotation(App.Current.MainWindow),
-                        () => this.IsDatasetLoaded());
+                    this.createAnnotationStreamCommand = new RelayCommand(() => this.CreateAnnotationStream());
                 }
 
-                return this.insertAnnotationCommand;
+                return this.createAnnotationStreamCommand;
             }
-        }*/
+        }
 
         /*/// <summary>
         /// Gets the show settings window command.
@@ -987,13 +1025,25 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
-        private string LayoutsDirectory => Path.Combine(PsiStudioDocumentsPath, "Layouts");
-
         /// <summary>
         /// Called when the main application window is closing.
         /// </summary>
-        public void OnClosing()
+        /// <returns>True if the application should continue closing, or false if closing has been cancelled by the user.</returns>
+        public bool OnClosing()
         {
+            // If there's any unsaved partitions, prompt the user to save the changes first.
+            SessionViewModel currentSession = VisualizationContext.Instance.DatasetViewModel?.CurrentSessionViewModel;
+            if (currentSession != null)
+            {
+                foreach (PartitionViewModel partitionViewModel in currentSession.PartitionViewModels)
+                {
+                    if (!partitionViewModel.PromptSaveChangesAndContinue())
+                    {
+                        return false;
+                    }
+                }
+            }
+
             // Put the current state of the timing buttons into the settings object
             this.AppSettings.ShowAbsoluteTiming = this.VisualizationContainer.Navigator.ShowAbsoluteTiming;
             this.AppSettings.ShowTimingRelativeToSessionStart = this.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart;
@@ -1001,57 +1051,98 @@ namespace Microsoft.Psi.PsiStudio
 
             // Save the settings
             this.AppSettings.Save();
+
+            return true;
         }
 
-        /*/// <summary>
-        /// Display the add annotation dialog.
+        /// <summary>
+        /// Creates a new annotation stream in a partition.
         /// </summary>
-        /// <param name="owner">The window that will own this dialog.</param>
-        public void AddAnnotation(Window owner)
+        public void CreateAnnotationStream()
         {
-            AddAnnotationWindow dlg = new AddAnnotationWindow(AnnotationSchemaRegistryViewModel.Default.Schemas);
-            dlg.Owner = owner;
-            dlg.StorePath = string.IsNullOrWhiteSpace(this.DatasetViewModel.FileName) ? Environment.CurrentDirectory : Path.GetDirectoryName(this.DatasetViewModel.FileName);
-            var result = dlg.ShowDialog();
-            if (result.HasValue && result.Value)
+            // Ensure there is a current session.
+            SessionViewModel currentSession = VisualizationContext.Instance.DatasetViewModel?.CurrentSessionViewModel;
+            if (currentSession == null)
             {
-                // test for overwrite
-                var path = Path.Combine(dlg.StorePath, dlg.StoreName + ".pas");
-                if (File.Exists(path))
+                return;
+            }
+
+            CreateAnnotationStreamWindow dlg = new CreateAnnotationStreamWindow(currentSession.PartitionViewModels, this.annotationDefinitions, Application.Current.MainWindow);
+            if (dlg.ShowDialog() == true)
+            {
+                AnnotationDefinition annotationDefinition = dlg.SelectedAnnotationDefinition;
+                string streamName = dlg.StreamName;
+                string storeName;
+                string storePath;
+
+                if (dlg.UseExistingPartition)
                 {
-                    var overwrite = MessageBox.Show(
-                        owner,
-                        $"The annotation file ({dlg.StoreName + ".pas"}) already exists in {dlg.StorePath}. Overwrite?",
-                        "Overwrite Annotation File",
-                        MessageBoxButton.OKCancel,
-                        MessageBoxImage.Warning,
-                        MessageBoxResult.Cancel);
-                    if (overwrite == MessageBoxResult.Cancel)
+                    // Get the partition that the stream will be created in
+                    PartitionViewModel partitionViewModel = currentSession.PartitionViewModels.FirstOrDefault(p => p.Name == dlg.ExistingPartitionName);
+
+                    // Make note of the partition's name and path so we can reload it later
+                    storeName = partitionViewModel.StoreName;
+                    storePath = partitionViewModel.StorePath;
+
+                    // Attempt to remove the partition from the session.  If the partition contains unsaved changes, then the user will be
+                    // prompted to save the changes first.  The user may elect to cancel the entire operation, in which case we cannot continue.
+                    if (!partitionViewModel.RemovePartition())
                     {
                         return;
                     }
+
+                    // Close the existing partition's store
+                    DataManager.Instance.CloseStore(storeName, storePath);
+                }
+                else
+                {
+                    // Make note of the new partition's name and path
+                    storeName = dlg.StoreName;
+                    storePath = dlg.StorePath;
                 }
 
-                // create a new panel for the annotations - don't make it the current panel
-                var panel = new TimelineVisualizationPanel();
-                panel.Name = dlg.PartitionName;
-                panel.Height = 22;
-                this.VisualizationContainer.AddPanel(panel);
+                // Create the progress window
+                var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Creating annotations stream {dlg.StreamName}");
+                var progress = new Progress<double>(p =>
+                {
+                    progressWindow.Progress = p;
 
-                // create a new annotated event visualization object and add to the panel
-                var annotations = new AnnotatedEventVisualizationObject();
-                annotations.Name = dlg.AnnotationName;
-                panel.AddVisualizationObject(annotations);
+                    if (p == 1.0)
+                    {
+                        // close the status window when the task reports completion
+                        progressWindow.Close();
+                    }
+                });
 
-                // create a new annotation definition and store
-                var definition = new AnnotatedEventDefinition(dlg.StreamName);
-                definition.AddSchema(dlg.AnnotationSchema);
-                this.DatasetViewModel.CurrentSessionViewModel.CreateAnnotationPartition(dlg.StoreName, dlg.StorePath, definition);
+                // Run the task to add the stream to the existing or new partition
+                if (dlg.UseExistingPartition)
+                {
+                    // Add the empty annotations stream to the existing partition
+                    Task.Run(() => PsiStore.AddStreamInPlace<TimeIntervalAnnotation, AnnotationDefinition>((storeName, storePath), streamName, annotationDefinition, true, progress));
+                }
+                else
+                {
+                    // Create the new partition with the empty annotations stream
+                    Task.Run(() => PsiStore.CreateWithStream<TimeIntervalAnnotation, AnnotationDefinition>(storeName, storePath, streamName, annotationDefinition, progress));
+                }
 
-                // open the stream for visualization (NOTE: if the selection extents were MinTime/MaxTime, no event will be created)
-                annotations.OpenStream(new StreamBinding(dlg.StreamName, dlg.PartitionName, dlg.StoreName, dlg.StorePath, typeof(AnnotationSimpleReader)));
+                // Show the modal progress window.  If the task has already completed then it will have
+                // closed the progress window and an invalid operation exception will be thrown.
+                try
+                {
+                    progressWindow.ShowDialog();
+                }
+                catch (InvalidOperationException)
+                {
+                }
+
+                // Add the partition to the session
+                currentSession.AddStorePartition(new PsiStoreStreamReader(storeName, storePath));
+
+                // Update the source bindings for all visualization objects in the current session
+                this.VisualizationContainer.UpdateStreamSources(currentSession);
             }
-        }*/
+        }
 
         private void MoveCursorBy(TimeSpan timeSpan, SnappingBehavior snappingBehavior)
         {
@@ -1060,28 +1151,39 @@ namespace Microsoft.Psi.PsiStudio
             var time = nav.Cursor + timeSpan;
             if (visContainer.SnapToVisualizationObject is IStreamVisualizationObject vo)
             {
-                nav.MoveTo(vo.GetSnappedTime(time, snappingBehavior) ?? time);
+                nav.MoveCursorTo(vo.GetSnappedTime(time, snappingBehavior) ?? time);
             }
             else
             {
-                nav.MoveTo(time);
+                nav.MoveCursorTo(time);
             }
         }
 
         private void OpenCurrentLayout()
         {
-            // Attempt to open the current layout
-            bool success = VisualizationContext.Instance.OpenLayout(this.CurrentLayout.Path, this.CurrentLayout.Name);
-
-            // If the load failed, load the default layout instead.  This method
-            // may have been initially called by the SelectedItemChanged handler
-            // from the Layouts combobox, and it's bound to CurrentLayout, so
-            // we need to kick off a task to change its value back rather than
-            // set it directly here.
-            /*if (!success)
+            // Check if the current layout is the default, empty layout
+            if (this.CurrentLayout.Name == this.newLayoutName)
             {
-                Task.Run(() => Application.Current?.Dispatcher.InvokeAsync(() => this.CurrentLayout = this.AvailableLayouts[0]));
-            }*/
+                VisualizationContext.Instance.ClearLayout();
+            }
+            else
+            {
+                // Attempt to open the current layout
+                bool success = VisualizationContext.Instance.OpenLayout(this.CurrentLayout.Path, this.CurrentLayout.Name);
+                if (success)
+                {
+                    this.EnsureStreamMemberNodesVisible();
+                }
+                else
+                {
+                    // If the load failed, load the default layout instead.  This method
+                    // may have been initially called by the SelectedItemChanged handler
+                    // from the Layouts combobox, and it's bound to CurrentLayout, so
+                    // we need to asynchronously dispatch a message to change its value
+                    // back rather than set it directly here.
+                    Application.Current?.Dispatcher.InvokeAsync(() => this.CurrentLayout = this.AvailableLayouts[0]);
+                }
+            }
         }
 
         private async void MainWindow_Activated(object sender, EventArgs e)
@@ -1093,6 +1195,9 @@ namespace Microsoft.Psi.PsiStudio
                 // Initialize the visualizer map
                 this.InitializeVisualizerMap();
 
+                // Load the available annotation definitions
+                this.LoadAnnotationDefinitions();
+
                 // Open the current layout
                 this.OpenCurrentLayout();
 
@@ -1102,6 +1207,49 @@ namespace Microsoft.Psi.PsiStudio
                 if (args.Length > 1)
                 {
                     await VisualizationContext.Instance.OpenDatasetAsync(args[1]);
+                    this.EnsureStreamMemberNodesVisible();
+                }
+            }
+        }
+
+        private void EnsureStreamMemberNodesVisible()
+        {
+            if (VisualizationContext.Instance.DatasetViewModel != null)
+            {
+                // Check if the visualization container contains any stream member visualizers.
+                List<IStreamVisualizationObject> memberVisualizers = this.VisualizationContainer.GetStreamMemberVisualizers();
+                if (memberVisualizers.Any())
+                {
+                    // Get the current session
+                    SessionViewModel currentSessionViewModel = VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel;
+
+                    foreach (IStreamVisualizationObject streamMemberVisualizer in memberVisualizers)
+                    {
+                        // Get the stream tree node for stream being used by the stream member visualizer.
+                        StreamTreeNode streamTreeNode = currentSessionViewModel.FindStream(streamMemberVisualizer.StreamBinding.PartitionName, streamMemberVisualizer.StreamBinding.StreamName);
+
+                        // If the session contains the stream, ensure its member children have been created.
+                        if (streamTreeNode != null)
+                        {
+                            streamTreeNode.EnsureMemberChildExists(streamMemberVisualizer.StreamBinding.StreamAdapterArguments[0] as string);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DataStoreStatusChanged(object sender, DataStoreStatusChangedEventArgs e)
+        {
+            if (VisualizationContext.Instance.DatasetViewModel != null)
+            {
+                SessionViewModel currentSessionViewModel = VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel;
+                if (currentSessionViewModel != null)
+                {
+                    PartitionViewModel partitionViewModel = currentSessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == e.StoreName);
+                    if (partitionViewModel != default)
+                    {
+                        partitionViewModel.ChangeStoreStatus(e.IsDirty, e.StreamNames);
+                    }
                 }
             }
         }
@@ -1124,79 +1272,127 @@ namespace Microsoft.Psi.PsiStudio
             }
 
             // Initialize the visualizer map
-            VisualizationContext.Instance.VisualizerMap.Initialize(additionalAssemblies, Path.Combine(PsiStudioDocumentsPath, "VisualizersLog.txt"));
+            VisualizationContext.Instance.PluginMap.Initialize(additionalAssemblies, Path.Combine(psiStudioDocumentsPath, "VisualizersLog.txt"));
         }
 
         private void UpdateLayoutList()
         {
-            this.RaisePropertyChanging(nameof(this.AvailableLayouts));
+            // Create a new collection of layouts
+            List<LayoutInfo> layouts = new List<LayoutInfo>();
 
-            this.availableLayouts = new List<LayoutInfo>();
-            this.availableLayouts.Add(new LayoutInfo(this.newLayoutName, null));
+            // Add the default/new layout
+            layouts.Add(new LayoutInfo(this.newLayoutName, null));
 
             // Create the layouts directory if it doesn't already exist
-            DirectoryInfo directoryInfo = new DirectoryInfo(this.LayoutsDirectory);
+            DirectoryInfo directoryInfo = new DirectoryInfo(layoutsPath);
             if (!directoryInfo.Exists)
             {
-                Directory.CreateDirectory(this.LayoutsDirectory);
+                Directory.CreateDirectory(layoutsPath);
             }
 
             // Find all the layout files and add them to the list of available layouts
             FileInfo[] files = directoryInfo.GetFiles("*.plo");
             foreach (FileInfo fileInfo in files)
             {
-                this.AddLayoutToAvailableLayouts(fileInfo.FullName);
+                layouts.Add(new LayoutInfo(Path.GetFileNameWithoutExtension(fileInfo.FullName), fileInfo.FullName));
             }
 
+            // Set the list of available layouts
+            this.RaisePropertyChanging(nameof(this.AvailableLayouts));
+            this.AvailableLayouts = layouts;
             this.RaisePropertyChanged(nameof(this.AvailableLayouts));
-        }
 
-        private LayoutInfo AddLayoutToAvailableLayouts(string fileName)
-        {
-            LayoutInfo layoutInfo = new LayoutInfo(Path.GetFileNameWithoutExtension(fileName), fileName);
-            this.availableLayouts.Add(layoutInfo);
-            return layoutInfo;
+            // Set the current layout if it's in the available layouts, otherwise make "new layout" the current layout
+            LayoutInfo lastLayout = this.AvailableLayouts.FirstOrDefault(l => l.Name == this.AppSettings.CurrentLayoutName);
+            this.CurrentLayout = lastLayout ?? this.AvailableLayouts[0];
         }
 
         private void SaveLayoutAs()
         {
-            LayoutNameWindow dlg = new LayoutNameWindow(Application.Current.MainWindow);
+            LayoutNameWindow dlg = new LayoutNameWindow(Application.Current.MainWindow, layoutsPath);
 
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
-                string fileName = Path.Combine(this.LayoutsDirectory, dlg.LayoutName);
+                string fileName = Path.Combine(layoutsPath, dlg.LayoutName);
 
                 // Save the layout
                 this.VisualizationContainer.Save(fileName);
 
-                // Add this layout to the list of available layouts and make it current
-                this.RaisePropertyChanging(nameof(this.AvailableLayouts));
-                this.RaisePropertyChanging(nameof(this.CurrentLayout));
-                LayoutInfo newLayout = this.AddLayoutToAvailableLayouts(fileName);
-                this.CurrentLayout = newLayout;
-                this.RaisePropertyChanged(nameof(this.AvailableLayouts));
-                this.RaisePropertyChanged(nameof(this.CurrentLayout));
+                // Recreate the layout list
+                this.UpdateLayoutList();
+
+                // Set the current layout
+                this.CurrentLayout = this.AvailableLayouts.First(l => l.Path == fileName);
             }
+        }
+
+        private void LoadAnnotationDefinitions()
+        {
+            this.annotationDefinitions = new List<AnnotationDefinition>();
+
+            // Create the annotations definitions directory if it doesn't already exist
+            DirectoryInfo directoryInfo = new DirectoryInfo(annotationDefinitionsPath);
+            if (!directoryInfo.Exists)
+            {
+                Directory.CreateDirectory(annotationDefinitionsPath);
+            }
+
+            // Keep a list of annotation definitions that failed to load
+            List<string> annotationDefinitionLoadFailures = new List<string>();
+
+            // Find all the annotations definitions and add them to the list
+            FileInfo[] files = directoryInfo.GetFiles("*.pad");
+            foreach (FileInfo fileInfo in files)
+            {
+                AnnotationDefinition annotationDefinition = AnnotationDefinition.Load(fileInfo.FullName);
+                if (annotationDefinition != null)
+                {
+                    this.annotationDefinitions.Add(annotationDefinition);
+                }
+                else
+                {
+                    annotationDefinitionLoadFailures.Add(fileInfo.FullName);
+                }
+            }
+
+            if (annotationDefinitionLoadFailures.Count > 0)
+            {
+                this.ReportAnnotationDefinitionLoadFailures(annotationDefinitionLoadFailures);
+            }
+        }
+
+        private void ReportAnnotationDefinitionLoadFailures(List<string> annotationDefinitionLoadFailures)
+        {
+            StringBuilder errorMessage = new StringBuilder();
+            errorMessage.AppendLine("The following Annotation Definitions could not be loaded because they contain unknown types:");
+            errorMessage.AppendLine();
+            foreach (string annotationDefinitionLoadFailure in annotationDefinitionLoadFailures)
+            {
+                FileInfo fileInfo = new FileInfo(annotationDefinitionLoadFailure);
+                errorMessage.AppendLine(fileInfo.Name);
+            }
+
+            new MessageBoxWindow(Application.Current.MainWindow, "Annotation Definition Load Error", errorMessage.ToString(), "Close", null).ShowDialog();
         }
 
         private void ExpandDatasetsTree()
         {
-            this.UpdateDatasetsTreeView(true);
+            this.ExpandOrCollapseDatasetsTreeView(true);
         }
 
         private void CollapseDatasetsTree()
         {
-            this.UpdateDatasetsTreeView(false);
+            this.ExpandOrCollapseDatasetsTreeView(false);
         }
 
-        private void UpdateDatasetsTreeView(bool expand)
+        private void ExpandOrCollapseDatasetsTreeView(bool expand)
         {
-            foreach (DatasetViewModel datasetViewModel in VisualizationContext.Instance.DatasetViewModels)
+            foreach (var datasetViewModel in VisualizationContext.Instance.DatasetViewModels)
             {
-                foreach (SessionViewModel sessionViewModel in datasetViewModel.SessionViewModels)
+                foreach (var sessionViewModel in datasetViewModel.SessionViewModels)
                 {
-                    foreach (PartitionViewModel partitionViewModel in sessionViewModel.PartitionViewModels)
+                    foreach (var partitionViewModel in sessionViewModel.PartitionViewModels)
                     {
                         if (expand)
                         {
@@ -1213,7 +1409,14 @@ namespace Microsoft.Psi.PsiStudio
                     sessionViewModel.IsTreeNodeExpanded = expand;
                 }
 
-                datasetViewModel.IsTreeNodeExpanded = expand;
+                // for the dataset level, we only expand. When we collapse, the dataset level does not
+                // collapse, since that provides no useful information - the user most likely wants to
+                // see the sessions. If for some reason they need to be hidden, that collapse can be
+                // done manually.
+                if (expand)
+                {
+                    datasetViewModel.IsTreeNodeExpanded = expand;
+                }
             }
         }
 
@@ -1245,10 +1448,18 @@ namespace Microsoft.Psi.PsiStudio
                     StreamBinding streamBinding = streamVisualizationObject.StreamBinding;
                     foreach (SessionViewModel sessionViewModel in VisualizationContext.Instance.DatasetViewModel.SessionViewModels)
                     {
-                        PartitionViewModel partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.StorePath == streamBinding.StorePath);
+                        PartitionViewModel partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == streamBinding.PartitionName);
                         if (partitionViewModel != null)
                         {
-                            if (partitionViewModel.SelectStream(streamBinding.StreamName))
+                            // Get the name of the node to select.  If there are stream adapter arguments then assume
+                            // the stream adapter is a stream member adapter and append the path to the member.
+                            string nodeName = streamBinding.StreamName;
+                            if ((streamBinding.StreamAdapterArguments != null) && streamBinding.StreamAdapterArguments.Any())
+                            {
+                                nodeName += "." + streamBinding.StreamAdapterArguments[0] as string;
+                            }
+
+                            if (partitionViewModel.SelectNode(nodeName))
                             {
                                 sessionViewModel.IsTreeNodeExpanded = true;
                                 VisualizationContext.Instance.DatasetViewModel.IsTreeNodeExpanded = true;

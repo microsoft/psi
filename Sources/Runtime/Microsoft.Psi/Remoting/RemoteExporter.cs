@@ -44,7 +44,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="maxBytesPerSecond">Maximum bytes/sec quota (default infinite).</param>
         /// <param name="bytesPerSecondSmoothingWindowSeconds">Smoothing window over which to compute bytes/sec (default 5 sec.).</param>
         public RemoteExporter(Pipeline pipeline, int port = DefaultPort, TransportKind transport = DefaultTransport, long maxBytesPerSecond = long.MaxValue, double bytesPerSecondSmoothingWindowSeconds = 5.0)
-            : this(Store.Create(pipeline, $"RemoteExporter_{Guid.NewGuid().ToString()}", null, true), port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
+            : this(PsiStore.Create(pipeline, $"RemoteExporter_{Guid.NewGuid().ToString()}", null, true), port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
         {
         }
 
@@ -241,7 +241,7 @@ namespace Microsoft.Psi.Remoting
 
             private TcpClient client;
             private Stream stream;
-            private StoreReader storeReader;
+            private PsiStoreReader storeReader;
             private TimeInterval interval;
 
             public Connection(TcpClient client, ITransport dataTransport, string name, string path, Action<Guid> onDisconnect, Exporter exporter, long maxBytesPerSecond, double bytesPerSecondSmoothingWindowSeconds)
@@ -302,7 +302,7 @@ namespace Microsoft.Psi.Remoting
                     writer.Reset();
                     writer.Write(len - 4);
                     this.stream.Write(writer.Buffer, 0, len);
-                    this.storeReader = new StoreReader(this.storeName, this.storePath, this.MetaUpdateHandler, true);
+                    this.storeReader = new PsiStoreReader(this.storeName, this.storePath, this.MetaUpdateHandler, true);
                 }
                 catch (Exception)
                 {

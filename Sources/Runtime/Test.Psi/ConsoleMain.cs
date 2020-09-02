@@ -19,7 +19,6 @@ namespace Test.Psi
         /// <param name="args">Command-line args.</param>
         public static void Main(string[] args)
         {
-            Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             TestRunner.RunAll(args);
         }
     }

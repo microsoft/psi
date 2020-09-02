@@ -12,6 +12,7 @@ namespace Microsoft.Psi.Data
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Psi.Data.Helpers;
+    using Microsoft.Psi.Persistence;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -89,14 +90,14 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Creates a new dataset from an existing data store.
         /// </summary>
-        /// <param name="storeName">The name of the data store.</param>
-        /// <param name="storePath">The path of the data store.</param>
-        /// <param name="partitionName">The partition name.</param>
+        /// <param name="streamReader">The stream reader of the data store.</param>
+        /// <param name="sessionName">The session name (optional, defaults to streamReader.Name).</param>
+        /// <param name="partitionName">The partition name (optional, defaults to streamReader.).</param>
         /// <returns>The newly created dataset.</returns>
-        public static Dataset CreateFromExistingStore(string storeName, string storePath, string partitionName = null)
+        public static Dataset CreateFromStore(IStreamReader streamReader, string sessionName = null, string partitionName = null)
         {
             var dataset = new Dataset();
-            dataset.AddSessionFromExistingStore(storeName, storeName, storePath, partitionName);
+            dataset.AddSessionFromStore(streamReader, sessionName, partitionName);
             return dataset;
         }
 
@@ -133,7 +134,7 @@ namespace Microsoft.Psi.Data
                 newSession.Name = session.Name;
                 foreach (var p in session.Partitions)
                 {
-                    newSession.AddStorePartition(p.StoreName, p.StorePath);
+                    newSession.AddStorePartition(StreamReader.Create(p.StoreName, p.StorePath, p.StreamReaderTypeName), p.Name);
                 }
             }
         }
@@ -167,15 +168,14 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Creates and adds a session to this dataset using the specified parameters.
         /// </summary>
-        /// <param name="sessionName">The name of the session.</param>
-        /// <param name="storeName">The name of the data store.</param>
-        /// <param name="storePath">The path of the data store.</param>
+        /// <param name="streamReader">The stream reader of the data store.</param>
+        /// <param name="sessionName">The name of the session (optional, defaults to streamReader.Name).</param>
         /// <param name="partitionName">The partition name.</param>
         /// <returns>The newly added session.</returns>
-        public Session AddSessionFromExistingStore(string sessionName, string storeName, string storePath, string partitionName = null)
+        public Session AddSessionFromStore(IStreamReader streamReader, string sessionName = null, string partitionName = null)
         {
-            var session = new Session(this, sessionName);
-            session.AddStorePartition(storeName, storePath, partitionName);
+            var session = new Session(this, sessionName ?? streamReader.Name);
+            session.AddStorePartition(streamReader, partitionName);
             this.AddSession(session);
             return session;
         }
@@ -221,14 +221,15 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
         /// </summary>
-        /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
-        /// <param name="outputPartitionName">The output partition name to be created.</param>
-        /// <param name="overwrite">Flag indicating whether the partition should be overwritten. Default is false.</param>
-        /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
-        /// <param name="outputStorePath">The path of the output data store. Default is null.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us.</param>
-        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <param name="computeDerived">The action to be invoked to compute derive partitions.</param>
+        /// <param name="outputPartitionName">The name of the output partition to be created.</param>
+        /// <param name="overwrite">An optional flag indicating whether the partition should be overwritten. Default is false.</param>
+        /// <param name="outputStoreName">An optional name for the output data store. Default is the output partition name.</param>
+        /// <param name="outputStorePath">An optional path for the output data store. Default is the path for the first partition in the session.</param>
+        /// <param name="replayDescriptor">An optional replay descriptor to use when creating the derived partition.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
         public async Task CreateDerivedPartitionAsync(
             Action<Pipeline, SessionImporter, Exporter> computeDerived,
             string outputPartitionName,
@@ -236,48 +237,50 @@ namespace Microsoft.Psi.Data
             string outputStoreName = null,
             string outputStorePath = null,
             ReplayDescriptor replayDescriptor = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
         {
             await this.CreateDerivedPartitionAsync<long>(
-                (p, si, e, l) => computeDerived(p, si, e),
+                (p, si, e, _) => computeDerived(p, si, e),
                 0,
                 outputPartitionName,
                 overwrite,
                 outputStoreName,
                 outputStorePath,
                 replayDescriptor,
+                progress,
                 cancellationToken);
         }
 
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
         /// </summary>
-        /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
-        /// <param name="outputPartitionName">The output partition name to be created.</param>
-        /// <param name="overwrite">Flag indicating whether the partition should be overwritten.</param>
-        /// <param name="outputStoreName">The name of the output data store.</param>
-        /// <param name="outputPathFunction">A function to determine output path from the given Session.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us.</param>
-        /// <param name="progress">An object that can be used for reporting progress.</param>
-        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <param name="computeDerived">The action to be invoked to compute derive partitions.</param>
+        /// <param name="outputPartitionName">The name of the output partition to be created.</param>
+        /// <param name="overwrite">An optional flag indicating whether the partition should be overwritten. Default is false.</param>
+        /// <param name="outputStoreName">An optional name for the output data store. Default is the output partition name.</param>
+        /// <param name="outputStorePathFunction">An optional function to determine output store path for each given session. Default is the path for the first partition in the session.</param>
+        /// <param name="replayDescriptor">An optional replay descriptor to use when creating the derived partition.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
         public async Task CreateDerivedPartitionAsync(
             Action<Pipeline, SessionImporter, Exporter> computeDerived,
             string outputPartitionName,
             bool overwrite,
             string outputStoreName,
-            Func<Session, string> outputPathFunction,
+            Func<Session, string> outputStorePathFunction,
             ReplayDescriptor replayDescriptor = null,
             IProgress<(string, double)> progress = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             await this.CreateDerivedPartitionAsync<long>(
-                (p, si, e, l) => computeDerived(p, si, e),
+                (p, si, e, _) => computeDerived(p, si, e),
                 0,
                 outputPartitionName,
                 overwrite,
                 outputStoreName,
-                outputPathFunction,
+                outputStorePathFunction,
                 replayDescriptor,
                 progress,
                 cancellationToken);
@@ -290,52 +293,11 @@ namespace Microsoft.Psi.Data
         /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
         /// <param name="parameter">The parameter to be passed to the action.</param>
         /// <param name="outputPartitionName">The output partition name to be created.</param>
-        /// <param name="overwrite">Flag indicating whether the partition should be overwritten.</param>
-        /// <param name="outputStoreName">The name of the output data store.</param>
-        /// <param name="outputPathFunction">A function to determine output path from the given Session.</param>
+        /// <param name="overwrite">Flag indicating whether the partition should be overwritten. Default is false.</param>
+        /// <param name="outputStoreName">An optional name for the output data store. Default is the output partition name.</param>
+        /// <param name="outputStorePath">An optional path for the output data store. Default is the path for the first partition in the session.</param>
         /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="progress">An object that can be used for reporting progress.</param>
-        /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        public async Task CreateDerivedPartitionAsync<TParameter>(
-            Action<Pipeline, SessionImporter, Exporter, TParameter> computeDerived,
-            TParameter parameter,
-            string outputPartitionName,
-            bool overwrite,
-            string outputStoreName,
-            Func<Session, string> outputPathFunction,
-            ReplayDescriptor replayDescriptor = null,
-            IProgress<(string, double)> progress = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            double progressPerSession = 1.0 / this.Sessions.Count;
-            for (int i = 0; i < this.Sessions.Count; i++)
-            {
-                var session = this.Sessions[i];
-                await session.CreateDerivedPartitionAsync(
-                    computeDerived,
-                    parameter,
-                    outputPartitionName,
-                    overwrite,
-                    outputStoreName,
-                    outputPathFunction(session),
-                    replayDescriptor,
-                    new Progress<(string s, double p)>(t => progress?.Report(($"Creating derived partition on session {session.Name}", (i + t.p) * progressPerSession))),
-                    cancellationToken);
-            }
-        }
-
-        /// <summary>
-        /// Asynchronously computes a derived partition for each session in the dataset.
-        /// </summary>
-        /// <typeparam name="TParameter">The type of parameter passed to the action.</typeparam>
-        /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
-        /// <param name="parameter">The parameter to be passed to the action.</param>
-        /// <param name="outputPartitionName">The output partition name to be created.</param>
-        /// <param name="overwrite">Flag indicating whether the partition should be overwritten. Default is false.</param>
-        /// <param name="outputStoreName">The name of the output data store. Default is null.</param>
-        /// <param name="outputStorePath">The path of the output data store. Default is null.</param>
-        /// <param name="replayDescriptor">The replay descriptor to us.</param>
         /// <param name="cancellationToken">A token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task CreateDerivedPartitionAsync<TParameter>(
@@ -346,24 +308,61 @@ namespace Microsoft.Psi.Data
             string outputStoreName = null,
             string outputStorePath = null,
             ReplayDescriptor replayDescriptor = null,
-            CancellationToken cancellationToken = default(CancellationToken))
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
         {
+            await this.CreateDerivedPartitionAsync(
+                computeDerived,
+                parameter,
+                outputPartitionName,
+                overwrite,
+                outputStoreName,
+                _ => outputStorePath,
+                replayDescriptor,
+                progress,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Asynchronously computes a derived partition for each session in the dataset.
+        /// </summary>
+        /// <typeparam name="TParameter">The type of parameter passed to the action.</typeparam>
+        /// <param name="computeDerived">The action to be invoked to derive partitions.</param>
+        /// <param name="parameter">The parameter to be passed to the action.</param>
+        /// <param name="outputPartitionName">The name of the output partition to be created.</param>
+        /// <param name="overwrite">An optional flag indicating whether the partition should be overwritten. Default is false.</param>
+        /// <param name="outputStoreName">An optional name for the output data store. Default is the output partition name.</param>
+        /// <param name="outputStorePathFunction">An optional function to determine output store path for each given session. Default is the path for the first partition in the session.</param>
+        /// <param name="replayDescriptor">An optional replay descriptor to use when creating the derived partition.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
+        public async Task CreateDerivedPartitionAsync<TParameter>(
+            Action<Pipeline, SessionImporter, Exporter, TParameter> computeDerived,
+            TParameter parameter,
+            string outputPartitionName,
+            bool overwrite,
+            string outputStoreName,
+            Func<Session, string> outputStorePathFunction,
+            ReplayDescriptor replayDescriptor = null,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+        {
+            double sessionCount = this.Sessions.Count;
             int sessionIndex = 0;
-            foreach (var session in this.Sessions)
+            for (int i = 0; i < this.Sessions.Count; i++)
             {
-                var inputPartition = session.Partitions.FirstOrDefault();
-                await session.CreateDerivedPartitionAsync(
+                var session = this.Sessions[i];
+                await session.CreateDerivedPsiPartitionAsync(
                     computeDerived,
                     parameter,
                     outputPartitionName,
                     overwrite,
-                    outputStoreName,
-                    (outputStorePath == null) ? inputPartition.StorePath : Path.Combine(outputStorePath, $"{sessionIndex}"),
+                    outputStoreName ?? outputPartitionName,
+                    outputStorePathFunction(session) ?? session.Partitions.First().StorePath,
                     replayDescriptor,
-                    null,
+                    progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionIndex + tuple.Item2) / sessionCount))) : null,
                     cancellationToken);
-
-                // increment session index
                 sessionIndex++;
             }
         }
@@ -373,28 +372,11 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="path">The path that contains the data stores.</param>
         /// <param name="partitionName">The name of the partition to be added when adding a new session. Default is null.</param>
-        public void AddSessionsFromExistingStores(string path, string partitionName = null)
+        public void AddSessionsFromPsiStores(string path, string partitionName = null)
         {
-            this.AddSessionsFromExistingStores(path, path, partitionName);
-        }
-
-        private void AddSessionsFromExistingStores(string rootPath, string currentPath, string partitionName)
-        {
-            // scan for any psi catalog files
-            foreach (var filename in Directory.EnumerateFiles(currentPath, "*.Catalog_000000.psi"))
+            foreach (var store in PsiStoreCommon.EnumerateStores(path))
             {
-                var fi = new FileInfo(filename);
-                var storeName = fi.Name.Substring(0, fi.Name.Length - ".Catalog_000000.psi".Length);
-                var sessionName = (currentPath == rootPath) ? filename : Path.Combine(currentPath, filename).Substring(rootPath.Length);
-                sessionName = sessionName.Substring(0, sessionName.Length - fi.Name.Length);
-                sessionName = sessionName.Trim('\\');
-                this.AddSessionFromExistingStore(sessionName, storeName, currentPath, partitionName);
-            }
-
-            // now go through subfolders
-            foreach (var directory in Directory.EnumerateDirectories(currentPath))
-            {
-                this.AddSessionsFromExistingStores(rootPath, Path.Combine(currentPath, directory), partitionName);
+                this.AddSessionFromPsiStore(store.Name, store.Path, store.Session, partitionName);
             }
         }
 
@@ -425,7 +407,7 @@ namespace Microsoft.Psi.Data
                 {
                     var importer = SessionImporter.Open(pipeline, session);
                     action(pipeline, importer);
-                    pipeline.Run(new ReplayDescriptor(importer.OriginatingTimeInterval));
+                    pipeline.Run(new ReplayDescriptor(importer.MessageOriginatingTimeInterval));
                 }
             }
         }

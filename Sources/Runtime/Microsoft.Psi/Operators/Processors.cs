@@ -188,7 +188,7 @@ namespace Microsoft.Psi
                     var m = messages[0].original && messages.Length > 1 ? messages[1] : messages[0];
                     if (m.upsert)
                     {
-                        emitter.Post(m.message, envelope.OriginatingTime);
+                        emitter.Deliver(m.message, envelope);
                     }
                 });
         }

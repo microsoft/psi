@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CheckVariable">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <ApplicationIcon />
@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
     <ProjectReference Include="..\..\Common\Test.Psi.Common\Test.Psi.Common.csproj" />
-    <ProjectReference Include="..\..\Integrations\MicrosoftSpeech\Microsoft.Psi.MicrosoftSpeech.Windows\Microsoft.Psi.MicrosoftSpeech.Windows.csproj" />
     <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
     <ProjectReference Include="..\Microsoft.Psi.Speech.Windows\Microsoft.Psi.Speech.Windows.csproj" />
     <ProjectReference Include="..\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj" />
@@ -56,10 +55,4 @@
   <ItemGroup>
     <Reference Include="System.Speech" />
   </ItemGroup>
-  <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable MsSpeechSdkDir to point to your Microsoft.Speech installation" ContinueOnError="WarnAndContinue" Condition="'$(MsSpeechSdkDir)'==''" />
-    <CreateProperty Value="" Condition="'$(MsSpeechSdkDir)'==''">
-      <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
-    </CreateProperty>
-  </Target>
 </Project>

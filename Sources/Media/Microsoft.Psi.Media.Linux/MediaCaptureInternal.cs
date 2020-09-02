@@ -24,6 +24,7 @@ namespace Microsoft.Psi.Media
         private int handle = 0;
         private LinuxVideoInterop.Capability capabilities;
         private Thread background;
+        private volatile bool isStopping;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCaptureInternal"/> class.
@@ -160,6 +161,7 @@ namespace Microsoft.Psi.Media
 
                 LinuxVideoInterop.StreamOn(this.handle);
                 this.background = new Thread(new ThreadStart(this.ProcessFrames)) { IsBackground = true };
+                this.isStopping = false;
                 this.background.Start();
             }
             catch
@@ -182,11 +184,16 @@ namespace Microsoft.Psi.Media
         /// </summary>
         public void Close()
         {
-            LinuxVideoInterop.StreamOff(this.handle);
             if (this.file != null)
             {
+                // stop any running background thread and wait for it to terminate
+                this.isStopping = true;
+                this.background?.Join();
+
+                LinuxVideoInterop.StreamOff(this.handle);
                 this.file.Close();
                 this.file.Dispose();
+                this.file = null;
             }
         }
 
@@ -200,7 +207,7 @@ namespace Microsoft.Psi.Media
 
         private unsafe void ProcessFrames()
         {
-            while (true)
+            while (!this.isStopping)
             {
                 if (this.OnFrame != null)
                 {

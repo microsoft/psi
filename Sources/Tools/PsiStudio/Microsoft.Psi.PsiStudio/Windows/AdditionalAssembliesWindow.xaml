@@ -12,9 +12,8 @@
         Background="{StaticResource WindowBackgroundBrush}">
 
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Height" Value="20" />
-            <Setter Property="VerticalAlignment" Value="Center" />
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Height" Value="22" />
             <Setter Property="Width" Value="80" />
             <Setter Property="Margin" Value="5" />
         </Style>
@@ -22,7 +21,7 @@
 
     <StackPanel Orientation="Vertical" Width="600" Margin="5">
         <TextBlock Margin="5" Name="WarningLine1" TextWrapping="Wrap"/>
-        <ListBox Margin="5" ItemsSource="{Binding AdditionalAssemblies}" Height="160" />
+        <ListBox Margin="5" ItemsSource="{Binding AdditionalAssemblies}" Height="160" AutomationProperties.Name="AdditionalAssembliesListBox" />
         <TextBlock Margin="5" Name="WarningLine2" TextWrapping="Wrap"/>
         <TextBlock Margin="5" Name="WarningQuestion" TextWrapping="Wrap"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

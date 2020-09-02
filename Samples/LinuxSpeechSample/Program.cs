@@ -4,20 +4,18 @@
 namespace Microsoft.Psi.Samples.LinuxSpeechSample
 {
     using System;
-    using System.Linq;
     using Microsoft.Psi.Audio;
-    using Microsoft.Psi.CognitiveServices.Speech;
-    using Microsoft.Psi.Speech;
 
     /// <summary>
     /// Speech sample on Linux sample program.
     /// </summary>
     public static class Program
     {
-        // This field is required and must be a valid key which may be obtained by signing up at
-        // https://azure.microsoft.com/en-us/try/cognitive-services/?api=speech-api.
+        // A valid subscription key is required which may be obtained by signing up at
+        // https://azure.microsoft.com/en-us/services/cognitive-services.
         private static string azureSubscriptionKey = string.Empty;
-        private static string azureRegion = string.Empty; // the region to which the subscription is associated (e.g. "westus")
+        private static string azureRegion = string.Empty; // the service region of the speech resource (e.g. "westus")
+        private static string deviceName = "plughw:0,0";
 
         /// <summary>
         /// Main entry point.
@@ -42,10 +40,8 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
                 switch (key)
                 {
                     case ConsoleKey.D1:
-                        // Azure speech service requires a valid subscription key
-                        if (GetSubscriptionKey())
+                        if (GetSubscriptionKeyAndRegion() && GetAudioDeviceName())
                         {
-                            // Demonstrate the use of the AzureSpeechRecognizer component
                             RunAzureSpeech();
                         }
 
@@ -63,52 +59,26 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         }
 
         /// <summary>
-        /// Builds and runs a speech recognition pipeline using the Azure speech recognizer. Requires a valid Cognitive Services
-        /// subscription key. See https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account.
+        /// Builds and runs a speech recognition pipeline using the Azure speech service. Requires a valid Cognitive Services
+        /// subscription key. See https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started.
         /// </summary>
-        /// <remarks>
-        /// If you are getting a <see cref="System.InvalidOperationException"/> with the message 'AzureSpeechRecognizer returned
-        /// OnConversationError with error code: LoginFailed. Original error text: Transport error', this most likely is due to
-        /// an invalid subscription key. Please check your Azure portal at https://portal.azure.com and ensure that you have
-        /// added a subscription to the Azure Speech API on your account.
-        /// </remarks>
         public static void RunAzureSpeech()
         {
-            // Get the Device Name to record audio from
-            Console.Write("Enter Device Name (default: plughw:0,0)");
-            string deviceName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(deviceName))
-            {
-                deviceName = "plughw:0,0";
-            }
-
             // Create the pipeline object.
             using (Pipeline pipeline = Pipeline.Create())
             {
                 // Create the AudioSource component to capture audio from the default device in 16 kHz 1-channel
-                // PCM format as required by both the voice activity detector and speech recognition components.
-                IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, new AudioCaptureConfiguration() { DeviceName = deviceName, Format = WaveFormat.Create16kHz1Channel16BitPcm() });
+                // PCM format as required by the speech recognition component.
+                var audio = new AudioCapture(pipeline, new AudioCaptureConfiguration { DeviceName = deviceName, Format = WaveFormat.Create16kHz1Channel16BitPcm() });
 
-                // Perform voice activity detection using the voice activity detector component
-                var vad = new SimpleVoiceActivityDetector(pipeline);
-                audioInput.PipeTo(vad);
-
-                // Create Azure speech recognizer component
-                var recognizer = new AzureSpeechRecognizer(pipeline, new AzureSpeechRecognizerConfiguration() { SubscriptionKey = Program.azureSubscriptionKey, Region = Program.azureRegion });
-
-                // The input audio to the Azure speech recognizer needs to be annotated with a voice activity flag.
-                // This can be constructed by using the Psi Join() operator to combine the audio and VAD streams.
-                var annotatedAudio = audioInput.Join(vad);
+                // Create the speech recognizer component
+                var recognizer = new ContinuousSpeechRecognizer(pipeline, azureSubscriptionKey, azureRegion);
 
                 // Subscribe the recognizer to the annotated audio
-                annotatedAudio.PipeTo(recognizer);
-
-                // Partial and final speech recognition results are posted on the same stream. Here
-                // we use Psi's Where() operator to filter out only the final recognition results.
-                var finalResults = recognizer.Out.Where(result => result.IsFinal);
+                audio.PipeTo(recognizer);
 
                 // Print the recognized text of the final recognition result to the console.
-                finalResults.Do(result => Console.WriteLine(result.Text));
+                recognizer.Out.Do((result, e) => Console.WriteLine($"{e.OriginatingTime.TimeOfDay}: {result}"));
 
                 // Register an event handler to catch pipeline errors
                 pipeline.PipelineExceptionNotHandled += Pipeline_PipelineException;
@@ -148,38 +118,58 @@ namespace Microsoft.Psi.Samples.LinuxSpeechSample
         }
 
         /// <summary>
-        /// Prompt user to enter Azure Speech subscription key from Cognitive Services. Or just set the AzureSubscriptionKey
+        /// Prompt user to enter Azure Speech subscription key from Cognitive Services. Or just set the <see cref="azureSubscriptionKey"/>
         /// static member at the top of this file to avoid having to enter it each time. For more information on how to
-        /// register for a subscription, see https://www.microsoft.com/cognitive-services/en-us/sign-up.
+        /// sign up for a subscription, see https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started.
         /// </summary>
         /// <returns>
         /// True if <see cref="azureSubscriptionKey"/> contains a non-empty key (the key will not actually be
         /// authenticated until the first attempt to access the speech recognition service). False otherwise.
         /// </returns>
-        private static bool GetSubscriptionKey()
+        private static bool GetSubscriptionKeyAndRegion()
         {
-            Console.WriteLine("A Cognitive Services Speech subscription key is required to use this. For more info, see 'https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account'");
+            Console.WriteLine("A Cognitive Services Speech subscription key is required to use this. For more info, see 'https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started'");
             Console.Write("Enter subscription key");
-            Console.Write(string.IsNullOrWhiteSpace(Program.azureSubscriptionKey) ? ": " : string.Format(" (current = {0}): ", Program.azureSubscriptionKey));
+            Console.Write(string.IsNullOrWhiteSpace(azureSubscriptionKey) ? ": " : string.Format(" (current = {0}): ", azureSubscriptionKey));
 
             // Read a new key or hit enter to keep using the current one (if any)
             string response = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(response))
             {
-                Program.azureSubscriptionKey = response;
+                azureSubscriptionKey = response;
             }
 
             Console.Write("Enter region");
-            Console.Write(string.IsNullOrWhiteSpace(Program.azureRegion) ? ": " : string.Format(" (current = {0}): ", Program.azureRegion));
+            Console.Write(string.IsNullOrWhiteSpace(azureRegion) ? ": " : string.Format(" (current = {0}): ", azureRegion));
 
             // Read a new key or hit enter to keep using the current one (if any)
             response = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(response))
             {
-                Program.azureRegion = response;
+                azureRegion = response;
             }
 
-            return !string.IsNullOrWhiteSpace(Program.azureSubscriptionKey) && !string.IsNullOrWhiteSpace(Program.azureRegion);
+            return !string.IsNullOrWhiteSpace(azureSubscriptionKey) && !string.IsNullOrWhiteSpace(azureRegion);
+        }
+
+        /// <summary>
+        /// Prompt user to enter the audio capture device name.
+        /// </summary>
+        /// <returns>True if <see cref="deviceName"/> contains a non-empty string. False otherwise.</returns>
+        private static bool GetAudioDeviceName()
+        {
+            // Get the Device Name to record audio from
+            Console.Write("Enter Device Name");
+            Console.Write(string.IsNullOrWhiteSpace(deviceName) ? ": " : string.Format(" (current = {0}): ", deviceName));
+
+            // Read a new key or hit enter to keep using the current one (if any)
+            string response = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(response))
+            {
+                deviceName = response;
+            }
+
+            return !string.IsNullOrWhiteSpace(deviceName);
         }
     }
 }

@@ -23,18 +23,20 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Test.Psi\CrossFrameworkSerializationTester.cs" Link="CrossFrameworkSerializationTester.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\Test.Psi.Common\Test.Psi.Common.csproj" />
     <ProjectReference Include="..\Microsoft.Psi.Windows\Microsoft.Psi.Windows.csproj" />
     <ProjectReference Include="..\Microsoft.Psi\Microsoft.Psi.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

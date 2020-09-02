@@ -23,9 +23,7 @@ namespace Microsoft.Psi.Kinect
         private static List<CameraDeviceInfo> allDevices = null;
         private static WaveFormat audioFormat = WaveFormat.Create16kHz1ChannelIeeeFloat();
         private readonly Pipeline pipeline;
-
         private Microsoft.Kinect.KinectSensor kinectSensor = null;
-        private KinectSensorConfiguration configuration = null;
         private IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo = null;
         private bool calibrationPosted = false;
         private MultiSourceFrameReader multiFrameReader = null;
@@ -48,7 +46,7 @@ namespace Microsoft.Psi.Kinect
         : this(pipeline)
         {
             var configurationHelper = new ConfigurationHelper<KinectSensorConfiguration>(configurationFilename);
-            this.configuration = configurationHelper.Configuration;
+            this.Configuration = configurationHelper.Configuration;
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace Microsoft.Psi.Kinect
         public KinectSensor(Pipeline pipeline, KinectSensorConfiguration configuration)
         : this(pipeline)
         {
-            this.configuration = configuration;
+            this.Configuration = configuration;
         }
 
         /// <summary>
@@ -155,7 +153,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Gets the sensor configuration.
         /// </summary>
-        public KinectSensorConfiguration Configuration => this.configuration;
+        public KinectSensorConfiguration Configuration { get; } = null;
 
         /// <summary>
         /// Gets the list of bodies.
@@ -269,27 +267,27 @@ namespace Microsoft.Psi.Kinect
 
             this.whichFrames = FrameSourceTypes.None;
 
-            if (this.configuration.OutputBodies)
+            if (this.Configuration.OutputBodies)
             {
                 this.whichFrames |= FrameSourceTypes.Body;
             }
 
-            if (this.configuration.OutputColor)
+            if (this.Configuration.OutputColor)
             {
                 this.whichFrames |= FrameSourceTypes.Color;
             }
 
-            if (this.configuration.OutputDepth)
+            if (this.Configuration.OutputDepth)
             {
                 this.whichFrames |= FrameSourceTypes.Depth;
             }
 
-            if (this.configuration.OutputInfrared)
+            if (this.Configuration.OutputInfrared)
             {
                 this.whichFrames |= FrameSourceTypes.Infrared;
             }
 
-            if (this.configuration.OutputLongExposureInfrared)
+            if (this.Configuration.OutputLongExposureInfrared)
             {
                 this.whichFrames |= FrameSourceTypes.LongExposureInfrared;
             }
@@ -300,7 +298,7 @@ namespace Microsoft.Psi.Kinect
                 this.multiFrameReader.MultiSourceFrameArrived += this.MultiFrameReader_FrameArrived;
             }
 
-            if (this.configuration.OutputAudio)
+            if (this.Configuration.OutputAudio)
             {
                 this.audioBeamFrameReader = this.kinectSensor.AudioSource.OpenReader();
                 this.audioBeamFrameReader.FrameArrived += this.AudioBeamFrameReader_FrameArrived;
@@ -316,7 +314,7 @@ namespace Microsoft.Psi.Kinect
                 this.DepthFrameToCameraSpaceTable.Post(this.kinectSensor.CoordinateMapper.GetDepthFrameToCameraSpaceTable(), this.pipeline.GetCurrentTime());
             }
 
-            if (this.configuration.OutputCalibration)
+            if (this.Configuration.OutputCalibration)
             {
                 if (!this.calibrationPosted)
                 {
@@ -446,7 +444,7 @@ namespace Microsoft.Psi.Kinect
             const int colorImageWidth = 1920;
             const int colorImageHeight = 1080;
 
-            if (!this.configuration.OutputColorToCameraMapping && !this.configuration.OutputRGBD)
+            if (!this.Configuration.OutputColorToCameraMapping && !this.Configuration.OutputRGBD)
             {
                 return;
             }
@@ -454,7 +452,7 @@ namespace Microsoft.Psi.Kinect
             ushort[] depthData = new ushort[depthFrame.FrameDescription.LengthInPixels];
             depthFrame.CopyFrameDataToArray(depthData);
 
-            if (this.configuration.OutputColorToCameraMapping)
+            if (this.Configuration.OutputColorToCameraMapping)
             {
                 // Writing out a mapping from color space to camera space
                 CameraSpacePoint[] colorToCameraMapping = new CameraSpacePoint[colorImageWidth * colorImageHeight];
@@ -463,7 +461,7 @@ namespace Microsoft.Psi.Kinect
                 this.ColorToCameraMapper.Post(colorToCameraMapping, time);
             }
 
-            if (this.configuration.OutputRGBD)
+            if (this.Configuration.OutputRGBD)
             {
                 unsafe
                 {

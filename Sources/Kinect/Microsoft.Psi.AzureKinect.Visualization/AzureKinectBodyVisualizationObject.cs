@@ -18,7 +18,7 @@ namespace Microsoft.Psi.AzureKinect.Visualization
     /// <summary>
     /// Implements a visualization object for Azure Kinect bodies.
     /// </summary>
-    [VisualizationObject("Visualize Azure Kinect Body")]
+    [VisualizationObject("Azure Kinect Body")]
     public class AzureKinectBodyVisualizationObject : ModelVisual3DVisualizationObject<AzureKinectBody>
     {
         private readonly BillboardTextVisual3D billboard;
@@ -27,7 +27,8 @@ namespace Microsoft.Psi.AzureKinect.Visualization
 
         private Color color = Colors.White;
         private double inferredJointsOpacity = 30;
-        private double thicknessMm = 30;
+        private double boneDiameterMm = 20;
+        private double jointRadiusMm = 15;
         private bool showBillboard = false;
         private int polygonResolution = 6;
         private double billboardHeightCm = 100;
@@ -73,15 +74,27 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         }
 
         /// <summary>
-        /// Gets or sets the thickness.
+        /// Gets or sets the bone diameter.
         /// </summary>
         [DataMember]
-        [DisplayName("Thickness (mm)")]
-        [Description("Diameter of bones and radius of joints (mm).")]
-        public double ThicknessMm
+        [DisplayName("Bone diameter (mm)")]
+        [Description("Diameter of bones (mm).")]
+        public double BoneDiameterMm
         {
-            get { return this.thicknessMm; }
-            set { this.Set(nameof(this.ThicknessMm), ref this.thicknessMm, value); }
+            get { return this.boneDiameterMm; }
+            set { this.Set(nameof(this.BoneDiameterMm), ref this.boneDiameterMm, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the joint diameter.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Joint radius (mm)")]
+        [Description("Radius of joints (mm).")]
+        public double JointRadiusMm
+        {
+            get { return this.jointRadiusMm; }
+            set { this.Set(nameof(this.JointRadiusMm), ref this.jointRadiusMm, value); }
         }
 
         /// <summary>
@@ -136,7 +149,8 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         {
             if (propertyName == nameof(this.Color) ||
                 propertyName == nameof(this.InferredJointsOpacity) ||
-                propertyName == nameof(this.ThicknessMm) ||
+                propertyName == nameof(this.BoneDiameterMm) ||
+                propertyName == nameof(this.JointRadiusMm) ||
                 propertyName == nameof(this.PolygonResolution))
             {
                 this.UpdateVisuals();
@@ -183,9 +197,9 @@ namespace Microsoft.Psi.AzureKinect.Visualization
                     {
                         var jointPosition = this.CurrentData.Joints[jointType].Pose.Origin;
 
-                        if (visualJoint.Radius != this.ThicknessMm / 1000.0)
+                        if (visualJoint.Radius != this.JointRadiusMm / 1000.0)
                         {
-                            visualJoint.Radius = this.ThicknessMm / 1000.0;
+                            visualJoint.Radius = this.JointRadiusMm / 1000.0;
                         }
 
                         var fill = isTracked ? trackedEntitiesBrush : untrackedEntitiesBrush;
@@ -222,9 +236,9 @@ namespace Microsoft.Psi.AzureKinect.Visualization
                     visualBone.BeginEdit();
                     if (visible)
                     {
-                        if (visualBone.Diameter != this.ThicknessMm / 1000.0)
+                        if (visualBone.Diameter != this.BoneDiameterMm / 1000.0)
                         {
-                            visualBone.Diameter = this.ThicknessMm / 1000.0;
+                            visualBone.Diameter = this.BoneDiameterMm / 1000.0;
                         }
 
                         var joint1Position = this.visualJoints[bone.ParentJoint].Transform.Value;

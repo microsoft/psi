@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Serialization
     /// The <see cref="KnownSerializers.Default"/> contains system-wide serializers for the current version of the type system.
     /// Serializers explicitly registered with this instance are used by all other instances unless an override is specified.
     /// When deserializing from a persisted file, the <see cref="Microsoft.Psi.Data.Importer"/> instance returned by
-    /// the <see cref="Microsoft.Psi.Store.Open"/> method will create its own KnownSerializer instance, and register serializers
+    /// the <see cref="Data.PsiImporter"/> will create its own KnownSerializer instance, and register serializers
     /// compatible with the store being open.
     /// </summary>
     /// <remarks>
@@ -32,8 +32,8 @@ namespace Microsoft.Psi.Serialization
     /// type of the field (e.g the field is declared as IEnumerable{int} and is assigned an int[]).
     /// In such cases the runtime might not be able to find the correct type to use,
     /// and can only instantiate the correct deserializer if one of the following is true:
-    /// - a serializer has been explicitly registered for the object type or contract using <see cref="Register{T, TSerializer}()"/>
-    /// - a type has been explicitly registered with an explicit contract name <see cref="Register{T}(string)"/> or <see cref="Register{T, TSerializer}(string)"/>.
+    /// - a serializer has been explicitly registered for the object type or contract using <see cref="Register{T, TSerializer}(CloningFlags)"/>
+    /// - a type has been explicitly registered with an explicit contract name <see cref="Register{T}(string, CloningFlags)"/> or <see cref="Register{T, TSerializer}(string, CloningFlags)"/>.
     /// </remarks>
     public class KnownSerializers
     {
@@ -101,6 +101,9 @@ namespace Microsoft.Psi.Serialization
         // used to find the schema by id (when creating a handler from a polymorphic field: id -> schema -> type)
         private ConcurrentDictionary<int, TypeSchema> schemasById;
 
+        // used to find the cloning flags for a given type
+        private ConcurrentDictionary<Type, CloningFlags> cloningFlags;
+
         // *************** the cached handlers and handler indexes ****************
         // these caches are accessed often once the rules are expanded into handlers,
         // so we use regular collections to optimize the read path at the expense of the update path (implemented as memcopy and swap)
@@ -156,6 +159,7 @@ namespace Microsoft.Psi.Serialization
                 this.knownNames = new ConcurrentDictionary<Type, string>();
                 this.schemas = new ConcurrentDictionary<string, TypeSchema>();
                 this.schemasById = new ConcurrentDictionary<int, TypeSchema>();
+                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>();
 
                 // register non-generic, custom serializers
                 this.Register<string, StringSerializer>();
@@ -173,6 +177,7 @@ namespace Microsoft.Psi.Serialization
                 this.knownNames = new ConcurrentDictionary<Type, string>(Default.knownNames);
                 this.schemas = new ConcurrentDictionary<string, TypeSchema>(Default.schemas);
                 this.schemasById = new ConcurrentDictionary<int, TypeSchema>(Default.schemasById);
+                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>(Default.cloningFlags);
             }
         }
 
@@ -197,7 +202,8 @@ namespace Microsoft.Psi.Serialization
         /// </summary>
         /// <typeparam name="T">The type to use when deserializing objects with the specified contract.</typeparam>
         /// <param name="contractName">The name to remap. This can be a full type name or a contract name.</param>
-        public void Register<T>(string contractName) => this.Register(typeof(T), contractName);
+        /// <param name="cloningFlags">Optional flags that control the cloning behavior for this type.</param>
+        public void Register<T>(string contractName, CloningFlags cloningFlags = CloningFlags.None) => this.Register(typeof(T), contractName, cloningFlags);
 
         /// <summary>
         /// Registers a given type with the specified contract name.
@@ -205,7 +211,8 @@ namespace Microsoft.Psi.Serialization
         /// </summary>
         /// <param name="type">The type to use when deserializing objects with the specified contract.</param>
         /// <param name="contractName">The name to remap. This can be a full type name or a contract name.</param>
-        public void Register(Type type, string contractName)
+        /// <param name="cloningFlags">Optional flags that control the cloning behavior for this type.</param>
+        public void Register(Type type, string contractName, CloningFlags cloningFlags = CloningFlags.None)
         {
             contractName = contractName ?? TypeSchema.GetContractName(type, this.runtimeVersion);
             if (this.knownTypes.TryGetValue(contractName, out Type existingType) && existingType != type)
@@ -213,8 +220,18 @@ namespace Microsoft.Psi.Serialization
                 throw new SerializationException($"Cannot register type {type.AssemblyQualifiedName} under the contract name {contractName} because the type {existingType.AssemblyQualifiedName} is already registered under the same name.");
             }
 
+            if (this.cloningFlags.TryGetValue(type, out var existingFlags) || this.handlersByType.ContainsKey(type))
+            {
+                // cannot re-register once type flags has been registered or handler has been created
+                if (existingFlags != cloningFlags)
+                {
+                    throw new SerializationException($"Cannot register type {type.AssemblyQualifiedName} with cloning flags ({cloningFlags}) because a handler for it has already been created with flags ({existingFlags}).");
+                }
+            }
+
             this.knownTypes[contractName] = type;
             this.knownNames[type] = contractName;
+            this.cloningFlags[type] = cloningFlags;
         }
 
         /// <summary>
@@ -222,12 +239,13 @@ namespace Microsoft.Psi.Serialization
         /// Use this overload when type T is required in a polymorphic context.
         /// </summary>
         /// <typeparam name="T">The type to serialize.</typeparam>
+        /// <param name="cloningFlags">Optional flags that control the cloning behavior for this type.</param>
         /// <remarks>
         /// When deserializing a polymorphic field, the field's object value might have a different type than the declared (static)
         /// type of the field (e.g the field is declared as IEnumerable{int} and is assigned a MyCustomCollection{int}).
         /// Pre-registering the type allows the runtime to find it in such circumstances.
         /// </remarks>
-        public void Register<T>() => this.Register(typeof(T), null);
+        public void Register<T>(CloningFlags cloningFlags = CloningFlags.None) => this.Register(typeof(T), null, cloningFlags);
 
         /// <summary>
         /// Registers a serializer based on type.
@@ -237,23 +255,25 @@ namespace Microsoft.Psi.Serialization
         /// <typeparam name="TSerializer">
         /// The corresponding type of serializer to use, which replaces any <see cref="SerializerAttribute"/> annotation.
         /// </typeparam>
-        public void Register<T, TSerializer>()
-            where TSerializer : ISerializer<T>, new() => this.Register<T, TSerializer>(null);
+        /// <param name="cloningFlags">Optional flags that control the cloning behavior for this type.</param>
+        public void Register<T, TSerializer>(CloningFlags cloningFlags = CloningFlags.None)
+            where TSerializer : ISerializer<T>, new() => this.Register<T, TSerializer>(null, cloningFlags);
 
         /// <summary>
         /// Registers a type and serializer for the specified contract type.
         /// Use this overload to deserialize data persisted before a type name change.
         /// </summary>
         /// <param name="contractName">The previous contract name of type T.</param>
+        /// <param name="cloningFlags">Optional flags that control the cloning behavior for this type.</param>
         /// <typeparam name="T">The type being serialized.</typeparam>
         /// <typeparam name="TSerializer">
         /// The corresponding type of serializer to use, which replaces any <see cref="SerializerAttribute"/> annotation.
         /// </typeparam>
-        public void Register<T, TSerializer>(string contractName)
+        public void Register<T, TSerializer>(string contractName, CloningFlags cloningFlags = CloningFlags.None)
             where TSerializer : ISerializer<T>, new()
         {
             Type t = typeof(T);
-            this.Register(t, contractName);
+            this.Register(t, contractName, cloningFlags);
             this.serializers[t] = typeof(TSerializer);
         }
 
@@ -269,6 +289,16 @@ namespace Microsoft.Psi.Serialization
             var serializableType = interf.GetGenericArguments()[0];
             serializableType = TypeResolutionHelper.GetVerifiedType(serializableType.Namespace + "." + serializableType.Name); // FullName doesn't work here
             this.templates[serializableType] = genericSerializer;
+        }
+
+        /// <summary>
+        /// Gets the cloning flags for the specified type.
+        /// </summary>
+        /// <param name="type">The type for which to get the cloning flags.</param>
+        /// <returns>The cloning flags for the type.</returns>
+        internal CloningFlags GetCloningFlags(Type type)
+        {
+            return this.cloningFlags.TryGetValue(type, out var flags) ? flags : CloningFlags.None;
         }
 
         /// <summary>
@@ -433,7 +463,7 @@ namespace Microsoft.Psi.Serialization
             int id = schema?.Id ?? TypeSchema.GetId(name);
 
             serializer = this.CreateSerializer<T>();
-            handler = SerializationHandler.Create<T>(serializer, name, id);
+            handler = SerializationHandler.Create<T>(serializer, schema?.Name ?? name, id);
 
             // first register the handler
             int oldCount = this.handlers.Length;
@@ -532,6 +562,11 @@ namespace Microsoft.Psi.Serialization
             // which in turn will delegate element serialization to the correct registered serializer
             if (type.IsArray)
             {
+                if (type.GetArrayRank() != 1)
+                {
+                    throw new NotSupportedException("Multi-dimensional arrays are currently not supported. A workaround would be to convert to a one-dimensional array.");
+                }
+
                 // instantiate the correct array serializer based on the type of elements in the array
                 var itemType = type.GetElementType();
                 Type arraySerializer = Generator.IsSimpleValueType(itemType) ? typeof(SimpleArraySerializer<>) : typeof(ArraySerializer<>);

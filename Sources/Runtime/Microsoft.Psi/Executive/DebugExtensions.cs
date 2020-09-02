@@ -29,7 +29,7 @@ namespace Microsoft.Psi
                     if (debugStore == null)
                     {
                         debugPipeline = Pipeline.Create(debugStoreName);
-                        debugStore = Store.Create(debugPipeline, debugStoreName, null);
+                        debugStore = PsiStore.Create(debugPipeline, debugStoreName, null);
                         debugPipeline.RunAsync();
                     }
                 }
@@ -71,7 +71,7 @@ namespace Microsoft.Psi
             {
                 lock (syncRoot)
                 {
-                    if (!Store.TryGetMetadata(debugPipeline, debugName, out PsiStreamMetadata meta))
+                    if (!PsiStore.TryGetStreamMetadata(debugPipeline, debugName, out IStreamMetadata meta))
                     {
                         source.Write(debugName, debugStore, deliveryPolicy: deliveryPolicy);
                     }

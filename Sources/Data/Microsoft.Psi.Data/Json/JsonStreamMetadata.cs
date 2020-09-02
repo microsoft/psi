@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Data.Json
 {
     using System;
+    using Microsoft.Psi;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -62,11 +63,11 @@ namespace Microsoft.Psi.Data.Json
 
         /// <inheritdoc />
         [JsonProperty(Order = 6)]
-        public DateTime FirstMessageTime { get; set; }
+        public DateTime FirstMessageCreationTime { get; set; }
 
         /// <inheritdoc />
         [JsonProperty(Order = 7)]
-        public DateTime LastMessageTime { get; set; }
+        public DateTime LastMessageCreationTime { get; set; }
 
         /// <inheritdoc />
         [JsonProperty(Order = 8)]
@@ -93,18 +94,36 @@ namespace Microsoft.Psi.Data.Json
         public string SupplementalMetadataTypeName { get; set; }
 
         /// <inheritdoc />
+        [JsonProperty(Order = 14)]
+        public DateTime OpenedTime => DateTime.MinValue;
+
+        /// <inheritdoc />
+        [JsonProperty(Order = 15)]
+        public DateTime ClosedTime => DateTime.MaxValue;
+
+        /// <inheritdoc />
+        [JsonProperty(Order = 16)]
+        public bool IsClosed => false;
+
+        /// <inheritdoc />
+        public T GetSupplementalMetadata<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
         public void Update(Envelope envelope, int size)
         {
             if (this.FirstMessageOriginatingTime == default(DateTime))
             {
                 this.FirstMessageOriginatingTime = envelope.OriginatingTime;
-                this.FirstMessageTime = envelope.Time;
+                this.FirstMessageCreationTime = envelope.CreationTime;
             }
 
             this.LastMessageOriginatingTime = envelope.OriginatingTime;
-            this.LastMessageTime = envelope.Time;
+            this.LastMessageCreationTime = envelope.CreationTime;
             this.MessageCount++;
-            this.AverageLatency = (int)((((long)this.AverageLatency * (this.MessageCount - 1)) + ((envelope.Time - envelope.OriginatingTime).Ticks / TicksPerMicrosecond)) / this.MessageCount);
+            this.AverageLatency = (int)((((long)this.AverageLatency * (this.MessageCount - 1)) + ((envelope.CreationTime - envelope.OriginatingTime).Ticks / TicksPerMicrosecond)) / this.MessageCount);
             this.AverageMessageSize = (int)((((long)this.AverageMessageSize * (this.MessageCount - 1)) + size) / this.MessageCount);
         }
 

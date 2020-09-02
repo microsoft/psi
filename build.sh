@@ -16,7 +16,6 @@
 (cd ./Sources/Language/Microsoft.Psi.Language/                                         && . ./build.sh)
 (cd ./Sources/Media/Microsoft.Psi.Media.Linux/                                         && . ./build.sh)
 (cd ./Sources/Speech/Microsoft.Psi.Speech/                                             && . ./build.sh)
-(cd ./Sources/Speech/Test.Psi.Speech/                                                  && . ./build.sh)
 (cd ./Sources/Runtime/Microsoft.Psi/                                                   && . ./build.sh)
 (cd ./Sources/Runtime/Microsoft.Psi.Interop/                                           && . ./build.sh)
 (cd ./Sources/Runtime/Test.Psi/                                                        && . ./build.sh)

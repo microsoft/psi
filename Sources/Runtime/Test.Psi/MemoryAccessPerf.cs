@@ -247,13 +247,19 @@ namespace Test.Psi
             }
         }
 
-#pragma warning disable 0169 // The field 'MemoryAccessPerf.RGB.*' is never used
         private struct RGB
         {
             private int r;
             private int g;
             private int b;
+
+            // prevents CS0169 warning
+            private RGB(int r, int g, int b)
+            {
+                this.r = r;
+                this.g = g;
+                this.b = b;
+            }
         }
-#pragma warning restore 0169
     }
 }

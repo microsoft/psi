@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CheckVariable">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -63,13 +63,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <Target Name="OldBuild" DependsOnTargets="$(OldBuildDependsOn)" />
   <Target Name="CheckVariable">
-    <Warning Text="In order to build this sample you must define the environment variable OpenCVDir_V4 to point to your OpenCV SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir_V4)'==''" />
-    <CallTarget Targets="OldBuild" Condition="'$(OpenCVDir_V4)'!=''" />
+    <Warning Text="In order to build this project you must define the environment variable OpenCVDir_V4 to point to your OpenCV SDK installation" ContinueOnError="WarnAndContinue" Condition="'$(OpenCVDir_V4)'==''" />
+    <CreateProperty Value="" Condition="'$(OpenCVDir_V4)'==''">
+      <Output TaskParameter="Value" PropertyName="BuildDependsOn" />
+    </CreateProperty>
+    <CreateProperty Value="false" Condition="'$(OpenCVDir_V4)'==''">
+      <Output TaskParameter="Value" PropertyName="GeneratePackageOnBuild" />
+    </CreateProperty>
+    <CreateProperty Value="" Condition="'$(OpenCVDir_V4)'==''">
+      <Output TaskParameter="Value" PropertyName="GenerateNuspecDependsOn" />
+    </CreateProperty>
   </Target>
-  <PropertyGroup>
-    <OldBuildDependsOn>$(BuildDependsOn)</OldBuildDependsOn>
-    <BuildDependsOn>CheckVariable</BuildDependsOn>
-  </PropertyGroup>
 </Project>

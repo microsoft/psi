@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Persistence
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using Microsoft.Psi.Data;
 
     internal class PageIndexCache : IDisposable
     {
@@ -15,7 +16,7 @@ namespace Microsoft.Psi.Persistence
 
         public PageIndexCache(string name, string path)
         {
-            this.indexReader = new InfiniteFileReader(path, StoreCommon.GetIndexFileName(name));
+            this.indexReader = new InfiniteFileReader(path, PsiStoreCommon.GetIndexFileName(name));
         }
 
         public void Dispose()
@@ -75,7 +76,7 @@ namespace Microsoft.Psi.Persistence
 
         private static int CompareTime(DateTime time, IndexEntry entry, bool useOriginatingTime)
         {
-            return useOriginatingTime ? time.CompareTo(entry.OriginatingTime) : time.CompareTo(entry.Time);
+            return useOriginatingTime ? time.CompareTo(entry.OriginatingTime) : time.CompareTo(entry.CreationTime);
         }
 
         private void Update()

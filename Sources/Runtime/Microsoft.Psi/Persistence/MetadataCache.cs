@@ -16,8 +16,8 @@ namespace Microsoft.Psi.Persistence
         private volatile Dictionary<string, PsiStreamMetadata> streamDescriptors = new Dictionary<string, PsiStreamMetadata>();
         private volatile Dictionary<int, PsiStreamMetadata> streamDescriptorsById = new Dictionary<int, PsiStreamMetadata>();
         private InfiniteFileReader catalogReader;
-        private TimeInterval activeTimeRange;
-        private TimeInterval originatingTimeRange;
+        private TimeInterval messageCreationTimeInterval;
+        private TimeInterval messageOriginatingTimeInterval;
         private Action<IEnumerable<Metadata>, RuntimeInfo> entriesAdded;
         private RuntimeInfo runtimeVersion;
 
@@ -25,7 +25,7 @@ namespace Microsoft.Psi.Persistence
         {
             this.name = name;
             this.path = path;
-            this.catalogReader = new InfiniteFileReader(path, StoreCommon.GetCatalogFileName(name));
+            this.catalogReader = new InfiniteFileReader(path, PsiStoreCommon.GetCatalogFileName(name));
             this.entriesAdded = entriesAdded;
 
             // assume v0 for backwards compat. Update will fix this up if the file is newer.
@@ -44,21 +44,21 @@ namespace Microsoft.Psi.Persistence
             }
         }
 
-        public TimeInterval ActiveTimeInterval
+        public TimeInterval MessageCreationTimeInterval
         {
             get
             {
                 this.Update();
-                return this.activeTimeRange;
+                return this.messageCreationTimeInterval;
             }
         }
 
-        public TimeInterval OriginatingTimeInterval
+        public TimeInterval MessageOriginatingTimeInterval
         {
             get
             {
                 this.Update();
-                return this.originatingTimeRange;
+                return this.messageOriginatingTimeInterval;
             }
         }
 
@@ -150,8 +150,8 @@ namespace Microsoft.Psi.Persistence
                 }
 
                 // compute the time ranges
-                this.activeTimeRange = GetTimeRange(newStreamDescriptors.Values, meta => meta.ActiveLifetime);
-                this.originatingTimeRange = GetTimeRange(newStreamDescriptors.Values, meta => meta.OriginatingLifetime);
+                this.messageCreationTimeInterval = GetTimeRange(newStreamDescriptors.Values, meta => meta.MessageCreationTimeInterval);
+                this.messageOriginatingTimeInterval = GetTimeRange(newStreamDescriptors.Values, meta => meta.MessageOriginatingTimeInterval);
 
                 // clean up if the catalog is closed and we really reached the end
                 if (!this.catalogReader.IsMoreDataExpected() && !this.catalogReader.HasMoreData())

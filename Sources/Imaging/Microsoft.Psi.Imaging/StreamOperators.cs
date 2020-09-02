@@ -239,15 +239,16 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Scales a shared image by the specified scale factors.
+        /// Rotates a shared image by the specified angle.
         /// </summary>
-        /// <param name="source">Image to scale.</param>
+        /// <param name="source">Image to rotate.</param>
         /// <param name="angleInDegrees">Angle for rotation specified in degrees.</param>
         /// <param name="samplingMode">Sampling mode to use when sampling pixels.</param>
+        /// <param name="fit">Used to describe the fit of the output image. Tight=output image is cropped to match exactly the required size. Loose=output image will be maximum size possible (i.e. length of source image diagonal).</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
         /// <returns>Returns a producer that generates rotated images.</returns>
-        public static IProducer<Shared<Image>> Rotate(this IProducer<Shared<Image>> source, float angleInDegrees, SamplingMode samplingMode, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        public static IProducer<Shared<Image>> Rotate(this IProducer<Shared<Image>> source, float angleInDegrees, SamplingMode samplingMode, RotationFitMode fit = RotationFitMode.Tight, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
         {
             sharedImageAllocator ??= ImagePool.GetOrCreate;
             return source.Process<Shared<Image>, Shared<Image>>(
@@ -257,13 +258,14 @@ namespace Microsoft.Psi.Imaging
                         sharedImage.Resource.Width,
                         sharedImage.Resource.Height,
                         angleInDegrees,
+                        fit,
                         out int rotatedWidth,
                         out int rotateHeight,
                         out float originx,
                         out float originy);
                     using var rotatedSharedImage = sharedImageAllocator(rotatedWidth, rotateHeight, sharedImage.Resource.PixelFormat);
                     rotatedSharedImage.Resource.Clear(Color.Black);
-                    sharedImage.Resource.Rotate(rotatedSharedImage.Resource, angleInDegrees, samplingMode);
+                    sharedImage.Resource.Rotate(rotatedSharedImage.Resource, angleInDegrees, samplingMode, fit);
                     emitter.Post(rotatedSharedImage, envelope.OriginatingTime);
                 }, deliveryPolicy);
         }

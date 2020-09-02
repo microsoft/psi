@@ -76,7 +76,6 @@
 
   <ItemGroup>
     <None Include="$(OutDir)\Microsoft.Psi.IL.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutDir)\Microsoft.Psi.IL.$(ilasmPdbExt)" Pack="true" PackagePath="lib\$(TargetFramework)" />
   </ItemGroup>
 
   <ItemGroup>

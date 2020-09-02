@@ -292,7 +292,7 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="averagingWindow">Window in which to compute averages.</param>
             internal void AddMessageLatencyAtEmitter(Envelope envelope, DateTime current, TimeSpan averagingWindow)
             {
-                this.AddStatistic(envelope.Time - envelope.OriginatingTime, this.MessageLatencyAtEmitterHistory, current, averagingWindow);
+                this.AddStatistic(envelope.CreationTime - envelope.OriginatingTime, this.MessageLatencyAtEmitterHistory, current, averagingWindow);
             }
 
             /// <summary>
@@ -303,7 +303,7 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="averagingWindow">Window in which to compute averages.</param>
             internal void AddMessageLatencyAtReceiver(Envelope envelope, DateTime current, TimeSpan averagingWindow)
             {
-                this.AddStatistic(envelope.Time - envelope.OriginatingTime, this.MessageLatencyAtReceiverHistory, current, averagingWindow);
+                this.AddStatistic(envelope.CreationTime - envelope.OriginatingTime, this.MessageLatencyAtReceiverHistory, current, averagingWindow);
             }
 
             /// <summary>

@@ -35,7 +35,7 @@
       </PackageReference>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\Visualization\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj" />
+      <ProjectReference Include="..\..\Visualization\Microsoft.Psi.Visualization.Windows\Microsoft.Psi.Visualization.Windows.csproj" />
       <ProjectReference Include="..\Microsoft.Psi.Kinect.Windows\Microsoft.Psi.Kinect.Windows.csproj" />
     </ItemGroup>
     <ItemGroup>

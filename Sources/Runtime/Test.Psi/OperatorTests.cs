@@ -36,7 +36,7 @@ namespace Test.Psi
                 Operators.Do(delayedSource, (d, e) =>
                 {
                     results.Add(e.OriginatingTime);
-                    delayedResults.Add(e.Time);
+                    delayedResults.Add(e.CreationTime);
                 });
 
                 p.Run();

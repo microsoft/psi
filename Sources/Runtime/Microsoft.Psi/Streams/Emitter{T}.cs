@@ -234,7 +234,7 @@ namespace Microsoft.Psi
                 throw new InvalidOperationException($"Attempted to post a message with a sequence ID that is out of order: {this.Name}\nThis may be caused by simultaneous calls to Emitter.Post() from multiple threads.");
             }
 
-            if (e.OriginatingTime <= this.lastEnvelope.OriginatingTime || e.Time < this.lastEnvelope.Time)
+            if (e.OriginatingTime <= this.lastEnvelope.OriginatingTime || e.CreationTime < this.lastEnvelope.CreationTime)
             {
                 throw new InvalidOperationException($"Attempted to post a message without strictly increasing originating time or that is out of order in wall-clock time: {this.Name}");
             }

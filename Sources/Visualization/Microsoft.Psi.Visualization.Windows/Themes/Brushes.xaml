@@ -1,0 +1,83 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<!--***********************************************************************************
+
+   Extended WPF Toolkit
+
+   Copyright (C) 2007-2013 Xceed Software Inc.
+
+   This program is provided to you under the terms of the Microsoft Public
+   License (Ms-PL) as published at http://wpftoolkit.codeplex.com/license 
+
+   For more features, controls, and fast professional support,
+   pick up the Plus Edition at http://xceed.com/wpf_toolkit
+
+   Stay informed: follow @datagrid on Twitter or Like http://facebook.com/datagrids
+
+  **********************************************************************************-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit">
+
+    <Color x:Key="DarkBackgroundColor">#252526</Color>
+    <Color x:Key="MediumBackgroundColor">#2D2D30</Color>
+    <Color x:Key="LightBackgroundColor">#3F3F46</Color>
+    
+    <Color x:Key="MediumBorderColor">#2D2D30</Color>
+    <Color x:Key="LightBorderColor">#3F3F46</Color>
+    <Color x:Key="SeparatorColor">DimGray</Color>
+
+    <Color x:Key="CursorColor">#2887CB</Color>
+    <Color x:Key="LiveCursorColor">#46E0FF</Color>
+    <Color x:Key="SelectionStartColor">Green</Color>
+    <Color x:Key="SelectionEndColor">Red</Color>
+    <Color x:Key="SelectionRegionColor">#30808080</Color>
+
+    <Color x:Key="TimelineLightColor">#4F4F56</Color>
+    <Color x:Key="TimelineDarkColor">#323334</Color>
+    <Color x:Key="TimelineDividerColor">#606060</Color>
+
+    <SolidColorBrush x:Key="DarkBackgroundColorBrush" Color="{StaticResource DarkBackgroundColor}"/>
+    <SolidColorBrush x:Key="MediumBackgroundColorBrush" Color="{StaticResource MediumBackgroundColor}"/>
+    <SolidColorBrush x:Key="LightBackgroundColorBrush" Color="{StaticResource LightBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="MediumBorderColorBrush" Color="{StaticResource MediumBorderColor}"/>
+    <SolidColorBrush x:Key="LightBorderColorBrush" Color="{StaticResource LightBorderColor}"/>
+    <SolidColorBrush x:Key="SeparatorColorBrush" Color="{StaticResource SeparatorColor}"/>
+    
+    <SolidColorBrush x:Key="DebugBrush" Color="Magenta"/>
+
+    <SolidColorBrush x:Key="CursorBrush" Color="{StaticResource CursorColor}"/>
+    <SolidColorBrush x:Key="LiveCursorBrush" Color="{StaticResource LiveCursorColor}"/>
+    <SolidColorBrush x:Key="SelectionStartBrush" Color="{StaticResource SelectionStartColor}"/>
+    <SolidColorBrush x:Key="SelectionEndBrush" Color="{StaticResource SelectionEndColor}"/>
+    <SolidColorBrush x:Key="SelectionRegionBrush" Color="{StaticResource SelectionRegionColor}"/>
+
+    <SolidColorBrush x:Key="TimelineLightBrush" Color="{StaticResource TimelineLightColor}"/>
+    <SolidColorBrush x:Key="TimelineDarkBrush" Color="{StaticResource TimelineDarkColor}"/>
+    <SolidColorBrush x:Key="TimelineDividerBrush" Color="{StaticResource TimelineDividerColor}"/>
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlNormalBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlDisabledBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlNormalBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlMouseOverBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ControlFocusedBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonNormalOuterBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonNormalInnerBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonNormalBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonMouseOverOuterBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonMouseOverInnerBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonMouseOverBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonPressedOuterBorderKey}" Color="{StaticResource MediumBorderColor}"  options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonPressedInnerBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonPressedBackgroundKey}" Color="{StaticResource MediumBackgroundColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonFocusedOuterBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonFocusedInnerBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=ButtonDisabledOuterBorderKey}" Color="{StaticResource MediumBorderColor}" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=GlyphNormalForegroundKey}" Color="White" options:Freeze="true"/>
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type themes:ResourceKeys}, ResourceId=GlyphDisabledForegroundKey}" Color="Gray" options:Freeze="true"/>
+
+</ResourceDictionary>

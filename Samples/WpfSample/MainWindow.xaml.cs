@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Samples.WpfSample
                     this.pipeline,
                     new Audio.AudioPlayerConfiguration()
                     {
-                        InputFormat = Audio.WaveFormat.Create16BitPcm(48000, 2),
+                        Format = Audio.WaveFormat.Create16BitPcm(48000, 2),
                     });
                 webcam.Audio.PipeTo(player.In);
             }

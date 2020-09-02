@@ -34,7 +34,7 @@
       </PackageReference>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\Visualization\Microsoft.Psi.Visualization.Common.Windows\Microsoft.Psi.Visualization.Common.Windows.csproj" />
+      <ProjectReference Include="..\..\Visualization\Microsoft.Psi.Visualization.Windows\Microsoft.Psi.Visualization.Windows.csproj" />
       <ProjectReference Include="..\Microsoft.Psi.AzureKinect.x64\Microsoft.Psi.AzureKinect.x64.csproj" />
     </ItemGroup>
     <ItemGroup>

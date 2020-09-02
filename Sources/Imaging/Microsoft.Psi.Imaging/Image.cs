@@ -132,7 +132,13 @@ namespace Microsoft.Psi.Imaging
         /// bitmap data.</para></remarks>
         public void CopyFrom(BitmapData bitmapData)
         {
-            this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, this.UnmanagedBuffer.Size);
+            int numBytes = bitmapData.Height * bitmapData.Stride;
+            if (numBytes > this.UnmanagedBuffer.Size)
+            {
+                throw new InvalidOperationException("Buffer too small.");
+            }
+
+            this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
         }
 
         /// <summary>
@@ -165,7 +171,13 @@ namespace Microsoft.Psi.Imaging
                 }
                 else
                 {
-                    this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, this.UnmanagedBuffer.Size);
+                    int numBytes = bitmapData.Height * bitmapData.Stride;
+                    if (numBytes > this.UnmanagedBuffer.Size)
+                    {
+                        throw new InvalidOperationException("Buffer too small.");
+                    }
+
+                    this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
                 }
             }
             finally

@@ -79,6 +79,6 @@ namespace Microsoft.Psi.Audio
         /// set, the <see cref="AudioPlayer"/> component will attempt to infer the audio format
         /// from the <see cref="AudioBuffer"/> messages arriving on the input stream.
         /// </remarks>
-        public WaveFormat InputFormat { get; set; } = WaveFormat.Create16kHz1Channel16BitPcm();
+        public WaveFormat Format { get; set; } = WaveFormat.Create16kHz1Channel16BitPcm();
     }
 }

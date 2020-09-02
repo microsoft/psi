@@ -17,6 +17,8 @@ namespace Test.Psi.Common
     /// </summary>
     public class TestRunner
     {
+        public static readonly string TestResourcesPath = Environment.GetEnvironmentVariable("PsiTestResources");
+
         /// <summary>
         /// Runs the specified test cases , or all the tests in the current assembly if no arguments are specified.
         /// It can also run static methods that are not marked with the TestMethod attribute, if the method name is prefixed with "!" in the argument string (the "!" is dropped before searching for the method).
@@ -195,9 +197,8 @@ namespace Test.Psi.Common
         }
 
         /// <summary>
-        /// Due to the runtime's asynchronous behavior, we may try to
-        /// delete our test directory before the runtime has finished
-        /// messing with it.  This method will keep trying to delete
+        /// Due to the runtime's asynchronous behavior, we may try to delete our test directory
+        /// before the runtime has finished updating it. This method will keep trying to delete
         /// the directory until the runtime shuts down.
         /// </summary>
         /// <param name="path">The path to the Directory to be deleted.</param>

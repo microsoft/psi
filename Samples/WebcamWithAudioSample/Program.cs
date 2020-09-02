@@ -64,10 +64,10 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
                 pipeline.PipelineCompleted += Pipeline_PipelineCompleted;
 
                 // Create store
-                Data.Exporter store = Store.Create(pipeline, ApplicationName, pathToStore);
+                var store = PsiStore.Create(pipeline, ApplicationName, pathToStore);
 
                 // Create our webcam
-                MediaCapture webcam = new MediaCapture(pipeline, 1920, 1080, 30);
+                var webcam = new MediaCapture(pipeline, 1920, 1080, 30);
 
                 // Create the AudioCapture component to capture audio from the default device in 16 kHz 1-channel
                 IProducer<AudioBuffer> audioInput = new AudioCapture(pipeline, WaveFormat.Create16kHz1Channel16BitPcm());
@@ -75,10 +75,10 @@ namespace Microsoft.Psi.Samples.WebcamWithAudioSample
                 var images = webcam.Out.EncodeJpeg(90, DeliveryPolicy.LatestMessage).Out;
 
                 // Attach the webcam's image output to the store. We will write the images to the store as compressed JPEGs.
-                Store.Write(images, "Image", store, true, DeliveryPolicy.LatestMessage);
+                images.Write("Image", store, true, DeliveryPolicy.LatestMessage);
 
                 // Attach the audio input to the store
-                Store.Write(audioInput.Out, "Audio", store, true, DeliveryPolicy.LatestMessage);
+                audioInput.Out.Write("Audio", store, true, DeliveryPolicy.LatestMessage);
 
                 // Run the pipeline
                 pipeline.RunAsync();

@@ -41,16 +41,31 @@ namespace Microsoft.Psi
         string PartitionPath { get; }
 
         /// <summary>
+        /// Gets the time when the stream was opened.
+        /// </summary>
+        DateTime OpenedTime { get; }
+
+        /// <summary>
+        /// Gets the time when the stream was closed.
+        /// </summary>
+        DateTime ClosedTime { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the stream has been closed.
+        /// </summary>
+        bool IsClosed { get; }
+
+        /// <summary>
         /// Gets the first creation time of a message in the stream.
         /// </summary>
-        /// <seealso cref="Envelope.Time"/>
-        DateTime FirstMessageTime { get; }
+        /// <seealso cref="Envelope.CreationTime"/>
+        DateTime FirstMessageCreationTime { get; }
 
         /// <summary>
         /// Gets the last creation time of a message in the stream.
         /// </summary>
-        /// <seealso cref="Envelope.Time"/>
-        DateTime LastMessageTime { get; }
+        /// <seealso cref="Envelope.CreationTime"/>
+        DateTime LastMessageCreationTime { get; }
 
         /// <summary>
         /// Gets the first originating time of a message in the stream.
@@ -78,6 +93,13 @@ namespace Microsoft.Psi
         /// Gets the number of messages in the stream.
         /// </summary>
         int MessageCount { get; }
+
+        /// <summary>
+        /// Gets supplemental stream metadata.
+        /// </summary>
+        /// <typeparam name="T">Type of supplemental metadata.</typeparam>
+        /// <returns>Supplemental metadata.</returns>
+        T GetSupplementalMetadata<T>();
 
         /// <summary>
         /// Updates this stream metadata with the specified envelope and size.

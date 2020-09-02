@@ -20,17 +20,7 @@ namespace Microsoft.Psi.Persistence
         private string name;
         private string path;
 
-        public MessageWriter(string name, string path, bool append)
-            : this(name, path, 0, append)
-        {
-        }
-
-        public MessageWriter(string name, string path = null, int extentSize = 0)
-            : this(name, path, extentSize, false)
-        {
-        }
-
-        internal MessageWriter(string name, string path, int extentSize, bool append)
+        public MessageWriter(string name, string path, int extentSize = 0)
         {
             this.name = name;
             this.path = path;
@@ -41,7 +31,7 @@ namespace Microsoft.Psi.Persistence
 
             if (path != null)
             {
-                this.fileWriter = new InfiniteFileWriter(path, name, extentSize, append);
+                this.fileWriter = new InfiniteFileWriter(path, name, extentSize);
             }
             else
             {

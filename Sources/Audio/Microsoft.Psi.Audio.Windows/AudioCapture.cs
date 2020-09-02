@@ -89,12 +89,13 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioCapture"/> class with a specified output format.
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class with a specified output format and device name.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="outputFormat">The output format to use.</param>
-        public AudioCapture(Pipeline pipeline, WaveFormat outputFormat)
-            : this(pipeline, new AudioCaptureConfiguration() { OutputFormat = outputFormat })
+        /// <param name="deviceName">The name of the audio device.</param>
+        public AudioCapture(Pipeline pipeline, WaveFormat outputFormat, string deviceName = null)
+            : this(pipeline, new AudioCaptureConfiguration() { Format = outputFormat, DeviceName = deviceName })
         {
         }
 
@@ -183,11 +184,11 @@ namespace Microsoft.Psi.Audio
             this.wasapiCapture.AudioVolumeNotification += this.HandleAudioVolumeNotification;
 
             // tell the audio device to start capturing audio
-            this.wasapiCapture.StartCapture(this.Configuration.TargetLatencyInMs, this.Configuration.AudioEngineBufferInMs, this.Configuration.Gain, this.Configuration.OutputFormat, this.Configuration.OptimizeForSpeech, this.Configuration.UseEventDrivenCapture);
+            this.wasapiCapture.StartCapture(this.Configuration.TargetLatencyInMs, this.Configuration.AudioEngineBufferInMs, this.Configuration.Gain, this.Configuration.Format, this.Configuration.OptimizeForSpeech, this.Configuration.UseEventDrivenCapture);
 
             // Get the actual capture format. This should normally match the configured output format,
             // unless that was null in which case the native device capture format is returned.
-            this.sourceFormat = this.Configuration.OutputFormat ?? this.wasapiCapture.MixFormat;
+            this.sourceFormat = this.Configuration.Format ?? this.wasapiCapture.MixFormat;
         }
 
         /// <inheritdoc/>

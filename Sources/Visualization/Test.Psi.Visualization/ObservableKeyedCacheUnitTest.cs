@@ -216,7 +216,7 @@ namespace Test.Psi.Visualization
         public void GetViewTest()
         {
             var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-            Assert.IsInstanceOfType(view1, typeof(IList<double>));
+            Assert.IsInstanceOfType(view1, typeof(IReadOnlyList<double>));
             Assert.AreEqual(view1.Count, 3);
 
             var view2 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
@@ -311,121 +311,6 @@ namespace Test.Psi.Visualization
         }
 
         /// <summary>
-        /// View Add tests.
-        /// </summary>
-        [TestMethod]
-        [Timeout(60000)]
-        public void ViewAddTest()
-        {
-            var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-            var view2 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-            var view3 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 1, 46, 0, null);
-
-            view1.Add(12);
-            view1.Add(22);
-
-            Assert.AreEqual(view1.Count, 5);
-            Assert.AreEqual(view3.Count, 6);
-            Assert.AreEqual(this.test.Count, 12);
-            UnitTestHelper.AssertAreEqual(view1, view2, view1.Count);
-
-            view3.Add(1);
-            view3.Add(43);
-            view3.Add(45);
-
-            Assert.AreEqual(view1.Count, 6);
-            Assert.AreEqual(view3.Count, 9);
-            Assert.AreEqual(this.test.Count, 15);
-            UnitTestHelper.AssertAreEqual(view1, view2, view1.Count);
-        }
-
-        /// <summary>
-        /// View AddRange tests.
-        /// </summary>
-        [TestMethod]
-        [Timeout(60000)]
-        public void ViewAddRangeTest()
-        {
-            double[] range = { 32, 40, 16, 19, 11, 12 };
-
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-
-            var eventCount = 0;
-            var itemCount = 0;
-            NotifyCollectionChangedEventHandler viewCollectionChanged = (s, e) => { this.CollectionChangedHandler(e, ref eventCount, ref itemCount); };
-            view.DetailedCollectionChanged += viewCollectionChanged;
-
-            view.AddRange(range);
-            foreach (var item in range)
-            {
-                this.basis.Add(item, item);
-            }
-
-            Assert.AreEqual(view.Count, 9);
-            Assert.AreEqual(eventCount, 1);
-            Assert.AreEqual(itemCount, range.Length);
-            Assert.AreEqual(this.basis.Count, this.test.Count);
-            UnitTestHelper.AssertAreEqual(this.basis.Values, this.test, this.test.Count);
-
-            this.test.DetailedCollectionChanged -= viewCollectionChanged;
-        }
-
-        /// <summary>
-        /// View Clear tests.
-        /// </summary>
-        [TestMethod]
-        [Timeout(60000)]
-        public void ViewClearTest()
-        {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-            Assert.AreNotEqual(view.Count, 0);
-
-            view.Clear();
-            Assert.AreEqual(view.Count, 0);
-
-            this.test.Add(30);
-            Assert.AreNotEqual(view.Count, 0);
-
-            this.test.Clear();
-            Assert.AreEqual(view.Count, 0);
-        }
-
-        /// <summary>
-        /// View Contains tests.
-        /// </summary>
-        [TestMethod]
-        [Timeout(60000)]
-        public void ViewContainsTest()
-        {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-            Assert.IsTrue(view.Contains(15));
-            Assert.IsFalse(view.Contains(45));
-        }
-
-        /// <summary>
-        /// View CopyTo tests.
-        /// </summary>
-        [TestMethod]
-        [Timeout(60000)]
-        public void ViewCopyToTest()
-        {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
-            var viewArray = new double[3];
-            var testArray = new double[] { 2, 10, 15 };
-
-            view.CopyTo(viewArray, 0);
-            Assert.AreEqual(viewArray.Length, 3);
-
-            for (var i = 0; i < viewArray.Length; i++)
-            {
-                Assert.AreEqual(viewArray[i], testArray[i]);
-            }
-
-            var smallArray = new double[1];
-            UnitTestHelper.TestException(() => view.CopyTo(smallArray, 0), typeof(ArgumentException));
-        }
-
-        /// <summary>
         /// View empty view tests.
         /// </summary>
         [TestMethod]
@@ -492,25 +377,6 @@ namespace Test.Psi.Visualization
 
             double x = 0;
             UnitTestHelper.TestException(() => x = view[100], typeof(ArgumentOutOfRangeException));
-        }
-
-        /// <summary>
-        /// View Remove tests.
-        /// </summary>
-        [TestMethod]
-        [Timeout(60000)]
-        public void ViewRemoveTest()
-        {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, -1000, 1000, 0, null);
-
-            view.RemoveAt(6);
-            this.basis.RemoveAt(6);
-            UnitTestHelper.AssertAreEqual(this.basis.Values, view, view.Count);
-            UnitTestHelper.TestException(() => view.RemoveAt(100), typeof(ArgumentOutOfRangeException));
-
-            view.Remove(-456);
-            this.basis.Remove(-456);
-            UnitTestHelper.AssertAreEqual(this.basis.Values, view, view.Count);
         }
 
         /// <summary>

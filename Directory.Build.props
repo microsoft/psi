@@ -6,34 +6,22 @@
     <Company>Microsoft Corporation</Company>
     <Owners>microsoft,psi</Owners>
     <Authors>Microsoft</Authors>
-    <AssemblyVersion>0.12.53.2</AssemblyVersion>
+    <AssemblyVersion>0.13.38.2</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)-beta</Version>
     <SignAssembly>false</SignAssembly>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <RepositoryUrl>http://github.com/microsoft/psi/</RepositoryUrl>
+    <RepositoryUrl>https://github.com/microsoft/psi/</RepositoryUrl>
     <PackageProjectUrl>https://github.com/microsoft/psi/wiki</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>Psi;Microsoft</PackageTags>
     <RepositoryType>git</RepositoryType>
-    <IncludeSymbols>true</IncludeSymbols>
-    <!-- Workaround for arbitrary value in AssemblyInformationalVersionAttribute until it is fixed in VS 16 https://github.com/Microsoft/visualfsharp/issues/4822 -->
-    <NoWarn>FS2003</NoWarn>
     <LangVersion>latest</LangVersion>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
-
-  <!-- Support for building in Visual Studio versions 15.9 and up -->
-  <PropertyGroup Condition="'$(MSBuildVersion)' >= '15.9'">
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-  </PropertyGroup>
-
-  <!-- Support for building in Visual Studio versions before 15.9 -->
-  <PropertyGroup Condition="'$(MSBuildVersion)' &lt; '15.9'">
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/psi/master/LICENSE.txt</PackageLicenseUrl>
-    <!-- Disable licenseUrl deprecation warning in later versions of VS -->
-    <NoWarn>NU5125</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -31,21 +31,21 @@ namespace Microsoft.Psi
         /// <summary>
         /// The message creation time.
         /// </summary>
-        public DateTime Time;
+        public DateTime CreationTime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Envelope"/> struct.
         /// </summary>
         /// <param name="originatingTime">The <see cref="OriginatingTime"/> of this message.</param>
-        /// <param name="time">The creation <see cref="Time"/> of the message.</param>
+        /// <param name="creationTime">The <see cref="CreationTime"/> of the message.</param>
         /// <param name="sourceId">The <see cref="SourceId"/> of the message.</param>
         /// <param name="sequenceId">The unique <see cref="SequenceId"/> of the message.</param>
-        public Envelope(DateTime originatingTime, DateTime time, int sourceId, int sequenceId)
+        public Envelope(DateTime originatingTime, DateTime creationTime, int sourceId, int sequenceId)
         {
             this.SourceId = sourceId;
             this.SequenceId = sequenceId;
             this.OriginatingTime = originatingTime;
-            this.Time = time;
+            this.CreationTime = creationTime;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Microsoft.Psi
             return
                 first.SourceId == second.SourceId &&
                 first.SequenceId == second.SequenceId &&
-                first.Time == second.Time &&
+                first.CreationTime == second.CreationTime &&
                 first.OriginatingTime == second.OriginatingTime;
         }
 
@@ -104,7 +104,7 @@ namespace Microsoft.Psi
         /// <returns>A hashcode.</returns>
         public override int GetHashCode()
         {
-            return this.SourceId ^ this.SequenceId ^ this.Time.GetHashCode() ^ this.OriginatingTime.GetHashCode();
+            return this.SourceId ^ this.SequenceId ^ this.CreationTime.GetHashCode() ^ this.OriginatingTime.GetHashCode();
         }
     }
 }
