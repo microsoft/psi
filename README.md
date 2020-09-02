@@ -20,7 +20,7 @@ The core \\psi infrastructure is built on .NET Standard and therefore runs both 
 
 To learn more about \\psi and how to build applications with it, we recommend you start with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction) tutorial, which will walk you through for some of the main concepts. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk.
 
-A number of small [sample applications](https://github.com/microsoft/psi/wiki/Samples) are also available. A good starting point is a sample that illustrates how to capture and synchronize data from a webcam and microphone, which is available both for [Windows](https://github.com/Microsoft/psi-samples/tree/main/Samples/WebcamWithAudioSample) and [Linux](https://github.com/Microsoft/psi-samples/tree/main/Samples/LinuxWebcamWithAudioSample).
+A number of small [sample applications](https://github.com/microsoft/psi/wiki/Samples) are also available. A good starting point is a sample ([Windows version](https://github.com/Microsoft/psi-samples/tree/main/Samples/WebcamWithAudioSample) or [Linux version](https://github.com/Microsoft/psi-samples/tree/main/Samples/LinuxWebcamWithAudioSample)) that illustrates how to capture and process synchronized data from a webcam and microphone.
 
 The documentation for \\psi is available in the [github project wiki](https://github.com/microsoft/psi/wiki). It contains many additional resources, including [tutorials]( https://github.com/microsoft/psi/wiki/Tutorials), and [other specialized topics]( https://github.com/microsoft/psi/wiki/Other-Topics) that can help you learn more about the framework. 
 
