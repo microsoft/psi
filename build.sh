@@ -21,6 +21,3 @@
 (cd ./Sources/Runtime/Test.Psi/                                                        && . ./build.sh)
 (cd ./Sources/Toolkits/FiniteStateMachine/Microsoft.Psi.FiniteStateMachine/            && . ./build.sh)
 (cd ./Sources/Tools/PsiStoreTool/                                                      && . ./build.sh)
-(cd ./Samples/AzureKinectSample/                                                       && . ./build.sh)
-(cd ./Samples/RosTurtleSample/                                                         && . ./build.sh)
-(cd ./Samples/LinuxSpeechSample/                                                       && . ./build.sh)

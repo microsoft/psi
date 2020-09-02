@@ -6,8 +6,8 @@ Here we briefly explain the ROS architecture and the bridge layer.
 
 The following tutorials may help to get started:
 
-* [PsiRosTurtleSample](https://github.com/Microsoft/psi/tree/master/Samples/RosTurtleSample/) - simple tutorial to control `turtlesim` (no hardware required)
-* [ArmControlROSSample](https://github.com/Microsoft/psi/tree/master/Samples/RosArmControlSample/) - tutorial to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) (hardware required)
+* [PsiRosTurtleSample](https://github.com/Microsoft/psi-samples/tree/main/Samples/RosTurtleSample/) - simple tutorial to control `turtlesim` (no hardware required)
+* [ArmControlROSSample](https://github.com/Microsoft/psi-samples/tree/main/Samples/RosArmControlSample/) - tutorial to control the [uArm Metal](http://ufactory.cc/#/en/uarm1) (hardware required)
 
 ## ROS
 
