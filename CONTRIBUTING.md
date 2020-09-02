@@ -55,7 +55,6 @@ Below is a description of the directory structure for the Platform for Situated 
 | Folder    | Subfolder     | Description |
 | :-------- | :------------ | :---------- |
 | Build     |               | Contains \psi build tools. |
-| Samples   |               | Contains \psi sample applications. |
 | Sources   |               | Contains \psi source code. |
 | Sources   | Audio         | Contains class libraries for audio components. |
 | Sources   | Calibration   | Contains class libraries for calibrating cameras. |
