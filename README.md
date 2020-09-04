@@ -14,6 +14,8 @@ The framework accelerates the development of multimodal, integrative-AI systems 
 
 ![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
 
+A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/).
+
 # Getting Started
 
 The core \\psi infrastructure is built on .NET Standard and therefore runs both on Windows and Linux. Some [components](https://github.com/microsoft/psi/wiki/List-of-Components) and tools are more specific and are available only on one or the other operating system. You can build \\psi applications either by [leveraging \\psi NuGet packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages), or by [cloning and building the source code](https://github.com/microsoft/psi/wiki/Building-the-Codebase). 
