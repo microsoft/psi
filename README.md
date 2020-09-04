@@ -8,7 +8,7 @@
 The framework accelerates the development of multimodal, integrative-AI systems by providing: 
 -	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
 -	a set of **tools** for multimodal data visualization, annotation, and processing
--	an ecosystem of **components** for various sensors, processing technologies, and effectors
+-	an ecosystem of **components** for various sensors, processing technologies, and effectors that can be used to easily compose applications
 
 <br>
 
