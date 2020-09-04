@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/dev/Git/Repos/psi-github/build/docfx",
+  "source_base_path": "D:/a/1/s/Build/docfx",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -2946,7 +2946,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.DepthImageCompressor.html",
-          "hash": "ssSKUyabc8aE6FWvOcS9+w=="
+          "hash": "xAFvuUOLrmAByyk6jtSzUg=="
         }
       },
       "is_incremental": false,
@@ -2982,7 +2982,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.DepthImageFromStreamDecoder.html",
-          "hash": "sNr6uXScvYKJHqs3Bw983Q=="
+          "hash": "wj+Xzlli/BpA2bRJ73WLwA=="
         }
       },
       "is_incremental": false,
@@ -3006,7 +3006,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.DepthImageToPngStreamEncoder.html",
-          "hash": "AaBSbkZ5oI8zLR8SW1Snqw=="
+          "hash": "jlhxyI+88UddEcxvqpleUw=="
         }
       },
       "is_incremental": false,
@@ -3198,7 +3198,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageCompressor.html",
-          "hash": "L/6YTSSFw25C2PWlIqkM0w=="
+          "hash": "c1Y4ekErzQayafPjfdQOBw=="
         }
       },
       "is_incremental": false,
@@ -3234,7 +3234,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageFromStreamDecoder.html",
-          "hash": "3cSY8wZNgDJhYBkYDEKJuQ=="
+          "hash": "RSQ/f89dhC2Sl6hht+8rxw=="
         }
       },
       "is_incremental": false,
@@ -3258,7 +3258,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.html",
-          "hash": "NrkXvfLVogdD8Cdtg6JSyg=="
+          "hash": "PfWYlC80KZD2su91crvg/w=="
         }
       },
       "is_incremental": false,
@@ -3270,7 +3270,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageToPngStreamEncoder.html",
-          "hash": "IEdIblkZnIdnGi/mN5qOeA=="
+          "hash": "r2ob2DS8QJVs/Mf4doMuYQ=="
         }
       },
       "is_incremental": false,
@@ -3294,7 +3294,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImagingOperators.html",
-          "hash": "4ajjEVSufGGBULwAH0u/Cw=="
+          "hash": "O03T8prlZgkuXk/OkMIs7Q=="
         }
       },
       "is_incremental": false,
@@ -3918,7 +3918,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Media.MediaCapture.html",
-          "hash": "X0uhGWHnBJehVnNSeMJrmw=="
+          "hash": "ZHK9ZXG+Un5zjXjsmxC1Ww=="
         }
       },
       "is_incremental": false,
@@ -4086,7 +4086,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeech.html",
-          "hash": "DYCjabEH1vMgeUnNOLPyPA=="
+          "hash": "xLuHFY8TS+tq3CfpVMHF+w=="
         }
       },
       "is_incremental": false,
@@ -4098,7 +4098,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.html",
-          "hash": "kO+9/ljgLC8/gx5/Pqbgfw=="
+          "hash": "8rcdT392hvKTheMCpPYb2Q=="
         }
       },
       "is_incremental": false,
@@ -4122,7 +4122,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechRecognizer.html",
-          "hash": "wyomSM3QnEsyYBNBBeiX5g=="
+          "hash": "zbzqTjutTPKoobbQqTlR7Q=="
         }
       },
       "is_incremental": false,
@@ -4170,7 +4170,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Onnx.OnnxModel.html",
-          "hash": "qxt4PqE6ddzpWzZ9Dpu/eA=="
+          "hash": "AVwj0Km2zuYEW8Y0i3pOFg=="
         }
       },
       "is_incremental": false,
@@ -4182,7 +4182,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Onnx.OnnxModelConfiguration.html",
-          "hash": "hle6mIGfZzEGS3j6VG8VjA=="
+          "hash": "dS2pfcUPUOU3SK3HykA76Q=="
         }
       },
       "is_incremental": false,
@@ -4194,7 +4194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Onnx.OnnxModelRunner.html",
-          "hash": "d6gxqVxjF38LtLDdE0ligw=="
+          "hash": "p9ycwNVfIGW7WxHCTSRhtA=="
         }
       },
       "is_incremental": false,
@@ -9198,7 +9198,7 @@
       "output": {
         ".html": {
           "relative_path": "api/PsiStoreTool.Program.html",
-          "hash": "NkcaSC8YffDT9uIZq2NoUA=="
+          "hash": "Smnuj/4r1YNQkXOpRLdp8g=="
         }
       },
       "is_incremental": false,
