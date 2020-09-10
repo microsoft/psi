@@ -3,9 +3,9 @@
 ![Build status](https://dev.azure.com/msresearch/psi/_apis/build/status/psi-github-ci?branchName=master)
 [![Join the chat at https://gitter.im/Microsoft/psi](https://badges.gitter.im/Microsoft/psi.svg)](https://gitter.im/Microsoft/psi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. These are systems that process various types of streaming sensor data (such as audio, video, depth, etc.) and that need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
+**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. Examples include multimodal interactive systems such as social robots and embodied conversational agents, systems for ambient intelligence and smart spaces, applications based on small devices that work with streaming sensor data, etc. In essence, any application that processes streaming, sensor data (such as audio, video, depth, etc.), combines multiple (AI) technologies, and operates under latency constraints can benefit from the affordances the provided by the framework.
 
-The framework accelerates the development of multimodal, integrative-AI systems by providing: 
+The framework accelerates the development of these systems by providing: 
 -	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
 -	a set of **tools** for multimodal data visualization, annotation, and processing
 -	an ecosystem of **components** for various sensors, processing technologies, and effectors
