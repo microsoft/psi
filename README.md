@@ -5,7 +5,7 @@
 
 **Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. Examples include multimodal interactive systems such as social robots and embodied conversational agents, systems for ambient intelligence and smart spaces, applications based on small devices that work with streaming sensor data, etc. In essence, any application that processes streaming, sensor data (such as audio, video, depth, etc.), combines multiple (AI) technologies, and operates under latency constraints can benefit from the affordances the provided by the framework.
 
-The framework accelerates the development of these systems by providing: 
+The framework accelerates the development of these applications by providing: 
 -	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
 -	a set of **tools** for multimodal data visualization, annotation, and processing
 -	an ecosystem of **components** for various sensors, processing technologies, and effectors
