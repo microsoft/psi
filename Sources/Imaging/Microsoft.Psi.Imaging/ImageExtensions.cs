@@ -214,7 +214,7 @@ namespace Microsoft.Psi.Imaging
                 throw new ArgumentException("Destination image's width/height must match the source image width/height");
             }
 
-            if (image.PixelFormat == PixelFormat.Gray_16bpp)
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.Gray_8bpp)
             {
                 // We can't handle this through GDI.
                 unsafe
@@ -244,7 +244,15 @@ namespace Microsoft.Psi.Imaging
                         byte* destinationColumn = destinationRow + xoffset;
                         for (int j = 0; j < image.Width; j++)
                         {
-                            ((ushort*)destinationColumn)[0] = ((ushort*)sourceColumn)[0];
+                            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+                            {
+                                destinationColumn[0] = sourceColumn[0];
+                            }
+                            else
+                            {
+                                ((ushort*)destinationColumn)[0] = ((ushort*)sourceColumn)[0];
+                            }
+
                             sourceColumn += sourceBytesPerPixel;
                             destinationColumn += xstep;
                         }
@@ -348,6 +356,24 @@ namespace Microsoft.Psi.Imaging
                     "Convert to a supported format such as color or 8bpp grayscale first.");
             }
 
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // To work around this issue, we will convert the image to 24bpp, perform the resize,
+            // and then convert back to 8bpp.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                using Image tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                using Image resizedImage = new Image((int)newWidth, (int)newHeight, PixelFormat.BGR_24bpp);
+                tmpImage.Resize(resizedImage, newWidth, newHeight, mode);
+                destImage.CopyFrom(resizedImage);
+                return;
+            }
+
             using var bitmap = new Bitmap((int)newWidth, (int)newHeight, PixelFormatHelper.ToSystemPixelFormat(image.PixelFormat));
             using var graphics = Graphics.FromImage(bitmap);
             graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
@@ -445,6 +471,24 @@ namespace Microsoft.Psi.Imaging
             if (rotatedWidth != destImage.Width || rotatedHeight != destImage.Height)
             {
                 throw new ArgumentException($"Destination image must be size={rotatedWidth}x{rotatedHeight}.");
+            }
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // To work around this issue, we will convert the image to 24bpp, perform the rotation,
+            // and then convert back to 8bpp.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                using Image tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                using Image rotatedImage = new Image(rotatedWidth, rotatedHeight, PixelFormat.BGR_24bpp);
+                tmpImage.Rotate(rotatedImage, angleInDegrees, mode, fit);
+                destImage.CopyFrom(rotatedImage);
+                return;
             }
 
             using var bitmap = new Bitmap(rotatedWidth, rotatedHeight, PixelFormatHelper.ToSystemPixelFormat(image.PixelFormat));
@@ -850,11 +894,33 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line.</param>
         public static void DrawRectangle(this Image image, Rectangle rect, Color color, int width)
         {
-            using Bitmap bm = image.ToBitmap(false);
+            Image sourceImage = image;
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // To work around this issue, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to 8bpp.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(sourceImage);
+            }
+
+            using Bitmap bm = sourceImage.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawRectangle(pen, rect);
+
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                image.CopyFrom(sourceImage);
+                sourceImage.Dispose();
+            }
         }
 
         /// <summary>
@@ -867,11 +933,33 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line.</param>
         public static void DrawLine(this Image image, Point p0, Point p1, Color color, int width)
         {
-            using Bitmap bm = image.ToBitmap(false);
+            Image sourceImage = image;
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // To work around this issue, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to 8bpp.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(sourceImage);
+            }
+
+            using Bitmap bm = sourceImage.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawLine(pen, p0, p1);
+
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                image.CopyFrom(sourceImage);
+                sourceImage.Dispose();
+            }
         }
 
         /// <summary>
@@ -884,11 +972,33 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line.</param>
         public static void DrawCircle(this Image image, Point p0, int radius, Color color, int width)
         {
-            using Bitmap bm = image.ToBitmap(false);
+            Image sourceImage = image;
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // To work around this issue, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to 8bpp.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(sourceImage);
+            }
+
+            using Bitmap bm = sourceImage.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawEllipse(pen, p0.X - radius, p0.Y - radius, 2 * radius, 2 * radius);
+
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                image.CopyFrom(sourceImage);
+                sourceImage.Dispose();
+            }
         }
 
         /// <summary>
@@ -902,14 +1012,36 @@ namespace Microsoft.Psi.Imaging
         /// <param name="fontSize">Size of font. Optional.</param>
         public static void DrawText(this Image image, string str, Point p0, Color color = default(Color), string font = "Arial", float fontSize = 24.0f)
         {
+            Image sourceImage = image;
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // To work around this issue, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to 8bpp.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(sourceImage);
+            }
+
             font ??= "Arial";
-            using Bitmap bm = image.ToBitmap(false);
+            using Bitmap bm = sourceImage.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using Font drawFont = new Font(font, fontSize);
             using SolidBrush drawBrush = new SolidBrush(color);
             using StringFormat drawFormat = new StringFormat();
             drawFormat.FormatFlags = 0;
             graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
+
+            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            {
+                image.CopyFrom(sourceImage);
+                sourceImage.Dispose();
+            }
         }
     }
 

@@ -6,6 +6,7 @@
 namespace Test.Psi.Imaging
 {
     using System;
+    using System.Windows.Media.Media3D;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Imaging;
@@ -15,6 +16,14 @@ namespace Test.Psi.Imaging
     [TestClass]
     public class ImageTester
     {
+        private Image testImage_Gray = Image.FromBitmap(Properties.Resources.TestImage_Gray);
+        private Image testImage_GrayDrawCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawCircle);
+        private Image testImage_GrayDrawLine = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawLine);
+        private Image testImage_GrayDrawRect = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawRect);
+        private Image testImage_GrayDrawText = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawText);
+        private Image testImage_GrayFlip = Image.FromBitmap(Properties.Resources.TestImage_GrayFlip);
+        private Image testImage_GrayResized = Image.FromBitmap(Properties.Resources.TestImage_GrayResized);
+        private Image testImage_GrayRotate = Image.FromBitmap(Properties.Resources.TestImage_GrayRotate);
         private Image testImage = Image.FromBitmap(Properties.Resources.TestImage);
         private Image testImage2 = Image.FromBitmap(Properties.Resources.TestImage2);
         private Image testImage2_Threshold = Image.FromBitmap(Properties.Resources.TestImage2_Threshold);
@@ -41,6 +50,75 @@ namespace Test.Psi.Imaging
         private Image testImage_50_25_Cubic = Image.FromBitmap(Properties.Resources.TestImage_Scale_50_25_Cubic);
         private Image testImage_150_125_Point = Image.FromBitmap(Properties.Resources.TestImage_Scale_150_125_Point);
         private Image testImage_25_200_Linear = Image.FromBitmap(Properties.Resources.TestImage_Scale_25_200_Linear);
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawCircle()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawCircle(new System.Drawing.Point(0, 0), 100, System.Drawing.Color.Red, 3);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawCircle, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawLine()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawLine(new System.Drawing.Point(0, 0), new System.Drawing.Point(100, 100), System.Drawing.Color.Red, 3);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawLine, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawRect()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawRectangle(new System.Drawing.Rectangle(0, 0, 20, 20), System.Drawing.Color.White, 3);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawRect, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawText()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawText("Test", new System.Drawing.Point(0, 20), System.Drawing.Color.Red);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawText, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayFlip()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.Flip(sharedImage.Resource, FlipMode.AlongHorizontalAxis);
+            this.AssertAreImagesEqual(this.testImage_GrayFlip, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayResize()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            this.testImage_Gray.Resize(100, 100, SamplingMode.Bilinear);
+            this.AssertAreImagesEqual(this.testImage_GrayResized, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayRotate()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.Rotate(20.0f, SamplingMode.Bilinear);
+            this.AssertAreImagesEqual(this.testImage_GrayRotate, sharedImage.Resource);
+        }
 
         [TestMethod]
         [Timeout(60000)]
