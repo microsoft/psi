@@ -350,7 +350,7 @@ namespace Microsoft.Psi.Imaging
             unsafe
             {
                 int bytesPerPixel1 = image1.BitsPerPixel / 8;
-                int bytesPerPixel2 = image1.BitsPerPixel / 8;
+                int bytesPerPixel2 = image2.BitsPerPixel / 8;
 
                 byte* row1 = (byte*)image1.ImageData.ToPointer();
                 byte* row2 = (byte*)image2.ImageData.ToPointer();
