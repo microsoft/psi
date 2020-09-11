@@ -484,7 +484,7 @@ namespace Test.Psi.Imaging
             this.AssertAreImagesEqual(this.testImage, this.testImage);
             this.AssertAreImagesEqual(this.testImage_Gray, this.testImage_Gray);
             ImageError err = new ImageError();
-            Assert.IsFalse(this.testImage2.Compare(this.testImage2_DrawRect, 2.0, ref err));
+            Assert.IsFalse(this.testImage2.Compare(this.testImage2_DrawRect, 2.0, 0.01, ref err));
         }
 
         [TestMethod]
@@ -568,13 +568,7 @@ namespace Test.Psi.Imaging
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage)
         {
             ImageError err = new ImageError();
-            bool failed = referenceImage.Compare(subjectImage, 3.0, ref err);
-            if (!failed)
-            {
-                Console.WriteLine($"Image comparison failed: err.MaxError={err.MaxError}   err.AvgError={err.AvgError}");
-            }
-
-            Assert.IsTrue(failed);
+            Assert.IsTrue(referenceImage.Compare(subjectImage, 6.0, 0.01, ref err));
         }
     }
 }

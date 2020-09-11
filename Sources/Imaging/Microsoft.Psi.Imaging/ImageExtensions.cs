@@ -330,9 +330,10 @@ namespace Microsoft.Psi.Imaging
         /// <param name="image1">First image in comparison.</param>
         /// <param name="image2">Second image in comparison.</param>
         /// <param name="tolerance">Maximum allowable distance between pixels in RGB or Grayscale space.</param>
+        /// <param name="percentOutliersAllowed">Percetange of pixels allowed to be outside tolerance.</param>
         /// <param name="errorMetrics">Error metrics across all pixels.</param>
         /// <returns>True if images are considered identical. False otherwise.</returns>
-        public static bool Compare(this ImageBase image1, ImageBase image2, double tolerance, ref ImageError errorMetrics)
+        public static bool Compare(this ImageBase image1, ImageBase image2, double tolerance, double percentOutliersAllowed, ref ImageError errorMetrics)
         {
             if (image1.GetType() != image2.GetType() ||
                 image1.PixelFormat != image2.PixelFormat ||
@@ -342,9 +343,9 @@ namespace Microsoft.Psi.Imaging
                 return false;
             }
 
-            bool result = true;
             errorMetrics.MaxError = 0.0f;
             errorMetrics.AvgError = 0.0f;
+            errorMetrics.NumberOutliers = 0;
             double dist = 0.0f;
             unsafe
             {
@@ -423,7 +424,7 @@ namespace Microsoft.Psi.Imaging
                         errorMetrics.AvgError += dist;
                         if (dist > tolerance * tolerance)
                         {
-                            result = false;
+                            errorMetrics.NumberOutliers++;
                         }
 
                         col1 += bytesPerPixel1;
@@ -438,7 +439,7 @@ namespace Microsoft.Psi.Imaging
             errorMetrics.AvgError /= (double)(image1.Width * image1.Height);
             errorMetrics.MaxError = Math.Sqrt(errorMetrics.MaxError);
 
-            return result;
+            return errorMetrics.NumberOutliers <= percentOutliersAllowed * image1.Width * image1.Height;
         }
 
         /// <summary>

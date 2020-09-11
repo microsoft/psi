@@ -17,5 +17,10 @@ namespace Microsoft.Psi.Imaging
         /// Gets or sets the average distance across all pixels.
         /// </summary>
         public double AvgError { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of outliers (pixels outside of the specified tolerance).
+        /// </summary>
+        public int NumberOutliers { get; set; }
     }
 }
