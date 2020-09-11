@@ -481,7 +481,6 @@ namespace Test.Psi.Imaging
         [Timeout(60000)]
         public void Image_Compare()
         {
-            // Scale using nearest-neighbor
             this.AssertAreImagesEqual(this.testImage, this.testImage);
             this.AssertAreImagesEqual(this.testImage_Gray, this.testImage_Gray);
             ImageError err = new ImageError();
@@ -569,7 +568,7 @@ namespace Test.Psi.Imaging
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage)
         {
             ImageError err = new ImageError();
-            Assert.IsTrue(referenceImage.Compare(subjectImage, 2.0, ref err));
+            Assert.IsTrue(referenceImage.Compare(subjectImage, 3.0, ref err));
         }
     }
 }
