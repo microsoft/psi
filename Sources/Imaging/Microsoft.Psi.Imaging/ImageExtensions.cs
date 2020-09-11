@@ -325,6 +325,123 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Compares two images to see if they are identical (within some specified tolerance).
+        /// </summary>
+        /// <param name="image1">First image in comparison.</param>
+        /// <param name="image2">Second image in comparison.</param>
+        /// <param name="tolerance">Maximum allowable distance between pixels in RGB or Grayscale space.</param>
+        /// <param name="errorMetrics">Error metrics across all pixels.</param>
+        /// <returns>True if images are considered identical. False otherwise.</returns>
+        public static bool Compare(this ImageBase image1, ImageBase image2, double tolerance, ref ImageError errorMetrics)
+        {
+            if (image1.GetType() != image2.GetType() ||
+                image1.PixelFormat != image2.PixelFormat ||
+                image1.Width != image2.Width ||
+                image1.Height != image2.Height)
+            {
+                return false;
+            }
+
+            bool result = true;
+            errorMetrics.MaxError = 0.0f;
+            errorMetrics.AvgError = 0.0f;
+            double dist = 0.0f;
+            unsafe
+            {
+                int bytesPerPixel1 = image1.BitsPerPixel / 8;
+                int bytesPerPixel2 = image1.BitsPerPixel / 8;
+
+                byte* row1 = (byte*)image1.ImageData.ToPointer();
+                byte* row2 = (byte*)image2.ImageData.ToPointer();
+                for (int y = 0; y < image1.Height; y++)
+                {
+                    byte* col1 = row1;
+                    byte* col2 = row2;
+                    for (int x = 0; x < image1.Width; x++)
+                    {
+                        switch (image1.PixelFormat)
+                        {
+                            case PixelFormat.BGRA_32bpp:
+                                {
+                                    int dr = col1[0] - col2[0];
+                                    int dg = col1[1] - col2[1];
+                                    int db = col1[2] - col2[2];
+                                    int da = col1[3] - col2[3];
+                                    dist = (double)(dr * dr + dg * dg + db * db + da * da);
+                                }
+
+                                break;
+
+                            case PixelFormat.BGRX_32bpp:
+                            case PixelFormat.BGR_24bpp:
+                                {
+                                    int dr = col1[0] - col2[0];
+                                    int dg = col1[1] - col2[1];
+                                    int db = col1[2] - col2[2];
+                                    dist = (double)(dr * dr + dg * dg + db * db);
+                                }
+
+                                break;
+
+                            case PixelFormat.Gray_16bpp:
+                                {
+                                    int d = ((ushort*)col1)[0] - ((ushort*)col2)[0];
+                                    dist = (double)(d * d);
+                                }
+
+                                break;
+
+                            case PixelFormat.Gray_8bpp:
+                                {
+                                    int d = col1[0] - col2[0];
+                                    dist = (double)(d * d);
+                                }
+
+                                break;
+
+                            case PixelFormat.RGBA_64bpp:
+                                {
+                                    int dr = ((ushort*)col1)[0] - ((ushort*)col2)[0];
+                                    int dg = ((ushort*)col1)[1] - ((ushort*)col2)[1];
+                                    int db = ((ushort*)col1)[2] - ((ushort*)col2)[2];
+                                    int da = ((ushort*)col1)[3] - ((ushort*)col2)[3];
+                                    dist = (double)(dr * dr + dg * dg + db * db + da * da);
+                                }
+
+                                break;
+
+                            case PixelFormat.Undefined:
+                            default:
+                                throw new ArgumentException("Unsupported image format");
+                        }
+
+                        if (dist > errorMetrics.MaxError)
+                        {
+                            errorMetrics.MaxError = dist;
+                        }
+
+                        errorMetrics.AvgError += dist;
+                        if (dist > tolerance * tolerance)
+                        {
+                            result = false;
+                        }
+
+                        col1 += bytesPerPixel1;
+                        col2 += bytesPerPixel2;
+                    }
+
+                    row1 += image1.Stride;
+                    row2 += image2.Stride;
+                }
+            }
+
+            errorMetrics.AvgError /= (double)(image1.Width * image1.Height);
+            errorMetrics.MaxError = Math.Sqrt(errorMetrics.MaxError);
+
+            return result;
+        }
+
+        /// <summary>
         /// Resizes an image by the specified scale factors using the specified sampling mode.
         /// </summary>
         /// <param name="image">Image to resize.</param>

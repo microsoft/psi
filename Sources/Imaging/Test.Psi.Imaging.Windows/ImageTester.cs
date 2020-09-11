@@ -479,6 +479,17 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
+        public void Image_Compare()
+        {
+            // Scale using nearest-neighbor
+            this.AssertAreImagesEqual(this.testImage, this.testImage);
+            this.AssertAreImagesEqual(this.testImage_Gray, this.testImage_Gray);
+            ImageError err = new ImageError();
+            Assert.IsFalse(this.testImage2.Compare(this.testImage2_DrawRect, 2.0, ref err));
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void Image_Scale()
         {
             // Scale using nearest-neighbor
@@ -557,28 +568,8 @@ namespace Test.Psi.Imaging
 
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage)
         {
-            Assert.AreEqual(referenceImage.GetType(), subjectImage.GetType());
-            Assert.AreEqual(referenceImage.PixelFormat, subjectImage.PixelFormat);
-            Assert.AreEqual(referenceImage.Width, subjectImage.Width);
-            Assert.AreEqual(referenceImage.Height, subjectImage.Height);
-
-            // compare one line of the image at a time since a stride may contain padding bytes
-            for (int line = 0; line < referenceImage.Height; line++)
-            {
-                var refbytes = referenceImage.ReadBytes(referenceImage.Width * referenceImage.BitsPerPixel / 8, line * referenceImage.Stride);
-                var subjbytes = subjectImage.ReadBytes(subjectImage.Width * subjectImage.BitsPerPixel / 8, line * subjectImage.Stride);
-                if (referenceImage.PixelFormat == PixelFormat.BGRX_32bpp)
-                {
-                    // BGRX images can have any value for they alpha channel. Here we normalize them to 255
-                    for (int i = 0; i < referenceImage.Width; i++)
-                    {
-                        refbytes[4 * i + 3] = 255;
-                        subjbytes[4 * i + 3] = 255;
-                    }
-                }
-
-                CollectionAssert.AreEqual(refbytes, subjbytes);
-            }
+            ImageError err = new ImageError();
+            Assert.IsTrue(referenceImage.Compare(subjectImage, 2.0, ref err));
         }
     }
 }
