@@ -568,7 +568,13 @@ namespace Test.Psi.Imaging
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage)
         {
             ImageError err = new ImageError();
-            Assert.IsTrue(referenceImage.Compare(subjectImage, 3.0, ref err));
+            bool failed = referenceImage.Compare(subjectImage, 3.0, ref err);
+            if (failed)
+            {
+                Console.WriteLine($"Image comparison failed: err.MaxError={err.MaxError}   err.AvgError={err.AvgError}");
+            }
+
+            Assert.IsTrue(failed);
         }
     }
 }
