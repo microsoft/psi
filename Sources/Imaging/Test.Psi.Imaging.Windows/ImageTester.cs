@@ -569,7 +569,7 @@ namespace Test.Psi.Imaging
         {
             ImageError err = new ImageError();
             bool failed = referenceImage.Compare(subjectImage, 3.0, ref err);
-            if (failed)
+            if (!failed)
             {
                 Console.WriteLine($"Image comparison failed: err.MaxError={err.MaxError}   err.AvgError={err.AvgError}");
             }
