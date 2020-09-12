@@ -37,6 +37,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>
     </DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -162,6 +163,14 @@
     <Content Include="Resources\TestImage2_Rotate_Neg10.bmp" />
     <Content Include="Resources\TestImage2_Rotate_Neg10_Loose.bmp" />
     <Content Include="Resources\TestImage2_Threshold.bmp" />
+    <Content Include="Resources\TestImage_Gray.bmp" />
+    <Content Include="Resources\TestImage_GrayDrawCircle.bmp" />
+    <Content Include="Resources\TestImage_GrayDrawLine.bmp" />
+    <Content Include="Resources\TestImage_GrayDrawRect.bmp" />
+    <Content Include="Resources\TestImage_GrayDrawText.bmp" />
+    <Content Include="Resources\TestImage_GrayFlip.bmp" />
+    <Content Include="Resources\TestImage_GrayResized.bmp" />
+    <Content Include="Resources\TestImage_GrayRotate.bmp" />
     <Content Include="Resources\TestImage_Scale_150_125_Point.bmp" />
     <Content Include="Resources\TestImage_Scale_25_200_Linear.bmp" />
     <Content Include="Resources\TestImage_Scale_50_25_Cubic.bmp" />
