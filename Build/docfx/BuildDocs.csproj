@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Properties for DocFX -->
+  <PropertyGroup>
+    <!-- This is the DoxFX config file -->
+    <DocfxConfigFile>docfx.json</DocfxConfigFile>
+
+    <!-- This is where the docs will be written to -->
+    <PreviewOutputFolder>_site</PreviewOutputFolder>
+
+    <!-- Logging parameters for the DocFX build process -->
+    <LogFile>obj/log.txt</LogFile>
+    <LogLevel>Verbose</LogLevel>
+
+    <!-- Set the property below to true to skip building docs when testing -->
+    <BuildingForLiveUnitTesting>false</BuildingForLiveUnitTesting>
+
+    <!-- The following allows us to serve the docs using 'dotnet run' -->
+    <StartAction>Program</StartAction>
+    <StartProgram>$(Pkgdocfx_console)/tools/docfx.exe</StartProgram>
+    <StartArguments>serve $(PreviewOutputFolder)</StartArguments>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="$(PreviewOutputFolder)\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="docfx.console" Version="2.56.2" GeneratePathProperty="true">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

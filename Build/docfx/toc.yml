@@ -1,0 +1,7 @@
+- name: Platform for Situated Intelligence
+  href: https://github.com/microsoft/psi
+- name: Wiki
+  href: https://github.com/microsoft/psi/wiki
+- name: API Documentation
+  href: api/
+  homepage: api/Microsoft.Psi.html

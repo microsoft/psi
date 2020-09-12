@@ -5,26 +5,26 @@
 
 **Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. These are systems that process various types of streaming sensor data (such as audio, video, depth, etc.) and that need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
 
-The framework alleviates the engineering challenges that arise when building such systems by providing: 
--	a modern, performant **infrastructure** for working with multimodal, temporally streaming data, and a programming paradigm for concurrent, coordinated computation that simplifies application development.
--	a set of **tools** for multimodal data visualization, annotation, and processing, which support and accelerate debugging and maintenance.
--	an ecosystem of **components** for various sensors, processing technologies, and effectors, enabling rapid prototyping and reuse.
+The framework accelerates the development of multimodal, integrative-AI systems by providing: 
+-	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
+-	a set of **tools** for multimodal data visualization, annotation, and processing
+-	an ecosystem of **components** for various sensors, processing technologies, and effectors
 
 <br>
 
 ![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
 
+A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/).
+
 # Getting Started
 
-The core infrastructure in Platform for Situated Intelligence is built on .NET Standard and therefore runs both on Windows and Linux. Some [components](https://github.com/microsoft/psi/wiki/List-of-Components) and tools are more specific and are available only on one or the other operating system.
+The core \\psi infrastructure is built on .NET Standard and therefore runs both on Windows and Linux. Some [components](https://github.com/microsoft/psi/wiki/List-of-Components) and tools are more specific and are available only on one or the other operating system. You can build \\psi applications either by [leveraging \\psi NuGet packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages), or by [cloning and building the source code](https://github.com/microsoft/psi/wiki/Building-the-Codebase). 
 
-You can get started building \\psi applications in two ways:
- - [leveraging \\psi NuGet packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages), or
- - [cloning and building the source code](https://github.com/microsoft/psi/wiki/Building-the-Codebase). 
+__A Quick Introduction.__ To learn more about \\psi and how to build applications with it, we recommend you start with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction) tutorial, which will walk you through for some of the main concepts. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk.
 
-To learn more about \\psi and how to build applications with it, we recommend you start with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction) tutorial, which will walk you through for some of the main concepts. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk.
+__Samples.__ A number of small [sample applications](https://github.com/microsoft/psi/wiki/Samples), several with walkthroughs, are also available. A good starting point is a sample ([Windows version](https://github.com/Microsoft/psi-samples/tree/main/Samples/WebcamWithAudioSample) or [Linux version](https://github.com/Microsoft/psi-samples/tree/main/Samples/LinuxWebcamWithAudioSample)) that illustrates how to capture and process synchronized data from a webcam and microphone.
 
-The documentation for \\psi is available in the [github project wiki](https://github.com/microsoft/psi/wiki). It contains various informational resources, including [tutorials]( https://github.com/microsoft/psi/wiki/Tutorials), [samples]( https://github.com/microsoft/psi/wiki/Samples), and [other specialized topics]( https://github.com/microsoft/psi/wiki/Other-Topics) that can help you learn more about the framework. 
+__Documentation.__ The documentation for \\psi is available in the [github project wiki](https://github.com/microsoft/psi/wiki). It contains many additional resources, including [tutorials]( https://github.com/microsoft/psi/wiki/Tutorials), other [specialized topics]( https://github.com/microsoft/psi/wiki/Other-Topics), and a full [API reference](https://microsoft.github.io/psi/api/Microsoft.Psi.html) that can help you learn more about the framework.
 
 # Getting Help
 If you find a bug or if you would like to request a new feature or additional documentation, please file an [issue in github](https://github.com/microsoft/psi/issues). Use the [`bug`](https://github.com/microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce the bug. Use the [`feature request`](https://github.com/microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/microsoft/psi/labels/documentation) label to request additional documentation. 
@@ -37,7 +37,7 @@ To find more information about our future plans, please see the [Roadmap](https:
 
 # Who is Using
 
-Platform for Situated Intelligence is currently being used in several industry and academic research labs, including (but not limited to):
+Platform for Situated Intelligence has been and is currently used in several industry and academic research labs, including (but not limited to):
 * the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
 * the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
 * the [Speech Language and Interactive Machines](https://coen.boisestate.edu/slim/) research group at Boise State University.
