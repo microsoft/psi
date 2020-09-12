@@ -185,13 +185,16 @@ namespace Microsoft.Psi.AzureKinect
                 }
             }
 
-            if (this.configuration.Exposure > TimeSpan.Zero)
+            if (this.configuration.ExposureTime > TimeSpan.Zero)
             {
-                // one tick is 100 nano seconds (0.1 microseconds). The exposure is set in microseconds.
-                this.device.SetColorControl(ColorControlCommand.ExposureTimeAbsolute, ColorControlMode.Manual, (int)(this.configuration.Exposure.Ticks / 10));
+                // one tick is 100 nano seconds (0.1 microseconds). The exposure time is set in microseconds.
+                this.device.SetColorControl(ColorControlCommand.ExposureTimeAbsolute, ColorControlMode.Manual, (int)(this.configuration.ExposureTime.Ticks / 10));
             }
 
-            this.device.SetColorControl(ColorControlCommand.PowerlineFrequency, ColorControlMode.Manual, (int)this.configuration.PowerlineFrequency);
+            if (this.configuration.PowerlineFrequency != AzureKinectSensorConfiguration.PowerlineFrequencyTypes.Default)
+            {
+                this.device.SetColorControl(ColorControlCommand.PowerlineFrequency, ColorControlMode.Manual, (int)this.configuration.PowerlineFrequency);
+            }
 
             this.device.StartCameras(new DeviceConfiguration()
             {

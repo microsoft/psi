@@ -17,6 +17,11 @@ namespace Microsoft.Psi.AzureKinect
         public enum PowerlineFrequencyTypes
         {
             /// <summary>
+            /// Use the default value or the powerline frequency set previously (reverts upon powercycle).
+            /// </summary>
+            Default = 0,
+
+            /// <summary>
             /// For powerline with 50Hz Frequency. (e.g. UK, Germany, Italy, etc).
             /// </summary>
             FiftyHz = 1,
@@ -66,27 +71,27 @@ namespace Microsoft.Psi.AzureKinect
         public WiredSyncMode WiredSyncMode { get; set; } = WiredSyncMode.Standalone;
 
         /// <summary>
-        /// Gets or sets the delay before publishing when receiving signal from the master sensor.
+        /// Gets or sets the delay before publishing when receiving a signal from the master sensor.
         /// </summary>
         public TimeSpan SuboridinateDelayOffMaster { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         /// Gets or sets the delay between capturing the color image and depth image.
-        /// <remarks>Used in synchronization mode to make sure the infarred sensors
-        /// does not interfere with each other.</remarks>
         /// </summary>
+        /// <remarks>Used in synchronization mode to make sure the infrared sensors
+        /// do not interfere with each other.</remarks>
         public TimeSpan DepthDelayOffColor { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         /// Gets or sets the color sensors's exposure. Zero or negative means the exposure time is set automatically.
         /// </summary>
-        public TimeSpan Exposure { get; set; } = TimeSpan.MinValue;
+        public TimeSpan ExposureTime { get; set; } = TimeSpan.MinValue;
 
         /// <summary>
         /// Gets or sets the sensor's powerline frequency.
         /// <remarks>See AzureKinect's documentation for more information.</remarks>
         /// </summary>
-        public PowerlineFrequencyTypes PowerlineFrequency { get; set; } = PowerlineFrequencyTypes.SixtyHz;
+        public PowerlineFrequencyTypes PowerlineFrequency { get; set; } = PowerlineFrequencyTypes.Default;
 
         /// <summary>
         /// Gets or sets a value indicating whether the color stream is emitted.
