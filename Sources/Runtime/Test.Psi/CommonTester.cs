@@ -4,6 +4,7 @@
 namespace Test.Psi
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
@@ -53,6 +54,7 @@ namespace Test.Psi
             uint ui = 0xFFFFFFFF;
             ulong ul = 0xFFFFFFFFFFFFFFFF;
             DateTime dt = DateTime.Now;
+            var stream = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 });
 
             bufW.Write(b);
             bufW.Write(br);
@@ -73,6 +75,11 @@ namespace Test.Psi
             bufW.Write(ui);
             bufW.Write(ul);
             bufW.Write(dt);
+            bufW.CopyFromStream(stream, 2);
+            bufW.CopyFromStream(stream, 3);
+            int position = bufW.Position;
+            bufW.CopyFromStream(stream, 2); // attempt to read past end of stream
+            Assert.AreEqual(position, bufW.Position);
 
             BufferReader bufR = new BufferReader(bufW.Buffer);
             Assert.AreEqual(b, bufR.ReadByte());
@@ -108,6 +115,9 @@ namespace Test.Psi
             Assert.AreEqual(ui, bufR.ReadUInt32());
             Assert.AreEqual(ul, bufR.ReadUInt64());
             Assert.AreEqual(dt, bufR.ReadDateTime());
+            var stream_r = new MemoryStream();
+            bufR.CopyToStream(stream_r, (int)stream.Length);
+            CollectionAssert.AreEqual(stream.ToArray(), stream_r.ToArray());
         }
     }
 }
