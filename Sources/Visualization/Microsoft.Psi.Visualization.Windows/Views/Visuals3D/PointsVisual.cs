@@ -66,6 +66,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                     }
                 }
             }
+            else
+            {
+                for (int i = 0; i < this.spheres.Count; i++)
+                {
+                    this.spheres[i].Visible = false;
+                }
+            }
         }
 
         private void VisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
