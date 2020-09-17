@@ -6,6 +6,7 @@
 namespace Microsoft.Psi.Media
 {
     using System;
+    using System.IO;
     using System.Runtime.InteropServices;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
@@ -194,6 +195,16 @@ namespace Microsoft.Psi.Media
                                 }
 
                                 sharedImage.Resource.CopyFrom(bytes);
+                                this.Out.Post(sharedImage, originatingTime);
+                            }
+                        }
+                        else if (this.configuration.PixelFormat == PixelFormatId.MJPEG)
+                        {
+                            var len = frame.Length;
+                            using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
+                            {
+                                Marshal.Copy(frame.Start, shared.Resource, 0, len);
+                                new ImageFromStreamDecoder().DecodeFromStream(new MemoryStream(shared.Resource), sharedImage.Resource);
                                 this.Out.Post(sharedImage, originatingTime);
                             }
                         }
