@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Media
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Imaging;
+    using SkiaSharp;
 
     /// <summary>
     /// Component that captures and streams video from a camera.
@@ -149,16 +150,19 @@ namespace Microsoft.Psi.Media
 
                 if (this.Out.HasSubscribers)
                 {
-                    using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp))
+                    if (this.configuration.PixelFormat == PixelFormatId.BGR24)
                     {
-                        if (this.configuration.PixelFormat == PixelFormatId.BGR24)
+                        using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp))
                         {
                             sharedImage.Resource.CopyFrom((IntPtr)frame.Start);
                             this.Out.Post(sharedImage, this.pipeline.GetCurrentTime());
                         }
-                        else if (this.configuration.PixelFormat == PixelFormatId.YUYV)
+                    }
+                    else if (this.configuration.PixelFormat == PixelFormatId.YUYV)
+                    {
+                        // convert YUYV -> BGR24 (see https://msdn.microsoft.com/en-us/library/ms893078.aspx)
+                        using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp))
                         {
-                            // convert YUYV -> BGR24 (see https://msdn.microsoft.com/en-us/library/ms893078.aspx)
                             var len = (int)(frame.Length * 1.5);
                             using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
                             {
@@ -198,13 +202,15 @@ namespace Microsoft.Psi.Media
                                 this.Out.Post(sharedImage, originatingTime);
                             }
                         }
-                        else if (this.configuration.PixelFormat == PixelFormatId.MJPEG)
+                    }
+                    else if (this.configuration.PixelFormat == PixelFormatId.MJPEG)
+                    {
+                        var decoded = SKBitmap.Decode(new UnmanagedMemoryStream((byte*)frame.Start, frame.Length));
+                        if (decoded != null)
                         {
-                            var len = frame.Length;
-                            using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
+                            using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGRA_32bpp))
                             {
-                                Marshal.Copy(frame.Start, shared.Resource, 0, len);
-                                new ImageFromStreamDecoder().DecodeFromStream(new MemoryStream(shared.Resource), sharedImage.Resource);
+                                sharedImage.Resource.CopyFrom(decoded.Bytes);
                                 this.Out.Post(sharedImage, originatingTime);
                             }
                         }
