@@ -3,9 +3,9 @@
 ![Build status](https://dev.azure.com/msresearch/psi/_apis/build/status/psi-github-ci?branchName=master)
 [![Join the chat at https://gitter.im/Microsoft/psi](https://badges.gitter.im/Microsoft/psi.svg)](https://gitter.im/Microsoft/psi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. These are systems that process various types of streaming sensor data (such as audio, video, depth, etc.) and that need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
+**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. Examples include multimodal interactive systems such as social robots and embodied conversational agents, systems for ambient intelligence and smart spaces, applications based on small devices that work with streaming sensor data, etc. In essence, any application that processes streaming, sensor data (such as audio, video, depth, etc.), combines multiple (AI) technologies, and operates under latency constraints can benefit from the affordances the provided by the framework.
 
-The framework accelerates the development of multimodal, integrative-AI systems by providing: 
+The framework accelerates the development of these applications by providing: 
 -	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
 -	a set of **tools** for multimodal data visualization, annotation, and processing
 -	an ecosystem of **components** for various sensors, processing technologies, and effectors
@@ -13,6 +13,14 @@ The framework accelerates the development of multimodal, integrative-AI systems 
 <br>
 
 ![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
+
+A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/).
+
+# What’s New
+
+__09/02/2020__: We published [a blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/) with a high-level overview of the framework.
+
+__08/31/2020__: We released version [0.13.38.2]( https://github.com/microsoft/psi/releases/tag/v0.13.38.2-beta), which brings important updates to Platform for Situated Intelligence Studio (including data annotation), updates to the runtime to support 3rd party data store sources, and components for running ONNX models. See the [release notes]( https://github.com/microsoft/psi/wiki/Release-Notes#20200831-beta-release-version-013382) for a more complete description of updates.
 
 # Getting Started
 

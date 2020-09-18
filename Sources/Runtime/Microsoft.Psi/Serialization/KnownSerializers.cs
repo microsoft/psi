@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Serialization
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.CompilerServices;
@@ -166,6 +167,7 @@ namespace Microsoft.Psi.Serialization
                 this.Register<byte[], ByteArraySerializer>();
                 this.Register<BufferReader, BufferSerializer>();
                 this.Register<string[], StringArraySerializer>();
+                this.Register<MemoryStream, MemoryStreamSerializer>();
                 this.RegisterGenericSerializer(typeof(EnumerableSerializer<>));
             }
             else

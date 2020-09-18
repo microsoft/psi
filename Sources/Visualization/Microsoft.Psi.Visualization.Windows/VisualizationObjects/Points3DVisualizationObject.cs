@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [VisualizationObject("3D Points")]
     public class Points3DVisualizationObject : Instant3DVisualizationObject<List<Point3D>>
     {
-        private Color color = Colors.DarkBlue;
+        private Color color = Colors.White;
         private double radiusCm = 2;
 
         /// <summary>

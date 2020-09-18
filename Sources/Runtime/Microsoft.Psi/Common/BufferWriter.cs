@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Common
 {
     using System;
+    using System.IO;
     using System.Text;
 
     /// <summary>
@@ -79,16 +80,16 @@ namespace Microsoft.Psi.Common
         /// Writes the specified number of bytes from the specified address.
         /// </summary>
         /// <param name="source">The pointer to the memory to copy into the buffer.</param>
-        /// <param name="lenghtInBytes">The number of bytes to copy.</param>
-        public unsafe void Write(void* source, int lenghtInBytes)
+        /// <param name="lengthInBytes">The number of bytes to copy.</param>
+        public unsafe void Write(void* source, int lengthInBytes)
         {
-            int start = this.MoveCurrentPosition(lenghtInBytes);
+            int start = this.MoveCurrentPosition(lengthInBytes);
 
             fixed (byte* buf = this.buffer)
             {
                 // more efficient than Array.Copy or cpblk IL instruction because it handles small sizes explicitly
                 // http://referencesource.microsoft.com/#mscorlib/system/buffer.cs,c2ca91c0d34a8f86
-                System.Buffer.MemoryCopy(source, buf + start, this.buffer.Length - start, lenghtInBytes);
+                System.Buffer.MemoryCopy(source, buf + start, this.buffer.Length - start, lengthInBytes);
             }
         }
 
@@ -492,6 +493,34 @@ namespace Microsoft.Psi.Common
             unsafe
             {
                 this.Write((byte*)&envelope, sizeof(Envelope));
+            }
+        }
+
+        /// <summary>
+        /// Copies the specified number of bytes from a <see cref="Stream"/> to the underlying buffer.
+        /// </summary>
+        /// <param name="stream">The stream from which to read.</param>
+        /// <param name="count">The count of bytes to write.</param>
+        public void CopyFromStream(Stream stream, int count)
+        {
+            // ensure buffer has sufficient capacity
+            int start = this.MoveCurrentPosition(count);
+
+            int totalBytesRead = 0;
+            int remainingCount = count;
+            while (remainingCount > 0)
+            {
+                int bytesRead = stream.Read(this.buffer, start, remainingCount);
+                if (bytesRead == 0)
+                {
+                    // end of stream reached; adjust currentPosition if we read fewer bytes than requested
+                    this.currentPosition -= remainingCount;
+                    break;
+                }
+
+                totalBytesRead += bytesRead;
+                start += bytesRead;
+                remainingCount -= bytesRead;
             }
         }
 
