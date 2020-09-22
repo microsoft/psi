@@ -101,7 +101,8 @@ namespace Microsoft.Psi.Imaging
                 throw new InvalidOperationException("Cannot encode from an image that has a different width, height, or pixel format.");
             }
 
-            this.stream.Position = 0;
+            // reset the underlying MemoryStream - this also resets Position to 0
+            this.stream.SetLength(0);
             imageEncoder.EncodeToStream(image, this.stream);
         }
 

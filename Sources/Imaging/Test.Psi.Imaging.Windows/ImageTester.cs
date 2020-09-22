@@ -456,6 +456,48 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
+        public void EncodedImage_Serialize()
+        {
+            // encode an image with low compression (higher quality)
+            var jpegEncoder = new ImageToJpegStreamEncoder() { QualityLevel = 100 };
+            jpegEncoder.QualityLevel = 100;
+            var encodedImage = this.testImage.Encode(jpegEncoder);
+
+            // serialize the encoded image
+            var bw = new BufferWriter(0);
+            Serializer.Serialize(bw, encodedImage, new SerializationContext());
+            int serializedLengthHq = bw.Position;
+
+            // deserialize the encoded image and verify the data
+            EncodedImage targetEncodedImage = null;
+            var br = new BufferReader(bw.Buffer);
+            Serializer.Deserialize(br, ref targetEncodedImage, new SerializationContext());
+            var decodedImage = encodedImage.Decode(new ImageFromStreamDecoder());
+            var targetDecodedImage = targetEncodedImage.Decode(new ImageFromStreamDecoder());
+            this.AssertAreImagesEqual(decodedImage, targetDecodedImage);
+
+            // encode an image with high compression (lower quality)
+            jpegEncoder = new ImageToJpegStreamEncoder() { QualityLevel = 10 };
+            encodedImage = this.testImage.Encode(jpegEncoder);
+
+            // serialize the encoded image
+            bw = new BufferWriter(0);
+            Serializer.Serialize(bw, encodedImage, new SerializationContext());
+            int serializedLengthLq = bw.Position;
+
+            // deserialize the encoded image (into recycled target) and verify the data
+            br = new BufferReader(bw.Buffer);
+            Serializer.Deserialize(br, ref targetEncodedImage, new SerializationContext());
+            decodedImage = encodedImage.Decode(new ImageFromStreamDecoder());
+            targetDecodedImage = targetEncodedImage.Decode(new ImageFromStreamDecoder());
+            this.AssertAreImagesEqual(decodedImage, targetDecodedImage);
+
+            // verify serialized length is smaller for the more compressed image
+            Assert.IsTrue(serializedLengthLq < serializedLengthHq);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void Test_Resize()
         {
             // Resize using nearest-neighbor
