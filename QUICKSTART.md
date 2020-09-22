@@ -1,5 +1,9 @@
 # `QUICKSTART.md`
 
+# `LINUX` - build `\psi` on Ubuntu/Debian
+
+Build `\psi` on Ubuntu `LINUX`; only tested on `amd64` architecture.
+
 ## Step 1
 Install `.Net Core` version [3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
@@ -16,7 +20,7 @@ sudo apt install -y dotnet-sdk-3.1 dotnet-runtime-3.1
 ```
 
 ## Step 2 
-Install [`mono-devel`](https://www.mono-project.com/download/stable/); use appropriate version below:
+Install [`mono-devel`](https://www.mono-project.com/download/stable/); use appropriate commands based on Ubuntu version, see below:
 
 ### **Ubuntu 18.04**
 
