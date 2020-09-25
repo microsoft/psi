@@ -1016,7 +1016,7 @@ namespace Microsoft.Psi.PsiStudio
                     this.AppSettings.CurrentLayoutName = this.currentLayout.Name;
                 }
 
-                if (this.currentLayout != null)
+                if (this.currentLayout != null && this.isInitialized)
                 {
                     this.OpenCurrentLayout();
                 }
