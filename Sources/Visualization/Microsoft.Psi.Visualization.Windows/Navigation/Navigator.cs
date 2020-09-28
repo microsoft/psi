@@ -381,6 +381,10 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.ViewRange.SetRange(navigator.ViewRange.AsTimeInterval);
             this.SelectionRange.SetRange(navigator.SelectionRange.AsTimeInterval);
             this.Cursor = navigator.Cursor;
+            this.ShowAbsoluteTiming = navigator.ShowAbsoluteTiming;
+            this.ShowTimingRelativeToSessionStart = navigator.ShowTimingRelativeToSessionStart;
+            this.ShowTimingRelativeToSelectionStart = navigator.ShowTimingRelativeToSelectionStart;
+            this.CursorFollowsMouse = navigator.CursorFollowsMouse;
         }
 
         /// <summary>
