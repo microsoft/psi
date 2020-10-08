@@ -864,22 +864,33 @@ namespace Test.Psi
             using (var pipeline = Pipeline.Create())
             {
                 var inclusiveRelativeTime = RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2));
-                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Window(inclusiveRelativeTime).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Select((_, e) => e.OriginatingTime).Window(RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2))).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
-                pipeline.Run();
+                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1), keepOpen: true).Window(inclusiveRelativeTime).ToEnumerable();
+                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1), keepOpen: true).Select((_, e) => e.OriginatingTime).Window(inclusiveRelativeTime).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToEnumerable();
 
-                var results = buffers.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0 }, results[0]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1 }, results[1]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2 }, results[2]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, results[3]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3, 4 }, results[4]));
+                // use RunAsync and keepOpen: true in Generators to test for final output *before* pipeline close
+                pipeline.RunAsync();
 
-                var timestampResults = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, timestampResults.Length);
-                foreach (var buf in timestamps)
+                // Enumerate the collection manually to verify that all the expected results are available
+                // *while* the collector is still subscribed (enumerator will block if the last result is
+                // not present in the collection, implying that the window is still buffering).
+                var results = buffers.GetEnumerator();
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1, 2 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2, 3 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3, 4 }, results.Current));
+
+                var timestampResults = timestamps.GetEnumerator();
+                for (int i = 0; i < 5; i++)
                 {
+                    Assert.IsTrue(timestampResults.MoveNext());
+                    var buf = timestampResults.Current;
+
                     // buffer timestamp matches _last_ message in buffer
                     Assert.AreEqual(buf.Item1.Last(), buf.Item2);
                 }
@@ -893,22 +904,33 @@ namespace Test.Psi
             using (var pipeline = Pipeline.Create())
             {
                 var exclusiveRelativeTime = RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2), false);
-                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Window(exclusiveRelativeTime).ToObservable().ToListObservable();
-                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1)).Select((_, e) => e.OriginatingTime).Window(RelativeTimeInterval.Past(TimeSpan.FromMilliseconds(2))).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToObservable().ToListObservable();
-                pipeline.Run();
+                var buffers = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1), keepOpen: true).Window(exclusiveRelativeTime).ToEnumerable();
+                var timestamps = Generators.Range(pipeline, 0, 5, TimeSpan.FromMilliseconds(1), keepOpen: true).Select((_, e) => e.OriginatingTime).Window(exclusiveRelativeTime).Select((m, e) => Tuple.Create(m.ToArray(), e.OriginatingTime)).ToEnumerable();
 
-                var results = buffers.AsEnumerable().ToArray();
-                Assert.AreEqual(5, results.Length);
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0 }, results[0]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1 }, results[1]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2 }, results[2]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3 }, results[3]));
-                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 3, 4 }, results[4]));
+                // use RunAsync and keepOpen:true in Generators to test for final output *before* pipeline close
+                pipeline.RunAsync();
 
-                var timestampResults = timestamps.AsEnumerable().ToArray();
-                Assert.AreEqual(5, timestampResults.Length);
-                foreach (var buf in timestamps)
+                // Enumerate the collection manually to verify that all the expected results are available
+                // *while* the collector is still subscribed (enumerator will block if the last result is
+                // not present in the collection, implying that the window is still buffering).
+                var results = buffers.GetEnumerator();
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 0, 1 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 1, 2 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 2, 3 }, results.Current));
+                Assert.IsTrue(results.MoveNext());
+                Assert.IsTrue(Enumerable.SequenceEqual(new int[] { 3, 4 }, results.Current));
+
+                var timestampResults = timestamps.GetEnumerator();
+                for (int i = 0; i < 5; i++)
                 {
+                    Assert.IsTrue(timestampResults.MoveNext());
+                    var buf = timestampResults.Current;
+
                     // buffer timestamp matches _last_ message in buffer
                     Assert.AreEqual(buf.Item1.Last(), buf.Item2);
                 }
