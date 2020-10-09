@@ -177,7 +177,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 
             set
             {
-                if ((value >= 1) && (value <= 11))
+                if ((value > 0) && (value <= 11))
                 {
                     this.RaisePropertyChanging(nameof(this.PlaySpeed));
                     this.playSpeed = value;

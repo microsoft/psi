@@ -617,7 +617,17 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.increasePlaySpeedCommand == null)
                 {
                     this.increasePlaySpeedCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.PlaySpeed++,
+                        () =>
+                        {
+                            if (this.VisualizationContainer.Navigator.PlaySpeed <= 1)
+                            {
+                                this.VisualizationContainer.Navigator.PlaySpeed *= 2;
+                            }
+                            else
+                            {
+                                this.VisualizationContainer.Navigator.PlaySpeed++;
+                            }
+                        },
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -637,7 +647,17 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.decreasePlaySpeedCommand == null)
                 {
                     this.decreasePlaySpeedCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.PlaySpeed--,
+                        () =>
+                        {
+                            if (this.VisualizationContainer.Navigator.PlaySpeed <= 1)
+                            {
+                                this.VisualizationContainer.Navigator.PlaySpeed /= 2;
+                            }
+                            else
+                            {
+                                this.VisualizationContainer.Navigator.PlaySpeed--;
+                            }
+                        },
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
