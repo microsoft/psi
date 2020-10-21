@@ -13,12 +13,12 @@ namespace Microsoft.Psi.Visualization.Adapters
     /// Used to adapt streams of lists of rectangles into lists of named rectangles.
     /// </summary>
     [StreamAdapter]
-    public class ListRectangleAdapter : StreamAdapter<List<Rectangle>, List<Tuple<Rectangle, string>>>
+    public class RectangleListAdapter : StreamAdapter<List<Rectangle>, List<Tuple<Rectangle, string>>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListRectangleAdapter"/> class.
+        /// Initializes a new instance of the <see cref="RectangleListAdapter"/> class.
         /// </summary>
-        public ListRectangleAdapter()
+        public RectangleListAdapter()
             : base(Adapter)
         {
         }
