@@ -59,7 +59,7 @@ Platform for Situated Intelligence has been and is currently used in several ind
 * the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
 * the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
 * the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
-* the [Transportation, Bots, & Disability Lab](tbd.ri.cmu.edu) at the Carnegie Mellon University.
+* the [Transportation, Bots, & Disability Lab](https://tbd.ri.cmu.edu) at the Carnegie Mellon University.
 
 If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
 
