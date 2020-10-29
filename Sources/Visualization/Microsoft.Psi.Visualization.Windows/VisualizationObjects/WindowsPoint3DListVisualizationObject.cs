@@ -7,10 +7,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a visualization object that can display lists of 3D rectangles.
+    /// Represents a visualization object that can display lists of Windows 3D points.
     /// </summary>
-    [VisualizationObject("3D Rectangles")]
-    public class Rect3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Rect3DVisualizationObject, Rect3D?, List<Rect3D?>>
+    [VisualizationObject("3D Points")]
+    public class WindowsPoint3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<WindowsPoint3DVisualizationObject, Point3D?, List<Point3D?>>
     {
     }
 }
