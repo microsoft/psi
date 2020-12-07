@@ -139,6 +139,13 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             // Replace the panel
             this.Panels[placeholderPanelIndex] = newPanel;
             this.UpdateChildPanelMargins();
+
+            // If the current visualization panel is the one we just replaced,
+            // then set it instead to the new panel we replaced it with.
+            if (this.Container?.CurrentPanel == oldPanel)
+            {
+                this.Container.CurrentPanel = newPanel;
+            }
         }
 
         /// <inheritdoc/>

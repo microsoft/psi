@@ -25,7 +25,7 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTransformer"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="transformer">Function for transforming the source image.</param>
         /// <param name="pixelFormat">Pixel format for destination image.</param>
         /// <param name="sharedImageAllocator ">Optional image allocator for creating new shared image.</param>

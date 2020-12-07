@@ -19,6 +19,11 @@ namespace Microsoft.Psi.Visualization.Data
     public class EpsilonInstantStreamReader<T>
     {
         /// <summary>
+        /// The stream name.
+        /// </summary>
+        private readonly string streamName;
+
+        /// <summary>
         /// Flag indicating whether type parameter T is Shared{} or not.
         /// </summary>
         private readonly bool isSharedType = typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(Shared<>);
@@ -31,9 +36,11 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="EpsilonInstantStreamReader{T}"/> class.
         /// </summary>
+        /// <param name="streamName">The name of the stream.</param>
         /// <param name="cursorEpsilon">The cursor epsilon to use when searching for messages around a cursor time.</param>
-        public EpsilonInstantStreamReader(RelativeTimeInterval cursorEpsilon)
+        public EpsilonInstantStreamReader(string streamName, RelativeTimeInterval cursorEpsilon)
         {
+            this.streamName = streamName;
             this.CursorEpsilon = cursorEpsilon;
             this.dataProviders = new List<IAdaptingInstantDataProvider<T>>();
         }
@@ -123,6 +130,17 @@ namespace Microsoft.Psi.Visualization.Data
 
                 // Read the data
                 data = cacheEntry.Read<T>(streamReader);
+            }
+            else
+            {
+                // cache miss, attempt to seek directly while the cache is presumably being populated
+                streamReader.Seek(cursorTime + this.CursorEpsilon, true);
+                streamReader.OpenStream<T>(this.streamName, (m, e) =>
+                {
+                    cacheEntry = new StreamCacheEntry(null, e.CreationTime, e.OriginatingTime);
+                    data = m;
+                });
+                streamReader.MoveNext(out var envelope);
             }
 
             // Notify each adapting data provider of the new data

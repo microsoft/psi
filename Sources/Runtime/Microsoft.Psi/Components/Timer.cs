@@ -53,7 +53,7 @@ namespace Microsoft.Psi.Components
         /// Initializes a new instance of the <see cref="Timer"/> class.
         /// The timer fires off messages at the rate specified  by timerInterval.
         /// </summary>
-        /// <param name="pipeline">The pipeline this component will be part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="timerInterval">The timer firing interval, in ms.</param>
         public Timer(Pipeline pipeline, uint timerInterval)
         {

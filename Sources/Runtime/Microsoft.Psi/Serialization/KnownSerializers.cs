@@ -492,15 +492,43 @@ namespace Microsoft.Psi.Serialization
                 // initialize the serializer after the handler is registered,
                 // to make sure all handlers are registered before initialization runs and
                 // allow the serializer initialization code to find and cache the handlers for the types it needs
-                schema = serializer.Initialize(this, schema);
-
-                // let any subscribers know that we initialized a new serializer that publishes a schema
-                if (schema != null)
+                try
                 {
-                    // store the updated schema and override whatever is present already
-                    this.schemas[schema.Name] = schema;
-                    this.schemasById[schema.Id] = schema;
-                    this.SchemaAdded?.Invoke(this, schema);
+                    schema = serializer.Initialize(this, schema);
+
+                    // let any subscribers know that we initialized a new serializer that publishes a schema
+                    if (schema != null)
+                    {
+                        // store the updated schema and override whatever is present already
+                        this.schemas[schema.Name] = schema;
+                        this.schemasById[schema.Id] = schema;
+                        this.SchemaAdded?.Invoke(this, schema);
+                    }
+                }
+                catch (SerializationException)
+                {
+                    // Even though we're going to rethrow this exception, some callers may wish to
+                    // attempt to recover from this error and just mark this one stream type as
+                    // unreadable. So we should remove the handler we just registered as it's not
+                    // yet properly initialized.
+                    oldCount = this.handlers.Length;
+                    newHandlers = new SerializationHandler[oldCount - 1];
+                    Array.Copy(this.handlers, newHandlers, oldCount - 1);
+                    this.handlers = newHandlers;
+
+                    newIndex = new Dictionary<SerializationHandler, int>(this.index);
+                    newIndex.Remove(handler);
+                    this.index = newIndex;
+
+                    newHandlersByType = new Dictionary<Type, SerializationHandler>(this.handlersByType);
+                    newHandlersByType.Remove(type);
+                    this.handlersByType = newHandlersByType;
+
+                    newHandlersById = new Dictionary<int, SerializationHandler>(this.handlersById);
+                    newHandlersById.Remove(handler.Id);
+                    this.handlersById = newHandlersById;
+
+                    throw;
                 }
             }
 

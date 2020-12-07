@@ -33,6 +33,9 @@
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseRightButtonDown">
+                        <cmd:EventToCommand Command="{Binding Path=MouseRightButtonDownCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
                     <i:EventTrigger EventName="MouseMove">
                         <cmd:EventToCommand Command="{Binding Path=MouseMoveCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
@@ -40,6 +43,21 @@
                         <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonUpCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <Canvas.Children>
+                    <TextBox x:Name="EditUnrestrictedAnnotationTextBox"
+                             HorizontalContentAlignment="Center"
+                             VerticalContentAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="{Binding FontSize}"
+                             TextChanged="EditUnrestrictedAnnotationTextBox_TextChanged"
+                             Canvas.ZIndex="9999"
+                             Visibility="Collapsed"
+                             LostFocus="TextBox_LostFocus">
+                        <TextBox.RenderTransform>
+                            <TranslateTransform/>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Canvas.Children>
             </Canvas>
         </Border>
     </Grid>

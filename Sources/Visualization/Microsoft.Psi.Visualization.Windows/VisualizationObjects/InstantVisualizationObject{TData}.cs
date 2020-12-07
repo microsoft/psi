@@ -157,6 +157,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 DataManager.Instance.UnregisterInstantDataTarget(this.registrationToken);
                 this.registrationToken = Guid.Empty;
+                this.SetCurrentValue(null, false);
             }
 
             base.OnStreamUnbound();

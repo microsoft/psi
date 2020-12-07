@@ -13,9 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
-    using System.Windows.Media.Imaging;
     using GalaSoft.MvvmLight.CommandWpf;
-    using Microsoft.Psi.PsiStudio;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Controls;
     using Microsoft.Psi.Visualization.Helpers;
@@ -39,7 +37,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private RelayCommand showHideLegendCommand;
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
         private RelayCommand<MouseButtonEventArgs> mouseRightButtonDownCommand;
-        private Point lastMouseLeftButtonDownPoint = new Point(0, 0);
+
+        private TimelineScroller timelineScroller = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimelineVisualizationPanel"/> class.
@@ -50,12 +49,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             this.Height = 70;
             this.VisualizationObjects.CollectionChanged += this.VisualizationObjects_CollectionChanged;
         }
-
-        /// <summary>
-        /// Gets the Mouse Position the last time the user clicked in this panel.
-        /// </summary>
-        [Browsable(false)]
-        public Point LastMouseLeftButtonDownPoint => this.lastMouseLeftButtonDownPoint;
 
         /// <summary>
         /// Gets the show/hide legend command.
@@ -149,8 +142,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                     this.mouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
                         e =>
                         {
-                            this.lastMouseLeftButtonDownPoint = e.GetPosition(e.Source as TimelineScroller);
-
                             // Set the current panel on click
                             if (!this.IsCurrentPanel)
                             {
@@ -159,7 +150,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
                             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             {
-                                DateTime time = this.GetTimeAtMousePointer(e);
+                                DateTime time = this.GetTimeAtMousePointer(e, true);
                                 this.Navigator.SelectionRange.SetRange(time, this.Navigator.SelectionRange.EndTime >= time ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
                                 e.Handled = true;
                             }
@@ -186,7 +177,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                         {
                             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             {
-                                DateTime time = this.GetTimeAtMousePointer(e);
+                                DateTime time = this.GetTimeAtMousePointer(e, true);
                                 this.Navigator.SelectionRange.SetRange(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
                                 e.Handled = true;
                             }
@@ -232,11 +223,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <summary>
         /// Called when the context menu is opening.
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        public void OnContextMenuOpening(object sender)
+        /// <param name="contextMenu">The context menu being opened.</param>
+        public void OnContextMenuOpening(ContextMenu contextMenu)
         {
-            // Create the empty context menu
-            ContextMenu contextMenu = new ContextMenu();
+            // Clear the context menu
+            contextMenu.Items.Clear();
 
             // Check with each of the visualization objects if they wish to add their own context menu items.
             foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
@@ -255,9 +246,58 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
             // Add the context menu items for the panel
             this.InsertPanelContextMenuItems(contextMenu);
+        }
 
-            // set the context menu
-            (sender as FrameworkElement).ContextMenu = contextMenu;
+        /// <summary>
+        /// Gets the time at the mouse pointer, optionally adjusting for visualization object snap.
+        /// </summary>
+        /// <param name="mouseEventArgs">A mouse event args object.</param>
+        /// <param name="useSnap">If true, and if a visualization object is currently being snapped to, then adjust the time to the nearest message in the visualization object being snapped to.</param>
+        /// <returns>The time represented by the mouse pointer.</returns>
+        public DateTime GetTimeAtMousePointer(MouseEventArgs mouseEventArgs, bool useSnap)
+        {
+            TimelineScroller root = this.GetTimelineScroller(mouseEventArgs.Source);
+            if (root != null)
+            {
+                Point point = mouseEventArgs.GetPosition(root);
+                double percent = point.X / root.ActualWidth;
+                var viewRange = this.Navigator.ViewRange;
+                DateTime time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
+
+                // If we're currently snapping to some Visualization Object, adjust the time to the timestamp of the nearest message
+                DateTime? snappedTime = null;
+                if (useSnap == true && VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject snapToVisualizationObject)
+                {
+                    snappedTime = snapToVisualizationObject.GetSnappedTime(time);
+                }
+
+                return snappedTime ?? time;
+            }
+
+            return DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Gets the timeline scroller parent of a framework element.
+        /// </summary>
+        /// <param name="sourceElement">The framework element to search from.</param>
+        /// <returns>The timeline scroller object.</returns>
+        public TimelineScroller GetTimelineScroller(object sourceElement)
+        {
+            if (this.timelineScroller == null)
+            {
+                // Walk up the visual tree until we either find the
+                // Timeline Scroller or fall off the top of the tree
+                DependencyObject target = sourceElement as DependencyObject;
+                while (target != null && !(target is TimelineScroller))
+                {
+                    target = VisualTreeHelper.GetParent(target);
+                }
+
+                this.timelineScroller = target as TimelineScroller;
+            }
+
+            return this.timelineScroller;
         }
 
         /// <inheritdoc />
@@ -311,43 +351,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToSelection, "Zoom to Selection", this.ZoomToSelectionCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToSession, "Zoom to Session Extents", this.ZoomToSessionExtentsCommand));
-        }
-
-        private DateTime GetTimeAtMousePointer(MouseEventArgs e)
-        {
-            TimelineScroller root = this.FindTimelineScroller(e.Source);
-            if (root != null)
-            {
-                Point point = e.GetPosition(root);
-                double percent = point.X / root.ActualWidth;
-                var viewRange = this.Navigator.ViewRange;
-                DateTime time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
-
-                // If we're currently snapping to some Visualization Object, adjust the time to the timestamp of the nearest message
-                DateTime? snappedTime = null;
-                if (VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject snapToVisualizationObject)
-                {
-                    snappedTime = snapToVisualizationObject.GetSnappedTime(time);
-                }
-
-                return snappedTime ?? time;
-            }
-
-            Debug.WriteLine("TimelineVisualizationPanel.GetTimeAtMousePointer() - Could not find the TimelineScroller in the tree");
-            return DateTime.UtcNow;
-        }
-
-        private TimelineScroller FindTimelineScroller(object sourceElement)
-        {
-            // Walk up the visual tree until we either find the
-            // Timeline Scroller or fall off the top of the tree
-            FrameworkElement target = sourceElement as FrameworkElement;
-            while (target != null && !(target is TimelineScroller))
-            {
-                target = target.Parent as FrameworkElement;
-            }
-
-            return target as TimelineScroller;
         }
 
         private void VisualizationObjects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

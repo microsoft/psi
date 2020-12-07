@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Collections.Specialized;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.Serialization;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Collections;
@@ -97,6 +98,11 @@ namespace Microsoft.Psi.Visualization.Data
                 this.data.CollectionChanged += this.OnCollectionChanged;
             }
         }
+
+        /// <summary>
+        /// Event that fires when a stream is unable to be read from.
+        /// </summary>
+        public event EventHandler<StreamReadErrorEventArgs> StreamReadError;
 
         /// <summary>
         /// Gets shared allocator.
@@ -318,13 +324,14 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.StreamAdapter == null)
                 {
-                    streamReader.OpenStream<T>(this.StreamName, this.OnReceiveData, this.Allocator);
+                    streamReader.OpenStream<T>(this.StreamName, this.OnReceiveData, this.Allocator, this.OnReadError);
                 }
                 else
                 {
                     dynamic dynStreamAdapter = this.StreamAdapter;
                     dynamic dynAdaptedReceiver = dynStreamAdapter.AdaptReceiver(new Action<T, Envelope>(this.OnReceiveData));
-                    streamReader.OpenStream(this.StreamName, dynAdaptedReceiver, dynStreamAdapter.Allocator);
+                    dynamic dynReadError = new Action<SerializationException>(this.OnReadError);
+                    streamReader.OpenStream(this.StreamName, dynAdaptedReceiver, dynStreamAdapter.Allocator, dynReadError);
                 }
             }
         }
@@ -559,7 +566,7 @@ namespace Microsoft.Psi.Visualization.Data
                     if (createIfNecessary)
                     {
                         // Create the instant stream reader
-                        instantStreamReader = new EpsilonInstantStreamReader<T>(cursorEpsilon);
+                        instantStreamReader = new EpsilonInstantStreamReader<T>(this.StreamName, cursorEpsilon);
                         this.instantStreamReaders.Add(instantStreamReader);
                     }
                     else
@@ -634,6 +641,12 @@ namespace Microsoft.Psi.Visualization.Data
                     this.indexBuffer.Add(new StreamCacheEntry(indexThunk, env.CreationTime, env.OriginatingTime));
                 }
             }
+        }
+
+        private void OnReadError(SerializationException ex)
+        {
+            // Notify the data store reader
+            this.StreamReadError?.Invoke(this, new StreamReadErrorEventArgs() { StreamName = this.StreamName, Exception = ex });
         }
     }
 }
