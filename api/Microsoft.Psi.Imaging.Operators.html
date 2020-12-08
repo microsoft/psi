@@ -211,7 +211,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1613">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1863">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_AbsDiff_" data-uid="Microsoft.Psi.Imaging.Operators.AbsDiff*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_AbsDiff_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Operators.AbsDiff(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image)">AbsDiff(Image, Image)</h4>
@@ -264,7 +264,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1626">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1876">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_AbsDiff_" data-uid="Microsoft.Psi.Imaging.Operators.AbsDiff*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_AbsDiff_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Operators.AbsDiff(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image)">AbsDiff(Image, Image, Image)</h4>
@@ -366,7 +366,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1297">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1547">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Clear_" data-uid="Microsoft.Psi.Imaging.Operators.Clear*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Clear_Microsoft_Psi_Imaging_Image_Color_" data-uid="Microsoft.Psi.Imaging.Operators.Clear(Microsoft.Psi.Imaging.Image,Color)">Clear(Image, Color)</h4>
@@ -468,7 +468,78 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L928">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L336">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_Operators_Compare_" data-uid="Microsoft.Psi.Imaging.Operators.Compare*"></a>
+  <h4 id="Microsoft_Psi_Imaging_Operators_Compare_Microsoft_Psi_Imaging_ImageBase_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_Microsoft_Psi_Imaging_ImageError__" data-uid="Microsoft.Psi.Imaging.Operators.Compare(Microsoft.Psi.Imaging.ImageBase,Microsoft.Psi.Imaging.ImageBase,System.Double,System.Double,Microsoft.Psi.Imaging.ImageError@)">Compare(ImageBase, ImageBase, Double, Double, ref ImageError)</h4>
+  <div class="markdown level1 summary"><p>Compares two images to see if they are identical (within some specified tolerance).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Compare(this ImageBase image1, ImageBase image2, double tolerance, double percentOutliersAllowed, ref ImageError errorMetrics)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></td>
+        <td><span class="parametername">image1</span></td>
+        <td><p>First image in comparison.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></td>
+        <td><span class="parametername">image2</span></td>
+        <td><p>Second image in comparison.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>Maximum allowable distance between pixels in RGB or Grayscale space.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">percentOutliersAllowed</span></td>
+        <td><p>Percetange of pixels allowed to be outside tolerance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.ImageError.html">ImageError</a></td>
+        <td><span class="parametername">errorMetrics</span></td>
+        <td><p>Error metrics across all pixels.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if images are considered identical. False otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1178">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_CopyTo_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_CopyTo_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image)">CopyTo(Image, Image, Image)</h4>
@@ -512,7 +583,7 @@ See <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Ima
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L951">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1201">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_CopyTo_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_CopyTo_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_Rectangle_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,Rectangle)">CopyTo(Image, Image, Rectangle)</h4>
@@ -556,7 +627,7 @@ See <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Ima
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L974">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1224">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_CopyTo_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_CopyTo_Microsoft_Psi_Imaging_Image_Rectangle_Microsoft_Psi_Imaging_Image_Point_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo(Microsoft.Psi.Imaging.Image,Rectangle,Microsoft.Psi.Imaging.Image,Point)">CopyTo(Image, Rectangle, Image, Point)</h4>
@@ -606,7 +677,7 @@ See <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Ima
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1023">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1273">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_CopyTo_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_CopyTo_Microsoft_Psi_Imaging_Image_Rectangle_Microsoft_Psi_Imaging_Image_Point_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Operators.CopyTo(Microsoft.Psi.Imaging.Image,Rectangle,Microsoft.Psi.Imaging.Image,Point,Microsoft.Psi.Imaging.Image)">CopyTo(Image, Rectangle, Image, Point, Image)</h4>
@@ -684,7 +755,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L602">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L764">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Crop_" data-uid="Microsoft.Psi.Imaging.Operators.Crop*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.Crop(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Imaging.DepthImage,System.Int32,System.Int32,System.Int32,System.Int32)">Crop(DepthImage, DepthImage, Int32, Int32, Int32, Int32)</h4>
@@ -745,7 +816,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L586">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L748">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Crop_" data-uid="Microsoft.Psi.Imaging.Operators.Crop*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_DepthImage_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.Crop(Microsoft.Psi.Imaging.DepthImage,System.Int32,System.Int32,System.Int32,System.Int32)">Crop(DepthImage, Int32, Int32, Int32, Int32)</h4>
@@ -816,7 +887,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L514">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L676">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Crop_" data-uid="Microsoft.Psi.Imaging.Operators.Crop*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.Crop(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,System.Int32,System.Int32,System.Int32,System.Int32)">Crop(Image, Image, Int32, Int32, Int32, Int32)</h4>
@@ -893,7 +964,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L497">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L659">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Crop_" data-uid="Microsoft.Psi.Imaging.Operators.Crop*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.Crop(Microsoft.Psi.Imaging.Image,System.Int32,System.Int32,System.Int32,System.Int32)">Crop(Image, Int32, Int32, Int32, Int32)</h4>
@@ -1318,7 +1389,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L781">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L943">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_DetermineRotatedWidthHeight_" data-uid="Microsoft.Psi.Imaging.Operators.DetermineRotatedWidthHeight*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_DetermineRotatedWidthHeight_System_Int32_System_Int32_System_Single_Microsoft_Psi_Imaging_RotationFitMode_System_Int32__System_Int32__System_Single__System_Single__" data-uid="Microsoft.Psi.Imaging.Operators.DetermineRotatedWidthHeight(System.Int32,System.Int32,System.Single,Microsoft.Psi.Imaging.RotationFitMode,System.Int32@,System.Int32@,System.Single@,System.Single@)">DetermineRotatedWidthHeight(Int32, Int32, Single, RotationFitMode, out Int32, out Int32, out Single, out Single)</h4>
@@ -1391,7 +1462,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L885">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1091">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_DrawCircle_" data-uid="Microsoft.Psi.Imaging.Operators.DrawCircle*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_DrawCircle_Microsoft_Psi_Imaging_Image_Point_System_Int32_Color_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.DrawCircle(Microsoft.Psi.Imaging.Image,Point,System.Int32,Color,System.Int32)">DrawCircle(Image, Point, Int32, Color, Int32)</h4>
@@ -1529,7 +1600,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L868">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1052">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_DrawLine_" data-uid="Microsoft.Psi.Imaging.Operators.DrawLine*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_DrawLine_Microsoft_Psi_Imaging_Image_Point_Point_Color_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.DrawLine(Microsoft.Psi.Imaging.Image,Point,Point,Color,System.Int32)">DrawLine(Image, Point, Point, Color, Int32)</h4>
@@ -1667,7 +1738,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L851">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1013">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_DrawRectangle_" data-uid="Microsoft.Psi.Imaging.Operators.DrawRectangle*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_DrawRectangle_Microsoft_Psi_Imaging_Image_Rectangle_Color_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.DrawRectangle(Microsoft.Psi.Imaging.Image,Rectangle,Color,System.Int32)">DrawRectangle(Image, Rectangle, Color, Int32)</h4>
@@ -1793,7 +1864,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L903">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1131">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_DrawText_" data-uid="Microsoft.Psi.Imaging.Operators.DrawText*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_DrawText_Microsoft_Psi_Imaging_Image_System_String_Point_Color_System_String_System_Single_" data-uid="Microsoft.Psi.Imaging.Operators.DrawText(Microsoft.Psi.Imaging.Image,System.String,Point,Color,System.String,System.Single)">DrawText(Image, String, Point, Color, String, Single)</h4>
@@ -2179,7 +2250,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1377">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1627">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_ExtractChannel_" data-uid="Microsoft.Psi.Imaging.Operators.ExtractChannel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_ExtractChannel_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.ExtractChannel(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,System.Int32)">ExtractChannel(Image, Image, Int32)</h4>
@@ -2222,7 +2293,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1364">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1614">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_ExtractChannel_" data-uid="Microsoft.Psi.Imaging.Operators.ExtractChannel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_ExtractChannel_Microsoft_Psi_Imaging_Image_System_Int32_" data-uid="Microsoft.Psi.Imaging.Operators.ExtractChannel(Microsoft.Psi.Imaging.Image,System.Int32)">ExtractChannel(Image, Int32)</h4>
@@ -2501,7 +2572,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1204">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1454">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Invert_" data-uid="Microsoft.Psi.Imaging.Operators.Invert*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Invert_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Operators.Invert(Microsoft.Psi.Imaging.Image)">Invert(Image)</h4>
@@ -2548,7 +2619,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1216">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1466">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Invert_" data-uid="Microsoft.Psi.Imaging.Operators.Invert*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Invert_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Operators.Invert(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image)">Invert(Image, Image)</h4>
@@ -2644,7 +2715,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L682">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L844">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_PseudoColorize_" data-uid="Microsoft.Psi.Imaging.Operators.PseudoColorize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_Image_System_ValueTuple_System_UInt16_System_UInt16__" data-uid="Microsoft.Psi.Imaging.Operators.PseudoColorize(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Imaging.Image,System.ValueTuple{System.UInt16,System.UInt16})">PseudoColorize(DepthImage, Image, (UInt16 MinValue, UInt16 MaxValue))</h4>
@@ -2687,7 +2758,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L669">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L831">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_PseudoColorize_" data-uid="Microsoft.Psi.Imaging.Operators.PseudoColorize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_System_ValueTuple_System_UInt16_System_UInt16__" data-uid="Microsoft.Psi.Imaging.Operators.PseudoColorize(Microsoft.Psi.Imaging.DepthImage,System.ValueTuple{System.UInt16,System.UInt16})">PseudoColorize(DepthImage, (UInt16 MinValue, UInt16 MaxValue))</h4>
@@ -2805,7 +2876,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L327">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L453">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Resize_" data-uid="Microsoft.Psi.Imaging.Operators.Resize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Resize_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Single_System_Single_Microsoft_Psi_Imaging_SamplingMode_" data-uid="Microsoft.Psi.Imaging.Operators.Resize(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,System.Single,System.Single,Microsoft.Psi.Imaging.SamplingMode)">Resize(Image, Image, Single, Single, SamplingMode)</h4>
@@ -2860,7 +2931,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L398">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L542">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Resize_" data-uid="Microsoft.Psi.Imaging.Operators.Resize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Resize_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_Microsoft_Psi_Imaging_SamplingMode_" data-uid="Microsoft.Psi.Imaging.Operators.Resize(Microsoft.Psi.Imaging.Image,System.Int32,System.Int32,Microsoft.Psi.Imaging.SamplingMode)">Resize(Image, Int32, Int32, SamplingMode)</h4>
@@ -3120,7 +3191,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L433">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L577">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Rotate_" data-uid="Microsoft.Psi.Imaging.Operators.Rotate*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Rotate_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Single_Microsoft_Psi_Imaging_SamplingMode_Microsoft_Psi_Imaging_RotationFitMode_" data-uid="Microsoft.Psi.Imaging.Operators.Rotate(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,System.Single,Microsoft.Psi.Imaging.SamplingMode,Microsoft.Psi.Imaging.RotationFitMode)">Rotate(Image, Image, Single, SamplingMode, RotationFitMode)</h4>
@@ -3175,7 +3246,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L413">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L557">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Rotate_" data-uid="Microsoft.Psi.Imaging.Operators.Rotate*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Rotate_Microsoft_Psi_Imaging_Image_System_Single_Microsoft_Psi_Imaging_SamplingMode_Microsoft_Psi_Imaging_RotationFitMode_" data-uid="Microsoft.Psi.Imaging.Operators.Rotate(Microsoft.Psi.Imaging.Image,System.Single,Microsoft.Psi.Imaging.SamplingMode,Microsoft.Psi.Imaging.RotationFitMode)">Rotate(Image, Single, SamplingMode, RotationFitMode)</h4>
@@ -3317,7 +3388,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L312">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L320">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Scale_" data-uid="Microsoft.Psi.Imaging.Operators.Scale*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Scale_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Single_System_Single_Microsoft_Psi_Imaging_SamplingMode_" data-uid="Microsoft.Psi.Imaging.Operators.Scale(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,System.Single,System.Single,Microsoft.Psi.Imaging.SamplingMode)">Scale(Image, Image, Single, Single, SamplingMode)</h4>
@@ -3372,7 +3443,7 @@ boundary
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L295">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L303">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Scale_" data-uid="Microsoft.Psi.Imaging.Operators.Scale*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Scale_Microsoft_Psi_Imaging_Image_System_Single_System_Single_Microsoft_Psi_Imaging_SamplingMode_" data-uid="Microsoft.Psi.Imaging.Operators.Scale(Microsoft.Psi.Imaging.Image,System.Single,System.Single,Microsoft.Psi.Imaging.SamplingMode)">Scale(Image, Single, Single, SamplingMode)</h4>
@@ -3550,7 +3621,7 @@ image with 256 gradients of gray color.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1455">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1705">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Threshold_" data-uid="Microsoft.Psi.Imaging.Operators.Threshold*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Threshold_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_Microsoft_Psi_Imaging_Threshold_" data-uid="Microsoft.Psi.Imaging.Operators.Threshold(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.Image,System.Int32,System.Int32,Microsoft.Psi.Imaging.Threshold)">Threshold(Image, Image, Int32, Int32, Threshold)</h4>
@@ -3605,7 +3676,7 @@ image with 256 gradients of gray color.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1440">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageExtensions.cs/#L1690">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Operators_Threshold_" data-uid="Microsoft.Psi.Imaging.Operators.Threshold*"></a>
   <h4 id="Microsoft_Psi_Imaging_Operators_Threshold_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_Microsoft_Psi_Imaging_Threshold_" data-uid="Microsoft.Psi.Imaging.Operators.Threshold(Microsoft.Psi.Imaging.Image,System.Int32,System.Int32,Microsoft.Psi.Imaging.Threshold)">Threshold(Image, Int32, Int32, Threshold)</h4>

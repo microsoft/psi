@@ -159,7 +159,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L359">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L374">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_CloseStore_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.CloseStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_CloseStore_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.CloseStore(System.String,System.String)">CloseStore(String, String)</h4>
@@ -196,7 +196,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L80">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L85">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_Dispose_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Dispose*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Dispose" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Dispose">Dispose()</h4>
@@ -221,7 +221,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L375">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L390">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_GetOriginatingTimeOfNearestInstantMessage_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetOriginatingTimeOfNearestInstantMessage*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetOriginatingTimeOfNearestInstantMessage_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetOriginatingTimeOfNearestInstantMessage(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime)">GetOriginatingTimeOfNearestInstantMessage(StreamSource, DateTime)</h4>
@@ -274,7 +274,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L312">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L327">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadata_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadata*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadata__1_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadata``1(Microsoft.Psi.Visualization.Data.StreamSource)">GetSupplementalMetadata&lt;TSupplementalMetadata&gt;(StreamSource)</h4>
@@ -337,7 +337,54 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L166">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L184">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_IsStreamUnreadable_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.IsStreamUnreadable*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_IsStreamUnreadable_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.IsStreamUnreadable(Microsoft.Psi.Visualization.Data.StreamSource)">IsStreamUnreadable(StreamSource)</h4>
+  <div class="markdown level1 summary"><p>Checks if a stream is known to be unreadable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStreamUnreadable(StreamSource streamSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to read from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the stream is currently considered readable, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L171">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_OnInstantViewRangeChanged_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.OnInstantViewRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_OnInstantViewRangeChanged_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.OnInstantViewRangeChanged(Microsoft.Psi.TimeInterval)">OnInstantViewRangeChanged(TimeInterval)</h4>
@@ -368,7 +415,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L147">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L152">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadInstantData_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadInstantData*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadInstantData_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadInstantData(System.DateTime)">ReadInstantData(DateTime)</h4>
@@ -400,7 +447,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L182">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L197">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,System.DateTime)">ReadStream&lt;T&gt;(StreamSource, DateTime, DateTime)</h4>
@@ -475,7 +522,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L218">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L233">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.Func{System.DateTime,System.DateTime})">ReadStream&lt;T&gt;(StreamSource, Func&lt;DateTime, DateTime&gt;)</h4>
@@ -544,7 +591,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L200">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L215">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_UInt32_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.UInt32)">ReadStream&lt;T&gt;(StreamSource, UInt32)</h4>
@@ -613,7 +660,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L263">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L278">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_System_DateTime_System_TimeSpan_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,System.DateTime,System.TimeSpan)">ReadSummary&lt;T&gt;(StreamSource, DateTime, DateTime, TimeSpan)</h4>
@@ -694,7 +741,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L297">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L312">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_TimeSpan_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.TimeSpan,System.Func{System.DateTime,System.DateTime})">ReadSummary&lt;T&gt;(StreamSource, TimeSpan, Func&lt;DateTime, DateTime&gt;)</h4>
@@ -769,7 +816,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L280">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L295">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_TimeSpan_System_UInt32_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.TimeSpan,System.UInt32)">ReadSummary&lt;T&gt;(StreamSource, TimeSpan, UInt32)</h4>
@@ -844,7 +891,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L94">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L99">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterInstantDataTarget*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterInstantDataTarget__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_RelativeTimeInterval_System_Action_System_Object_Microsoft_Psi_Visualization_Data_StreamCacheEntry__Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterInstantDataTarget``1(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.RelativeTimeInterval,System.Action{System.Object,Microsoft.Psi.Visualization.Data.StreamCacheEntry},Microsoft.Psi.TimeInterval)">RegisterInstantDataTarget&lt;TTarget&gt;(StreamSource, RelativeTimeInterval, Action&lt;Object, StreamCacheEntry&gt;, TimeInterval)</h4>
@@ -925,7 +972,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L234">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L249">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterSummaryDataConsumer_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterSummaryDataConsumer*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterSummaryDataConsumer_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterSummaryDataConsumer(Microsoft.Psi.Visualization.Data.StreamSource)">RegisterSummaryDataConsumer(StreamSource)</h4>
@@ -972,7 +1019,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L345">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L360">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_SaveStore_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SaveStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_SaveStore_System_String_System_String_System_IProgress_System_Double__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SaveStore(System.String,System.String,System.IProgress{System.Double})">SaveStore(String, String, IProgress&lt;Double&gt;)</h4>
@@ -1015,7 +1062,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L121">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L126">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterInstantDataTarget*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterInstantDataTarget_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterInstantDataTarget(System.Guid)">UnregisterInstantDataTarget(Guid)</h4>
@@ -1046,7 +1093,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L246">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L261">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterSummaryDataConsumer_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterSummaryDataConsumer*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterSummaryDataConsumer_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterSummaryDataConsumer(System.Guid)">UnregisterSummaryDataConsumer(Guid)</h4>
@@ -1077,7 +1124,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L134">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L139">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_UpdateInstantDataTargetEpsilon_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateInstantDataTargetEpsilon*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UpdateInstantDataTargetEpsilon_System_Guid_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateInstantDataTargetEpsilon(System.Guid,Microsoft.Psi.RelativeTimeInterval)">UpdateInstantDataTargetEpsilon(Guid, RelativeTimeInterval)</h4>
@@ -1114,7 +1161,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L325">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L340">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_UpdateStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UpdateStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_Collections_Generic_IEnumerable_Microsoft_Psi_Visualization_Data_StreamUpdate___0___" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.Collections.Generic.IEnumerable{Microsoft.Psi.Visualization.Data.StreamUpdate{``0}})">UpdateStream&lt;T&gt;(StreamSource, IEnumerable&lt;StreamUpdate&lt;T&gt;&gt;)</h4>
@@ -1191,6 +1238,33 @@ either a stream adapter or a stream summarizer are not permitted to update a str
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.DataStoreStatusChangedEventArgs.html">DataStoreStatusChangedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L82">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_StreamReadError" data-uid="Microsoft.Psi.Visualization.Data.DataManager.StreamReadError">StreamReadError</h4>
+  <div class="markdown level1 summary"><p>Event that fires when a stream is unable to be read from.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;StreamReadErrorEventArgs&gt; StreamReadError</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.Data.StreamReadErrorEventArgs.html">StreamReadErrorEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>

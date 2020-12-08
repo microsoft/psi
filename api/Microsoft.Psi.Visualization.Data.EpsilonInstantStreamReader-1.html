@@ -142,16 +142,16 @@ which then pushes the read data to a collection of adapting data providers.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L35">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1__ctor_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1__ctor_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.#ctor(Microsoft.Psi.RelativeTimeInterval)">EpsilonInstantStreamReader(RelativeTimeInterval)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1__ctor_System_String_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.#ctor(System.String,Microsoft.Psi.RelativeTimeInterval)">EpsilonInstantStreamReader(String, RelativeTimeInterval)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader-1.html">EpsilonInstantStreamReader&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EpsilonInstantStreamReader(RelativeTimeInterval cursorEpsilon)</code></pre>
+    <pre><code class="lang-csharp hljs">public EpsilonInstantStreamReader(string streamName, RelativeTimeInterval cursorEpsilon)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -164,6 +164,12 @@ which then pushes the read data to a collection of adapting data providers.</p>
     </thead>
     <tbody>
       <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The name of the stream.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
         <td><span class="parametername">cursorEpsilon</span></td>
         <td><p>The cursor epsilon to use when searching for messages around a cursor time.</p>
@@ -175,7 +181,7 @@ which then pushes the read data to a collection of adapting data providers.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L44">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_CursorEpsilon_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.CursorEpsilon*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_CursorEpsilon" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.CursorEpsilon">CursorEpsilon</h4>
@@ -203,7 +209,7 @@ which then pushes the read data to a collection of adapting data providers.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_HasAdaptingDataProviders_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.HasAdaptingDataProviders*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_HasAdaptingDataProviders" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.HasAdaptingDataProviders">HasAdaptingDataProviders</h4>
@@ -233,7 +239,7 @@ which then pushes the read data to a collection of adapting data providers.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L112">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L119">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_ReadInstantData_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.ReadInstantData*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_ReadInstantData_Microsoft_Psi_Data_IStreamReader_System_DateTime_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_StreamCacheEntry__" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.ReadInstantData(Microsoft.Psi.Data.IStreamReader,System.DateTime,Microsoft.Psi.Visualization.Collections.ObservableKeyedCache{System.DateTime,Microsoft.Psi.Visualization.Data.StreamCacheEntry})">ReadInstantData(IStreamReader, DateTime, ObservableKeyedCache&lt;DateTime, StreamCacheEntry&gt;)</h4>
@@ -276,7 +282,7 @@ which then pushes the read data to a collection of adapting data providers.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_RegisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.RegisterInstantDataTarget*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_RegisterInstantDataTarget__1_Microsoft_Psi_Visualization_Data_InstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.RegisterInstantDataTarget``1(Microsoft.Psi.Visualization.Data.InstantDataTarget)">RegisterInstantDataTarget&lt;TTarget&gt;(InstantDataTarget)</h4>
@@ -323,7 +329,7 @@ which then pushes the read data to a collection of adapting data providers.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/EpsilonInstantStreamReader{T}.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_UnregisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.UnregisterInstantDataTarget*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_EpsilonInstantStreamReader_1_UnregisterInstantDataTarget_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader`1.UnregisterInstantDataTarget(System.Guid)">UnregisterInstantDataTarget(Guid)</h4>

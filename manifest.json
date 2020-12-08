@@ -474,7 +474,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Audio.WaveFileStreamReader.WaveAudioStreamMetadata.html",
-          "hash": "Gr7jx3qAVpiUuuFfKtqnnw=="
+          "hash": "y5fPK0txCSes4OBQDdx/vQ=="
         }
       },
       "is_incremental": false,
@@ -486,7 +486,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Audio.WaveFileStreamReader.html",
-          "hash": "oT1D7LEJajAgAMHoHnbXIA=="
+          "hash": "5hDI+YvsmV4uUB27u0IMoA=="
         }
       },
       "is_incremental": false,
@@ -638,11 +638,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.AzureKinect.AzureKinectSensorConfiguration.PowerlineFrequencyTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.AzureKinect.AzureKinectSensorConfiguration.PowerlineFrequencyTypes.html",
+          "hash": "3rpex8srkc+2tHjwInDB2Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.AzureKinect.AzureKinectSensorConfiguration.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.AzureKinect.AzureKinectSensorConfiguration.html",
-          "hash": "T4MsULK/IGDmsPW6p17VXw=="
+          "hash": "KuEB8G4TwrPqMi6dQPPaTw=="
         }
       },
       "is_incremental": false,
@@ -654,7 +666,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyListVisualizationObject.html",
-          "hash": "6NmP7EdqIHRM4kNJ2jJZLg=="
+          "hash": "uZospDs5GQTntYsw6qC/+w=="
         }
       },
       "is_incremental": false,
@@ -666,7 +678,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.AzureKinect.Visualization.AzureKinectBodyVisualizationObject.html",
-          "hash": "Ia8qOAEiXF2YsuH5y6A4/Q=="
+          "hash": "wGEfVI7UwTI4PQBC41Eshg=="
         }
       },
       "is_incremental": false,
@@ -690,7 +702,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.AzureKinect.html",
-          "hash": "wRks7mAlfb8fbo9LBXdc7w=="
+          "hash": "VTUN5qkPACKtl5vc4Ze1lA=="
         }
       },
       "is_incremental": false,
@@ -894,7 +906,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Calibration.ProjectTo3D.html",
-          "hash": "SYUJS+9nv20CetbVFK2gNg=="
+          "hash": "9bBtA8DDvzj0gzW7jD6n/A=="
         }
       },
       "is_incremental": false,
@@ -1362,7 +1374,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Common.BufferReader.html",
-          "hash": "trnpJCL2O4zE6dXkHXk6CQ=="
+          "hash": "8Ra+B+Gvt1MOZ0Tv4KylYw=="
         }
       },
       "is_incremental": false,
@@ -1374,7 +1386,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Common.BufferWriter.html",
-          "hash": "v6I36hggDmiPRHeAAO3+aQ=="
+          "hash": "CBUDT74XzmCU08nYsbEx9w=="
         }
       },
       "is_incremental": false,
@@ -1650,7 +1662,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Components.Generator.html",
-          "hash": "bH6qFNznXIIg0p99iOdV/A=="
+          "hash": "YL/A40tmBx+0TitcJS2Vkg=="
         }
       },
       "is_incremental": false,
@@ -1878,7 +1890,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Components.Timer.html",
-          "hash": "QA7S7S/ITv47Wp5mvRO6ew=="
+          "hash": "qBlSmRm6BIVt5v4pcaJAeA=="
         }
       },
       "is_incremental": false,
@@ -2166,7 +2178,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Data.IStreamReader.html",
-          "hash": "foCYMTYs6IbIkUsKZifi3g=="
+          "hash": "uCKKw5Hz5+MuYcgDKCgyJA=="
         }
       },
       "is_incremental": false,
@@ -2214,7 +2226,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Data.Json.JsonGenerator.html",
-          "hash": "SWR0mxQq3kAgprzVBqMlOA=="
+          "hash": "GcidjCJxbRMcrV7TIn+pDQ=="
         }
       },
       "is_incremental": false,
@@ -2298,7 +2310,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Data.Json.JsonStreamReader.html",
-          "hash": "EXjfekxJMJhiQrdYOW19FQ=="
+          "hash": "bWptQpu+nzpmC1teZg6krQ=="
         }
       },
       "is_incremental": false,
@@ -2358,7 +2370,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Data.PsiStoreStreamReader.html",
-          "hash": "vEzOscBfY5XemTjnVuhAEA=="
+          "hash": "JIl5eqXSB+uu2Bvvi/dgTA=="
         }
       },
       "is_incremental": false,
@@ -2922,7 +2934,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.DepthImage.html",
-          "hash": "EZ7Gm9q/hchEWAHFQ5CpyQ=="
+          "hash": "N1R2kXcYoueR5H7KLA6XhQ=="
         }
       },
       "is_incremental": false,
@@ -3030,7 +3042,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.EncodedImage.html",
-          "hash": "puYImbgxa+y1v38vtAm2oQ=="
+          "hash": "ZR2D7y4OnxQxBFo5OF+cqw=="
         }
       },
       "is_incremental": false,
@@ -3150,7 +3162,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.Image.html",
-          "hash": "57LHV1QCXutWohtchSqlIA=="
+          "hash": "CcFsRM1M4BXzny4eXolD5A=="
         }
       },
       "is_incremental": false,
@@ -3174,7 +3186,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageBase.html",
-          "hash": "gc1pJpQptzTTr+wTzREcJQ=="
+          "hash": "YzuTKXo0lQKJxviegVwIWg=="
         }
       },
       "is_incremental": false,
@@ -3211,6 +3223,18 @@
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageEncoder.html",
           "hash": "XFtJpmFyNsp6EK6xaDACrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Imaging.ImageError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Imaging.ImageError.html",
+          "hash": "+55rLvij+cM6wZl7a2NpCA=="
         }
       },
       "is_incremental": false,
@@ -3270,7 +3294,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.ImageTransformer.html",
-          "hash": "4ju+QQwOWAaeIFXxry9nwA=="
+          "hash": "5p/Qswx5lw70QsXhRbzYGg=="
         }
       },
       "is_incremental": false,
@@ -3294,7 +3318,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.Operators.html",
-          "hash": "fbbs2iHfGFw7IH2ambB7dA=="
+          "hash": "5/7hTxZBzlJSjUo2crSWfQ=="
         }
       },
       "is_incremental": false,
@@ -3390,7 +3414,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.html",
-          "hash": "KWIJUWWrFBTIAljsUhCOrQ=="
+          "hash": "e6wb8FfllBozpDqujwYUHw=="
         }
       },
       "is_incremental": false,
@@ -3774,7 +3798,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Kinect.Visualization.KinectBodyListVisualizationObject.html",
-          "hash": "Kg70YSGQBQ4v9RBw56mczQ=="
+          "hash": "YAsWkymG5yW5+EcCI0Y7Wg=="
         }
       },
       "is_incremental": false,
@@ -3786,7 +3810,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Kinect.Visualization.KinectBodyVisualizationObject.html",
-          "hash": "1xAo8PHQFIi8xKCCspth4A=="
+          "hash": "5Op8iVk0GXxndm/Xq55l7Q=="
         }
       },
       "is_incremental": false,
@@ -3906,7 +3930,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Media.MediaCapture.html",
-          "hash": "WQguIuLLJ5dsHodQ3izN7w=="
+          "hash": "DzjejIjcLpgcnvNsE7MhrA=="
         }
       },
       "is_incremental": false,
@@ -3966,7 +3990,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Media.MediaSource.html",
-          "hash": "TiEBY6uSxwqD3T0ZVhTnBw=="
+          "hash": "SHUq2ucJMJNwtxSPDtprHQ=="
         }
       },
       "is_incremental": false,
@@ -3978,7 +4002,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Media.Mpeg4Writer.html",
-          "hash": "DYi9JBNd8ZE4QddZ5b7Bmg=="
+          "hash": "s30TcnZBisKwZR+eCHcmGQ=="
         }
       },
       "is_incremental": false,
@@ -4010,11 +4034,59 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Media.VisualCapture.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Media.VisualCapture.html",
+          "hash": "lVS4oN63EAc4cBjtorTkPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Media.VisualCaptureConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Media.VisualCaptureConfiguration.html",
+          "hash": "sKBdQPcY9mB3CPNW9V+mHg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Media.WindowCapture.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Media.WindowCapture.html",
+          "hash": "9JXLxBsMxoltBFbDGs3tnQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Media.WindowCaptureConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Media.WindowCaptureConfiguration.html",
+          "hash": "ky4dGU5rsGt3rCrdonjyYQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Media.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Media.html",
-          "hash": "OoEoj0KgD+i6UFEkmkVSDQ=="
+          "hash": "SAl/9TLrUwgVELtqnwKj8w=="
         }
       },
       "is_incremental": false,
@@ -4154,6 +4226,42 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Onnx.ImageNetModelRunner.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Onnx.ImageNetModelRunner.html",
+          "hash": "outR4NRFLfHkoT9QgjgjwA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Onnx.ImageNetModelRunnerConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Onnx.ImageNetModelRunnerConfiguration.html",
+          "hash": "zSjT3kRqE/o33sbQ3Y3rtg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Onnx.LabeledPrediction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Onnx.LabeledPrediction.html",
+          "hash": "GqjIoFEMX9PNx99P9eCSrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Onnx.OnnxModel.yml",
       "output": {
         ".html": {
@@ -4218,7 +4326,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Onnx.html",
-          "hash": "JbjEHckbcCKonttuAChYkg=="
+          "hash": "c9rVRFo39jINMwccJlckfQ=="
         }
       },
       "is_incremental": false,
@@ -4386,7 +4494,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.PsiStore.html",
-          "hash": "7Ji5aGyflt+HGkTOnlxZog=="
+          "hash": "LRjJMselV/JNDQisCgE33A=="
         }
       },
       "is_incremental": false,
@@ -4470,7 +4578,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.PsiStudio.MainWindowViewModel.html",
-          "hash": "PZqCntfhGHKMfBHI1V//sQ=="
+          "hash": "18Gsrokank+jfNo02LOXeA=="
         }
       },
       "is_incremental": false,
@@ -4578,7 +4686,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.RealSense.Windows.RealSenseSensor.html",
-          "hash": "FImQ2WTC6HcDSUIlabVusw=="
+          "hash": "E1GwQGTkhX+x1uvP/PKRKw=="
         }
       },
       "is_incremental": false,
@@ -4902,7 +5010,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Serialization.KnownSerializers.html",
-          "hash": "ZSkOfzMshBam02XYl8ucyg=="
+          "hash": "B57ZxMvliP6PEPqYUkjWGw=="
         }
       },
       "is_incremental": false,
@@ -5366,18 +5474,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Store.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Microsoft.Psi.Store.html",
-          "hash": "RsNUHI42lkD1gcV66iUvfw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.StreamMetadataBase.yml",
       "output": {
         ".html": {
@@ -5498,18 +5594,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.CoordinateSystemAdapter.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.CoordinateSystemAdapter.html",
-          "hash": "RuvlSvRFuV+3DphAHlPlcQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.DepthImageToImageAdapter.yml",
       "output": {
         ".html": {
@@ -5594,11 +5678,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.ListRectangleAdapter.yml",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.Line3DListToNullableAdapter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.ListRectangleAdapter.html",
-          "hash": "oAGXl3c05B1baPs/jHNHhA=="
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.Line3DListToNullableAdapter.html",
+          "hash": "cy8ZyjNyvFY8GRrYvLaPNw=="
         }
       },
       "is_incremental": false,
@@ -5606,11 +5690,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullableLine3DToLine3DListVisualizationObject.yml",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullableLine3DToLine3DListVisualizationObject.html",
-          "hash": "TIKK9FeOjU/JJmO2ugELxQ=="
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.html",
+          "hash": "zcDNmz0lJw2n1oXN8UozJQ=="
         }
       },
       "is_incremental": false,
@@ -5630,11 +5714,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsPoint3DListAdapter.yml",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsPoint3DListAdapter.html",
-          "hash": "FoVft7FER7Rr/z+7z213gw=="
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter.html",
+          "hash": "sG8/d5xZw+4P/zo8Gnkc4A=="
         }
       },
       "is_incremental": false,
@@ -5642,11 +5726,35 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsPoint3DListAdapter.yml",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsNullablePoint3DAdapter.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsPoint3DListAdapter.html",
-          "hash": "Xg+6jsp8I2aLCruCikmUXg=="
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsNullablePoint3DAdapter.html",
+          "hash": "Uzx/zMimdJFUUi9D39N3Cw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsNullablePoint3DListAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsNullablePoint3DListAdapter.html",
+          "hash": "lJkyfLQtd7ItaBJKhrhwdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToWindowsNullablePoint3DAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToWindowsNullablePoint3DAdapter.html",
+          "hash": "wtgcahVxtxM0QxsclWtHWA=="
         }
       },
       "is_incremental": false,
@@ -5695,6 +5803,90 @@
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Adapters.PointArrayToScatterPlotAdapter.html",
           "hash": "Och/+a2jxj+NIzuoWZb49g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.Rect3DListToNullableAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.Rect3DListToNullableAdapter.html",
+          "hash": "vcE1QDRs+i1QIn+t97NdZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.Rect3DToNullableAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.Rect3DToNullableAdapter.html",
+          "hash": "Yaosus0ET/dC/b5eRZKg+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleAdapter.html",
+          "hash": "w3K6ki7V6F9JMqan3OWw4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleListAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleListAdapter.html",
+          "hash": "tw1z1/VODBszEK7+Se0B6A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleSystemTupleAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleSystemTupleAdapter.html",
+          "hash": "tjux4Z19Y817tu9jRMzVsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleValueTupleAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleValueTupleAdapter.html",
+          "hash": "UMh0Y/VwyLEYvy6hHmFo2w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleValueTupleListAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.RectangleValueTupleListAdapter.html",
+          "hash": "1m+iI8tdh5+C44dWpdKtOw=="
         }
       },
       "is_incremental": false,
@@ -5762,11 +5954,35 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.WindowsPoint3DListToNullableAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.WindowsPoint3DListToNullableAdapter.html",
+          "hash": "tD8g76VbYVvHjv4MBhj4Tg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.WindowsPoint3DToNullableAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Adapters.WindowsPoint3DToNullableAdapter.html",
+          "hash": "eHm59yGe1VBOvpbUqlo6yA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Visualization.Adapters.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Adapters.html",
-          "hash": "/qMJ4JF86JAkerT6PFS59w=="
+          "hash": "KnQtCXzw/RuzMLgSsDwYcA=="
         }
       },
       "is_incremental": false,
@@ -5994,7 +6210,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Controls.TimelineScroller.html",
-          "hash": "nCTgaxoK5r68mVYQExKXUA=="
+          "hash": "Cdozkr4tIZTm8mpd0uOjDw=="
         }
       },
       "is_incremental": false,
@@ -6186,7 +6402,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.DataManager.html",
-          "hash": "CfzdwzICfrhPiL8qHOxBXg=="
+          "hash": "0xC7d+gp4WE6F5dPF9GMWw=="
         }
       },
       "is_incremental": false,
@@ -6198,7 +6414,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.DataStoreReader.html",
-          "hash": "V6AyyO+N+zwqsk++D7Pgag=="
+          "hash": "9MckuqoXIpRYsLyQsBV0RQ=="
         }
       },
       "is_incremental": false,
@@ -6210,7 +6426,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader-1.html",
-          "hash": "4ED2g1yrEvrRkHYj7za0jA=="
+          "hash": "SVrZbn2SIweOuc9/V/bTOg=="
         }
       },
       "is_incremental": false,
@@ -6378,7 +6594,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.StreamAdapter-2.html",
-          "hash": "JHnVqwvQ5+PMQ/1UfEjZOg=="
+          "hash": "urAqC0sKmDXwYo0FRpJsdA=="
         }
       },
       "is_incremental": false,
@@ -6402,7 +6618,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.StreamCache-1.html",
-          "hash": "/uSqBisF+k6N1cdZxLMRKQ=="
+          "hash": "2guogyxHTWoqGWKoreGcrQ=="
         }
       },
       "is_incremental": false,
@@ -6415,6 +6631,18 @@
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.StreamCacheEntry.html",
           "hash": "yvH4AF96UMt8jb1MBVuj3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.Data.StreamReadErrorEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.Data.StreamReadErrorEventArgs.html",
+          "hash": "pvCgElGLDCsqeRyCDRJ5eQ=="
         }
       },
       "is_incremental": false,
@@ -6522,7 +6750,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.html",
-          "hash": "lu17M6VuRCjAp1WDZ7bFFQ=="
+          "hash": "npmi3YEhSiN6rDNV+DRBwg=="
         }
       },
       "is_incremental": false,
@@ -6822,7 +7050,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.LiveCharts.CartesianChartVisualizationObject-1.html",
-          "hash": "PDSw21RsC6+h53zuhJ50CQ=="
+          "hash": "CI+0CAvYXoytR4QdLly2+A=="
         }
       },
       "is_incremental": false,
@@ -6846,7 +7074,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.LiveCharts.HistogramVisualizationObject.html",
-          "hash": "A1fGIHhFAY4jDIaPcK6wxw=="
+          "hash": "9AU0CK9J3zBGT1FKOq8uAg=="
         }
       },
       "is_incremental": false,
@@ -6930,7 +7158,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Navigation.Navigator.html",
-          "hash": "VJ9sZRoo3XCd8+EM7Rzb3w=="
+          "hash": "Pi3JzG6t4+m/RTm0rOLqaw=="
         }
       },
       "is_incremental": false,
@@ -7302,7 +7530,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html",
-          "hash": "l94ZIfPgXoXG5JaesP0Rvg=="
+          "hash": "XMwz7tTxYsIwdhqGGGpCxQ=="
         }
       },
       "is_incremental": false,
@@ -7326,7 +7554,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.ViewModels.StreamTreeNode.html",
-          "hash": "AYj3bFruYd4iqcRUD4P5FA=="
+          "hash": "wnyfmm+BOi3hMvUs16We8g=="
         }
       },
       "is_incremental": false,
@@ -7434,7 +7662,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.html",
-          "hash": "VUBI3I37QtJcJOR0g1DW5Q=="
+          "hash": "3Wxx42EMu6r+EFAcXl1ayQ=="
         }
       },
       "is_incremental": false,
@@ -7458,7 +7686,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.VisualizationContainerView.html",
-          "hash": "7aFH7XC4WY1Vmw3Fn81MhQ=="
+          "hash": "pKgW5G0np3gtYsLT0XUzEw=="
         }
       },
       "is_incremental": false,
@@ -7818,7 +8046,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalAnnotationVisualizationObjectView.html",
-          "hash": "BzzavlUEjOY1AuJUu316Yg=="
+          "hash": "T/tflT5YyGsnOnSiVtXpww=="
         }
       },
       "is_incremental": false,
@@ -7934,18 +8162,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.PointsVisual.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.PointsVisual.html",
-          "hash": "tkrPyHblZLbGZEIzsumORw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.ScatterPlanarDirectionVisual.yml",
       "output": {
         ".html": {
@@ -7986,7 +8202,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.html",
-          "hash": "eqANx8/9HXlafQL82MHZTw=="
+          "hash": "LZEQAOuebkfHcHVYMDLgZw=="
         }
       },
       "is_incremental": false,
@@ -8070,7 +8286,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.AnimatedModel3DVisualizationObject.html",
-          "hash": "MFlWfgnXiWLlw7V6AIgWuQ=="
+          "hash": "6FQVgsJKvlAc5oSRL1mEvw=="
         }
       },
       "is_incremental": false,
@@ -8130,7 +8346,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.CoordinateSystemListVisualizationObject.html",
-          "hash": "usqNZPZ1luAAPP0WC4VxPw=="
+          "hash": "ohK4YRX/VfJyRVjErKHAtg=="
         }
       },
       "is_incremental": false,
@@ -8142,7 +8358,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.CoordinateSystemVisualizationObject.html",
-          "hash": "xd44nhjbgS4554Rbyq/Kuw=="
+          "hash": "hd4ibbb6LBFrPI+hayv5Rw=="
         }
       },
       "is_incremental": false,
@@ -8166,7 +8382,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.DepthImageAsMeshVisualizationObject.html",
-          "hash": "UhdUfxQyWlxHAHWRsY+Lhg=="
+          "hash": "4RvMSCwuIoaW++93t6XMZg=="
         }
       },
       "is_incremental": false,
@@ -8178,7 +8394,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.DepthImageAsPointCloudVisualizationObject.html",
-          "hash": "o2BQUsprE2YZbkuW6zoCPw=="
+          "hash": "LV9eCbv59iVc7EwY5wo6FA=="
         }
       },
       "is_incremental": false,
@@ -8190,7 +8406,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.DepthImageWithIntrinsicsAsMeshVisualizationObject.html",
-          "hash": "U7iuZm4JcuNBZh7KhP9qwQ=="
+          "hash": "6xmoLBFK6BKvso47TYgeZQ=="
         }
       },
       "is_incremental": false,
@@ -8202,7 +8418,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.DepthImageWithIntrinsicsAsPointCloudVisualizationObject.html",
-          "hash": "OLEPS6/SMcPdEPdN9aAhMQ=="
+          "hash": "ntr0NsvIsJSnCuWAMpRNCg=="
         }
       },
       "is_incremental": false,
@@ -8250,7 +8466,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ICameraIntrinsicsVisualizationObject.html",
-          "hash": "mZ0V8wDZL1lAUlxKMCAQHw=="
+          "hash": "BaLEp9bFaq1H7lckLsO49g=="
         }
       },
       "is_incremental": false,
@@ -8286,7 +8502,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html",
-          "hash": "0qHqlP0X8OwTaUQDbsni7g=="
+          "hash": "VFQUUvNYyxRnt5VjWfUi9w=="
         }
       },
       "is_incremental": false,
@@ -8298,7 +8514,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObjectBase-1.html",
-          "hash": "sIcyf1b8r4UHvk1w5ssAxw=="
+          "hash": "uCY82JgC5JHicy7VDax8Vw=="
         }
       },
       "is_incremental": false,
@@ -8310,7 +8526,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ImageWithIntrinsicsVisualizationObject.html",
-          "hash": "czG8ZwMdFCf/Dz0d0WUR1w=="
+          "hash": "BUi7GospT8C2D27r6+ev6Q=="
         }
       },
       "is_incremental": false,
@@ -8322,7 +8538,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Instant2DVisualizationObject-1.html",
-          "hash": "ig0fxVuudiLXNLc3Qhnjfg=="
+          "hash": "d8OPhEX86njOumpsJLSXpQ=="
         }
       },
       "is_incremental": false,
@@ -8334,7 +8550,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html",
-          "hash": "NA01DHuS0tGGn+Pjm68GHw=="
+          "hash": "v48oMXIo2dxlsHLLiwx31w=="
         }
       },
       "is_incremental": false,
@@ -8346,7 +8562,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html",
-          "hash": "8v+el2QJdPZLO6ELbYzCQw=="
+          "hash": "J/l1sFTusaiExjeD0vH4VA=="
         }
       },
       "is_incremental": false,
@@ -8382,7 +8598,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Line3DListVisualizationObject.html",
-          "hash": "SLgJdZkC7LOcr5kxMq2Kkw=="
+          "hash": "WL18QpOyeNWZsPGMCJWAzg=="
         }
       },
       "is_incremental": false,
@@ -8394,7 +8610,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Line3DVisualizationObject.html",
-          "hash": "b6HFoDF5QlkqdxUf3YBWMg=="
+          "hash": "h/yvrIaZ+mRT3VbEgiUbYA=="
         }
       },
       "is_incremental": false,
@@ -8430,7 +8646,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html",
-          "hash": "VgevrFATn0EXSRjwL6ISOA=="
+          "hash": "j+G43UhtDpi2LjgSnY/JaA=="
         }
       },
       "is_incremental": false,
@@ -8442,7 +8658,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObjectCollectionBase-2.html",
-          "hash": "ChjFaliJcd2UFewjdWm45Q=="
+          "hash": "Q72b5H/8BKHUWYuntkahHA=="
         }
       },
       "is_incremental": false,
@@ -8454,7 +8670,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObjectEnumerable-3.html",
-          "hash": "5PsiOWQ3MhrEWSzglQ0zqA=="
+          "hash": "gx4btZwhwPGL5wFNwMxbCA=="
         }
       },
       "is_incremental": false,
@@ -8562,7 +8778,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.PipelineDiagnosticsVisualizationObject.html",
-          "hash": "/NTu1u/7NYg4r80TGu8mFA=="
+          "hash": "5ChubMrgl+qxZMT2vi1+/g=="
         }
       },
       "is_incremental": false,
@@ -8582,23 +8798,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Points3DVisualizationObject.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Points3DVisualizationObject.html",
-          "hash": "RG5ECBN+LWMFEEfQnP992A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Rect3DListVisualizationObject.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Rect3DListVisualizationObject.html",
-          "hash": "F2e2RcHlXg6df8TGJItu1w=="
+          "hash": "j9wVtA2nzY4ALoE3saT/Qw=="
         }
       },
       "is_incremental": false,
@@ -8610,7 +8814,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Rect3DVisualizationObject.html",
-          "hash": "JY/zv693KZm7vA2NA3ir1g=="
+          "hash": "CFWAEeBT83wN2gCaNuQwlA=="
         }
       },
       "is_incremental": false,
@@ -8622,7 +8826,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ScatterPlanarDirectionVisualizationObject.html",
-          "hash": "RuFXTv0FH0bcK1TMB8sFig=="
+          "hash": "uxhJ3hAFYxH0AouNp0dHWA=="
         }
       },
       "is_incremental": false,
@@ -8634,7 +8838,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ScatterPlotVisualizationObject.html",
-          "hash": "p6Qng+m/zWY6xU+nGiz1Yg=="
+          "hash": "vM9N0ZLiDGZ/CVTtFYw9Uw=="
         }
       },
       "is_incremental": false,
@@ -8646,7 +8850,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.ScatterRectangleVisualizationObject.html",
-          "hash": "KNaNEaVmEwetbqAwBq/4iw=="
+          "hash": "Op8sR7MHkcRG4uzOl1DkAQ=="
         }
       },
       "is_incremental": false,
@@ -8670,7 +8874,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.Sprite3DVisualizationObject.html",
-          "hash": "fRn03P+4uGlZi75zuKS1lw=="
+          "hash": "7qfk0HuDATtYbLRzvwBnIA=="
         }
       },
       "is_incremental": false,
@@ -8682,7 +8886,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html",
-          "hash": "iwDUUY4KC20+eGkywFnkOg=="
+          "hash": "1CAIS0hs87aocRIEz+Cq1Q=="
         }
       },
       "is_incremental": false,
@@ -8714,11 +8918,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.html",
+          "hash": "cmzp+2tyGUAJyq5CnrLRBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html",
-          "hash": "a876HY7ZFICtZxaGokGKpA=="
+          "hash": "XBZ4NjfgCqTtMUK49VcJXw=="
         }
       },
       "is_incremental": false,
@@ -8766,7 +8982,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html",
-          "hash": "XMJUr5VOrA/9UMHQgwZRbQ=="
+          "hash": "e3P2gFb85Zc9YqxLIuUU8Q=="
         }
       },
       "is_incremental": false,
@@ -8778,7 +8994,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.UpdatableModelVisual3DVisualizationObjectDictionary-3.html",
-          "hash": "NeJbZ8+z38ngQrGspg7Gww=="
+          "hash": "TNqnsngUBxrlShGM9uHfNA=="
         }
       },
       "is_incremental": false,
@@ -8870,11 +9086,35 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.WindowsPoint3DListVisualizationObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.WindowsPoint3DListVisualizationObject.html",
+          "hash": "0t2F5DspFnm270f9AmIDHA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.WindowsPoint3DVisualizationObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.WindowsPoint3DVisualizationObject.html",
+          "hash": "oDgMSw3uVcAqGUeAEft+JA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.html",
-          "hash": "JaE+ynHWU6olXhFNYKwdwg=="
+          "hash": "UIpgL32cNBgRTXvzyaF+ag=="
         }
       },
       "is_incremental": false,
@@ -8886,7 +9126,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.html",
-          "hash": "rTwikRqPmz6Iq2RLGgAdig=="
+          "hash": "UZHZHvYWvu/uF73P01cnvw=="
         }
       },
       "is_incremental": false,
@@ -8910,7 +9150,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationContainer.html",
-          "hash": "RnN20Fc2kBGd1t4Be1C5jA=="
+          "hash": "6R5sm3JYcJ7bpss3Um2MWA=="
         }
       },
       "is_incremental": false,
@@ -8922,7 +9162,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.html",
-          "hash": "SampdaCAVINi6MrROXbj9w=="
+          "hash": "ksXNkfKGafHOutK++Ft98Q=="
         }
       },
       "is_incremental": false,
@@ -8934,7 +9174,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.html",
-          "hash": "/qVmADMUwHCoUMZpqyYSug=="
+          "hash": "7u58DhRpAgkowOgqf7hrfA=="
         }
       },
       "is_incremental": false,
@@ -9186,7 +9426,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.html",
-          "hash": "jKRlHA/Wdyz8DKI68HboGw=="
+          "hash": "fb3fn21nlq8/hnVL7sw/ig=="
         }
       },
       "is_incremental": false,
@@ -9222,7 +9462,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "9/nWXh/+19UmmeKdIyNygA=="
+          "hash": "Rwi03rawV7n4o2eUSj0z5w=="
         }
       },
       "is_incremental": false,
@@ -9280,7 +9520,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 767,
+          "total_file_count": 787,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

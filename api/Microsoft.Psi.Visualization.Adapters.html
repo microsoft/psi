@@ -93,9 +93,6 @@
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CompressedImageAdapter.html">CompressedImageAdapter</a></h4>
       <section><p>Used to adapt streams of compresed images into <a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>s.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CoordinateSystemAdapter.html">CoordinateSystemAdapter</a></h4>
-      <section><p>Used to adapt streams of coordinate systems into lists of coordinate systems.</p>
-</section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthImageToImageAdapter.html">DepthImageToImageAdapter</a></h4>
       <section><p>Represents an adapter that converts a depth image to an image.</p>
 </section>
@@ -117,20 +114,26 @@
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.IntToDoubleAdapter.html">IntToDoubleAdapter</a></h4>
       <section><p>Used to adapt streams of integers into doubles.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ListRectangleAdapter.html">ListRectangleAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of rectangles into lists of named rectangles.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DListToNullableAdapter.html">Line3DListToNullableAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of <see cref="!:Line3D"></see> to lists of nullable <see cref="!:Line3D"></see>.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullableLine3DToLine3DListVisualizationObject.html">MathNetNullableLine3DToLine3DListVisualizationObject</a></h4>
-      <section><p>Used to adapt streams of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable&lt;T&gt;</a> into a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List&lt;T&gt;</a>.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.html">Line3DToNullableAdapter</a></h4>
+      <section><p>Used to adapt streams of <see cref="!:Line3D"></see> into nullable <see cref="!:Line3D"></see>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint2DToScatterPlotAdapter.html">MathNetNullablePoint2DToScatterPlotAdapter</a></h4>
       <section><p>Used to adapt streams of lists of nullable MathNet.Spatial.Euclidean.Point2Ds into lists named points.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsPoint3DListAdapter.html">MathNetNullablePoint3DToWindowsPoint3DListAdapter</a></h4>
-      <section><p>Used to adapt streams of nullable MathNet.Spatial.Euclidean.Point3Ds into lists of System.Windows.Media.Media32.Point3Ds.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter.html">MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of nullable <see cref="!:MathNet.Point3D"></see> into lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsPoint3DListAdapter.html">MathNetPoint3DListToWindowsPoint3DListAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of MathNet.Spatial.Eudlidean.Point3Ds into lists of System.Windows.Media.Media32.Point3Ds.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsNullablePoint3DAdapter.html">MathNetNullablePoint3DToWindowsNullablePoint3DAdapter</a></h4>
+      <section><p>Used to adapt streams of nullable <see cref="!:MathNet.Point3D"></see> into nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsNullablePoint3DListAdapter.html">MathNetPoint3DListToWindowsNullablePoint3DListAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of <see cref="!:MathNet.Point3D"></see> into lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToWindowsNullablePoint3DAdapter.html">MathNetPoint3DToWindowsNullablePoint3DAdapter</a></h4>
+      <section><p>Used to adapt streams of <see cref="!:MathNet.Point3D"></see> into nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ObjectAdapter-1.html">ObjectAdapter&lt;T&gt;</a></h4>
       <section><p>Used to adapt streams of any type into objects.</p>
@@ -143,6 +146,27 @@
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PointArrayToScatterPlotAdapter.html">PointArrayToScatterPlotAdapter</a></h4>
       <section><p>Used to adapt streams of point arrays into lists named points.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Rect3DListToNullableAdapter.html">Rect3DListToNullableAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a> to lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Rect3DToNullableAdapter.html">Rect3DToNullableAdapter</a></h4>
+      <section><p>Used to adapt streams of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a> into nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleAdapter.html">RectangleAdapter</a></h4>
+      <section><p>Used to adapt streams of rectangle into lists of named rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleListAdapter.html">RectangleListAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of rectangles into lists of named rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleSystemTupleAdapter.html">RectangleSystemTupleAdapter</a></h4>
+      <section><p>Used to adapt streams of single System.Tuple named rectangle into lists of System.Tuple named rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleValueTupleAdapter.html">RectangleValueTupleAdapter</a></h4>
+      <section><p>Used to adapt streams of of value tuple named rectangle into lists of System.Tuple named rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleValueTupleListAdapter.html">RectangleValueTupleListAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of value tuple named rectangles into lists of System.Tuple named rectangles.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamAdapterAttribute.html">StreamAdapterAttribute</a></h4>
       <section><p>Represents a stream adapter attribute.</p>
@@ -158,6 +182,12 @@
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.TimeSpanToDoubleAdapter.html">TimeSpanToDoubleAdapter</a></h4>
       <section><p>Used to adapt streams of time spans into doubles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.WindowsPoint3DListToNullableAdapter.html">WindowsPoint3DListToNullableAdapter</a></h4>
+      <section><p>Used to adapt streams of lists of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.WindowsPoint3DToNullableAdapter.html">WindowsPoint3DToNullableAdapter</a></h4>
+      <section><p>Used to adapt streams of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
 </article>
           </div>
