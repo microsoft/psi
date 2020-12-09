@@ -130,7 +130,7 @@ socket.bind('tcp://127.0.0.1:12345')
 while True:
     payload = {}
     payload['message'] = random.uniform(0, 1)
-    payload['originatingTime'] = datetime.datetime.now().isoformat()
+    payload['originatingTime'] = datetime.datetime.utcnow().isoformat()
     socket.send_multipart(['test-topic'.encode(), json.dumps(payload).encode('utf-8')])
 ```
 
@@ -153,7 +153,7 @@ using (var p = Pipeline.Create())
 }
 ```
 
-Notice that in the above example, the Python code generates timestamps with `datetime.now().isoformat()`. This is fine when messages _originate_ in Python. This timestamp represents the _originating_ time of the message. In the case where Python code is consuming a \\psi stream, doing some work with it and producing a resulting output stream it is more appropriate to use the original time of the message from \\psi as the originating time for the output. This allows for joins and other time algebra to work correctly back in \\psi. For example:
+Notice that in the above example, the Python code generates timestamps with `datetime.utcnow().isoformat()`. This is fine when messages _originate_ in Python. This timestamp represents the _originating_ time of the message in UTC time. In the case where Python code is consuming a \\psi stream, doing some work with it and producing a resulting output stream it is more appropriate to use the original time of the message from \\psi as the originating time for the output. This allows for joins and other time algebra to work correctly back in \\psi. For example:
 
 ```python
 while True:

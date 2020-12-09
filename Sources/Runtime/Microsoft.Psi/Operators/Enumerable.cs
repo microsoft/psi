@@ -53,12 +53,12 @@ namespace Microsoft.Psi
                     source.Out.Pipeline,
                     (d, e, s) =>
                     {
-                        this.enumerator.Queue.Enqueue(d);
-                        this.enumerator.Update.Set();
+                        this.enumerator.Queue.Enqueue(d.DeepClone());
+                        this.enumerator.Enqueued.Set();
                     });
 
                 source.PipeTo(processor, deliveryPolicy);
-                processor.In.Unsubscribed += _ => this.enumerator.Update.Set();
+                processor.In.Unsubscribed += _ => this.enumerator.Closed.Set();
             }
 
             /// <inheritdoc />
@@ -82,21 +82,20 @@ namespace Microsoft.Psi
             private class StreamEnumerator : IEnumerator, IEnumerator<T>
             {
                 private readonly Func<T, bool> predicate;
-
-                private ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
-
-                private ManualResetEvent enqueued = new ManualResetEvent(false);
-
                 private T current;
+                private WaitHandle[] queueUpdated;
 
                 public StreamEnumerator(Func<T, bool> predicate)
                 {
                     this.predicate = predicate;
+                    this.queueUpdated = new[] { this.Closed, this.Enqueued };
                 }
 
-                public ConcurrentQueue<T> Queue => this.queue;
+                public ConcurrentQueue<T> Queue { get; } = new ConcurrentQueue<T>();
 
-                public ManualResetEvent Update => this.enqueued;
+                public ManualResetEvent Enqueued { get; } = new ManualResetEvent(false);
+
+                public ManualResetEvent Closed { get; } = new ManualResetEvent(false);
 
                 public object Current => this.current;
 
@@ -104,7 +103,7 @@ namespace Microsoft.Psi
 
                 public void Dispose()
                 {
-                    this.enqueued.Dispose();
+                    this.Enqueued.Dispose();
                 }
 
                 public bool MoveNext()
@@ -113,12 +112,17 @@ namespace Microsoft.Psi
                     {
                         if (this.Queue.TryDequeue(out this.current))
                         {
+                            if (this.Queue.IsEmpty)
+                            {
+                                this.Enqueued.Reset();
+                            }
+
                             return this.predicate(this.current);
                         }
 
-                        this.Update.WaitOne();
-                        if (this.Queue.IsEmpty)
+                        if (WaitHandle.WaitAny(this.queueUpdated) == 0 && this.Queue.IsEmpty)
                         {
+                            // enumerator is closed *and* queue is empty
                             return false;
                         }
                     }

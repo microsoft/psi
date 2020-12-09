@@ -238,7 +238,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         {
             var analysisResult = default(ImageAnalysis);
 
-            if (data != null)
+            if (data != null && data.Resource != null)
             {
                 using Stream imageFileStream = new MemoryStream();
 

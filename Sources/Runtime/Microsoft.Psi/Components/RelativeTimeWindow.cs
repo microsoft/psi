@@ -72,7 +72,7 @@ namespace Microsoft.Psi.Components
 
                 // decide whether we should output - only output when we have seen enough (or know that nothing further is to be seen - `final`).
                 // evidence that nothing else will appear in the window
-                bool shouldOutputNextMessage = final || messages.Last().OriginatingTime > window.Right;
+                bool shouldOutputNextMessage = final || messages.Last().OriginatingTime >= window.Right;
 
                 if (shouldOutputNextMessage)
                 {

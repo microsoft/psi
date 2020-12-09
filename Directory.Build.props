@@ -6,7 +6,7 @@
     <Company>Microsoft Corporation</Company>
     <Owners>microsoft,psi</Owners>
     <Authors>Microsoft</Authors>
-    <AssemblyVersion>0.13.38.2</AssemblyVersion>
+    <AssemblyVersion>0.14.35.3</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <Version>$(AssemblyVersion)-beta</Version>
     <SignAssembly>false</SignAssembly>

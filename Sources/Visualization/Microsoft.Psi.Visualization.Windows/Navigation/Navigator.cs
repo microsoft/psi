@@ -177,7 +177,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 
             set
             {
-                if ((value >= 1) && (value <= 11))
+                if ((value > 0) && (value <= 11))
                 {
                     this.RaisePropertyChanging(nameof(this.PlaySpeed));
                     this.playSpeed = value;
@@ -381,6 +381,10 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.ViewRange.SetRange(navigator.ViewRange.AsTimeInterval);
             this.SelectionRange.SetRange(navigator.SelectionRange.AsTimeInterval);
             this.Cursor = navigator.Cursor;
+            this.ShowAbsoluteTiming = navigator.ShowAbsoluteTiming;
+            this.ShowTimingRelativeToSessionStart = navigator.ShowTimingRelativeToSessionStart;
+            this.ShowTimingRelativeToSelectionStart = navigator.ShowTimingRelativeToSelectionStart;
+            this.CursorFollowsMouse = navigator.CursorFollowsMouse;
         }
 
         /// <summary>

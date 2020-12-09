@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-namespace Microsoft.Psi.Audio
+namespace Microsoft.Psi
 {
     using System;
-    using Microsoft.Psi;
 
     /// <summary>
     /// Stream metadata base class.

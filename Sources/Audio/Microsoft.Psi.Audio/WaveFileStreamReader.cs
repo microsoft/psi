@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Audio
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
@@ -160,7 +161,7 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null)
+        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
         {
             ValidateStreamName(name);
 

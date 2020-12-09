@@ -51,7 +51,11 @@ namespace Microsoft.Psi.Visualization.Controls
 
                 if (snappedTime.HasValue)
                 {
-                    this.Navigator.Cursor = snappedTime.Value;
+                    // Only snap to the point if it is within the current viewport.
+                    if (this.Navigator.ViewRange.AsTimeInterval.PointIsWithin(snappedTime.Value))
+                    {
+                        this.Navigator.Cursor = snappedTime.Value;
+                    }
                 }
                 else
                 {

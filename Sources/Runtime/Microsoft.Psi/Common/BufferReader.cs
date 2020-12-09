@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Common
 {
     using System;
+    using System.IO;
     using System.Text;
 
     /// <summary>
@@ -117,16 +118,16 @@ namespace Microsoft.Psi.Common
         /// Copies the specified number of bytes from the underlying buffer to the specified memory address.
         /// </summary>
         /// <param name="target">The target memory address.</param>
-        /// <param name="lenghtInBytes">The number of bytes to copy.</param>
-        public unsafe void Read(void* target, int lenghtInBytes)
+        /// <param name="lengthInBytes">The number of bytes to copy.</param>
+        public unsafe void Read(void* target, int lengthInBytes)
         {
-            var start = this.MoveCurrentPosition(lenghtInBytes);
+            var start = this.MoveCurrentPosition(lengthInBytes);
 
             fixed (byte* buf = this.buffer)
             {
                 // more efficient then Array.Copy or cpblk IL instruction because it handles small sizes explicitly
                 // http://referencesource.microsoft.com/#mscorlib/system/buffer.cs,c2ca91c0d34a8f86
-                System.Buffer.MemoryCopy(buf + start, target, lenghtInBytes, lenghtInBytes);
+                System.Buffer.MemoryCopy(buf + start, target, lengthInBytes, lengthInBytes);
             }
         }
 
@@ -256,6 +257,17 @@ namespace Microsoft.Psi.Common
                     this.Read(t, count * sizeof(char));
                 }
             }
+        }
+
+        /// <summary>
+        /// Copies the specified number of bytes from the underlying buffer into the specified stream.
+        /// </summary>
+        /// <param name="target">The stream to copy to.</param>
+        /// <param name="count">The number of bytes to copy.</param>
+        public void CopyToStream(Stream target, int count)
+        {
+            var start = this.MoveCurrentPosition(count);
+            target.Write(this.buffer, start, count);
         }
 
         /// <summary>

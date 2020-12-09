@@ -16,6 +16,7 @@ namespace PsiStoreTool
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Data;
+    using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Interop.Format;
     using Microsoft.Psi.Interop.Transport;
 
@@ -281,6 +282,37 @@ namespace PsiStoreTool
             }
 
             PsiStore.Crop((store, path), (output, path), startTime, lengthRelativeInterval, true, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
+            return 0;
+        }
+
+        /// <summary>
+        /// Encode image streams, generating a new store.
+        /// </summary>
+        /// <param name="store">Store name.</param>
+        /// <param name="path">Store path.</param>
+        /// <param name="output">Output store name.</param>
+        /// <param name="quality">Start time relative to beginning.</param>
+        /// <returns>Success flag.</returns>
+        internal static int EncodeStore(string store, string path, string output, int quality)
+        {
+            Console.WriteLine($"Encoding store (store={store}, path={path}, output={output}, quality={quality}");
+
+            bool IsImageStream(IStreamMetadata streamInfo)
+            {
+                return streamInfo.TypeName.StartsWith("Microsoft.Psi.Shared`1[[Microsoft.Psi.Imaging.Image,");
+            }
+
+            void EncodeImageStreams(IStreamMetadata streamInfo, PsiImporter importer, Exporter exporter)
+            {
+                importer
+                    .OpenStream<Shared<Image>>(streamInfo.Name)
+                    .ToPixelFormat(PixelFormat.BGRA_32bpp)
+                    .EncodeJpeg(quality)
+                    .Write(streamInfo.Name, exporter, true);
+            }
+
+            PsiStore.Process(IsImageStream, EncodeImageStreams, (store, path), (output, path), true, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
+
             return 0;
         }
 

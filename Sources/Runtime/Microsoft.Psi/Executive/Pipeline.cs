@@ -662,7 +662,7 @@ namespace Microsoft.Psi
         /// </summary>
         internal static void SetLastStreamId(int lastStreamId)
         {
-            Pipeline.lastStreamId = lastStreamId;
+            Pipeline.lastStreamId = Math.Max(Pipeline.lastStreamId, lastStreamId);
         }
 
         internal Emitter<T> CreateEmitterWithFixedStreamId<T>(object owner, string name, int streamId, Emitter<T>.ValidateMessageHandler messageValidator)

@@ -3,9 +3,9 @@
 ![Build status](https://dev.azure.com/msresearch/psi/_apis/build/status/psi-github-ci?branchName=master)
 [![Join the chat at https://gitter.im/Microsoft/psi](https://badges.gitter.im/Microsoft/psi.svg)](https://gitter.im/Microsoft/psi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. These are systems that process various types of streaming sensor data (such as audio, video, depth, etc.) and that need to leverage and coordinate a variety of component technologies. Examples range from social robots or embodied agents that interact with people, to smart spaces such as instrumented meeting rooms, all the way to applications based on small devices that process streaming sensor data.
+**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. Examples include multimodal interactive systems such as social robots and embodied conversational agents, systems for ambient intelligence and smart spaces, applications based on small devices that work with streaming sensor data, etc. In essence, any application that processes streaming, sensor data (such as audio, video, depth, etc.), combines multiple (AI) technologies, and operates under latency constraints can benefit from the affordances the provided by the framework.
 
-The framework accelerates the development of multimodal, integrative-AI systems by providing: 
+The framework accelerates the development of these applications by providing: 
 -	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
 -	a set of **tools** for multimodal data visualization, annotation, and processing
 -	an ecosystem of **components** for various sensors, processing technologies, and effectors
@@ -14,13 +14,31 @@ The framework accelerates the development of multimodal, integrative-AI systems 
 
 ![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
 
+A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). An on-demand webinar is also available containing a brief introduction and tutorial on how to code with \psi – here is the [registration link](https://note.microsoft.com/MSR-Webinar-Platform-Situated-Intelligence-Registration-On-Demand.html).
+
+# What’s New
+__12/07/2020__: We have published a new beta release, version 0.14.35.3, which includes a new ONNX model runner for ImageNet models, new components for screen and window capture, updates to annotation editing in PsiStudio, as well as a number of bug fixes and updates -- see the [full release notes](https://github.com/microsoft/psi/wiki/Release-Notes) for more details.
+
+__09/30/2020__: We have added three additional samples: a basic [HelloWorld]( https://github.com/Microsoft/psi-samples/tree/main/Samples/HelloWorld) sample illustrating the simplest starting point for a \psi application, a more complex one demonstrating how to do some basic audio capture and processing to construct [a simple voice activity detector]( https://github.com/Microsoft/psi-samples/tree/main/Samples/SimpleVoiceActivityDetector), and a third sample that combines information from Azure Kinect with Cognitive Services vision and speech to [detect objects that a person is pointing to](https://github.com/microsoft/psi-samples/tree/main/Samples/WhatIsThat).
+
+__09/02/2020__: We published [a blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/) with a high-level overview of the framework.
+
+__08/31/2020__: We released version [0.13.38.2]( https://github.com/microsoft/psi/releases/tag/v0.13.38.2-beta), which brings important updates to Platform for Situated Intelligence Studio (including data annotation), updates to the runtime to support 3rd party data store sources, and components for running ONNX models. See the [release notes]( https://github.com/microsoft/psi/wiki/Release-Notes#20200831-beta-release-version-013382) for a more complete description of updates.
+
 # Getting Started
 
 The core \\psi infrastructure is built on .NET Standard and therefore runs both on Windows and Linux. Some [components](https://github.com/microsoft/psi/wiki/List-of-Components) and tools are more specific and are available only on one or the other operating system. You can build \\psi applications either by [leveraging \\psi NuGet packages](https://github.com/microsoft/psi/wiki/Using-via-NuGet-Packages), or by [cloning and building the source code](https://github.com/microsoft/psi/wiki/Building-the-Codebase). 
 
 __A Quick Introduction.__ To learn more about \\psi and how to build applications with it, we recommend you start with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction) tutorial, which will walk you through for some of the main concepts. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk.
 
-__Samples.__ A number of small [sample applications](https://github.com/microsoft/psi/wiki/Samples), several with walkthroughs, are also available. A good starting point is a sample ([Windows version](https://github.com/Microsoft/psi-samples/tree/main/Samples/WebcamWithAudioSample) or [Linux version](https://github.com/Microsoft/psi-samples/tree/main/Samples/LinuxWebcamWithAudioSample)) that illustrates how to capture and process synchronized data from a webcam and microphone.
+__Samples.__ If you would like to directly start from sample code, a number of small [sample applications](https://github.com/microsoft/psi/wiki/Samples) are also available, and several of them have walkthroughs that explain how the sample was constructed and point to additional documentation. We recommend you start with the samples below, listed in increasing order of complexity:
+| Name | Description | Cross-plat | Requirements |
+| :----------- | :---------- | :--: | :--: |
+| [HelloWorld](https://github.com/Microsoft/psi-samples/tree/main/Samples/HelloWorld) <br> ![HelloWorldPreview](https://github.com/microsoft/psi-samples/blob/main/Samples/HelloWorld/Images/HelloWorldPreview.png) | This sample provides the simplest starting point for creating a \\psi application: it illustrates how to create and run a simple \psi pipeline containing a single stream. | Yes | None |
+| [SimpleVoiceActivityDetector](https://github.com/Microsoft/psi-samples/tree/main/Samples/SimpleVoiceActivityDetector) <br> ![SimpleVADPreview](https://github.com/microsoft/psi-samples/blob/main/Samples/SimpleVoiceActivityDetector/Images/SimpleVADPreview.png) | This sample captures audio from a microphone and performs voice activity detection, i.e., it computes a boolean signal indicating whether or not the audio contains voiced speech. | Yes | Microphone |
+| [WebcamWithAudio for Windows](https://github.com/Microsoft/psi-samples/tree/main/Samples/WebcamWithAudioSample) or [Linux](https://github.com/Microsoft/psi-samples/tree/main/Samples/LinuxWebcamWithAudioSample) <br> ![WebcamPreview](https://github.com/microsoft/psi-samples/blob/main/Samples/WebcamWithAudioSample/Images/WebcamPreview.gif) | This sample shows how to display images from a camera and the audio energy level from a microphone and illustrates the basics of stream synchronization. | Yes | Webcam and Microphone | 
+| [WhatIsThat](https://github.com/microsoft/psi-samples/tree/main/Samples/WhatIsThat) <br> ![WhatIsThatPreview](https://github.com/microsoft/psi-samples/blob/main/Samples/WhatIsThat/Images/WhatIsThatPreview.gif)| This sample implements a simple application that uses an Azure Kinect sensor to detect the objects a person is pointing to. | Windows-only | Azure Kinect + Cognitive Services |
+
 
 __Documentation.__ The documentation for \\psi is available in the [github project wiki](https://github.com/microsoft/psi/wiki). It contains many additional resources, including [tutorials]( https://github.com/microsoft/psi/wiki/Tutorials), other [specialized topics]( https://github.com/microsoft/psi/wiki/Other-Topics), and a full [API reference](https://microsoft.github.io/psi/api/Microsoft.Psi.html) that can help you learn more about the framework.
 
@@ -43,6 +61,7 @@ Platform for Situated Intelligence has been and is currently used in several ind
 * the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
 * the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
 * the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
+* the [Transportation, Bots, & Disability Lab](https://tbd.ri.cmu.edu) at the Carnegie Mellon University.
 
 If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
 

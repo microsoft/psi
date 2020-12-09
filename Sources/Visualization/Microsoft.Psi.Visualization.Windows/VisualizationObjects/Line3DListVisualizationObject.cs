@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Represents a visualization object that can display lists of 3D lines.
     /// </summary>
     [VisualizationObject("3D Lines")]
-    public class Line3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Line3DVisualizationObject, Line3D, List<Line3D>>
+    public class Line3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Line3DVisualizationObject, Line3D?, List<Line3D?>>
     {
     }
 }

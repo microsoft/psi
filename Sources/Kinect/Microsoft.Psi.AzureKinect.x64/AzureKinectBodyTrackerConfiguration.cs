@@ -18,7 +18,7 @@ namespace Microsoft.Psi.AzureKinect
         /// the responsiveness of the detected skeletons but will cause more positional and
         /// orientational jitters.
         /// </remarks>
-        public float TemporalSmoothing { get; set; } = 0.5f;
+        public float TemporalSmoothing { get; set; } = 0f;
 
         /// <summary>
         /// Gets or sets a value indicating whether to perform body tracking computation only
