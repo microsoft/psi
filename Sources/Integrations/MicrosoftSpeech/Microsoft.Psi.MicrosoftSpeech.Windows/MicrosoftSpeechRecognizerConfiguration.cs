@@ -86,6 +86,12 @@ namespace Microsoft.Psi.MicrosoftSpeech
         public int EndSilenceTimeoutAmbiguousMs { get; set; } = 500;
 
         /// <summary>
+        /// Gets or sets the number of milliseconds to wait for the final recognition result
+        /// once the component has been stopped during pipeline shutdown.
+        /// </summary>
+        public int FinalRecognitionResultTimeoutMs { get; set; } = 500;
+
+        /// <summary>
         /// Gets or sets the expected input format of the audio stream.
         /// </summary>
         /// <remarks>
