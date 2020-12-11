@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Windows;
     using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi;
     using Microsoft.Psi.PsiStudio.TypeSpec;
@@ -17,6 +18,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.ViewModels;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Represents a stream visualization object.
@@ -480,9 +482,21 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnAddToPanel()
+        {
+            // Listen for stream read errors
+            DataManager.Instance.StreamReadError += this.OnStreamReadError;
+
+            base.OnAddToPanel();
+        }
+
         /// <inheritdoc />
         protected override void OnRemoveFromPanel()
         {
+            // Stop listening for stream read errors
+            DataManager.Instance.StreamReadError -= this.OnStreamReadError;
+
             // Unbind the visualization object from any source
             this.UpdateStreamSource(null);
 
@@ -528,6 +542,26 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(this.StreamSource.IsLive))
             {
                 this.RaisePropertyChanged(nameof(this.IconSource));
+            }
+        }
+
+        private void OnStreamReadError(object sender, StreamReadErrorEventArgs e)
+        {
+            // Check if the error is related to the stream that this visualization object currently references
+            if ((this.StreamSource != null) &&
+                (this.StreamSource.StoreName == e.StoreName) &&
+                (this.StreamSource.StorePath == e.StorePath) &&
+                (this.StreamSource.StreamName == e.StreamName))
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    // Mark this visualization object as unbound since we can't read any messages.
+                    this.UpdateStreamSource(null);
+
+                    // Display an error message to the user.
+                    string errorMessage = $"The format of the messages in the stream {e.StreamName} in store {e.StoreName} have changed and are unable to be deserialized, see error below:{Environment.NewLine}{Environment.NewLine}{e.Exception.Message}";
+                    new MessageBoxWindow(Application.Current.MainWindow, "Stream Type Mismatch", errorMessage, "Close", null).ShowDialog();
+                }));
             }
         }
     }

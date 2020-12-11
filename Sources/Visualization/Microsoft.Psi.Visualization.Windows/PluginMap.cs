@@ -272,14 +272,15 @@ namespace Microsoft.Psi.Visualization
 
             // We force-add the latency visualizer b/c it's not detectable by data type
             // (the adapter to make it work will be added automatically later in
-            // CustomizeVisualizerMetadata.
+            // CustomizeVisualizerMetadata). Latency visualizer is only compatible with
+            // timeline visualization panels.
             if (isUniversal.HasValue && isUniversal.Value)
             {
                 if (isInNewPanel.HasValue && isInNewPanel.Value)
                 {
                     results.Add(this.visualizers.FirstOrDefault(v => v.CommandText == ContextMenuName.VisualizeLatencyInNewPanel));
                 }
-                else
+                else if (visualizationPanel is TimelineVisualizationPanel)
                 {
                     results.Add(this.visualizers.FirstOrDefault(v => v.CommandText == ContextMenuName.VisualizeLatency));
                 }

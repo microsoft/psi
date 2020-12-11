@@ -290,21 +290,29 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <returns>A stream source if a source was found to bind to, otherwise returns null.</returns>
         public StreamSource GetStreamSource(StreamBinding streamBinding)
         {
+            StreamSource streamSource = null;
+
             // Check if the partition contains the required stream
             IStreamMetadata streamMetadata = this.Partition.AvailableStreams.FirstOrDefault(s => s.Name == streamBinding.StreamName);
             if (streamMetadata != default)
             {
-                // We have found a source to bind to
-                return new StreamSource(
+                // Create the stream source
+                streamSource = new StreamSource(
                     this,
                     TypeResolutionHelper.GetVerifiedType(this.StreamReaderTypeName),
                     streamBinding.StreamName,
                     streamMetadata,
                     streamBinding.StreamAdapter,
                     streamBinding.Summarizer);
+
+                // Check with data manager as to whether the stream is already known to be unreadable
+                if (DataManager.Instance.IsStreamUnreadable(streamSource))
+                {
+                    streamSource = null;
+                }
             }
 
-            return null;
+            return streamSource;
         }
 
         /// <summary>

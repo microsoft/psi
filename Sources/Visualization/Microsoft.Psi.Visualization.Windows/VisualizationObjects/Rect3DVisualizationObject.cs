@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
+    using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
@@ -13,13 +14,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Represents a 3D rectangles visualization object.
     /// </summary>
     [VisualizationObject("3D Rectangle")]
-    public class Rect3DVisualizationObject : ModelVisual3DVisualizationObject<Rect3D>
+    public class Rect3DVisualizationObject : ModelVisual3DVisualizationObject<Rect3D?>
     {
-        private static readonly int PipeDiv = 7;
-
         private Color color = Colors.White;
-        private double thickness = 15;
+        private double thicknessMm = 15;
         private double opacity = 100;
+        private int pipeDiv = 7;
 
         // The edges that make up the 3D rectangle
         private PipeVisual3D[] edges;
@@ -37,6 +37,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets the color.
         /// </summary>
         [DataMember]
+        [Description("The color of the rectangle(s).")]
         public Color Color
         {
             get { return this.color; }
@@ -47,35 +48,49 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets the thickness.
         /// </summary>
         [DataMember]
-        public double Thickness
+        [DisplayName("Thickness (mm)")]
+        [Description("The thickness of the rectangle edges in millimeters.")]
+        public double ThicknessMm
         {
-            get { return this.thickness; }
-            set { this.Set(nameof(this.Thickness), ref this.thickness, value); }
+            get { return this.thicknessMm; }
+            set { this.Set(nameof(this.ThicknessMm), ref this.thicknessMm, value); }
         }
 
         /// <summary>
         /// Gets or sets the line opacity.
         /// </summary>
         [DataMember]
+        [Description("The opacity of the rectangle(s).")]
         public double Opacity
         {
             get { return this.opacity; }
             set { this.Set(nameof(this.Opacity), ref this.opacity, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the number of divisions to use when rendering each edge as a pipe.
+        /// </summary>
+        [DataMember]
+        [Description("Number of divisions to use when rendering each rectangle edge as a pipe (minimum value is 3).")]
+        public int PipeDivisions
+        {
+            get { return this.pipeDiv; }
+            set { this.Set(nameof(this.PipeDivisions), ref this.pipeDiv, value < 3 ? 3 : value); }
+        }
+
         /// <inheritdoc/>
         public override void UpdateData()
         {
-            if (this.CurrentData != default)
+            if (this.CurrentData.HasValue)
             {
-                var p0 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y, this.CurrentData.Location.Z);
-                var p1 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y, this.CurrentData.Location.Z);
-                var p2 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z);
-                var p3 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z);
-                var p4 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
-                var p5 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
-                var p6 = new Point3D(this.CurrentData.Location.X + this.CurrentData.SizeX, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
-                var p7 = new Point3D(this.CurrentData.Location.X, this.CurrentData.Location.Y + this.CurrentData.SizeY, this.CurrentData.Location.Z + this.CurrentData.SizeZ);
+                var p0 = new Point3D(this.CurrentData.Value.Location.X, this.CurrentData.Value.Location.Y, this.CurrentData.Value.Location.Z);
+                var p1 = new Point3D(this.CurrentData.Value.Location.X + this.CurrentData.Value.SizeX, this.CurrentData.Value.Location.Y, this.CurrentData.Value.Location.Z);
+                var p2 = new Point3D(this.CurrentData.Value.Location.X + this.CurrentData.Value.SizeX, this.CurrentData.Value.Location.Y + this.CurrentData.Value.SizeY, this.CurrentData.Value.Location.Z);
+                var p3 = new Point3D(this.CurrentData.Value.Location.X, this.CurrentData.Value.Location.Y + this.CurrentData.Value.SizeY, this.CurrentData.Value.Location.Z);
+                var p4 = new Point3D(this.CurrentData.Value.Location.X, this.CurrentData.Value.Location.Y, this.CurrentData.Value.Location.Z + this.CurrentData.Value.SizeZ);
+                var p5 = new Point3D(this.CurrentData.Value.Location.X + this.CurrentData.Value.SizeX, this.CurrentData.Value.Location.Y, this.CurrentData.Value.Location.Z + this.CurrentData.Value.SizeZ);
+                var p6 = new Point3D(this.CurrentData.Value.Location.X + this.CurrentData.Value.SizeX, this.CurrentData.Value.Location.Y + this.CurrentData.Value.SizeY, this.CurrentData.Value.Location.Z + this.CurrentData.Value.SizeZ);
+                var p7 = new Point3D(this.CurrentData.Value.Location.X, this.CurrentData.Value.Location.Y + this.CurrentData.Value.SizeY, this.CurrentData.Value.Location.Z + this.CurrentData.Value.SizeZ);
 
                 this.UpdateLinePosition(this.edges[0], p0, p1);
                 this.UpdateLinePosition(this.edges[1], p1, p2);
@@ -100,7 +115,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Check if the changed property is one that require updating the lines in the image.
             if (propertyName == nameof(this.Color) ||
                 propertyName == nameof(this.Opacity) ||
-                propertyName == nameof(this.Thickness))
+                propertyName == nameof(this.ThicknessMm) ||
+                propertyName == nameof(this.PipeDivisions))
             {
                 this.UpdateLineProperties();
             }
@@ -117,7 +133,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.edges = new PipeVisual3D[12];
             for (int i = 0; i < this.edges.Length; i++)
             {
-                this.edges[i] = new PipeVisual3D() { ThetaDiv = PipeDiv };
+                this.edges[i] = new PipeVisual3D();
             }
 
             // Set the color, thickness, opacity
@@ -135,7 +151,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             foreach (PipeVisual3D line in this.edges)
             {
-                this.UpdateChildVisibility(line, this.Visible);
+                this.UpdateChildVisibility(line, this.Visible && this.CurrentData.HasValue);
             }
         }
 
@@ -150,8 +166,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             foreach (PipeVisual3D line in this.edges)
             {
-                line.Diameter = this.Thickness / 1000.0;
+                line.Diameter = this.ThicknessMm / 1000.0;
                 line.Fill = new SolidColorBrush(alphaColor);
+                line.ThetaDiv = this.PipeDivisions;
             }
         }
     }

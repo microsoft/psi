@@ -17,6 +17,14 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private int relativeWidth = 100;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="InstantVisualizationPlaceholderPanel"/> class.
+        /// </summary>
+        public InstantVisualizationPlaceholderPanel()
+        {
+            this.Name = "Empty Instant Panel";
+        }
+
+        /// <summary>
         /// Gets or sets the name of the relative width for the panel.
         /// </summary>
         [DataMember]

@@ -9,8 +9,6 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using Microsoft.Psi.PsiStudio;
-    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
@@ -52,6 +50,16 @@ namespace Microsoft.Psi.Visualization.Views
             this.currentDragOperation = DragOperation.None;
         }
 
+        /// <summary>
+        /// Notifies of a change in mouse position while a context menu is being displayed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The mouse event args.</param>
+        public void ContextMenuMouseMove(object sender, MouseEventArgs e)
+        {
+            this.lastMousePosition = e.GetPosition(this);
+        }
+
         /// <inheritdoc />
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
@@ -74,7 +82,15 @@ namespace Microsoft.Psi.Visualization.Views
             }
             else
             {
-                this.VisualizationPanel.OnContextMenuOpening(sender);
+                // Create the context menu if it doesn't yet exist
+                FrameworkElement senderElement = sender as FrameworkElement;
+                if (senderElement.ContextMenu == null)
+                {
+                    senderElement.ContextMenu = new ContextMenu();
+                    senderElement.ContextMenu.AddHandler(MouseMoveEvent, new MouseEventHandler(this.ContextMenuMouseMove), true);
+                }
+
+                this.VisualizationPanel.OnContextMenuOpening(senderElement.ContextMenu);
             }
         }
 
@@ -82,8 +98,8 @@ namespace Microsoft.Psi.Visualization.Views
         {
             Point mousePosition = e.GetPosition(this);
 
-            // If the user has the Left Mouse button pressed, initiate a Drag & Drop reorder operation
-            if (e.LeftButton == MouseButtonState.Pressed)
+            // If the user has the Left Mouse button pressed, initiate a Drag & Drop reorder operation.
+            if ((e.LeftButton == MouseButtonState.Pressed) && (mousePosition != this.lastMousePosition))
             {
                 switch (this.currentDragOperation)
                 {
@@ -115,7 +131,6 @@ namespace Microsoft.Psi.Visualization.Views
                 if (VisualizationContext.Instance.VisualizationContainer.Navigator.CursorMode == CursorMode.Manual)
                 {
                     this.currentDragOperation = DragOperation.TimelineScroll;
-                    this.DoDragTimeline(mousePosition);
                     this.Cursor = Cursors.Hand;
                 }
             }

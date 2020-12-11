@@ -6,6 +6,7 @@
 namespace Test.Psi.Imaging
 {
     using System;
+    using System.Windows.Media.Media3D;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Imaging;
@@ -15,6 +16,14 @@ namespace Test.Psi.Imaging
     [TestClass]
     public class ImageTester
     {
+        private Image testImage_Gray = Image.FromBitmap(Properties.Resources.TestImage_Gray);
+        private Image testImage_GrayDrawCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawCircle);
+        private Image testImage_GrayDrawLine = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawLine);
+        private Image testImage_GrayDrawRect = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawRect);
+        private Image testImage_GrayDrawText = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawText);
+        private Image testImage_GrayFlip = Image.FromBitmap(Properties.Resources.TestImage_GrayFlip);
+        private Image testImage_GrayResized = Image.FromBitmap(Properties.Resources.TestImage_GrayResized);
+        private Image testImage_GrayRotate = Image.FromBitmap(Properties.Resources.TestImage_GrayRotate);
         private Image testImage = Image.FromBitmap(Properties.Resources.TestImage);
         private Image testImage2 = Image.FromBitmap(Properties.Resources.TestImage2);
         private Image testImage2_Threshold = Image.FromBitmap(Properties.Resources.TestImage2_Threshold);
@@ -41,6 +50,75 @@ namespace Test.Psi.Imaging
         private Image testImage_50_25_Cubic = Image.FromBitmap(Properties.Resources.TestImage_Scale_50_25_Cubic);
         private Image testImage_150_125_Point = Image.FromBitmap(Properties.Resources.TestImage_Scale_150_125_Point);
         private Image testImage_25_200_Linear = Image.FromBitmap(Properties.Resources.TestImage_Scale_25_200_Linear);
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawCircle()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawCircle(new System.Drawing.Point(0, 0), 100, System.Drawing.Color.Red, 3);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawCircle, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawLine()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawLine(new System.Drawing.Point(0, 0), new System.Drawing.Point(100, 100), System.Drawing.Color.Red, 3);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawLine, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawRect()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawRectangle(new System.Drawing.Rectangle(0, 0, 20, 20), System.Drawing.Color.White, 3);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawRect, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawText()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawText("Test", new System.Drawing.Point(0, 20), System.Drawing.Color.Red);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawText, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayFlip()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.Flip(sharedImage.Resource, FlipMode.AlongHorizontalAxis);
+            this.AssertAreImagesEqual(this.testImage_GrayFlip, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayResize()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            this.testImage_Gray.Resize(100, 100, SamplingMode.Bilinear);
+            this.AssertAreImagesEqual(this.testImage_GrayResized, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayRotate()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.Rotate(20.0f, SamplingMode.Bilinear);
+            this.AssertAreImagesEqual(this.testImage_GrayRotate, sharedImage.Resource);
+        }
 
         [TestMethod]
         [Timeout(60000)]
@@ -378,6 +456,48 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
+        public void EncodedImage_Serialize()
+        {
+            // encode an image with low compression (higher quality)
+            var jpegEncoder = new ImageToJpegStreamEncoder() { QualityLevel = 100 };
+            jpegEncoder.QualityLevel = 100;
+            var encodedImage = this.testImage.Encode(jpegEncoder);
+
+            // serialize the encoded image
+            var bw = new BufferWriter(0);
+            Serializer.Serialize(bw, encodedImage, new SerializationContext());
+            int serializedLengthHq = bw.Position;
+
+            // deserialize the encoded image and verify the data
+            EncodedImage targetEncodedImage = null;
+            var br = new BufferReader(bw.Buffer);
+            Serializer.Deserialize(br, ref targetEncodedImage, new SerializationContext());
+            var decodedImage = encodedImage.Decode(new ImageFromStreamDecoder());
+            var targetDecodedImage = targetEncodedImage.Decode(new ImageFromStreamDecoder());
+            this.AssertAreImagesEqual(decodedImage, targetDecodedImage);
+
+            // encode an image with high compression (lower quality)
+            jpegEncoder = new ImageToJpegStreamEncoder() { QualityLevel = 10 };
+            encodedImage = this.testImage.Encode(jpegEncoder);
+
+            // serialize the encoded image
+            bw = new BufferWriter(0);
+            Serializer.Serialize(bw, encodedImage, new SerializationContext());
+            int serializedLengthLq = bw.Position;
+
+            // deserialize the encoded image (into recycled target) and verify the data
+            br = new BufferReader(bw.Buffer);
+            Serializer.Deserialize(br, ref targetEncodedImage, new SerializationContext());
+            decodedImage = encodedImage.Decode(new ImageFromStreamDecoder());
+            targetDecodedImage = targetEncodedImage.Decode(new ImageFromStreamDecoder());
+            this.AssertAreImagesEqual(decodedImage, targetDecodedImage);
+
+            // verify serialized length is smaller for the more compressed image
+            Assert.IsTrue(serializedLengthLq < serializedLengthHq);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void Test_Resize()
         {
             // Resize using nearest-neighbor
@@ -397,6 +517,16 @@ namespace Test.Psi.Imaging
                 this.testImage_25_200_Linear.Width,
                 this.testImage_25_200_Linear.Height,
                 SamplingMode.Bilinear));
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_Compare()
+        {
+            this.AssertAreImagesEqual(this.testImage, this.testImage);
+            this.AssertAreImagesEqual(this.testImage_Gray, this.testImage_Gray);
+            ImageError err = new ImageError();
+            Assert.IsFalse(this.testImage2.Compare(this.testImage2_DrawRect, 2.0, 0.01, ref err));
         }
 
         [TestMethod]
@@ -479,28 +609,8 @@ namespace Test.Psi.Imaging
 
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage)
         {
-            Assert.AreEqual(referenceImage.GetType(), subjectImage.GetType());
-            Assert.AreEqual(referenceImage.PixelFormat, subjectImage.PixelFormat);
-            Assert.AreEqual(referenceImage.Width, subjectImage.Width);
-            Assert.AreEqual(referenceImage.Height, subjectImage.Height);
-
-            // compare one line of the image at a time since a stride may contain padding bytes
-            for (int line = 0; line < referenceImage.Height; line++)
-            {
-                var refbytes = referenceImage.ReadBytes(referenceImage.Width * referenceImage.BitsPerPixel / 8, line * referenceImage.Stride);
-                var subjbytes = subjectImage.ReadBytes(subjectImage.Width * subjectImage.BitsPerPixel / 8, line * subjectImage.Stride);
-                if (referenceImage.PixelFormat == PixelFormat.BGRX_32bpp)
-                {
-                    // BGRX images can have any value for they alpha channel. Here we normalize them to 255
-                    for (int i = 0; i < referenceImage.Width; i++)
-                    {
-                        refbytes[4 * i + 3] = 255;
-                        subjbytes[4 * i + 3] = 255;
-                    }
-                }
-
-                CollectionAssert.AreEqual(refbytes, subjbytes);
-            }
+            ImageError err = new ImageError();
+            Assert.IsTrue(referenceImage.Compare(subjectImage, 6.0, 0.01, ref err));
         }
     }
 }

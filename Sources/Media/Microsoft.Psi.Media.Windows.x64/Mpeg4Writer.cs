@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="Mpeg4Writer"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of output file to write to.</param>
         /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
         public Mpeg4Writer(Pipeline pipeline, string filename, string configurationFilename)
@@ -35,7 +35,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="Mpeg4Writer"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of output file to write to.</param>
         /// <param name="configuration">Describes how to configure the media capture device.</param>
         public Mpeg4Writer(Pipeline pipeline, string filename, Mpeg4WriterConfiguration configuration)
@@ -47,7 +47,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="Mpeg4Writer"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of output file to write to.</param>
         /// <param name="width">Width of output image in pixels.</param>
         /// <param name="height">Height of output image in pixels.</param>

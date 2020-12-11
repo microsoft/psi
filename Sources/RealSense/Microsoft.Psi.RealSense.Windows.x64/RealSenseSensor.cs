@@ -22,7 +22,7 @@ namespace Microsoft.Psi.RealSense.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="RealSenseSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         public RealSenseSensor(Pipeline pipeline)
         {
             this.shutdown = false;

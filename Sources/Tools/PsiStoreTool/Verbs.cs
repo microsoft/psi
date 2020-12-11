@@ -203,7 +203,7 @@ namespace PsiStoreTool
         internal class Crop : BaseStoreCommand
         {
             /// <summary>
-            /// Gets or sets name of Psi data store.
+            /// Gets or sets name of output Psi data store.
             /// </summary>
             [Option('o', "output", Required = false, Default = "Cropped", HelpText = "Name of output Psi data store (default=Cropped).")]
             public string Output { get; set; }
@@ -219,6 +219,25 @@ namespace PsiStoreTool
             /// </summary>
             [Option('l', "length", Required = false, HelpText = "Length of interval relative to start (default=unbounded).")]
             public string Length { get; set; }
+        }
+
+        /// <summary>
+        /// Encode image streams verb.
+        /// </summary>
+        [Verb("encode", HelpText = "Encode image streams to JPEG.")]
+        internal class Encode : BaseStoreCommand
+        {
+            /// <summary>
+            /// Gets or sets name of output Psi data store.
+            /// </summary>
+            [Option('o', "output", Required = false, Default = "Encoded", HelpText = "Name of output Psi data store (default=Encoded).")]
+            public string Output { get; set; }
+
+            /// <summary>
+            /// Gets or sets quality of the JPEG compression.
+            /// </summary>
+            [Option('q', "quality", Default = 90, HelpText = "Quality of JPEG compression 0-100 (optional, default 90).")]
+            public int Quality { get; set; }
         }
     }
 }

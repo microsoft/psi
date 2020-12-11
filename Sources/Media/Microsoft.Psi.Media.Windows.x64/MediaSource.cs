@@ -45,7 +45,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaSource"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of media file to play.</param>
         /// <param name="dropOutOfOrderPackets">Optional flag specifying whether to drop out of order packets (defaults to <c>false</c>).</param>
         public MediaSource(Pipeline pipeline, string filename, bool dropOutOfOrderPackets = false)
@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaSource"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="input">Source stream of the media to consume.</param>
         /// <param name="startTime">Optional date/time that the media started.</param>
         /// <param name="dropOutOfOrderPackets">Optional flag specifying whether to drop out of order packets (defaults to <c>false</c>).</param>

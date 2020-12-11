@@ -59,17 +59,115 @@ namespace Test.Psi.Imaging.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TestImage {
-            get {
+        internal static System.Drawing.Bitmap TestImage
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("TestImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_Gray
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_Gray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayDrawCircle
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayDrawCircle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayDrawLine
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayDrawLine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayDrawRect
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayDrawRect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayDrawText
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayDrawText", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayFlip
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayFlip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayResized
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayResized", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayRotate
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("TestImage_GrayRotate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
