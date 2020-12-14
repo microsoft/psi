@@ -9,8 +9,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <summary>
     /// Represents a visualization object that can display lists of Windows 3D points.
     /// </summary>
-    [VisualizationObject("3D Points")]
-    public class WindowsPoint3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<WindowsPoint3DVisualizationObject, Point3D?, List<Point3D?>>
+    [VisualizationObject("3D Spheres")]
+    public class Point3DListAsSpheresVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Point3DAsSphereVisualizationObject, Point3D?, List<Point3D?>>
     {
     }
 }

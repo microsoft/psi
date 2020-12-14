@@ -13,8 +13,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <summary>
     /// Represents a 3D point visualization object.
     /// </summary>
-    [VisualizationObject("3D Point")]
-    public class WindowsPoint3DVisualizationObject : ModelVisual3DVisualizationObject<Point3D?>
+    [VisualizationObject("3D Sphere")]
+    public class Point3DAsSphereVisualizationObject : ModelVisual3DVisualizationObject<Point3D?>
     {
         private SphereVisual3D sphereVisual;
         private Color color = Colors.White;
@@ -23,9 +23,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private int sphereDiv = 7;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsPoint3DVisualizationObject"/> class.
+        /// Initializes a new instance of the <see cref="Point3DAsSphereVisualizationObject"/> class.
         /// </summary>
-        public WindowsPoint3DVisualizationObject()
+        public Point3DAsSphereVisualizationObject()
         {
             this.sphereVisual = new SphereVisual3D();
 

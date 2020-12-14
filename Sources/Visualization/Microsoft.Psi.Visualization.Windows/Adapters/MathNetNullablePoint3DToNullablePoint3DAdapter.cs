@@ -12,12 +12,12 @@ namespace Microsoft.Psi.Visualization.Adapters
     /// Used to adapt streams of nullable <see cref="MathNet.Point3D"/> into nullable <see cref="Windows.Point3D"/>.
     /// </summary>
     [StreamAdapter]
-    public class MathNetNullablePoint3DToWindowsNullablePoint3DAdapter : StreamAdapter<MathNet.Point3D?, Windows.Point3D?>
+    public class MathNetNullablePoint3DToNullablePoint3DAdapter : StreamAdapter<MathNet.Point3D?, Windows.Point3D?>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MathNetNullablePoint3DToWindowsNullablePoint3DAdapter"/> class.
+        /// Initializes a new instance of the <see cref="MathNetNullablePoint3DToNullablePoint3DAdapter"/> class.
         /// </summary>
-        public MathNetNullablePoint3DToWindowsNullablePoint3DAdapter()
+        public MathNetNullablePoint3DToNullablePoint3DAdapter()
             : base(Adapter)
         {
         }
