@@ -256,76 +256,76 @@ namespace Microsoft.Psi.Diagnostics
             /// <summary>
             /// Add processed message time to pipeline element statistics.
             /// </summary>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddProcessedMessage(DateTime current, TimeSpan averagingWindow)
+            internal void AddProcessedMessage(DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(++this.ProcessedCount, this.ProcessedHistory, current, averagingWindow);
+                this.AddStatistic(++this.ProcessedCount, this.ProcessedHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add dropped message time to pipeline element statistics.
             /// </summary>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddDroppedMessage(DateTime current, TimeSpan averagingWindow)
+            internal void AddDroppedMessage(DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(++this.DroppedCount, this.DroppedHistory, current, averagingWindow);
+                this.AddStatistic(++this.DroppedCount, this.DroppedHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add current delivery queue size to pipeline element statistics.
             /// </summary>
             /// <param name="size">Current delivery queue size.</param>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddCurrentQueueSize(int size, DateTime current, TimeSpan averagingWindow)
+            internal void AddCurrentQueueSize(int size, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(size, this.QueueSizeHistory, current, averagingWindow);
+                this.AddStatistic(size, this.QueueSizeHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add message latency at emitter (when queued/dropped) to pipeline element statistics.
             /// </summary>
-            /// <param name="envelope">Message envelope.</param>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="latency">The message latency.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageLatencyAtEmitter(Envelope envelope, DateTime current, TimeSpan averagingWindow)
+            internal void AddMessageLatencyAtEmitter(TimeSpan latency, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(envelope.CreationTime - envelope.OriginatingTime, this.MessageLatencyAtEmitterHistory, current, averagingWindow);
+                this.AddStatistic(latency, this.MessageLatencyAtEmitterHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add message latency at receiver (when delivered/processed) to pipeline element statistics.
             /// </summary>
-            /// <param name="envelope">Message envelope.</param>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="latency">The message latency.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageLatencyAtReceiver(Envelope envelope, DateTime current, TimeSpan averagingWindow)
+            internal void AddMessageLatencyAtReceiver(TimeSpan latency, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(envelope.CreationTime - envelope.OriginatingTime, this.MessageLatencyAtReceiverHistory, current, averagingWindow);
+                this.AddStatistic(latency, this.MessageLatencyAtReceiverHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add message processing time to pipeline element statistics.
             /// </summary>
-            /// <param name="time">Time spent processing message.</param>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="processingTime">Time spent processing message.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddProcessingTime(TimeSpan time, DateTime current, TimeSpan averagingWindow)
+            internal void AddProcessingTime(TimeSpan processingTime, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(time, this.ProcessingTimeHistory, current, averagingWindow);
+                this.AddStatistic(processingTime, this.ProcessingTimeHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add message size to pipeline element statistics.
             /// </summary>
             /// <param name="size">Message size (bytes).</param>
-            /// <param name="current">Current pipeline time.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageSize(int size, DateTime current, TimeSpan averagingWindow)
+            internal void AddMessageSize(int size, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(size, this.MessageSizeHistory, current, averagingWindow);
+                this.AddStatistic(size, this.MessageSizeHistory, diagnosticsTime, averagingWindow);
             }
 
             private void AddStatistic<T>(T val, ConcurrentQueue<(T, DateTime)> queue, DateTime current, TimeSpan averagingWindow)
