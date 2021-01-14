@@ -1430,23 +1430,30 @@ namespace Microsoft.Psi
                 }
                 else if (component.Outputs.Count > 0 || component.Inputs.Count > 0)
                 {
-                    long ticks = 0;
-                    foreach (var input in component.Inputs)
-                    {
-                        ticks += Math.Max(input.Value.LastEnvelope.OriginatingTime.Ticks, startTicks);
-                    }
-
-                    foreach (var output in component.Outputs)
-                    {
-                        ticks += Math.Max(output.Value.LastEnvelope.OriginatingTime.Ticks, startTicks);
-                    }
+                    long ticksSinceStart = 0;
 
                     // use average originating time across all outputs and inputs to estimate percent completion
                     int streamCount = component.Outputs.Count + component.Inputs.Count;
-                    ticks = streamCount > 0 ? Math.Min(ticks / streamCount, endTicks) : startTicks;
+
+                    if (streamCount > 0)
+                    {
+                        foreach (var input in component.Inputs)
+                        {
+                            ticksSinceStart += (input.Value.LastEnvelope.OriginatingTime.Ticks - startTicks) / streamCount;
+                        }
+
+                        foreach (var output in component.Outputs)
+                        {
+                            ticksSinceStart += (output.Value.LastEnvelope.OriginatingTime.Ticks - startTicks) / streamCount;
+                        }
+                    }
+                    else
+                    {
+                        ticksSinceStart = 0;
+                    }
 
                     // if we have seen a message with maximum originating time, call it done
-                    componentProgress = 1.0 * (ticks - startTicks) / (endTicks - startTicks);
+                    componentProgress = Math.Min(Math.Max(ticksSinceStart / (double)(endTicks - startTicks), 0), 1);
                 }
                 else if (component.IsActivated)
                 {

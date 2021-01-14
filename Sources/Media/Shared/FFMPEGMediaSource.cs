@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="FFMPEGMediaSource"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of media file to play</param>
         /// <param name="format">Output format for images</param>
         public FFMPEGMediaSource(Pipeline pipeline, string filename, PixelFormat format = PixelFormat.BGRX_32bpp)

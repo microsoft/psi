@@ -4,9 +4,9 @@
 namespace Microsoft.Psi.Visualization.Data
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Psi;
@@ -26,6 +26,12 @@ namespace Microsoft.Psi.Visualization.Data
         private string storePath;
 
         /// <summary>
+        /// The list of streams that have been identified as unreadable, probably due to the format of the
+        /// message on disk not matching the current format of the data object they are deserialized from.
+        /// </summary>
+        private List<string> unreadableStreams = new List<string>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataStoreReader"/> class.
         /// </summary>
         /// <param name="storeName">Store name to read.</param>
@@ -39,6 +45,11 @@ namespace Microsoft.Psi.Visualization.Data
             this.executionContexts = new List<ExecutionContext>();
             this.streamCaches = new List<IStreamCache>();
         }
+
+        /// <summary>
+        /// Event that fires when a stream is unable to be read from.
+        /// </summary>
+        public event EventHandler<StreamReadErrorEventArgs> StreamReadError;
 
         /// <inheritdoc />
         public void Dispose()
@@ -134,6 +145,19 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
+        /// Checks if a stream is known to be unreadable.
+        /// </summary>
+        /// <param name="streamName">The name of the stream.</param>
+        /// <returns>True if the stream is currently considered readable, otherwise false.</returns>
+        internal bool IsStreamUnreadable(string streamName)
+        {
+            lock (this.unreadableStreams)
+            {
+                return this.unreadableStreams.Contains(streamName);
+            }
+        }
+
+        /// <summary>
         /// Called to ask the reader to read the data for all instant streams.
         /// </summary>
         /// <param name="cursorTime">The time of the visualization container's cursor.</param>
@@ -143,9 +167,16 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 foreach (IStreamCache streamCache in this.streamCaches.ToList())
                 {
-                    if (streamCache.HasInstantStreamReaders)
+                    if (streamCache.HasInstantStreamReaders && (!this.unreadableStreams.Contains(streamCache.StreamName)))
                     {
-                        streamCache.ReadInstantData(reader, cursorTime);
+                        try
+                        {
+                            streamCache.ReadInstantData(reader, cursorTime);
+                        }
+                        catch (SerializationException ex)
+                        {
+                            this.StreamCache_StreamReadError(this, new StreamReadErrorEventArgs() { StreamName = streamCache.StreamName, Exception = ex });
+                        }
                     }
                 }
             }
@@ -326,11 +357,12 @@ namespace Microsoft.Psi.Visualization.Data
         private IStreamCache GetOrCreateStreamCacheByStreamSource<T>(StreamSource streamSource, IStreamAdapter streamAdapter)
         {
             var streamName = streamSource.StreamName;
-            var streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter);
+            StreamCache<T> streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter) as StreamCache<T>;
 
             if (streamCache == null)
             {
                 streamCache = new StreamCache<T>(streamSource.StreamName, streamAdapter);
+                streamCache.StreamReadError += this.StreamCache_StreamReadError;
                 this.streamCaches.Add(streamCache);
             }
 
@@ -339,15 +371,34 @@ namespace Microsoft.Psi.Visualization.Data
 
         private IStreamCache GetOrCreateStreamCacheByName<T>(string streamName, IStreamAdapter streamAdapter)
         {
-            var streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter);
+            StreamCache<T> streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter) as StreamCache<T>;
 
             if (streamCache == null)
             {
                 streamCache = new StreamCache<T>(streamName, streamAdapter);
+                streamCache.StreamReadError += this.StreamCache_StreamReadError;
                 this.streamCaches.Add(streamCache);
             }
 
             return streamCache;
+        }
+
+        private void StreamCache_StreamReadError(object sender, StreamReadErrorEventArgs e)
+        {
+            // Add the stream to the list of known unreadable streams if it's not already there.
+            lock (this.unreadableStreams)
+            {
+                if (!this.unreadableStreams.Contains(e.StreamName))
+                {
+                    this.unreadableStreams.Add(e.StreamName);
+                }
+            }
+
+            // Add the store name and path and propagate the message to the data manager
+            e.StoreName = this.storeName;
+            e.StorePath = this.storePath;
+
+            this.StreamReadError?.Invoke(this, e);
         }
 
         private struct ExecutionContext

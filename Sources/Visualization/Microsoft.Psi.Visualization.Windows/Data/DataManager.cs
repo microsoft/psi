@@ -76,6 +76,11 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         public event EventHandler<DataStoreStatusChangedEventArgs> DataStoreStatusChanged;
 
+        /// <summary>
+        /// Event that fires when a stream is unable to be read from.
+        /// </summary>
+        public event EventHandler<StreamReadErrorEventArgs> StreamReadError;
+
         /// <inheritdoc />
         public void Dispose()
         {
@@ -169,6 +174,16 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 dataStoreReader.OnInstantViewRangeChanged(viewRange);
             }
+        }
+
+        /// <summary>
+        /// Checks if a stream is known to be unreadable.
+        /// </summary>
+        /// <param name="streamSource">The stream source indicating which stream to read from.</param>
+        /// <returns>True if the stream is currently considered readable, otherwise false.</returns>
+        public bool IsStreamUnreadable(StreamSource streamSource)
+        {
+            return this.GetOrCreateDataStoreReader(streamSource.StoreName, streamSource.StorePath, streamSource.StreamReaderType).IsStreamUnreadable(streamSource.StreamName);
         }
 
         /// <summary>
@@ -402,12 +417,15 @@ namespace Microsoft.Psi.Visualization.Data
                     }
                     catch (Exception ex)
                     {
-                        new MessageBoxWindow(
-                            Application.Current.MainWindow,
-                            "Instant Data Push Error",
-                            $"An error occurred while attempting to push instant data to the visualization objects{Environment.NewLine}{Environment.NewLine}{ex.Message}",
-                            "Close",
-                            null).ShowDialog();
+                        Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            new MessageBoxWindow(
+                                Application.Current.MainWindow,
+                                "Instant Data Push Error",
+                                $"An error occurred while attempting to push instant data to the visualization objects{Environment.NewLine}{Environment.NewLine}{ex.Message}",
+                                "Close",
+                                null).ShowDialog();
+                        }));
                     }
                 }
                 else
@@ -493,6 +511,7 @@ namespace Microsoft.Psi.Visualization.Data
                 else
                 {
                     DataStoreReader dataStoreReader = new DataStoreReader(storeName, storePath, streamReaderType);
+                    dataStoreReader.StreamReadError += this.DataStoreReader_StreamReadError;
                     this.dataStoreReaders[key] = dataStoreReader;
                     return dataStoreReader;
                 }
@@ -517,7 +536,12 @@ namespace Microsoft.Psi.Visualization.Data
         private void RemoveDataStoreReader(string storeName, string storePath)
         {
             ValueTuple<string, string> key = (storeName, storePath);
-            this.dataStoreReaders.Remove(key);
+
+            lock (this.dataStoreReaders)
+            {
+                this.dataStoreReaders[key].StreamReadError -= this.DataStoreReader_StreamReadError;
+                this.dataStoreReaders.Remove(key);
+            }
         }
 
         private List<DataStoreReader> GetDataStoreReaderList()
@@ -527,6 +551,12 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 return this.dataStoreReaders.Values.ToList();
             }
+        }
+
+        private void DataStoreReader_StreamReadError(object sender, StreamReadErrorEventArgs e)
+        {
+            // Alert the visualization objects that the stream is unreadable.
+            this.StreamReadError?.Invoke(this, e);
         }
 
         private StreamSummaryManager GetStreamSummaryManager(StreamSource streamSource)

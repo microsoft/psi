@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using System.Threading;
 
     /// <summary>
@@ -55,8 +56,9 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The name of the stream to open.</param>
         /// <param name="target">The function to call for every message in this stream.</param>
         /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="errorHandler">The function to call if an error occurs when reading the stream.</param>
         /// <returns>The metadata describing the opened stream.</returns>
-        IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null);
+        IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null);
 
         /// <summary>
         /// Opens the specified stream for reading, in index form; providing only index entries to the target delegate.

@@ -11,22 +11,22 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Windows = System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Used to adapt streams of lists of MathNet.Spatial.Eudlidean.Point3Ds into lists of System.Windows.Media.Media32.Point3Ds.
+    /// Used to adapt streams of lists of <see cref="MathNet.Point3D"/> into lists of <see cref="Windows.Point3D"/>.
     /// </summary>
     [StreamAdapter]
-    public class MathNetPoint3DListToWindowsPoint3DListAdapter : StreamAdapter<List<MathNet.Point3D>, List<Windows.Point3D>>
+    public class MathNetPoint3DListToPoint3DListAdapter : StreamAdapter<List<MathNet.Point3D>, List<Windows.Point3D>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MathNetPoint3DListToWindowsPoint3DListAdapter"/> class.
+        /// Initializes a new instance of the <see cref="MathNetPoint3DListToPoint3DListAdapter"/> class.
         /// </summary>
-        public MathNetPoint3DListToWindowsPoint3DListAdapter()
+        public MathNetPoint3DListToPoint3DListAdapter()
             : base(Adapter)
         {
         }
 
         private static List<Windows.Point3D> Adapter(List<MathNet.Point3D> value, Envelope env)
         {
-            return value.Select(p => new Windows.Point3D(p.X, p.Y, p.Z)).ToList();
+            return value?.Select(p => new Windows.Point3D(p.X, p.Y, p.Z)).ToList();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
         public MediaCapture(Pipeline pipeline, string configurationFilename)
         : this(pipeline)
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Describes how to configure the media capture device.</param>
         public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration)
         : this(pipeline)
@@ -49,7 +49,7 @@ namespace Microsoft.Psi.Media
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCapture"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="width">Width of output image in pixels.</param>
         /// <param name="height">Height of output image in pixels.</param>
         /// <param name="deviceId">Device ID.</param>

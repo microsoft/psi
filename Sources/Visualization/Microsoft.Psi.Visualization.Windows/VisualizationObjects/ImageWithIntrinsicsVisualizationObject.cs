@@ -104,8 +104,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets the image transparency.
         /// </summary>
         [DataMember]
-        [DisplayName("Image Transparency")]
-        [Description("The transparency level for the image.")]
+        [DisplayName("Image Transparency (%)")]
+        [Description("The transparency level (percentage) for the image.")]
         public int ImageTransparency
         {
             get { return this.imageTransparency; }

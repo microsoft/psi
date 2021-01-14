@@ -262,30 +262,36 @@ namespace Microsoft.Psi.Diagnostics
             }
 
             /// <summary>
-            /// Message enqueued by receiver.
+            /// Message was emitted towards a receiver.
             /// </summary>
-            /// <param name="queueSize">Awaiting delivery queue size.</param>
             /// <param name="envelope">Message envelope.</param>
-            public void MessageEnqueued(int queueSize, Envelope envelope)
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
+            public void MessageEmitted(Envelope envelope, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
-            /// Message dropped by receiver.
+            /// Capture a queue size update.
             /// </summary>
             /// <param name="queueSize">Awaiting delivery queue size.</param>
-            /// <param name="envelope">Message envelope.</param>
-            public void MessageDropped(int queueSize, Envelope envelope)
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
+            public void QueueSizeUpdate(int queueSize, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddDroppedMessage(envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
-            /// Message enqueued by receiver.
+            /// Message was dropped by receiver.
+            /// </summary>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
+            public void MessageDropped(DateTime diagnosticsTime)
+            {
+                this.receiverDiagnostics.AddDroppedMessage(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+            }
+
+            /// <summary>
+            /// Capture throttle status update.
             /// </summary>
             /// <param name="throttled">Whether input is throttled.</param>
             public void PipelineElementReceiverThrottle(bool throttled)
@@ -294,44 +300,18 @@ namespace Microsoft.Psi.Diagnostics
             }
 
             /// <summary>
-            /// Message being processed by component.
+            /// Message was processed by component.
             /// </summary>
-            /// <param name="pipeline">Pipeline to which the receiver belongs.</param>
-            /// <param name="queueSize">Awaiting delivery queue size.</param>
             /// <param name="envelope">Message envelope.</param>
+            /// <param name="processingTime">The time it took to process the message.</param>
             /// <param name="messageSize">Message size (bytes).</param>
-            public DateTime MessageProcessStart(Pipeline pipeline, int queueSize, Envelope envelope, int messageSize)
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
+            public void MessageProcessed(Envelope envelope, TimeSpan processingTime, int messageSize, DateTime diagnosticsTime)
             {
-                var time = pipeline.GetCurrentTime();
-                this.receiverDiagnostics.AddProcessedMessage(envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtReceiver(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageSize(messageSize, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                return time;
-            }
-
-            /// <summary>
-            /// Message processed by component.
-            /// </summary>
-            /// <param name="pipeline">Pipeline to which the element belongs.</param>
-            /// <param name="startTime">Time at which message processing started - returned by MessageProcessStart().</param>
-            public void MessageProcessComplete(Pipeline pipeline, DateTime startTime)
-            {
-                var current = pipeline.GetCurrentTime();
-                this.receiverDiagnostics.AddProcessingTime(current - startTime, current, this.diagnosticsConfig.AveragingTimeSpan);
-            }
-
-            /// <summary>
-            /// Message processed synchronously by receiver.
-            /// </summary>
-            /// <param name="pipeline">Pipeline to which the element belongs.</param>
-            /// <param name="queueSize">Awaiting delivery queue size.</param>
-            /// <param name="envelope">Message envelope.</param>
-            /// <param name="messageSize">Message size (bytes).</param>
-            public void MessageProcessedSynchronously(Pipeline pipeline, int queueSize, Envelope envelope, int messageSize)
-            {
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope, envelope.CreationTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.MessageProcessComplete(pipeline, this.MessageProcessStart(pipeline, queueSize, envelope, messageSize));
+                this.receiverDiagnostics.AddProcessedMessage(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageSize(messageSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageLatencyAtReceiver(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddProcessingTime(processingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
         }
     }

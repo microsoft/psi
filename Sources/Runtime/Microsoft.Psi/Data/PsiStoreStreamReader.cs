@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
@@ -17,6 +18,7 @@ namespace Microsoft.Psi.Data
     public sealed class PsiStoreStreamReader : IStreamReader
     {
         private readonly Dictionary<int, List<Delegate>> targets = new Dictionary<int, List<Delegate>>();
+        private readonly Dictionary<int, List<Action<SerializationException>>> errorHandlers = new Dictionary<int, List<Action<SerializationException>>>();
         private readonly Dictionary<int, Action<BufferReader, Envelope>> outputs = new Dictionary<int, Action<BufferReader, Envelope>>();
         private readonly Dictionary<int, Action<IndexEntry, Envelope>> indexOutputs = new Dictionary<int, Action<IndexEntry, Envelope>>();
 
@@ -106,10 +108,10 @@ namespace Microsoft.Psi.Data
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null)
+        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
         {
             var meta = this.PsiStoreReader.OpenStream(name); // this checks for duplicates
-            this.OpenStream<T>(meta, target, allocator);
+            this.OpenStream<T>(meta, target, allocator, errorHandler);
             return meta;
         }
 
@@ -183,11 +185,37 @@ namespace Microsoft.Psi.Data
                         var indexEntry = this.PsiStoreReader.ReadIndex();
                         this.indexOutputs[e.SourceId](indexEntry, e);
                     }
-                    else
+                    else if (this.outputs.ContainsKey(e.SourceId))
                     {
                         int count = this.PsiStoreReader.Read(ref this.buffer);
                         var bufferReader = new BufferReader(this.buffer, count);
-                        this.outputs[e.SourceId](bufferReader, e);
+
+                        // Deserialize the data and call the listeners.  Note that due to polymorphic types, we
+                        // may be attempting to create some handlers on the fly which may result in a serialization
+                        // exception being thrown due to type mismatch errors.
+                        try
+                        {
+                            this.outputs[e.SourceId](bufferReader, e);
+                        }
+                        catch (SerializationException ex)
+                        {
+                            // If any error occurred while processing the message and there are
+                            // registered error handlers, stop attempting to process messages
+                            // from the stream and notify all registered error handler listeners.
+                            // otherwise, rethrow the exception to exit the application.
+                            if (this.errorHandlers.ContainsKey(e.SourceId))
+                            {
+                                this.outputs.Remove(e.SourceId);
+                                foreach (Action<SerializationException> errorAction in this.errorHandlers[e.SourceId])
+                                {
+                                    errorAction.Invoke(ex);
+                                }
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
                     }
                 }
             }
@@ -229,34 +257,8 @@ namespace Microsoft.Psi.Data
             this.context.Serializers.RegisterMetadata(metadata);
         }
 
-        private void OpenStream<T>(IStreamMetadata meta, Action<T, Envelope> target, Func<T> allocator = null)
+        private void OpenStream<T>(IStreamMetadata meta, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
         {
-            // Get the deserialization handler for this stream type
-            var handler = this.context.Serializers.GetHandler<T>();
-
-            var isDynamic = typeof(T).FullName == typeof(object).FullName;
-            var isRaw = typeof(T).FullName == typeof(Message<BufferReader>).FullName;
-
-            if (!isDynamic && !isRaw)
-            {
-                // check that the requested type matches the stream type
-                var streamType = meta.TypeName;
-                var handlerType = handler.Name;
-                if (streamType != handlerType)
-                {
-                    // check if the handler is able to handle the stream type
-                    if (handlerType != streamType)
-                    {
-                        if (this.context.Serializers.Schemas.TryGetValue(streamType, out var streamTypeSchema) &&
-                            this.context.Serializers.Schemas.TryGetValue(handlerType, out var handlerTypeSchema))
-                        {
-                            // validate compatibility - will throw if types are incompatible
-                            handlerTypeSchema.ValidateCompatibleWith(streamTypeSchema);
-                        }
-                    }
-                }
-            }
-
             // If there's no list of targets for this stream, create it now
             if (!this.targets.ContainsKey(meta.Id))
             {
@@ -266,18 +268,78 @@ namespace Microsoft.Psi.Data
             // Add the target to the list to call when this stream has new data
             this.targets[meta.Id].Add(target);
 
-            // Update the code to execute when this stream receives new data
-            this.outputs[meta.Id] = (br, e) =>
+            // Add the error handler, if any
+            if (errorHandler != null)
             {
-                // Deserialize the data
-                var data = this.Deserialize<T>(handler, br, e, isDynamic, isRaw, (allocator == null) ? default(T) : allocator(), meta.TypeName, this.context.Serializers.Schemas);
-
-                // Call each of the targets
-                foreach (Delegate action in this.targets[meta.Id])
+                if (!this.errorHandlers.ContainsKey(meta.Id))
                 {
-                    (action as Action<T, Envelope>)(data, e);
+                    this.errorHandlers[meta.Id] = new List<Action<SerializationException>>();
                 }
-            };
+
+                this.errorHandlers[meta.Id].Add(errorHandler);
+            }
+
+            // Get the deserialization handler for this stream type
+            SerializationHandler<T> handler = null;
+            try
+            {
+                // A serialization exception may be thrown here if the handler is unable to be initialized due to a
+                // mismatch between the format of the messages in the stream and the current format of T, probably
+                // because a field has been added, removed, or renamed in T since the stream was created.
+                handler = this.context.Serializers.GetHandler<T>();
+
+                var isDynamic = typeof(T).FullName == typeof(object).FullName;
+                var isRaw = typeof(T).FullName == typeof(Message<BufferReader>).FullName;
+
+                if (!isDynamic && !isRaw)
+                {
+                    // check that the requested type matches the stream type
+                    var streamType = meta.TypeName;
+                    var handlerType = handler.Name;
+                    if (streamType != handlerType)
+                    {
+                        // check if the handler is able to handle the stream type
+                        if (handlerType != streamType)
+                        {
+                            if (this.context.Serializers.Schemas.TryGetValue(streamType, out var streamTypeSchema) &&
+                                this.context.Serializers.Schemas.TryGetValue(handlerType, out var handlerTypeSchema))
+                            {
+                                // validate compatibility - will throw if types are incompatible
+                                handlerTypeSchema.ValidateCompatibleWith(streamTypeSchema);
+                            }
+                        }
+                    }
+                }
+
+                // Update the code to execute when this stream receives new data
+                this.outputs[meta.Id] = (br, e) =>
+                {
+                    // Deserialize the data
+                    var data = this.Deserialize<T>(handler, br, e, isDynamic, isRaw, (allocator == null) ? default(T) : allocator(), meta.TypeName, this.context.Serializers.Schemas);
+
+                    // Call each of the targets
+                    foreach (Delegate action in this.targets[meta.Id])
+                    {
+                        (action as Action<T, Envelope>)(data, e);
+                    }
+                };
+            }
+            catch (SerializationException ex)
+            {
+                // If there are any registered error handlers, call the ones registered for
+                // this stream, otherwise rethrow the exception to exit the application.
+                if (this.errorHandlers.ContainsKey(meta.Id))
+                {
+                    foreach (Action<SerializationException> errorAction in this.errorHandlers[meta.Id])
+                    {
+                        errorAction.Invoke(ex);
+                    }
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
         private T Deserialize<T>(SerializationHandler<T> handler, BufferReader br, Envelope env, bool isDynamic, bool isRaw, T objectToReuse, string typeName, IDictionary<string, TypeSchema> schemas)

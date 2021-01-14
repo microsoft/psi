@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Represents a visualization object that can display lists of 3D rectangles.
     /// </summary>
     [VisualizationObject("3D Rectangles")]
-    public class Rect3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Rect3DVisualizationObject, Rect3D, List<Rect3D>>
+    public class Rect3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Rect3DVisualizationObject, Rect3D?, List<Rect3D?>>
     {
     }
 }

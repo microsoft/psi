@@ -17,6 +17,8 @@ The framework accelerates the development of these applications by providing:
 A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). An on-demand webinar is also available containing a brief introduction and tutorial on how to code with \psi – here is the [registration link](https://note.microsoft.com/MSR-Webinar-Platform-Situated-Intelligence-Registration-On-Demand.html).
 
 # What’s New
+__12/07/2020__: We have published a new beta release, version 0.14.35.3, which includes a new ONNX model runner for ImageNet models, new components for screen and window capture, updates to annotation editing in PsiStudio, as well as a number of bug fixes and updates -- see the [full release notes](https://github.com/microsoft/psi/wiki/Release-Notes) for more details.
+
 __09/30/2020__: We have added three additional samples: a basic [HelloWorld]( https://github.com/Microsoft/psi-samples/tree/main/Samples/HelloWorld) sample illustrating the simplest starting point for a \psi application, a more complex one demonstrating how to do some basic audio capture and processing to construct [a simple voice activity detector]( https://github.com/Microsoft/psi-samples/tree/main/Samples/SimpleVoiceActivityDetector), and a third sample that combines information from Azure Kinect with Cognitive Services vision and speech to [detect objects that a person is pointing to](https://github.com/microsoft/psi-samples/tree/main/Samples/WhatIsThat).
 
 __09/02/2020__: We published [a blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/) with a high-level overview of the framework.
@@ -59,7 +61,7 @@ Platform for Situated Intelligence has been and is currently used in several ind
 * the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
 * the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
 * the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
-* the [Transportation, Bots, & Disability Lab](tbd.ri.cmu.edu) at the Carnegie Mellon University.
+* the [Transportation, Bots, & Disability Lab](https://tbd.ri.cmu.edu) at the Carnegie Mellon University.
 
 If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
 

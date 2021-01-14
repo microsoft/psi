@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Data.Json
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
     using Newtonsoft.Json.Linq;
@@ -125,7 +126,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStream<T>(string streamName, Action<T, Envelope> target, Func<T> allocator = null)
+        public IStreamMetadata OpenStream<T>(string streamName, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
         {
             if (string.IsNullOrWhiteSpace(streamName))
             {

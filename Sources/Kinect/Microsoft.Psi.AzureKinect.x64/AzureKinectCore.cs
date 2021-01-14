@@ -44,7 +44,7 @@ namespace Microsoft.Psi.AzureKinect
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKinectCore"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this component is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="config">Configuration to use for the device.</param>
         public AzureKinectCore(Pipeline pipeline, AzureKinectSensorConfiguration config = null)
         {

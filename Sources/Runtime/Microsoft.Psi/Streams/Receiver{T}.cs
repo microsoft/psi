@@ -217,6 +217,15 @@ namespace Microsoft.Psi
 
         internal void Receive(Message<T> message)
         {
+            var hasDiagnosticsCollector = this.receiverDiagnosticsCollector.Value != null;
+            var diagnosticsTime = DateTime.MinValue;
+
+            if (hasDiagnosticsCollector)
+            {
+                diagnosticsTime = this.pipeline.GetCurrentTime();
+                this.receiverDiagnosticsCollector.Value.MessageEmitted(message.Envelope, diagnosticsTime);
+            }
+
             if (this.counters != null)
             {
                 var messageTimeReal = this.scheduler.Clock.ToRealTime(message.Time);
@@ -241,14 +250,22 @@ namespace Microsoft.Psi
                 // however, if this thread already has a lock on the owner it means some other receiver is in our call stack (we have a delivery loop),
                 // so bail out because executing the delegate would break the exclusive execution promise of the receivers
                 // An existing lock can also indicate that a downstream component wants us to slow down (throttle)
-                bool delivered = this.scheduler.TryExecute(this.syncContext, this.onReceived, message, message.OriginatingTime, this.schedulerContext);
+                bool delivered = this.scheduler.TryExecute(
+                    this.syncContext,
+                    this.onReceived,
+                    message,
+                    message.OriginatingTime,
+                    this.schedulerContext,
+                    hasDiagnosticsCollector,
+                    out var processingTime);
+
                 if (delivered)
                 {
-                    this.receiverDiagnosticsCollector.Value?.MessageProcessedSynchronously(
-                        this.pipeline,
-                        this.awaitingDelivery.Count,
+                    this.receiverDiagnosticsCollector.Value?.MessageProcessed(
                         message.Envelope,
-                        this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0);
+                        processingTime,
+                        this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
+                        diagnosticsTime);
                     return;
                 }
             }
@@ -260,7 +277,7 @@ namespace Microsoft.Psi
                 message.Data = message.Data.DeepClone(this.Recycler);
             }
 
-            this.awaitingDelivery.Enqueue(message, out QueueTransition stateTransition, this.receiverDiagnosticsCollector.Value, this.StartThrottling);
+            this.awaitingDelivery.Enqueue(message, this.receiverDiagnosticsCollector.Value, diagnosticsTime, this.StartThrottling, out QueueTransition stateTransition);
 
             // if the queue was empty or if the next message is a closing message, we need to schedule delivery
             if (stateTransition.ToNotEmpty || stateTransition.ToClosing)
@@ -272,7 +289,9 @@ namespace Microsoft.Psi
 
         internal void DeliverNext()
         {
-            if (this.awaitingDelivery.TryDequeue(out Message<T> message, out QueueTransition stateTransition, this.scheduler.Clock.GetCurrentTime(), this.receiverDiagnosticsCollector.Value, this.StopThrottling))
+            var currentTime = this.scheduler.Clock.GetCurrentTime();
+
+            if (this.awaitingDelivery.TryDequeue(out Message<T> message, out QueueTransition stateTransition, currentTime, this.receiverDiagnosticsCollector.Value, this.StopThrottling))
             {
                 if (message.SequenceId == int.MaxValue)
                 {
@@ -288,14 +307,24 @@ namespace Microsoft.Psi
                     message.Data = message.Data.DeepClone(this.Recycler);
                 }
 
-                DateTime start = (this.counters != null) ? Time.GetCurrentTime() : default(DateTime);
-                var processStartTime = this.receiverDiagnosticsCollector.Value?.MessageProcessStart(
-                    this.pipeline,
-                    this.awaitingDelivery.Count,
-                    message.Envelope,
-                    this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0);
-                this.onReceived(message);
-                this.receiverDiagnosticsCollector.Value?.MessageProcessComplete(this.pipeline, processStartTime.Value);
+                DateTime start = (this.counters != null) ? Time.GetCurrentTime() : default;
+
+                if (this.receiverDiagnosticsCollector.Value == null)
+                {
+                    this.onReceived(message);
+                }
+                else
+                {
+                    var processStartTime = this.pipeline.GetCurrentTime();
+                    this.onReceived(message);
+                    var processingTime = this.pipeline.GetCurrentTime() - processStartTime;
+
+                    this.receiverDiagnosticsCollector.Value.MessageProcessed(
+                        message.Envelope,
+                        processingTime,
+                        this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
+                        currentTime);
+                }
 
                 if (this.counters != null)
                 {
