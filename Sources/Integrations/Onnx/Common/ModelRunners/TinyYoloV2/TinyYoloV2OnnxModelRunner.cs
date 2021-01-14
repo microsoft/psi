@@ -172,7 +172,7 @@ namespace Microsoft.Psi.Onnx
                     {
                         BoundingBox = new System.Drawing.RectangleF(
                             detection.BoundingBox.X * scaleFactor,
-                            inputHeight - squareSize / 2 + detection.BoundingBox.Y * scaleFactor,
+                            (inputHeight - squareSize) / 2 + detection.BoundingBox.Y * scaleFactor,
                             detection.BoundingBox.Width * scaleFactor,
                             detection.BoundingBox.Height * scaleFactor),
                         Label = detection.Label,
