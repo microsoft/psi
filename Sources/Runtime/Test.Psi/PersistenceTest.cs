@@ -12,6 +12,7 @@ namespace Test.Psi
     using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Test.Psi.Common;
@@ -538,6 +539,37 @@ namespace Test.Psi
                 }
 
                 Assert.AreEqual(count * factor, recount);
+            }
+
+            // manually read the index entries
+            List<IndexEntry> indexEntries = new List<IndexEntry>();
+            using (var indexReader = new InfiniteFileReader(PsiStoreCommon.GetPathToLatestVersion(name, this.path), PsiStoreCommon.GetIndexFileName(name)))
+            {
+                while (indexReader.MoveNext())
+                {
+                    IndexEntry indexEntry;
+                    unsafe
+                    {
+                        indexReader.Read((byte*)&indexEntry, sizeof(IndexEntry));
+                    }
+
+                    indexEntries.Add(indexEntry);
+                }
+            }
+
+            // verify seeking to the index entry boundaries (skip the zero index entry)
+            for (int i = 1; i < indexEntries.Count; i++)
+            {
+                var time = indexEntries[i].OriginatingTime;
+                var desc = new ReplayDescriptor(time, true);
+                using (var p2 = Pipeline.Create("read"))
+                {
+                    var readStore = PsiStore.Open(p2, name, this.path);
+
+                    var seq2 = readStore.OpenStream<int>("seq");
+                    var verifier = seq2.First().Do((_, e) => Assert.AreEqual(time, e.OriginatingTime));
+                    p2.Run(desc);
+                }
             }
         }
 
