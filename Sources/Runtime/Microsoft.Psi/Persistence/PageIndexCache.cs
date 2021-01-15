@@ -57,17 +57,13 @@ namespace Microsoft.Psi.Persistence
             {
                 midIndex = startIndex + ((endIndex - startIndex) / 2);
                 var compResult = CompareTime(time, indexList[midIndex], useOriginatingTime);
-                if (compResult < 0)
-                {
-                    endIndex = midIndex;
-                }
-                else if (compResult > 0)
+                if (compResult > 0)
                 {
                     startIndex = midIndex;
                 }
                 else
                 {
-                    return indexList[midIndex];
+                    endIndex = midIndex;
                 }
             }
 
