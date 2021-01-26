@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Represents a XY panel 3D visualization object.
+    /// Implements an XY panel 3D visualization object.
     /// </summary>
     [VisualizationObject("2D Panel in 3D Space")]
     public class XYPanel3DVisualizationObject : Instant3DVisualizationObject<CoordinateSystem>

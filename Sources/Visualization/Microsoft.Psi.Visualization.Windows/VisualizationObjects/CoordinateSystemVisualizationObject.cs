@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Win3D = System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a coordinate system visualization object.
+    /// Implements a coordinate system visualization object.
     /// </summary>
     [VisualizationObject("Coordinate System")]
     public class CoordinateSystemVisualizationObject : ModelVisual3DVisualizationObject<CoordinateSystem>

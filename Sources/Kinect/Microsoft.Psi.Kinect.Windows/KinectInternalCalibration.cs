@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Kinect
     using MathNet.Numerics.LinearAlgebra;
     using Microsoft.Kinect;
     using Microsoft.Psi.Calibration;
+    using static Microsoft.Psi.Calibration.CalibrationExtensions;
 
     internal class KinectInternalCalibration
     {
@@ -90,7 +91,7 @@ namespace Microsoft.Psi.Kinect
             var rotation = Vector<double>.Build.Dense(3);
             var translation = Vector<double>.Build.Dense(3);
             var colorError = CalibrateColorCamera(objectPoints1, colorPoints1, colorCameraMatrix, colorLensDistortion, rotation, translation, this.silent);
-            var rotationMatrix = RotationExtensions.AxisAngleToMatrix(rotation);
+            var rotationMatrix = AxisAngleToMatrix(rotation);
 
             this.depthToColorTransform = Matrix<double>.Build.DenseIdentity(4, 4);
             for (int i = 0; i < 3; i++)
@@ -332,7 +333,7 @@ namespace Microsoft.Psi.Kinect
                 Matrix<double> R;
                 Vector<double> t;
                 DLT(cameraMatrix, distCoeffs, worldPoints, imagePoints, out R, out t);
-                var r = RotationExtensions.MatrixToAxisAngle(R);
+                var r = MatrixToAxisAngle(R);
                 r.CopyTo(rotation);
                 t.CopyTo(translation);
             }
@@ -395,7 +396,7 @@ namespace Microsoft.Psi.Kinect
                 t[1] = p[pi++];
                 t[2] = p[pi++];
 
-                var R = RotationExtensions.AxisAngleToMatrix(r);
+                var R = AxisAngleToMatrix(r);
 
                 int fveci = 0;
                 for (int i = 0; i < worldPoints.Count; i++)

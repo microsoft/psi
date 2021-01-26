@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of integers into doubles.
+    /// Implements an adapter from streams of integers into doubles.
     /// </summary>
     [StreamAdapter]
     public class IntToDoubleAdapter : StreamAdapter<int, double>

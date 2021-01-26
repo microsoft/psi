@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Represents a scatter plot visualization object.
+    /// Implements a scatter plot visualization object.
     /// </summary>
     [VisualizationObject("Labeled Points")]
     public class ScatterPlotVisualizationObject : Instant2DVisualizationObject<List<Tuple<Point, string>>>

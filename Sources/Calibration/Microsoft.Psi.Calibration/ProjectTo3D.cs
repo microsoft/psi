@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Calibration
             {
                 foreach (var point2D in point2DList)
                 {
-                    var result = DepthExtensions.ProjectToCameraSpace(calibration, point2D, depthImage);
+                    var result = CalibrationExtensions.ProjectToCameraSpace(calibration, point2D, depthImage);
                     if (result != null)
                     {
                         point3DList.Add(result.Value);

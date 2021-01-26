@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Represents the container where all visualization panels are hosted. The is the root UI element for visualizations.
+    /// Implements the container where all visualization panels are hosted. The is the root UI element for visualizations.
     /// </summary>
     public class VisualizationContainer : ObservableObject
     {

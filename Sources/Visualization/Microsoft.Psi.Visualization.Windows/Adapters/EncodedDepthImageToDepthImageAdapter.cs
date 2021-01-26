@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Represents an adapter that converts an encoded depth image to a depth image.
+    /// Implements an adapter from streams of encoded depth image to depth image.
     /// </summary>
     [StreamAdapter]
     public class EncodedDepthImageToDepthImageAdapter : StreamAdapter<Shared<EncodedDepthImage>, Shared<DepthImage>>
@@ -22,16 +22,7 @@ namespace Microsoft.Psi.Visualization.Adapters
 
         private static Shared<DepthImage> Adapter(Shared<EncodedDepthImage> sharedEncodedDepthImage, Envelope envelope)
         {
-            Shared<DepthImage> sharedDepthImage = null;
-
-            if ((sharedEncodedDepthImage != null) && (sharedEncodedDepthImage.Resource != null))
-            {
-                sharedDepthImage = DepthImagePool.GetOrCreate(sharedEncodedDepthImage.Resource.Width, sharedEncodedDepthImage.Resource.Height);
-                var decoder = new DepthImageFromStreamDecoder();
-                decoder.DecodeFromStream(sharedEncodedDepthImage.Resource.ToStream(), sharedDepthImage.Resource);
-            }
-
-            return sharedDepthImage;
+            return sharedEncodedDepthImage?.Decode();
         }
     }
 }

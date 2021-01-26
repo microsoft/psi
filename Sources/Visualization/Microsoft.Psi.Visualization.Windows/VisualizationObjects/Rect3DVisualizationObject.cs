@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using HelixToolkit.Wpf;
 
     /// <summary>
-    /// Represents a 3D rectangles visualization object.
+    /// Implements a 3D rectangles visualization object.
     /// </summary>
     [VisualizationObject("3D Rectangle")]
     public class Rect3DVisualizationObject : ModelVisual3DVisualizationObject<Rect3D?>

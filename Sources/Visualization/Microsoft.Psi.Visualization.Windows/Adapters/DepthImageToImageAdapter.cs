@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Represents an adapter that converts a depth image to an image.
+    /// Implements an adapter from streams of depth image to an image.
     /// </summary>
     [StreamAdapter]
     public class DepthImageToImageAdapter : StreamAdapter<Shared<DepthImage>, Shared<Image>>

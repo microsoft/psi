@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a visualization object that contains a collection of 3D visuals.
+    /// Implements a visualization object that contains a collection of 3D visuals.
     /// </summary>
     /// <typeparam name="TVisual">The type of visual in the list.</typeparam>
     public class UpdatableVisual3DList<TVisual> : ModelVisual3D

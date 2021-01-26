@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of lists of value tuple named rectangles into lists of System.Tuple named rectangles.
+    /// Implements an adapter from streams of lists of value tuple named rectangles into lists of System.Tuple named rectangles.
     /// </summary>
     [StreamAdapter]
     public class RectangleValueTupleListAdapter : StreamAdapter<List<(Rectangle, string)>, List<Tuple<Rectangle, string>>>

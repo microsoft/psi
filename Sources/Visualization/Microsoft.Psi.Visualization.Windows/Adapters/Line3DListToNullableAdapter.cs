@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of lists of <see cref="Line3D"/> to lists of nullable <see cref="Line3D"/>.
+    /// Implements an adapter from streams of lists of <see cref="Line3D"/> to lists of nullable <see cref="Line3D"/>.
     /// </summary>
     [StreamAdapter]
     public class Line3DListToNullableAdapter : StreamAdapter<List<Line3D>, List<Line3D?>>

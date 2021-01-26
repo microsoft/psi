@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of compresed images into <see cref="Image"/>s.
+    /// Implements an adapter from streams of compresed images into <see cref="Image"/>s.
     /// </summary>
     [StreamAdapter]
     public class CompressedImageAdapter : StreamAdapter<byte[], Shared<Image>>

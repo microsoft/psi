@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams of any type into objects.
+    /// Implements an adapter from streams of any type into objects.
     /// </summary>
     /// <typeparam name="T">Message type.</typeparam>
     public class ObjectAdapter<T> : StreamAdapter<T, object>

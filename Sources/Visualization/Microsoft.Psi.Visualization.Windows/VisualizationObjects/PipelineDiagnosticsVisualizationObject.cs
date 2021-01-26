@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
-    /// Class implements a diagnostics visualization object.
+    /// Implements a diagnostics visualization object.
     /// </summary>
     [VisualizationObject("Diagnostics", null, IconSourcePath.Diagnostics, IconSourcePath.Diagnostics)]
     public class PipelineDiagnosticsVisualizationObject : Instant2DVisualizationObject<PipelineDiagnostics>

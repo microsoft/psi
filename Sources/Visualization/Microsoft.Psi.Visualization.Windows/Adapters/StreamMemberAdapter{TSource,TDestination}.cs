@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Adapter from a source stream to a member of that stream.
+    /// Implements an adapter from a source stream to a member of that stream.
     /// </summary>
     /// <typeparam name="TSource">The type of messages in the source stream.</typeparam>
     /// <typeparam name="TDestination">The type of the member property or field.</typeparam>

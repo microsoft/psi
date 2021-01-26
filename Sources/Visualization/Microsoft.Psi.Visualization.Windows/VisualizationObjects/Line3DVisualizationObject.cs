@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
-    /// Represents a 3D line visualization object.
+    /// Implements a 3D line visualization object.
     /// </summary>
     [VisualizationObject("3D Line")]
     public class Line3DVisualizationObject : ModelVisual3DVisualizationObject<Line3D?>

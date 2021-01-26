@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Represents an audio visualization object.
+    /// Implements an audio visualization object.
     /// </summary>
     [VisualizationObject("Audio", typeof(AudioSummarizer), IconSourcePath.StreamAudioMuted, IconSourcePath.StreamAudioMuted)]
     public class AudioVisualizationObject : PlotVisualizationObject<double>

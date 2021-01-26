@@ -251,9 +251,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <typeparam name="T">The type of the new message.</typeparam>
         /// <param name="data">The new message data.</param>
         /// <returns>A newly created message using the envelope of the current value.</returns>
-        protected Message<T> SynthesizeMessage<T>(T data)
+        protected Message<T>? SynthesizeMessage<T>(T data)
         {
-            return new Message<T>(data, this.CurrentValue.Value.OriginatingTime, this.CurrentValue.Value.Time, this.CurrentValue.Value.SourceId, this.CurrentValue.Value.SequenceId);
+            if (!this.CurrentValue.HasValue)
+            {
+                return null;
+            }
+            else
+            {
+                return new Message<T>(data, this.CurrentValue.Value.OriginatingTime, this.CurrentValue.Value.Time, this.CurrentValue.Value.SourceId, this.CurrentValue.Value.SequenceId);
+            }
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Windows = System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Used to adapt streams of <see cref="MathNet.Point3D"/> into nullable <see cref="Windows.Point3D"/>.
+    /// Implements an adapter from streams of <see cref="MathNet.Point3D"/> into nullable <see cref="Windows.Point3D"/>.
     /// </summary>
     [StreamAdapter]
     public class MathNetPoint3DToNullablePoint3DAdapter : StreamAdapter<MathNet.Point3D, Windows.Point3D?>

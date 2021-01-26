@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a visualization object that can display lists of Windows 3D points.
+    /// Implements a visualization object that can display lists of Windows 3D points.
     /// </summary>
     [VisualizationObject("3D Spheres")]
     public class Point3DListAsSpheresVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Point3DAsSphereVisualizationObject, Point3D?, List<Point3D?>>

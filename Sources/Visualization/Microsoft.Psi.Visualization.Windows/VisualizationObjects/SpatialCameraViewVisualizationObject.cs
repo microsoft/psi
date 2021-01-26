@@ -12,36 +12,33 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Extensions;
-    using Microsoft.Psi.Visualization.Views.Visuals3D;
+    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
     using Win3D = System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a 3D image with intrinsics visualization object.
+    /// Implements a visualization object for a spatial camera view, from an image, camera intrinsics, and spatial position.
     /// </summary>
-    [VisualizationObject("Image with Intrinsics")]
-    public class ImageWithIntrinsicsVisualizationObject : ModelVisual3DVisualizationObject<(Shared<Image>, ICameraIntrinsics)>
+    [VisualizationObject("3D Camera View")]
+    public class SpatialCameraViewVisualizationObject : ModelVisual3DVisualizationObject<(Shared<Image>, ICameraIntrinsics, CoordinateSystem)>
     {
-        private static readonly CoordinateSystem OriginCoordinateSystem = new CoordinateSystem();
-
         private readonly MeshGeometryVisual3D imageModelVisual;
         private readonly DisplayImage displayImage;
-        private readonly CameraIntrinsicsVisual3D cameraIntrinsicsVisual3D;
-        private ICameraIntrinsics currentIntrinsics = null;
 
-        private Color frustumColor = Colors.DimGray;
-        private double imagePlaneDistanceCm = 100;
+        private SpatialCameraVisualizationObject spatialCamera;
+        private Shared<Image> image = null;
+        private CoordinateSystem position = null;
+        private ICameraIntrinsics intrinsics = null;
         private int imageTransparency = 50;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageWithIntrinsicsVisualizationObject"/> class.
+        /// Initializes a new instance of the <see cref="SpatialCameraViewVisualizationObject"/> class.
         /// </summary>
-        public ImageWithIntrinsicsVisualizationObject()
+        public SpatialCameraViewVisualizationObject()
         {
-            this.cameraIntrinsicsVisual3D = new CameraIntrinsicsVisual3D()
-            {
-                Color = this.frustumColor,
-                ImagePlaneDistanceCm = this.imagePlaneDistanceCm,
-            };
+            // Instantiate the child visualizer for visualizing the camera frustum,
+            // and register for its property changed notifications.
+            this.spatialCamera = new SpatialCameraVisualizationObject();
+            this.spatialCamera.RegisterChildPropertyChangedNotifications(this, nameof(this.SpatialCamera));
 
             // Create a rectangle mesh for the image
             this.displayImage = new DisplayImage();
@@ -77,27 +74,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the frustum color.
+        /// Gets or sets the visualization object for the camera intrinsics as a frustum.
         /// </summary>
+        [ExpandableObject]
         [DataMember]
-        [DisplayName("Frustum Color")]
-        [Description("The color of the rendered frustum.")]
-        public Color FrustumColor
+        [DisplayName("Spatial Camera")]
+        [Description("The frustum representing the spatial camera.")]
+        public SpatialCameraVisualizationObject SpatialCamera
         {
-            get { return this.frustumColor; }
-            set { this.Set(nameof(this.FrustumColor), ref this.frustumColor, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the image plane distance.
-        /// </summary>
-        [DataMember]
-        [DisplayName("Image Plane Distance (cm)")]
-        [Description("The image plane distance in centimeters.")]
-        public double ImagePlaneDistanceCm
-        {
-            get { return this.imagePlaneDistanceCm; }
-            set { this.Set(nameof(this.ImagePlaneDistanceCm), ref this.imagePlaneDistanceCm, value); }
+            get { return this.spatialCamera; }
+            set { this.Set(nameof(this.SpatialCamera), ref this.spatialCamera, value); }
         }
 
         /// <summary>
@@ -115,32 +101,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         public override void UpdateData()
         {
-            if (this.currentIntrinsics == null)
+            if (this.image != null)
             {
-                this.currentIntrinsics = this.CurrentData.Item2;
-            }
-            else
-            {
-                this.CurrentData.Item2.DeepClone(ref this.currentIntrinsics);
+                this.image.Dispose();
             }
 
-            this.UpdateImageContents();
-            this.UpdateVisualPosition();
+            this.image = this.CurrentData.Item1?.AddRef();
+            this.intrinsics = this.CurrentData.Item2;
+            this.position = this.CurrentData.Item3;
+
+            this.UpdateVisuals();
             this.UpdateVisibility();
         }
 
         /// <inheritdoc/>
         public override void NotifyPropertyChanged(string propertyName)
         {
-            if (propertyName == nameof(this.FrustumColor))
-            {
-                this.cameraIntrinsicsVisual3D.Color = this.FrustumColor;
-            }
-            else if (propertyName == nameof(this.ImagePlaneDistanceCm))
-            {
-                this.UpdateVisualPosition();
-            }
-            else if (propertyName == nameof(this.ImageTransparency))
+            if (propertyName == nameof(this.ImageTransparency))
             {
                 this.UpdateImageContents();
             }
@@ -150,45 +127,58 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <inheritdoc/>
+        public override void OnChildPropertyChanged(string path, object value)
+        {
+            if (path == nameof(this.SpatialCamera) + "." + nameof(this.SpatialCamera.ImagePlaneDistanceCm))
+            {
+                this.UpdateVisualPosition();
+            }
+
+            base.OnChildPropertyChanged(path, value);
+        }
+
+        private void UpdateVisuals()
+        {
+            this.spatialCamera.SetCurrentValue(this.SynthesizeMessage((this.intrinsics, this.position)));
+            this.UpdateImageContents();
+            this.UpdateVisualPosition();
+        }
+
         private void UpdateImageContents()
         {
-            if (this.CurrentData.Item1 != null && this.CurrentData.Item1.Resource != null)
+            if (this.image != null && this.image.Resource != null)
             {
                 // Update the display image
-                this.displayImage.UpdateImage(this.CurrentData.Item1);
+                this.displayImage.UpdateImage(this.image);
 
                 // Render the display image
                 var material = new Win3D.DiffuseMaterial(new ImageBrush(this.displayImage.Image) { Opacity = this.ImageTransparency * 0.01 });
                 this.imageModelVisual.Material = material;
                 this.imageModelVisual.BackMaterial = material;
             }
-
-            this.UpdateVisibility();
         }
 
         private void UpdateVisualPosition()
         {
-            if (this.currentIntrinsics != null)
+            if (this.intrinsics != null && this.position != null)
             {
-                var focalDistance = this.ImagePlaneDistanceCm * 0.01;
-                var leftWidth = focalDistance * this.currentIntrinsics.PrincipalPoint.X / this.currentIntrinsics.FocalLength;
-                var rightWidth = focalDistance * (this.currentIntrinsics.ImageWidth - this.currentIntrinsics.PrincipalPoint.X) / this.currentIntrinsics.FocalLength;
-                var topHeight = focalDistance * this.currentIntrinsics.PrincipalPoint.Y / this.currentIntrinsics.FocalLength;
-                var bottomHeight = focalDistance * (this.currentIntrinsics.ImageHeight - this.currentIntrinsics.PrincipalPoint.Y) / this.currentIntrinsics.FocalLength;
+                var focalDistance = this.spatialCamera.ImagePlaneDistanceCm * 0.01;
+                var leftWidth = focalDistance * this.intrinsics.PrincipalPoint.X / this.intrinsics.FocalLength;
+                var rightWidth = focalDistance * (this.intrinsics.ImageWidth - this.intrinsics.PrincipalPoint.X) / this.intrinsics.FocalLength;
+                var topHeight = focalDistance * this.intrinsics.PrincipalPoint.Y / this.intrinsics.FocalLength;
+                var bottomHeight = focalDistance * (this.intrinsics.ImageHeight - this.intrinsics.PrincipalPoint.Y) / this.intrinsics.FocalLength;
 
-                var pointingAxis = OriginCoordinateSystem.XAxis;
-                var imageRightAxis = OriginCoordinateSystem.YAxis.Negate();
-                var imageUpAxis = OriginCoordinateSystem.ZAxis;
+                var pointingAxis = this.position.XAxis;
+                var imageRightAxis = this.position.YAxis.Negate();
+                var imageUpAxis = this.position.ZAxis;
 
-                var principalPoint = OriginCoordinateSystem.Origin + pointingAxis.ScaleBy(focalDistance);
+                var principalPoint = this.position.Origin + pointingAxis.ScaleBy(focalDistance);
 
                 var topLeftPoint3D = (principalPoint - imageRightAxis.ScaleBy(leftWidth) + imageUpAxis.ScaleBy(topHeight)).ToPoint3D();
                 var topRightPoint3D = (principalPoint + imageRightAxis.ScaleBy(rightWidth) + imageUpAxis.ScaleBy(topHeight)).ToPoint3D();
                 var bottomRightPoint3D = (principalPoint + imageRightAxis.ScaleBy(rightWidth) - imageUpAxis.ScaleBy(bottomHeight)).ToPoint3D();
                 var bottomLeftPoint3D = (principalPoint - imageRightAxis.ScaleBy(leftWidth) - imageUpAxis.ScaleBy(bottomHeight)).ToPoint3D();
-
-                this.cameraIntrinsicsVisual3D.ImagePlaneDistanceCm = this.imagePlaneDistanceCm;
-                this.cameraIntrinsicsVisual3D.Intrinsics = this.currentIntrinsics;
 
                 this.imageModelVisual.MeshGeometry.Positions[0] = topLeftPoint3D;
                 this.imageModelVisual.MeshGeometry.Positions[1] = topRightPoint3D;
@@ -199,8 +189,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.imageModelVisual, this.Visible && this.CurrentData.Item1 != null && this.CurrentData.Item1.Resource != null);
-            this.UpdateChildVisibility(this.cameraIntrinsicsVisual3D, this.Visible && this.CurrentData.Item1 != null && this.CurrentData.Item1.Resource != null);
+            var visible = this.Visible && this.CurrentData != default && this.image != null && this.image.Resource != null && this.intrinsics != null && this.position != null;
+            this.UpdateChildVisibility(this.imageModelVisual, visible);
+            this.UpdateChildVisibility(this.spatialCamera.ModelView, visible);
         }
     }
 }

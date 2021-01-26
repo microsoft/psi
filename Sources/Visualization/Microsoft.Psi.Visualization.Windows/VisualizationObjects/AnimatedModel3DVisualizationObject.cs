@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals3D;
 
     /// <summary>
-    /// Represents an animated model 3D visualization object.
+    /// Implements an animated model 3D visualization object.
     /// </summary>
     [VisualizationObject("Animated Model")]
     public class AnimatedModel3DVisualizationObject : Instant3DVisualizationObject<CoordinateSystem>

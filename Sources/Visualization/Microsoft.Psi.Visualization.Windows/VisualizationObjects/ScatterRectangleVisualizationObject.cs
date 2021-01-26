@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Represents a scatter rectangle visualization object.
+    /// Implements a scatter rectangle visualization object.
     /// </summary>
     [VisualizationObject("Labeled Rectangles")]
     public class ScatterRectangleVisualizationObject : Instant2DVisualizationObject<List<Tuple<System.Drawing.Rectangle, string>>>

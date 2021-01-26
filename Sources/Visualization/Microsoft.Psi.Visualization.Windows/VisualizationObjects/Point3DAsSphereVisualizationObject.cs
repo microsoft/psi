@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using HelixToolkit.Wpf;
 
     /// <summary>
-    /// Represents a 3D point visualization object.
+    /// Implements a 3D point visualization object.
     /// </summary>
     [VisualizationObject("3D Sphere")]
     public class Point3DAsSphereVisualizationObject : ModelVisual3DVisualizationObject<Point3D?>

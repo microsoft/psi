@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Represents a speech recognition visualization object.
+    /// Implements a speech recognition visualization object.
     /// </summary>
     [VisualizationObject("Speech Recognition Results")]
     public class SpeechRecognitionVisualizationObject : TimelineVisualizationObject<IStreamingSpeechRecognitionResult>

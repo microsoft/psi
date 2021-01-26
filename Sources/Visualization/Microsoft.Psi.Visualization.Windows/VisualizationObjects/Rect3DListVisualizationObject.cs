@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a visualization object that can display lists of 3D rectangles.
+    /// Implements a visualization object that can display lists of 3D rectangles.
     /// </summary>
     [VisualizationObject("3D Rectangles")]
     public class Rect3DListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<Rect3DVisualizationObject, Rect3D?, List<Rect3D?>>

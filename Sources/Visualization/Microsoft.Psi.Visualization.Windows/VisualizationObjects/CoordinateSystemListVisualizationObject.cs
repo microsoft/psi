@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
-    /// Represents a visualization object that can display lists of coordinate systems.
+    /// Implements a visualization object that can display lists of coordinate systems.
     /// </summary>
     [VisualizationObject("Coordinate Systems")]
     public class CoordinateSystemListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<CoordinateSystemVisualizationObject, CoordinateSystem, List<CoordinateSystem>>

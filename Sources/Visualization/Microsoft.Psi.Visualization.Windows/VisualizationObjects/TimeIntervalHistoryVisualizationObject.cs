@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Represents a discrete event visualization object.
+    /// Implements a discrete event visualization object.
     /// </summary>
     [VisualizationObject("Time Interval History")]
     public class TimeIntervalHistoryVisualizationObject : TimelineVisualizationObject<TimeIntervalHistory>

@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals3D;
 
     /// <summary>
-    /// Represents a sprite 3D visualization object.
+    /// Implements a sprite 3D visualization object.
     /// </summary>
     [VisualizationObject("3D Sprites")]
     public class Sprite3DVisualizationObject : Instant3DVisualizationObject<CoordinateSystem>

@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Represents a stream adapter that passes its input through to its output unchanged.
+    /// Implements an adapter that passes its input through to its output unchanged.
     /// </summary>
     /// <typeparam name="T">The type of data the adapter can adapt.</typeparam>
     public class PassthroughAdapter<T> : StreamAdapter<T, T>

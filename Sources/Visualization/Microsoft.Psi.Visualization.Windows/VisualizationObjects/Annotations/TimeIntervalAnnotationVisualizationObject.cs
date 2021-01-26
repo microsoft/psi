@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
-    /// Class implements a <see cref="TimeIntervalAnnotation"/>.
+    /// Implements a visualization object for <see cref="TimeIntervalAnnotation"/>.
     /// </summary>
     [VisualizationObject("Time Interval Annotations")]
     public class TimeIntervalAnnotationVisualizationObject : TimelineVisualizationObject<TimeIntervalAnnotation>

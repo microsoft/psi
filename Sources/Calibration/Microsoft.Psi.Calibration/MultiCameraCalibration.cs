@@ -174,7 +174,7 @@ namespace Microsoft.Psi.Calibration
             /// <summary>
             /// Gets the camera's intrinsics.
             /// </summary>
-            public CameraIntrinsics CameraIntrinsics
+            public ICameraIntrinsics CameraIntrinsics
             {
                 get
                 {

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Class implements a generic message visualization object view model.
+    /// Implements a generic message visualization object view model.
     /// </summary>
     [VisualizationObject("Messages", typeof(ObjectSummarizer), IconSourcePath.Messages, IconSourcePath.MessagesInPanel, "%StreamName% (Messages)", true)]
     public class MessageVisualizationObject : PlotVisualizationObject<object>

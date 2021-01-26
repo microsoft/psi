@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals3D;
 
     /// <summary>
-    /// Represents a scatter planar direction visualization object.
+    /// Implements a scatter planar direction visualization object.
     /// </summary>
     [VisualizationObject("Scatter Planar Data")]
     public class ScatterPlanarDirectionVisualizationObject : Instant3DVisualizationObject<List<CoordinateSystem>>

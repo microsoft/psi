@@ -1,31 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-namespace Microsoft.Psi.Visualization.Views.Visuals3D
+namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.Serialization;
     using System.Windows.Media;
-    using System.Windows.Media.Media3D;
     using HelixToolkit.Wpf;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Visualization.Extensions;
 
     /// <summary>
-    /// Implements 3D visual for camera intrinsics.
+    /// Implements a visualization object for a spatial camera (camera intrinsics + position) as a frustum.
     /// </summary>
-    public class CameraIntrinsicsVisual3D : ModelVisual3D
+    [VisualizationObject("Spatial Camera")]
+    public class SpatialCameraVisualizationObject : ModelVisual3DVisualizationObject<(ICameraIntrinsics, CoordinateSystem)>
     {
         private readonly List<LinesVisual3D> pyramid = new List<LinesVisual3D>();
-        private CoordinateSystem position = new CoordinateSystem();
+        private CoordinateSystem position = null;
         private ICameraIntrinsics intrinsics = null;
         private Color color = Colors.DimGray;
         private double imagePlaneDistanceCm = 100;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CameraIntrinsicsVisual3D"/> class.
+        /// Initializes a new instance of the <see cref="SpatialCameraVisualizationObject"/> class.
         /// </summary>
-        public CameraIntrinsicsVisual3D()
+        public SpatialCameraVisualizationObject()
         {
             // Create frustum lines
             for (int i = 0; i < 8; i++)
@@ -41,77 +43,62 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
                 }
 
                 this.pyramid.Add(linesVisual3D);
-                this.Children.Add(linesVisual3D);
             }
         }
 
         /// <summary>
-        /// Gets or sets the color of the frustum.
+        /// Gets or sets the frustum color.
         /// </summary>
+        [DataMember]
+        [DisplayName("Color")]
+        [Description("The color of the frustum.")]
         public Color Color
         {
             get { return this.color; }
-
-            set
-            {
-                this.color = value;
-                this.UpdateColor();
-            }
+            set { this.Set(nameof(this.Color), ref this.color, value); }
         }
 
         /// <summary>
-        /// Gets or sets the distance from the camera to the rendered image plane.
+        /// Gets or sets the image plane distance.
         /// </summary>
+        [DataMember]
+        [DisplayName("Image Plane Distance (cm)")]
+        [Description("The image plane distance in centimeters.")]
         public double ImagePlaneDistanceCm
         {
             get { return this.imagePlaneDistanceCm; }
+            set { this.Set(nameof(this.ImagePlaneDistanceCm), ref this.imagePlaneDistanceCm, value); }
+        }
 
-            set
+        /// <inheritdoc/>
+        public override void UpdateData()
+        {
+            this.intrinsics = this.CurrentData.Item1;
+            this.position = this.CurrentData.Item2;
+            this.UpdateVisuals();
+            this.UpdateVisibility();
+        }
+
+        /// <inheritdoc/>
+        public override void NotifyPropertyChanged(string propertyName)
+        {
+            if (propertyName == nameof(this.Color))
             {
-                this.imagePlaneDistanceCm = value;
-                this.UpdateVisualPosition();
+                this.UpdateColor();
+            }
+            else if (propertyName == nameof(this.ImagePlaneDistanceCm))
+            {
+                this.UpdateVisuals();
+            }
+            else if (propertyName == nameof(this.Visible))
+            {
+                this.UpdateVisibility();
             }
         }
 
-        /// <summary>
-        /// Gets or sets the camera intrinsics.
-        /// </summary>
-        public ICameraIntrinsics Intrinsics
+        private void UpdateVisuals()
         {
-            get { return this.intrinsics; }
-
-            set
-            {
-                this.intrinsics = value;
-                this.UpdateVisualPosition();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the camera position.
-        /// </summary>
-        public CoordinateSystem Position
-        {
-            get { return this.position; }
-
-            set
-            {
-                this.position = value;
-                this.UpdateVisualPosition();
-            }
-        }
-
-        private void UpdateColor()
-        {
-            for (int i = 0; i < this.pyramid.Count; i++)
-            {
-                this.pyramid[i].Color = this.color;
-            }
-        }
-
-        private void UpdateVisualPosition()
-        {
-            if (this.intrinsics != null)
+            if (this.intrinsics != null && this.position != null)
             {
                 var focalDistance = this.ImagePlaneDistanceCm * 0.01;
                 var leftWidth = focalDistance * this.intrinsics.PrincipalPoint.X / this.intrinsics.FocalLengthXY.X;
@@ -155,6 +142,22 @@ namespace Microsoft.Psi.Visualization.Views.Visuals3D
 
                 this.pyramid[7].Points[0] = cameraPoint3D;
                 this.pyramid[7].Points[1] = bottomRightPoint3D;
+            }
+        }
+
+        private void UpdateVisibility()
+        {
+            foreach (var edge in this.pyramid)
+            {
+                this.UpdateChildVisibility(edge, this.Visible && this.CurrentData != default && this.intrinsics != null && this.position != null);
+            }
+        }
+
+        private void UpdateColor()
+        {
+            foreach (var edge in this.pyramid)
+            {
+                edge.Color = this.color;
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Represents a visualization object that contains a dictionary of 3D visuals.
+    /// Implements a visualization object that contains a dictionary of 3D visuals.
     /// </summary>
     /// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
     /// <typeparam name="TVisual">The type of visual in the dictionary.</typeparam>

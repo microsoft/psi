@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Represents a dictionary of 3D visualization objects.
+    /// Implements a dictionary of 3D visualization objects.
     /// </summary>
     /// <typeparam name="TVisObj">The type of visualization object in the dictionary.</typeparam>
     /// <typeparam name="TKey">The type of dictionary keys.</typeparam>

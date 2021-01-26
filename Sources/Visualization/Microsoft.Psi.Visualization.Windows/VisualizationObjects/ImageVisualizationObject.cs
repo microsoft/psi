@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Class implements a image visualization object.
+    /// Implements an image visualization object.
     /// </summary>
     [VisualizationObject("Image")]
     public class ImageVisualizationObject : ImageVisualizationObjectBase<Shared<Image>>

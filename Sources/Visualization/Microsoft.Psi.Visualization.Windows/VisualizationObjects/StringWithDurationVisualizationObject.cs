@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Represents a string with duration visualization object.
+    /// Implements a string with duration visualization object.
     /// </summary>
     [VisualizationObject("Strings with Duration")]
     public class StringWithDurationVisualizationObject : TimelineVisualizationObject<Tuple<string, TimeSpan>>

@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using HelixToolkit.Wpf;
 
     /// <summary>
-    /// Represents a list of 3D points as a point cloud visualization object.
+    /// Implements a list of 3D points as a point cloud visualization object.
     /// </summary>
     [VisualizationObject("3D Point Cloud")]
     public class Point3DListAsPointCloudVisualizationObject : ModelVisual3DVisualizationObject<List<Point3D>>
