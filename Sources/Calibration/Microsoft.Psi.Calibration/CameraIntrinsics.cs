@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Calibration
 {
+    using System;
     using System.Runtime.Serialization;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
@@ -22,9 +23,9 @@ namespace Microsoft.Psi.Calibration
         /// </summary>
         /// <param name="imageWidth">The width of the image.</param>
         /// <param name="imageHeight">The height of the image.</param>
-        /// <param name="transform">The intrinsics transform matrix.</param>
-        /// <param name="radialDistortion">The radial distortion parameters.</param>
-        /// <param name="tangentialDistortion">The tangential distortion parameters.</param>
+        /// <param name="transform">The 3x3 intrinsics transform matrix.</param>
+        /// <param name="radialDistortion">The radial distortion parameters (up to 6).</param>
+        /// <param name="tangentialDistortion">The tangential distortion parameters (up to 2).</param>
         /// <param name="closedFormDistorts">Indicates which direction the closed form equation for Brown-Conrady Distortion model goes. I.e. does it perform distortion or undistortion. Default is to distort (thus making projection simpler and unprojection more complicated).</param>
         public CameraIntrinsics(
             int imageWidth,
@@ -36,9 +37,25 @@ namespace Microsoft.Psi.Calibration
         {
             this.ImageWidth = imageWidth;
             this.ImageHeight = imageHeight;
+
+            if (transform == null || transform.RowCount != 3 || transform.ColumnCount != 3)
+            {
+                throw new ArgumentException($"{nameof(CameraIntrinsics)} must be initialized with a 3x3 transform matrix.");
+            }
+
             this.Transform = transform;
-            this.RadialDistortion = radialDistortion ?? Vector<double>.Build.Dense(6, 0);
-            this.TangentialDistortion = tangentialDistortion ?? Vector<double>.Build.Dense(2, 0);
+            this.RadialDistortion = Vector<double>.Build.Dense(6, 0);
+            if (radialDistortion != null)
+            {
+                radialDistortion.CopySubVectorTo(this.RadialDistortion, 0, 0, Math.Min(6, radialDistortion.Count));
+            }
+
+            this.TangentialDistortion = Vector<double>.Build.Dense(2, 0);
+            if (tangentialDistortion != null)
+            {
+                tangentialDistortion.CopySubVectorTo(this.TangentialDistortion, 0, 0, Math.Min(2, tangentialDistortion.Count));
+            }
+
             this.FocalLengthXY = new Point2D(this.Transform[0, 0], this.Transform[1, 1]);
             this.PrincipalPoint = new Point2D(this.Transform[0, 2], this.Transform[1, 2]);
             this.ClosedFormDistorts = closedFormDistorts;
@@ -207,8 +224,6 @@ namespace Microsoft.Psi.Calibration
                 double radiusSqSq = radiusSq * radiusSq;
                 double g = 1 + k1 * radiusSq + k2 * radiusSqSq + k3 * radiusSq * radiusSqSq;
                 double h = 1 + k4 * radiusSq + k5 * radiusSqSq + k6 * radiusSq * radiusSqSq;
-                double dr2dx = 2 * x;
-                double dr2dy = 2 * y;
                 double d = g / h;
                 double dgdr2 = k1 + 2 * k2 * radiusSq + 3 * k3 * radiusSqSq;
                 double dhdr2 = k4 + 2 * k5 * radiusSq + 3 * k6 * radiusSqSq;
@@ -222,7 +237,7 @@ namespace Microsoft.Psi.Calibration
 
                 double det = (dFxdx * dFydy) - dFydx * dFxdy;
 
-                if (System.Math.Abs(det) < 1E-16)
+                if (Math.Abs(det) < 1E-16)
                 {
                     // Not invertible. Perform no distortion
                     outputPt = new Point2D(inputPt.X, inputPt.Y);
@@ -275,36 +290,26 @@ namespace Microsoft.Psi.Calibration
             // Undistort pixel
             double xp, yp;
             double radiusSquared = (inputPt.X * inputPt.X) + (inputPt.Y * inputPt.Y);
-            if (this.RadialDistortion != null)
-            {
-                double k1 = this.RadialDistortion[0];
-                double k2 = this.RadialDistortion[1];
-                double k3 = this.RadialDistortion[2];
-                double k4 = this.RadialDistortion[3];
-                double k5 = this.RadialDistortion[4];
-                double k6 = this.RadialDistortion[5];
-                double g = 1 + k1 * radiusSquared + k2 * radiusSquared * radiusSquared + k3 * radiusSquared * radiusSquared * radiusSquared;
-                double h = 1 + k4 * radiusSquared + k5 * radiusSquared * radiusSquared + k6 * radiusSquared * radiusSquared * radiusSquared;
-                double d = g / h;
 
-                xp = inputPt.X * d;
-                yp = inputPt.Y * d;
-            }
-            else
-            {
-                xp = inputPt.X;
-                yp = inputPt.Y;
-            }
+            double k1 = this.RadialDistortion[0];
+            double k2 = this.RadialDistortion[1];
+            double k3 = this.RadialDistortion[2];
+            double k4 = this.RadialDistortion[3];
+            double k5 = this.RadialDistortion[4];
+            double k6 = this.RadialDistortion[5];
+            double g = 1 + k1 * radiusSquared + k2 * radiusSquared * radiusSquared + k3 * radiusSquared * radiusSquared * radiusSquared;
+            double h = 1 + k4 * radiusSquared + k5 * radiusSquared * radiusSquared + k6 * radiusSquared * radiusSquared * radiusSquared;
+            double d = g / h;
 
-            // If we are incorporating tangential distortion, include that here
-            if (this.TangentialDistortion != null && (this.TangentialDistortion[0] != 0.0 || this.TangentialDistortion[1] != 0.0))
-            {
-                double xy = 2.0 * inputPt.X * inputPt.Y;
-                double x2 = 2.0 * inputPt.X * inputPt.X;
-                double y2 = 2.0 * inputPt.Y * inputPt.Y;
-                xp += (this.TangentialDistortion[1] * (radiusSquared + x2)) + (this.TangentialDistortion[0] * xy);
-                yp += (this.TangentialDistortion[0] * (radiusSquared + y2)) + (this.TangentialDistortion[1] * xy);
-            }
+            xp = inputPt.X * d;
+            yp = inputPt.Y * d;
+
+            // Incorporate tangential distortion
+            double xy = 2.0 * inputPt.X * inputPt.Y;
+            double x2 = 2.0 * inputPt.X * inputPt.X;
+            double y2 = 2.0 * inputPt.Y * inputPt.Y;
+            xp += (this.TangentialDistortion[1] * (radiusSquared + x2)) + (this.TangentialDistortion[0] * xy);
+            yp += (this.TangentialDistortion[0] * (radiusSquared + y2)) + (this.TangentialDistortion[1] * xy);
 
             outputPt = new Point2D(xp, yp);
             return true;

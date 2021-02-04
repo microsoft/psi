@@ -67,11 +67,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [DataMember]
         [DisplayName("Point Cloud Sparsity")]
-        [Description("The sparsity (in pixels) of the point cloud.")]
+        [Description("The sparsity (in pixels) of the point cloud (min=1).")]
         public int Sparsity
         {
             get { return this.sparsity; }
-            set { this.Set(nameof(this.Sparsity), ref this.sparsity, value); }
+            set { this.Set(nameof(this.Sparsity), ref this.sparsity, value > 0 ? value : 1); }
         }
 
         /// <inheritdoc/>
