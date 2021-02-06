@@ -1269,31 +1269,11 @@ namespace Test.Psi
         }
 
         [TestMethod]
-        [Timeout(60000)]
+        [Timeout(10000)]
         public void ZipAndMerge()
         {
             var zipped = new List<string[]>();
             var merged = new List<string>();
-
-            using (var p = Pipeline.Create())
-            {
-                Generators.Range(p, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open because of Delay
-
-                // A0  A1  A2  A3  A4  A5  A6  A7  A8  A9
-                // B0    B1    B2    B3    B4    B5    B6    B7    B8    B9
-                // C0      C1      C2      C3      C4      C5      C6      C7      C8      C9 (arriving 100ms late in wall-clock time)
-                //
-                // Zipped order: A0 B0 C0 A1 B1 A2 C1 A3 B2 A4 C2 B3 A5 A6 B4 C3 A7 B5 A8 C4 A9 B6 C5 B7 B8 C6 B9 C7 C8 C9
-                // Several places align *exactly* in originating time (e.g. A0-B0-C0, A2-C1, A3-B2, etc.) these are ordered by stream ID within the same tick
-                var sourceA = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(10)).Select(i => $"A{i}");
-                var sourceB = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(15)).Select(i => $"B{i}");
-                var sourceC = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(20)).Select(i => $"C{i}").Delay(TimeSpan.FromMilliseconds(100));
-
-                Operators.Merge(new[] { sourceA, sourceB, sourceC }).Do(x => merged.Add(x.Data.DeepClone())); // non-deterministic order
-                Operators.Zip(new[] { sourceA, sourceB, sourceC }).Do(x => zipped.Add(x.DeepClone())); // ordered by originating time, then stream ID within single tick
-
-                p.Run();
-            }
 
             // Zipped and ordered by originating time (with stream ID tie-breaker)
             var zippedShouldBe = new[]
@@ -1307,18 +1287,28 @@ namespace Test.Psi
                 new string[] { "B3" },
                 new string[] { "A5" },
                 new string[] { "A6", "B4", "C3" },
-                new string[] { "A7" },
-                new string[] { "B5" },
-                new string[] { "A8", "C4" },
-                new string[] { "A9", "B6" },
-                new string[] { "C5" },
-                new string[] { "B7" },
-                new string[] { "B8", "C6" },
-                new string[] { "B9" },
-                new string[] { "C7" },
-                new string[] { "C8" },
-                new string[] { "C9" },
             };
+
+            using (var p = Pipeline.Create())
+            {
+                // A0  A1  A2  A3  A4  A5  A6
+                // B0    B1    B2    B3    B4
+                // C0      C1      C2      C3 (arriving 100ms late in wall-clock time)
+                //
+                // Zipped order: [A0 B0 C0] [A1] [B1] [A2 C1] [A3 B2] [A4 C2] [B3] [A5] [A6 B4 C3]
+                // Several places align *exactly* in originating time (e.g. A0-B0-C0, A2-C1, A3-B2, etc.) these are ordered by stream ID within the same tick
+                var sourceA = Generators.Range(p, 0, 7, TimeSpan.FromMilliseconds(10), keepOpen: true).Select(i => $"A{i}");
+                var sourceB = Generators.Range(p, 0, 5, TimeSpan.FromMilliseconds(15), keepOpen: true).Select(i => $"B{i}");
+                var sourceC = Generators.Range(p, 0, 4, TimeSpan.FromMilliseconds(20), keepOpen: true).Select(i => $"C{i}").Delay(TimeSpan.FromMilliseconds(100));
+
+                Operators.Merge(new[] { sourceA, sourceB, sourceC }).Do(x => merged.Add(x.Data.DeepClone())); // non-deterministic order
+                Operators.Zip(new[] { sourceA, sourceB, sourceC }).Do(x => zipped.Add(x.DeepClone())); // ordered by originating time, then stream ID within single tick
+
+                p.RunAsync();
+                while (zipped.Count != zippedShouldBe.Length)
+                {
+                }
+            }
 
             Assert.AreEqual(zipped.Count, zippedShouldBe.Length);
             for (int i = 0; i < zipped.Count; i++)
@@ -1330,9 +1320,9 @@ namespace Test.Psi
             Assert.IsTrue(Enumerable.SequenceEqual(
                 new[]
                 {
-                    "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9",
-                    "B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9",
-                    "C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9",
+                    "A0", "A1", "A2", "A3", "A4", "A5", "A6",
+                    "B0", "B1", "B2", "B3", "B4",
+                    "C0", "C1", "C2", "C3",
                 },
                 merged.OrderBy(_ => _)));
         }

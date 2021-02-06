@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Components
 
             // get the groups of messages ready to be published
             var eligible = this.buffer
-                .Where(m => m.envelope.OriginatingTime < frontier)
+                .Where(m => m.envelope.OriginatingTime <= frontier)
                 .OrderBy(m => m.envelope.OriginatingTime)
                 .ThenBy(m => m.envelope.SourceId)
                 .GroupBy(m => m.envelope.OriginatingTime);
