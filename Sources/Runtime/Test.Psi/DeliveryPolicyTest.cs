@@ -8,6 +8,7 @@ namespace Test.Psi
     using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
+    using Microsoft.Psi.Streams;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -272,6 +273,75 @@ namespace Test.Psi
             CollectionAssert.IsSubsetOf(new List<int>() { 0, 2, 4, 6, 8 }, queueSizeTwoWithGuarantees);
             CollectionAssert.AllItemsAreUnique(queueSizeTwoWithGuarantees);
             CollectionAssert.AreEqual(queueSizeTwoWithGuarantees.OrderBy(x => x).ToList(), queueSizeTwoWithGuarantees);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void HandleClosingMessage()
+        {
+            // Create a delivery policy specifying a maximum queue size of 1
+            var deliveryPolicy = new DeliveryPolicy<int>(
+                1,
+                1,
+                null,
+                false,
+                false,
+                guaranteeDelivery: value => value == 2, // only guarantee message value is 2
+                "TestDeliveryPolicy");
+
+            var deliveryQueue = new DeliveryQueue<int>(deliveryPolicy, RecyclingPool.Create<int>());
+
+            // Enqueue a closing message - message should be queued
+            deliveryQueue.Enqueue(
+                Message.Create(0, DateTime.UtcNow, DateTime.UtcNow, 0, int.MaxValue), // closing message
+                null,
+                default,
+                null,
+                out _);
+
+            // Enqueue a message with value 1 - message should not be queued
+            deliveryQueue.Enqueue(
+                Message.Create(1, DateTime.UtcNow, DateTime.UtcNow, 0, 0),
+                null,
+                default,
+                null,
+                out _);
+
+            // Check that closing message ignores guaranteeDelivery => false result
+            Assert.IsTrue(deliveryQueue.TryDequeue(out var message, out _, DateTime.UtcNow, null, null));
+            Assert.AreEqual(int.MaxValue, message.SequenceId);
+            Assert.IsTrue(deliveryQueue.IsEmpty);
+
+            // Enqueue a message with value 1 - message should be queued
+            deliveryQueue.Enqueue(
+                Message.Create(1, DateTime.UtcNow, DateTime.UtcNow, 0, 0),
+                null,
+                default,
+                null,
+                out _);
+
+            // Enqueue a message with value 2 - message should be queued (guaranteeDelivery => true)
+            deliveryQueue.Enqueue(
+                Message.Create(2, DateTime.UtcNow, DateTime.UtcNow, 0, 0),
+                null,
+                default,
+                null,
+                out _);
+
+            // Enqueue a closing message - message should be queued
+            deliveryQueue.Enqueue(
+                Message.Create(0, DateTime.UtcNow, DateTime.UtcNow, 0, int.MaxValue), // closing message
+                null,
+                default,
+                null,
+                out _);
+
+            // Check that only guaranteed and closing messages are queued
+            Assert.IsTrue(deliveryQueue.TryDequeue(out message, out _, DateTime.UtcNow, null, null));
+            Assert.AreEqual(2, message.Data);
+            Assert.IsTrue(deliveryQueue.TryDequeue(out message, out _, DateTime.UtcNow, null, null));
+            Assert.AreEqual(int.MaxValue, message.SequenceId);
+            Assert.IsTrue(deliveryQueue.IsEmpty);
         }
     }
 }

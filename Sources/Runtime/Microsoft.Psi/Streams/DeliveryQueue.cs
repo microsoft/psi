@@ -141,7 +141,8 @@ namespace Microsoft.Psi.Streams
         {
             lock (this.queue)
             {
-                var dropIncomingMessage = false;
+                bool dropIncomingMessage = false;
+                bool IsClosingMessage(Message<T> m) => m.SequenceId == int.MaxValue;
 
                 // If the queue size is more than the allowed size in the policy, try to drop messages in the queue
                 // if possible, until we create enough space to hold the new message
@@ -166,7 +167,8 @@ namespace Microsoft.Psi.Streams
                             // that means all messages in the queue have guaranteed delivery and cannot
                             // be dropped. In this case, we avoid further growing the queue by simply
                             // dropping the incoming message if it does not have guaranteed delivery
-                            dropIncomingMessage = !this.policy.GuaranteeDelivery(message.Data);
+                            // (unless it is a closing message, which we should never drop)
+                            dropIncomingMessage = !IsClosingMessage(message) && !this.policy.GuaranteeDelivery(message.Data);
                         }
                         else
                         {
@@ -192,7 +194,7 @@ namespace Microsoft.Psi.Streams
                                 var item = this.queue.Dequeue();
 
                                 // if no messages has been dropped yet and this message can be dropped
-                                if (!hasDropped && !this.policy.GuaranteeDelivery(item.Data))
+                                if (!hasDropped && !IsClosingMessage(item) && !this.policy.GuaranteeDelivery(item.Data))
                                 {
                                     // then drop it
                                     receiverDiagnosticsCollector?.MessageDropped(diagnosticsTime);
@@ -208,16 +210,15 @@ namespace Microsoft.Psi.Streams
                             }
 
                             // if at this point we haven't found something to drop, we should drop the
-                            // incoming message, if it does not have guaranteed delivery
-                            dropIncomingMessage = !hasDropped && !this.policy.GuaranteeDelivery(message.Data);
+                            // incoming message, if it does not have guaranteed delivery and is not a
+                            // closing message
+                            dropIncomingMessage = !hasDropped && !IsClosingMessage(message) && !this.policy.GuaranteeDelivery(message.Data);
                         }
                     }
                 }
 
-                var isClosingMessage = message.SequenceId == int.MaxValue;
-
                 // special closing message
-                if (isClosingMessage)
+                if (IsClosingMessage(message))
                 {
                     // queued messages with an originating time past the closing time should be dropped, regardless
                     // of their guaranteed delivery.
@@ -230,8 +231,8 @@ namespace Microsoft.Psi.Streams
                     }
                 }
 
-                // enqueue the new message, if it's the closing one, or if we should not drop
-                if (!dropIncomingMessage || isClosingMessage)
+                // enqueue the new message, unless we've decided it should be dropped
+                if (!dropIncomingMessage)
                 {
                     this.queue.Enqueue(message);
                 }
