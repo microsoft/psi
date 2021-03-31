@@ -70,7 +70,7 @@ Platform for Situated Intelligence has been and is currently used in several ind
 
 If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
 
-# Paper
+# Technical Report
 
 A more in-depth description of the framework is available in [this technical report](https://arxiv.org/abs/2103.15975). Please cite as: 
 
