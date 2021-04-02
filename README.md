@@ -14,9 +14,14 @@ The framework accelerates the development of these applications by providing:
 
 ![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
 
-A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). An on-demand webinar is also available containing a brief introduction and tutorial on how to code with \psi – here is the [registration link](https://note.microsoft.com/MSR-Webinar-Platform-Situated-Intelligence-Registration-On-Demand.html).
+A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). A webinar containing a brief introduction and tutorial on how to code with \psi is now available [as an online video](https://youtu.be/A6nr8MWwM3o).
 
 # What’s New
+
+__03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
+
+__02/26/2021__: Please join us __April 27-28th__ for a [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! This virtual workshop will introduce you to the basics of using the framework to accelerate your own work in the space of multimodal, integrative AI, and will include in-depth tutorials, demos, and discussions of specific topics. For more information and to register, please see the [event website](https://aka.ms/psi-w1).
+
 __12/07/2020__: We have published a new beta release, version 0.14.35.3, which includes a new ONNX model runner for ImageNet models, new components for screen and window capture, updates to annotation editing in PsiStudio, as well as a number of bug fixes and updates -- see the [full release notes](https://github.com/microsoft/psi/wiki/Release-Notes) for more details.
 
 __09/30/2020__: We have added three additional samples: a basic [HelloWorld]( https://github.com/Microsoft/psi-samples/tree/main/Samples/HelloWorld) sample illustrating the simplest starting point for a \psi application, a more complex one demonstrating how to do some basic audio capture and processing to construct [a simple voice activity detector]( https://github.com/Microsoft/psi-samples/tree/main/Samples/SimpleVoiceActivityDetector), and a third sample that combines information from Azure Kinect with Cognitive Services vision and speech to [detect objects that a person is pointing to](https://github.com/microsoft/psi-samples/tree/main/Samples/WhatIsThat).
@@ -64,6 +69,21 @@ Platform for Situated Intelligence has been and is currently used in several ind
 * the [Transportation, Bots, & Disability Lab](https://tbd.ri.cmu.edu) at the Carnegie Mellon University.
 
 If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to. 
+
+# Technical Report
+
+A more in-depth description of the framework is available in [this technical report](https://arxiv.org/abs/2103.15975). Please cite as: 
+
+```text
+@misc{bohus2021platform,
+      title={Platform for Situated Intelligence}, 
+      author={Dan Bohus and Sean Andrist and Ashley Feniello and Nick Saw and Mihai Jalobeanu and Patrick Sweeney and Anne Loomis Thompson and Eric Horvitz},
+      year={2021},
+      eprint={2103.15975},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI}
+}
+```
 
 # Disclaimer
 
