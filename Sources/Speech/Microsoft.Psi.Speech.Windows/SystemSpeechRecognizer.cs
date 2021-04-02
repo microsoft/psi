@@ -59,6 +59,11 @@ namespace Microsoft.Psi.Speech
         private DateTime streamStartTime;
 
         /// <summary>
+        /// Final originating time given upon component being stopped by the pipeline.
+        /// </summary>
+        private DateTime finalOriginatingTime = DateTime.MaxValue;
+
+        /// <summary>
         /// Event to signal that the recognizer has been stopped.
         /// </summary>
         private ManualResetEvent recognizeComplete;
@@ -258,6 +263,12 @@ namespace Microsoft.Psi.Speech
         /// <inheritdoc/>
         public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            this.finalOriginatingTime = finalOriginatingTime;
+
+            // Wait for final in-progress result to complete
+            this.inputAudioStream.Close();
+            this.recognizeComplete.WaitOne(this.Configuration.FinalRecognitionResultTimeoutMs);
+
             // Unregister handlers so they won't fire while disposing.
             this.speechRecognitionEngine.SpeechDetected -= this.OnSpeechDetected;
             this.speechRecognitionEngine.SpeechHypothesized -= this.OnSpeechHypothesized;
@@ -271,14 +282,10 @@ namespace Microsoft.Psi.Speech
             this.speechRecognitionEngine.EmulateRecognizeCompleted -= this.OnEmulateRecognizeCompleted;
             this.speechRecognitionEngine.LoadGrammarCompleted -= this.OnLoadGrammarCompleted;
 
-            // Close the audio stream first so that RecognizeAyncCancel
-            // will finalize the current recognition operation.
-            this.inputAudioStream.Close();
-
             // Cancel any in-progress recognition and wait for completion
             // (OnRecognizeCompleted) before disposing of recognition engine.
             this.speechRecognitionEngine.RecognizeAsyncCancel();
-            this.recognizeComplete.WaitOne(333);
+            this.recognizeComplete.WaitOne(this.Configuration.FinalRecognitionResultTimeoutMs);
 
             notifyCompleted();
         }
@@ -527,8 +534,11 @@ namespace Microsoft.Psi.Speech
             }
 
             // Post the message and update the originating time for this stream
-            stream.Post(data, originatingTime);
-            this.lastPostedOriginatingTimes[group] = originatingTime;
+            if (originatingTime <= this.finalOriginatingTime)
+            {
+                stream.Post(data, originatingTime);
+                this.lastPostedOriginatingTimes[group] = originatingTime;
+            }
         }
 
         /// <summary>
