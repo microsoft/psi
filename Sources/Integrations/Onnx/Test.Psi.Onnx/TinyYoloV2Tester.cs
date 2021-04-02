@@ -76,7 +76,7 @@ namespace Test.Psi.Onnx
             }
             else
             {
-                Console.WriteLine($"Warning: Test {nameof(TinyYoloV2ObjectDetectionTest)} not run because 'PsiTestResources' environment variable not found.");
+                Assert.Inconclusive($"Warning: Test {nameof(TinyYoloV2ObjectDetectionTest)} not run because 'PsiTestResources' environment variable not found.");
             }
         }
     }
