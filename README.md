@@ -14,7 +14,7 @@ The framework accelerates the development of these applications by providing:
 
 ![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
 
-A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). An on-demand webinar is also available containing a brief introduction and tutorial on how to code with \psi – here is the [registration link](https://note.microsoft.com/MSR-Webinar-Platform-Situated-Intelligence-Registration-On-Demand.html).
+A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). A webinar containing a brief introduction and tutorial on how to code with \psi is now available [as an online video](https://youtu.be/A6nr8MWwM3o).
 
 # What’s New
 
