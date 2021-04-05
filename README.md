@@ -18,9 +18,9 @@ A high-level overview of the framework is available in [this blog post](https://
 
 # What’s New
 
-__03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
+__Upcoming Workshop__: Please join us __April 27-28th__ for a [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! This virtual workshop will introduce you to the basics of using the framework to accelerate your own work in the space of multimodal, integrative AI, and will include in-depth tutorials, demos, and discussions of specific topics. For more information and to register, please see the [event website](https://aka.ms/psi-w1).
 
-__02/26/2021__: Please join us __April 27-28th__ for a [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! This virtual workshop will introduce you to the basics of using the framework to accelerate your own work in the space of multimodal, integrative AI, and will include in-depth tutorials, demos, and discussions of specific topics. For more information and to register, please see the [event website](https://aka.ms/psi-w1).
+__03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
 
 __12/07/2020__: We have published a new beta release, version 0.14.35.3, which includes a new ONNX model runner for ImageNet models, new components for screen and window capture, updates to annotation editing in PsiStudio, as well as a number of bug fixes and updates -- see the [full release notes](https://github.com/microsoft/psi/wiki/Release-Notes) for more details.
 
