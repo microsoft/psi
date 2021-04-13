@@ -616,3 +616,48 @@ module RosMessageTypes =
             type Kind = string
             let FromMessage m = m |> Seq.toList |> function ["data", StringVal str] -> str | _ -> malformed ()
             let ToMessage str = ["data", StringVal str] |> Seq.ofList
+
+
+    module AudioCommon =
+        module AudioData =
+            let Def = { Type   = "audio_common_msgs/AudioData"
+                        MD5    = "f43a8e1b362b75baa741461b46adc7e0";
+                        Fields = ["data", VariableArrayDef UInt8Def]}
+
+            type Kind = { Data : uint8 seq }
+            let FromMessage m = m |> Seq.toList |> function ["data", VariableArrayVal data] -> {Data = List.map (function UInt8Val n -> n | _ -> malformed ()) data}| _ -> malformed ()          
+            let ToMessage {Data = data } = ["data", VariableArrayVal (Seq.map UInt8Val data |> Seq.toList)]
+
+        module AudioInfo =
+            let Def = { Type   = "audio_common_msgs/AudioInfo"
+                        MD5    = "9413d9b7029680d3b1db6ed0ae535f88";
+                        Fields = ["channels", UInt8Def
+                                  "sample_rate", UInt32Def
+                                  "sample_format", StringDef
+                                  "bitrate", UInt32Def
+                                  "coding_format", StringDef]}
+                     
+            type Kind = { Channels:     uint8 
+                          SampleRate:   uint32 
+                          SampleFormat: string 
+                          Bitrate:      uint32 
+                          CodingFormat: string }
+            let FromMessage m = m |> Seq.toList |> function ["channels",        UInt8Val   channels
+                                                             "sample_rate",     UInt32Val  rate
+                                                             "sample_format",   StringVal  format
+                                                             "bitrate",         UInt32Val  bitrate
+                                                             "coding_format",   StringVal  coding] -> { Channels     = channels
+                                                                                                        SampleRate   = rate
+                                                                                                        SampleFormat = format
+                                                                                                        Bitrate      = bitrate
+                                                                                                        CodingFormat = coding } |_ -> malformed ()
+                                                   
+            let ToMessage { Channels     = channels
+                            SampleRate   = rate
+                            SampleFormat = format
+                            Bitrate      = bitrate
+                            CodingFormat = coding  } = ["channels",         UInt8Val   channels
+                                                        "sample_rate",      UInt32Val  rate
+                                                        "sample_format",    StringVal  format
+                                                        "bitrate",          UInt32Val  bitrate
+                                                        "coding_format",    StringVal  coding] |> Seq.ofList
