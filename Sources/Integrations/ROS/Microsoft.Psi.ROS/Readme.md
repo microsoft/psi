@@ -31,7 +31,7 @@ It is physically hosted by the ROS Master at the same host/port as the ROS Maste
 
 ## Bridge
 
-At its core, the library includes an `XmlRpc` reader/writer, ROS TCP header and body serializers, and classes to manage communication with the ROS Master, the Parameter Server, and ROS Slave client.
+At its core, the library includes an `XmlRpc` reader/writer, ROS TCP header and body serializers, and classes to manage communication with the ROS Master, the Parameter Server, and ROS Node client.
 These are the fundamental pieces from which everything else is built.
 
 Moving up a layer, there are `Publisher` and `Subscriber` classes to manage many-to-many connections through topics.
