@@ -21,7 +21,7 @@ module RosNode =
     open RosServiceClient
     open RosMessage
 
-    // Communication *as* a ROS slave (node) via XmlRpc methods (http://wiki.ros.org/ROS/Slave_API)
+    // Communication *as* a ROS node via XmlRpc methods (http://wiki.ros.org/ROS/Slave_API)
 
     type Node(name, host, rosMasterIp, rosMasterPort) =
         let rosMasterUri = sprintf "http://%s:%i" rosMasterIp rosMasterPort

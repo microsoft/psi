@@ -220,7 +220,7 @@ This is mapped an `Option` type in F#
 
 ### ROS Nodes
 
-[Communication with ROS slaves (nodes) via XmlRpc methods](http://wiki.ros.org/ROS/Slave_API) includes the following APIs.
+[Communication with ROS nodes via XmlRpc methods](http://wiki.ros.org/ROS/Slave_API) includes the following APIs.
 Though not mentioned below, all requests contain the `caller_id` and a response body bundled with states code/message (see XmlRpc section above).
 
 * `getBusStats () -> bus_stats` (see docs)
