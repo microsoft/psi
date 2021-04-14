@@ -26,7 +26,7 @@
     <Compile Include="RosRpc.fs" />
     <Compile Include="RosParamClient.fs" />
     <Compile Include="RosMasterClient.fs" />
-    <Compile Include="RosSlaveClient.fs" />
+    <Compile Include="RosNodeClient.fs" />
     <Compile Include="RosMessage.fs" />
     <Compile Include="RosMessageTypes.fs" />
     <Compile Include="RosServiceTypes.fs" />

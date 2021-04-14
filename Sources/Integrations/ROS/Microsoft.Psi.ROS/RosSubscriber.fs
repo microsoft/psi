@@ -7,7 +7,7 @@ module RosSubscriber =
 
     open RosMessage
     open RosMasterClient
-    open RosSlaveClient
+    open RosNodeClient
     open RosTcp
     open System
     open System.IO
@@ -38,7 +38,7 @@ module RosSubscriber =
                     let listen () =
                         try
                             sprintf "  Publisher: %s" publisher |> Trace.WriteLine
-                            let client = new RosSlaveClient(RosDns.resolve rosMasterIp publisher, caller)
+                            let client = new RosNodeClient(RosDns.resolve rosMasterIp publisher, caller)
                             let host, port = client.RequestTopic(topic, ["TCPROS"])
                             sprintf "Connecting: %s %i (%s)" host port topic |> Trace.WriteLine
                             let tcp = new TcpClient(RosDns.resolve rosMasterIp host, port)
