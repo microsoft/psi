@@ -20,6 +20,8 @@ A high-level overview of the framework is available in [this blog post](https://
 
 __Upcoming Workshop__: Please join us __April 27-28th__ for a [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! This virtual workshop will introduce you to the basics of using the framework to accelerate your own work in the space of multimodal, integrative AI, and will include in-depth tutorials, demos, and discussions of specific topics. For more information and to register, please see the [event website](https://aka.ms/psi-w1).
 
+__04/14/2021__: We uploaded a [brief overview](https://innovation.microsoft.com/en-us/tech-minutes-platform-for-situated-intelligence) on Platform for Situated Intelligence as part of the Microsoft Innovation Tech Minutes series.
+
 __03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
 
 __12/07/2020__: We have published a new beta release, version 0.14.35.3, which includes a new ONNX model runner for ImageNet models, new components for screen and window capture, updates to annotation editing in PsiStudio, as well as a number of bug fixes and updates -- see the [full release notes](https://github.com/microsoft/psi/wiki/Release-Notes) for more details.
@@ -36,7 +38,7 @@ The core \\psi infrastructure is built on .NET Standard and therefore runs both 
 
 __A Brief Introduction.__ To learn more about \\psi and how to build applications with it, we recommend you start with the [Brief Introduction](https://github.com/microsoft/psi/wiki/Brief-Introduction) tutorial, which will walk you through for some of the main concepts. It shows how to create a simple program, describes the core concept of a stream, and explains how to transform, synchronize, visualize, persist and replay streams from disk.
 
-__A Video Webinar.__ If you prefer getting started by watching a presentation about the framework, this [video webinar](https://youtu.be/A6nr8MWwM3o) gives a 30 minute high-level overview of the framework, followed by a 30 minute hands-on coding session illustrating how to write a first, simple application.
+__A Video Webinar.__ If you prefer getting started by watching a presentation about the framework, this [video webinar](https://youtu.be/A6nr8MWwM3o) gives a 30 minute high-level overview of the framework, followed by a 30 minute hands-on coding session illustrating how to write a first, simple application. Alternatively, for a shorter (~13 min) high-level overview, see [this presentation](https://innovation.microsoft.com/en-us/tech-minutes-platform-for-situated-intelligence) we did as part of the Tech Minutes series.
 
 __Samples.__ If you would like to directly start from sample code, a number of small [sample applications](https://github.com/microsoft/psi/wiki/Samples) are also available, and several of them have walkthroughs that explain how the sample was constructed and point to additional documentation. We recommend you start with the samples below, listed in increasing order of complexity:
 | Name | Description | Cross-plat | Requirements |
