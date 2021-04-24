@@ -9,19 +9,17 @@ namespace Microsoft.Psi.Visualization
     using System.Windows.Input;
 
     /// <summary>
-    /// Represents a command.
+    /// Implements a visualization command.
     /// </summary>
-    /// <typeparam name="T">The type of the command argument.</typeparam>
-    public class VisualizationCommand<T> : ICommand
-        where T : class
+    public class VisualizationCommand : ICommand
     {
-        private readonly Action<T> action;
+        private readonly Action action;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VisualizationCommand{T}"/> class.
+        /// Initializes a new instance of the <see cref="VisualizationCommand"/> class.
         /// </summary>
         /// <param name="action">The action to perform.</param>
-        public VisualizationCommand(Action<T> action)
+        public VisualizationCommand(Action action)
         {
             this.action = action;
         }
@@ -35,15 +33,12 @@ namespace Microsoft.Psi.Visualization
         }
 
         /// <inheritdoc />
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(object parameter) => true;
 
         /// <inheritdoc />
         public void Execute(object parameter)
         {
-            this.action(parameter as T);
+            this.action();
         }
     }
 }

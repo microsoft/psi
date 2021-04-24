@@ -19,5 +19,15 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets the source data type.
         /// </summary>
         Type SourceType { get; }
+
+        /// <summary>
+        /// Gets the allocator for source messages.
+        /// </summary>
+        Func<dynamic> SourceAllocator { get; }
+
+        /// <summary>
+        /// Gets the deallocator for source messages.
+        /// </summary>
+        Action<dynamic> SourceDeallocator { get; }
     }
 }

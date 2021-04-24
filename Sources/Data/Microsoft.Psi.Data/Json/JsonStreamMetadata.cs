@@ -12,8 +12,6 @@ namespace Microsoft.Psi.Data.Json
     /// </summary>
     public class JsonStreamMetadata : IStreamMetadata
     {
-        private const int TicksPerMicrosecond = 10;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonStreamMetadata"/> class.
         /// </summary>
@@ -28,17 +26,17 @@ namespace Microsoft.Psi.Data.Json
         /// <param name="id">The id of the stream the metadata represents.</param>
         /// <param name="typeName">The name of the type of data contained in the stream the metadata represents.</param>
         /// <param name="supplementalMetadataTypeName">The name of the type of supplemental metadata for the stream the metadata represents.</param>
-        /// <param name="partitionName">The name of the partition where the stream is stored.</param>
-        /// <param name="partitionPath">The path of the partition where the stream is stored.</param>
-        public JsonStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string partitionName, string partitionPath)
+        /// <param name="storeName">The name of the store containing the stream.</param>
+        /// <param name="storePath">The path of the store containing the stream.</param>
+        public JsonStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string storeName, string storePath)
             : this()
         {
             this.Name = name;
             this.Id = id;
             this.TypeName = typeName;
             this.SupplementalMetadataTypeName = supplementalMetadataTypeName;
-            this.PartitionName = partitionName;
-            this.PartitionPath = partitionPath;
+            this.StoreName = storeName;
+            this.StorePath = storePath;
         }
 
         /// <inheritdoc />
@@ -55,11 +53,11 @@ namespace Microsoft.Psi.Data.Json
 
         /// <inheritdoc />
         [JsonProperty(Order = 4)]
-        public string PartitionName { get; set; }
+        public string StoreName { get; set; }
 
         /// <inheritdoc />
         [JsonProperty(Order = 5)]
-        public string PartitionPath { get; set; }
+        public string StorePath { get; set; }
 
         /// <inheritdoc />
         [JsonProperty(Order = 6)]
@@ -79,15 +77,27 @@ namespace Microsoft.Psi.Data.Json
 
         /// <inheritdoc />
         [JsonProperty(Order = 10)]
-        public int AverageMessageSize { get; set; }
+        public long MessageCount { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the total size (bytes) of messages in the stream.
+        /// </summary>
         [JsonProperty(Order = 11)]
-        public int AverageLatency { get; set; }
+        public long MessageSizeCumulativeSum { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cumulative sum of latencies of messages in the stream.
+        /// </summary>
+        [JsonProperty(Order = 12)]
+        public long LatencyCumulativeSum { get; set; }
 
         /// <inheritdoc />
-        [JsonProperty(Order = 12)]
-        public int MessageCount { get; set; }
+        [JsonIgnore]
+        public double AverageMessageSize => this.MessageCount > 0 ? (double)this.MessageSizeCumulativeSum / this.MessageCount : 0;
+
+        /// <inheritdoc />
+        [JsonIgnore]
+        public double AverageMessageLatencyMs => this.MessageCount > 0 ? (double)this.LatencyCumulativeSum / this.MessageCount / TimeSpan.TicksPerMillisecond : 0;
 
         /// <inheritdoc />
         [JsonProperty(Order = 13)]
@@ -123,8 +133,8 @@ namespace Microsoft.Psi.Data.Json
             this.LastMessageOriginatingTime = envelope.OriginatingTime;
             this.LastMessageCreationTime = envelope.CreationTime;
             this.MessageCount++;
-            this.AverageLatency = (int)((((long)this.AverageLatency * (this.MessageCount - 1)) + ((envelope.CreationTime - envelope.OriginatingTime).Ticks / TicksPerMicrosecond)) / this.MessageCount);
-            this.AverageMessageSize = (int)((((long)this.AverageMessageSize * (this.MessageCount - 1)) + size) / this.MessageCount);
+            this.MessageSizeCumulativeSum += size;
+            this.LatencyCumulativeSum += (envelope.CreationTime - envelope.OriginatingTime).Ticks;
         }
 
         /// <inheritdoc />

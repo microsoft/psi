@@ -36,17 +36,17 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// The path to the PsiStudio data in the MyDocuments folder.
         /// </summary>
-        private static string psiStudioDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
+        private static readonly string PsiStudioDocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ApplicationName);
 
         /// <summary>
         /// The path to the layouts directory.
         /// </summary>
-        private static string layoutsPath = Path.Combine(psiStudioDocumentsPath, "Layouts");
+        private static readonly string PsiStudioLayoutsPath = Path.Combine(PsiStudioDocumentsPath, "Layouts");
 
         /// <summary>
         /// The path to the annotations definitions directory.
         /// </summary>
-        private static string annotationDefinitionsPath = Path.Combine(psiStudioDocumentsPath, "AnnotationDefinitions");
+        private static readonly string PsiStudioAnnotationDefinitionsPath = Path.Combine(PsiStudioDocumentsPath, "AnnotationDefinitions");
 
         private readonly TimeSpan nudgeTimeSpan = TimeSpan.FromSeconds(1 / 30.0);
         private readonly TimeSpan jumpTimeSpan = TimeSpan.FromSeconds(1 / 6.0);
@@ -101,6 +101,7 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand toggleLiveModeCommand;
         private RelayCommand saveLayoutCommand;
         private RelayCommand saveLayoutAsCommand;
+        private RelayCommand clearLayoutCommand;
         private RelayCommand expandDatasetsTreeCommand;
         private RelayCommand collapseDatasetsTreeCommand;
         private RelayCommand expandVisualizationsTreeCommand;
@@ -120,7 +121,7 @@ namespace Microsoft.Psi.PsiStudio
         public MainWindowViewModel()
         {
             // Create and load the settings
-            this.AppSettings = PsiStudioSettings.Load(Path.Combine(psiStudioDocumentsPath, "PsiStudioSettings.xml"));
+            this.AppSettings = PsiStudioSettings.Load(Path.Combine(PsiStudioDocumentsPath, "PsiStudioSettings.xml"));
 
             // Wait until the main window is visible before initializing the visualizer
             // map as we may need to display some message boxes during this process.
@@ -245,7 +246,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.nudgeRightCommand == null)
                 {
                     this.nudgeRightCommand = new RelayCommand(
-                        () => this.MoveCursorBy(this.nudgeTimeSpan, SnappingBehavior.Next),
+                        () => this.MoveCursorBy(this.nudgeTimeSpan, NearestMessageType.Next),
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -265,7 +266,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.nudgeLeftCommand == null)
                 {
                     this.nudgeLeftCommand = new RelayCommand(
-                        () => this.MoveCursorBy(-this.nudgeTimeSpan, SnappingBehavior.Previous),
+                        () => this.MoveCursorBy(-this.nudgeTimeSpan, NearestMessageType.Previous),
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -285,7 +286,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.jumpRightCommand == null)
                 {
                     this.jumpRightCommand = new RelayCommand(
-                        () => this.MoveCursorBy(this.jumpTimeSpan, SnappingBehavior.Next),
+                        () => this.MoveCursorBy(this.jumpTimeSpan, NearestMessageType.Next),
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -305,7 +306,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.jumpLeftCommand == null)
                 {
                     this.jumpLeftCommand = new RelayCommand(
-                        () => this.MoveCursorBy(-this.jumpTimeSpan, SnappingBehavior.Previous),
+                        () => this.MoveCursorBy(-this.jumpTimeSpan, NearestMessageType.Previous),
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -339,7 +340,7 @@ namespace Microsoft.Psi.PsiStudio
                             {
                                 string filename = dlg.FileName;
                                 await VisualizationContext.Instance.OpenDatasetAsync(filename);
-                                this.EnsureStreamMemberNodesVisible();
+                                this.EnsureDerivedStreamTreeNodesExist();
                             }
                         });
                 }
@@ -362,16 +363,18 @@ namespace Microsoft.Psi.PsiStudio
                     this.openDatasetCommand = new RelayCommand(
                         async () =>
                         {
-                            OpenFileDialog dlg = new OpenFileDialog();
-                            dlg.DefaultExt = ".pds";
-                            dlg.Filter = "Psi Dataset (.pds)|*.pds";
+                            OpenFileDialog dlg = new OpenFileDialog
+                            {
+                                DefaultExt = ".pds",
+                                Filter = "Psi Dataset (.pds)|*.pds",
+                            };
 
                             bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
                                 await VisualizationContext.Instance.OpenDatasetAsync(filename);
-                                this.EnsureStreamMemberNodesVisible();
+                                this.EnsureDerivedStreamTreeNodesExist();
                             }
                         });
                 }
@@ -394,9 +397,11 @@ namespace Microsoft.Psi.PsiStudio
                     this.saveDatasetCommand = new RelayCommand(
                         async () =>
                         {
-                            SaveFileDialog dlg = new SaveFileDialog();
-                            dlg.DefaultExt = ".pds";
-                            dlg.Filter = "Psi Dataset (.pds)|*.pds";
+                            SaveFileDialog dlg = new SaveFileDialog
+                            {
+                                DefaultExt = ".pds",
+                                Filter = "Psi Dataset (.pds)|*.pds",
+                            };
 
                             bool? result = dlg.ShowDialog(Application.Current.MainWindow);
                             if (result == true)
@@ -617,17 +622,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.increasePlaySpeedCommand == null)
                 {
                     this.increasePlaySpeedCommand = new RelayCommand(
-                        () =>
-                        {
-                            if (this.VisualizationContainer.Navigator.PlaySpeed <= 1)
-                            {
-                                this.VisualizationContainer.Navigator.PlaySpeed *= 2;
-                            }
-                            else
-                            {
-                                this.VisualizationContainer.Navigator.PlaySpeed++;
-                            }
-                        },
+                        () => this.VisualizationContainer.Navigator.PlaySpeed *= 2,
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -647,17 +642,7 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.decreasePlaySpeedCommand == null)
                 {
                     this.decreasePlaySpeedCommand = new RelayCommand(
-                        () =>
-                        {
-                            if (this.VisualizationContainer.Navigator.PlaySpeed <= 1)
-                            {
-                                this.VisualizationContainer.Navigator.PlaySpeed /= 2;
-                            }
-                            else
-                            {
-                                this.VisualizationContainer.Navigator.PlaySpeed--;
-                            }
-                        },
+                        () => this.VisualizationContainer.Navigator.PlaySpeed /= 2,
                         () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
                 }
 
@@ -733,6 +718,28 @@ namespace Microsoft.Psi.PsiStudio
                 }
 
                 return this.saveLayoutAsCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the clear layout command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ClearLayoutCommand
+        {
+            get
+            {
+                if (this.clearLayoutCommand == null)
+                {
+                    this.clearLayoutCommand = new RelayCommand(
+                        () =>
+                        {
+                            this.ClearLayout();
+                        });
+                }
+
+                return this.clearLayoutCommand;
             }
         }
 
@@ -840,13 +847,12 @@ namespace Microsoft.Psi.PsiStudio
                     this.selectedVisualizationChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
                         e =>
                         {
-                            if (e.NewValue is VisualizationPanel)
+                            if (e.NewValue is VisualizationPanel visualizationPanel)
                             {
-                                this.VisualizationContainer.CurrentPanel = e.NewValue as VisualizationPanel;
+                                this.VisualizationContainer.CurrentPanel = visualizationPanel;
                             }
-                            else if (e.NewValue is VisualizationObject)
+                            else if (e.NewValue is VisualizationObject visualizationObject)
                             {
-                                var visualizationObject = e.NewValue as VisualizationObject;
                                 this.VisualizationContainer.CurrentPanel = visualizationObject.Panel;
                                 visualizationObject.Panel.CurrentVisualizationObject = visualizationObject;
                             }
@@ -1164,14 +1170,14 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
-        private void MoveCursorBy(TimeSpan timeSpan, SnappingBehavior snappingBehavior)
+        private void MoveCursorBy(TimeSpan timeSpan, NearestMessageType nearestMessageType)
         {
             var visContainer = this.VisualizationContainer;
             var nav = visContainer.Navigator;
             var time = nav.Cursor + timeSpan;
             if (visContainer.SnapToVisualizationObject is IStreamVisualizationObject vo)
             {
-                nav.MoveCursorTo(vo.GetSnappedTime(time, snappingBehavior) ?? time);
+                nav.MoveCursorTo(DataManager.Instance.GetTimeOfNearestMessage(vo.StreamSource, time, nearestMessageType) ?? time);
             }
             else
             {
@@ -1192,7 +1198,7 @@ namespace Microsoft.Psi.PsiStudio
                 bool success = VisualizationContext.Instance.OpenLayout(this.CurrentLayout.Path, this.CurrentLayout.Name);
                 if (success)
                 {
-                    this.EnsureStreamMemberNodesVisible();
+                    this.EnsureDerivedStreamTreeNodesExist();
                 }
                 else
                 {
@@ -1227,33 +1233,30 @@ namespace Microsoft.Psi.PsiStudio
                 if (args.Length > 1)
                 {
                     await VisualizationContext.Instance.OpenDatasetAsync(args[1]);
-                    this.EnsureStreamMemberNodesVisible();
+                    this.EnsureDerivedStreamTreeNodesExist();
                 }
             }
         }
 
-        private void EnsureStreamMemberNodesVisible()
+        private void EnsureDerivedStreamTreeNodesExist()
         {
             if (VisualizationContext.Instance.DatasetViewModel != null)
             {
                 // Check if the visualization container contains any stream member visualizers.
-                List<IStreamVisualizationObject> memberVisualizers = this.VisualizationContainer.GetStreamMemberVisualizers();
-                if (memberVisualizers.Any())
+                var derivedStreamVisualizationObjects = this.VisualizationContainer.GetDerivedStreamVisualizationObjects();
+
+                // Get the current session
+                var currentSessionViewModel = VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel;
+
+                foreach (IStreamVisualizationObject derivedStreamVisualizationObject in derivedStreamVisualizationObjects)
                 {
-                    // Get the current session
-                    SessionViewModel currentSessionViewModel = VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel;
+                    // Get the stream tree node for stream being used by the stream member visualizer.
+                    var streamTreeNode = currentSessionViewModel.FindStreamTreeNode(
+                        derivedStreamVisualizationObject.StreamBinding.PartitionName,
+                        derivedStreamVisualizationObject.StreamBinding.StreamName);
 
-                    foreach (IStreamVisualizationObject streamMemberVisualizer in memberVisualizers)
-                    {
-                        // Get the stream tree node for stream being used by the stream member visualizer.
-                        StreamTreeNode streamTreeNode = currentSessionViewModel.FindStream(streamMemberVisualizer.StreamBinding.PartitionName, streamMemberVisualizer.StreamBinding.StreamName);
-
-                        // If the session contains the stream, ensure its member children have been created.
-                        if (streamTreeNode != null)
-                        {
-                            streamTreeNode.EnsureMemberChildExists(streamMemberVisualizer.StreamBinding.StreamAdapterArguments[0] as string);
-                        }
-                    }
+                    // If the session contains the stream, ensure its member children have been created.
+                    streamTreeNode?.EnsureDerivedStreamExists(derivedStreamVisualizationObject.StreamBinding);
                 }
             }
         }
@@ -1292,22 +1295,22 @@ namespace Microsoft.Psi.PsiStudio
             }
 
             // Initialize the visualizer map
-            VisualizationContext.Instance.PluginMap.Initialize(additionalAssemblies, Path.Combine(psiStudioDocumentsPath, "VisualizersLog.txt"));
+            VisualizationContext.Instance.PluginMap.Initialize(additionalAssemblies, Path.Combine(PsiStudioDocumentsPath, "VisualizersLog.txt"));
         }
 
         private void UpdateLayoutList()
         {
             // Create a new collection of layouts
-            List<LayoutInfo> layouts = new List<LayoutInfo>();
-
-            // Add the default/new layout
-            layouts.Add(new LayoutInfo(this.newLayoutName, null));
+            List<LayoutInfo> layouts = new List<LayoutInfo>
+            {
+                new LayoutInfo(this.newLayoutName, null),
+            };
 
             // Create the layouts directory if it doesn't already exist
-            DirectoryInfo directoryInfo = new DirectoryInfo(layoutsPath);
+            DirectoryInfo directoryInfo = new DirectoryInfo(PsiStudioLayoutsPath);
             if (!directoryInfo.Exists)
             {
-                Directory.CreateDirectory(layoutsPath);
+                Directory.CreateDirectory(PsiStudioLayoutsPath);
             }
 
             // Find all the layout files and add them to the list of available layouts
@@ -1329,12 +1332,12 @@ namespace Microsoft.Psi.PsiStudio
 
         private void SaveLayoutAs()
         {
-            LayoutNameWindow dlg = new LayoutNameWindow(Application.Current.MainWindow, layoutsPath);
+            LayoutNameWindow dlg = new LayoutNameWindow(Application.Current.MainWindow, PsiStudioLayoutsPath);
 
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
-                string fileName = Path.Combine(layoutsPath, dlg.LayoutName);
+                string fileName = Path.Combine(PsiStudioLayoutsPath, dlg.LayoutName);
 
                 // Save the layout
                 this.VisualizationContainer.Save(fileName);
@@ -1347,15 +1350,21 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
+        private void ClearLayout()
+        {
+            // Clear the visualization container
+            this.VisualizationContainer.Clear();
+        }
+
         private void LoadAnnotationDefinitions()
         {
             this.annotationDefinitions = new List<AnnotationDefinition>();
 
             // Create the annotations definitions directory if it doesn't already exist
-            DirectoryInfo directoryInfo = new DirectoryInfo(annotationDefinitionsPath);
+            DirectoryInfo directoryInfo = new DirectoryInfo(PsiStudioAnnotationDefinitionsPath);
             if (!directoryInfo.Exists)
             {
-                Directory.CreateDirectory(annotationDefinitionsPath);
+                Directory.CreateDirectory(PsiStudioAnnotationDefinitionsPath);
             }
 
             // Keep a list of annotation definitions that failed to load
@@ -1462,24 +1471,15 @@ namespace Microsoft.Psi.PsiStudio
         {
             if (VisualizationContext.Instance.DatasetViewModel != null)
             {
-                IStreamVisualizationObject streamVisualizationObject = this.selectedVisualization as IStreamVisualizationObject;
-                if (streamVisualizationObject != null)
+                if (this.selectedVisualization is IStreamVisualizationObject streamVisualizationObject)
                 {
-                    StreamBinding streamBinding = streamVisualizationObject.StreamBinding;
-                    foreach (SessionViewModel sessionViewModel in VisualizationContext.Instance.DatasetViewModel.SessionViewModels)
+                    var streamBinding = streamVisualizationObject.StreamBinding;
+                    foreach (var sessionViewModel in VisualizationContext.Instance.DatasetViewModel.SessionViewModels)
                     {
-                        PartitionViewModel partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == streamBinding.PartitionName);
+                        var partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == streamBinding.PartitionName);
                         if (partitionViewModel != null)
                         {
-                            // Get the name of the node to select.  If there are stream adapter arguments then assume
-                            // the stream adapter is a stream member adapter and append the path to the member.
-                            string nodeName = streamBinding.StreamName;
-                            if ((streamBinding.StreamAdapterArguments != null) && streamBinding.StreamAdapterArguments.Any())
-                            {
-                                nodeName += "." + streamBinding.StreamAdapterArguments[0] as string;
-                            }
-
-                            if (partitionViewModel.SelectNode(nodeName))
+                            if (partitionViewModel.SelectNode(streamBinding.NodePath))
                             {
                                 sessionViewModel.IsTreeNodeExpanded = true;
                                 VisualizationContext.Instance.DatasetViewModel.IsTreeNodeExpanded = true;

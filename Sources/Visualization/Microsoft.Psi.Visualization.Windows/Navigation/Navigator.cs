@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Visualization.Navigation
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -29,6 +30,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         private readonly NavigatorRange dataRange;
         private readonly NavigatorRange selectionRange;
         private readonly NavigatorRange viewRange;
+
+        // The dictionary of audio playback sources, keyed by audio visualization objects.  The audio
+        // of all currently bound audio sources in this collection will be played during playback.
+        private readonly Dictionary<AudioVisualizationObject, StreamSource> audioPlaybackSources = new Dictionary<AudioVisualizationObject, StreamSource>();
+
+        private readonly int playTimerTickIntervalMs = 10;
 
         private DateTime cursor;
         private CursorMode cursorMode;
@@ -53,7 +60,6 @@ namespace Microsoft.Psi.Visualization.Navigation
         private double playSpeed = 1.0d;
 
         private DispatcherTimer playTimer = null;
-        private int playTimerTickIntervalMs = 10;
 
         // The current clock time (in ticks) of the last time the play timer fired
         private DateTime lastPlayTimerTickTime;
@@ -63,10 +69,6 @@ namespace Microsoft.Psi.Visualization.Navigation
 
         // True if the timeline cursor should follow the mouse cursor when in manual navigation mode, otherwise false
         private bool cursorFollowsMouse = true;
-
-        // The dictionary of audio playback sources, keyed by audio visualization objects.  The audio
-        // of all currently bound audio sources in this collection will be played during playback.
-        private Dictionary<AudioVisualizationObject, StreamSource> audioPlaybackSources = new Dictionary<AudioVisualizationObject, StreamSource>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
@@ -81,8 +83,8 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.cursor = now.AddSeconds(-60);
             this.zoomToSelectionPadding = 0.1;
 
-            this.SelectionRange.RangeChanged += this.SelectionRange_RangeChanged;
-            this.viewRange.PropertyChanged += this.ViewRange_PropertyChanged;
+            this.selectionRange.RangeChanged += this.OnSelectionRangeChanged;
+            this.viewRange.PropertyChanged += this.OnViewRangePropertyChanged;
         }
 
         /// <summary>
@@ -144,7 +146,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                     var original = this.cursor;
                     this.cursor = value;
                     this.CursorChanged?.Invoke(this, new NavigatorTimeChangedEventArgs(original, value));
-                    DataManager.Instance.ReadInstantData(value);
+                    DataManager.Instance.ReadAndPublishStreamValue(value);
                     this.RaisePropertyChanged(nameof(this.Cursor));
                     this.RaisePropertyChanged(nameof(this.CursorRelativeToSessionStartFormatted));
                     this.RaisePropertyChanged(nameof(this.CursorRelativeToSelectionStartFormatted));
@@ -177,7 +179,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 
             set
             {
-                if ((value > 0) && (value <= 11))
+                if (value > 0)
                 {
                     this.RaisePropertyChanging(nameof(this.PlaySpeed));
                     this.playSpeed = value;
@@ -267,16 +269,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Gets selection start as a formatted string.
         /// </summary>
-        public string SelectionStartFormatted =>
-            this.SelectionRange.StartTime != DateTime.MinValue ?
-            this.FormatDateTime(this.SelectionRange.StartTime) : string.Empty;
+        public string SelectionStartFormatted => DateTimeFormatHelper.FormatDateTime(this.SelectionRange.StartTime, false);
 
         /// <summary>
         /// Gets selection end as a formatted string.
         /// </summary>
-        public string SelectionEndFormatted =>
-            this.SelectionRange.EndTime != DateTime.MaxValue ?
-            this.FormatDateTime(this.SelectionRange.EndTime) : string.Empty;
+        public string SelectionEndFormatted => DateTimeFormatHelper.FormatDateTime(this.SelectionRange.EndTime, false);
 
         /// <summary>
         /// Gets the offset of the section start from the start of the ession.
@@ -639,7 +637,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         /// <returns>True if the navigator can clear the selection, false otherwise.</returns>
         public bool CanClearSelection() =>
-            this.CursorMode != CursorMode.Live && this.SelectionRange.IsFinite;
+            this.CursorMode != CursorMode.Live && (this.SelectionRange.StartTime != DateTime.MinValue || this.SelectionRange.EndTime != DateTime.MaxValue);
 
         /// <summary>
         /// Animates the navigator cursor based on indicated speed.
@@ -707,7 +705,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                     {
                         // Get the audio stream to play
                         var reader = StreamReader.Create(streamSource.StoreName, streamSource.StorePath, streamSource.StreamReaderType);
-                        var importer = new Importer(this.audioPlaybackPipeline, reader);
+                        var importer = new Importer(this.audioPlaybackPipeline, reader, false);
                         var stream = importer.OpenStream<AudioBuffer>(streamSource.StreamName);
 
                         // Create the audio player
@@ -787,12 +785,7 @@ namespace Microsoft.Psi.Visualization.Navigation
             return timespan.ToString(timespan < TimeSpan.Zero ? "\\-hh\\:mm\\:ss\\.ffff" : "hh\\:mm\\:ss\\.ffff");
         }
 
-        private string FormatDateTime(DateTime dateTime)
-        {
-            return dateTime.ToString("M/d/yyyy hh\\:mm\\:ss\\.ffff");
-        }
-
-        private void SelectionRange_RangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
+        private void OnSelectionRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
         {
             this.RaisePropertyChanged(nameof(this.ShowSelectionStart));
             this.RaisePropertyChanged(nameof(this.ShowSelectionEnd));
@@ -807,7 +800,7 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.RaisePropertyChanged(nameof(this.SelectionEndRelativeToSelectionStartFormatted));
         }
 
-        private void ViewRange_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnViewRangePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             // If the duration of the View Range has changed, then we need to recalculate
             // the time offset of the cursor from the start time of the view range
@@ -818,7 +811,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 
             if (e.PropertyName == nameof(NavigatorRange.StartTime) || e.PropertyName == nameof(NavigatorRange.EndTime))
             {
-                DataManager.Instance.OnInstantViewRangeChanged(this.ViewRange.AsTimeInterval);
+                DataManager.Instance.SetStreamValueProvidersCacheInterval(this.ViewRange.AsTimeInterval);
             }
         }
     }

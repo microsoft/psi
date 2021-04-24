@@ -67,6 +67,15 @@ namespace Microsoft.Psi.Data
         /// <inheritdoc />
         public TimeInterval MessageOriginatingTimeInterval => this.PsiStoreReader.MessageOriginatingTimeInterval;
 
+        /// <inheritdoc />
+        public TimeInterval StreamTimeInterval => this.PsiStoreReader.StreamTimeInterval;
+
+        /// <inheritdoc />
+        public long? Size => this.PsiStoreReader.Size;
+
+        /// <inheritdoc />
+        public int? StreamCount => this.PsiStoreReader.StreamCount;
+
         /// <summary>
         /// Gets underlying PsiStoreReader (internal only, not part of IStreamReader interface).
         /// </summary>
@@ -108,15 +117,15 @@ namespace Microsoft.Psi.Data
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
+        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<T> deallocator = null, Action<SerializationException> errorHandler = null)
         {
             var meta = this.PsiStoreReader.OpenStream(name); // this checks for duplicates
-            this.OpenStream<T>(meta, target, allocator, errorHandler);
+            this.OpenStream(meta, target, allocator, deallocator, errorHandler);
             return meta;
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStreamIndex<T>(string streamName, Action<Func<IStreamReader, T>, Envelope> target)
+        public IStreamMetadata OpenStreamIndex<T>(string streamName, Action<Func<IStreamReader, T>, Envelope> target, Func<T> allocator = null)
         {
             var meta = this.PsiStoreReader.OpenStream(streamName); // this checks for duplicates
 
@@ -128,7 +137,7 @@ namespace Microsoft.Psi.Data
                 // given the current IStreamReader or a new `reader` instance against the same store.
                 // The Func is a closure over the `indexEntry` needed for retrieval by `Read<T>(...)`
                 // but this implementation detail remain opaque to users of the reader.
-                target(new Func<IStreamReader, T>(reader => ((PsiStoreStreamReader)reader).Read<T>(indexEntry)), envelope);
+                target(new Func<IStreamReader, T>(reader => ((PsiStoreStreamReader)reader).Read<T>(indexEntry, allocator)), envelope);
             });
             return meta;
         }
@@ -168,7 +177,6 @@ namespace Microsoft.Psi.Data
         public void ReadAll(ReplayDescriptor descriptor, CancellationToken cancelationToken = default)
         {
             var result = true;
-            Envelope e;
             this.PsiStoreReader.Seek(descriptor.Interval, true);
             while (result || this.PsiStoreReader.IsMoreDataExpected())
             {
@@ -177,7 +185,7 @@ namespace Microsoft.Psi.Data
                     return;
                 }
 
-                result = this.PsiStoreReader.MoveNext(out e);
+                result = this.PsiStoreReader.MoveNext(out Envelope e);
                 if (result)
                 {
                     if (this.indexOutputs.ContainsKey(e.SourceId))
@@ -231,14 +239,15 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <typeparam name="T">The type of message data.</typeparam>
         /// <param name="indexEntry">Index entry describing the location of a particular message.</param>
+        /// <param name="allocator">An optional allocator to use when constructing messages.</param>
         /// <returns>Message data.</returns>
-        private T Read<T>(IndexEntry indexEntry)
+        private T Read<T>(IndexEntry indexEntry, Func<T> allocator = null)
         {
-            var target = default(T);
+            var target = (allocator == null) ? default : allocator();
             int count = this.PsiStoreReader.ReadAt(indexEntry, ref this.buffer);
             var bufferReader = new BufferReader(this.buffer, count);
             var handler = this.context.Serializers.GetHandler<T>();
-            target = this.Deserialize<T>(handler, bufferReader, default(Envelope) /* only used by raw */, false, false, target, null /* only used by dynamic */, null /* only used by dynamic */);
+            target = this.Deserialize(handler, bufferReader, default /* only used by raw */, false, false, target, null /* only used by dynamic */, null /* only used by dynamic */);
             return target;
         }
 
@@ -257,8 +266,17 @@ namespace Microsoft.Psi.Data
             this.context.Serializers.RegisterMetadata(metadata);
         }
 
-        private void OpenStream<T>(IStreamMetadata meta, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
+        private void OpenStream<T>(IStreamMetadata meta, Action<T, Envelope> target, Func<T> allocator = null, Action<T> deallocator = null, Action<SerializationException> errorHandler = null)
         {
+            // If no deallocator is specified, use the default
+            deallocator ??= data =>
+            {
+                if (data is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            };
+
             // If there's no list of targets for this stream, create it now
             if (!this.targets.ContainsKey(meta.Id))
             {
@@ -315,13 +333,16 @@ namespace Microsoft.Psi.Data
                 this.outputs[meta.Id] = (br, e) =>
                 {
                     // Deserialize the data
-                    var data = this.Deserialize<T>(handler, br, e, isDynamic, isRaw, (allocator == null) ? default(T) : allocator(), meta.TypeName, this.context.Serializers.Schemas);
+                    var target = (allocator == null) ? default : allocator();
+                    var data = this.Deserialize(handler, br, e, isDynamic, isRaw, target, meta.TypeName, this.context.Serializers.Schemas);
 
                     // Call each of the targets
                     foreach (Delegate action in this.targets[meta.Id])
                     {
                         (action as Action<T, Envelope>)(data, e);
                     }
+
+                    deallocator(data);
                 };
             }
             catch (SerializationException ex)

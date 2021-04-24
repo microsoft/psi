@@ -21,7 +21,6 @@ namespace Microsoft.Psi.AzureKinect.Visualization
     [VisualizationObject("Azure Kinect Body")]
     public class AzureKinectBodyVisualizationObject : ModelVisual3DVisualizationObject<AzureKinectBody>
     {
-        private readonly BillboardTextVisual3D billboard;
         private readonly UpdatableVisual3DDictionary<JointId, SphereVisual3D> visualJoints;
         private readonly UpdatableVisual3DDictionary<(JointId ChildJoint, JointId ParentJoint), PipeVisual3D> visualBones;
 
@@ -41,12 +40,8 @@ namespace Microsoft.Psi.AzureKinect.Visualization
             this.visualJoints = new UpdatableVisual3DDictionary<JointId, SphereVisual3D>(null);
             this.visualBones = new UpdatableVisual3DDictionary<(JointId ChildJoint, JointId ParentJoint), PipeVisual3D>(null);
 
-            this.billboard = new BillboardTextVisual3D()
-            {
-                Background = Brushes.Gray,
-                Foreground = new SolidColorBrush(Colors.White),
-                Padding = new Thickness(5),
-            };
+            this.Billboard = new BillboardTextVisualizationObject();
+            this.Billboard.RegisterChildPropertyChangedNotifications(this, nameof(this.Billboard));
 
             this.UpdateVisibility();
         }
@@ -121,6 +116,16 @@ namespace Microsoft.Psi.AzureKinect.Visualization
             get { return this.billboardHeightCm; }
             set { this.Set(nameof(this.BillboardHeightCm), ref this.billboardHeightCm, value); }
         }
+
+        /// <summary>
+        /// Gets the billboard visualization object for the spatial entity.
+        /// </summary>
+        [ExpandableObject]
+        [DataMember]
+        [PropertyOrder(2)]
+        [DisplayName("Billboard Properties")]
+        [Description("The billboard properties.")]
+        public BillboardTextVisualizationObject Billboard { get; private set; }
 
         /// <summary>
         /// Gets or sets the number of divisions to use when rendering polygons for joints and bones.
@@ -278,8 +283,9 @@ namespace Microsoft.Psi.AzureKinect.Visualization
             if (this.CurrentData != null)
             {
                 var origin = this.CurrentData.Joints[JointId.Pelvis].Pose.Origin;
-                this.billboard.Position = new Win3D.Point3D(origin.X, origin.Y, origin.Z + (this.BillboardHeightCm / 100.0));
-                this.billboard.Text = this.CurrentData.ToString();
+                var pos = new Win3D.Point3D(origin.X, origin.Y, origin.Z + (this.BillboardHeightCm / 100.0));
+                var text = this.CurrentData.ToString();
+                this.Billboard.SetCurrentValue(this.SynthesizeMessage(Tuple.Create(pos, text)));
             }
         }
 
@@ -292,7 +298,7 @@ namespace Microsoft.Psi.AzureKinect.Visualization
 
         private void UpdateBillboardVisibility()
         {
-            this.UpdateChildVisibility(this.billboard, this.Visible && this.CurrentData != default && this.ShowBillboard);
+            this.UpdateChildVisibility(this.Billboard.ModelView, this.Visible && this.CurrentData != default && this.ShowBillboard);
         }
     }
 }

@@ -99,8 +99,9 @@ namespace Microsoft.Psi.Scheduling
         /// <param name="argument">Action argument.</param>
         /// <param name="startTime">Scheduled start time.</param>
         /// <param name="context">The scheduler context on which to execute the action.</param>
-        /// <param name="outputProcessingTime">Indicates whether to output processing time information.</param>
-        /// <param name="processingTime">The time it took to process (execute) the action.</param>
+        /// <param name="outputActionTiming">Indicates whether to output action timing information.</param>
+        /// <param name="actionStartTime">The time the runtime started executing the action.</param>
+        /// <param name="actionEndTime">The time the runtime ended executing the action.</param>
         /// <returns>Success flag.</returns>
         public bool TryExecute<T>(
             SynchronizationLock synchronizationObject,
@@ -108,13 +109,16 @@ namespace Microsoft.Psi.Scheduling
             T argument,
             DateTime startTime,
             SchedulerContext context,
-            bool outputProcessingTime,
-            out TimeSpan processingTime)
+            bool outputActionTiming,
+            out DateTime actionStartTime,
+            out DateTime actionEndTime)
         {
-            processingTime = TimeSpan.Zero;
+            actionStartTime = DateTime.MinValue;
+            actionEndTime = DateTime.MinValue;
 
             if (this.forcedShutdownRequested || startTime > context.FinalizeTime)
             {
+                actionStartTime = actionEndTime = this.clock.GetCurrentTime();
                 return true;
             }
 
@@ -136,8 +140,6 @@ namespace Microsoft.Psi.Scheduling
                 return false;
             }
 
-            var actionStartTime = default(DateTime);
-
             try
             {
                 // Unlike ExecuteAndRelease, which assumes that the context has already been entered (e.g.
@@ -148,7 +150,7 @@ namespace Microsoft.Psi.Scheduling
                 this.counters?.Increment(SchedulerCounters.WorkitemsPerSecond);
                 this.counters?.Increment(SchedulerCounters.ImmediateWorkitemsPerSecond);
 
-                if (outputProcessingTime)
+                if (outputActionTiming)
                 {
                     actionStartTime = this.clock.GetCurrentTime();
                 }
@@ -160,9 +162,9 @@ namespace Microsoft.Psi.Scheduling
             }
             finally
             {
-                if (outputProcessingTime)
+                if (outputActionTiming)
                 {
-                    processingTime = this.clock.GetCurrentTime() - actionStartTime;
+                    actionEndTime = this.clock.GetCurrentTime();
                 }
 
                 synchronizationObject.Release();

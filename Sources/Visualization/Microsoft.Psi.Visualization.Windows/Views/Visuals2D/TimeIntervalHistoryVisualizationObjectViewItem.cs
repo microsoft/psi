@@ -79,16 +79,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             // determine the correspondence of 5 pixels in the time space
             var offset = 10.0 / this.parent.ScaleTransform.ScaleX;
-            var verticalSpace = this.parent.VisualizationObject.LineWidth * 4 / this.parent.ScaleTransform.ScaleY;
+            var verticalSpace = this.parent.StreamVisualizationObject.LineWidth * 4 / this.parent.ScaleTransform.ScaleY;
 
             var start = (data.TimeInterval.Left - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
             var end = (data.TimeInterval.Right - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
             var startFull = data.TimeInterval.LeftEndpoint.Inclusive ? start : Math.Min(start + offset, end);
             var endFull = data.TimeInterval.RightEndpoint.Inclusive ? end : Math.Max(end - offset, start);
 
-            var lo = (double)(data.TrackNumber + verticalSpace) / this.parent.VisualizationObject.TrackCount;
-            var hi = (double)(data.TrackNumber + 1 - verticalSpace) / this.parent.VisualizationObject.TrackCount;
-            var mid = (double)(data.TrackNumber + 0.5) / this.parent.VisualizationObject.TrackCount;
+            var lo = (double)(data.TrackNumber + verticalSpace) / this.parent.StreamVisualizationObject.TrackCount;
+            var hi = (double)(data.TrackNumber + 1 - verticalSpace) / this.parent.StreamVisualizationObject.TrackCount;
+            var mid = (double)(data.TrackNumber + 0.5) / this.parent.StreamVisualizationObject.TrackCount;
 
             this.timeIntervalFigure.StartPoint = new Point(start, mid);
             (this.timeIntervalFigure.Segments[0] as LineSegment).Point = new Point(startFull, lo);
@@ -125,22 +125,22 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         internal void SetupBindings()
         {
             // Create bindings for lines
-            var binding = new Binding(nameof(this.parent.VisualizationObject) + "." + nameof(this.parent.VisualizationObject.LineColor))
+            var binding = new Binding(nameof(this.parent.StreamVisualizationObject) + "." + nameof(this.parent.StreamVisualizationObject.LineColor))
             {
-                Source = this.parent.VisualizationObject,
+                Source = this.parent.StreamVisualizationObject,
                 Converter = new Converters.ColorConverter(),
             };
             BindingOperations.SetBinding(this.figure, Shape.StrokeProperty, binding);
 
-            binding = new Binding(nameof(this.parent.VisualizationObject) + "." + nameof(this.parent.VisualizationObject.LineWidth))
+            binding = new Binding(nameof(this.parent.StreamVisualizationObject) + "." + nameof(this.parent.StreamVisualizationObject.LineWidth))
             {
-                Source = this.parent.VisualizationObject,
+                Source = this.parent.StreamVisualizationObject,
             };
             BindingOperations.SetBinding(this.figure, Shape.StrokeThicknessProperty, binding);
 
-            binding = new Binding(nameof(this.parent.VisualizationObject) + "." + nameof(this.parent.VisualizationObject.FillColor))
+            binding = new Binding(nameof(this.parent.StreamVisualizationObject) + "." + nameof(this.parent.StreamVisualizationObject.FillColor))
             {
-                Source = this.parent.VisualizationObject,
+                Source = this.parent.StreamVisualizationObject,
                 Converter = new Converters.ColorConverter(),
             };
             BindingOperations.SetBinding(this.figure, Shape.FillProperty, binding);

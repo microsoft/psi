@@ -60,10 +60,6 @@
     <x:Static x:Key="EmptyString"
              Member="sys:String.Empty" />
 
-    <Style TargetType="{x:Type pg:PropertyItem}" BasedOn="{StaticResource {x:Type pg:PropertyItemBase}}">
-        <Setter Property="Background" Value="{StaticResource DarkBackgroundColorBrush}"/>
-    </Style>
-    
     <!-- PropertyGrid numeric Editors -->
     <Style TargetType="{x:Type editor:PropertyGridEditorByteUpDown}"
           BasedOn="{StaticResource NumericUpDown}">
@@ -716,7 +712,7 @@
     </Style>
 
     <SolidColorBrush x:Key="GlyphBrush"
-                    Color="#FF31347C" />
+                    Color="#FFAAAAAA" />
 
     <ControlTemplate x:Key="ExpanderToggleButton"
                     TargetType="{x:Type ToggleButton}">
@@ -941,6 +937,7 @@
 
 
     <Style TargetType="{x:Type pg:PropertyItemBase}">
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="{StaticResource DarkBackgroundColorBrush}" />
         <!-- Set the margin at 1 pixel bottom to let the horizontal "line" effect appear. -->
         <Setter Property="Margin"
@@ -1069,7 +1066,7 @@
                            Value="True">
                             <Setter TargetName="PART_Name"
                              Property="Background"
-                             Value="#CED4DF" />
+                             Value="#4A4A4A" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                            Value="True">
@@ -1112,7 +1109,8 @@
                              Value="False" />
                         </Trigger>
 
-                        <DataTrigger Binding="{Binding ElementName=_optionsImage, Path=ToolTip}"
+                        <!-- The following is commented out as we aren't using these AdvancedOptions icons -->
+                        <!--<DataTrigger Binding="{Binding ElementName=_optionsImage, Path=ToolTip}"
                                Value="{x:Static pg:StringConstants.Local}">
                             <Setter TargetName="_optionsImage"
                              Property="Source"
@@ -1142,16 +1140,20 @@
                              Property="Source"
                              Value="../Images/Style11.png" />
                         </DataTrigger>
-                        <!--DataTrigger Binding="{Binding ElementName=_optionsImage, Path=ToolTip}"
+                        <DataTrigger Binding="{Binding ElementName=_optionsImage, Path=ToolTip}"
                                Value="{x:Static pg:StringConstants.AdvancedProperties}">
                             <Setter TargetName="_optionsImage"
                              Property="Source"
                              Value="../Images/AdvancedProperties11.png" />
-                        </-->
+                        </DataTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type pg:PropertyItem}" BasedOn="{StaticResource {x:Type pg:PropertyItemBase}}">
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundColorBrush}"/>
     </Style>
 
     <Style TargetType="{x:Type pg:PropertyGrid}">

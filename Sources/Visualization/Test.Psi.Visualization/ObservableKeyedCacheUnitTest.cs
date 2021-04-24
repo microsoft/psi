@@ -215,28 +215,28 @@ namespace Test.Psi.Visualization
         [Timeout(60000)]
         public void GetViewTest()
         {
-            var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
+            var view1 = this.test.GetView(ObservableKeyedViewMode.Fixed, 2, 44, 0, null);
             Assert.IsInstanceOfType(view1, typeof(IReadOnlyList<double>));
             Assert.AreEqual(view1.Count, 3);
 
-            var view2 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
+            var view2 = this.test.GetView(ObservableKeyedViewMode.Fixed, 2, 44, 0, null);
             UnitTestHelper.AssertAreEqual(view1, view2, view1.Count);
             Assert.AreEqual(view1, view2);
 
-            var view3 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 1, 45, 0, null);
+            var view3 = this.test.GetView(ObservableKeyedViewMode.Fixed, 1, 45, 0, null);
             Assert.AreEqual(view3.Count, 4);
 
-            var view4 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, -1000, 1000, 0, null);
+            var view4 = this.test.GetView(ObservableKeyedViewMode.Fixed, -1000, 1000, 0, null);
             Assert.AreEqual(view4.Count, 10);
 
-            var view5 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, -456, 123.1, 0, null);
+            var view5 = this.test.GetView(ObservableKeyedViewMode.Fixed, -456, 123.1, 0, null);
             Assert.AreEqual(view5.Count, 10);
             UnitTestHelper.AssertAreEqual(view4, view5, view4.Count);
             Assert.AreNotEqual(view4, view5);
 
             UnitTestHelper.TestException(
                 () =>
-                this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 100, -100, 0, null), typeof(ArgumentException));
+                this.test.GetView(ObservableKeyedViewMode.Fixed, 100, -100, 0, null), typeof(ArgumentException));
         }
 
         /// <summary>
@@ -317,10 +317,10 @@ namespace Test.Psi.Visualization
         [Timeout(60000)]
         public void ViewEmptyTest()
         {
-            var view1 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 1, 2, 0, null);
+            var view1 = this.test.GetView(ObservableKeyedViewMode.Fixed, 1, 2, 0, null);
             Assert.AreEqual(view1.Count, 0);
 
-            var view2 = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 1, 1, 0, null);
+            var view2 = this.test.GetView(ObservableKeyedViewMode.Fixed, 1, 1, 0, null);
             Assert.AreEqual(view2.Count, 0);
         }
 
@@ -331,7 +331,7 @@ namespace Test.Psi.Visualization
         [Timeout(60000)]
         public void ViewEnumeratorTest()
         {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
+            var view = this.test.GetView(ObservableKeyedViewMode.Fixed, 2, 44, 0, null);
             var array = new double[] { 2, 10, 15 };
 
             using (var viewEnumerator = view.GetEnumerator())
@@ -357,7 +357,7 @@ namespace Test.Psi.Visualization
         [Timeout(60000)]
         public void ViewIndexOfTest()
         {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
+            var view = this.test.GetView(ObservableKeyedViewMode.Fixed, 2, 44, 0, null);
 
             Assert.AreEqual(view.IndexOf(10), 1);
             Assert.AreEqual(view.IndexOf(44), -1);
@@ -370,7 +370,7 @@ namespace Test.Psi.Visualization
         [Timeout(60000)]
         public void ViewIndexerTest()
         {
-            var view = this.test.GetView(ObservableKeyedCache<double, double>.ObservableKeyedView.ViewMode.Fixed, 2, 44, 0, null);
+            var view = this.test.GetView(ObservableKeyedViewMode.Fixed, 2, 44, 0, null);
 
             Assert.AreEqual(view[1], 10);
             UnitTestHelper.TestException(() => view[2] = 105, typeof(NotSupportedException));

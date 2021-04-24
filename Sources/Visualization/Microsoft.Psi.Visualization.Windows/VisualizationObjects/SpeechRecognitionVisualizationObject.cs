@@ -8,12 +8,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Speech;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Implements a speech recognition visualization object.
+    /// Implements a visualization object for <see cref="IStreamingSpeechRecognitionResult"/>.
     /// </summary>
     [VisualizationObject("Speech Recognition Results")]
-    public class SpeechRecognitionVisualizationObject : TimelineVisualizationObject<IStreamingSpeechRecognitionResult>
+    [VisualizationPanelType(VisualizationPanelType.Timeline)]
+    public class SpeechRecognitionVisualizationObject : StreamIntervalVisualizationObject<IStreamingSpeechRecognitionResult>
     {
         /// <inheritdoc />
         [IgnoreDataMember]

@@ -31,14 +31,14 @@ namespace Microsoft.Psi
         string SupplementalMetadataTypeName { get; }
 
         /// <summary>
-        /// Gets the name of the partition where the stream is stored.
+        /// Gets the name of the store containing the stream.
         /// </summary>
-        string PartitionName { get; }
+        string StoreName { get; }
 
         /// <summary>
-        /// Gets the path of the partition where the stream is stored.
+        /// Gets the path of the store containing the stream.
         /// </summary>
-        string PartitionPath { get; }
+        string StorePath { get; }
 
         /// <summary>
         /// Gets the time when the stream was opened.
@@ -80,19 +80,19 @@ namespace Microsoft.Psi
         DateTime LastMessageOriginatingTime { get; }
 
         /// <summary>
-        /// Gets the average size of messages in the stream.
-        /// </summary>
-        int AverageMessageSize { get; }
-
-        /// <summary>
-        /// Gets the average latency of messages in the stream, in microseconds.
-        /// </summary>
-        int AverageLatency { get; }
-
-        /// <summary>
         /// Gets the number of messages in the stream.
         /// </summary>
-        int MessageCount { get; }
+        long MessageCount { get; }
+
+        /// <summary>
+        /// Gets the average size (bytes) of messages in the stream.
+        /// </summary>
+        double AverageMessageSize { get; }
+
+        /// <summary>
+        /// Gets the average latency (milliseconds) of messages in the stream.
+        /// </summary>
+        double AverageMessageLatencyMs { get; }
 
         /// <summary>
         /// Gets supplemental stream metadata.

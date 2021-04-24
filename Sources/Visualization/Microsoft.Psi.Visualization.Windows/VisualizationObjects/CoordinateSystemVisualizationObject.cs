@@ -31,7 +31,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         };
 
         private double length = .2;
-        private double thickness = .02;
+        private double thickness = .015;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CoordinateSystemVisualizationObject"/> class.

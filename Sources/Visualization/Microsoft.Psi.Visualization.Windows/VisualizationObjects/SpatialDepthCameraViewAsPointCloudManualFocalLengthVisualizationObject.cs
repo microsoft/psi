@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using MathNet.Spatial.Euclidean;
@@ -69,6 +70,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             get { return this.focalLengthY; }
             set { this.Set(nameof(this.FocalLengthY), ref this.focalLengthY, value); }
         }
+
+        /// <inheritdoc/>
+        protected override Action<(Shared<DepthImage>, CoordinateSystem)> Deallocator => data => data.Item1?.Dispose();
 
         /// <inheritdoc/>
         public override void UpdateData()

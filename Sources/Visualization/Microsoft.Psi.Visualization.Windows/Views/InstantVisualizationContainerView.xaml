@@ -18,7 +18,7 @@
         </Style>
     </Control.Resources>
 
-    <Grid x:Name="PanelGrid" Background="{x:Null}" MouseMove="Root_MouseMove">
+    <Grid x:Name="PanelGrid" Background="Transparent" MouseMove="Root_MouseMove">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

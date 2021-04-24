@@ -19,6 +19,7 @@ namespace PsiStoreTool
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Interop.Format;
     using Microsoft.Psi.Interop.Transport;
+    using Microsoft.Psi.Persistence;
 
     /// <summary>
     /// Psi store utility methods.
@@ -29,10 +30,10 @@ namespace PsiStoreTool
         private const string ApplicationName = "PsiStoreTool";
 
         // The list of default assemblies which will be searched for task definitions.
-        private static string[] defaultAssemblies = new[] { "PsiStoreTool.dll" };
+        private static readonly string[] DefaultAssemblies = new[] { "PsiStoreTool.dll" };
 
         // The number of characters in each line in the console.
-        private static int consoleLineWidth = 80;
+        private static readonly int ConsoleLineWidth = 80;
 
         /// <summary>
         /// List streams within store.
@@ -53,16 +54,15 @@ namespace PsiStoreTool
                 if (showSize)
                 {
                     stringBuilder.AppendLine("[Avg. Message Size / Total Size]; * marks indexed streams");
-                    foreach (var stream in data.AvailableStreams.OrderByDescending(s => (double)s.MessageCount * s.AverageMessageSize))
+                    foreach (var stream in data.AvailableStreams.OrderByDescending(s => ((PsiStreamMetadata)s).MessageSizeCumulativeSum))
                     {
-                        var psiStream = stream as PsiStreamMetadata;
-                        if (psiStream == null)
+                        if (stream is not PsiStreamMetadata psiStream)
                         {
                             throw new NotSupportedException("Currently, only Psi Stores are supported.");
                         }
 
                         var isIndexed = psiStream.IsIndexed ? "* " : "  ";
-                        stringBuilder.AppendLine($"{isIndexed}[{(double)stream.AverageMessageSize / 1024:0.00}Kb / {(stream.AverageMessageSize * (double)stream.MessageCount) / (1024 * 1024):0.00}Mb] {stream.Name} ({stream.TypeName.Split(',')[0]})");
+                        stringBuilder.AppendLine($"{isIndexed}[{(double)psiStream.AverageMessageSize / 1024:0.00}Kb / {(psiStream.AverageMessageSize * (double)stream.MessageCount) / (1024 * 1024):0.00}Mb] {stream.Name} ({stream.TypeName.Split(',')[0]})");
                     }
                 }
                 else
@@ -92,8 +92,7 @@ namespace PsiStoreTool
             using (var pipeline = Pipeline.Create())
             {
                 var data = PsiStore.Open(pipeline, store, Path.GetFullPath(path));
-                var meta = data.AvailableStreams.First(s => s.Name == stream) as PsiStreamMetadata;
-                if (meta == null)
+                if (data.AvailableStreams.First(s => s.Name == stream) is not PsiStreamMetadata meta)
                 {
                     throw new NotSupportedException("Currently, only Psi Stores are supported.");
                 }
@@ -103,8 +102,9 @@ namespace PsiStoreTool
                 Console.WriteLine($"TypeName: {meta.TypeName}");
                 Console.WriteLine($"SupplementalMetadataTypeName: {meta.SupplementalMetadataTypeName}");
                 Console.WriteLine($"MessageCount: {meta.MessageCount}");
-                Console.WriteLine($"AverageFrequency: {meta.AverageFrequency}");
-                Console.WriteLine($"AverageLatency: {meta.AverageLatency}");
+                Console.WriteLine($"MessageSizeCumulativeSum: {meta.MessageSizeCumulativeSum}");
+                Console.WriteLine($"LatencyCumulativeSum: {meta.LatencyCumulativeSum}");
+                Console.WriteLine($"AverageLatencyMs: {meta.AverageMessageLatencyMs}");
                 Console.WriteLine($"AverageMessageSize: {meta.AverageMessageSize}");
                 Console.WriteLine($"FirstMessageOriginatingTime: {meta.FirstMessageOriginatingTime}");
                 Console.WriteLine($"LastMessageOriginatingTime: {meta.LastMessageOriginatingTime}");
@@ -241,11 +241,18 @@ namespace PsiStoreTool
         /// <param name="stores">Store names (semicolon separated).</param>
         /// <param name="path">Store path.</param>
         /// <param name="output">Output store name.</param>
+        /// <param name="outputPath">Output store path.</param>
         /// <returns>Success flag.</returns>
-        internal static int ConcatenateStores(string stores, string path, string output)
+        internal static int ConcatenateStores(string stores, string path, string output, string outputPath)
         {
-            Console.WriteLine($"Concatenating stores (stores={stores}, path={path}, output={output})");
-            PsiStore.Concatenate(stores.Split(';').Select(s => (s, path)), (output, path), new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
+            Console.WriteLine($"Concatenating stores (stores={stores}, path={path}, output={output}, outputpath={outputPath})");
+
+            if (PsiStore.Exists(output, outputPath) && !ConfirmStoreOverwrite(output))
+            {
+                return -1;
+            }
+
+            PsiStore.Concatenate(stores.Split(';').Select(s => (s, path)), (output, outputPath), false, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
             return 0;
         }
 
@@ -255,12 +262,13 @@ namespace PsiStoreTool
         /// <param name="store">Store name.</param>
         /// <param name="path">Store path.</param>
         /// <param name="output">Output store name.</param>
+        /// <param name="outputPath">Output store path.</param>
         /// <param name="start">Start time relative to beginning.</param>
         /// <param name="length">Length relative to start.</param>
         /// <returns>Success flag.</returns>
-        internal static int CropStore(string store, string path, string output, string start, string length)
+        internal static int CropStore(string store, string path, string output, string outputPath, string start, string length)
         {
-            Console.WriteLine($"Cropping store (store={store}, path={path}, output={output}, start={start}, length={length})");
+            Console.WriteLine($"Cropping store (store={store}, path={path}, output={output}, outputpath={outputPath}, start={start}, length={length})");
 
             var startTime = TimeSpan.Zero; // start at beginning if unspecified
             if (!string.IsNullOrWhiteSpace(start) && !TimeSpan.TryParse(start, CultureInfo.InvariantCulture, out startTime))
@@ -281,7 +289,12 @@ namespace PsiStoreTool
                 }
             }
 
-            PsiStore.Crop((store, path), (output, path), startTime, lengthRelativeInterval, true, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
+            if (PsiStore.Exists(output, outputPath) && !ConfirmStoreOverwrite(output))
+            {
+                return -1;
+            }
+
+            PsiStore.Crop((store, path), (output, outputPath), startTime, lengthRelativeInterval, false, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
             return 0;
         }
 
@@ -291,13 +304,14 @@ namespace PsiStoreTool
         /// <param name="store">Store name.</param>
         /// <param name="path">Store path.</param>
         /// <param name="output">Output store name.</param>
+        /// <param name="outputPath">Output store path.</param>
         /// <param name="quality">Start time relative to beginning.</param>
         /// <returns>Success flag.</returns>
-        internal static int EncodeStore(string store, string path, string output, int quality)
+        internal static int EncodeStore(string store, string path, string output, string outputPath, int quality)
         {
-            Console.WriteLine($"Encoding store (store={store}, path={path}, output={output}, quality={quality}");
+            Console.WriteLine($"Encoding store (store={store}, path={path}, output={output}, outputPath={outputPath}, quality={quality}");
 
-            bool IsImageStream(IStreamMetadata streamInfo)
+            static bool IsImageStream(IStreamMetadata streamInfo)
             {
                 return streamInfo.TypeName.StartsWith("Microsoft.Psi.Shared`1[[Microsoft.Psi.Imaging.Image,");
             }
@@ -311,7 +325,12 @@ namespace PsiStoreTool
                     .Write(streamInfo.Name, exporter, true);
             }
 
-            PsiStore.Process(IsImageStream, EncodeImageStreams, (store, path), (output, path), true, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
+            if (PsiStore.Exists(output, outputPath) && !ConfirmStoreOverwrite(output))
+            {
+                return -1;
+            }
+
+            PsiStore.Process(IsImageStream, EncodeImageStreams, (store, path), (output, outputPath), false, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")), Console.WriteLine);
 
             return 0;
         }
@@ -360,7 +379,9 @@ namespace PsiStoreTool
             var task = tasks[0];
 
             // process task
-            using (var pipeline = Pipeline.Create())
+            using (var pipeline = Pipeline.Create(
+                deliveryPolicy: task.Attribute.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : DeliveryPolicy.Unlimited,
+                enableDiagnostics: task.Attribute.EnableDiagnostics))
             {
                 var importer = store != null ? PsiStore.Open(pipeline, store, Path.GetFullPath(path)) : null;
 
@@ -377,12 +398,7 @@ namespace PsiStoreTool
                     var p = parameterInfo[i];
                     if (p.ParameterType.IsAssignableFrom(typeof(Importer)))
                     {
-                        if (importer == null)
-                        {
-                            throw new ArgumentException("Error: Task requires a store, but no store argument supplied (-s).");
-                        }
-
-                        parameters[i] = importer;
+                        parameters[i] = importer ?? throw new ArgumentException("Error: Task requires a store, but no store argument supplied (-s).");
                     }
                     else if (p.ParameterType.IsAssignableFrom(typeof(Pipeline)))
                     {
@@ -398,7 +414,7 @@ namespace PsiStoreTool
                     }
                     else
                     {
-                        Action<string, Func<string, object>> processArgs = (friendlyName, parser) =>
+                        void ProcessArgs(string friendlyName, Func<string, object> parser)
                         {
                             if (argIndex < args.Count())
                             {
@@ -429,31 +445,31 @@ namespace PsiStoreTool
                                 }
                                 while (parameters[i] == null);
                             }
-                        };
+                        }
 
                         if (p.ParameterType.IsAssignableFrom(typeof(double)))
                         {
-                            processArgs("double", v => double.Parse(v));
+                            ProcessArgs("double", v => double.Parse(v));
                         }
                         else if (p.ParameterType.IsAssignableFrom(typeof(int)))
                         {
-                            processArgs("integer", v => int.Parse(v));
+                            ProcessArgs("integer", v => int.Parse(v));
                         }
                         else if (p.ParameterType.IsAssignableFrom(typeof(bool)))
                         {
-                            processArgs("boolean", v => bool.Parse(v));
+                            ProcessArgs("boolean", v => bool.Parse(v));
                         }
                         else if (p.ParameterType.IsAssignableFrom(typeof(DateTime)))
                         {
-                            processArgs("datetime", v => DateTime.Parse(v));
+                            ProcessArgs("datetime", v => DateTime.Parse(v));
                         }
                         else if (p.ParameterType.IsAssignableFrom(typeof(TimeSpan)))
                         {
-                            processArgs("timespan", v => TimeSpan.Parse(v));
+                            ProcessArgs("timespan", v => TimeSpan.Parse(v));
                         }
                         else if (p.ParameterType.IsAssignableFrom(typeof(string)))
                         {
-                            processArgs("string", v => v);
+                            ProcessArgs("string", v => v);
                         }
                         else
                         {
@@ -492,9 +508,86 @@ namespace PsiStoreTool
                 if (importer != null)
                 {
                     pipeline.ProgressReportInterval = TimeSpan.FromSeconds(1);
-                    pipeline.RunAsync(null, new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")));
+                    pipeline.RunAsync(
+                        task.Attribute.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
+                        new Progress<double>(p => Console.WriteLine($"Progress: {p * 100.0:F2}%")));
                     pipeline.WaitAll();
                 }
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Analyze streams within store.
+        /// </summary>
+        /// <param name="store">Store name.</param>
+        /// <param name="path">Store path.</param>
+        /// <param name="order">Sort order for reporting statistics.</param>
+        /// <returns>Success flag.</returns>
+        internal static int AnalyzeStreams(string store, string path, string order)
+        {
+            Console.WriteLine($"Execute Task (store={store}, path={path}, order={order}");
+            Console.WriteLine();
+
+            var orderByAverage = order == "avg" ? true : order == "max" ? false : throw new ArgumentException($"Expected order of 'avg' or 'max' ({order})");
+            var frontier = DateTime.MinValue;
+            var stats = new Dictionary<int, (TimeSpan DelayCumulativeSum, TimeSpan DelayMax)>();
+            var count = 0L;
+
+            var latest = PsiStore.GetPathToLatestVersion(store, Path.GetFullPath(path));
+            var reader = new PsiStoreStreamReader(store, latest);
+            foreach (var meta in reader.AvailableStreams)
+            {
+                var id = meta.Id;
+                stats[id] = (TimeSpan.Zero, TimeSpan.Zero);
+                reader.OpenStream<Message<BufferReader>>(meta.Name, (_, e) =>
+                {
+                    if (++count % 10000 == 0)
+                    {
+                        Console.Write('.');
+                    }
+
+                    if (e.CreationTime < frontier)
+                    {
+                        var delay = frontier - e.CreationTime;
+                        var stat = stats[id];
+                        stats[id] = (stat.DelayCumulativeSum + delay, delay > stat.DelayMax ? delay : stat.DelayMax);
+                    }
+                    else
+                    {
+                        frontier = e.CreationTime;
+                    }
+                });
+            }
+
+            Console.WriteLine(
+               "Messages from multiple streams are interleaved with no guarantee that time-ordering between streams " +
+               "is preserved. Reading in a single pass may results in a delay of messages that come physically later " +
+               "in the store but may come before other messages in time. We are analyzing the store to determine the " +
+               "delay between the most current creation time of messages on a stream and the latest message read among " +
+               "all streams. This may help inform whether to set the PsiStore.Open(..., usePerStreamReaders=...) flag.");
+            Console.WriteLine();
+            Console.Write("Analyzing Store");
+            reader.Seek(TimeInterval.Infinite);
+            while (reader.MoveNext(out Envelope _))
+            {
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Summary of per-stream delays:");
+            Console.WriteLine();
+            var report = reader.AvailableStreams.Select(meta =>
+            {
+                var stat = stats[meta.Id];
+                var avgDelay = (double)stat.DelayCumulativeSum.Ticks / meta.MessageCount / TimeSpan.TicksPerMillisecond;
+                var maxDelay = stat.DelayMax.Ticks / TimeSpan.TicksPerMillisecond;
+                return (Average: avgDelay, Maximum: maxDelay, Name: meta.Name);
+            }).OrderByDescending(x => orderByAverage ? x.Average : x.Maximum);
+
+            foreach (var delay in report)
+            {
+                Console.WriteLine($"AvgDelay={delay.Average:00000.00}ms MaxDelay={delay.Maximum:00000.00}ms Name={delay.Name}");
             }
 
             return 0;
@@ -536,13 +629,13 @@ namespace PsiStoreTool
         /// <returns>Persistent format serializer (dynamic, because may be used as IFormatSerializer or IPersistentFormatSerializer).</returns>
         private static dynamic GetFormatSerializer(string format)
         {
-            switch (format)
+            return format switch
             {
-                case "msg": return MessagePackFormat.Instance;
-                case "json": return JsonFormat.Instance;
-                case "csv": return CsvFormat.Instance;
-                default: throw new ArgumentException($"Unknown format specifier: {format}");
-            }
+                "msg" => MessagePackFormat.Instance,
+                "json" => JsonFormat.Instance,
+                "csv" => CsvFormat.Instance,
+                _ => throw new ArgumentException($"Unknown format specifier: {format}"),
+            };
         }
 
         /// <summary>
@@ -552,18 +645,18 @@ namespace PsiStoreTool
         /// <param name="indent">Indent level.</param>
         private static void PrintNode(dynamic node, int indent)
         {
-            Func<int, string> indentStr = n => new string(' ', (indent + n) * 2);
+            string IndentStr(int n) => new string(' ', (indent + n) * 2);
 
             if (indent > 10)
             {
                 // too deep - may be cyclic
-                Console.WriteLine($"{indentStr(1)}...");
+                Console.WriteLine($"{IndentStr(1)}...");
                 return;
             }
 
             if (node == null)
             {
-                Console.WriteLine($"{indentStr(0)}null");
+                Console.WriteLine($"{IndentStr(0)}null");
                 return;
             }
 
@@ -574,12 +667,12 @@ namespace PsiStoreTool
                 {
                     if (field.Value is ExpandoObject || field.Value is dynamic[])
                     {
-                        Console.WriteLine($"{indentStr(0)}{field.Key}:");
+                        Console.WriteLine($"{IndentStr(0)}{field.Key}:");
                         PrintNode(field.Value, indent + 1);
                     }
                     else
                     {
-                        Console.WriteLine($"{indentStr(0)}{field.Key}: {field.Value}");
+                        Console.WriteLine($"{IndentStr(0)}{field.Key}: {field.Value}");
                     }
                 }
             }
@@ -591,7 +684,7 @@ namespace PsiStoreTool
                 {
                     if (++i > 3)
                     {
-                        Console.WriteLine($"{indentStr(1)}...");
+                        Console.WriteLine($"{IndentStr(1)}...");
                         break;
                     }
 
@@ -601,7 +694,7 @@ namespace PsiStoreTool
             else
             {
                 // simple primitive
-                Console.WriteLine($"{indentStr(0)}{node}");
+                Console.WriteLine($"{IndentStr(0)}{node}");
             }
         }
 
@@ -635,7 +728,7 @@ namespace PsiStoreTool
 
             foreach (var file in assemblies)
             {
-                Console.WriteLine($"| {file.PadRight(consoleLineWidth - 4)} |");
+                Console.WriteLine($"| {file.PadRight(ConsoleLineWidth - 4)} |");
             }
 
             WriteEmptyLine();
@@ -692,12 +785,12 @@ namespace PsiStoreTool
 
         private static void WriteHorizontalLine()
         {
-            Console.WriteLine($"+{new string('-', consoleLineWidth - 2)}+");
+            Console.WriteLine($"+{new string('-', ConsoleLineWidth - 2)}+");
         }
 
         private static void WriteEmptyLine()
         {
-            Console.WriteLine($"|{new string(' ', consoleLineWidth - 2)}|");
+            Console.WriteLine($"|{new string(' ', ConsoleLineWidth - 2)}|");
         }
 
         private static void WriteWarningLines(string warningString)
@@ -713,7 +806,7 @@ namespace PsiStoreTool
             {
                 // If the next word, and a prepended space fit on the current line,
                 // add it. Otherwise output the current line and begin a new one.
-                if (line.Length + words[index].Length + 1 <= consoleLineWidth - 4)
+                if (line.Length + words[index].Length + 1 <= ConsoleLineWidth - 4)
                 {
                     if (line.Length > 0)
                     {
@@ -737,7 +830,7 @@ namespace PsiStoreTool
 
         private static void OutputLine(StringBuilder line)
         {
-            double sidePadding = (consoleLineWidth - 4 - line.Length) / 2.0d;
+            double sidePadding = (ConsoleLineWidth - 4 - line.Length) / 2.0d;
 
             Console.Write("| ");
             Console.Write(new string(' ', (int)Math.Floor(sidePadding)));
@@ -745,6 +838,13 @@ namespace PsiStoreTool
             Console.Write(new string(' ', (int)Math.Ceiling(sidePadding)));
             Console.WriteLine(" |");
             line.Clear();
+        }
+
+        private static bool ConfirmStoreOverwrite(string output)
+        {
+            Console.WriteLine($"A store named {output} already exists at the specified output path. Are you sure you want to overwrite it? Type 'y' for yes, or any other key to exit.");
+            var response = Console.ReadLine();
+            return response == "Y" || response == "y";
         }
     }
 }

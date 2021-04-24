@@ -14,14 +14,17 @@ namespace Microsoft.Psi.Visualization
     public class PsiCommand : ICommand
     {
         private Action action;
+        private bool canExecute;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PsiCommand"/> class.
         /// </summary>
         /// <param name="action">The action to perform.</param>
-        public PsiCommand(Action action)
+        /// <param name="canExecute">True if the command can be executed, otherwise false.</param>
+        public PsiCommand(Action action, bool canExecute = true)
         {
             this.action = action;
+            this.canExecute = canExecute;
         }
 
         /// <inheritdoc />
@@ -35,7 +38,7 @@ namespace Microsoft.Psi.Visualization
         /// <inheritdoc />
         public bool CanExecute(object parameter)
         {
-            return true;
+            return this.canExecute;
         }
 
         /// <inheritdoc />

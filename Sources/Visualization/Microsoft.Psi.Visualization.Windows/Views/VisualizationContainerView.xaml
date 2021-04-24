@@ -60,7 +60,8 @@
             EnableRowVirtualization="False"
             VerticalContentAlignment="Stretch"
             VerticalScrollBarVisibility="Disabled"
-            AutomationProperties.Name="VisualizationPanels">
+            AutomationProperties.Name="VisualizationPanels"
+            ContextMenuOpening="OnContextMenuOpening">
 
             <DataGrid.Resources>
                 <views:VisualizationTemplateSelector x:Key="panelTemplateSelector" />
@@ -91,6 +92,7 @@
             <DataGrid.Columns>
                 <DataGridTemplateColumn CellTemplateSelector="{StaticResource panelTemplateSelector}" Width="*" />
             </DataGrid.Columns>
+            
         </DataGrid>
     </Grid>
 </UserControl>

@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="startTime">Starting time for streams of data..</param>
         /// <param name="audioBufferSizeMs">The size of each data buffer in milliseconds.</param>
         public WaveFileImporter(Pipeline pipeline, string name, string path, DateTime startTime, int audioBufferSizeMs = WaveFileStreamReader.DefaultAudioBufferSizeMs)
-            : base(pipeline, new WaveFileStreamReader(name, path, startTime, audioBufferSizeMs))
+            : base(pipeline, new WaveFileStreamReader(name, path, startTime, audioBufferSizeMs), false)
         {
         }
     }

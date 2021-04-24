@@ -72,5 +72,15 @@ namespace Microsoft.Psi.PsiStudio.Common
         /// Expand members.
         /// </summary>
         public const string ExpandMembers = "Expand Members";
+
+        /// <summary>
+        /// Expand all nodes.
+        /// </summary>
+        public const string ExpandAllNodes = "Expand All Nodes";
+
+        /// <summary>
+        /// Collapse all nodes.
+        /// </summary>
+        public const string CollapseAllNodes = "Collapse All Nodes";
     }
 }

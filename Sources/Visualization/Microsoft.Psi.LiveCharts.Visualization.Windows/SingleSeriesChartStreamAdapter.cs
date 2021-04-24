@@ -9,25 +9,17 @@ namespace Microsoft.Psi.Visualization.LiveCharts
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Used to adapt streams a list describing a single series chart to a cartesian chart visualization object.
+    /// Implements a stream adapter from a list describing a single series chart to a dictionary
+    /// describing a multiple-series chart.
     /// </summary>
     [StreamAdapter]
     public class SingleSeriesChartStreamAdapter : StreamAdapter<List<(string, double)>, Dictionary<string, (string, double)[]>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SingleSeriesChartStreamAdapter"/> class.
-        /// </summary>
-        public SingleSeriesChartStreamAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static Dictionary<string, (string, double)[]> Adapter(List<(string, double)> value, Envelope envelope)
-        {
-            return new Dictionary<string, (string, double)[]>()
+        /// <inheritdoc/>
+        public override Dictionary<string, (string, double)[]> GetAdaptedValue(List<(string, double)> source, Envelope envelope)
+            => new Dictionary<string, (string, double)[]>()
             {
-                { "Data", value != null ? value.ToArray() : Array.Empty<(string, double)>() },
+                { "Data", source != null ? source.ToArray() : Array.Empty<(string, double)>() },
             };
-        }
     }
 }

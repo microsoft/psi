@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Data.Json
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading;
     using Microsoft.Psi;
@@ -99,6 +100,28 @@ namespace Microsoft.Psi.Data.Json
             }
         }
 
+        /// <inheritdoc />
+        public TimeInterval StreamTimeInterval
+        {
+            get
+            {
+                TimeInterval timeInterval = TimeInterval.Empty;
+                foreach (var metadata in this.AvailableStreams)
+                {
+                    var metadataTimeInterval = new TimeInterval(metadata.OpenedTime, metadata.ClosedTime);
+                    timeInterval = TimeInterval.Coverage(new TimeInterval[] { timeInterval, metadataTimeInterval });
+                }
+
+                return timeInterval;
+            }
+        }
+
+        /// <inheritdoc/>
+        public long? Size => this.Reader?.Size;
+
+        /// <inheritdoc/>
+        public int? StreamCount => this.Reader?.AvailableStreams.Count();
+
         /// <summary>
         /// Gets or sets the underlying store reader.
         /// </summary>
@@ -126,7 +149,7 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStream<T>(string streamName, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
+        public IStreamMetadata OpenStream<T>(string streamName, Action<T, Envelope> target, Func<T> allocator = null, Action<T> deallocator = null, Action<SerializationException> errorHandler = null)
         {
             if (string.IsNullOrWhiteSpace(streamName))
             {
@@ -140,7 +163,12 @@ namespace Microsoft.Psi.Data.Json
 
             if (allocator != null)
             {
-                throw new ArgumentException("Allocators are not used by JsonStreamReader and must be null.", nameof(allocator));
+                throw new NotSupportedException($"Allocators are not supported by {nameof(JsonStreamReader)} and must be null.");
+            }
+
+            if (deallocator != null)
+            {
+                throw new NotSupportedException($"Deallocators are not supported by {nameof(JsonStreamReader)} and must be null.");
             }
 
             var metadata = this.Reader.OpenStream(streamName);
@@ -156,16 +184,15 @@ namespace Microsoft.Psi.Data.Json
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStreamIndex<T>(string streamName, Action<Func<IStreamReader, T>, Envelope> target)
+        public IStreamMetadata OpenStreamIndex<T>(string streamName, Action<Func<IStreamReader, T>, Envelope> target, Func<T> allocator = null)
         {
-            throw new NotImplementedException("JsonStreamReader does not support indexing.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support indexing.");
         }
 
         /// <inheritdoc />
-        public void ReadAll(ReplayDescriptor descriptor, CancellationToken cancelationToken = default(CancellationToken))
+        public void ReadAll(ReplayDescriptor descriptor, CancellationToken cancelationToken = default)
         {
             bool hasMoreData = true;
-            Envelope envelope;
             this.Reader.Seek(descriptor);
             while (hasMoreData)
             {
@@ -174,11 +201,10 @@ namespace Microsoft.Psi.Data.Json
                     return;
                 }
 
-                hasMoreData = this.Reader.MoveNext(out envelope);
+                hasMoreData = this.Reader.MoveNext(out Envelope envelope);
                 if (hasMoreData)
                 {
-                    JToken token;
-                    hasMoreData = this.Reader.Read(out token);
+                    hasMoreData = this.Reader.Read(out JToken token);
                     this.outputs[envelope.SourceId](token, envelope);
                 }
             }
@@ -187,37 +213,37 @@ namespace Microsoft.Psi.Data.Json
         /// <inheritdoc />
         public void Seek(TimeInterval interval, bool useOriginatingTime = false)
         {
-            throw new NotImplementedException("JsonStreamReader does not support seeking.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support seeking.");
         }
 
         /// <inheritdoc />
         public bool MoveNext(out Envelope envelope)
         {
-            throw new NotImplementedException("JsonStreamReader does not support stream-style access.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support stream-style access.");
         }
 
         /// <inheritdoc />
         public bool IsLive()
         {
-            throw new NotImplementedException("JsonStreamReader does not support stream-style access.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support stream-style access.");
         }
 
         /// <inheritdoc />
         public IStreamMetadata GetStreamMetadata(string name)
         {
-            throw new NotImplementedException("JsonStreamReader does not support metadata.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support metadata.");
         }
 
         /// <inheritdoc />
         public T GetSupplementalMetadata<T>(string streamName)
         {
-            throw new NotImplementedException("JsonStreamReader does not support supplemental metadata.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support supplemental metadata.");
         }
 
         /// <inheritdoc />
         public bool ContainsStream(string name)
         {
-            throw new NotImplementedException("JsonStreamReader does not support this API.");
+            throw new NotSupportedException($"{nameof(JsonStreamReader)} does not support this API.");
         }
     }
 }

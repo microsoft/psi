@@ -69,7 +69,8 @@
                      ToolTip="{Binding Name}">
                   <Grid.Resources>
                      <Style TargetType="ToolTip">
-                        <Style.Triggers>
+                                <Setter Property="Background" Value="{StaticResource DarkBackgroundColorBrush}"/>
+                                <Style.Triggers>
                            <Trigger Property="Content"
                                     Value="{x:Static sys:String.Empty}">
                               <Setter Property="Visibility"
@@ -249,7 +250,7 @@
                          AllowsTransparency="True" 
                          Focusable="False" 
                          HorizontalOffset="1"
-                         VerticalOffset="1" 
+                         VerticalOffset="1"
                          PopupAnimation="Slide"
                          ToolTip="{x:Static sys:String.Empty}">
                      <Popup.Resources>

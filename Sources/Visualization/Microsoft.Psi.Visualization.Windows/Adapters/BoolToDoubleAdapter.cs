@@ -6,22 +6,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of booleans into doubles.
+    /// Implements a stream adapter from <see cref="bool"/> to <see cref="double"/>.
     /// </summary>
     [StreamAdapter]
     public class BoolToDoubleAdapter : StreamAdapter<bool, double>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BoolToDoubleAdapter"/> class.
-        /// </summary>
-        public BoolToDoubleAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static double Adapter(bool value, Envelope env)
-        {
-            return value ? 1.0 : 0.0;
-        }
+        /// <inheritdoc/>
+        public override double GetAdaptedValue(bool source, Envelope envelope)
+            => source ? 1.0 : 0.0;
     }
 }

@@ -118,6 +118,7 @@ namespace Microsoft.Psi.Data.Json
                     var t = token.ToObject<T>();
                     emitter.Post(t, originatingTime);
                 });
+            this.streams.Add(streamName);
 
             return emitter;
         }

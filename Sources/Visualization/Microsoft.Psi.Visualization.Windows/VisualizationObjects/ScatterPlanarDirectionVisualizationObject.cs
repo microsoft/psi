@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a scatter planar direction visualization object.
     /// </summary>
     [VisualizationObject("Scatter Planar Data")]
-    public class ScatterPlanarDirectionVisualizationObject : Instant3DVisualizationObject<List<CoordinateSystem>>
+    public class ScatterPlanarDirectionVisualizationObject : XYZValueVisualizationObject<List<CoordinateSystem>>
     {
         private Color color = Colors.DarkGray;
         private double size = 0.5;

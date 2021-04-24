@@ -4,26 +4,22 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
-    using System.Collections.Specialized;
     using System.ComponentModel;
-    using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
     using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi;
     using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization;
-    using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
-    using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
-    /// Represents a stream visualization object.
+    /// Provides an abstract base class for stream visualization objects.
     /// </summary>
-    /// <typeparam name="TData">The type of the stream.</typeparam>
+    /// <typeparam name="TData">The type of the stream data.</typeparam>
     public abstract class StreamVisualizationObject<TData> : VisualizationObject, IStreamVisualizationObject
     {
         /// <summary>
@@ -37,14 +33,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private StreamSource streamSource = null;
 
         /// <summary>
+        /// The positive magnitude of the cursor epsilon (this value can be modified in the properties window).
+        /// </summary>
+        private int cursorEpsilonPosMs;
+
+        /// <summary>
+        /// The negative magnitude of the cursor epsilon (this value can be modified in the properties window).
+        /// </summary>
+        private int cursorEpsilonNegMs;
+
+        /// <summary>
+        /// Gets or sets the epsilon interval around the cursor used when reading data.
+        /// </summary>
+        private RelativeTimeInterval cursorEpsilon;
+
+        /// <summary>
         /// The current (based on navigation cursor) value of the stream.
         /// </summary>
         private Message<TData>? currentValue;
-
-        /// <summary>
-        /// The data read from the stream.
-        /// </summary>
-        private ObservableKeyedCache<DateTime, Message<TData>>.ObservableKeyedView data;
 
         /// <summary>
         /// The snap to stream command.
@@ -61,7 +67,72 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         public StreamVisualizationObject()
         {
-            this.IsShared = typeof(TData).IsGenericType && typeof(TData).GetGenericTypeDefinition() == typeof(Shared<>);
+            this.CursorEpsilonPosMs = 0;
+            this.CursorEpsilonNegMs = 500;
+        }
+
+        /// <summary>
+        /// Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).
+        /// </summary>
+        [DataMember]
+        [DisplayName("Cursor Epsilon Future (ms)")]
+        [Description("The epsilon future duration relative to the cursor (in milliseconds) to consider when finding messages to visualize.")]
+        public int CursorEpsilonPosMs
+        {
+            get { return this.cursorEpsilonPosMs; }
+
+            set
+            {
+                this.cursorEpsilonPosMs = value;
+                this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.cursorEpsilonNegMs), TimeSpan.FromMilliseconds(this.cursorEpsilonPosMs));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).
+        /// </summary>
+        [DataMember]
+        [DisplayName("Cursor Epsilon Past (ms)")]
+        [Description("The epsilon past duration relative to the cursor (in milliseconds) to consider when finding messages to visualize.")]
+        public int CursorEpsilonNegMs
+        {
+            get { return this.cursorEpsilonNegMs; }
+
+            set
+            {
+                this.cursorEpsilonNegMs = value;
+                this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.cursorEpsilonNegMs), TimeSpan.FromMilliseconds(this.cursorEpsilonPosMs));
+            }
+        }
+
+        /// <summary>
+        /// Gets the stream name.
+        /// </summary>
+        [Browsable(true)]
+        [DisplayName("Stream Name")]
+        [IgnoreDataMember]
+        public string StreamName => this.StreamBinding?.StreamName;
+
+        /// <summary>
+        /// Gets the stream name.
+        /// </summary>
+        [Browsable(true)]
+        [DisplayName("Partition Name")]
+        [IgnoreDataMember]
+        public string PartitionName => this.StreamBinding?.PartitionName;
+
+        /// <summary>
+        /// Gets the cursor epsilon.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelativeTimeInterval CursorEpsilon
+        {
+            get => this.cursorEpsilon;
+            private set
+            {
+                this.Set(nameof(this.CursorEpsilon), ref this.cursorEpsilon, value);
+            }
         }
 
         /// <inheritdoc/>
@@ -108,6 +179,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Gets a value indicating whether the visualization object has a current value.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public bool HasCurrentValue => this.currentValue.HasValue;
+
+        /// <summary>
         /// Gets the current value.
         /// </summary>
         [Browsable(false)]
@@ -127,38 +205,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public DateTime CurrentOriginatingTime => this.currentValue.HasValue ? this.currentValue.Value.OriginatingTime : default;
-
-        /// <summary>
-        /// Gets or sets the data view.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public ObservableKeyedCache<DateTime, Message<TData>>.ObservableKeyedView Data
-        {
-            get => this.data;
-            protected set
-            {
-                if (this.data != value)
-                {
-                    if (this.data != null)
-                    {
-                        this.data.DetailedCollectionChanged -= this.OnDataDetailedCollectionChanged;
-                    }
-
-                    this.Set(nameof(this.Data), ref this.data, value);
-
-                    if (this.data != null)
-                    {
-                        this.data.DetailedCollectionChanged += this.OnDataDetailedCollectionChanged;
-                        this.OnDataCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                    }
-                    else
-                    {
-                        this.SetCurrentValue(null);
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// Gets or sets the stream binding.
@@ -224,9 +270,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [IgnoreDataMember]
         public virtual bool RequiresSupplementalMetadata => false;
 
-        /// <summary>
-        /// Gets a value indicating whether the visualization object is currently bound to a datasource.
-        /// </summary>
+        /// <inheritdoc/>
         [Browsable(false)]
         [IgnoreDataMember]
         public bool IsBound => this.StreamSource != null;
@@ -248,7 +292,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (!this.IsBound)
                 {
-                    if (this.StreamBinding.IsStreamMemberBinding)
+                    if (this.StreamBinding.IsDerived)
                     {
                         // Stream member unbound
                         return IconSourcePath.StreamMemberUnbound;
@@ -261,7 +305,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
                 else if (this.IsSnappedToStream)
                 {
-                    if (this.StreamBinding.IsStreamMemberBinding)
+                    if (this.StreamBinding.IsDerived)
                     {
                         // Snap to stream member
                         return this.IsLive ? IconSourcePath.StreamMemberSnapLive : IconSourcePath.StreamMemberSnap;
@@ -272,7 +316,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                         return this.IsLive ? IconSourcePath.SnapToStreamLive : IconSourcePath.SnapToStream;
                     }
                 }
-                else if (this.StreamBinding.IsStreamMemberBinding)
+                else if (this.StreamBinding.IsDerived)
                 {
                     // Stream member
                     return this.IsLive ? IconSourcePath.StreamMemberLive : IconSourcePath.StreamMember;
@@ -288,7 +332,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         [Browsable(false)]
         [IgnoreDataMember]
-        public override bool IsSnappedToStream => this.Container != null ? this.Container.SnapToVisualizationObject == this : false;
+        public override bool IsSnappedToStream => this.Container?.SnapToVisualizationObject == this;
 
         /// <summary>
         /// Gets the text to display in the snap to stream menu item.
@@ -303,16 +347,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public bool IsLive => this.StreamSource != null && this.StreamSource.IsLive;
 
         /// <summary>
-        /// Gets a value indicating whether type parameter T is Shared{} or not.
+        /// Gets the allocator to use when reading data.
         /// </summary>
-        protected bool IsShared { get; private set; }
+        protected virtual Func<TData> Allocator { get; } = null;
+
+        /// <summary>
+        /// Gets the deallocator to use when reading data.
+        /// </summary>
+        protected virtual Action<TData> Deallocator { get; } =
+            data =>
+            {
+                if (data is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            };
 
         /// <summary>
         /// Sets the current value for the visualization object.
         /// </summary>
         /// <param name="value">The value to use as the new current value.</param>
-        /// <param name="incrementSharedRefCount">True if the reference count of shared data should be automatically incremented, otherwise false.</param>
-        public void SetCurrentValue(Message<TData>? value, bool incrementSharedRefCount = true)
+        public void SetCurrentValue(Message<TData>? value)
         {
             if (this.currentValue != value)
             {
@@ -320,22 +375,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 this.RaisePropertyChanging(nameof(this.CurrentData));
                 this.RaisePropertyChanging(nameof(this.CurrentOriginatingTime));
 
-                // If we're handling shared objects, decrement the reference count of the current value
-                if (this.IsShared && this.currentValue.HasValue)
+                // Deallocate the current value
+                if (this.currentValue.HasValue)
                 {
-                    ((IDisposable)this.currentValue.Value.Data)?.Dispose();
+                    this.Deallocator?.Invoke(this.currentValue.Value.Data);
                 }
 
-                // If we're handling shared objects, increment the reference count if requested.
-                // NOTE: InstantVisualzationObject will pass false for incrementSharedRefCount
-                // because it already increased the reference count itself before calling us.
-                if (this.IsShared && incrementSharedRefCount)
+                // If we have an incoming value
+                if (value.HasValue)
                 {
-                    this.currentValue = value.DeepClone();
+                    // Create a copy using the allocator
+                    var data = this.Allocator != null ? this.Allocator() : default;
+                    value.Value.Data.DeepClone(ref data);
+                    this.currentValue = new Message<TData>(data, value.Value.OriginatingTime, value.Value.CreationTime, 0, 0);
                 }
                 else
                 {
-                    this.currentValue = value;
+                    this.currentValue = null;
                 }
 
                 this.RaisePropertyChanged(nameof(this.CurrentValue));
@@ -375,10 +431,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc />
-        public void UpdateStreamSource(SessionViewModel activeSession)
+        public void UpdateStreamSource(SessionViewModel sessionViewModel)
         {
             // Attempt to rebind to a source
-            StreamSource newStreamSource = activeSession != null ? activeSession.GetStreamSource(this.streamBinding) : null;
+            var newStreamSource = sessionViewModel?.CreateStreamSource(
+                this.streamBinding,
+                () => this.Allocator != null ? this.Allocator() : default,
+                t => this.Deallocator?.Invoke(t));
 
             // If we're still bound to the same source, then we're done.
             if (this.StreamSource == newStreamSource)
@@ -421,32 +480,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.RaisePropertyChanged(nameof(this.CanSnapToStream));
         }
 
-        /// <inheritdoc/>
-        public virtual DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest)
-        {
-            // TODO
-            return this.GetTimeOfNearestMessage(time, this.Data?.Count ?? 0, (idx) => this.Data[idx].OriginatingTime, snappingBehavior);
-        }
-
-        /// <summary>
-        /// Returns the timestamp of the Message that's closest to currentTime.  Used by the "Snap To Stream" functionality.
-        /// </summary>
-        /// <param name="currentTime">The time underneath the mouse cursor.</param>
-        /// <param name="count">Number of entries to search within.</param>
-        /// <param name="timeAtIndex">Function that returns an index given a time.</param>
-        /// <param name="snappingBehavior">Timeline snapping behavior.</param>
-        /// <returns>The timestamp of the message that's temporally closest to currentTime.</returns>
-        protected DateTime? GetTimeOfNearestMessage(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, SnappingBehavior snappingBehavior)
-        {
-            int index = IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex, snappingBehavior);
-            if (index >= 0)
-            {
-                return timeAtIndex(index);
-            }
-
-            return null;
-        }
-
         /// <summary>
         /// Finds the index that is either exactly at currentTime, or closest to currentTime.
         /// Uses binary search to find exact match or location where match should be.
@@ -458,28 +491,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected virtual int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
         {
             return IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex);
-        }
-
-        /// <summary>
-        /// Called when data collection contents have changed.
-        /// </summary>
-        /// <param name="e">Collection changed event arguments.</param>
-        protected virtual void OnDataCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            // see if we are still active
-            if (this.Container == null)
-            {
-                return;
-            }
-
-            if (this.Navigator.CursorMode == CursorMode.Live)
-            {
-                var last = this.Data.LastOrDefault();
-                if (last != default(Message<TData>))
-                {
-                    this.SetCurrentValue(last);
-                }
-            }
         }
 
         /// <inheritdoc/>
@@ -515,18 +526,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         protected virtual void OnStreamUnbound()
         {
-            this.Data = null;
-
             // If this is the stream currently being snapped to, disable snap to stream.
             if (this.IsSnappedToStream)
             {
                 this.ToggleSnapToStream();
             }
-        }
-
-        private void OnDataDetailedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            this.OnDataCollectionChanged(e);
         }
 
         private void StreamSource_PropertyChanging(object sender, PropertyChangingEventArgs e)
@@ -559,7 +563,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     this.UpdateStreamSource(null);
 
                     // Display an error message to the user.
-                    string errorMessage = $"The format of the messages in the stream {e.StreamName} in store {e.StoreName} have changed and are unable to be deserialized, see error below:{Environment.NewLine}{Environment.NewLine}{e.Exception.Message}";
+                    string errorMessage = $"The format of the messages in the stream {e.StreamName} in store {e.StoreName} have changed and are unable to be deserialized. PsiStudio will no longer attempt to read from this stream. See detailed error information below:{Environment.NewLine}{Environment.NewLine}{e.Exception.Message}";
                     new MessageBoxWindow(Application.Current.MainWindow, "Stream Type Mismatch", errorMessage, "Close", null).ShowDialog();
                 }));
             }

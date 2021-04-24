@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.Persistence
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -57,15 +56,8 @@ namespace Microsoft.Psi.Persistence
             return fullPath != null;
         }
 
-        internal static string GetPathToLatestVersion(string appName, string rootPath)
-        {
-            if (!TryGetPathToLatestVersion(appName, rootPath, out string path))
-            {
-                throw new InvalidOperationException($"No matching files found: {rootPath} \\[{appName}.*\\]{appName}*");
-            }
-
-            return path;
-        }
+        internal static long GetSize(string storeName, string storePath)
+            => EnumerateStoreFiles(storeName, storePath).Select(fi => fi.Length).Sum();
 
         internal static IEnumerable<FileInfo> EnumerateStoreFiles(string storeName, string storePath)
         {

@@ -9,22 +9,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of depth camera view to spatial depth camera view with default position.
+    /// Implements a stream adapter from depth camera view to spatial depth camera view with default position.
     /// </summary>
     [StreamAdapter]
     public class DepthCameraViewToSpatialDepthCameraViewAdapter : StreamAdapter<(Shared<DepthImage>, ICameraIntrinsics), (Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DepthCameraViewToSpatialDepthCameraViewAdapter"/> class.
-        /// </summary>
-        public DepthCameraViewToSpatialDepthCameraViewAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static (Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem) Adapter((Shared<DepthImage>, ICameraIntrinsics) value, Envelope env)
-        {
-            return (value.Item1, value.Item2, new CoordinateSystem());
-        }
+        /// <inheritdoc/>
+        public override (Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem) GetAdaptedValue((Shared<DepthImage>, ICameraIntrinsics) source, Envelope envelope)
+            => (source.Item1, source.Item2, new CoordinateSystem());
     }
 }

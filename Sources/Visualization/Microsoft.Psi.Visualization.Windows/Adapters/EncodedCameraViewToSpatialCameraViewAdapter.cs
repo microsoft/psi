@@ -9,22 +9,19 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of camera view (encoded image) to spatial camera view (decoded image) with default position.
+    /// Implements a stream adapter from camera view (shared encoded image with intrinsics) to spatial camera view (shared image with intrinsics) with default position.
     /// </summary>
     [StreamAdapter]
     public class EncodedCameraViewToSpatialCameraViewAdapter : StreamAdapter<(Shared<EncodedImage>, ICameraIntrinsics), (Shared<Image>, ICameraIntrinsics, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncodedCameraViewToSpatialCameraViewAdapter"/> class.
-        /// </summary>
-        public EncodedCameraViewToSpatialCameraViewAdapter()
-            : base(Adapter)
-        {
-        }
+        private readonly EncodedImageToImageAdapter imageAdapter = new EncodedImageToImageAdapter();
 
-        private static (Shared<Image>, ICameraIntrinsics, CoordinateSystem) Adapter((Shared<EncodedImage>, ICameraIntrinsics) value, Envelope env)
-        {
-            return (value.Item1?.Decode(), value.Item2, new CoordinateSystem());
-        }
+        /// <inheritdoc/>
+        public override (Shared<Image>, ICameraIntrinsics, CoordinateSystem) GetAdaptedValue((Shared<EncodedImage>, ICameraIntrinsics) source, Envelope envelope)
+            => (this.imageAdapter.GetAdaptedValue(source.Item1, envelope), source.Item2, new CoordinateSystem());
+
+        /// <inheritdoc/>
+        public override void Dispose((Shared<Image>, ICameraIntrinsics, CoordinateSystem) destination)
+            => this.imageAdapter.Dispose(destination.Item1);
     }
 }

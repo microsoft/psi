@@ -5,7 +5,6 @@ namespace Microsoft.Psi.Persistence
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
 
     /// <summary>
@@ -49,7 +48,7 @@ namespace Microsoft.Psi.Persistence
             this.fileReader.Seek(extentId, position);
         }
 
-        public bool MoveNext(IEnumerable<int> ids)
+        public bool MoveNext(HashSet<int> ids)
         {
             bool hasData = this.MoveNext();
             while (hasData && !ids.Contains(this.currentEnvelope.SourceId))

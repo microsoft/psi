@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Visualization.Views
     /// <summary>
     /// Interaction logic for XYZVisualizationPanelView.xaml.
     /// </summary>
-    public partial class XYZVisualizationPanelView : VisualizationPanelViewBase
+    public partial class XYZVisualizationPanelView : VisualizationPanelView
     {
         private Storyboard cameraStoryboard;
 

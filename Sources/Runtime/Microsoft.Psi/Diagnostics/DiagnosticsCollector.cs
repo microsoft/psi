@@ -14,9 +14,9 @@ namespace Microsoft.Psi.Diagnostics
     {
         private readonly DiagnosticsConfiguration diagnosticsConfig;
 
-        private ConcurrentDictionary<int, PipelineDiagnosticsInternal> graphs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal>();
-        private ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics> outputs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics>();
-        private ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics> connectors = new ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics>();
+        private readonly ConcurrentDictionary<int, PipelineDiagnosticsInternal> graphs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal>();
+        private readonly ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics> outputs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics>();
+        private readonly ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics> connectors = new ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics>();
 
         public DiagnosticsCollector(DiagnosticsConfiguration diagnosticsConfig)
         {
@@ -239,7 +239,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="receiver">Receiver having completed processing.</param>
         public ReceiverCollector GetReceiverDiagnosticsCollector(Pipeline pipeline, PipelineElement element, IReceiver receiver)
         {
-            return new ReceiverCollector(this.graphs[pipeline.Id].PipelineElements[element.Id].Receivers[receiver.Id], this.diagnosticsConfig);
+            return new ReceiverCollector(this.graphs[pipeline.Id].PipelineElements[element.Id], receiver.Id, this.diagnosticsConfig);
         }
 
         /// <summary>
@@ -247,18 +247,33 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         public class ReceiverCollector
         {
+            private readonly PipelineDiagnosticsInternal.PipelineElementDiagnostics pipelineElementDiagnostics;
             private readonly PipelineDiagnosticsInternal.ReceiverDiagnostics receiverDiagnostics;
             private readonly DiagnosticsConfiguration diagnosticsConfig;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ReceiverCollector"/> class.
             /// </summary>
-            /// <param name="receiverDiagnostics">Receiver diagnostics instance being collected.</param>
+            /// <param name="pipelineElementDiagnostics">Pipeline element diagnostics instance associated with this receiver.</param>
+            /// <param name="receiverId">The id for the receiver to collect diagnostics about.</param>
             /// <param name="diagnosticsConfig">Diagnostics configuration.</param>
-            internal ReceiverCollector(PipelineDiagnosticsInternal.ReceiverDiagnostics receiverDiagnostics, DiagnosticsConfiguration diagnosticsConfig)
+            internal ReceiverCollector(
+                PipelineDiagnosticsInternal.PipelineElementDiagnostics pipelineElementDiagnostics,
+                int receiverId,
+                DiagnosticsConfiguration diagnosticsConfig)
             {
-                this.receiverDiagnostics = receiverDiagnostics;
+                this.pipelineElementDiagnostics = pipelineElementDiagnostics;
+                this.receiverDiagnostics = this.pipelineElementDiagnostics.Receivers[receiverId];
                 this.diagnosticsConfig = diagnosticsConfig;
+            }
+
+            /// <summary>
+            /// Update of the pipeline element diagnostic state.
+            /// </summary>
+            /// <param name="diagnosticState">The new diagnostic state.</param>
+            public void UpdateDiagnosticState(string diagnosticState)
+            {
+                this.pipelineElementDiagnostics.DiagnosticState = diagnosticState;
             }
 
             /// <summary>
@@ -268,7 +283,9 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void MessageEmitted(Envelope envelope, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddMessageLatencyAtEmitter(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageEmitted(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageCreatedLatency(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageEmittedLatency(diagnosticsTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
@@ -278,7 +295,7 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void QueueSizeUpdate(int queueSize, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddCurrentQueueSize(queueSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddDeliveryQueueSize(queueSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
@@ -287,31 +304,32 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void MessageDropped(DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddDroppedMessage(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageDropped(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
 
             /// <summary>
             /// Capture throttle status update.
             /// </summary>
-            /// <param name="throttled">Whether input is throttled.</param>
-            public void PipelineElementReceiverThrottle(bool throttled)
+            /// <param name="receiverIsThrottled">Whether input is throttled.</param>
+            public void PipelineElementReceiverThrottle(bool receiverIsThrottled)
             {
-                this.receiverDiagnostics.Throttled = throttled;
+                this.receiverDiagnostics.ReceiverIsThrottled = receiverIsThrottled;
             }
 
             /// <summary>
             /// Message was processed by component.
             /// </summary>
             /// <param name="envelope">Message envelope.</param>
-            /// <param name="processingTime">The time it took to process the message.</param>
+            /// <param name="receiverStartTime">The time the runtime started executing the receiver for the message.</param>
+            /// <param name="receiverEndTime">The time the runtime finished executing the receiver for the message.</param>
             /// <param name="messageSize">Message size (bytes).</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            public void MessageProcessed(Envelope envelope, TimeSpan processingTime, int messageSize, DateTime diagnosticsTime)
+            public void MessageProcessed(Envelope envelope, DateTime receiverStartTime, DateTime receiverEndTime, int messageSize, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddProcessedMessage(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageProcessed(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
                 this.receiverDiagnostics.AddMessageSize(messageSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageLatencyAtReceiver(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddProcessingTime(processingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageReceivedLatency(receiverStartTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageProcessTime(receiverEndTime - receiverStartTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
             }
         }
     }

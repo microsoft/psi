@@ -16,10 +16,16 @@ namespace Microsoft.Psi.Visualization.Helpers
         /// Formats a nullable datetime object into a string.
         /// </summary>
         /// <param name="dateTime">The nullable datetime object to format.</param>
+        /// <param name="renderDateTimeMinMax">If true, then DateTime.MinValue and DateTimeMaxValue are rendered explicitly, otherwise they are rendered as empty strings.</param>
         /// <returns>A string representation of the datetime.</returns>
-        public static string FormatDateTime(DateTime? dateTime)
+        public static string FormatDateTime(DateTime? dateTime, bool renderDateTimeMinMax = true)
         {
-            return dateTime.HasValue ? dateTime.Value.ToString(DateTimeFormat) : string.Empty;
+            if (!dateTime.HasValue || (!renderDateTimeMinMax && (dateTime.Value == DateTime.MinValue || dateTime.Value == DateTime.MaxValue)))
+            {
+                return string.Empty;
+            }
+
+            return dateTime.Value.ToString(DateTimeFormat);
         }
     }
 }

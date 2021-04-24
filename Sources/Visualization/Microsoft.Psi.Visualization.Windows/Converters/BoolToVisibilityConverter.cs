@@ -9,7 +9,8 @@ namespace Microsoft.Psi.Visualization.Converters
     using System.Windows.Data;
 
     /// <summary>
-    /// Provides a way to apply custom logic to a binding. Specifically, converting from a boolean to a <see cref="Visibility"/>.
+    /// Implements a converter from a boolean to a <see cref="Visibility"/>, with true
+    /// corresponding to Visible, and false corresponding to Collapsed.
     /// </summary>
     [ValueConversion(typeof(object), typeof(Visibility))]
     public class BoolToVisibilityConverter : IValueConverter

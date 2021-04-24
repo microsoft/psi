@@ -77,7 +77,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -85,7 +85,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second session with a duplicate name
-            var session1 = dataset.AddSessionFromPsiStore("NewStore", StorePath, "Session_0"); // should throw
+            dataset.AddSessionFromPsiStore("NewStore", StorePath, "Session_0"); // should throw
         }
 
         [TestMethod]
@@ -136,7 +136,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -145,7 +145,7 @@ namespace Test.Psi.Data
 
             // create a second dataset with a duplicate session name and append it to the first
             var dataset1 = new Dataset();
-            var session1 = dataset1.AddSessionFromPsiStore("NewStore", StorePath, "Session_0");
+            dataset1.AddSessionFromPsiStore("NewStore", StorePath, "Session_0");
 
             dataset.Append(dataset1); // should throw
         }
@@ -201,7 +201,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a partition
-            var partition0 = session.AddPsiStorePartition("PsiStore", StorePath, "Partition_0");
+            session.AddPsiStorePartition("PsiStore", StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -209,7 +209,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second partition with a duplicate name
-            var partition1 = session.AddPsiStorePartition("NewStore", StorePath, "Partition_0"); // should throw
+            session.AddPsiStorePartition("NewStore", StorePath, "Partition_0"); // should throw
         }
 
         [TestMethod]
@@ -400,9 +400,11 @@ namespace Test.Psi.Data
                     false,
                     "DerivedStore",
                     StorePath,
-                    null,
-                    null,
-                    cts.Token);
+                    replayDescriptor: null,
+                    deliveryPolicy: null,
+                    enableDiagnostics: false,
+                    progress: null,
+                    cancellationToken: cts.Token);
             }
             catch (OperationCanceledException)
             {
@@ -423,12 +425,10 @@ namespace Test.Psi.Data
 
         private static void GenerateTestStore(string storeName, string storePath)
         {
-            using (var p = Pipeline.Create())
-            {
-                var store = PsiStore.Create(p, storeName, storePath);
-                var root = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(1)).Write("Root", store);
-                p.Run();
-            }
+            using var p = Pipeline.Create();
+            var store = PsiStore.Create(p, storeName, storePath);
+            var root = Generators.Sequence(p, 0, i => i + 1, 10, TimeSpan.FromTicks(1)).Write("Root", store);
+            p.Run();
         }
     }
 }

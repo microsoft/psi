@@ -103,7 +103,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="maxBytesPerSecond">Maximum bytes/sec quota (default infinite).</param>
         /// <param name="bytesPerSecondSmoothingWindowSeconds">Smoothing window over which to compute bytes/sec (default 5 sec.).</param>
         public RemoteExporter(Importer importer, int port = DefaultPort, TransportKind transport = DefaultTransport, long maxBytesPerSecond = long.MaxValue, double bytesPerSecondSmoothingWindowSeconds = 5.0)
-            : this(importer.Name, importer.Path, port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
+            : this(importer.StoreName, importer.StorePath, port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
         {
             // used to remote an existing store. this.Exporter remains null
         }

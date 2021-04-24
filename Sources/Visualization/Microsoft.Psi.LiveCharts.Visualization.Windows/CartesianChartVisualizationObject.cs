@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Visualization.LiveCharts
     using global::LiveCharts.Wpf;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
     /// Enumeration that defines the type of cartesian series to use.
@@ -76,7 +77,8 @@ namespace Microsoft.Psi.Visualization.LiveCharts
     /// for example <see cref="HistogramVisualizationObject"/>.
     /// </para></remarks>
     [VisualizationObject("Cartesian Chart")]
-    public class CartesianChartVisualizationObject<T> : Instant2DVisualizationObject<Dictionary<string, T[]>>
+    [VisualizationPanelType(VisualizationPanelType.XY)]
+    public class CartesianChartVisualizationObject<T> : StreamValueVisualizationObject<Dictionary<string, T[]>>
     {
         /// <summary>
         /// Exception message that describes encountering an unknown cartesian chart type.

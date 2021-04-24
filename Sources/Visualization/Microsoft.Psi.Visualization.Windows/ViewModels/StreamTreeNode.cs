@@ -5,191 +5,54 @@ namespace Microsoft.Psi.Visualization.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
-    using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Media;
-    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data.Annotations;
-    using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization;
-    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
-    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
-    /// Defines a base class for nodes in a tree that hold information about data streams.
+    /// Implements a node in the dataset tree that represents a stream.
     /// </summary>
-    public class StreamTreeNode : ObservableTreeNodeObject
+    public class StreamTreeNode : StreamContainerTreeNode
     {
-        private readonly ObservableCollection<StreamTreeNode> internalChildren;
-        private readonly ReadOnlyObservableCollection<StreamTreeNode> children;
-
-        private RelayCommand<StackPanel> contextMenuOpeningCommand;
         private bool isDirty = false;
-        private bool? supplementalMetadataIsKnownType = null;
+        private bool? supplementalMetadataTypeIsKnown = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamTreeNode"/> class.
         /// </summary>
-        /// <param name="partitionViewModel">The partition where this stream tree node can be found.</param>
-        public StreamTreeNode(PartitionViewModel partitionViewModel)
+        /// <param name="partitionViewModel">The partition for the stream tree node.</param>
+        /// <param name="path">The path to the stream tree node.</param>
+        /// <param name="name">The name of the stream tree node.</param>
+        /// <param name="streamMetadata">The stream metadata.</param>
+        public StreamTreeNode(PartitionViewModel partitionViewModel, string path, string name, IStreamMetadata streamMetadata)
+            : base(partitionViewModel, path, name)
         {
-            this.PartitionViewModel = partitionViewModel;
-            this.PartitionViewModel.PropertyChanged += this.Partition_PropertyChanged;
-            this.PartitionViewModel.SessionViewModel.DatasetViewModel.PropertyChanged += this.DatasetViewModel_PropertyChanged;
-            this.internalChildren = new ObservableCollection<StreamTreeNode>();
-            this.children = new ReadOnlyObservableCollection<StreamTreeNode>(this.internalChildren);
+            this.SourceStreamMetadata = streamMetadata;
+            this.DataTypeName = this.SourceStreamMetadata.TypeName;
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="StreamTreeNode"/> class.
-        /// </summary>
-        ~StreamTreeNode()
-        {
-            this.PartitionViewModel.PropertyChanged -= this.Partition_PropertyChanged;
-            this.PartitionViewModel.SessionViewModel.DatasetViewModel.PropertyChanged -= this.DatasetViewModel_PropertyChanged;
-        }
-
-        /// <summary>
-        /// Gets the id of the data stream.
-        /// </summary>
-        [PropertyOrder(0)]
-        [Description("The ID of the stream within the Store")]
-        public int? Id => this.StreamMetadata?.Id;
-
-        /// <summary>
-        /// Gets or sets the name of this stream tree node.
-        /// </summary>
-        [PropertyOrder(1)]
-        public string Name { get; protected set; }
-
-        /// <summary>
-        /// Gets the display name.
+        /// Gets or sets the metadata of the source data stream.
         /// </summary>
         [Browsable(false)]
-        public string DisplayName => this.isDirty ? this.Name + "*" : this.Name;
-
-        /// <summary>
-        /// Gets or sets the stream name of this stream tree node.
-        /// </summary>
-        [PropertyOrder(2)]
-        [DisplayName("Stream Name")]
-        [Description("The name of the stream.")]
-        public string StreamName { get; protected set; }
-
-        /// <summary>
-        /// Gets the type of messages in this stream tree node.
-        /// </summary>
-        [PropertyOrder(3)]
-        [DisplayName("Message Type")]
-        [Description("The type of messages in the stream.")]
-        public string StreamTypeDisplayName => TypeSpec.Simplify(this.StreamTypeName);
-
-        /// <summary>
-        /// Gets the of this node relative to the node that represents the actual stream.
-        /// If this stream tree node represents a stream and not some submember of the
-        /// stream then this value will be nul..
-        /// </summary>
-        [PropertyOrder(4)]
-        [DisplayName("Member Path")]
-        [Description("The path from the messages in the stream to this property or field member")]
-        public string MemberPath { get; private set; }
-
-        /// <summary>
-        /// Gets the type of data represented by this stream tree node.
-        /// </summary>
-        [PropertyOrder(5)]
-        [DisplayName("Member Type")]
-        [Description("The type of data represented by the member.")]
-        public string NodeTypeDisplayName => TypeSpec.Simplify(this.NodeTypeName);
-
-        /// <summary>
-        /// Gets the number of messages in the data stream.
-        /// </summary>
-        [PropertyOrder(6)]
-        [DisplayName("Message Count")]
-        [Description("The number of messages in the stream.")]
-        public int? MessageCount => this.StreamMetadata?.MessageCount;
-
-        /// <summary>
-        /// Gets the average message size of the data stream.
-        /// </summary>
-        [PropertyOrder(7)]
-        [DisplayName("Average Message Size")]
-        [Description("The average size (in bytes) of messages in the stream.")]
-        public int? AverageMessageSize => this.StreamMetadata?.AverageMessageSize;
-
-        /// <summary>
-        /// Gets the average latency of the data stream.
-        /// </summary>
-        [PropertyOrder(8)]
-        [DisplayName("Average Message Latency")]
-        [Description("The average latency of all messages in the stream.")]
-        public int? AverageLatency => this.StreamMetadata?.AverageLatency;
-
-        /// <summary>
-        /// Gets a string representation of the originating time of the first message in the data stream.
-        /// </summary>
-        [PropertyOrder(9)]
-        [DisplayName("First Message Originating Time")]
-        [Description("The originating time of the first message in the stream.")]
-        public string FirstMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.FirstMessageOriginatingTime);
-
-        /// <summary>
-        /// Gets a string representation of the time of the first message in the data stream.
-        /// </summary>
-        [PropertyOrder(10)]
-        [DisplayName("First Message Creation Time")]
-        [Description("The creation time of the first message in the stream.")]
-        public string FirstMessageCreationTimeString => DateTimeFormatHelper.FormatDateTime(this.FirstMessageCreationTime);
-
-        /// <summary>
-        /// Gets a string representation of the originating time of the last message in the data stream.
-        /// </summary>
-        [PropertyOrder(11)]
-        [DisplayName("Last Message Originating Time")]
-        [Description("The originating time of the last message in the stream.")]
-        public string LastMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.LastMessageOriginatingTime);
-
-        /// <summary>
-        /// Gets a string representation of the time of the last message in the data stream.
-        /// </summary>
-        [PropertyOrder(12)]
-        [DisplayName("Last Message Creation Time")]
-        [Description("The creation time of the last message in the stream.")]
-        public string LastMessageCreationTimeString => DateTimeFormatHelper.FormatDateTime(this.LastMessageCreationTime);
-
-        /// <summary>
-        /// Gets or sets the type of messages in this stream tree node.
-        /// </summary>
-        [Browsable(false)]
-        public string StreamTypeName { get; protected set; }
+        public IStreamMetadata SourceStreamMetadata { get; protected set; }
 
         /// <summary>
         /// Gets or sets the type of data represented by this stream tree node.
         /// </summary>
         [Browsable(false)]
-        public string NodeTypeName { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this stream is an auto-generated nullable member.
-        /// </summary>
-        /// <remarks>When stream members are generated for value types, if any of the ancestor
-        /// streams are reference type, we generate a corresponding nullable value type for the
-        /// stream member (instead of the actual value type). This is done so that when the ancestor
-        /// object is null, we can still produce values (in this case null as well) for the member.</remarks>
-        [Browsable(false)]
-        public bool IsAutoGeneratedNullableMember { get; protected set; }
+        public string DataTypeName { get; protected set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the stream has unsaved changes.
@@ -207,635 +70,732 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets the collection of children for the this stream tree node.
-        /// </summary>
-        [Browsable(false)]
-        public ReadOnlyObservableCollection<StreamTreeNode> Children => this.children;
-
-        /// <summary>
-        /// Gets the originating time of the first message in the data stream.
-        /// </summary>
-        [Browsable(false)]
-        public DateTime? FirstMessageOriginatingTime => this.StreamMetadata?.FirstMessageOriginatingTime;
-
-        /// <summary>
-        /// Gets the time of the first message in the data stream.
-        /// </summary>
-        [Browsable(false)]
-        public DateTime? FirstMessageCreationTime => this.StreamMetadata?.FirstMessageCreationTime;
-
-        /// <summary>
-        /// Gets the originating time of the last message in the data stream.
-        /// </summary>
-        [Browsable(false)]
-        public DateTime? LastMessageOriginatingTime => this.StreamMetadata?.LastMessageOriginatingTime;
-
-        /// <summary>
-        /// Gets the time of the last message in the data stream.
-        /// </summary>
-        [Browsable(false)]
-        public DateTime? LastMessageCreationTime => this.StreamMetadata?.LastMessageCreationTime;
-
-        /// <summary>
-        /// Gets a value indicating whether the node represents a stream.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsStream => this.StreamMetadata != null;
-
-        /// <summary>
-        /// Gets the partition where this stream tree node can be found.
-        /// </summary>
-        [Browsable(false)]
-        public PartitionViewModel PartitionViewModel { get; private set; }
-
-        /// <summary>
-        /// Gets the path of the data stream.
-        /// </summary>
-        [Browsable(false)]
-        public string Path { get; private set; }
-
-        /// <summary>
-        /// Gets the stream metadata of the data stream.
-        /// </summary>
-        [Browsable(false)]
-        public IStreamMetadata StreamMetadata { get; private set; }
-
-        /// <summary>
-        /// Gets the opacity of the stream tree node. (Opacity is lowered for all nodes in sessions that are not the current session).
-        /// </summary>
-        [Browsable(false)]
-        public double UiElementOpacity => this.PartitionViewModel.SessionViewModel.UiElementOpacity;
-
-        /// <summary>
-        /// Gets a value indicating whether this StreamTreeNode can currently be visualized.
-        /// </summary>
-        [Browsable(false)]
-        public bool CanVisualize => this.IsStream && this.PartitionViewModel.SessionViewModel.IsCurrentSession;
-
-        /// <summary>
         /// Gets a value indicating whether the stream's supplemental metadata (if any) is known, readable type.
         /// </summary>
         [Browsable(false)]
-        public bool SupplementalMetadataIsKnownType
+        public bool SupplementalMetadataTypeIsKnown
         {
             get
             {
                 // If there is no supplemental metadata for the stream, then everything is fine.
-                if (string.IsNullOrWhiteSpace(this.StreamMetadata.SupplementalMetadataTypeName))
+                if (string.IsNullOrWhiteSpace(this.SourceStreamMetadata.SupplementalMetadataTypeName))
                 {
                     return true;
                 }
 
                 // If we've not tried to read the supplemental metadata yet, do so now.
-                if (!this.supplementalMetadataIsKnownType.HasValue)
+                if (!this.supplementalMetadataTypeIsKnown.HasValue)
                 {
                     try
                     {
-                        // Get the stream source for the stream.
-                        StreamSource streamSource = this.PartitionViewModel.SessionViewModel.GetStreamSource(new StreamBinding(this.StreamName, this.PartitionViewModel.Name));
-
                         // Attempt to read the supplemental metadata for the stream.
-                        MethodInfo methodInfo = DataManager.Instance.GetType().GetMethod(nameof(IStreamMetadata.GetSupplementalMetadata), new Type[] { typeof(StreamSource) });
-                        MethodInfo genericMethodInfo = methodInfo.MakeGenericMethod(TypeResolutionHelper.GetVerifiedType(this.StreamMetadata.SupplementalMetadataTypeName));
-                        genericMethodInfo.Invoke(DataManager.Instance, new object[] { streamSource });
+                        MethodInfo methodInfo = DataManager.Instance.GetType().GetMethod(
+                            nameof(DataManager.GetSupplementalMetadataByName),
+                            new Type[] { typeof(string), typeof(string), typeof(Type), typeof(string) });
+
+                        MethodInfo genericMethodInfo = methodInfo.MakeGenericMethod(TypeResolutionHelper.GetVerifiedType(this.SourceStreamMetadata.SupplementalMetadataTypeName));
+
+                        var parameters = new object[]
+                            {
+                                this.PartitionViewModel.StoreName,
+                                this.PartitionViewModel.StorePath,
+                                TypeResolutionHelper.GetVerifiedType(this.PartitionViewModel.StreamReaderTypeName),
+                                this.SourceStreamName,
+                            };
+                        genericMethodInfo.Invoke(DataManager.Instance, parameters);
 
                         // Success
-                        this.supplementalMetadataIsKnownType = true;
+                        this.supplementalMetadataTypeIsKnown = true;
                     }
                     catch (Exception)
                     {
-                        this.supplementalMetadataIsKnownType = false;
+                        this.supplementalMetadataTypeIsKnown = false;
                     }
                 }
 
-                return this.supplementalMetadataIsKnownType.Value;
+                return this.supplementalMetadataTypeIsKnown.Value;
             }
         }
 
         /// <summary>
-        /// Gets the command that executes when opening the stream tree node context menu.
+        /// Gets a value indicating whether the node represends a stream backed by a \psi store.
         /// </summary>
         [Browsable(false)]
-        public RelayCommand<StackPanel> ContextMenuOpeningCommand => this.contextMenuOpeningCommand ??= new RelayCommand<StackPanel>(panel => panel.ContextMenu = this.CreateContextMenu());
+        public bool IsPsiStream => this.SourceStreamMetadata is PsiStreamMetadata;
 
         /// <summary>
-        /// Gets the path to the stream's icon.
+        /// Gets a value indicating whether the node represends a indexed stream backed by a \psi store.
         /// </summary>
         [Browsable(false)]
-        public virtual string IconSource
+        public bool IsIndexedPsiStream => this.SourceStreamMetadata is PsiStreamMetadata psiStreamMetadata && psiStreamMetadata.IsIndexed;
+
+        /// <summary>
+        /// Gets the originating time interval (earliest to latest) of the messages under this stream.
+        /// </summary>
+        [Browsable(false)]
+        public TimeInterval OriginatingTimeInterval => new TimeInterval(this.SourceStreamFirstMessageOriginatingTime, this.SourceStreamLastMessageOriginatingTime);
+
+        /// <summary>
+        /// Gets the id of the data stream.
+        /// </summary>
+        [DisplayName("Source Stream Id")]
+        [Description("The id of the source stream.")]
+        public int SourceStreamId => this.SourceStreamMetadata.Id;
+
+        /// <summary>
+        /// Gets the stream name of this stream tree node.
+        /// </summary>
+        [DisplayName("Source Stream Name")]
+        [Description("The name of the source stream.")]
+        public string SourceStreamName => this.SourceStreamMetadata.Name;
+
+        /// <summary>
+        /// Gets the type of messages in this stream tree node.
+        /// </summary>
+        [DisplayName("Source Stream Type")]
+        [Description("The type of messages in the source stream.")]
+        public string SourceStreamTypeNameSimplified => TypeSpec.Simplify(this.SourceStreamMetadata.TypeName);
+
+        /// <summary>
+        /// Gets the type of data represented by this stream tree node.
+        /// </summary>
+        [DisplayName("Data Type")]
+        [Description("The type of data contained by this node.")]
+        public string DataTypeNameSimplified => TypeSpec.Simplify(this.DataTypeName);
+
+        /// <inheritdoc/>
+        public override double SubsumedAverageMessageSize =>
+            this.HasNonDerivedChildren ?
+                ((base.SubsumedAverageMessageSize * base.SubsumedMessageCount) + (this.SourceStreamAverageMessageSize * this.SourceStreamMessageCount)) /
+                (base.SubsumedMessageCount + this.SourceStreamMessageCount) :
+                this.SourceStreamAverageMessageSize;
+
+        /// <summary>
+        /// Gets the average message size in the stream.
+        /// </summary>
+        [DisplayName("Source Stream Avg. Message Size")]
+        [Description("The average size (in bytes) of messages in the source stream.")]
+        public virtual double SourceStreamAverageMessageSize => this.SourceStreamMetadata.AverageMessageSize;
+
+        /// <inheritdoc/>
+        public override double SubsumedAverageMessageLatencyMs =>
+            this.HasNonDerivedChildren ?
+                ((base.SubsumedAverageMessageLatencyMs * base.SubsumedMessageCount) + (this.SourceStreamAverageMessageLatencyMs * this.SourceStreamMessageCount)) /
+                    (base.SubsumedMessageCount + this.SourceStreamMessageCount) :
+                this.SourceStreamAverageMessageLatencyMs;
+
+        /// <summary>
+        /// Gets the average latency of messages in the streams(s) subsumed by the tree node.
+        /// </summary>
+        [DisplayName("Source Stream Avg. Message Latency (ms)")]
+        [Description("The average latency (in milliseconds) of messages in the source stream.")]
+        public virtual double SourceStreamAverageMessageLatencyMs => this.SourceStreamMetadata.AverageMessageLatencyMs;
+
+        /// <inheritdoc/>
+        public override DateTime SubsumedOpenedTime =>
+            this.HasNonDerivedChildren ?
+                new DateTime(Math.Min(base.SubsumedOpenedTime.Ticks, this.SourceStreamOpenedTime.Ticks)) :
+                this.SourceStreamOpenedTime;
+
+        /// <summary>
+        /// Gets the time at which the stream was opened.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime SourceStreamOpenedTime => this.SourceStreamMetadata.OpenedTime;
+
+        /// <inheritdoc/>
+        public override DateTime SubsumedClosedTime =>
+            this.HasNonDerivedChildren ?
+                new DateTime(Math.Max(base.SubsumedClosedTime.Ticks, this.SourceStreamClosedTime.Ticks)) :
+                this.SourceStreamClosedTime;
+
+        /// <summary>
+        /// Gets the time at which the stream was closed.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime SourceStreamClosedTime => this.SourceStreamMetadata.ClosedTime;
+
+        /// <inheritdoc/>
+        public override DateTime SubsumedFirstMessageOriginatingTime =>
+            this.HasNonDerivedChildren ?
+                new DateTime(Math.Min(base.SubsumedFirstMessageOriginatingTime.Ticks, this.SourceStreamFirstMessageOriginatingTime.Ticks)) :
+                this.SourceStreamFirstMessageOriginatingTime;
+
+        /// <summary>
+        /// Gets the originating time of the first message in the stream.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime SourceStreamFirstMessageOriginatingTime => this.SourceStreamMetadata.FirstMessageOriginatingTime;
+
+        /// <inheritdoc/>
+        public override DateTime SubsumedFirstMessageCreationTime =>
+            this.HasNonDerivedChildren ?
+                new DateTime(Math.Min(base.SubsumedFirstMessageCreationTime.Ticks, this.SourceStreamFirstMessageCreationTime.Ticks)) :
+                this.SourceStreamFirstMessageCreationTime;
+
+        /// <summary>
+        /// Gets the creation time of the first message in the stream.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime SourceStreamFirstMessageCreationTime => this.SourceStreamMetadata.FirstMessageCreationTime;
+
+        /// <inheritdoc/>
+        public override DateTime SubsumedLastMessageOriginatingTime =>
+            this.HasNonDerivedChildren ?
+                new DateTime(Math.Max(base.SubsumedLastMessageOriginatingTime.Ticks, this.SourceStreamLastMessageOriginatingTime.Ticks)) :
+                this.SourceStreamLastMessageOriginatingTime;
+
+        /// <summary>
+        /// Gets the originating time of the last message in the stream.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime SourceStreamLastMessageOriginatingTime => this.SourceStreamMetadata.LastMessageOriginatingTime;
+
+        /// <inheritdoc/>
+        public override DateTime SubsumedLastMessageCreationTime =>
+            this.HasNonDerivedChildren ?
+                new DateTime(Math.Max(base.SubsumedLastMessageCreationTime.Ticks, this.SourceStreamLastMessageCreationTime.Ticks)) :
+                this.SourceStreamLastMessageCreationTime;
+
+        /// <summary>
+        /// Gets the creation time of the last message in the stream.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime SourceStreamLastMessageCreationTime => this.SourceStreamMetadata.LastMessageCreationTime;
+
+        /// <inheritdoc/>
+        public override long SubsumedMessageCount =>
+            this.HasNonDerivedChildren ?
+                base.SubsumedMessageCount + this.SourceStreamMessageCount :
+                this.SourceStreamMessageCount;
+
+        /// <summary>
+        /// Gets the number of messages in the stream.
+        /// </summary>
+        [DisplayName("Source Stream Message Count")]
+        [Description("The total number of messages in the stream.")]
+        public virtual long SourceStreamMessageCount => this.SourceStreamMetadata.MessageCount;
+
+        /// <inheritdoc/>
+        public override long SubsumedSize =>
+            this.HasNonDerivedChildren ?
+                base.SubsumedSize + this.SourceStreamSize :
+                this.SourceStreamSize;
+
+        /// <summary>
+        /// Gets the total size of the messages in the stream.
+        /// </summary>
+        [DisplayName("Source Stream Size")]
+        [Description("The size (in bytes) of data in the stream.")]
+        public virtual long SourceStreamSize
         {
             get
             {
-                if (this.IsStream)
+                if (this.SourceStreamMetadata is PsiStreamMetadata psiStreamMetadata)
                 {
-                    if (VisualizationContext.Instance.GetDataType(this.NodeTypeName)?.Name == nameof(PipelineDiagnostics))
-                    {
-                        // Diagnostics stream
-                        return this.PartitionViewModel.IsLivePartition ? IconSourcePath.DiagnosticsLive : IconSourcePath.Diagnostics;
-                    }
-                    else if (!string.IsNullOrWhiteSpace(this.MemberPath))
-                    {
-                        // Stream Member
-                        return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamMemberLive : IconSourcePath.StreamMember;
-                    }
-                    else if (VisualizationContext.Instance.GetDataType(this.NodeTypeName)?.Name == nameof(TimeIntervalAnnotation))
-                    {
-                        // Annotation
-                        return IconSourcePath.Annotation;
-                    }
-                    else if (this.InternalChildren.Any(c => string.IsNullOrWhiteSpace(c.MemberPath)))
-                    {
-                        // Group node that's also a stream
-                        return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamGroupLive : IconSourcePath.StreamGroup;
-                    }
-                    else if (VisualizationContext.Instance.GetDataType(this.NodeTypeName) == typeof(AudioBuffer))
-                    {
-                        // Audio stream
-                        return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamAudioMutedLive : IconSourcePath.StreamAudioMuted;
-                    }
-                    else
-                    {
-                        // Stream
-                        return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamLive : IconSourcePath.Stream;
-                    }
+                    return psiStreamMetadata.MessageSizeCumulativeSum;
                 }
                 else
                 {
-                    // Group node that's not a stream
-                    return this.PartitionViewModel.IsLivePartition ? IconSourcePath.GroupLive : IconSourcePath.Group;
+                    return (long)(this.SourceStreamMetadata.AverageMessageSize * this.SourceStreamMetadata.MessageCount);
                 }
             }
         }
 
         /// <summary>
-        /// Gets the color to use when rendering the tree node.
+        /// Gets a string representation of the source stream opened time.
         /// </summary>
-        [Browsable(false)]
-        public Brush ForegroundBrush
+        [DisplayName("Source Stream OpenedTime")]
+        [Description("The opened time for the source stream.")]
+        public virtual string SourceStreamOpenedTimeString
+            => DateTimeFormatHelper.FormatDateTime(this.SourceStreamOpenedTime);
+
+        /// <summary>
+        /// Gets a string representation of the source stream closed time.
+        /// </summary>
+        [DisplayName("Source Stream ClosedTime")]
+        [Description("The closed time for the source stream.")]
+        public virtual string SourceStreamClosedTimeString
+            => DateTimeFormatHelper.FormatDateTime(this.SourceStreamClosedTime);
+
+        /// <summary>
+        /// Gets a string representation of the originating time of the first message in the stream.
+        /// </summary>
+        [DisplayName("Source Stream First Message OriginatingTime")]
+        [Description("The originating time of the first message in the stream.")]
+        public virtual string SourceStreamFirstMessageOriginatingTimeString
+            => DateTimeFormatHelper.FormatDateTime(this.SourceStreamFirstMessageOriginatingTime);
+
+        /// <summary>
+        /// Gets a string representation of the time of the first message in the stream.
+        /// </summary>
+        [DisplayName("Source Stream First Message CreationTime")]
+        [Description("The creation time of the first message in the stream.")]
+        public virtual string SourceStreamFirstMessageCreationTimeString
+            => DateTimeFormatHelper.FormatDateTime(this.SourceStreamFirstMessageCreationTime);
+
+        /// <summary>
+        /// Gets a string representation of the originating time of the last message in the stream.
+        /// </summary>
+        [DisplayName("Source Stream Last Message OriginatingTime")]
+        [Description("The originating time of the last message in the stream.")]
+        public virtual string SourceStreamLastMessageOriginatingTimeString
+            => DateTimeFormatHelper.FormatDateTime(this.SourceStreamLastMessageOriginatingTime);
+
+        /// <summary>
+        /// Gets a string representation of the time of the last message in the stream.
+        /// </summary>
+        [DisplayName("Source Stream Last Message CreationTime")]
+        [Description("The creation time of the last message in the stream.")]
+        public virtual string SourceStreamLastMessageCreationTimeString
+            => DateTimeFormatHelper.FormatDateTime(this.SourceStreamLastMessageCreationTime);
+
+        /// <inheritdoc/>
+        public override string DisplayName => this.IsDirty ? $"{this.Name}*" : this.Name;
+
+        /// <inheritdoc/>
+        public override string IconSource
         {
             get
             {
-                // If it's a stream member
-                if (this.IsStream && !string.IsNullOrWhiteSpace(this.MemberPath))
+                if (VisualizationContext.Instance.GetDataType(this.DataTypeName) == typeof(AudioBuffer))
                 {
-                    // Show it in gray
-                    return new SolidColorBrush(Colors.Gray);
+                    // Audio stream
+                    return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamAudioMutedLive : IconSourcePath.StreamAudioMuted;
+                }
+                else if (VisualizationContext.Instance.GetDataType(this.DataTypeName)?.Name == nameof(TimeIntervalAnnotation))
+                {
+                    // Annotation
+                    return IconSourcePath.Annotation;
+                }
+                else if (this.InternalChildren.Any())
+                {
+                    // Group node that's also a stream
+                    return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamGroupLive : IconSourcePath.StreamGroup;
                 }
                 else
                 {
-                    return new SolidColorBrush(Colors.White);
+                    // Stream
+                    return this.PartitionViewModel.IsLivePartition ? IconSourcePath.StreamLive : IconSourcePath.Stream;
                 }
             }
         }
 
         /// <summary>
-        /// Gets the originating time interval (earliest to latest) of the messages in this session.
+        /// Ensures that a derived stream exists as a child of this stream tree node.
         /// </summary>
-        [Browsable(false)]
-        public TimeInterval OriginatingTimeInterval
+        /// <param name="streamBinding">The stream binding for the derived stream.</param>
+        public virtual void EnsureDerivedStreamExists(StreamBinding streamBinding)
         {
-            get
+            var memberPath = default(string);
+            if (streamBinding.NodePath.StartsWith(streamBinding.StreamName))
             {
-                if (this.IsStream)
-                {
-                    return new TimeInterval(this.FirstMessageOriginatingTime.Value, this.LastMessageOriginatingTime.Value);
-                }
-                else
-                {
-                    return TimeInterval.Coverage(
-                        this.children
-                            .Where(p => p.OriginatingTimeInterval.Left > DateTime.MinValue && p.OriginatingTimeInterval.Right < DateTime.MaxValue)
-                            .Select(p => p.OriginatingTimeInterval));
-                }
+                memberPath = streamBinding.NodePath.Substring(streamBinding.StreamName.Length + 1);
             }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this stream tree node can expand members.
-        /// </summary>
-        /// <returns>True if the node type has members and is not an auto-generated nullable type, otherwise false.</returns>
-        [Browsable(false)]
-        public bool CanExpandMembers
-        {
-            get
+            else
             {
-                // Get the node type
-                Type nodeType = TypeResolutionHelper.GetVerifiedType(this.NodeTypeName);
-
-                // If it's an auto-generated nullable, we need to assess whether the inner value-type (inside the nullable)
-                // can expand the members.
-                if (this.IsAutoGeneratedNullableMember)
-                {
-                    nodeType = nodeType.GenericTypeArguments[0];
-                }
-
-                if (nodeType != null)
-                {
-                    return nodeType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(property => !property.GetMethod.GetParameters().Any()).Any() || nodeType.GetFields(BindingFlags.Public | BindingFlags.Instance).Any();
-                }
-
-                return false;
+                throw new Exception("Unexpected derived stream binding.");
             }
-        }
 
-        /// <summary>
-        /// Gets a value indicating whether this stream tree node has expanded members.
-        /// </summary>
-        /// <returns>True if the node has expanded members, false otherwise.</returns>
-        [Browsable(false)]
-        public bool HasExpandedMembers => this.InternalChildren.Any(c => !string.IsNullOrWhiteSpace(c.MemberPath));
-
-        /// <summary>
-        /// Gets the internal collection of children for the this stream tree node.
-        /// </summary>
-        [Browsable(false)]
-        protected ObservableCollection<StreamTreeNode> InternalChildren => this.internalChildren;
-
-        /// <summary>
-        /// Adds a new store stream tree node based on the specified stream as child of this node.
-        /// </summary>
-        /// <param name="streamMetadata">The stream to add to the tree.</param>
-        /// <returns>A reference to the new stream tree node.</returns>
-        public StreamTreeNode AddPath(IStreamMetadata streamMetadata)
-        {
-            return this.AddPath(streamMetadata.Name.Split('.'), streamMetadata, 1);
-        }
-
-        /// <summary>
-        /// Recursively searches for a stream with a given name, and if it is found selects it and ensures all parent nodes are expanded.
-        /// </summary>
-        /// <param name="nodeName">The name of the node to find.</param>
-        /// <returns>True if the node was found, otherwise false.</returns>
-        public bool SelectNode(string nodeName)
-        {
-            return this.SelectNode(nodeName.Split('.'), 1);
-        }
-
-        /// <summary>
-        /// Finds a stream tree node by full name.
-        /// </summary>
-        /// <param name="streamName">The name of the stream to search for.</param>
-        /// <returns>A stream tree node, or null if the stream was not found.</returns>
-        public StreamTreeNode FindNode(string streamName)
-        {
-            return this.FindNode(streamName.Split('.'), 1);
-        }
-
-        /// <summary>
-        /// Creates all child member nodes for a stream tree node.
-        /// </summary>
-        public void CreateMemberChildren()
-        {
-            // check that this nodes have not already been expanded
-            if (this.HasExpandedMembers)
+            if (this.FindStreamTreeNode(memberPath) == null)
             {
-                return;
+                this.AddDerivedMemberStreamChildren();
+                this.ExpandAll();
             }
 
+            if (memberPath.Contains('.'))
+            {
+                var pathItems = memberPath.Split('.');
+                if (this.InternalChildren.FirstOrDefault(p => p.Name == pathItems.First()) is DerivedMemberStreamTreeNode memberChild)
+                {
+                    memberChild.EnsureDerivedStreamExists(streamBinding);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Selects the list of visualizers compatible with this stream tree node.
+        /// </summary>
+        /// <param name="visualizationPanel">The visualization panel where it is intended to visualize the data, or visualizers targeting any panels should be returned.</param>
+        /// <param name="isUniversal">A nullable boolean indicating constraints on whether the visualizer should be a universal one (visualize messages, visualize latency etc).</param>
+        /// <param name="isInNewPanel">A nullable boolean indicating constraints on whether the visualizer should be a "in new panel" one.</param>
+        /// <returns>The matching list of visualizers.</returns>
+        public virtual List<VisualizerMetadata> GetCompatibleVisualizers(
+            VisualizationPanel visualizationPanel = null,
+            bool? isUniversal = null,
+            bool? isInNewPanel = null)
+        {
+            var results = new List<VisualizerMetadata>();
+            var nodeDataType = VisualizationContext.Instance.GetDataType(this.DataTypeName);
+            var comparer = new VisualizerMetadataComparer(nodeDataType);
+
+            // If we're looking for visualizers that fit in any panel
+            if (visualizationPanel == null)
+            {
+                results.AddRange(VisualizationContext.Instance.PluginMap.Visualizers.Where(v =>
+                    (nodeDataType == v.DataType || nodeDataType.IsSubclassOf(v.DataType)) &&
+                    (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value) &&
+                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal))
+                    .OrderBy(v => v, comparer));
+            }
+            else
+            {
+                // o/w find out the compatible panel types
+                results.AddRange(VisualizationContext.Instance.PluginMap.Visualizers.Where(v =>
+                    visualizationPanel.CompatiblePanelTypes.Contains(v.VisualizationPanelType) &&
+                    (nodeDataType == v.DataType || nodeDataType.IsSubclassOf(v.DataType)) &&
+                    (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value) &&
+                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal))
+                    .OrderBy(v => v, comparer));
+            }
+
+            // Special-case: for streams of type Dictionary<TKey, numeric>, create the corresponding
+            // numeric series visualizer, by using a dictionary-key-to-string adapter.
+            if ((!isUniversal.HasValue || !isUniversal.Value) &&
+                (visualizationPanel == null || visualizationPanel.CompatiblePanelTypes.Contains(VisualizationPanelType.Timeline)))
+            {
+                if (nodeDataType.IsGenericType && nodeDataType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                {
+                    var genericArguments = nodeDataType.GetGenericArguments();
+                    var numericSeriesVisualizationObjectType = NumericSeriesVisualizationObject.GetSeriesVisualizationObjectTypeByNumericType(genericArguments[1]);
+
+                    if (numericSeriesVisualizationObjectType != null)
+                    {
+                        if (visualizationPanel == null)
+                        {
+                            var metadata = VisualizationContext.Instance.PluginMap.Visualizers
+                                .FirstOrDefault(v =>
+                                    (v.VisualizationObjectType == numericSeriesVisualizationObjectType) &&
+                                    (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value))
+                                .GetCloneWithNewStreamAdapterType(typeof(DictionaryKeyToStringAdapter<,>).MakeGenericType(genericArguments));
+                            results.Add(metadata);
+                        }
+                        else
+                        {
+                            var metadata = VisualizationContext.Instance.PluginMap.Visualizers
+                                .FirstOrDefault(v =>
+                                    visualizationPanel.CompatiblePanelTypes.Contains(v.VisualizationPanelType) &&
+                                    (v.VisualizationObjectType == numericSeriesVisualizationObjectType) &&
+                                    (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value))
+                                .GetCloneWithNewStreamAdapterType(typeof(DictionaryKeyToStringAdapter<,>).MakeGenericType(genericArguments));
+                            results.Add(metadata);
+                        }
+                    }
+                }
+            }
+
+            // Special-case: the latency visualizer b/c it's not detectable by data type
+            // (the adapter to make it work will be added automatically later in
+            // CustomizeVisualizerMetadata). Latency visualizer is only compatible with
+            // timeline visualization panels.
+            if (isUniversal.HasValue && isUniversal.Value)
+            {
+                if (isInNewPanel.HasValue && isInNewPanel.Value)
+                {
+                    results.Add(VisualizationContext.Instance.PluginMap.Visualizers.FirstOrDefault(v => v.CommandText == ContextMenuName.VisualizeLatencyInNewPanel));
+                }
+                else if (visualizationPanel is TimelineVisualizationPanel)
+                {
+                    results.Add(VisualizationContext.Instance.PluginMap.Visualizers.FirstOrDefault(v => v.CommandText == ContextMenuName.VisualizeLatency));
+                }
+            }
+
+            // Customize each visualizer metadata.
+            this.InsertCustomAdapters(results);
+
+            return results;
+        }
+
+        /// <summary>
+        /// Creates a stream binding for this stream tree node and a specified visualizer.
+        /// </summary>
+        /// <param name="visualizerMetadata">The visualizer to create a stream binding for.</param>
+        /// <returns>A corresponding stream binding.</returns>
+        public virtual StreamBinding CreateStreamBinding(VisualizerMetadata visualizerMetadata) =>
+            new StreamBinding(
+                this.SourceStreamMetadata.Name,
+                this.PartitionViewModel.Name,
+                this.Path,
+                visualizerMetadata.StreamAdapterType,
+                null,
+                visualizerMetadata.SummarizerType,
+                null,
+                false);
+
+        /// <summary>
+        /// Customizes a list of visualizers by inserting custom adapters where necessary.
+        /// </summary>
+        /// <param name="metadatas">The list of visualizers.</param>
+        protected virtual void InsertCustomAdapters(List<VisualizerMetadata> metadatas)
+        {
+            var streamSourceDataType = VisualizationContext.Instance.GetDataType(this.SourceStreamMetadata.TypeName);
+
+            // For each of the non-universal visualization objects, add a data adapter from the stream data type to the subfield data type
+            for (int index = 0; index < metadatas.Count; index++)
+            {
+                // For message visualization object insert a custom object adapter so values can be displayed for known types.
+                if (metadatas[index].VisualizationObjectType == typeof(MessageVisualizationObject))
+                {
+                    var objectAdapterType = typeof(ObjectAdapter<>).MakeGenericType(streamSourceDataType);
+                    metadatas[index] = metadatas[index].GetCloneWithNewStreamAdapterType(objectAdapterType);
+                }
+
+                // For latency visualization object insert a custom object adapter so values can be displayed for known types.
+                if (metadatas[index].VisualizationObjectType == typeof(LatencyVisualizationObject))
+                {
+                    var objectToLatencyAdapterType = typeof(ObjectToLatencyAdapter<>).MakeGenericType(streamSourceDataType);
+                    metadatas[index] = metadatas[index].GetCloneWithNewStreamAdapterType(objectToLatencyAdapterType);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds all derived member stream children.
+        /// </summary>
+        protected virtual void AddDerivedMemberStreamChildren()
+        {
             // Get the type of this node.
-            Type nodeType = TypeResolutionHelper.GetVerifiedType(this.NodeTypeName);
+            Type dataType = TypeResolutionHelper.GetVerifiedType(this.DataTypeName);
 
-            // If this is already an auto-generated nullable, then the type we care to expand is
-            // the value-type inside the nullable type.
-            if (this.IsAutoGeneratedNullableMember)
+            if (dataType != null)
             {
-                nodeType = nodeType.GenericTypeArguments[0];
-            }
+                // Determine if the current node is a reference type
+                var isReference = !dataType.IsValueType || Nullable.GetUnderlyingType(dataType) != null;
 
-            // Determine if the current node is a reference type
-            var isReference = this.IsAutoGeneratedNullableMember || !nodeType.IsValueType || Nullable.GetUnderlyingType(nodeType) != null;
-
-            if (nodeType != null)
-            {
                 // Create a child node for each public instance property that takes no parameters.
-                foreach (PropertyInfo propertyInfo in nodeType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(property => !property.GetMethod.GetParameters().Any()))
+                foreach (PropertyInfo propertyInfo in dataType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(property => !property.GetMethod.GetParameters().Any()))
                 {
-                    this.CreateMemberChild(propertyInfo, propertyInfo.PropertyType, isReference);
+                    this.AddDerivedMemberStreamChild(propertyInfo, propertyInfo.PropertyType, isReference && propertyInfo.PropertyType.IsValueType);
                 }
 
                 // Create a child node for each public instance field
-                foreach (FieldInfo fieldInfo in nodeType.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                foreach (FieldInfo fieldInfo in dataType.GetFields(BindingFlags.Public | BindingFlags.Instance))
                 {
-                    this.CreateMemberChild(fieldInfo, fieldInfo.FieldType, isReference);
+                    this.AddDerivedMemberStreamChild(fieldInfo, fieldInfo.FieldType, isReference && fieldInfo.FieldType.IsValueType);
                 }
             }
         }
 
         /// <summary>
-        /// Ensures that the stream member exists as a child of the stream tree node.
+        /// Adds a derived member stream child.
         /// </summary>
-        /// <param name="memberPath">The path to the stream member from the stream.</param>
-        public void EnsureMemberChildExists(string memberPath)
+        /// <param name="memberInfo">The member info.</param>
+        /// <param name="memberType">The member type.</param>
+        /// <param name="generateNullable">Indicates whether we should do a nullable expansion.</param>
+        protected void AddDerivedMemberStreamChild(MemberInfo memberInfo, Type memberType, bool generateNullable)
         {
-            this.EnsureMemberChildExists(memberPath.Split('.'), 1);
-        }
+            var child = new DerivedMemberStreamTreeNode(this, memberInfo, memberType, generateNullable);
 
-        /// <summary>
-        /// Expands this node and all of its child nodes recursively.
-        /// </summary>
-        public void ExpandAll()
-        {
-            foreach (StreamTreeNode child in this.Children)
-            {
-                child.ExpandAll();
-            }
-
-            this.IsTreeNodeExpanded = true;
-        }
-
-        /// <summary>
-        /// Collapses this node and all of its child nodes recursively.
-        /// </summary>
-        public void CollapseAll()
-        {
-            this.IsTreeNodeExpanded = false;
-
-            foreach (StreamTreeNode child in this.Children)
-            {
-                child.CollapseAll();
-            }
+            // Insert the child into the existing list, before all non-member sub-streams, and in alphabetical order
+            var lastOrDefault = this.InternalChildren.LastOrDefault(stn => string.Compare(stn.Name, memberInfo.Name) < 0 && stn is StreamTreeNode);
+            var index = lastOrDefault != null ? this.InternalChildren.IndexOf(lastOrDefault) + 1 : 0;
+            this.InternalChildren.Insert(index, child);
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        protected override void PopulateContextMenu(ContextMenu contextMenu)
         {
-            return "Node: " + this.Name;
+            this.PopulateContextMenuWithVisualizers(contextMenu);
+            this.PopulateContextMenuWithExpandMembers(contextMenu);
+            this.PopulateContextMenuWithZoomToStream(contextMenu);
+
+            base.PopulateContextMenu(contextMenu);
         }
 
         /// <summary>
-        /// Gets the menu for a stream tree node.
+        /// Populates a specified context menu with visualizers.
         /// </summary>
-        /// <returns>The context menu for the stream tree node.</returns>
-        internal ContextMenu CreateContextMenu()
+        /// <param name="contextMenu">The context menu to populate.</param>
+        protected void PopulateContextMenuWithVisualizers(ContextMenu contextMenu)
         {
-            // Create the context menu
-            var contextMenu = new ContextMenu();
+            var currentPanel = VisualizationContext.Instance.VisualizationContainer.CurrentPanel;
 
-            if (this.IsStream)
+            // sectionStart and sectionEnd keep track of how many items were added in each
+            // section of the menu, and can be used to reason about when to add a separator
+            var previousIconPath = default(string);
+
+            // get the type-specific visualizers that work in the current panel
+            if (currentPanel != null)
             {
-                var currentPanel = VisualizationContext.Instance.VisualizationContainer.CurrentPanel;
-
-                // sectionStart and sectionEnd keep track of how many items were added in each
-                // section of the menu, and can be used to reason about when to add a separator
-                var previousIconPath = default(string);
-
-                // get the type-specific visualizers that work in the current panel
-                if (currentPanel != null)
-                {
-                    var specificInCurrentPanel = VisualizationContext.Instance.PluginMap.GetCompatibleVisualizers(
-                        streamTreeNode: this,
-                        visualizationPanel: currentPanel,
-                        isUniversal: false,
-                        isInNewPanel: false);
-                    foreach (var visualizer in specificInCurrentPanel)
-                    {
-                        // Create and add a menu item. Currently show icon only if different from previous
-                        contextMenu.Items.Add(this.CreateVisualizeStreamMenuItem(visualizer, showIcon: visualizer.IconSourcePath != previousIconPath));
-                        previousIconPath = visualizer.IconSourcePath;
-                    }
-                }
-
-                // get the type specific visualizers in a new panel
-                previousIconPath = default;
-                var specificInNewPanel = VisualizationContext.Instance.PluginMap.GetCompatibleVisualizers(
-                    streamTreeNode: this,
-                    visualizationPanel: null,
-                    isUniversal: false,
-                    isInNewPanel: true);
-
-                // add a separator if necessary
-                if (specificInNewPanel.Any() && contextMenu.Items.Count > 0)
+                var specificInCurrentPanel = this.GetCompatibleVisualizers(visualizationPanel: currentPanel, isUniversal: false, isInNewPanel: false);
+                if (specificInCurrentPanel.Any() && contextMenu.Items.Count > 0)
                 {
                     contextMenu.Items.Add(new Separator());
                 }
 
-                foreach (var visualizer in specificInNewPanel)
+                foreach (var visualizer in specificInCurrentPanel)
                 {
-                    // Create and add a menu item. Currently show icon only for the first item in the section.
+                    // Create and add a menu item. Currently show icon only if different from previous
                     contextMenu.Items.Add(this.CreateVisualizeStreamMenuItem(visualizer, showIcon: visualizer.IconSourcePath != previousIconPath));
                     previousIconPath = visualizer.IconSourcePath;
                 }
+            }
 
-                if (currentPanel != null)
-                {
-                    // get the universal visualizers that work in the current panel
-                    var universalInCurrentPanel = VisualizationContext.Instance.PluginMap.GetCompatibleVisualizers(
-                        streamTreeNode: this,
-                        visualizationPanel: currentPanel,
-                        isUniversal: true,
-                        isInNewPanel: false);
+            // get the type specific visualizers in a new panel
+            previousIconPath = default;
+            var specificInNewPanel = this.GetCompatibleVisualizers(visualizationPanel: null, isUniversal: false, isInNewPanel: true);
 
-                    // add a separator if necessary
-                    if (universalInCurrentPanel.Any() && contextMenu.Items.Count > 0)
-                    {
-                        contextMenu.Items.Add(new Separator());
-                    }
+            // add a separator if necessary
+            if (specificInNewPanel.Any() && contextMenu.Items.Count > 0)
+            {
+                contextMenu.Items.Add(new Separator());
+            }
 
-                    foreach (var visualizer in universalInCurrentPanel)
-                    {
-                        // Create and add a menu item.
-                        contextMenu.Items.Add(this.CreateVisualizeStreamMenuItem(visualizer, showIcon: true));
-                    }
-                }
+            foreach (var visualizer in specificInNewPanel)
+            {
+                // Create and add a menu item. Currently show icon only for the first item in the section.
+                contextMenu.Items.Add(this.CreateVisualizeStreamMenuItem(visualizer, showIcon: visualizer.IconSourcePath != previousIconPath));
+                previousIconPath = visualizer.IconSourcePath;
+            }
 
-                // get the universal visualizer in new panel
-                var universalInNewPanel = VisualizationContext.Instance.PluginMap.GetCompatibleVisualizers(
-                    streamTreeNode: this,
-                    visualizationPanel: null,
-                    isUniversal: true,
-                    isInNewPanel: true);
+            if (currentPanel != null)
+            {
+                // get the universal visualizers that work in the current panel
+                var universalInCurrentPanel = this.GetCompatibleVisualizers(visualizationPanel: currentPanel, isUniversal: true, isInNewPanel: false);
 
                 // add a separator if necessary
-                if (universalInNewPanel.Any() && contextMenu.Items.Count > 0)
+                if (universalInCurrentPanel.Any() && contextMenu.Items.Count > 0)
                 {
                     contextMenu.Items.Add(new Separator());
                 }
 
-                foreach (var visualizer in universalInNewPanel)
+                foreach (var visualizer in universalInCurrentPanel)
                 {
                     // Create and add a menu item.
                     contextMenu.Items.Add(this.CreateVisualizeStreamMenuItem(visualizer, showIcon: true));
                 }
-
-                // Add the commands to add subnodes for each public property and field of the current node if the node's type is not simple
-                if (contextMenu.Items.Count > 0)
-                {
-                    contextMenu.Items.Add(new Separator());
-                }
-
-                contextMenu.Items.Add(
-                    MenuItemHelper.CreateMenuItem(
-                        IconSourcePath.StreamMember,
-                        ContextMenuName.ExpandMembers,
-                        new VisualizationCommand<VisualizerMetadata>((s) =>
-                        {
-                            this.CreateMemberChildren();
-                            this.ExpandAll();
-                        }),
-                        null,
-                        this.CanExpandMembers && !this.HasExpandedMembers));
-
-                // Add the "zoom to stream command"
-                if (contextMenu.Items.Count > 0)
-                {
-                    contextMenu.Items.Add(new Separator());
-                }
-
-                contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToStream, ContextMenuName.ZoomToStreamExtents, new VisualizationCommand<VisualizerMetadata>((s) => VisualizationContext.Instance.ZoomToStreamExtents(this))));
             }
 
-            return contextMenu;
+            // get the universal visualizer in new panel
+            var universalInNewPanel = this.GetCompatibleVisualizers(visualizationPanel: null, isUniversal: true, isInNewPanel: true);
+
+            // add a separator if necessary
+            if (universalInNewPanel.Any() && contextMenu.Items.Count > 0)
+            {
+                contextMenu.Items.Add(new Separator());
+            }
+
+            foreach (var visualizer in universalInNewPanel)
+            {
+                // Create and add a menu item.
+                contextMenu.Items.Add(this.CreateVisualizeStreamMenuItem(visualizer, showIcon: true));
+            }
         }
 
-        private MenuItem CreateVisualizeStreamMenuItem(VisualizerMetadata metadata, bool showIcon = true)
+        /// <summary>
+        /// Populates a specified context menu with expand members command.
+        /// </summary>
+        /// <param name="contextMenu">The context menu to populate.</param>
+        protected void PopulateContextMenuWithExpandMembers(ContextMenu contextMenu)
+        {
+            if (contextMenu.Items.Count > 0)
+            {
+                contextMenu.Items.Add(new Separator());
+            }
+
+            contextMenu.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    IconSourcePath.StreamMember,
+                    ContextMenuName.ExpandMembers,
+                    new VisualizationCommand(() =>
+                    {
+                        this.AddDerivedMemberStreamChildren();
+                        this.ExpandAll();
+                    }),
+                    isEnabled: this.CanExpandDerivedMemberStreams() && !this.InternalChildren.Any(c => c is DerivedMemberStreamTreeNode)));
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this stream tree node can expand derived members.
+        /// </summary>
+        /// <returns>True if the stream tree node can expand derived members.</returns>
+        protected virtual bool CanExpandDerivedMemberStreams()
+        {
+            Type nodeType = TypeResolutionHelper.GetVerifiedType(this.DataTypeName);
+
+            if (nodeType != null)
+            {
+                return nodeType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(property => !property.GetMethod.GetParameters().Any()).Any() ||
+                    nodeType.GetFields(BindingFlags.Public | BindingFlags.Instance).Any();
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Populates a specified context menu with zoom to stream command.
+        /// </summary>
+        /// <param name="contextMenu">The context menu to populate.</param>
+        protected void PopulateContextMenuWithZoomToStream(ContextMenu contextMenu)
+        {
+            if (contextMenu.Items.Count > 0)
+            {
+                contextMenu.Items.Add(new Separator());
+            }
+
+            contextMenu.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    IconSourcePath.ZoomToStream,
+                    ContextMenuName.ZoomToStreamExtents,
+                    new VisualizationCommand<StreamTreeNode>(stn => VisualizationContext.Instance.ZoomToStreamExtents(stn)),
+                    commandParameter: this));
+        }
+
+        /// <summary>
+        /// Creates a menu item for visualizing the stream.
+        /// </summary>
+        /// <param name="metadata">The visualizer metadata.</param>
+        /// <param name="showIcon">Indicates whether to show the icon.</param>
+        /// <returns>The menu item.</returns>
+        protected MenuItem CreateVisualizeStreamMenuItem(VisualizerMetadata metadata, bool showIcon = true)
         {
             return MenuItemHelper.CreateMenuItem(
                 showIcon ? metadata.IconSourcePath : string.Empty,
                 metadata.CommandText,
-                new VisualizationCommand<VisualizerMetadata>((s) => VisualizationContext.Instance.VisualizeStream(this, metadata, VisualizationContext.Instance.VisualizationContainer.CurrentPanel)),
-                metadata);
+                new VisualizationCommand<VisualizerMetadata>(m => VisualizationContext.Instance.VisualizeStream(this, m, VisualizationContext.Instance.VisualizationContainer.CurrentPanel)),
+                tag: metadata,
+                commandParameter: metadata);
         }
 
-        private StreamTreeNode AddPath(string[] path, IStreamMetadata streamMetadata, int depth)
+        /// <inheritdoc/>
+        protected override void OnDatasetViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var child = this.InternalChildren.FirstOrDefault(p => p.Name == path[depth - 1]) as StreamTreeNode;
-            if (child == null)
-            {
-                child = new StreamTreeNode(this.PartitionViewModel)
-                {
-                    Path = string.Join(".", path.Take(depth)),
-                    Name = path[depth - 1],
-                };
-
-                this.InternalChildren.Add(child);
-            }
-
-            // if we are at the last segment of the path name then we are at the leaf node
-            if (path.Length == depth)
-            {
-                Debug.Assert(child.StreamMetadata == null, "There should never be two leaf nodes");
-                child.StreamMetadata = streamMetadata;
-                child.StreamName = streamMetadata.Name;
-                child.StreamTypeName = streamMetadata.TypeName;
-                child.NodeTypeName = streamMetadata.TypeName;
-                return child;
-            }
-
-            // we are not at the last segment so recurse in
-            return child.AddPath(path, streamMetadata, depth + 1);
-        }
-
-        private bool SelectNode(string[] path, int depth)
-        {
-            StreamTreeNode child = this.InternalChildren.FirstOrDefault(p => p.Name == path[depth - 1]);
-            if (child == default)
-            {
-                return false;
-            }
-
-            if (path.Length == depth)
-            {
-                child.IsTreeNodeSelected = true;
-                this.IsTreeNodeExpanded = true;
-                return true;
-            }
-            else
-            {
-                bool result = child.SelectNode(path, depth + 1);
-                if (result)
-                {
-                    this.IsTreeNodeExpanded = true;
-                }
-
-                return result;
-            }
-        }
-
-        private StreamTreeNode FindNode(string[] path, int depth)
-        {
-            StreamTreeNode child = this.InternalChildren.FirstOrDefault(p => p.Name == path[depth - 1]);
-            if (child == default)
-            {
-                return null;
-            }
-
-            if (path.Length == depth)
-            {
-                return child;
-            }
-            else
-            {
-                return child.FindNode(path, depth + 1);
-            }
-        }
-
-        private void EnsureMemberChildExists(string[] path, int depth)
-        {
-            if (this.FindNode(path, depth) == null)
-            {
-                this.CreateMemberChildren();
-            }
-
-            if (path.Length > depth)
-            {
-                StreamTreeNode memberChild = this.InternalChildren.FirstOrDefault(p => p.Name == path[depth - 1]);
-                if (memberChild != null)
-                {
-                    memberChild.EnsureMemberChildExists(path, depth + 1);
-                }
-            }
-        }
-
-        private StreamTreeNode CreateMemberChild(MemberInfo memberInfo, Type memberType, bool hasReferenceTypeAncestor)
-        {
-            // The stream tree node type is initialized to the member type
-            var nodeTypeName = memberType.AssemblyQualifiedName;
-
-            // If the member type is a struct and we have an ancestor that's a reference type
-            var isAutoGeneratedNullableMember = false;
-            if (hasReferenceTypeAncestor && memberType.IsValueType)
-            {
-                // then we need to auto-generate a nullable value member type, instead of the
-                // actual member type
-                nodeTypeName = typeof(Nullable<>).MakeGenericType(memberType).AssemblyQualifiedName;
-
-                // and also mark is as such in the stream tree node
-                isAutoGeneratedNullableMember = true;
-            }
-
-            var child = new StreamTreeNode(this.PartitionViewModel)
-            {
-                Path = string.IsNullOrWhiteSpace(this.Path) ? memberInfo.Name : $"{this.Path}.{memberInfo.Name}",
-                MemberPath = string.IsNullOrWhiteSpace(this.MemberPath) ? memberInfo.Name : $"{this.MemberPath}.{memberInfo.Name}",
-                Name = memberInfo.Name,
-                StreamMetadata = this.StreamMetadata,
-                StreamTypeName = this.StreamMetadata.TypeName,
-                NodeTypeName = nodeTypeName,
-                StreamName = this.StreamMetadata.Name,
-                IsAutoGeneratedNullableMember = isAutoGeneratedNullableMember,
-            };
-
-            // Insert the child into the existing list, before all non-member sub-streams, and in alphabetical order
-            var lastOrDefault = this.InternalChildren.LastOrDefault(stn => string.Compare(stn.Name, memberInfo.Name) < 0 && !string.IsNullOrEmpty(stn.MemberPath));
-            var index = lastOrDefault != null ? this.InternalChildren.IndexOf(lastOrDefault) + 1 : 0;
-            this.InternalChildren.Insert(index, child);
-            return child;
-        }
-
-        private void Partition_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.PartitionViewModel.IsLivePartition))
-            {
-                this.RaisePropertyChanged(nameof(this.IconSource));
-            }
-        }
-
-        private void DatasetViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+            base.OnDatasetViewModelPropertyChanged(sender, e);
             if (e.PropertyName == nameof(this.PartitionViewModel.SessionViewModel.DatasetViewModel.CurrentSessionViewModel))
             {
-                this.RaisePropertyChanged(nameof(this.UiElementOpacity));
-                this.RaisePropertyChanged(nameof(this.CanVisualize));
+                this.RaisePropertyChanged(nameof(this.IsInCurrentSession));
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateAuxiliaryInfo()
+        {
+            var indexedMarker = this.IsIndexedPsiStream ? "*" : string.Empty;
+            var streamContainerPreamble = string.Empty;
+            var hasNonDerivedChildren = this.InternalChildren.Where(c => c is not DerivedStreamTreeNode).Any();
+            switch (this.PartitionViewModel.SessionViewModel.DatasetViewModel.ShowAuxiliaryStreamInfo)
+            {
+                case AuxiliaryStreamInfo.None:
+                    this.AuxiliaryInfo = string.Empty;
+                    break;
+                case AuxiliaryStreamInfo.Size:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatSize(this.SubsumedSize)}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatSize(this.SourceStreamSize);
+                    break;
+                case AuxiliaryStreamInfo.MessageCount:
+                    streamContainerPreamble = hasNonDerivedChildren ? this.SubsumedMessageCount == 0 ? "[0] " : $"[{this.SubsumedMessageCount:0,0}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + (this.SourceStreamMessageCount == 0 ? "0" : $"{this.SourceStreamMessageCount:0,0}");
+                    break;
+                case AuxiliaryStreamInfo.AverageMessageLatencyMs:
+                    streamContainerPreamble = hasNonDerivedChildren ? this.SubsumedAverageMessageLatencyMs < 1 ? "[<1 ms] " : $"[{this.SubsumedAverageMessageLatencyMs:0,0 ms}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + (this.SourceStreamAverageMessageLatencyMs < 1 ? "<1 ms" : $"{this.SourceStreamAverageMessageLatencyMs:0,0 ms}");
+                    break;
+                case AuxiliaryStreamInfo.AverageMessageSize:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatSize((long)this.SubsumedAverageMessageSize)}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatSize((long)this.SourceStreamAverageMessageSize);
+                    break;
+                default:
+                    break;
             }
         }
     }

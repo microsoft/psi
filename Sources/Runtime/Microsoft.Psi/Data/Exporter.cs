@@ -4,6 +4,8 @@
 namespace Microsoft.Psi.Data
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
@@ -26,7 +28,7 @@ namespace Microsoft.Psi.Data
         private readonly Merger<Message<BufferReader>, string> merger;
         private readonly Pipeline pipeline;
         private readonly ManualResetEvent throttle = new ManualResetEvent(true);
-        private KnownSerializers serializers;
+        private readonly KnownSerializers serializers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Exporter"/> class.
@@ -45,6 +47,7 @@ namespace Microsoft.Psi.Data
             this.pipeline = pipeline;
             this.serializers = serializers ?? new KnownSerializers();
             this.writer = new PsiStoreWriter(name, path, createSubdirectory);
+            this.pipeline.PipelineRun += (_, e) => this.writer.InitializeStreamOpenedTimes(e.StartOriginatingTime);
 
             // write the version info
             this.writer.WriteToCatalog(this.serializers.RuntimeVersion);
@@ -92,6 +95,7 @@ namespace Microsoft.Psi.Data
             base.Dispose();
             if (this.writer != null)
             {
+                this.writer.CloseAllStreams(this.pipeline.FinalOriginatingTime);
                 this.writer.Dispose();
             }
 
@@ -106,9 +110,9 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The name of the stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void Write<TMessage>(Emitter<TMessage> source, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
+        public void Write<TMessage>(IProducer<TMessage> source, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
         {
-            this.WriteToStorage(source, name, largeMessages, deliveryPolicy);
+            this.WriteToStorage(source.Out, name, largeMessages, deliveryPolicy);
         }
 
         /// <summary>
@@ -122,10 +126,43 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The name of the stream.</param>
         /// <param name="largeMessages">Indicates whether the stream contains large messages (typically >4k). If true, the messages will be written to the large message file.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void Write<TMessage, TSupplementalMetadata>(Emitter<TMessage> source, TSupplementalMetadata supplementalMetadataValue, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
+        public void Write<TMessage, TSupplementalMetadata>(IProducer<TMessage> source, TSupplementalMetadata supplementalMetadataValue, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
         {
-            var meta = this.WriteToStorage(source, name, largeMessages, deliveryPolicy);
+            var meta = this.WriteToStorage(source.Out, name, largeMessages, deliveryPolicy);
             meta.SetSupplementalMetadata(supplementalMetadataValue, this.serializers);
+        }
+
+        /// <summary>
+        /// Stores supplemental metadata representing distinct dictionary keys seen on the stream.
+        /// </summary>
+        /// <typeparam name="TKey">The type of dictionary key in the stream.</typeparam>
+        /// <typeparam name="TValue">The type of dictionary value in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        public void SummarizeDistinctKeysInSupplementalMetadata<TKey, TValue>(Emitter<Dictionary<TKey, TValue>> source)
+        {
+            if (!this.writer.TryGetMetadata(source.Id, out PsiStreamMetadata meta))
+            {
+                throw new ArgumentException("Stream metadata is not available because the stream has not been written.");
+            }
+
+            // update supplemental meta to reflect distinct keys seen
+            source.Aggregate(
+                new SortedSet<TKey>(),
+                (set, dict) =>
+                {
+                    foreach (var key in dict.Keys)
+                    {
+                        if (!set.Contains(key))
+                        {
+                            set.UnionWith(dict.Keys);
+                            meta.SetSupplementalMetadata(new DistinctKeysSupplementalMetadata<TKey>(set), this.serializers);
+                            return set;
+                        }
+                    }
+
+                    return set;
+                },
+                DeliveryPolicy.Unlimited);
         }
 
         /// <summary>
@@ -135,7 +172,7 @@ namespace Microsoft.Psi.Data
         /// <param name="source">The source stream to write.</param>
         /// <param name="name">The name of the stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        public void WriteEnvelopes<T>(Emitter<T> source, string name, DeliveryPolicy<T> deliveryPolicy = null)
+        public void WriteEnvelopes<T>(IProducer<T> source, string name, DeliveryPolicy<T> deliveryPolicy = null)
         {
             // make sure we can serialize this type
             var handler = this.serializers.GetHandler<int>();
@@ -145,15 +182,15 @@ namespace Microsoft.Psi.Data
             var mergeInput = this.merger.Add(name);
 
             // name the stream if it's not already named
-            var connector = new MessageEnvelopeConnector<T>(source.Pipeline, this, null);
+            var connector = new MessageEnvelopeConnector<T>(source.Out.Pipeline, this, null);
 
             // defaults to lossless delivery policy unless otherwise specified
             source.PipeTo(connector, deliveryPolicy ?? DeliveryPolicy.Unlimited);
-            source.Name = connector.Out.Name = name;
-            source.Closed += closeTime => this.writer.CloseStream(source.Id, closeTime);
+            source.Out.Name = connector.Out.Name = name;
+            source.Out.Closed += closeTime => this.writer.CloseStream(source.Out.Id, closeTime);
 
             // tell the writer to write the serialized stream
-            var meta = this.writer.OpenStream(source.Id, name, false, handler.Name);
+            var meta = this.writer.OpenStream(source.Out.Id, name, false, handler.Name);
 
             // register this stream with the store catalog
             this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, name, meta);
@@ -188,7 +225,7 @@ namespace Microsoft.Psi.Data
 
             var connector = this.CreateInputConnectorFrom<Message<BufferReader>>(source.Pipeline, null);
             source.PipeTo(connector);
-            source.Name = source.Name ?? meta.Name;
+            source.Name ??= meta.Name;
             connector.Out.Name = meta.Name;
 
             this.writer.OpenStream(meta);
@@ -240,6 +277,27 @@ namespace Microsoft.Psi.Data
             connector.PipeTo(serializer, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
 
             return meta;
+        }
+
+        /// <summary>
+        /// Represents distinct keys on a dictionary stream.
+        /// </summary>
+        /// <typeparam name="T">Type of keys.</typeparam>
+        public class DistinctKeysSupplementalMetadata<T>
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DistinctKeysSupplementalMetadata{T}"/> class.
+            /// </summary>
+            /// <param name="keys">Set of distinct keys.</param>
+            internal DistinctKeysSupplementalMetadata(SortedSet<T> keys)
+            {
+                this.Keys = keys.ToArray();
+            }
+
+            /// <summary>
+            /// Gets distinct keys.
+            /// </summary>
+            public T[] Keys { get; private set; }
         }
     }
 }

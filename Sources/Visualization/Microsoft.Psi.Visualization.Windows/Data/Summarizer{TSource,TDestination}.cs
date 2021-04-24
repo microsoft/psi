@@ -13,8 +13,8 @@ namespace Microsoft.Psi.Visualization.Data
     /// <typeparam name="TDestination">The summarized data type.</typeparam>
     public abstract class Summarizer<TSource, TDestination> : ISummarizer<TSource, TDestination>
     {
-        private Func<IEnumerable<Message<TSource>>, TimeSpan, List<IntervalData<TDestination>>> summarizer;
-        private Func<IntervalData<TDestination>, IntervalData<TDestination>, IntervalData<TDestination>> combiner;
+        private readonly Func<IEnumerable<Message<TSource>>, TimeSpan, List<IntervalData<TDestination>>> summarizer;
+        private readonly Func<IntervalData<TDestination>, IntervalData<TDestination>, IntervalData<TDestination>> combiner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Summarizer{TSource, TDestination}"/> class.
@@ -43,6 +43,29 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets the source data type.
         /// </summary>
         public Type SourceType { get; private set; }
+
+        /// <summary>
+        /// Gets the allocator for reading source objects.
+        /// </summary>
+        public virtual Func<TSource> SourceAllocator => null;
+
+        /// <summary>
+        /// Gets the deallocator for reading source objects.
+        /// </summary>
+        public virtual Action<TSource> SourceDeallocator =>
+            source =>
+            {
+                if (source is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            };
+
+        /// <inheritdoc/>
+        Func<dynamic> ISummarizer.SourceAllocator => this.SourceAllocator != null ? () => this.SourceAllocator() : null;
+
+        /// <inheritdoc/>
+        Action<dynamic> ISummarizer.SourceDeallocator => this.SourceDeallocator != null ? t => this.SourceDeallocator(t) : null;
 
         /// <summary>
         /// Default method for combining two <see cref="IntervalData{TDest}"/> values.

@@ -120,11 +120,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Gets the icon to display in the context menu.  If audio is enabled, then we return the audio muted icon etc.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public string ContextMenuIconSource => this.Navigator.IsAudioPlaybackVisualizationObject(this) ? IconSourcePath.StreamAudioMuted : IconSourcePath.StreamAudio;
+
+        /// <summary>
         /// Gets the text for the enable/mute audio playback menu item.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public string EnableAudioCommandText => this.Navigator.IsAudioPlaybackVisualizationObject(this) ? "Mute Audio" : "Enable Audio";
+        public string EnableAudioCommandText => this.Navigator.IsAudioPlaybackVisualizationObject(this) ? $"Mute {this.Name}" : $"Enable {this.Name}";
 
         /// <inheritdoc/>
         public override double GetNumericValue(double data)

@@ -6,14 +6,14 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows;
-    using System.Windows.Controls;
+    using System.Windows.Input;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Interaction logic for ImageVisualizationObjectView.xaml.
     /// </summary>
-    public partial class ImageVisualizationObjectView : UserControl
+    public partial class ImageVisualizationObjectView : VisualizationObjectView
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageVisualizationObjectView"/> class.
@@ -22,8 +22,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             this.InitializeComponent();
             this.DisplayImage = new DisplayImage();
-            this.DataContextChanged += this.ImageVisualizationObjectView_DataContextChanged;
-            this.Unloaded += this.ImageVisualizationObjectView_Unloaded;
         }
 
         /// <summary>
@@ -34,25 +32,30 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <summary>
         /// Gets the image visualization object.
         /// </summary>
-        public ImageVisualizationObject ImageVisualizationObject { get; private set; }
+        public ImageVisualizationObject ImageVisualizationObject => this.VisualizationObject as ImageVisualizationObject;
 
-        private void ImageVisualizationObjectView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.ImageVisualizationObject = (ImageVisualizationObject)this.DataContext;
-            this.ImageVisualizationObject.PropertyChanged += this.ImageVisualizationObject_PropertyChanged;
-        }
-
-        private void ImageVisualizationObjectView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            this.ImageVisualizationObject.PropertyChanged -= this.ImageVisualizationObject_PropertyChanged;
-        }
-
-        private void ImageVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.ImageVisualizationObject.CurrentValue) || e.PropertyName == nameof(this.ImageVisualizationObject.HorizontalFlip))
             {
                 this.ShowCurrentImage();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            System.Windows.Point mousePosition = e.GetPosition(this.Image);
+
+            if (this.ImageVisualizationObject.CurrentValue != null && this.ImageVisualizationObject.CurrentValue.Value.Data != null && this.ImageVisualizationObject.CurrentValue.Value.Data.Resource != null)
+            {
+                int x = (int)(mousePosition.X * this.ImageVisualizationObject.CurrentValue.Value.Data.Resource.Width / this.Image.ActualWidth);
+                int y = (int)(mousePosition.Y * this.ImageVisualizationObject.CurrentValue.Value.Data.Resource.Height / this.Image.ActualHeight);
+                this.ImageVisualizationObject.SetMousePosition(new System.Windows.Point(x, y));
+            }
+
+            base.OnMouseMove(e);
         }
 
         private void ShowCurrentImage()
@@ -63,6 +66,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             if (image == null)
             {
                 this.Image.Visibility = Visibility.Hidden;
+                this.DisplayImage.UpdateImage(default(Shared<Imaging.Image>));
             }
             else
             {

@@ -25,6 +25,7 @@ namespace Microsoft.Psi
         private readonly int id;
         private readonly List<ClosedHandler> closedHandlers = new List<ClosedHandler>();
         private readonly ValidateMessageHandler messageValidator;
+        private readonly object receiversLock = new object();
         private string name;
         private int nextSeqId;
         private SynchronizationLock syncContext;
@@ -129,7 +130,10 @@ namespace Microsoft.Psi
                 e.SequenceId = int.MaxValue; // special "closing" ID
                 this.Deliver(new Message<T>(default(T), e));
 
-                this.receivers = new Receiver<T>[0];
+                lock (this.receiversLock)
+                {
+                    this.receivers = new Receiver<T>[0];
+                }
 
                 foreach (var handler in this.closedHandlers)
                 {
@@ -197,7 +201,7 @@ namespace Microsoft.Psi
         {
             receiver.OnSubscribe(this, allowSubscribeWhileRunning, deliveryPolicy);
 
-            lock (this.receivers)
+            lock (this.receiversLock)
             {
                 var newSet = this.receivers.Concat(new[] { receiver }).ToArray();
                 this.receivers = newSet;
@@ -206,7 +210,7 @@ namespace Microsoft.Psi
 
         internal void Unsubscribe(Receiver<T> receiver)
         {
-            lock (this.receivers)
+            lock (this.receiversLock)
             {
                 var newSet = this.receivers.Except(new[] { receiver }).ToArray();
                 this.receivers = newSet;
@@ -261,7 +265,7 @@ namespace Microsoft.Psi
             if (this.counters != null)
             {
                 this.counters.Increment(EmitterCounters.MessageCount);
-                this.counters.RawValue(EmitterCounters.MessageLatency, (msg.Time - msg.OriginatingTime).Ticks / 10);
+                this.counters.RawValue(EmitterCounters.MessageLatency, (msg.CreationTime - msg.OriginatingTime).Ticks / 10);
             }
 
             // capture the "receivers" member to avoid locking

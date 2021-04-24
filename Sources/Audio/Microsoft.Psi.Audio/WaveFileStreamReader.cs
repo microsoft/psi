@@ -36,40 +36,12 @@ namespace Microsoft.Psi.Audio
         private readonly long dataStart;
         private readonly long dataLength;
 
+        private readonly List<Delegate> audioTargets = new List<Delegate>();
+        private readonly List<Delegate> audioIndexTargets = new List<Delegate>();
+
         private int sequenceId = 0;
         private byte[] buffer;
         private TimeInterval seekInterval = TimeInterval.Infinite;
-
-        private List<Delegate> audioTargets = new List<Delegate>();
-        private List<Delegate> audioIndexTargets = new List<Delegate>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WaveFileStreamReader"/> class.
-        /// </summary>
-        /// <param name="name">Name of the WAVE file.</param>
-        /// <param name="path">Path of the WAVE file.</param>
-        /// <param name="startTime">Starting time for streams of data..</param>
-        /// <param name="audioBufferSizeMs">The size of each data buffer in milliseconds.</param>
-        public WaveFileStreamReader(string name, string path, DateTime startTime, int audioBufferSizeMs = DefaultAudioBufferSizeMs)
-        {
-            this.Name = name;
-            this.Path = path;
-            this.startTime = startTime;
-            var file = System.IO.Path.Combine(path, name);
-            this.waveFileReader = new BinaryReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read));
-            this.waveFormat = WaveFileHelper.ReadWaveFileHeader(this.waveFileReader);
-            this.dataLength = (int)WaveFileHelper.ReadWaveDataLength(this.waveFileReader);
-            this.dataStart = this.waveFileReader.BaseStream.Position;
-            var bufferSize = (int)(this.waveFormat.AvgBytesPerSec * audioBufferSizeMs / 1000);
-            this.buffer = new byte[bufferSize];
-
-            // Compute originating times based on audio chunk start time + duration
-            var endTime = this.startTime.AddSeconds((double)this.dataLength / (double)this.waveFormat.AvgBytesPerSec);
-            this.MessageOriginatingTimeInterval = this.MessageCreationTimeInterval = new TimeInterval(this.startTime, endTime);
-
-            var messageCount = (int)Math.Ceiling((double)this.dataLength / bufferSize);
-            this.audioStreamMetadata = new WaveAudioStreamMetadata(AudioStreamName, typeof(AudioBuffer).AssemblyQualifiedName, name, path, this.startTime, endTime, (int)this.dataLength / messageCount, messageCount, audioBufferSizeMs);
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaveFileStreamReader"/> class.
@@ -79,6 +51,35 @@ namespace Microsoft.Psi.Audio
         public WaveFileStreamReader(string name, string path)
             : this(name, path, DateTime.UtcNow, DefaultAudioBufferSizeMs)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WaveFileStreamReader"/> class.
+        /// </summary>
+        /// <param name="name">Name of the WAVE file.</param>
+        /// <param name="path">Path of the WAVE file.</param>
+        /// <param name="startTime">Starting time for streams of data..</param>
+        /// <param name="audioBufferSizeMs">The size of each data buffer in milliseconds.</param>
+        internal WaveFileStreamReader(string name, string path, DateTime startTime, int audioBufferSizeMs = DefaultAudioBufferSizeMs)
+        {
+            this.Name = name;
+            this.Path = path;
+            this.startTime = startTime;
+            var file = System.IO.Path.Combine(path, name);
+            this.Size = file.Length;
+            this.waveFileReader = new BinaryReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read));
+            this.waveFormat = WaveFileHelper.ReadWaveFileHeader(this.waveFileReader);
+            this.dataLength = WaveFileHelper.ReadWaveDataLength(this.waveFileReader);
+            this.dataStart = this.waveFileReader.BaseStream.Position;
+            var bufferSize = (int)(this.waveFormat.AvgBytesPerSec * audioBufferSizeMs / 1000);
+            this.buffer = new byte[bufferSize];
+
+            // Compute originating times based on audio chunk start time + duration
+            var endTime = this.startTime.AddSeconds((double)this.dataLength / (double)this.waveFormat.AvgBytesPerSec);
+            this.MessageOriginatingTimeInterval = this.MessageCreationTimeInterval = this.StreamTimeInterval = new TimeInterval(this.startTime, endTime);
+
+            var messageCount = (long)Math.Ceiling((double)this.dataLength / bufferSize);
+            this.audioStreamMetadata = new WaveAudioStreamMetadata(AudioStreamName, typeof(AudioBuffer).AssemblyQualifiedName, name, path, this.startTime, endTime, messageCount, (double)this.dataLength / messageCount, audioBufferSizeMs);
         }
 
         /// <inheritdoc />
@@ -101,6 +102,15 @@ namespace Microsoft.Psi.Audio
 
         /// <inheritdoc />
         public TimeInterval MessageOriginatingTimeInterval { get; private set; }
+
+        /// <inheritdoc />
+        public TimeInterval StreamTimeInterval { get; private set; }
+
+        /// <inheritdoc/>
+        public long? Size { get; }
+
+        /// <inheritdoc/>
+        public int? StreamCount => 1;
 
         /// <inheritdoc />
         public bool ContainsStream(string name)
@@ -128,7 +138,7 @@ namespace Microsoft.Psi.Audio
 
             if (typeof(T) != typeof(WaveFormat))
             {
-                throw new ArgumentException("The Audio stream supports only supplemental metadata of type WaveFormat.");
+                throw new NotSupportedException("The Audio stream supports only supplemental metadata of type WaveFormat.");
             }
 
             return (T)(object)this.waveFormat;
@@ -161,9 +171,19 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<SerializationException> errorHandler = null)
+        public IStreamMetadata OpenStream<T>(string name, Action<T, Envelope> target, Func<T> allocator = null, Action<T> deallocator = null, Action<SerializationException> errorHandler = null)
         {
             ValidateStreamName(name);
+
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            if (allocator != null)
+            {
+                throw new NotSupportedException($"Allocators are not supported by {nameof(WaveFileStreamReader)} and must be null.");
+            }
 
             // targets are later called when data is read by MoveNext or ReadAll (see InvokeTargets).
             this.audioTargets.Add(target);
@@ -171,9 +191,19 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <inheritdoc />
-        public IStreamMetadata OpenStreamIndex<T>(string name, Action<Func<IStreamReader, T>, Envelope> target)
+        public IStreamMetadata OpenStreamIndex<T>(string name, Action<Func<IStreamReader, T>, Envelope> target, Func<T> allocator = null)
         {
             ValidateStreamName(name);
+
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            if (allocator != null)
+            {
+                throw new NotSupportedException($"Allocators are not supported by {nameof(WaveFileStreamReader)} and must be null.");
+            }
 
             // targets are later called when data is read by MoveNext or ReadAll (see InvokeTargets).
             this.audioIndexTargets.Add(target);
@@ -222,7 +252,7 @@ namespace Microsoft.Psi.Audio
             if (name != AudioStreamName)
             {
                 // the only supported stream is the single audio stream.
-                throw new ArgumentException($"Only '{AudioStreamName}' stream is supported.");
+                throw new NotSupportedException($"Only '{AudioStreamName}' stream is supported.");
             }
         }
 
@@ -327,11 +357,11 @@ namespace Microsoft.Psi.Audio
             /// <param name="partitionPath">Partition/file path.</param>
             /// <param name="first">First message time.</param>
             /// <param name="last">Last message time.</param>
-            /// <param name="averageMessageSize">Average message size (bytes).</param>
             /// <param name="messageCount">Total message count.</param>
-            /// <param name="averageLatency">Average message latency.</param>
-            public WaveAudioStreamMetadata(string name, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, int averageMessageSize, int messageCount, int averageLatency)
-                : base(name, AudioSourceId, typeName, partitionName, partitionPath, first, last, averageMessageSize, messageCount, averageLatency)
+            /// <param name="averageMessageSize">Average message size (bytes).</param>
+            /// <param name="averageLatencyMs">Average message latency (milliseconds).</param>
+            internal WaveAudioStreamMetadata(string name, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, long messageCount, double averageMessageSize, double averageLatencyMs)
+                : base(name, AudioSourceId, typeName, partitionName, partitionPath, first, last, messageCount, averageMessageSize, averageLatencyMs)
             {
             }
         }

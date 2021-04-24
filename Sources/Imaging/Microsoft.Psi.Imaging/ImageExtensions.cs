@@ -189,6 +189,19 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Converts an image to the specified pixel format.
+        /// </summary>
+        /// <param name="image">The image to convert.</param>
+        /// <param name="format">The pixel format of the converted image.</param>
+        /// <returns>A copy of the image in the specified format.</returns>
+        public static Image Convert(this Image image, PixelFormat format)
+        {
+            var destImage = new Image(image.Width, image.Height, format);
+            image.CopyTo(destImage);
+            return destImage;
+        }
+
+        /// <summary>
         /// Flips an image along a specified axis.
         /// </summary>
         /// <param name="image">Image to flip.</param>
@@ -209,14 +222,29 @@ namespace Microsoft.Psi.Imaging
         /// <param name="mode">Axis along which to flip.</param>
         public static void Flip(this Image image, Image destImage, FlipMode mode)
         {
+            if (destImage.PixelFormat != image.PixelFormat)
+            {
+                throw new ArgumentException("destImage.PixelFormat", "Destination image pixel format doesn't match source image pixel format");
+            }
+
             if (image.Width != destImage.Width || image.Height != destImage.Height)
             {
                 throw new ArgumentException("Destination image's width/height must match the source image width/height");
             }
 
-            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.Gray_8bpp)
+            if (image.PixelFormat == PixelFormat.Gray_16bpp ||
+                image.PixelFormat == PixelFormat.Gray_8bpp ||
+                image.PixelFormat == PixelFormat.RGB_24bpp ||
+                image.PixelFormat == PixelFormat.RGBA_64bpp)
             {
-                // We can't handle this through GDI.
+                // We can't handle grayscale images through GDI. Also, while GDI can read 64bpp images, it will convert
+                // to 8-bits-per-channel for processing.
+                //
+                // See https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=net-5.0#remarks
+                // and https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.pixelformat?view=net-5.0#remarks
+                //
+                // Additionally, there is no corresponding System pixel format for RGB 24bpp. We will therefore handle
+                // all these cases using raw byte manipulation.
                 unsafe
                 {
                     int sourceBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
@@ -248,9 +276,16 @@ namespace Microsoft.Psi.Imaging
                             {
                                 destinationColumn[0] = sourceColumn[0];
                             }
-                            else
+                            else if (image.PixelFormat == PixelFormat.Gray_16bpp)
                             {
                                 ((ushort*)destinationColumn)[0] = ((ushort*)sourceColumn)[0];
+                            }
+                            else
+                            {
+                                for (int k = 0; k < destinationBytesPerPixel; k++)
+                                {
+                                    destinationColumn[k] = sourceColumn[k];
+                                }
                             }
 
                             sourceColumn += sourceBytesPerPixel;
@@ -270,12 +305,12 @@ namespace Microsoft.Psi.Imaging
                 switch (mode)
                 {
                     case FlipMode.AlongHorizontalAxis:
-                        graphics.TranslateTransform(0.0f, image.Height - 1);
+                        graphics.TranslateTransform(0.0f, image.Height);
                         graphics.ScaleTransform(1.0f, -1.0f);
                         break;
 
                     case FlipMode.AlongVerticalAxis:
-                        graphics.TranslateTransform(image.Width - 1, 0.0f);
+                        graphics.TranslateTransform(image.Width, 0.0f);
                         graphics.ScaleTransform(-1.0f, 1.0f);
                         break;
 
@@ -364,11 +399,11 @@ namespace Microsoft.Psi.Imaging
                         {
                             case PixelFormat.BGRA_32bpp:
                                 {
-                                    int dr = col1[0] - col2[0];
+                                    int db = col1[0] - col2[0];
                                     int dg = col1[1] - col2[1];
-                                    int db = col1[2] - col2[2];
+                                    int dr = col1[2] - col2[2];
                                     int da = col1[3] - col2[3];
-                                    dist = (double)(dr * dr + dg * dg + db * db + da * da);
+                                    dist = (double)(db * db + dg * dg + dr * dr + da * da);
                                 }
 
                                 break;
@@ -376,10 +411,10 @@ namespace Microsoft.Psi.Imaging
                             case PixelFormat.BGRX_32bpp:
                             case PixelFormat.BGR_24bpp:
                                 {
-                                    int dr = col1[0] - col2[0];
+                                    int db = col1[0] - col2[0];
                                     int dg = col1[1] - col2[1];
-                                    int db = col1[2] - col2[2];
-                                    dist = (double)(dr * dr + dg * dg + db * db);
+                                    int dr = col1[2] - col2[2];
+                                    dist = (double)(db * db + dg * dg + dr * dr);
                                 }
 
                                 break;
@@ -396,6 +431,16 @@ namespace Microsoft.Psi.Imaging
                                 {
                                     int d = col1[0] - col2[0];
                                     dist = (double)(d * d);
+                                }
+
+                                break;
+
+                            case PixelFormat.RGB_24bpp:
+                                {
+                                    int dr = col1[0] - col2[0];
+                                    int dg = col1[1] - col2[1];
+                                    int db = col1[2] - col2[2];
+                                    dist = (double)(dr * dr + dg * dg + db * db);
                                 }
 
                                 break;
@@ -467,11 +512,11 @@ namespace Microsoft.Psi.Imaging
                 throw new ArgumentException($"Destination image must be size={newWidth}x{newHeight}.");
             }
 
-            if (image.PixelFormat == PixelFormat.Gray_16bpp)
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
             {
-                throw new System.InvalidOperationException(
-                    "Scaling 16bpp images is not currently supported. " +
-                    "Convert to a supported format such as color or 8bpp grayscale first.");
+                throw new InvalidOperationException(
+                    "Scaling 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
             }
 
             // If our image is 8bpp we won't be able to call Graphics.FromImage because
@@ -479,9 +524,11 @@ namespace Microsoft.Psi.Imaging
             // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
             // for details.
             //
-            // To work around this issue, we will convert the image to 24bpp, perform the resize,
-            // and then convert back to 8bpp.
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the resize,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
                 using Image tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
@@ -581,6 +628,13 @@ namespace Microsoft.Psi.Imaging
                 throw new ArgumentOutOfRangeException("destImage.PixelFormat", "destination image pixel format doesn't match source image pixel format");
             }
 
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Rotating 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
+
             int rotatedWidth;
             int rotatedHeight;
             float originx, originy;
@@ -596,9 +650,11 @@ namespace Microsoft.Psi.Imaging
             // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
             // for details.
             //
-            // To work around this issue, we will convert the image to 24bpp, perform the rotation,
-            // and then convert back to 8bpp.
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the rotation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
                 using Image tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
@@ -827,11 +883,17 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="depthImage">Depth image to pseudo-colorize.</param>
         /// <param name="range">A tuple indicating the range (MinValue, MaxValue) of the depth values in the image.</param>
+        /// <param name="invalidValue">Indicates invalid depth values. These values are left black, or set to transparent based on the invalidAsTransparent parameter.</param>
+        /// <param name="invalidAsTransparent">Indicates whether to render invalid values as transparent in the image.</param>
         /// <returns>The pseudo-colorized image in BGR_24bpp format.</returns>
-        public static Image PseudoColorize(this DepthImage depthImage, (ushort MinValue, ushort MaxValue) range)
+        public static Image PseudoColorize(
+            this DepthImage depthImage,
+            (ushort MinValue, ushort MaxValue) range,
+            ushort? invalidValue = null,
+            bool invalidAsTransparent = false)
         {
             var colorizedImage = new Image(depthImage.Width, depthImage.Height, PixelFormat.BGR_24bpp);
-            depthImage.PseudoColorize(colorizedImage, range);
+            depthImage.PseudoColorize(colorizedImage, range, invalidValue, invalidAsTransparent);
             return colorizedImage;
         }
 
@@ -839,18 +901,25 @@ namespace Microsoft.Psi.Imaging
         /// Convert a depth image into a pseudo-colorized image, where more distant pixels are closer to blue, and near pixels are closer to red.
         /// </summary>
         /// <param name="depthImage">Depth image to pseudo-colorize.</param>
-        /// <param name="colorizedImage">Target color image. Must be in BGR_24bpp format.</param>
+        /// <param name="colorizedImage">Target color image. Must be in BGRA_32bpp format.</param>
         /// <param name="range">A tuple indicating the range (MinValue, MaxValue) of the depth values in the image.</param>
-        public static void PseudoColorize(this DepthImage depthImage, Image colorizedImage, (ushort MinValue, ushort MaxValue) range)
+        /// <param name="invalidValue">Indicates invalid depth values. These values are left black, or set to transparent based on the invalidAsTransparent parameter.</param>
+        /// <param name="invalidAsTransparent">Indicates whether to render invalid values as transparent in the image.</param>
+        public static void PseudoColorize(
+            this DepthImage depthImage,
+            Image colorizedImage,
+            (ushort MinValue, ushort MaxValue) range,
+            ushort? invalidValue = null,
+            bool invalidAsTransparent = false)
         {
             if (depthImage.Width != colorizedImage.Width || depthImage.Height != colorizedImage.Height)
             {
                 throw new ArgumentException("Destination color image must have same width and height as source depth image.");
             }
 
-            if (colorizedImage.PixelFormat != PixelFormat.BGR_24bpp)
+            if (colorizedImage.PixelFormat != PixelFormat.BGRA_32bpp)
             {
-                throw new InvalidOperationException("Only BGR 24bpp pixel format is supported for the destination color image.");
+                throw new InvalidOperationException("Only BGR 32bpp pixel format is supported for the destination color image.");
             }
 
             unsafe
@@ -866,13 +935,14 @@ namespace Microsoft.Psi.Imaging
                     {
                         ushort depth = *src;
 
-                        if (depth == 0)
+                        if (invalidValue.HasValue && depth == invalidValue.Value)
                         {
                             dst[0] = 0;
                             dst[1] = 0;
                             dst[2] = 0;
+                            dst[3] = (byte)(invalidAsTransparent ? 0 : 255);
 
-                            dst += 3;
+                            dst += 4;
                             src += 1;
                             continue;
                         }
@@ -881,48 +951,48 @@ namespace Microsoft.Psi.Imaging
                         ushort clampedDepth = depth > range.MaxValue ? range.MaxValue : depth;
                         clampedDepth = depth < range.MinValue ? range.MinValue : depth;
 
-                        // get the hue
-                        float hue = (clampedDepth - range.MinValue) / (float)(range.MaxValue - range.MinValue);
+                        // get the scaled depth (0-1 range)
+                        float scaledDepth = range.MaxValue == range.MinValue ? 0 : (clampedDepth - range.MinValue) / (float)(range.MaxValue - range.MinValue);
+                        scaledDepth = 1 - scaledDepth;
 
                         // We want to go from blue (at 2/3 in hue space) to red (at 0 in hue space), so
                         // remap accordingly
                         // See also: https://en.wikipedia.org/wiki/HSL_and_HSV#/media/File:HSV-RGB-comparison.svg
-                        hue = 1 - hue * .2f / .3f;
-
                         float red = .0f;
                         float green = .0f;
                         float blue = .0f;
 
-                        if (hue < 0.25)
+                        if (scaledDepth < 0.25)
                         {
-                            red = .0f;
-                            green = hue / 0.25f;
-                            blue = 1.0f;
+                            red = 1.0f;
+                            green = scaledDepth / 0.25f;
+                            blue = 0.0f;
                         }
-                        else if (hue < 0.5)
+                        else if (scaledDepth < 0.5)
                         {
-                            red = .0f;
+                            red = 1.0f - (scaledDepth - 0.25f) / 0.25f;
                             green = 1.0f;
-                            blue = 1.0f - (hue - 0.25f) / 0.25f;
+                            blue = 0.0f;
                         }
-                        else if (hue < 0.75)
+                        else if (scaledDepth < 0.75)
                         {
-                            red = (hue - 0.5f) / 0.25f;
+                            red = 0.0f;
                             green = 1.0f;
-                            blue = .0f;
+                            blue = (scaledDepth - 0.5f) / 0.25f;
                         }
                         else
                         {
-                            red = 1.0f;
-                            green = 1 - (hue - 0.75f) / 0.25f;
-                            blue = .0f;
+                            red = 0.0f;
+                            green = 1 - (scaledDepth - 0.75f) / 0.25f;
+                            blue = 1.0f;
                         }
 
-                        dst[0] = (byte)(red * 255);
+                        dst[0] = (byte)(blue * 255);
                         dst[1] = (byte)(green * 255);
-                        dst[2] = (byte)(blue * 255);
+                        dst[2] = (byte)(red * 255);
+                        dst[3] = 255;
 
-                        dst += 3;
+                        dst += 4;
                         src += 1;
                     }
                 });
@@ -972,6 +1042,134 @@ namespace Microsoft.Psi.Imaging
             }
         }
 
+        /// <summary>
+        /// Determines the average color of an image.
+        /// </summary>
+        /// <param name="image">The image to inspect.</param>
+        /// <returns>A color with the average RGB values of the image.</returns>
+        public static Color AverageColor(this Image image)
+        {
+            return image.AverageColor(0, 0, image.Width, image.Height);
+        }
+
+        /// <summary>
+        /// Determines the average color of a region of an image.
+        /// </summary>
+        /// <param name="image">The image to inspect.</param>
+        /// <param name="left">The left of the region to determine average color for.</param>
+        /// <param name="top">The top of the region to determine average color for.</param>
+        /// <param name="width">The width of the region to determine average color for.</param>
+        /// <param name="height">The height of the region to determine average color for.</param>
+        /// <returns>A color with the average RGB values of the region.</returns>
+        public static Color AverageColor(this Image image, int left, int top, int width, int height)
+        {
+            var colorF = image.AverageColorF(left, top, width, height);
+            return Color.FromArgb((byte)Math.Round(255 * colorF.R), (byte)Math.Round(255 * colorF.G), (byte)Math.Round(255 * colorF.B));
+        }
+
+        /// <summary>
+        /// Determines the average color of an image.
+        /// </summary>
+        /// <param name="image">The image to inspect.</param>
+        /// <returns>A triple containing the average RGB values of the region, in the range from 0.0 (lowest intensity) to 1.0 (highest intensity).</returns>
+        public static (double R, double G, double B) AverageColorF(this Image image)
+        {
+            return image.AverageColorF(0, 0, image.Width, image.Height);
+        }
+
+        /// <summary>
+        /// Determines the average color of a region of an image.
+        /// </summary>
+        /// <param name="image">The image to inspect.</param>
+        /// <param name="left">The left of the region to determine average color for.</param>
+        /// <param name="top">The top of the region to determine average color for.</param>
+        /// <param name="width">The width of the region to determine average color for.</param>
+        /// <param name="height">The height of the region to determine average color for.</param>
+        /// <returns>A triple containing the average RGB values of the region, in the range from 0.0 (lowest intensity) to 1.0 (highest intensity).</returns>
+        public static (double R, double G, double B) AverageColorF(this Image image, int left, int top, int width, int height)
+        {
+            double totalR = 0;
+            double totalG = 0;
+            double totalB = 0;
+
+            if (top < 0)
+            {
+                top = 0;
+            }
+
+            if (left < 0)
+            {
+                left = 0;
+            }
+
+            if (left + width > image.Width)
+            {
+                width = image.Width - left;
+            }
+
+            if (top + height > image.Height)
+            {
+                height = image.Height - top;
+            }
+
+            unsafe
+            {
+                byte* ptrFirstPixel = (byte*)image.ImageData.ToPointer();
+
+                for (var y = top; y < (top + height); y++)
+                {
+                    byte* ptrCurrentRow = ptrFirstPixel + (y * image.Stride);
+
+                    for (var x = left; x < (left + width); x++)
+                    {
+                        byte* ptrCurrentPixel = ptrCurrentRow + x * image.BitsPerPixel / 8;
+
+                        switch (image.PixelFormat)
+                        {
+                            case PixelFormat.BGRA_32bpp:
+                            case PixelFormat.BGRX_32bpp:
+                            case PixelFormat.BGR_24bpp:
+                                totalR += ptrCurrentPixel[2];
+                                totalG += ptrCurrentPixel[1];
+                                totalB += ptrCurrentPixel[0];
+                                break;
+
+                            case PixelFormat.RGB_24bpp:
+                                totalR += ptrCurrentPixel[0];
+                                totalG += ptrCurrentPixel[1];
+                                totalB += ptrCurrentPixel[2];
+                                break;
+
+                            case PixelFormat.RGBA_64bpp:
+                                totalR += ((ushort*)ptrCurrentPixel)[0];
+                                totalG += ((ushort*)ptrCurrentPixel)[1];
+                                totalB += ((ushort*)ptrCurrentPixel)[2];
+                                break;
+
+                            case PixelFormat.Gray_8bpp:
+                                totalR += ptrCurrentPixel[0];
+                                totalG += ptrCurrentPixel[0];
+                                totalB += ptrCurrentPixel[0];
+                                break;
+
+                            case PixelFormat.Gray_16bpp:
+                                totalR += ((ushort*)ptrCurrentPixel)[0];
+                                totalG += ((ushort*)ptrCurrentPixel)[0];
+                                totalB += ((ushort*)ptrCurrentPixel)[0];
+                                break;
+
+                            default:
+                                throw new NotSupportedException($"Pixel format {image.PixelFormat} not supported by Image.AverageColor().");
+                        }
+                    }
+                }
+            }
+
+            var totalPixels = width * height;
+            var scale = image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp ? 65535 : 255;
+            return (totalR / totalPixels / scale, totalG / totalPixels / scale, totalB / totalPixels / scale);
+        }
+
         private static void AddRotatedPointToBBox(float x, float y, ref float minx, ref float miny, ref float maxx, ref float maxy, float ca, float sa)
         {
             float nx = (x * ca) - (y * sa);
@@ -1012,33 +1210,37 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line.</param>
         public static void DrawRectangle(this Image image, Rectangle rect, Color color, int width)
         {
-            Image sourceImage = image;
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
 
             // If our image is 8bpp we won't be able to call Graphics.FromImage because
             // that call doesn't support the 8bpp pixel format. See:
             // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
             // for details.
             //
-            // To work around this issue, we will convert the image to 24bpp, perform the operation,
-            // and then convert back to 8bpp.
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
-                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
-                image.CopyTo(sourceImage);
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.DrawRectangle(rect, color, width);
+                image.CopyFrom(tmpImage);
+                return;
             }
 
-            using Bitmap bm = sourceImage.ToBitmap(false);
+            using Bitmap bm = image.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawRectangle(pen, rect);
-
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
-            {
-                image.CopyFrom(sourceImage);
-                sourceImage.Dispose();
-            }
         }
 
         /// <summary>
@@ -1051,33 +1253,37 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line.</param>
         public static void DrawLine(this Image image, Point p0, Point p1, Color color, int width)
         {
-            Image sourceImage = image;
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
 
             // If our image is 8bpp we won't be able to call Graphics.FromImage because
             // that call doesn't support the 8bpp pixel format. See:
             // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
             // for details.
             //
-            // To work around this issue, we will convert the image to 24bpp, perform the operation,
-            // and then convert back to 8bpp.
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
-                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
-                image.CopyTo(sourceImage);
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.DrawLine(p0, p1, color, width);
+                image.CopyFrom(tmpImage);
+                return;
             }
 
-            using Bitmap bm = sourceImage.ToBitmap(false);
+            using Bitmap bm = image.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawLine(pen, p0, p1);
-
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
-            {
-                image.CopyFrom(sourceImage);
-                sourceImage.Dispose();
-            }
         }
 
         /// <summary>
@@ -1090,33 +1296,37 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of line.</param>
         public static void DrawCircle(this Image image, Point p0, int radius, Color color, int width)
         {
-            Image sourceImage = image;
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
 
             // If our image is 8bpp we won't be able to call Graphics.FromImage because
             // that call doesn't support the 8bpp pixel format. See:
             // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
             // for details.
             //
-            // To work around this issue, we will convert the image to 24bpp, perform the operation,
-            // and then convert back to 8bpp.
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
-                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
-                image.CopyTo(sourceImage);
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.DrawCircle(p0, radius, color, width);
+                image.CopyFrom(tmpImage);
+                return;
             }
 
-            using Bitmap bm = sourceImage.ToBitmap(false);
+            using Bitmap bm = image.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using var pen = new Pen(new SolidBrush(color));
             pen.Width = width;
             graphics.DrawEllipse(pen, p0.X - radius, p0.Y - radius, 2 * radius, 2 * radius);
-
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
-            {
-                image.CopyFrom(sourceImage);
-                sourceImage.Dispose();
-            }
         }
 
         /// <summary>
@@ -1130,36 +1340,40 @@ namespace Microsoft.Psi.Imaging
         /// <param name="fontSize">Size of font. Optional.</param>
         public static void DrawText(this Image image, string str, Point p0, Color color = default(Color), string font = "Arial", float fontSize = 24.0f)
         {
-            Image sourceImage = image;
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
 
             // If our image is 8bpp we won't be able to call Graphics.FromImage because
             // that call doesn't support the 8bpp pixel format. See:
             // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
             // for details.
             //
-            // To work around this issue, we will convert the image to 24bpp, perform the operation,
-            // and then convert back to 8bpp.
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
-                sourceImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
-                image.CopyTo(sourceImage);
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.DrawText(str, p0, color, font, fontSize);
+                image.CopyFrom(tmpImage);
+                return;
             }
 
             font ??= "Arial";
-            using Bitmap bm = sourceImage.ToBitmap(false);
+            using Bitmap bm = image.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
             using Font drawFont = new Font(font, fontSize);
             using SolidBrush drawBrush = new SolidBrush(color);
             using StringFormat drawFormat = new StringFormat();
             drawFormat.FormatFlags = 0;
             graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
-
-            if (image.PixelFormat == PixelFormat.Gray_8bpp)
-            {
-                image.CopyFrom(sourceImage);
-                sourceImage.Dispose();
-            }
         }
     }
 
@@ -1375,6 +1589,12 @@ namespace Microsoft.Psi.Imaging
                                     alpha = srcCol[3];
                                     break;
 
+                                case PixelFormat.RGB_24bpp:
+                                    red = srcCol[0];
+                                    green = srcCol[1];
+                                    blue = srcCol[2];
+                                    break;
+
                                 case PixelFormat.RGBA_64bpp:
                                     red = ((ushort*)srcCol)[0];
                                     green = ((ushort*)srcCol)[1];
@@ -1410,6 +1630,12 @@ namespace Microsoft.Psi.Imaging
                                     dstCol[1] = (byte)green;
                                     dstCol[2] = (byte)red;
                                     dstCol[3] = (byte)alpha;
+                                    break;
+
+                                case PixelFormat.RGB_24bpp:
+                                    dstCol[0] = (byte)red;
+                                    dstCol[1] = (byte)green;
+                                    dstCol[2] = (byte)blue;
                                     break;
 
                                 case PixelFormat.RGBA_64bpp:
@@ -1494,22 +1720,17 @@ namespace Microsoft.Psi.Imaging
                                 break;
 
                             case PixelFormat.Gray_16bpp:
-                                ((ushort*)dstCol)[0] = (byte)(65535 - srcCol[0]);
+                                ((ushort*)dstCol)[0] = (ushort)(65535 - ((ushort*)srcCol)[0]);
                                 break;
 
                             case PixelFormat.BGR_24bpp:
+                            case PixelFormat.RGB_24bpp:
                                 dstCol[0] = (byte)(255 - srcCol[0]);
                                 dstCol[1] = (byte)(255 - srcCol[1]);
                                 dstCol[2] = (byte)(255 - srcCol[2]);
                                 break;
 
                             case PixelFormat.BGRX_32bpp:
-                                dstCol[0] = (byte)(255 - srcCol[0]);
-                                dstCol[1] = (byte)(255 - srcCol[1]);
-                                dstCol[2] = (byte)(255 - srcCol[2]);
-                                dstCol[3] = (byte)srcCol[3];
-                                break;
-
                             case PixelFormat.BGRA_32bpp:
                                 dstCol[0] = (byte)(255 - srcCol[0]);
                                 dstCol[1] = (byte)(255 - srcCol[1]);
@@ -1518,10 +1739,10 @@ namespace Microsoft.Psi.Imaging
                                 break;
 
                             case PixelFormat.RGBA_64bpp:
-                                dstCol[0] = (byte)(255 - srcCol[0]);
-                                dstCol[1] = (byte)(255 - srcCol[1]);
-                                dstCol[2] = (byte)(255 - srcCol[2]);
-                                dstCol[3] = (byte)srcCol[3];
+                                ((ushort*)dstCol)[0] = (ushort)(65535 - ((ushort*)srcCol)[0]);
+                                ((ushort*)dstCol)[1] = (ushort)(65535 - ((ushort*)srcCol)[1]);
+                                ((ushort*)dstCol)[2] = (ushort)(65535 - ((ushort*)srcCol)[2]);
+                                ((ushort*)dstCol)[3] = (ushort)((ushort*)srcCol)[3];
                                 break;
 
                             case PixelFormat.Undefined:
@@ -1562,34 +1783,43 @@ namespace Microsoft.Psi.Imaging
                                 break;
 
                             case PixelFormat.Gray_16bpp:
-                                ((ushort*)srcCol)[0] = Operators.Rgb2Gray((ushort)clr.R, (ushort)clr.G, (ushort)clr.B);
+                                ((ushort*)srcCol)[0] = Operators.Rgb2Gray(
+                                    (ushort)((clr.R << 8) | clr.R),
+                                    (ushort)((clr.G << 8) | clr.G),
+                                    (ushort)((clr.B << 8) | clr.B));
                                 break;
 
                             case PixelFormat.BGR_24bpp:
-                                srcCol[2] = clr.R;
-                                srcCol[1] = clr.G;
                                 srcCol[0] = clr.B;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.R;
                                 break;
 
                             case PixelFormat.BGRX_32bpp:
-                                srcCol[2] = clr.R;
-                                srcCol[1] = clr.G;
                                 srcCol[0] = clr.B;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.R;
                                 srcCol[3] = 255;
                                 break;
 
                             case PixelFormat.BGRA_32bpp:
-                                srcCol[2] = clr.R;
-                                srcCol[1] = clr.G;
                                 srcCol[0] = clr.B;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.R;
                                 srcCol[3] = clr.A;
                                 break;
 
+                            case PixelFormat.RGB_24bpp:
+                                srcCol[0] = clr.R;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.B;
+                                break;
+
                             case PixelFormat.RGBA_64bpp:
-                                ((ushort*)srcCol)[3] = (ushort)((clr.R << 8) | clr.R);
-                                ((ushort*)srcCol)[2] = (ushort)((clr.G << 8) | clr.G);
-                                ((ushort*)srcCol)[1] = (ushort)((clr.B << 8) | clr.B);
-                                ((ushort*)srcCol)[0] = (ushort)((clr.A << 8) | clr.A);
+                                ((ushort*)srcCol)[0] = (ushort)((clr.R << 8) | clr.R);
+                                ((ushort*)srcCol)[1] = (ushort)((clr.G << 8) | clr.G);
+                                ((ushort*)srcCol)[2] = (ushort)((clr.B << 8) | clr.B);
+                                ((ushort*)srcCol)[3] = (ushort)((clr.A << 8) | clr.A);
                                 break;
 
                             case PixelFormat.Undefined:
@@ -1750,6 +1980,12 @@ namespace Microsoft.Psi.Imaging
                                 r = g = b = a = srcCol[0];
                                 break;
 
+                            case PixelFormat.RGB_24bpp:
+                                r = srcCol[0];
+                                g = srcCol[1];
+                                b = srcCol[2];
+                                break;
+
                             case PixelFormat.RGBA_64bpp:
                                 r = ((ushort*)srcCol)[0];
                                 g = ((ushort*)srcCol)[1];
@@ -1826,18 +2062,24 @@ namespace Microsoft.Psi.Imaging
                                 break;
 
                             case PixelFormat.Gray_16bpp:
-                                ((ushort*)srcCol)[0] = (ushort)r;
+                                ((ushort*)dstCol)[0] = (ushort)r;
                                 break;
 
                             case PixelFormat.Gray_8bpp:
-                                srcCol[0] = (byte)r;
+                                dstCol[0] = (byte)r;
+                                break;
+
+                            case PixelFormat.RGB_24bpp:
+                                dstCol[0] = (byte)r;
+                                dstCol[1] = (byte)g;
+                                dstCol[2] = (byte)b;
                                 break;
 
                             case PixelFormat.RGBA_64bpp:
-                                ((ushort*)srcCol)[0] = (ushort)r;
-                                ((ushort*)srcCol)[1] = (ushort)g;
-                                ((ushort*)srcCol)[2] = (ushort)b;
-                                ((ushort*)srcCol)[3] = (ushort)a;
+                                ((ushort*)dstCol)[0] = (ushort)r;
+                                ((ushort*)dstCol)[1] = (ushort)g;
+                                ((ushort*)dstCol)[2] = (ushort)b;
+                                ((ushort*)dstCol)[3] = (ushort)a;
                                 break;
 
                             default:
@@ -1923,6 +2165,7 @@ namespace Microsoft.Psi.Imaging
                                 break;
 
                             case PixelFormat.BGR_24bpp:
+                            case PixelFormat.RGB_24bpp:
                                 delta0 = srcColA[0] - srcColB[0];
                                 delta1 = srcColA[1] - srcColB[1];
                                 delta2 = srcColA[2] - srcColB[2];

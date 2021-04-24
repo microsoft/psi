@@ -9,22 +9,19 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of depth camera view (encoded depth image) to spatial depth camera view (decoded depth image) with default position.
+    /// Implements a stream adapter from depth camera view (shared encoded depth image with intrinsics) to spatial depth camera view (shared depth image with intrinsics) with default position.
     /// </summary>
     [StreamAdapter]
     public class EncodedDepthCameraViewToSpatialDepthCameraViewAdapter : StreamAdapter<(Shared<EncodedDepthImage>, ICameraIntrinsics), (Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncodedDepthCameraViewToSpatialDepthCameraViewAdapter"/> class.
-        /// </summary>
-        public EncodedDepthCameraViewToSpatialDepthCameraViewAdapter()
-            : base(Adapter)
-        {
-        }
+        private readonly EncodedDepthImageToDepthImageAdapter depthImageAdapter = new EncodedDepthImageToDepthImageAdapter();
 
-        private static (Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem) Adapter((Shared<EncodedDepthImage>, ICameraIntrinsics) value, Envelope env)
-        {
-            return (value.Item1?.Decode(), value.Item2, new CoordinateSystem());
-        }
+        /// <inheritdoc/>
+        public override (Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem) GetAdaptedValue((Shared<EncodedDepthImage>, ICameraIntrinsics) source, Envelope envelope)
+            => (this.depthImageAdapter.GetAdaptedValue(source.Item1, envelope), source.Item2, new CoordinateSystem());
+
+        /// <inheritdoc/>
+        public override void Dispose((Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem) destination)
+            => this.depthImageAdapter.Dispose(destination.Item1);
     }
 }

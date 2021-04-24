@@ -137,7 +137,12 @@ namespace Microsoft.Psi.Streams
         /// <param name="diagnosticsTime">The time at which diagnostic information is captured about the message being enqueued.</param>
         /// <param name="stateTransitionAction">Action to perform after the queue state transition has been evaluated.</param>
         /// <param name="stateTransition">The struct describing the status of the internal queue.</param>
-        public void Enqueue(Message<T> message, DiagnosticsCollector.ReceiverCollector receiverDiagnosticsCollector, DateTime diagnosticsTime, Action<QueueTransition> stateTransitionAction, out QueueTransition stateTransition)
+        public void Enqueue(
+            Message<T> message,
+            DiagnosticsCollector.ReceiverCollector receiverDiagnosticsCollector,
+            DateTime diagnosticsTime,
+            Action<QueueTransition> stateTransitionAction,
+            out QueueTransition stateTransition)
         {
             lock (this.queue)
             {
@@ -284,7 +289,7 @@ namespace Microsoft.Psi.Streams
             // update the local variables.
             this.isEmpty = count == 0;
             this.isThrottling = this.policy.ThrottleWhenFull && count >= this.policy.MaximumQueueSize;
-            this.nextMessageEnvelope = (count == 0) ? default(Envelope) : this.queue.Peek().Envelope;
+            this.nextMessageEnvelope = (count == 0) ? default : this.queue.Peek().Envelope;
 
             // create the Transition object by comparing the current and previous local state variables.
             return new QueueTransition()

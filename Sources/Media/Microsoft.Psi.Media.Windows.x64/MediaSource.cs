@@ -90,8 +90,8 @@ namespace Microsoft.Psi.Media
         {
             if (!this.disposed)
             {
-                this.sourceReader.Dispose();
-                this.input.Dispose();
+                this.sourceReader?.Dispose();
+                this.input?.Dispose();
                 MediaManager.Shutdown();
                 this.disposed = true;
             }

@@ -175,22 +175,24 @@ namespace Microsoft.Psi
         /// <typeparam name="T">The input message type.</typeparam>
         /// <param name="source">The source stream to edit.</param>
         /// <param name="edits">A sequence of edits to be applied. Whether to update/insert or delete, an optional message to upsert and originating times.</param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A stream of the same type as the source stream with edits applied.</returns>
-        internal static IProducer<T> EditStream<T>(this IProducer<T> source, IEnumerable<(bool upsert, T message, DateTime originatingTime)> edits, DeliveryPolicy<T> deliveryPolicy = null)
+        internal static IProducer<T> EditStream<T>(this IProducer<T> source, IEnumerable<(bool upsert, T message, DateTime originatingTime)> edits)
         {
-            var originalStream = source.Select(m => (original: true, upsert: true, m), deliveryPolicy);
+            var originalStream = source.Select(m => (original: true, upsert: true, m), DeliveryPolicy.Unlimited);
             var orderedEdits = edits.OrderBy(e => e.originatingTime).Select(e => ((original: false, e.upsert, e.message), e.originatingTime));
             var editsStream = Generators.Sequence(source.Out.Pipeline, orderedEdits);
-            return originalStream.Zip(editsStream, DeliveryPolicy.Unlimited).Process<(bool original, bool upsert, T message)[], T>(
-                ((bool original, bool upsert, T message)[] messages, Envelope envelope, Emitter<T> emitter) =>
-                {
-                    var m = messages[0].original && messages.Length > 1 ? messages[1] : messages[0];
-                    if (m.upsert)
+            return originalStream
+                .Zip(editsStream, DeliveryPolicy.Unlimited)
+                .Process<(bool original, bool upsert, T message)[], T>(
+                    ((bool original, bool upsert, T message)[] messages, Envelope envelope, Emitter<T> emitter) =>
                     {
-                        emitter.Deliver(m.message, envelope);
-                    }
-                });
+                        var (original, upsert, message) = messages[0].original && messages.Length > 1 ? messages[1] : messages[0];
+                        if (upsert)
+                        {
+                            emitter.Deliver(message, envelope);
+                        }
+                    },
+                    DeliveryPolicy.Unlimited);
         }
     }
 }

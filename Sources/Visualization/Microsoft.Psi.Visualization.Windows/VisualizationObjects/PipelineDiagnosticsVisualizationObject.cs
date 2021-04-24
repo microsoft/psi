@@ -4,27 +4,31 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Media;
     using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
     /// Implements a diagnostics visualization object.
     /// </summary>
     [VisualizationObject("Diagnostics", null, IconSourcePath.Diagnostics, IconSourcePath.Diagnostics)]
-    public class PipelineDiagnosticsVisualizationObject : Instant2DVisualizationObject<PipelineDiagnostics>
+    [VisualizationPanelType(VisualizationPanelType.XY)]
+    public class PipelineDiagnosticsVisualizationObject : StreamValueVisualizationObject<PipelineDiagnostics>
     {
         private GraphLayoutDirection layoutDirection = GraphLayoutDirection.LeftToRight;
         private bool showEmitterNames = false;
         private bool showReceiverNames = true;
         private bool showDeliveryPolicies = false;
         private bool showExporterConnections = false;
-        private HeatmapStats heatmapStats = HeatmapStats.LatencyAtEmitter;
+        private HeatmapStats heatmapStats = HeatmapStats.AvgMessageReceivedLatency;
         private Color heatmapColor = Colors.Red;
         private HighlightCondition highlightCondition = HighlightCondition.None;
         private Color highlightColor = Colors.Yellow;
@@ -48,39 +52,49 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             None,
 
             /// <summary>
-            /// Latency at emitter heatmap visualization (average).
+            /// Message created latency heatmap visualization (average).
             /// </summary>
-            LatencyAtEmitter,
+            AvgMessageCreatedLatency,
 
             /// <summary>
-            /// Latency at receiver heatmap visualization (average).
+            /// Message emitted latency heatmap visualization (average).
             /// </summary>
-            LatencyAtReceiver,
+            AvgMessageEmittedLatency,
 
             /// <summary>
-            /// Receiver queue size heatmap visualization.
+            /// Message received latency heatmap visualization (average).
             /// </summary>
-            QueueSize,
+            AvgMessageReceivedLatency,
 
             /// <summary>
-            /// Processing time heatmap visualization (average).
+            /// Delivery queue size heatmap visualization.
             /// </summary>
-            Processing,
+            AvgDeliveryQueueSize,
 
             /// <summary>
-            /// Message throughput heatmap visualization.
+            /// Message process time heatmap visualization (average).
             /// </summary>
-            Throughput,
+            AvgMessageProcessTime,
 
             /// <summary>
-            /// Dropped message count heatmap visualization.
+            /// Message emitted count heatmap visualization.
             /// </summary>
-            DroppedCount,
+            TotalMessageEmittedCount,
+
+            /// <summary>
+            /// Message dropped count heatmap visualization.
+            /// </summary>
+            TotalMessageDroppedCount,
+
+            /// <summary>
+            /// Message processed count heatmap visualization.
+            /// </summary>
+            TotalMessageProcessedCount,
 
             /// <summary>
             /// Message size heatmap visualization (logarithmic).
             /// </summary>
-            MessageSize,
+            AvgMessageSize,
         }
 
         /// <summary>
@@ -389,6 +403,26 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [IgnoreDataMember]
         public bool ModelDirty { get; set; } = false;
+
+        /// <summary>
+        /// Adds the derived receiver diagnostics streams for a specified receiver id.
+        /// </summary>
+        /// <param name="receiverId">The receiver id.</param>
+        public void AddDerivedReceiverDiagnosticsStreams(int receiverId)
+        {
+            var partition = VisualizationContext.Instance
+                .DatasetViewModel
+                .CurrentSessionViewModel
+                .PartitionViewModels
+                .FirstOrDefault(p => p.Name == this.StreamBinding.PartitionName);
+
+            var pipelineDiagnosticsStreamTreeNode = partition
+                .FindStreamTreeNode(this.StreamBinding.StreamName) as PipelineDiagnosticsStreamTreeNode;
+
+            var receiver = pipelineDiagnosticsStreamTreeNode.AddDerivedReceiverDiagnosticsChildren(receiverId);
+            partition.SelectNode(receiver.Path);
+            receiver.ExpandAll();
+        }
 
         /// <inheritdoc />
         protected override void OnStreamUnbound()

@@ -8,12 +8,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Implements a string with duration visualization object.
+    /// Implements a visualization object for a tuple of string and duration.
     /// </summary>
     [VisualizationObject("Strings with Duration")]
-    public class StringWithDurationVisualizationObject : TimelineVisualizationObject<Tuple<string, TimeSpan>>
+    [VisualizationPanelType(VisualizationPanelType.Timeline)]
+    public class StringWithDurationVisualizationObject : StreamIntervalVisualizationObject<Tuple<string, TimeSpan>>
     {
         /// <inheritdoc />
         [IgnoreDataMember]

@@ -3,9 +3,11 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
+    using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views;
 
@@ -14,15 +16,25 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     /// </summary>
     public class InstantVisualizationPlaceholderPanel : VisualizationPanel
     {
+        private readonly InstantVisualizationContainer instantVisualizationContainer;
         private int relativeWidth = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InstantVisualizationPlaceholderPanel"/> class.
         /// </summary>
-        public InstantVisualizationPlaceholderPanel()
+        /// <param name="instantVisualizationContainer">The parent instant visualization container.</param>
+        public InstantVisualizationPlaceholderPanel(InstantVisualizationContainer instantVisualizationContainer)
         {
-            this.Name = "Empty Instant Panel";
+            this.instantVisualizationContainer = instantVisualizationContainer;
+            this.Name = "-Empty-";
         }
+
+        /// <summary>
+        /// Gets the remove cell command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand RemoveCellCommand => new RelayCommand(() => this.instantVisualizationContainer.CreateRemoveCellCommand(this));
 
         /// <summary>
         /// Gets or sets the name of the relative width for the panel.
@@ -34,6 +46,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             get { return this.relativeWidth; }
             set { this.Set(nameof(this.RelativeWidth), ref this.relativeWidth, value); }
         }
+
+        /// <inheritdoc/>
+        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.XY, VisualizationPanelType.XYZ };
 
         /// <inheritdoc/>
         protected override DataTemplate CreateDefaultViewTemplate()

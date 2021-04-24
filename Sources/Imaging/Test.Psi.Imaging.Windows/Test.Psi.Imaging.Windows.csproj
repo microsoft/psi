@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="ImageTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AverageColorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Test.Psi.Common\Test.Psi.Common.csproj">
@@ -144,6 +145,7 @@
     <None Include="Resources\TestImage_Crop_153_57_103_199.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\SolidColors.bmp" />
     <Content Include="Resources\TestImage2.bmp" />
     <Content Include="Resources\TestImage2_AbsDiff.bmp" />
     <Content Include="Resources\TestImage2_BlueChannel.bmp" />
@@ -171,9 +173,11 @@
     <Content Include="Resources\TestImage_GrayFlip.bmp" />
     <Content Include="Resources\TestImage_GrayResized.bmp" />
     <Content Include="Resources\TestImage_GrayRotate.bmp" />
+    <Content Include="Resources\TestImage_GraySetPixel.bmp" />
     <Content Include="Resources\TestImage_Scale_150_125_Point.bmp" />
     <Content Include="Resources\TestImage_Scale_25_200_Linear.bmp" />
     <Content Include="Resources\TestImage_Scale_50_25_Cubic.bmp" />
+    <Content Include="Resources\TestImage_SetPixel.bmp" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

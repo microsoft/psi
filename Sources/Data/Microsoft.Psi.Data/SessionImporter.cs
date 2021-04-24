@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -13,17 +14,18 @@ namespace Microsoft.Psi.Data
     {
         private Dictionary<string, Importer> importers = new Dictionary<string, Importer>();
 
-        private SessionImporter(Pipeline pipeline, Session session)
+        private SessionImporter(Pipeline pipeline, Session session, bool usePerStreamReaders)
         {
             foreach (var partition in session.Partitions)
             {
                 var reader = StreamReader.Create(partition.StoreName, partition.StorePath, partition.StreamReaderTypeName);
-                var importer = new Importer(pipeline, reader);
+                var importer = new Importer(pipeline, reader, usePerStreamReaders);
                 this.importers.Add(partition.Name, importer);
             }
 
             this.MessageOriginatingTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.MessageOriginatingTimeInterval));
             this.MessageCreationTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.MessageCreationTimeInterval));
+            this.StreamTimeInterval = TimeInterval.Coverage(this.importers.Values.Select(i => i.StreamTimeInterval));
             this.Name = session.Name;
         }
 
@@ -43,6 +45,11 @@ namespace Microsoft.Psi.Data
         public TimeInterval MessageCreationTimeInterval { get; private set; }
 
         /// <summary>
+        /// Gets the interval between the opened and closed times, across all streams in the session.
+        /// </summary>
+        public TimeInterval StreamTimeInterval { get; private set; }
+
+        /// <summary>
         /// Gets a dictionary of named importers.
         /// </summary>
         public IReadOnlyDictionary<string, Importer> PartitionImporters => this.importers;
@@ -52,10 +59,11 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="pipeline">Pipeline to use for imports.</param>
         /// <param name="session">Session to import into.</param>
+        /// <param name="usePerStreamReaders">Optional flag indicating whether to use per-stream readers.</param>
         /// <returns>The newly created session importer.</returns>
-        public static SessionImporter Open(Pipeline pipeline, Session session)
+        public static SessionImporter Open(Pipeline pipeline, Session session, bool usePerStreamReaders = true)
         {
-            return new SessionImporter(pipeline, session);
+            return new SessionImporter(pipeline, session, usePerStreamReaders);
         }
 
         /// <summary>
@@ -93,14 +101,16 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <typeparam name="T">The type of stream to open.</typeparam>
         /// <param name="streamName">The name of stream to open.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
         /// <returns>The opened stream.</returns>
-        public IProducer<T> OpenStream<T>(string streamName)
+        public IProducer<T> OpenStream<T>(string streamName, Func<T> allocator = null, Action<T> deallocator = null)
         {
             var all = this.importers.Values.Where(importer => importer.Contains(streamName));
             var count = all.Count();
             if (count == 1)
             {
-                return all.First().OpenStream<T>(streamName);
+                return all.First().OpenStream(streamName, allocator, deallocator);
             }
             else if (count > 1)
             {
@@ -118,10 +128,12 @@ namespace Microsoft.Psi.Data
         /// <typeparam name="T">The type of stream to open.</typeparam>
         /// <param name="partitionName">The partition to open stream in.</param>
         /// <param name="streamName">The name of stream to open.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
         /// <returns>The opened stream.</returns>
-        public IProducer<T> OpenStream<T>(string partitionName, string streamName)
+        public IProducer<T> OpenStream<T>(string partitionName, string streamName, Func<T> allocator = null, Action<T> deallocator = null)
         {
-            return this.importers[partitionName].OpenStream<T>(streamName);
+            return this.importers[partitionName].OpenStream(streamName, allocator, deallocator);
         }
 
         /// <summary>
@@ -131,7 +143,7 @@ namespace Microsoft.Psi.Data
         /// <returns>The list of importer names that contain the named stream.</returns>
         private IEnumerable<string> GetContainingUsages(string streamName)
         {
-            return this.importers.Values.Where(importer => importer.Contains(streamName)).Select(i => i.Name);
+            return this.importers.Values.Where(importer => importer.Contains(streamName)).Select(i => i.StoreName);
         }
     }
 }

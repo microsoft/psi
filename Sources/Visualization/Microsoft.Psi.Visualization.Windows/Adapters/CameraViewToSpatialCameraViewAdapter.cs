@@ -9,22 +9,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of camera view to spatial camera view with default position.
+    /// Implements a stream adapter from camera view to spatial camera view with default position.
     /// </summary>
     [StreamAdapter]
     public class CameraViewToSpatialCameraViewAdapter : StreamAdapter<(Shared<Image>, ICameraIntrinsics), (Shared<Image>, ICameraIntrinsics, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CameraViewToSpatialCameraViewAdapter"/> class.
-        /// </summary>
-        public CameraViewToSpatialCameraViewAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static (Shared<Image>, ICameraIntrinsics, CoordinateSystem) Adapter((Shared<Image>, ICameraIntrinsics) value, Envelope env)
-        {
-            return (value.Item1, value.Item2, new CoordinateSystem());
-        }
+        /// <inheritdoc/>
+        public override (Shared<Image>, ICameraIntrinsics, CoordinateSystem) GetAdaptedValue((Shared<Image>, ICameraIntrinsics) source, Envelope envelope)
+            => (source.Item1, source.Item2, new CoordinateSystem());
     }
 }

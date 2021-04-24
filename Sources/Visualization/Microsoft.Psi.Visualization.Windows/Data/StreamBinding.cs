@@ -23,19 +23,21 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         /// <param name="streamName">The stream name.</param>
         /// <param name="partitionName">The partition name.</param>
+        /// <param name="nodePath">The path of the node in the tree that has generated this stream binding.</param>
         /// <param name="streamAdapterType">The type of the stream adapter, null if there is none.</param>
         /// <param name="streamAdapterArguments">The arguments used when constructing the stream adapter, null if there are none.</param>
         /// <param name="summarizerType">The type of the stream summarizer, null if there is none.</param>
         /// <param name="summarizerArguments">The arguments used when constructing the stream summarizer, null if there are none.</param>
-        /// <param name="isStreamMemberBinding">True if this stream binding represents a binding to a member of the data in the stream rather than to the stream itself, otherwise false.</param>
+        /// <param name="isDerived">True if this stream binding represents a binding to a derived stream rather than to the stream itself, otherwise false.</param>
         public StreamBinding(
             string streamName,
             string partitionName,
+            string nodePath,
             Type streamAdapterType = null,
             object[] streamAdapterArguments = null,
             Type summarizerType = null,
             object[] summarizerArguments = null,
-            bool isStreamMemberBinding = false)
+            bool isDerived = false)
         {
             if (string.IsNullOrWhiteSpace(streamName))
             {
@@ -49,11 +51,12 @@ namespace Microsoft.Psi.Visualization.Data
 
             this.StreamName = streamName;
             this.PartitionName = partitionName;
+            this.NodePath = nodePath;
             this.StreamAdapterType = streamAdapterType;
             this.StreamAdapterArguments = streamAdapterArguments;
             this.SummarizerType = summarizerType;
             this.SummarizerArguments = summarizerArguments;
-            this.IsStreamMemberBinding = isStreamMemberBinding;
+            this.IsDerived = isDerived;
         }
 
         private StreamBinding()
@@ -72,6 +75,12 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         [DataMember]
         public string PartitionName { get; private set; }
+
+        /// <summary>
+        /// Gets the node path.
+        /// </summary>
+        [DataMember]
+        public string NodePath { get; private set; }
 
         /// <summary>
         /// Gets stream adapter.
@@ -107,7 +116,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a value indicating whether this stream binding represents a binding to a member of the data in the stream rather than to the stream itself.
         /// </summary>
         [DataMember]
-        public bool IsStreamMemberBinding { get; private set; }
+        public bool IsDerived { get; private set; }
 
         /// <summary>
         /// Gets stream adapter type.

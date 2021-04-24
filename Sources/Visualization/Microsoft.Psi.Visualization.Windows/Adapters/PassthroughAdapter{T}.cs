@@ -3,27 +3,17 @@
 
 namespace Microsoft.Psi.Visualization.Adapters
 {
+    using Microsoft.Psi;
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter that passes its input through to its output unchanged.
+    /// Implements a stream adapter that passes its input through to its output unchanged.
     /// </summary>
-    /// <typeparam name="T">The type of data the adapter can adapt.</typeparam>
+    /// <typeparam name="T">The source type.</typeparam>
     public class PassthroughAdapter<T> : StreamAdapter<T, T>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PassthroughAdapter{T}"/> class.
-        /// </summary>
-        public PassthroughAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static T Adapter(T data, Envelope env)
-        {
-            // If the data is shared, clone it because the caller will
-            // dereference the source soon after this method returns.
-            return SourceIsSharedType ? data.DeepClone() : data;
-        }
+        /// <inheritdoc/>
+        public override T GetAdaptedValue(T source, Envelope envelope)
+            => source;
     }
 }

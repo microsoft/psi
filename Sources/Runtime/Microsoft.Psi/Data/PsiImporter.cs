@@ -22,8 +22,9 @@ namespace Microsoft.Psi.Data
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to open a volatile data store.</param>
-        public PsiImporter(Pipeline pipeline, string name, string path)
-            : base(pipeline, new PsiStoreStreamReader(name, path))
+        /// <param name="usePerStreamReaders">Flag indicating whether to use per-stream readers.</param>
+        public PsiImporter(Pipeline pipeline, string name, string path, bool usePerStreamReaders)
+            : base(pipeline, new PsiStoreStreamReader(name, path), usePerStreamReaders)
         {
         }
     }

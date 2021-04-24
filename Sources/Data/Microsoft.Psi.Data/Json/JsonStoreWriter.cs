@@ -100,7 +100,7 @@ namespace Microsoft.Psi.Data.Json
                 throw new InvalidOperationException($"The stream id {streamId} has already been registered with this writer.");
             }
 
-            var metadata = new JsonStreamMetadata() { Id = streamId, Name = streamName, PartitionName = this.Name, PartitionPath = this.Path, TypeName = typeName };
+            var metadata = new JsonStreamMetadata() { Id = streamId, Name = streamName, StoreName = this.Name, StorePath = this.Path, TypeName = typeName };
             this.catalog[metadata.Id] = metadata;
             this.WriteCatalog(); // ensure catalog is up to date even if crashing later
             return metadata;

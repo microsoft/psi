@@ -18,6 +18,7 @@ namespace Microsoft.Psi.Persistence
         private InfiniteFileReader catalogReader;
         private TimeInterval messageCreationTimeInterval;
         private TimeInterval messageOriginatingTimeInterval;
+        private TimeInterval streamTimeInterval;
         private Action<IEnumerable<Metadata>, RuntimeInfo> entriesAdded;
         private RuntimeInfo runtimeVersion;
 
@@ -59,6 +60,15 @@ namespace Microsoft.Psi.Persistence
             {
                 this.Update();
                 return this.messageOriginatingTimeInterval;
+            }
+        }
+
+        public TimeInterval StreamTimeInterval
+        {
+            get
+            {
+                this.Update();
+                return this.streamTimeInterval;
             }
         }
 
@@ -138,8 +148,8 @@ namespace Microsoft.Psi.Persistence
                         if (meta.Kind == MetadataKind.StreamMetadata)
                         {
                             var sm = meta as PsiStreamMetadata;
-                            sm.PartitionName = this.name;
-                            sm.PartitionPath = this.path;
+                            sm.StoreName = this.name;
+                            sm.StorePath = this.path;
 
                             // the same meta entry will appear multiple times (written on open and on close).
                             // The last one wins.
@@ -152,6 +162,7 @@ namespace Microsoft.Psi.Persistence
                 // compute the time ranges
                 this.messageCreationTimeInterval = GetTimeRange(newStreamDescriptors.Values, meta => meta.MessageCreationTimeInterval);
                 this.messageOriginatingTimeInterval = GetTimeRange(newStreamDescriptors.Values, meta => meta.MessageOriginatingTimeInterval);
+                this.streamTimeInterval = GetTimeRange(newStreamDescriptors.Values, meta => meta.StreamTimeInterval);
 
                 // clean up if the catalog is closed and we really reached the end
                 if (!this.catalogReader.IsMoreDataExpected() && !this.catalogReader.HasMoreData())

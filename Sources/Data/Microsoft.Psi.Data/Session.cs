@@ -6,14 +6,10 @@ namespace Microsoft.Psi.Data
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Psi.Data.Annotations;
-    using Microsoft.Psi.Data.Json;
-    using Microsoft.Psi.Persistence;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -82,6 +78,16 @@ namespace Microsoft.Psi.Data
                     .Select(p => p.OriginatingTimeInterval));
 
         /// <summary>
+        /// Gets the size of the session, in bytes.
+        /// </summary>
+        public long? Size => this.InternalPartitions.Sum(p => p.Size);
+
+        /// <summary>
+        /// Gets the number of streams in the session.
+        /// </summary>
+        public long? StreamCount => this.InternalPartitions.Sum(p => p.StreamCount);
+
+        /// <summary>
         /// Gets the collection of partitions in this session.
         /// </summary>
         [IgnoreDataMember]
@@ -114,6 +120,8 @@ namespace Microsoft.Psi.Data
         /// <param name="outputStoreName">An optional name for the output data store. Default is the output partition name.</param>
         /// <param name="outputStorePath">An optional path for the output data store. Default is the same path at the first partition in the session.</param>
         /// <param name="replayDescriptor">An optional replay descriptor to use when creating the derived partition.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy to use when creating the derived partition.</param>
+        /// <param name="enableDiagnostics">Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
         /// <param name="progress">An optional progress object to be used for reporting progress.</param>
         /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
@@ -124,6 +132,8 @@ namespace Microsoft.Psi.Data
             string outputStoreName = null,
             string outputStorePath = null,
             ReplayDescriptor replayDescriptor = null,
+            DeliveryPolicy deliveryPolicy = null,
+            bool enableDiagnostics = false,
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
         {
@@ -135,6 +145,8 @@ namespace Microsoft.Psi.Data
                 outputStoreName,
                 outputStorePath,
                 replayDescriptor,
+                deliveryPolicy,
+                enableDiagnostics,
                 progress,
                 cancellationToken);
         }
@@ -150,6 +162,8 @@ namespace Microsoft.Psi.Data
         /// <param name="outputStoreName">An optional name for the output data store. Default is the output partition name.</param>
         /// <param name="outputStorePath">An optional path for the output data store. Default is the same path at the first partition in the session.</param>
         /// <param name="replayDescriptor">An optional replay descriptor to use when creating the derived partition.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy to use when creating the derived partition.</param>
+        /// <param name="enableDiagnostics">Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
         /// <param name="progress">An optional progress object to be used for reporting progress.</param>
         /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
@@ -161,6 +175,8 @@ namespace Microsoft.Psi.Data
             string outputStoreName,
             string outputStorePath,
             ReplayDescriptor replayDescriptor = null,
+            DeliveryPolicy deliveryPolicy = null,
+            bool enableDiagnostics = false,
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
         {
@@ -172,6 +188,8 @@ namespace Microsoft.Psi.Data
                 outputStoreName ?? outputPartitionName,
                 outputStorePath ?? this.Partitions.First().StorePath,
                 replayDescriptor,
+                deliveryPolicy,
+                enableDiagnostics,
                 progress,
                 cancellationToken);
         }
@@ -187,6 +205,8 @@ namespace Microsoft.Psi.Data
         /// <param name="outputStoreName">An optional name for the output data store. Default is null.</param>
         /// <param name="outputStorePath">An optional path for the output data store. Default is null.</param>
         /// <param name="replayDescriptor">An optional replay descriptor to use when creating the derived partition.</param>
+        /// <param name="deliveryPolicy">Pipeline-level delivery policy to use when creating the derived partition.</param>
+        /// <param name="enableDiagnostics">Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
         /// <param name="progress">An optional progress object to be used for reporting progress.</param>
         /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
@@ -198,6 +218,8 @@ namespace Microsoft.Psi.Data
             string outputStoreName,
             string outputStorePath,
             ReplayDescriptor replayDescriptor = null,
+            DeliveryPolicy deliveryPolicy = null,
+            bool enableDiagnostics = false,
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
         {
@@ -229,7 +251,7 @@ namespace Microsoft.Psi.Data
                     try
                     {
                         // create and run the pipeline
-                        using var pipeline = Pipeline.Create();
+                        using var pipeline = Pipeline.Create(enableDiagnostics: enableDiagnostics, deliveryPolicy: deliveryPolicy);
                         var importer = SessionImporter.Open(pipeline, this);
                         var exporter = PsiStore.Create(pipeline, outputStoreName, outputStorePath, createSubdirectory: false);
 

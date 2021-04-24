@@ -48,7 +48,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Text="Selection Start" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="1" Text="Selection Start" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Column="2" Text="Cursor" HorizontalAlignment="Right">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
@@ -63,8 +63,8 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock Grid.Column="3" Text="Selection End" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <TextBlock Grid.Column="4" Text="Session End" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="3" Text="Selection End" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="Session End" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right"/>
                 </Grid>
 
                 <Grid Grid.Row="1" Visibility="{Binding ShowAbsoluteTiming, Converter={StaticResource BoolToVisibilityConverter}}" Margin="10,0,10,4">
@@ -77,7 +77,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="Absolute Time" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Column="2" Text="{Binding Cursor, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" HorizontalAlignment="Right">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
@@ -92,8 +92,8 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndFormatted}" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <TextBlock Grid.Column="4" Text="{Binding DataRange.EndTime, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndFormatted}" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{Binding DataRange.EndTime, StringFormat=M/d/yyyy \HH\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right"/>
                 </Grid>
 
                 <Grid Grid.Row="2" Visibility="{Binding ShowTimingRelativeToSessionStart, Converter={StaticResource BoolToVisibilityConverter}}" Margin="10,0,10,4">
@@ -106,7 +106,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="Relative to Session Start" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Column="2" Text="{Binding CursorRelativeToSessionStartFormatted}" HorizontalAlignment="Right">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
@@ -121,8 +121,8 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <TextBlock Grid.Column="4" Text="{Binding DataRange.Duration, StringFormat=hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndRelativeToSessionStartFormatted}" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{Binding DataRange.Duration, StringFormat=hh\\:mm\\:ss\\.ffff}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right"/>
                 </Grid>
 
                 <Grid Grid.Row="3" Visibility="{Binding ShowTimingRelativeToSelectionStart, Converter={StaticResource BoolToVisibilityConverter}}" Margin="10,0,10,4">
@@ -135,7 +135,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="Relative to Selection Start" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartRelativeToSelectionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectionStartRelativeToSelectionStartFormatted}" Foreground="{StaticResource SelectionStartBrush}" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Column="2" Text="{Binding CursorRelativeToSelectionStartFormatted}" HorizontalAlignment="Right">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
@@ -150,8 +150,8 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndRelativeToSelectionStartFormatted}" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <TextBlock Grid.Column="4" Text="{Binding SessionEndRelativeToSelectionStartFormatted}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right" Visibility="{Binding DisplaySelectionMarkers, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Grid.Column="3" Text="{Binding SelectionEndRelativeToSelectionStartFormatted}" Foreground="{StaticResource SelectionEndBrush}" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{Binding SessionEndRelativeToSelectionStartFormatted}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Right"/>
                 </Grid>
             </Grid>
         </Border>

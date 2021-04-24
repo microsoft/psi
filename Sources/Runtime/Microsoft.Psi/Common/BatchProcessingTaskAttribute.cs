@@ -15,38 +15,59 @@ namespace Microsoft.Psi
         /// Initializes a new instance of the <see cref="BatchProcessingTaskAttribute"/> class.
         /// </summary>
         /// <param name="name">Name of this task.</param>
-        /// <param name="description">Description of this task.</param>
-        /// <param name="iconSourcePath">An optional path to the icon to be used for this task.</param>
-        public BatchProcessingTaskAttribute(string name, string description, string iconSourcePath = null)
+        public BatchProcessingTaskAttribute(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (string.IsNullOrWhiteSpace(description))
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-
             this.Name = name;
-            this.Description = description;
-            this.IconSourcePath = iconSourcePath;
         }
 
         /// <summary>
-        /// Gets the name of this task.
+        /// Gets the name.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Gets the description of this task.
+        /// Gets or sets the description.
         /// </summary>
-        public string Description { get; }
+        public string Description { get; set; } = null;
 
         /// <summary>
-        /// Gets the path to the icon associated with the batch task.
+        /// Gets or sets the path to the associated icon.
         /// </summary>
-        public string IconSourcePath { get; private set; }
+        public string IconSourcePath { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the <see cref="ReplayDescriptor.ReplayAllRealTime"/> descriptor when executing this batch task.
+        /// </summary>
+        public bool ReplayAllRealTime { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the <see cref="DeliveryPolicy.LatestMessage"/> pipeline-level delivery policy when executing this batch task.
+        /// </summary>
+        public bool DeliveryPolicyLatestMessage { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable pipeline diagnostics when running this batch task.
+        /// </summary>
+        public bool EnableDiagnostics { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the output store name.
+        /// </summary>
+        public string OutputStoreName { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the output store path.
+        /// </summary>
+        public string OutputStorePath { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the output partition name.
+        /// </summary>
+        public string OutputPartitionName { get; set; } = null;
     }
 }

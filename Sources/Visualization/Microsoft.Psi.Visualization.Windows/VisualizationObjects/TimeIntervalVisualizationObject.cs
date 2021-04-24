@@ -9,11 +9,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Represents a time interval visualization object.
+    /// Implements a visualization object for time intervals represented as a tuple of date-time values.
     /// </summary>
-    public abstract class TimeIntervalVisualizationObject : TimelineVisualizationObject<Tuple<DateTime, DateTime>>
+    [VisualizationPanelType(VisualizationPanelType.Timeline)]
+    public abstract class TimeIntervalVisualizationObject : StreamIntervalVisualizationObject<Tuple<DateTime, DateTime>>
     {
         /// <summary>
         /// The color of the marker to draw.

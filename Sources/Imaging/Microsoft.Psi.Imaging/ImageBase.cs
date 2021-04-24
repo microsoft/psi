@@ -96,7 +96,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="height">Height of image in pixels.</param>
         /// <param name="pixelFormat">Pixel format.</param>
         public ImageBase(int width, int height, PixelFormat pixelFormat)
-            : this(UnmanagedBuffer.Allocate(height * width * pixelFormat.GetBytesPerPixel()), width, height, width * pixelFormat.GetBytesPerPixel(), pixelFormat)
+            : this(UnmanagedBuffer.Allocate(height * 4 * ((width * pixelFormat.GetBytesPerPixel() + 3) / 4)), width, height, 4 * ((width * pixelFormat.GetBytesPerPixel() + 3) / 4), pixelFormat)
         {
         }
 
@@ -284,8 +284,50 @@ namespace Microsoft.Psi.Imaging
                         byte* dstCopy = dst + (stride * i);
                         for (int j = 0; j < this.width; j++)
                         {
-                            *dstCopy++ = Operators.Rgb2Gray(*srcCopy, *(srcCopy + 1), *(srcCopy + 2));
+                            *dstCopy++ = Operators.Rgb2Gray(srcCopy[2], srcCopy[1], srcCopy[0]);
                             srcCopy += 3;
+                        }
+                    });
+                }
+            }
+            else if ((this.pixelFormat == PixelFormat.Gray_16bpp) &&
+                     (pixelFormat == PixelFormat.Gray_8bpp))
+            {
+                unsafe
+                {
+                    byte* src = (byte*)this.image.Data.ToPointer();
+                    byte* dst = (byte*)destination.ToPointer();
+
+                    Parallel.For(0, this.Height, i =>
+                    {
+                        byte* srcCopy = src + (this.stride * i);
+                        byte* dstCopy = dst + (stride * i);
+                        for (int j = 0; j < this.width; j++)
+                        {
+                            // copy msb only
+                            *dstCopy++ = *(srcCopy + 1);
+                            srcCopy += 2;
+                        }
+                    });
+                }
+            }
+            else if ((this.pixelFormat == PixelFormat.Gray_8bpp) &&
+                     (pixelFormat == PixelFormat.Gray_16bpp))
+            {
+                unsafe
+                {
+                    byte* src = (byte*)this.image.Data.ToPointer();
+                    byte* dst = (byte*)destination.ToPointer();
+
+                    Parallel.For(0, this.Height, i =>
+                    {
+                        byte* srcCopy = src + (this.stride * i);
+                        byte* dstCopy = dst + (stride * i);
+                        for (int j = 0; j < this.width; j++)
+                        {
+                            // dest = (src << 8) | src
+                            *dstCopy++ = *srcCopy;
+                            *dstCopy++ = *srcCopy++;
                         }
                     });
                 }
@@ -305,6 +347,19 @@ namespace Microsoft.Psi.Imaging
         public void CopyFrom(byte[] sourceBuffer)
         {
             this.image.CopyFrom(sourceBuffer);
+        }
+
+        /// <summary>
+        /// Copies data from a source byte array buffer into the image.
+        /// </summary>
+        /// <param name="sourceBuffer">The buffer to copy the image from.</param>
+        /// <param name="offset">The zero-based index in the buffer from which to start copying.</param>
+        /// <param name="length">The number of bytes to copy.</param>
+        /// <remarks>The method copies data from the specified range in the buffer into
+        /// the image. The image must be allocated and must have the same size.</remarks>
+        public void CopyFrom(byte[] sourceBuffer, int offset, int length)
+        {
+            this.image.CopyFrom(sourceBuffer, offset, length);
         }
 
         /// <summary>
@@ -431,30 +486,32 @@ namespace Microsoft.Psi.Imaging
                         byte* dstCol = (byte*)destinationIntPtr.ToPointer() + (i * destinationStride);
                         for (int j = 0; j < this.width; j++)
                         {
-                            int red = 0;
-                            int green = 0;
-                            int blue = 0;
-                            int alpha = 255;
+                            int red;
+                            int green;
+                            int blue;
+                            int alpha;
+                            int bits;
                             switch (sourceFormat)
                             {
                                 case PixelFormat.Gray_8bpp:
                                     red = green = blue = srcCol[0];
+                                    alpha = 255;
+                                    bits = 8;
                                     break;
 
                                 case PixelFormat.Gray_16bpp:
                                     red = green = blue = ((ushort*)srcCol)[0];
+                                    alpha = 65535;
+                                    bits = 16;
                                     break;
 
                                 case PixelFormat.BGR_24bpp:
-                                    blue = srcCol[0];
-                                    green = srcCol[1];
-                                    red = srcCol[2];
-                                    break;
-
                                 case PixelFormat.BGRX_32bpp:
                                     blue = srcCol[0];
                                     green = srcCol[1];
                                     red = srcCol[2];
+                                    alpha = 255;
+                                    bits = 8;
                                     break;
 
                                 case PixelFormat.BGRA_32bpp:
@@ -462,6 +519,15 @@ namespace Microsoft.Psi.Imaging
                                     green = srcCol[1];
                                     red = srcCol[2];
                                     alpha = srcCol[3];
+                                    bits = 8;
+                                    break;
+
+                                case PixelFormat.RGB_24bpp:
+                                    red = srcCol[0];
+                                    green = srcCol[1];
+                                    blue = srcCol[2];
+                                    alpha = 255;
+                                    bits = 8;
                                     break;
 
                                 case PixelFormat.RGBA_64bpp:
@@ -469,11 +535,43 @@ namespace Microsoft.Psi.Imaging
                                     green = ((ushort*)srcCol)[1];
                                     blue = ((ushort*)srcCol)[2];
                                     alpha = ((ushort*)srcCol)[3];
+                                    bits = 16;
                                     break;
 
                                 case PixelFormat.Undefined:
                                 default:
                                     throw new ArgumentException(ExceptionDescriptionUnexpectedPixelFormat);
+                            }
+
+                            // Convert from 8-bits-per-channel (0-255) to 16-bits-per-channel (0-65535) and visa versa when needed.
+                            switch (destinationFormat)
+                            {
+                                case PixelFormat.Gray_8bpp:
+                                case PixelFormat.BGR_24bpp:
+                                case PixelFormat.BGRX_32bpp:
+                                case PixelFormat.BGRA_32bpp:
+                                case PixelFormat.RGB_24bpp:
+                                    if (bits == 16)
+                                    {
+                                        red >>= 8;
+                                        green >>= 8;
+                                        blue >>= 8;
+                                        alpha >>= 8;
+                                    }
+
+                                    break;
+
+                                case PixelFormat.Gray_16bpp:
+                                case PixelFormat.RGBA_64bpp:
+                                    if (bits == 8)
+                                    {
+                                        red = (red << 8) | red;
+                                        green = (green << 8) | green;
+                                        blue = (blue << 8) | blue;
+                                        alpha = (alpha << 8) | alpha;
+                                    }
+
+                                    break;
                             }
 
                             switch (destinationFormat)
@@ -498,6 +596,12 @@ namespace Microsoft.Psi.Imaging
                                     dstCol[1] = (byte)green;
                                     dstCol[2] = (byte)red;
                                     dstCol[3] = (byte)alpha;
+                                    break;
+
+                                case PixelFormat.RGB_24bpp:
+                                    dstCol[0] = (byte)red;
+                                    dstCol[1] = (byte)green;
+                                    dstCol[2] = (byte)blue;
                                     break;
 
                                 case PixelFormat.RGBA_64bpp:

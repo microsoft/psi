@@ -4,26 +4,16 @@
 namespace Microsoft.Psi.Visualization.Adapters
 {
     using System;
-    using System.Runtime.Serialization;
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of time spans into doubles.
+    /// Implements a stream adapter from time span to double.
     /// </summary>
     [StreamAdapter]
     public class TimeSpanToDoubleAdapter : StreamAdapter<TimeSpan, double>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TimeSpanToDoubleAdapter"/> class.
-        /// </summary>
-        public TimeSpanToDoubleAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static double Adapter(TimeSpan value, Envelope env)
-        {
-            return value.TotalMilliseconds;
-        }
+        /// <inheritdoc/>
+        public override double GetAdaptedValue(TimeSpan source, Envelope envelope)
+            => source.TotalMilliseconds;
     }
 }

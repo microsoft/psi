@@ -6,22 +6,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of integers into doubles.
+    /// Implements a stream adapter from int into double.
     /// </summary>
     [StreamAdapter]
     public class IntToDoubleAdapter : StreamAdapter<int, double>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IntToDoubleAdapter"/> class.
-        /// </summary>
-        public IntToDoubleAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static double Adapter(int value, Envelope env)
-        {
-            return (double)value;
-        }
+        /// <inheritdoc/>
+        public override double GetAdaptedValue(int source, Envelope envelope)
+            => source;
     }
 }

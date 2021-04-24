@@ -7,22 +7,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of <see cref="Point3D"/> to nullable <see cref="Point3D"/>.
+    /// Implements a stream adapter from <see cref="Point3D"/> to nullable <see cref="Point3D"/>.
     /// </summary>
     [StreamAdapter]
     public class Point3DToNullablePoint3DAdapter : StreamAdapter<Point3D, Point3D?>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Point3DToNullablePoint3DAdapter"/> class.
-        /// </summary>
-        public Point3DToNullablePoint3DAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static Point3D? Adapter(Point3D value, Envelope env)
-        {
-            return value;
-        }
+        /// <inheritdoc/>
+        public override Point3D? GetAdaptedValue(Point3D source, Envelope envelope)
+            => source;
     }
 }

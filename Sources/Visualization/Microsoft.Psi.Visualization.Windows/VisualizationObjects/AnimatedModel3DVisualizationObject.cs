@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements an animated model 3D visualization object.
     /// </summary>
     [VisualizationObject("Animated Model")]
-    public class AnimatedModel3DVisualizationObject : Instant3DVisualizationObject<CoordinateSystem>
+    public class AnimatedModel3DVisualizationObject : XYZValueVisualizationObject<CoordinateSystem>
     {
         private CoordinateSystem cameraTransform;
         private string source;

@@ -158,7 +158,6 @@ namespace Microsoft.Psi
             DeliveryPolicy<TWindow> windowDeliveryPolicy = null)
         {
             var dynamicWindow = new DynamicWindow<TWindow, TSource, TOutput>(source.Out.Pipeline, windowCreator, outputCreator);
-
             window.PipeTo(dynamicWindow.WindowIn, windowDeliveryPolicy);
             source.PipeTo(dynamicWindow.In, sourceDeliveryPolicy);
             return dynamicWindow;

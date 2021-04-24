@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -12,18 +13,23 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
+    using Xceed.Wpf.AvalonDock.Controls;
 
     /// <summary>
     /// Interaction logic for VisualizationContainerView.xaml.
     /// </summary>
-    public partial class VisualizationContainerView : UserControl
+    public partial class VisualizationContainerView : UserControl, IContextMenuItemsSource
     {
         // This adorner renders a shadow of a Visualization Panel while it's being dragged by the mouse
         private VisualizationContainerDragDropAdorner dragDropAdorner = null;
-        private VisualizationPanelViewBase hitTestResult = null;
+        private VisualizationPanelView hitTestResult = null;
+
+        // The collection of context menu sources for the context menu that's about to be displayed.
+        private Dictionary<ContextMenuItemsSourceType, IContextMenuItemsSource> contextMenuSources;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VisualizationContainerView"/> class.
@@ -31,6 +37,24 @@ namespace Microsoft.Psi.Visualization.Views
         public VisualizationContainerView()
         {
             this.InitializeComponent();
+            this.ContextMenu = new ContextMenu();
+        }
+
+        /// <inheritdoc/>
+        public ContextMenuItemsSourceType ContextMenuItemsSourceType => ContextMenuItemsSourceType.VisualizationContainer;
+
+        /// <inheritdoc/>
+        public string ContextMenuObjectName => string.Empty;
+
+        /// <inheritdoc/>
+        public void AppendContextMenuItems(List<MenuItem> menuItems)
+        {
+            if (this.DataContext is VisualizationContainer visualizationContainer)
+            {
+                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToSelection, "Zoom to Selection", visualizationContainer.ZoomToSelectionCommand));
+                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ClearSelection, "Clear Selection", visualizationContainer.ClearSelectionCommand));
+                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToSession, "Zoom to Session Extents", visualizationContainer.ZoomToSessionExtentsCommand));
+            }
         }
 
         private void Items_DragEnter(object sender, DragEventArgs e)
@@ -67,10 +91,12 @@ namespace Microsoft.Psi.Visualization.Views
             }
             else if (dragOperation == DragDropOperation.DragDropStream)
             {
-                StreamTreeNode streamTreeNode = e.Data.GetData(DragDropDataName.StreamTreeNode) as StreamTreeNode;
-                Point mousePosition = e.GetPosition(this.Items);
-                var visualizers = VisualizationContext.Instance.PluginMap.GetCompatibleVisualizers(
-                    streamTreeNode, this.GetVisualizationPanelUnderMouse(mousePosition), isUniversal: false, isInNewPanel: false);
+                var streamTreeNode = e.Data.GetData(DragDropDataName.StreamTreeNode) as StreamTreeNode;
+                var mousePosition = e.GetPosition(this.Items);
+                var visualizers = streamTreeNode.GetCompatibleVisualizers(
+                    this.GetVisualizationPanelUnderMouse(mousePosition),
+                    isUniversal: false,
+                    isInNewPanel: false);
                 e.Effects = visualizers.Any() ? DragDropEffects.Move : DragDropEffects.None;
                 e.Handled = true;
             }
@@ -109,25 +135,23 @@ namespace Microsoft.Psi.Visualization.Views
         private void DropReorderPanels(DragEventArgs e)
         {
             // Get the VisualizationPanel that's being dropped
-            VisualizationPanel droppedPanel = e.Data.GetData(DragDropDataName.VisualizationPanel) as VisualizationPanel;
-            if (droppedPanel != null)
+            if (e.Data.GetData(DragDropDataName.VisualizationPanel) is VisualizationPanel droppedVisualizationPanel)
             {
                 // Find the index of the panel being moved, and the index we should move it to
-                int moveToIndex = this.FindPanelMoveIndices(droppedPanel, this.dragDropAdorner.VerticalCenter, out int moveFromIndex);
+                int moveToIndex = this.FindPanelMoveIndices(droppedVisualizationPanel, this.dragDropAdorner.VerticalCenter, out int moveFromIndex);
 
                 // Check that we're not just trying to put the panel back where it started
                 if (moveFromIndex != moveToIndex)
                 {
-                    droppedPanel.Container.Panels.Move(moveFromIndex, moveToIndex);
+                    droppedVisualizationPanel.Container.Panels.Move(moveFromIndex, moveToIndex);
                 }
 
                 // Timeline Visualization Panels have multiple drag & drop operation types, only one of which
                 // can be in effect at any time.  If the panel being dropped is one of those then we need to
                 // signal to it that this drag operation is done.
-                TimelineVisualizationPanelView visualizationPanelView = e.Data.GetData(DragDropDataName.VisualizationPanelView) as TimelineVisualizationPanelView;
-                if (visualizationPanelView != null)
+                if (e.Data.GetData(DragDropDataName.VisualizationPanelView) is TimelineVisualizationPanelView timelineVisualizationPanelView)
                 {
-                    visualizationPanelView.FinishDragDrop();
+                    timelineVisualizationPanelView.FinishDragDrop();
                 }
             }
 
@@ -136,8 +160,7 @@ namespace Microsoft.Psi.Visualization.Views
 
         private void DropStream(DragEventArgs e)
         {
-            StreamTreeNode streamTreeNode = e.Data.GetData(DragDropDataName.StreamTreeNode) as StreamTreeNode;
-            if (streamTreeNode != null)
+            if (e.Data.GetData(DragDropDataName.StreamTreeNode) is StreamTreeNode streamTreeNode)
             {
                 // Get the mouse position
                 Point mousePosition = e.GetPosition(this.Items);
@@ -145,17 +168,13 @@ namespace Microsoft.Psi.Visualization.Views
                 // Get the visualization panel (if any) that the mouse is above
                 VisualizationPanel visualizationPanel = this.GetVisualizationPanelUnderMouse(mousePosition);
 
-                // Get the type of messages in the stream
-                Type dataType = VisualizationContext.Instance.GetDataType(streamTreeNode.NodeTypeName);
-
                 // Get the list of commands that are compatible with the user dropping the stream here
-                var visualizers = VisualizationContext.Instance.PluginMap.GetCompatibleVisualizers(
-                    streamTreeNode, visualizationPanel, isUniversal: false, isInNewPanel: false);
+                var visualizers = streamTreeNode.GetCompatibleVisualizers(visualizationPanel, isUniversal: false, isInNewPanel: false);
 
-                // If there's any compatible visualization commands, select the most appropriate one and execute it
+                // If there are compatible visualization commands, select the first one
                 if (visualizers.Any())
                 {
-                    VisualizationContext.Instance.VisualizeStream(streamTreeNode, VisualizerMetadata.GetClosestVisualizerMetadata(dataType, visualizers), visualizationPanel);
+                    VisualizationContext.Instance.VisualizeStream(streamTreeNode, visualizers.First(), visualizationPanel);
                 }
             }
         }
@@ -176,9 +195,9 @@ namespace Microsoft.Psi.Visualization.Views
 
         private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
         {
-            if (dependencyObject is VisualizationPanelViewBase)
+            if (dependencyObject is VisualizationPanelView)
             {
-                this.hitTestResult = dependencyObject as VisualizationPanelViewBase;
+                this.hitTestResult = dependencyObject as VisualizationPanelView;
                 return HitTestFilterBehavior.Stop;
             }
 
@@ -232,6 +251,133 @@ namespace Microsoft.Psi.Visualization.Views
             }
 
             return targetIndex;
+        }
+
+        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            // If the shift key is down, the the user is dropping the end selection
+            // marker, so in this case we won't show the context menu.
+            if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            // Create a new context menu metadata to be filled by the hit tester
+            this.contextMenuSources = new Dictionary<ContextMenuItemsSourceType, IContextMenuItemsSource>();
+
+            // Run a hit test at the mouse cursor
+            VisualTreeHelper.HitTest(
+                this,
+                null,
+                new HitTestResultCallback(this.ContextMenuHitTestResult),
+                new PointHitTestParameters(Mouse.GetPosition(this)));
+
+            // If a visualization panel was found, set it as the current visualization panel.
+            if (this.contextMenuSources.ContainsKey(ContextMenuItemsSourceType.VisualizationPanel))
+            {
+                VisualizationPanel visualizationPanel = (this.contextMenuSources[ContextMenuItemsSourceType.VisualizationPanel] as VisualizationPanelView).DataContext as VisualizationPanel;
+                visualizationPanel.IsTreeNodeSelected = true;
+            }
+
+            // Clear the existing context menu
+            this.ContextMenu.Items.Clear();
+
+            if (this.contextMenuSources.ContainsKey(ContextMenuItemsSourceType.VisualizationPanel))
+            {
+                // Find all of the visualization object views that are children of the panel view.
+                VisualizationPanelView panelView = this.contextMenuSources[ContextMenuItemsSourceType.VisualizationPanel] as VisualizationPanelView;
+                IEnumerable<VisualizationObjectView> visualizationObjectViews = panelView.FindVisualChildren<VisualizationObjectView>();
+                IEnumerator<VisualizationObjectView> viewEnumerator = visualizationObjectViews.GetEnumerator();
+
+                // If there's only a single visualization object view then insert its context menu items
+                // inline, otherwise generate a separate cascading menu for each visualization object view.
+                if (visualizationObjectViews.Count() == 1)
+                {
+                    viewEnumerator.MoveNext();
+                    this.AddContextMenuItems(viewEnumerator.Current, false);
+                }
+                else
+                {
+                    while (viewEnumerator.MoveNext())
+                    {
+                        this.AddContextMenuItems(viewEnumerator.Current, true);
+                    }
+                }
+            }
+
+            // Add the context menu items for the visualization panel, instant panel, and visualization conatiner.
+            foreach (IContextMenuItemsSource panelViewSource in this.contextMenuSources.Values)
+            {
+                this.AddContextMenuItems(panelViewSource, false);
+            }
+        }
+
+        // Return the result of the hit test to the callback.
+        private HitTestResultBehavior ContextMenuHitTestResult(HitTestResult result)
+        {
+            DependencyObject dependencyObject = result.VisualHit;
+            while (dependencyObject != null)
+            {
+                // If the object is a context menu item source and not a visualization object view, add it to the collection.
+                // (The context menu items for the visualization object views will be collected later from the panel)
+                if (dependencyObject is IContextMenuItemsSource contextMenuSource && contextMenuSource.ContextMenuItemsSourceType != ContextMenuItemsSourceType.VisualizationObject)
+                {
+                    this.contextMenuSources[contextMenuSource.ContextMenuItemsSourceType] = contextMenuSource;
+                }
+
+                // Optimization: If we're at the visualization container view level,
+                // we can stop since it's the top level visual we care about.
+                if (dependencyObject is VisualizationContainerView)
+                {
+                    break;
+                }
+                else
+                {
+                    dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
+                }
+            }
+
+            // Set the behavior to return visuals at all z-order levels.
+            return HitTestResultBehavior.Continue;
+        }
+
+        private void AddContextMenuItems(IContextMenuItemsSource menuItemSource, bool addAsCascadingMenu)
+        {
+            // Assume the menu root is the main context menu.
+            ItemsControl root = this.ContextMenu;
+
+            // If we're adding a cascading menu, add the top level of the cascading
+            // menu to the main context menu and set the root to it instead.
+            if (addAsCascadingMenu)
+            {
+                if (root.Items.Count > 0)
+                {
+                    root.Items.Add(new Separator());
+                }
+
+                ItemsControl newRoot = MenuItemHelper.CreateMenuItem(IconSourcePath.Stream, menuItemSource.ContextMenuObjectName, null);
+                root.Items.Add(newRoot);
+                root = newRoot;
+            }
+
+            // Get the list of context menu items from the context menu items source
+            List<MenuItem> menuItems = new List<MenuItem>();
+            menuItemSource.AppendContextMenuItems(menuItems);
+
+            // Add the context menu items to the context menu root.
+            if (menuItems != null && menuItems.Any())
+            {
+                if (root.Items.Count > 0)
+                {
+                    root.Items.Add(new Separator());
+                }
+
+                foreach (MenuItem menuItem in menuItems)
+                {
+                    root.Items.Add(menuItem);
+                }
+            }
         }
     }
 }

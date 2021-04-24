@@ -4,20 +4,18 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
-    using System.Windows.Controls;
+    using GalaSoft.MvvmLight.Command;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Newtonsoft.Json.Serialization;
-    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
-    /// Base class for visualization objects.
+    /// Provides an abstract base class for visualization objects.
     /// </summary>
     public abstract class VisualizationObject : ObservableTreeNodeObject
     {
@@ -37,13 +35,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private VisualizationPanel panel;
 
         /// <summary>
+        /// The toggle visualization command.
+        /// </summary>
+        private RelayCommand toggleVisibilityCommand;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="VisualizationObject"/> class.
         /// </summary>
         public VisualizationObject()
         {
             this.PropertyChanging += this.OnPropertyChanging;
             this.PropertyChanged += this.OnPropertyChanged;
-            this.InitNew();
         }
 
         /// <summary>
@@ -148,6 +150,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public bool IsConnected => this.panel != null;
 
         /// <summary>
+        /// Gets the toggle visualization command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ToggleVisibilityCommand
+        {
+            get
+            {
+                if (this.toggleVisibilityCommand == null)
+                {
+                    this.toggleVisibilityCommand = new RelayCommand(() => this.Visible = !this.Visible);
+                }
+
+                return this.toggleVisibilityCommand;
+            }
+        }
+
+        /// <summary>
         /// Gets the contract resolver. Default is null.
         /// </summary>
         [Browsable(false)]
@@ -157,19 +177,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Snaps or unsnaps the navigation cursor to the visualization object.
         /// </summary>
-        [Browsable(false)]
         public virtual void ToggleSnapToStream()
         {
-        }
-
-        /// <summary>
-        /// Called by the containing visualization panel when its context menu is opening to
-        /// allow the visualization object to add additional menuitems to the context menu.
-        /// </summary>
-        /// <returns>A collection of additional context menu items.</returns>
-        public virtual IEnumerable<MenuItem> GetAdditionalContextMenuItems()
-        {
-            return null;
         }
 
         /// <inheritdoc/>
@@ -228,13 +237,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Initialize properties for visualization objects as part of object construction or after deserialization.
-        /// </summary>
-        protected virtual void InitNew()
-        {
-        }
-
-        /// <summary>
         /// Implements a response to a notification that a property of the visualization object is changing.
         /// </summary>
         /// <param name="sender">The sender of the notification.</param>
@@ -253,12 +255,32 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Implements a response to a notification that a property of the visualization panel is changing.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnPanelPropertyChanging(object sender, PropertyChangingEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Implements a response to a notification that a property of the visualization panel has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Implements a response to a notification the visualization object has been added to a panel.
         /// </summary>
         protected virtual void OnAddToPanel()
         {
             this.Navigator.CursorChanged += this.OnCursorChanged;
             this.Navigator.CursorModeChanged += this.OnCursorModeChanged;
+            this.Panel.PropertyChanging += this.OnPanelPropertyChanging;
+            this.Panel.PropertyChanged += this.OnPanelPropertyChanged;
         }
 
         /// <summary>
@@ -268,12 +290,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             this.Navigator.CursorChanged -= this.OnCursorChanged;
             this.Navigator.CursorModeChanged -= this.OnCursorModeChanged;
-        }
-
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext c)
-        {
-            this.InitNew();
+            this.Panel.PropertyChanging -= this.OnPanelPropertyChanging;
+            this.Panel.PropertyChanged -= this.OnPanelPropertyChanged;
         }
     }
 }

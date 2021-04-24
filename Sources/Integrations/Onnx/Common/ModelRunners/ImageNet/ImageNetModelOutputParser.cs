@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Onnx
     /// Internal class that parses the outputs from the ImageNet model into
     /// a set of image classification results.
     /// </summary>
-    internal class ImageNetModelOutputParser
+    public class ImageNetModelOutputParser
     {
         private readonly string[] labels;
         private readonly int maxPredictions;

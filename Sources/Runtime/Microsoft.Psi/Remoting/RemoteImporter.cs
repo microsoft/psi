@@ -83,7 +83,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="port">TCP port on which to connect (default 11411).</param>
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         public RemoteImporter(Importer importer, TimeInterval replay, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(_ => importer, replay, false, host, port, importer.Name, importer.Path, allowSequenceRestart)
+            : this(_ => importer, replay, false, host, port, importer.StoreName, importer.StorePath, allowSequenceRestart)
         {
         }
 
@@ -97,7 +97,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
         public RemoteImporter(Importer importer, DateTime replayEnd, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(_ => importer, new TimeInterval(DateTime.MinValue, replayEnd), true, host, port, importer.Name, importer.Path, allowSequenceRestart)
+            : this(_ => importer, new TimeInterval(DateTime.MinValue, replayEnd), true, host, port, importer.StoreName, importer.StorePath, allowSequenceRestart)
         {
         }
 
@@ -110,7 +110,7 @@ namespace Microsoft.Psi.Remoting
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
         public RemoteImporter(Importer importer, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(_ => importer, new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, importer.Name, importer.Path, allowSequenceRestart)
+            : this(_ => importer, new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, importer.StoreName, importer.StorePath, allowSequenceRestart)
         {
         }
 
@@ -233,6 +233,7 @@ namespace Microsoft.Psi.Remoting
                     {
                         // "intermission" in meta updates
                         this.Importer = this.importerThunk(this.storeWriter.Name); // now that we have a populated catalog
+                        this.storeWriter.InitializeStreamOpenedTimes(this.Importer.GetCurrentTime());
                         this.StartDataClient(guid, transport);
                         this.connected.Set();
                     }

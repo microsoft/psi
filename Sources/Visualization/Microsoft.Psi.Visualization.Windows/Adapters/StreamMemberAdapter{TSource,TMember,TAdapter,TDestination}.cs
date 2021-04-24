@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from a source stream to an adapted version of a member of that stream.
+    /// Implements a stream adapter from a source stream to an adapted version of a member of that stream.
     /// </summary>
     /// <typeparam name="TSource">The type of messages in the source stream.</typeparam>
     /// <typeparam name="TMember">The type of the member in the stream <typeparamref name="TSource"/>.</typeparam>
@@ -31,10 +31,7 @@ namespace Microsoft.Psi.Visualization.Adapters
         /// </summary>
         /// <param name="path">The path to the member.</param>
         public StreamMemberAdapter(string path)
-            : base()
         {
-            this.AdapterFn = this.Adapter;
-
             // Create the source to stream member adapter
             this.streamMemberAdapter = Activator.CreateInstance(typeof(StreamMemberAdapter<TSource, TMember>), new object[] { path }) as StreamMemberAdapter<TSource, TMember>;
 
@@ -107,13 +104,14 @@ namespace Microsoft.Psi.Visualization.Adapters
             return this.streamMemberAdapter.GetHashCode() ^ this.streamMemberToDestinationAdapter.GetHashCode();
         }
 
-        private TDestination Adapter(TSource value, Envelope env)
+        /// <inheritdoc/>
+        public override TDestination GetAdaptedValue(TSource source, Envelope envelope)
         {
             // Adapt from the source type to the member type.
-            TMember memberValue = this.streamMemberAdapter.AdaptData(value);
+            TMember memberValue = this.streamMemberAdapter.GetAdaptedValue(source, envelope);
 
             // Adapt from the member type to the destination type.
-            return this.streamMemberToDestinationAdapter.AdaptData(memberValue);
+            return this.streamMemberToDestinationAdapter.GetAdaptedValue(memberValue, envelope);
         }
     }
 }

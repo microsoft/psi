@@ -1,23 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
+#pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
+
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Controls;
+    using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
-    using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Views;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
@@ -28,11 +28,10 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class TimelineVisualizationPanel : VisualizationPanel
     {
+        private Axis yAxis = new Axis();
         private bool showLegend = false;
         private bool showTimeTicks = false;
 
-        private RelayCommand zoomToSessionExtentsCommand;
-        private RelayCommand zoomToSelectionCommand;
         private RelayCommand clearSelectionCommand;
         private RelayCommand showHideLegendCommand;
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
@@ -47,7 +46,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             this.Name = "Timeline Panel";
             this.Height = 70;
-            this.VisualizationObjects.CollectionChanged += this.VisualizationObjects_CollectionChanged;
+            this.yAxis.PropertyChanged += this.OnYAxisPropertyChanged;
         }
 
         /// <summary>
@@ -65,26 +64,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 }
 
                 return this.showHideLegendCommand;
-            }
-        }
-
-        /// <summary>
-        /// Gets the zoom to selection command.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelayCommand ZoomToSelectionCommand
-        {
-            get
-            {
-                if (this.zoomToSelectionCommand == null)
-                {
-                    this.zoomToSelectionCommand = new RelayCommand(
-                        () => this.Container.Navigator.ZoomToSelection(),
-                        () => this.Container.Navigator.CanZoomToSelection());
-                }
-
-                return this.zoomToSelectionCommand;
             }
         }
 
@@ -109,26 +88,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the zoom to session extents command.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelayCommand ZoomToSessionExtentsCommand
-        {
-            get
-            {
-                if (this.zoomToSessionExtentsCommand == null)
-                {
-                    this.zoomToSessionExtentsCommand = new RelayCommand(
-                        () => this.Container.Navigator.ZoomToDataRange(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.Container.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.zoomToSessionExtentsCommand;
-            }
-        }
-
-        /// <summary>
         /// Gets the mouse left button down command.
         /// </summary>
         [Browsable(false)]
@@ -145,12 +104,19 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                             // Set the current panel on click
                             if (!this.IsCurrentPanel)
                             {
+                                this.IsTreeNodeSelected = true;
                                 this.Container.CurrentPanel = this;
+
+                                // If the panel contains any visualization objects, set the first one as selected.
+                                if (this.VisualizationObjects.Any())
+                                {
+                                    this.VisualizationObjects[0].IsTreeNodeSelected = true;
+                                }
                             }
 
                             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             {
-                                DateTime time = this.GetTimeAtMousePointer(e, true);
+                                var time = this.Navigator.Cursor;
                                 this.Navigator.SelectionRange.SetRange(time, this.Navigator.SelectionRange.EndTime >= time ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
                                 e.Handled = true;
                             }
@@ -177,7 +143,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                         {
                             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             {
-                                DateTime time = this.GetTimeAtMousePointer(e, true);
+                                var time = this.Navigator.Cursor;
                                 this.Navigator.SelectionRange.SetRange(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
                                 e.Handled = true;
                             }
@@ -189,10 +155,24 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the legend should be shown.
+        /// Gets or sets the Y Axis for the panel.
         /// </summary>
         [DataMember]
         [PropertyOrder(2)]
+        [DisplayName("Y Axis")]
+        [Description("The Y axis for the visualization panel.")]
+        [ExpandableObject]
+        public Axis YAxis
+        {
+            get { return this.yAxis; }
+            set { this.Set(nameof(this.YAxis), ref this.yAxis, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the legend should be shown.
+        /// </summary>
+        [DataMember]
+        [PropertyOrder(3)]
         [DisplayName("Show Legend")]
         [Description("Show the legend for the visualization panel.")]
         public bool ShowLegend
@@ -205,7 +185,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// Gets or sets a value indicating whether the time ticks should be shown.
         /// </summary>
         [DataMember]
-        [PropertyOrder(3)]
+        [PropertyOrder(4)]
         [DisplayName("Show Time Ticks")]
         [Description("Display an additional timeline along the bottom of the visualization panel.")]
         public bool ShowTimeTicks
@@ -220,33 +200,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <inheritdoc />
         public override bool CanZoomToPanel => this.VisualizationObjects.Count > 0;
 
-        /// <summary>
-        /// Called when the context menu is opening.
-        /// </summary>
-        /// <param name="contextMenu">The context menu being opened.</param>
-        public void OnContextMenuOpening(ContextMenu contextMenu)
-        {
-            // Clear the context menu
-            contextMenu.Items.Clear();
-
-            // Check with each of the visualization objects if they wish to add their own context menu items.
-            foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
-            {
-                IEnumerable<MenuItem> menuItems = visualizationObject.GetAdditionalContextMenuItems();
-                if (menuItems != null && menuItems.Any())
-                {
-                    foreach (MenuItem menuItem in menuItems)
-                    {
-                        contextMenu.Items.Add(menuItem);
-                    }
-
-                    contextMenu.Items.Add(new Separator());
-                }
-            }
-
-            // Add the context menu items for the panel
-            this.InsertPanelContextMenuItems(contextMenu);
-        }
+        /// <inheritdoc/>
+        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.Timeline };
 
         /// <summary>
         /// Gets the time at the mouse pointer, optionally adjusting for visualization object snap.
@@ -268,7 +223,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 DateTime? snappedTime = null;
                 if (useSnap == true && VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject snapToVisualizationObject)
                 {
-                    snappedTime = snapToVisualizationObject.GetSnappedTime(time);
+                    snappedTime = DataManager.Instance.GetTimeOfNearestMessage(snapToVisualizationObject.StreamSource, time, NearestMessageType.Nearest);
                 }
 
                 return snappedTime ?? time;
@@ -306,56 +261,53 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             return XamlHelper.CreateTemplate(this.GetType(), typeof(TimelineVisualizationPanelView));
         }
 
-        private void InsertPanelContextMenuItems(ContextMenu contextMenu)
+        /// <inheritdoc/>
+        protected override void OnVisualizationObjectYValueRangeChanged(object sender, EventArgs e)
         {
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Legend, this.ShowLegend ? "Hide Legend" : "Show Legend", this.ShowHideLegendCommand));
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.RemovePanel, "Remove Panel", this.RemovePanelCommand));
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ClearPanel, "Clear", this.ClearPanelCommand));
-
-            // Get the visualization object currently being snapped to (if any)
-            VisualizationObject snappedVisualizationObject = this.Container.SnapToVisualizationObject;
-
-            // Work out how many visualization objects we could potentially snap to.  If one of
-            // this panel's visualization objects is currently being snapped to, then this total
-            // is actually one fewer, and we'll also need to add an "unsnap" menu item.
-            int snappableVisualizationObjectsCount = this.VisualizationObjects.Count;
-            if ((snappedVisualizationObject != null) && this.VisualizationObjects.Contains(snappedVisualizationObject))
-            {
-                snappableVisualizationObjectsCount--;
-                contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Stream, string.Format("Unsnap from {0}", this.Container.SnapToVisualizationObject.Name), new VisualizationCommand<VisualizerMetadata>((v) => this.Container.SnapToVisualizationObject.ToggleSnapToStream())));
-            }
-
-            // If there's only 1 snappable visualization object in this panel, then create a
-            // direct menu, if there's more than 1 then create a cascading menu.
-            if (snappableVisualizationObjectsCount == 1)
-            {
-                VisualizationObject snappableVisualizationObject = this.VisualizationObjects.First(vo => vo != this.Container.SnapToVisualizationObject);
-                contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SnapToStream, string.Format("Snap to {0}", snappableVisualizationObject.Name), new VisualizationCommand<VisualizerMetadata>((v) => snappableVisualizationObject.ToggleSnapToStream())));
-            }
-            else if (snappableVisualizationObjectsCount > 1)
-            {
-                // Create the top-level menu item
-                var snapMenuItem = MenuItemHelper.CreateMenuItem(IconSourcePath.SnapToStream, "Snap To", null);
-
-                // create the child menu items for each visualization object.
-                foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
-                {
-                    if (visualizationObject != this.Container.SnapToVisualizationObject)
-                    {
-                        snapMenuItem.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SnapToStream, visualizationObject.Name, new VisualizationCommand<VisualizerMetadata>((v) => visualizationObject.ToggleSnapToStream())));
-                    }
-                }
-
-                contextMenu.Items.Add(snapMenuItem);
-            }
-
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToSelection, "Zoom to Selection", this.ZoomToSelectionCommand));
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.ZoomToSession, "Zoom to Session Extents", this.ZoomToSessionExtentsCommand));
+            this.CalculateYAxisRange();
+            base.OnVisualizationObjectYValueRangeChanged(sender, e);
         }
 
-        private void VisualizationObjects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        /// <summary>
+        /// Called when a property of the Y axis has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnYAxisPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChanged(nameof(this.CanZoomToPanel));
+            if (e.PropertyName == nameof(Axis.AxisComputeMode))
+            {
+                this.CalculateYAxisRange();
+            }
+            else if (e.PropertyName == nameof(Axis.Range))
+            {
+                this.RaisePropertyChanged(nameof(this.YAxis));
+            }
+        }
+
+        private void CalculateYAxisRange()
+        {
+            // If the y axis is in auto mode, then recalculate the y axis range
+            if (this.YAxis.AxisComputeMode == AxisComputeMode.Auto)
+            {
+                // Get the Y value range of all visualization objects that are Y value range providers and have a non-null Y value range
+                var yValueRanges = this.VisualizationObjects
+                    .Where(vo => vo is IYValueRangeProvider)
+                    .Select(vo => vo as IYValueRangeProvider)
+                    .Select(vrp => vrp.YValueRange)
+                    .Where(vr => vr != null);
+
+                // Set the Y axis range to cover all of the axis ranges of the visualization objects.
+                // If no visualization object reported a range, then use the defualt instead.
+                if (yValueRanges.Any())
+                {
+                    this.YAxis.SetRange(yValueRanges.Min(ar => ar.Minimum), yValueRanges.Max(ar => ar.Maximum));
+                }
+                else
+                {
+                    this.YAxis.SetDefaultRange();
+                }
+            }
         }
     }
 }

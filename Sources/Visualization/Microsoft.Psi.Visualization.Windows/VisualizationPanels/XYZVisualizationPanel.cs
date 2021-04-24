@@ -8,8 +8,10 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Media.Animation;
     using System.Windows.Media.Media3D;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
@@ -23,6 +25,10 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private double majorDistance = 5;
         private double minorDistance = 5;
         private double thickness = 0.01;
+
+        private Point3D mouseRightButtonDownCameraPosition;
+        private RelayCommand<MouseButtonEventArgs> previewMouseRightButtonDownCommand;
+        private RelayCommand<MouseButtonEventArgs> mouseRightButtonUpCommand;
 
         /// <summary>
         /// The current plan for moving the camera.
@@ -61,6 +67,70 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// Gets the camera animation completed event.
         /// </summary>
         public event EventHandler CameraAnimationCompleted;
+
+        /// <summary>
+        /// Gets the preview mouse right button down command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual RelayCommand<MouseButtonEventArgs> PreviewMouseRightButtonDownCommand
+        {
+            get
+            {
+                if (this.previewMouseRightButtonDownCommand == null)
+                {
+                    this.previewMouseRightButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
+                        e =>
+                        {
+                            // Helix viewport dows not mark the right mouse button up event as handled
+                            // as a user has finished manipulating the camera position with the right
+                            // mouse button.  As a result, when the user finishes manipulating the
+                            // camera position, this event will propagate up to the visualization container
+                            // view which will then think the user wishes to launch the context menu.  Note
+                            // however that the Helix viewport DOES swallow the right mouse button down
+                            // event.
+                            //
+                            // So, we need to instead handle the preview mouse right button down
+                            // event and remember the current camera position.  When the subsequent
+                            // right mouse button up event arrives, if the camera position has not
+                            // changed it means the user was NOT trying to move the camera position
+                            // so we will let that event propagate to the visualization container
+                            // which will cause the context menu to be displayed.
+                            this.mouseRightButtonDownCameraPosition = this.cameraPosition;
+                        });
+                }
+
+                return this.previewMouseRightButtonDownCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mouse right button up command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public virtual RelayCommand<MouseButtonEventArgs> MouseRightButtonUpCommand
+        {
+            get
+            {
+                if (this.mouseRightButtonUpCommand == null)
+                {
+                    this.mouseRightButtonUpCommand = new RelayCommand<MouseButtonEventArgs>(
+                        e =>
+                        {
+                            if (this.mouseRightButtonDownCameraPosition != this.cameraPosition)
+                            {
+                                // The camera position was moved by the user with the right mouse
+                                // button, so do not allow this event to propagate to the visualization
+                                // container and cause the context menu to be launched.
+                                e.Handled = true;
+                            }
+                        });
+                }
+
+                return this.mouseRightButtonUpCommand;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the current camera animation.
@@ -167,6 +237,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             get { return this.cameraFieldOfView; }
             set { this.Set(nameof(this.CameraFieldOfView), ref this.cameraFieldOfView, value); }
         }
+
+        /// <inheritdoc/>
+        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.XYZ };
 
         /// <summary>
         /// Called when the views's current camera animation has completed.

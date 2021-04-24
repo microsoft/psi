@@ -57,11 +57,12 @@ namespace Microsoft.Psi
         /// in which case the latest store is opened.
         /// - a null string, in which case an in-memory store is opened.
         /// </param>
+        /// <param name="usePerStreamReaders">Optional flag indicating whether to use per-stream readers (see remarks).</param>
         /// <returns>A <see cref="PsiImporter"/> instance that can be used to open streams and read messages.</returns>
         /// <remarks>
         /// The PsiImporter maintains a collection of serializers it knows about, which it uses to deserialize
         /// the data it reads form the store. By default, the PsiImporter derives the correct serializers
-        /// from the type argument passed to <see cref="Importer.OpenStream{T}(string)"/>. In other words,
+        /// from the type argument passed to <see cref="Importer.OpenStream{T}(string, Func{T}, Action{T})"/>. In other words,
         /// for the most part simply knowing the stream type is sufficient to determine all the types needed to
         /// deserialize the messages in the stream.
         /// However, there are two cases when this automatic behavior might not work:
@@ -73,10 +74,20 @@ namespace Microsoft.Psi
         /// (polymorphic fields) and the value assigned is of a type that implements the DataContract serialization rules.
         /// In this case, use the <see cref="KnownSerializers.Register{T}(CloningFlags)"/> method
         /// to let the serialization system know which compatible concrete type to use for that DataContract name.
+        /// Additionally, the usePerStreamReaders flag causes the importer to create separate readers for each opened stream.
+        /// When a store is written, messages from multiple streams are serialized into store files _as_ they arrive at the
+        /// Exporter. Messages within a stream are guaranteed to be persisted in time-order. However, messages across multiple
+        /// streams are interleaved and there is no guarantee that the interleaving preserves time-ordering. A _single_ stream
+        /// reader emits messages in the originally interleaved order. Using a single stream reader results in a delay of
+        /// messages that may come before other messages in time, but physically after them in the persisted store. This results
+        /// in an apparent emitted latency. Using individual stream readers (usePerStreamReaders=true) allows messages to be
+        /// emitted at a pipeline time approximating the original creation time; regardless of physical interleaved ordering.
+        /// The benefit is a better approximation of the live conditions during replay, while the drawback is a negligible
+        /// performance impact.
         /// </remarks>
-        public static PsiImporter Open(Pipeline pipeline, string name, string rootPath)
+        public static PsiImporter Open(Pipeline pipeline, string name, string rootPath, bool usePerStreamReaders = true)
         {
-            return new PsiImporter(pipeline, name, rootPath);
+            return new PsiImporter(pipeline, name, rootPath, usePerStreamReaders);
         }
 
         /// <summary>
@@ -111,6 +122,18 @@ namespace Microsoft.Psi
         {
             writer.Write(source.Out, supplementalMetadataValue, name, largeMessages, deliveryPolicy);
             return source;
+        }
+
+        /// <summary>
+        /// Stores supplemental metadata representing distinct dictionary keys seen on the stream.
+        /// </summary>
+        /// <typeparam name="TKey">The type of dictionary key in the stream.</typeparam>
+        /// <typeparam name="TValue">The type of dictionary value in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        /// <param name="writer">The store writer, created by e.g. <see cref="PsiStore.Create(Pipeline, string, string, bool, KnownSerializers)"/>.</param>
+        public static void SummarizeDistinctKeysInSupplementalMetadata<TKey, TValue>(this IProducer<Dictionary<TKey, TValue>> source, Exporter writer)
+        {
+            writer.SummarizeDistinctKeysInSupplementalMetadata(source.Out);
         }
 
         /// <summary>
@@ -150,7 +173,7 @@ namespace Microsoft.Psi
             bool allStreamsClosed = false;
             using (var p = Pipeline.Create())
             {
-                var importer = PsiStore.Open(p, name, path);
+                var importer = PsiStore.Open(p, name, path, false);
                 allStreamsClosed = importer.AvailableStreams.All(meta => meta.IsClosed);
             }
 
@@ -265,7 +288,7 @@ namespace Microsoft.Psi
             Action<string> loggingCallback = null)
         {
             using var pipeline = Pipeline.Create();
-            PsiImporter inputStore = PsiStore.Open(pipeline, input.Name, input.Path);
+            PsiImporter inputStore = PsiStore.Open(pipeline, input.Name, input.Path, false);
             Exporter outputStore = PsiStore.Create(pipeline, output.Name, output.Path, createSubdirectory, inputStore.Serializers);
 
             // setup the defaults
@@ -294,16 +317,20 @@ namespace Microsoft.Psi
         /// <remarks>Streams of the same name across stores must also have the same types as well as non-intersecting originating times.</remarks>
         /// <param name="storeFiles">Set of store files (name, path pairs) to concatenate.</param>
         /// <param name="output">Output store (name, path pair).</param>
+        /// <param name="createSubdirectory">
+        /// Indicates whether to create a numbered subdirectory for each concatenated store
+        /// generated by multiple calls to this method.
+        /// </param>
         /// <param name="progress">An optional progress reporter for progress updates.</param>
         /// <param name="loggingCallback">An optional callback to which human-friendly information will be logged.</param>
-        public static void Concatenate(IEnumerable<(string Name, string Path)> storeFiles, (string Name, string Path) output, IProgress<double> progress = null, Action<string> loggingCallback = null)
+        public static void Concatenate(IEnumerable<(string Name, string Path)> storeFiles, (string Name, string Path) output, bool createSubdirectory = true, IProgress<double> progress = null, Action<string> loggingCallback = null)
         {
             using var pipeline = Pipeline.Create(nameof(Concatenate), DeliveryPolicy.Unlimited);
-            var outputStore = PsiStore.Create(pipeline, output.Name, output.Path);
+            var outputStore = PsiStore.Create(pipeline, output.Name, output.Path, createSubdirectory);
             var outputReceivers = new Dictionary<string, Receiver<Message<BufferReader>>>(); // per-stream receivers writing to store
-            var inputStores = storeFiles.Select(file => (file, PsiStore.Open(pipeline, file.Name, Path.GetFullPath(file.Path))));
+            var inputStores = storeFiles.Select(file => (file, PsiStore.Open(pipeline, file.Name, Path.GetFullPath(file.Path), false)));
             var streamMetas = inputStores.SelectMany(s => s.Item2.AvailableStreams).GroupBy(s => s.Name); // streams across input stores, grouped by name
-            var totalMessageCount = 0; // total messages in all stores
+            long totalMessageCount = 0; // total messages in all stores
             var totalWrittenCount = 0; // total currently written (to track progress)
             var totalInFlight = 0;
             foreach (var group in streamMetas)
@@ -317,7 +344,7 @@ namespace Microsoft.Psi
                     pipeline,
                     m =>
                     {
-                        emitter.Post(Message.Create(m.Data, m.OriginatingTime, m.Time, meta.Id, emitter.LastEnvelope.SequenceId + 1), m.OriginatingTime);
+                        emitter.Post(Message.Create(m.Data, m.OriginatingTime, m.CreationTime, meta.Id, emitter.LastEnvelope.SequenceId + 1), m.OriginatingTime);
                         Interlocked.Decrement(ref totalInFlight);
                         Interlocked.Increment(ref totalWrittenCount);
                         if (totalWrittenCount % 10000 == 0)
@@ -331,7 +358,7 @@ namespace Microsoft.Psi
                 foreach (var stream in group)
                 {
                     totalMessageCount += stream.MessageCount;
-                    loggingCallback?.Invoke($"  Partition: {stream.PartitionName} {stream.Id} ({stream.TypeName.Split(',')[0]}) {stream.FirstMessageOriginatingTime}-{stream.LastMessageOriginatingTime}");
+                    loggingCallback?.Invoke($"  Store: {stream.StoreName} {stream.Id} ({stream.TypeName.Split(',')[0]}) {stream.FirstMessageOriginatingTime}-{stream.LastMessageOriginatingTime}");
                     if (group.GroupBy(pair => pair.TypeName).Count() != 1)
                     {
                         throw new ArgumentException("Type Mismatch");
@@ -354,7 +381,7 @@ namespace Microsoft.Psi
             {
                 loggingCallback?.Invoke($"Processing: {file.Name} {file.Path}");
                 using var p = Pipeline.Create(file.Name, DeliveryPolicy.Unlimited);
-                var store = PsiStore.Open(p, file.Name, Path.GetFullPath(file.Path));
+                var store = PsiStore.Open(p, file.Name, Path.GetFullPath(file.Path), false);
                 foreach (var stream in store.AvailableStreams)
                 {
                     store.OpenRawStream(stream as PsiStreamMetadata).Do(_ => Interlocked.Increment(ref totalInFlight)).PipeTo(outputReceivers[stream.Name]);
@@ -392,7 +419,7 @@ namespace Microsoft.Psi
         public static void Process(Func<IStreamMetadata, bool> predicate, Action<IStreamMetadata, PsiImporter, Exporter> processor, (string Name, string Path) input, (string Name, string Path) output, bool createSubdirectory = true, IProgress<double> progress = null, Action<string> loggingCallback = null)
         {
             using var pipeline = Pipeline.Create();
-            PsiImporter inputStore = PsiStore.Open(pipeline, input.Name, input.Path);
+            PsiImporter inputStore = PsiStore.Open(pipeline, input.Name, input.Path, false);
             Exporter outputStore = PsiStore.Create(pipeline, output.Name, output.Path, createSubdirectory, inputStore.Serializers);
 
             // copy all streams not being processed from inputStore to outputStore
@@ -454,6 +481,22 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Get path to latest version of store.
+        /// </summary>
+        /// <param name="storeName">The name of the store.</param>
+        /// <param name="rootPath">The root path of the store.</param>
+        /// <returns>Path to latest version of store.</returns>
+        public static string GetPathToLatestVersion(string storeName, string rootPath)
+        {
+            if (!PsiStoreCommon.TryGetPathToLatestVersion(storeName, rootPath, out string path))
+            {
+                throw new InvalidOperationException($"No matching files found: {rootPath} \\[{storeName}.*\\]{storeName}*");
+            }
+
+            return path;
+        }
+
+        /// <summary>
         /// Delete a \psi store.
         /// </summary>
         /// <param name="store">The name and path of the store to delete.</param>
@@ -494,7 +537,7 @@ namespace Microsoft.Psi
         {
             includeStreamPredicate ??= _ => true;
             using var pipeline = Pipeline.Create();
-            PsiImporter inputStore = PsiStore.Open(pipeline, input.Name, input.Path);
+            PsiImporter inputStore = PsiStore.Open(pipeline, input.Name, input.Path, false);
             Exporter outputStore = PsiStore.Create(pipeline, output.Name, output.Path, createSubdirectory, inputStore.Serializers);
 
             // copy all streams not being edited from inputStore to outputStore
@@ -522,7 +565,7 @@ namespace Microsoft.Psi
                         var method = typeof(PsiStore).GetMethod(nameof(PsiStore.EditStreamWithDynamicUpserts), BindingFlags.NonPublic | BindingFlags.Static);
                         var streamType = TypeResolutionHelper.GetVerifiedType(streamInfo.TypeName);
                         var generic = method.MakeGenericMethod(streamType);
-                        generic.Invoke(inputStore, new object[] { inputStore, streamInfo.Name, edits, outputStore, null });
+                        generic.Invoke(inputStore, new object[] { inputStore, streamInfo.Name, edits, outputStore });
                     }
                 }
             }
@@ -658,13 +701,11 @@ namespace Microsoft.Psi
             TSupplementalMetadata supplementalMetadata,
             IProgress<double> progress = null)
         {
-            using (var pipeline = Pipeline.Create())
-            {
-                PsiExporter outputStore = Create(pipeline, storeName, storePath, false);
-                Generators.Sequence(pipeline, new List<(T, DateTime)>()).Write(supplementalMetadata, streamName, outputStore);
-                pipeline.RunAsync(null, progress);
-                pipeline.WaitAll();
-            }
+            using var pipeline = Pipeline.Create();
+            PsiExporter outputStore = Create(pipeline, storeName, storePath, false);
+            Generators.Sequence(pipeline, new List<(T, DateTime)>()).Write(supplementalMetadata, streamName, outputStore);
+            pipeline.RunAsync(null, progress);
+            pipeline.WaitAll();
         }
 
         /// <summary>
@@ -674,13 +715,12 @@ namespace Microsoft.Psi
         /// <param name="streamName">The name of the stream to edit.</param>
         /// <param name="edits">A sequence of edits to be applied. Whether to update/insert or delete, an optional message to upsert and originating times.</param>
         /// <param name="writer">The store into which to output.</param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        private static void EditStream<T>(this PsiImporter importer, string streamName, IEnumerable<(bool upsert, T message, DateTime originatingTime)> edits, Exporter writer, DeliveryPolicy<T> deliveryPolicy = null)
+        private static void EditStream<T>(this PsiImporter importer, string streamName, IEnumerable<(bool upsert, T message, DateTime originatingTime)> edits, Exporter writer)
         {
             var stream = importer.OpenStream<T>(streamName);
-            var edited = stream.EditStream<T>(edits, deliveryPolicy);
+            var edited = stream.EditStream(edits);
             var meta = importer.GetMetadata(streamName) as PsiStreamMetadata;
-            writer.Write(edited.Out, streamName, meta, deliveryPolicy);
+            writer.Write(edited.Out, streamName, meta, DeliveryPolicy.Unlimited);
         }
 
         /// <summary>
@@ -690,8 +730,7 @@ namespace Microsoft.Psi
         /// <param name="streamName">The name of the stream to edit.</param>
         /// <param name="edits">A sequence of edits to be applied. Whether to update/insert or delete, an optional message to upsert and originating times.</param>
         /// <param name="writer">The store into which to output.</param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        private static void EditStreamWithDynamicUpserts<T>(this PsiImporter importer, string streamName, IEnumerable<(bool upsert, dynamic message, DateTime originatingTime)> edits, Exporter writer, DeliveryPolicy<T> deliveryPolicy = null)
+        private static void EditStreamWithDynamicUpserts<T>(this PsiImporter importer, string streamName, IEnumerable<(bool upsert, dynamic message, DateTime originatingTime)> edits, Exporter writer)
         {
             var typedEdits = edits.Select(e => (e.upsert, (T)(e.message ?? default(T)), e.originatingTime));
             importer.EditStream(streamName, typedEdits, writer);
@@ -706,7 +745,7 @@ namespace Microsoft.Psi
         /// <param name="deleteOriginalStore">Indicates whether the original store should be deleted.</param>
         private static void PerformStoreOperationInPlace((string Name, string Path) input, string operationName, Action<string, string, string> operationAction, bool deleteOriginalStore)
         {
-            string storePath = PsiStoreCommon.GetPathToLatestVersion(input.Name, input.Path);
+            string storePath = PsiStore.GetPathToLatestVersion(input.Name, input.Path);
             string tempFolderPath = Path.Combine(input.Path, $"{operationName}-{Guid.NewGuid()}");
 
             // invoke operation over the store; expected to generate a resulting store in the temp folder

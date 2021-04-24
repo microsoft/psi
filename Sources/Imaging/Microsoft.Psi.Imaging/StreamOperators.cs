@@ -133,21 +133,25 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="source">Source producer of depth images.</param>
         /// <param name="range">A tuple indicating the range (MinValue, MaxValue) of the depth values in the image.</param>
+        /// <param name="invalidValue">Indicates invalid depth values. These values are left black, or set to transparent based on the invalidAsTransparent parameter.</param>
+        /// <param name="invalidAsTransparent">Indicates whether to render invalid values as transparent in the image.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <param name="sharedImageAllocator">Optional image allocator to create new shared images (in <see cref="PixelFormat.BGR_24bpp"/> format).</param>
+        /// <param name="sharedImageAllocator">Optional image allocator to create new shared images (in <see cref="PixelFormat.BGRA_32bpp"/> format).</param>
         /// <returns>A producer of pseudo-colorized images.</returns>
         public static IProducer<Shared<Image>> PseudoColorize(
             this IProducer<Shared<DepthImage>> source,
             (ushort MinValue, ushort MaxValue) range,
+            ushort? invalidValue = null,
+            bool invalidAsTransparent = false,
             DeliveryPolicy<Shared<DepthImage>> deliveryPolicy = null,
             Func<int, int, Shared<Image>> sharedImageAllocator = null)
         {
-            sharedImageAllocator ??= (width, height) => ImagePool.GetOrCreate(width, height, PixelFormat.BGR_24bpp);
+            sharedImageAllocator ??= (width, height) => ImagePool.GetOrCreate(width, height, PixelFormat.BGRA_32bpp);
             return source.Process<Shared<DepthImage>, Shared<Image>>(
                 (sharedDepthImage, envelope, emitter) =>
                 {
                     using var colorizedImage = sharedImageAllocator(sharedDepthImage.Resource.Width, sharedDepthImage.Resource.Height);
-                    sharedDepthImage.Resource.PseudoColorize(colorizedImage.Resource, range);
+                    sharedDepthImage.Resource.PseudoColorize(colorizedImage.Resource, range, invalidValue, invalidAsTransparent);
                     emitter.Post(colorizedImage, envelope.OriginatingTime);
                 }, deliveryPolicy);
         }

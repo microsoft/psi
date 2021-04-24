@@ -6,7 +6,6 @@
 namespace Test.Psi.Imaging
 {
     using System;
-    using System.Windows.Media.Media3D;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Imaging;
@@ -24,6 +23,8 @@ namespace Test.Psi.Imaging
         private Image testImage_GrayFlip = Image.FromBitmap(Properties.Resources.TestImage_GrayFlip);
         private Image testImage_GrayResized = Image.FromBitmap(Properties.Resources.TestImage_GrayResized);
         private Image testImage_GrayRotate = Image.FromBitmap(Properties.Resources.TestImage_GrayRotate);
+        private Image testImage_GraySetPixel = Image.FromBitmap(Properties.Resources.TestImage_GraySetPixel);
+        private Image testImage_SetPixel = Image.FromBitmap(Properties.Resources.TestImage_SetPixel);
         private Image testImage = Image.FromBitmap(Properties.Resources.TestImage);
         private Image testImage2 = Image.FromBitmap(Properties.Resources.TestImage2);
         private Image testImage2_Threshold = Image.FromBitmap(Properties.Resources.TestImage2_Threshold);
@@ -50,6 +51,7 @@ namespace Test.Psi.Imaging
         private Image testImage_50_25_Cubic = Image.FromBitmap(Properties.Resources.TestImage_Scale_50_25_Cubic);
         private Image testImage_150_125_Point = Image.FromBitmap(Properties.Resources.TestImage_Scale_150_125_Point);
         private Image testImage_25_200_Linear = Image.FromBitmap(Properties.Resources.TestImage_Scale_25_200_Linear);
+        private Image solidColorsImage = Image.FromBitmap(Properties.Resources.SolidColors);
 
         [TestMethod]
         [Timeout(60000)]
@@ -122,153 +124,444 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_FlipViaOperator()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp)]
+        public void Image_GraySetPixel(PixelFormat pixelFormat)
         {
-            using (var pipeline = Pipeline.Create("FlipViaOperator"))
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_GraySetPixel.Width, this.testImage_GraySetPixel.Height, pixelFormat);
+            using var refImage = this.testImage_GraySetPixel.Convert(pixelFormat);
+
+            // The documentation for SetPixel is as follows:
+            /// <summary>
+            /// Sets a pixel in the image.
+            /// </summary>
+            /// <param name="x">Pixel's X coordinate.</param>
+            /// <param name="y">Pixel's Y coordinate.</param>
+            /// <param name="gray">Gray value to set pixel to.</param>
+
+            int shiftBits = pixelFormat.GetBitsPerChannel() - 8;
+            int maxValue = (1 << pixelFormat.GetBitsPerChannel()) - 1;
+
+            for (int x = 0; x <= 255; x++)
             {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat))
+                for (int y = 0; y <= 255; y++)
                 {
-                    this.testImage2.CopyTo(sharedImage.Resource);
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Flip(FlipMode.None).Do((img) =>
+                    int gray = (x << shiftBits) | x;
+                    sharedImage.Resource.SetPixel(x, y, gray);
+                }
+            }
+
+            this.AssertAreImagesEqual(refImage, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        public void Image_SetPixel(PixelFormat pixelFormat)
+        {
+            using var destImage = new Image(this.testImage_SetPixel.Width, this.testImage_SetPixel.Height, pixelFormat);
+            using var refImage = this.testImage_SetPixel.Convert(pixelFormat);
+
+            // The documentation for SetPixel is as follows:
+            /// <summary>
+            /// Sets a pixel in the image.
+            /// </summary>
+            /// <param name="x">Pixel's X coordinate.</param>
+            /// <param name="y">Pixel's Y coordinate.</param>
+            /// <param name="r">Red channel's value.</param>
+            /// <param name="g">Green channel's value.</param>
+            /// <param name="b">Blue channel's value.</param>
+            /// <param name="a">Alpha channel's value.</param>
+
+            int bitDepth = pixelFormat.GetBitsPerChannel();
+            int maxPixelValue = (1 << bitDepth) - 1;
+
+            for (int x = 0; x <= 255; x++)
+            {
+                for (int y = 0; y <= 255; y++)
+                {
+                    int r = x;
+                    int b = y;
+
+                    // scale values to match bit depth if necessary
+                    if (bitDepth == 16)
                     {
-                        this.AssertAreImagesEqual(this.testImage2, img.Resource);
-                    });
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Flip(FlipMode.AlongHorizontalAxis).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_FlipHoriz, img.Resource);
-                    });
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Flip(FlipMode.AlongVerticalAxis).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_FlipVert, img.Resource);
-                    });
-                    pipeline.Run();
+                        r = (r << 8) | r;
+                        b = (b << 8) | b;
+                    }
+
+                    int g = maxPixelValue - Math.Max(r, b);
+                    int a = maxPixelValue;
+                    destImage.SetPixel(x, y, r, g, b, a);
+                }
+            }
+
+            this.AssertAreImagesEqual(refImage, destImage);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp)]
+        public void Image_ReadBytes(PixelFormat pixelFormat)
+        {
+            using var destImage = new Image(this.solidColorsImage.Width, this.solidColorsImage.Height, pixelFormat);
+            this.solidColorsImage.CopyTo(destImage);
+
+            (int x, int y, int r, int g, int b)[] expected = new[]
+            {
+                (000, 000, 000, 000, 000),
+                (100, 100, 255, 000, 000),
+                (200, 200, 000, 255, 000),
+                (300, 100, 000, 000, 255),
+                (100, 200, 255, 255, 255),
+            };
+
+            foreach (var (x, y, r, g, b) in expected)
+            {
+                var bytes = destImage.ReadBytes(destImage.BitsPerPixel / 8, x * destImage.BitsPerPixel / 8 + y * destImage.Stride);
+                switch (pixelFormat)
+                {
+                    case PixelFormat.BGR_24bpp:
+                    case PixelFormat.BGRX_32bpp:
+                    case PixelFormat.BGRA_32bpp:
+                        Assert.AreEqual(bytes[0], b, $"First byte at ({x}, {y}) in {pixelFormat} should be the Blue channel.");
+                        Assert.AreEqual(bytes[1], g, $"Second byte at ({x}, {y}) in {pixelFormat} should be the Green channel.");
+                        Assert.AreEqual(bytes[2], r, $"Third byte at ({x}, {y}) in {pixelFormat} should be the Red channel.");
+                        break;
+
+                    case PixelFormat.RGB_24bpp:
+                        Assert.AreEqual(bytes[0], r, $"First byte at ({x}, {y}) in {pixelFormat} should be the Red channel.");
+                        Assert.AreEqual(bytes[1], g, $"Second byte at ({x}, {y}) in {pixelFormat} should be the Green channel.");
+                        Assert.AreEqual(bytes[2], b, $"Third byte at ({x}, {y}) in {pixelFormat} should be the Blue channel.");
+                        break;
+
+                    case PixelFormat.RGBA_64bpp:
+                        Assert.AreEqual(bytes[0], r, $"First byte at ({x}, {y}) in {pixelFormat} should be the Red channel.");
+                        Assert.AreEqual(bytes[1], r, $"Second byte at ({x}, {y}) in {pixelFormat} should be the Red channel.");
+                        Assert.AreEqual(bytes[2], g, $"Third byte at ({x}, {y}) in {pixelFormat} should be the Green channel.");
+                        Assert.AreEqual(bytes[3], g, $"Fourth byte at ({x}, {y}) in {pixelFormat} should be the Green channel.");
+                        Assert.AreEqual(bytes[4], b, $"Fifth byte at ({x}, {y}) in {pixelFormat} should be the Blue channel.");
+                        Assert.AreEqual(bytes[5], b, $"Sixth byte at ({x}, {y}) in {pixelFormat} should be the Blue channel.");
+                        break;
+
+                    case PixelFormat.Gray_8bpp:
+                        var gray8 = (byte)(((4897 * r) + (9617 * g) + (1868 * b)) >> 14);
+                        Assert.AreEqual(bytes[0], gray8, $"First byte at ({x}, {y}) in {pixelFormat} should be the appropriate grayscale.");
+                        break;
+
+                    case PixelFormat.Gray_16bpp:
+                        var gray16 = (ushort)(((4897 * (r * ushort.MaxValue / byte.MaxValue)) + (9617 * (g * ushort.MaxValue / byte.MaxValue)) + (1868 * (b * ushort.MaxValue / byte.MaxValue))) >> 14);
+                        Assert.AreEqual(BitConverter.ToUInt16(bytes, 0), gray16, $"First ushort at ({x}, {y}) in {pixelFormat} should be the appropriate grayscale.");
+                        break;
+
+                    default:
+                        Assert.Inconclusive($"No test for pixel format {pixelFormat}.");
+                        break;
                 }
             }
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_RotateViaOperator()
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.Gray_16bpp)]
+
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.BGRA_32bpp)]
+
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.RGBA_64bpp)]
+
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.Gray_16bpp)]
+
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.BGRA_32bpp)]
+
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.RGBA_64bpp)]
+        public void Image_CopyImage(PixelFormat srcFormat, PixelFormat dstFormat)
         {
-            using (var pipeline = Pipeline.Create("RotateViaOperator"))
+            var random = new Random();
+            var randomColor = System.Drawing.Color.FromArgb(random.Next(0, 256), random.Next(0, 256), random.Next(0, 256));
+            using var srcImage = new Image(1, 1, srcFormat);
+            srcImage.Clear(randomColor);
+
+            using var dstImage = new Image(1, 1, dstFormat);
+            srcImage.CopyTo(dstImage);
+
+            var srcPixel = srcImage.GetPixel(0, 0);
+            var dstPixel = dstImage.GetPixel(0, 0);
+
+            int srcDepth = srcFormat.GetBitsPerChannel();
+            int dstDepth = dstFormat.GetBitsPerChannel();
+
+            // When the target and source bit depths differ, adjust the source bit depth to match the target.
+            if (srcDepth == 8 && dstDepth == 16)
             {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat))
-                {
-                    this.testImage2.CopyTo(sharedImage.Resource);
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(-10.0f, SamplingMode.Point).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_Rotate_Neg10, img.Resource);
-                    });
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(110.0f, SamplingMode.Point).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_Rotate_110, img.Resource);
-                    });
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(-10.0f, SamplingMode.Point, RotationFitMode.Loose).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_Rotate_Neg10_Loose, img.Resource);
-                    });
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(110.0f, SamplingMode.Point, RotationFitMode.Loose).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_Rotate_110_Loose, img.Resource);
-                    });
-                    pipeline.Run();
-                }
+                srcPixel = ((srcPixel.r << 8) | srcPixel.r, (srcPixel.g << 8) | srcPixel.g, (srcPixel.b << 8) | srcPixel.b, (srcPixel.a << 8) | srcPixel.a);
+            }
+            else if (srcDepth == 16 && dstDepth == 8)
+            {
+                srcPixel = (srcPixel.r >> 8, srcPixel.g >> 8, srcPixel.b >> 8, srcPixel.a >> 8);
+            }
+
+            // When converting from a color format to gray, apply the Rgb2Gray operator to the
+            // source pixel value first (using the appropriate operator for the target bit depth).
+            if (dstFormat == PixelFormat.Gray_8bpp &&
+                srcFormat != PixelFormat.Gray_8bpp &&
+                srcFormat != PixelFormat.Gray_16bpp)
+            {
+                var gray = Microsoft.Psi.Imaging.Operators.Rgb2Gray((byte)srcPixel.r, (byte)srcPixel.g, (byte)srcPixel.b);
+                srcPixel = (gray, gray, gray, 255);
+            }
+            else if (dstFormat == PixelFormat.Gray_16bpp &&
+                srcFormat != PixelFormat.Gray_8bpp &&
+                srcFormat != PixelFormat.Gray_16bpp)
+            {
+                var gray = Microsoft.Psi.Imaging.Operators.Rgb2Gray((ushort)srcPixel.r, (ushort)srcPixel.g, (ushort)srcPixel.b);
+                srcPixel = (gray, gray, gray, 65535);
+            }
+
+            if (dstPixel != srcPixel)
+            {
+                var srcSampleBytesForErrorMessage = srcImage.ReadBytes(srcImage.BitsPerPixel / 8);
+                var dstSampleBytesForErrorMessage = dstImage.ReadBytes(dstImage.BitsPerPixel / 8);
+
+                Assert.AreEqual(srcPixel.r, dstPixel.r, 1, $"Mismatch in copied red color from {srcFormat} [{string.Join(", ", srcSampleBytesForErrorMessage)}] to {dstFormat} [{string.Join(", ", dstSampleBytesForErrorMessage)}]");
+                Assert.AreEqual(srcPixel.g, dstPixel.g, 1, $"Mismatch in copied green color from {srcFormat} [{string.Join(", ", srcSampleBytesForErrorMessage)}] to {dstFormat} [{string.Join(", ", dstSampleBytesForErrorMessage)}]");
+                Assert.AreEqual(srcPixel.b, dstPixel.b, 1, $"Mismatch in copied blue color from {srcFormat} [{string.Join(", ", srcSampleBytesForErrorMessage)}] to {dstFormat} [{string.Join(", ", dstSampleBytesForErrorMessage)}]");
+                Assert.AreEqual(srcPixel.a, dstPixel.a, 1, $"Mismatch in copied alpha from {srcFormat} [{string.Join(", ", srcSampleBytesForErrorMessage)}] to {dstFormat} [{string.Join(", ", dstSampleBytesForErrorMessage)}]");
             }
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_DrawRectangleViaOperator()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        public void Image_FlipViaOperator(PixelFormat pixelFormat)
         {
-            using (var pipeline = Pipeline.Create("DrawRectangleViaOperator"))
+            using var pipeline = Pipeline.Create("FlipViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Flip(FlipMode.None).Do((img) =>
             {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat))
-                {
-                    this.testImage2.CopyTo(sharedImage.Resource);
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawRectangle(new System.Drawing.Rectangle(20, 20, 255, 255), System.Drawing.Color.White, 3).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_DrawRect, img.Resource);
-                    });
-                    pipeline.Run();
-                }
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void Image_DrawLineViaOperator()
-        {
-            using (var pipeline = Pipeline.Create("DrawLineViaOperator"))
+                using var refImage = this.testImage2.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Flip(FlipMode.AlongHorizontalAxis).Do((img) =>
             {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat))
-                {
-                    this.testImage2.CopyTo(sharedImage.Resource);
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawLine(new System.Drawing.Point(0, 0), new System.Drawing.Point(255, 255), System.Drawing.Color.White, 3).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_DrawLine, img.Resource);
-                    });
-                    pipeline.Run();
-                }
-            }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void Image_DrawCircleViaOperator()
-        {
-            using (var pipeline = Pipeline.Create("DrawCircleViaOperator"))
+                using var refImage = this.testImage2_FlipHoriz.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Flip(FlipMode.AlongVerticalAxis).Do((img) =>
             {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat))
-                {
-                    this.testImage2.CopyTo(sharedImage.Resource);
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawCircle(new System.Drawing.Point(250, 250), 100, System.Drawing.Color.White, 3).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_DrawCircle, img.Resource);
-                    });
-                    pipeline.Run();
-                }
-            }
+                using var refImage = this.testImage2_FlipVert.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_DrawTextViaOperator()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_RotateViaOperator(PixelFormat pixelFormat)
         {
-            using (var pipeline = Pipeline.Create("DrawTextViaOperator"))
+            using var pipeline = Pipeline.Create("RotateViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(-10.0f, SamplingMode.Point).Do((img) =>
             {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat))
-                {
-                    this.testImage2.CopyTo(sharedImage.Resource);
-                    Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawText("Testing", new System.Drawing.Point(100, 100), System.Drawing.Color.White).Do((img) =>
-                    {
-                        this.AssertAreImagesEqual(this.testImage2_DrawText, img.Resource);
-                    });
-                    pipeline.Run();
-                }
-            }
+                using var refImage = this.testImage2_Rotate_Neg10.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(110.0f, SamplingMode.Point).Do((img) =>
+            {
+                using var refImage = this.testImage2_Rotate_110.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(-10.0f, SamplingMode.Point, RotationFitMode.Loose).Do((img) =>
+            {
+                using var refImage = this.testImage2_Rotate_Neg10_Loose.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Rotate(110.0f, SamplingMode.Point, RotationFitMode.Loose).Do((img) =>
+            {
+                using var refImage = this.testImage2_Rotate_110_Loose.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_CopyImage()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_DrawRectangleViaOperator(PixelFormat pixelFormat)
         {
-            using var destImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat);
-            destImage.Resource.Clear(System.Drawing.Color.Black);
-            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(50, 300, 100, 255);
-            this.testImage2.CopyTo(rect, destImage.Resource, new System.Drawing.Point(-10, 0), this.testImage2_Mask);
-            this.AssertAreImagesEqual(this.testImage2_CopyImage, destImage.Resource);
+            using var pipeline = Pipeline.Create("DrawRectangleViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawRectangle(new System.Drawing.Rectangle(20, 20, 255, 255), System.Drawing.Color.White, 3).Do((img) =>
+            {
+                using var refImage = this.testImage2_DrawRect.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_Invert()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_DrawLineViaOperator(PixelFormat pixelFormat)
+        {
+            using var pipeline = Pipeline.Create("DrawLineViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawLine(new System.Drawing.Point(0, 0), new System.Drawing.Point(255, 255), System.Drawing.Color.White, 3).Do((img) =>
+            {
+                using var refImage = this.testImage2_DrawLine.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_DrawCircleViaOperator(PixelFormat pixelFormat)
+        {
+            using var pipeline = Pipeline.Create("DrawCircleViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawCircle(new System.Drawing.Point(250, 250), 100, System.Drawing.Color.White, 3).Do((img) =>
+            {
+                using var refImage = this.testImage2_DrawCircle.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_DrawTextViaOperator(PixelFormat pixelFormat)
+        {
+            using var pipeline = Pipeline.Create("DrawTextViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawText("Testing", new System.Drawing.Point(100, 100), System.Drawing.Color.White).Do((img) =>
+            {
+                using var refImage = this.testImage2_DrawText.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        public void Image_CopyRegion(PixelFormat pixelFormat)
+        {
+            using var destImage = new Image(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            destImage.Clear(System.Drawing.Color.Black);
+            var rect = new System.Drawing.Rectangle(50, 300, 100, 255);
+            this.testImage2.Convert(pixelFormat).CopyTo(rect, destImage, new System.Drawing.Point(-10, 0), this.testImage2_Mask);
+            this.AssertAreImagesEqual(this.testImage2_CopyImage.Convert(pixelFormat), destImage);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        public void Image_Invert(PixelFormat pixelFormat)
         {
             using var pipeline = Pipeline.Create("ImageInvert");
-            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat);
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
             this.testImage2.CopyTo(sharedImage.Resource);
             Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Invert().Do((img) =>
             {
-                this.AssertAreImagesEqual(this.testImage2_Invert, img.Resource);
+                using var refImage = this.testImage2_Invert.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
             });
             pipeline.Run();
         }
@@ -291,34 +584,41 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_Threshold()
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_Threshold(PixelFormat pixelFormat)
         {
             using var pipeline = Pipeline.Create("ImageThreshold");
-            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat);
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
             this.testImage2.CopyTo(sharedImage.Resource);
             Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).Threshold(10, 170, Threshold.Binary).Do((img) =>
             {
-                this.AssertAreImagesEqual(this.testImage2_Threshold, img.Resource);
+                using var refImage = this.testImage2_Threshold.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
             });
             pipeline.Run();
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_ExtractChannels()
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        public void Image_ExtractChannels(PixelFormat pixelFormat)
         {
             using var pipeline = Pipeline.Create("ImageExtractChannel");
-            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, this.testImage2.PixelFormat);
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
             this.testImage2.CopyTo(sharedImage.Resource);
             var seq = Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false);
-            var rchannel = seq.ExtractChannel(0);
+            var bchannel = seq.ExtractChannel(0);
             var gchannel = seq.ExtractChannel(1);
-            var bchannel = seq.ExtractChannel(2);
-            rchannel.Join(gchannel.Join(bchannel)).Do((imgs) =>
+            var rchannel = seq.ExtractChannel(2);
+            bchannel.Join(gchannel.Join(rchannel)).Do((imgs) =>
             {
-                this.AssertAreImagesEqual(this.testImage2_RedChannel, imgs.Item1.Resource);
+                this.AssertAreImagesEqual(this.testImage2_BlueChannel, imgs.Item1.Resource);
                 this.AssertAreImagesEqual(this.testImage2_GreenChannel, imgs.Item2.Resource);
-                this.AssertAreImagesEqual(this.testImage2_BlueChannel, imgs.Item3.Resource);
+                this.AssertAreImagesEqual(this.testImage2_RedChannel, imgs.Item3.Resource);
             });
             pipeline.Run();
         }
@@ -392,30 +692,42 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_Crop()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        public void Image_Crop(PixelFormat pixelFormat)
         {
             // Crop the entire image region (a no-op) and verify that the original image is preserved
-            using (var croppedImage = this.testImage.Crop(0, 0, this.testImage.Width, this.testImage.Height))
+            using var sourceImage = this.testImage.Convert(pixelFormat);
+            using (var croppedImage = sourceImage.Crop(0, 0, sourceImage.Width, sourceImage.Height))
             {
-                this.AssertAreImagesEqual(this.testImage, croppedImage);
+                using var refImage = this.testImage.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, croppedImage);
             }
 
             // Crop an upper-left region and verify
-            using (var croppedImage = this.testImage.Crop(0, 0, 200, 100))
+            using (var croppedImage = sourceImage.Crop(0, 0, 200, 100))
             {
-                this.AssertAreImagesEqual(this.testImage_0_0_200_100, croppedImage);
+                using var refImage = this.testImage_0_0_200_100.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, croppedImage);
             }
 
             // Crop a lower-right region and verify
-            using (var croppedImage = this.testImage.Crop(153, 57, 103, 199))
+            using (var croppedImage = sourceImage.Crop(153, 57, 103, 199))
             {
-                this.AssertAreImagesEqual(this.testImage_153_57_103_199, croppedImage);
+                using var refImage = this.testImage_153_57_103_199.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, croppedImage);
             }
 
             // Crop an interior region and verify
-            using (var croppedImage = this.testImage.Crop(73, 41, 59, 37))
+            using (var croppedImage = sourceImage.Crop(73, 41, 59, 37))
             {
-                this.AssertAreImagesEqual(this.testImage_73_41_59_37, croppedImage);
+                using var refImage = this.testImage_73_41_59_37.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, croppedImage);
             }
         }
 
@@ -498,25 +810,35 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
-        public void Test_Resize()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_Resize(PixelFormat pixelFormat)
         {
+            // Resize using bicubic
+            this.AssertAreImagesEqual(
+                this.testImage_50_25_Cubic.Convert(pixelFormat),
+                this.testImage.Convert(pixelFormat).Resize(
+                    this.testImage_50_25_Cubic.Width,
+                    this.testImage_50_25_Cubic.Height,
+                    SamplingMode.Bicubic));
+
             // Resize using nearest-neighbor
-            this.AssertAreImagesEqual(this.testImage_50_25_Cubic, this.testImage.Resize(
-                this.testImage_50_25_Cubic.Width,
-                this.testImage_50_25_Cubic.Height,
-                SamplingMode.Bicubic));
+            this.AssertAreImagesEqual(
+                this.testImage_150_125_Point.Convert(pixelFormat),
+                this.testImage.Convert(pixelFormat).Resize(
+                    this.testImage_150_125_Point.Width,
+                    this.testImage_150_125_Point.Height,
+                    SamplingMode.Point));
 
-            // Scale using bilinear
-            this.AssertAreImagesEqual(this.testImage_150_125_Point, this.testImage.Resize(
-                this.testImage_150_125_Point.Width,
-                this.testImage_150_125_Point.Height,
-                SamplingMode.Point));
-
-            // Scale using bicubic
-            this.AssertAreImagesEqual(this.testImage_25_200_Linear, this.testImage.Resize(
-                this.testImage_25_200_Linear.Width,
-                this.testImage_25_200_Linear.Height,
-                SamplingMode.Bilinear));
+            // Resize using bilinear
+            this.AssertAreImagesEqual(
+                this.testImage_25_200_Linear.Convert(pixelFormat),
+                this.testImage.Convert(pixelFormat).Resize(
+                    this.testImage_25_200_Linear.Width,
+                    this.testImage_25_200_Linear.Height,
+                    SamplingMode.Bilinear));
         }
 
         [TestMethod]
@@ -531,25 +853,35 @@ namespace Test.Psi.Imaging
 
         [TestMethod]
         [Timeout(60000)]
-        public void Image_Scale()
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_Scale(PixelFormat pixelFormat)
         {
+            // Scale using bicubic
+            this.AssertAreImagesEqual(
+                this.testImage_50_25_Cubic.Convert(pixelFormat),
+                this.testImage.Convert(pixelFormat).Scale(
+                    (float)this.testImage_50_25_Cubic.Width / (float)this.testImage.Width,
+                    (float)this.testImage_50_25_Cubic.Height / (float)this.testImage.Height,
+                    SamplingMode.Bicubic));
+
             // Scale using nearest-neighbor
-            this.AssertAreImagesEqual(this.testImage_50_25_Cubic, this.testImage.Scale(
-                (float)this.testImage_50_25_Cubic.Width / (float)this.testImage.Width,
-                (float)this.testImage_50_25_Cubic.Height / (float)this.testImage.Height,
-                SamplingMode.Bicubic));
+            this.AssertAreImagesEqual(
+                this.testImage_150_125_Point.Convert(pixelFormat),
+                this.testImage.Convert(pixelFormat).Scale(
+                    (float)this.testImage_150_125_Point.Width / (float)this.testImage.Width,
+                    (float)this.testImage_150_125_Point.Height / (float)this.testImage.Height,
+                    SamplingMode.Point));
 
             // Scale using bilinear
-            this.AssertAreImagesEqual(this.testImage_150_125_Point, this.testImage.Scale(
-                (float)this.testImage_150_125_Point.Width / (float)this.testImage.Width,
-                (float)this.testImage_150_125_Point.Height / (float)this.testImage.Height,
-                SamplingMode.Point));
-
-            // Scale using bicubic
-            this.AssertAreImagesEqual(this.testImage_25_200_Linear, this.testImage.Scale(
-                (float)this.testImage_25_200_Linear.Width / (float)this.testImage.Width,
-                (float)this.testImage_25_200_Linear.Height / (float)this.testImage.Height,
-                SamplingMode.Bilinear));
+            this.AssertAreImagesEqual(
+                this.testImage_25_200_Linear.Convert(pixelFormat),
+                this.testImage.Convert(pixelFormat).Scale(
+                    (float)this.testImage_25_200_Linear.Width / (float)this.testImage.Width,
+                    (float)this.testImage_25_200_Linear.Height / (float)this.testImage.Height,
+                    SamplingMode.Bilinear));
 
             // Attempt to scale 16bpp grayscale - should throw NotSupportedException
             var depthImage = new Image(100, 100, PixelFormat.Gray_16bpp);
@@ -607,10 +939,13 @@ namespace Test.Psi.Imaging
             this.AssertAreImagesEqual(testDepthImage, targetDepthImage);
         }
 
-        private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage)
+        private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage, double tolerance = 6.0, double percentOutliersAllowed = 0.01)
         {
             ImageError err = new ImageError();
-            Assert.IsTrue(referenceImage.Compare(subjectImage, 6.0, 0.01, ref err));
+            Assert.AreEqual(referenceImage.Stride, subjectImage.Stride); // also check for consistency in the strides of allocated Images
+            Assert.IsTrue(
+                referenceImage.Compare(subjectImage, tolerance, percentOutliersAllowed, ref err),
+                $"Max err: {err.MaxError}, Outliers: {err.NumberOutliers}");
         }
     }
 }

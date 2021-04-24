@@ -81,6 +81,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
+        protected override Action<(Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem)> Deallocator => data => data.Item1?.Dispose();
+
+        /// <inheritdoc/>
         public override void UpdateData()
         {
             if (this.depthImage != null)

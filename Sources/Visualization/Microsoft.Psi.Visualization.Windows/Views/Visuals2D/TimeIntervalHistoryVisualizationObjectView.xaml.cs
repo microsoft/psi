@@ -11,9 +11,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// <summary>
     /// Interaction logic for TimeIntervalHistoryVisualizationObjectView.xaml.
     /// </summary>
-    public partial class TimeIntervalHistoryVisualizationObjectView : TimelineCanvasVisualizationObjectView<TimeIntervalHistoryVisualizationObject, TimeIntervalHistory>
+    public partial class TimeIntervalHistoryVisualizationObjectView : StreamIntervalVisualizationObjectTimelineCanvasView<TimeIntervalHistoryVisualizationObject, TimeIntervalHistory>
     {
-        private List<TimeIntervalHistoryVisualizationObjectViewItem> items = new List<TimeIntervalHistoryVisualizationObjectViewItem>();
+        private readonly List<TimeIntervalHistoryVisualizationObjectViewItem> items = new List<TimeIntervalHistoryVisualizationObjectViewItem>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeIntervalHistoryVisualizationObjectView"/> class.
@@ -29,7 +29,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             base.OnVisualizationObjectPropertyChanged(sender, e);
 
-            if (e.PropertyName == nameof(this.VisualizationObject.DisplayData))
+            if (e.PropertyName == nameof(this.StreamVisualizationObject.DisplayData))
             {
                 this.OnDisplayDataChanged();
             }
@@ -40,18 +40,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// </summary>
         protected virtual void OnDisplayDataChanged()
         {
-            this.Rerender();
+            this.UpdateView();
         }
 
         /// <inheritdoc/>
-        protected override void OnTransformsChanged()
+        protected override void UpdateView()
         {
-            this.Rerender();
-        }
-
-        private void Rerender()
-        {
-            for (int i = 0; i < this.VisualizationObject.DisplayData.Count; i++)
+            for (int i = 0; i < this.StreamVisualizationObject.DisplayData.Count; i++)
             {
                 TimeIntervalHistoryVisualizationObjectViewItem item;
                 if (i < this.items.Count)
@@ -64,13 +59,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     this.items.Add(item);
                 }
 
-                item.Update(this.VisualizationObject.DisplayData[i]);
+                item.Update(this.StreamVisualizationObject.DisplayData[i]);
             }
 
             // remove the remaining figures
-            for (int i = this.VisualizationObject.DisplayData.Count; i < this.items.Count; i++)
+            for (int i = this.StreamVisualizationObject.DisplayData.Count; i < this.items.Count; i++)
             {
-                var item = this.items[this.VisualizationObject.DisplayData.Count];
+                var item = this.items[this.StreamVisualizationObject.DisplayData.Count];
                 item.RemoveFromCanvas();
                 this.items.Remove(item);
             }

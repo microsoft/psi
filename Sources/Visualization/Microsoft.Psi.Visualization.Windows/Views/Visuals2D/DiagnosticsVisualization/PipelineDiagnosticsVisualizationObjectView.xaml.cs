@@ -13,16 +13,17 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Msagl.Drawing;
     using Microsoft.Msagl.WpfGraphControl;
     using Microsoft.Psi.Diagnostics;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Brushes = System.Windows.Media.Brushes;
     using Transform = System.Windows.Media.Transform;
 
     /// <summary>
-    /// Interaction logic for DiagnosticsVisualizationObjectView.xaml.
+    /// Interaction logic for PipelineDiagnosticsVisualizationObjectView.xaml.
     /// </summary>
-    public partial class PipelineDiagnosticsVisualizationObjectView : UserControl, IDisposable
+    public partial class PipelineDiagnosticsVisualizationObjectView : VisualizationObjectView, IDisposable
     {
-        private GraphViewer graphViewer = new GraphViewer() { LayoutEditingEnabled = false };
+        private readonly GraphViewer graphViewer = new GraphViewer() { LayoutEditingEnabled = false };
         private Dictionary<int, (Transform, Node)> graphVisualPanZoom = new Dictionary<int, (Transform, Node)>();
         private Transform lastRenderTransform = Transform.Identity;
         private Node lastCenteredNode = null;
@@ -34,15 +35,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public PipelineDiagnosticsVisualizationObjectView()
         {
             this.InitializeComponent();
-            this.DataContextChanged += this.DiagnosticsVisualizationObjectView_DataContextChanged;
-            this.Loaded += this.DiagnosticsVisualizationObjectView_Loaded;
-            this.Unloaded += this.DiagnosticsVisualizationObjectView_Unloaded;
         }
 
         /// <summary>
-        /// Gets the image visualization object.
+        /// Gets the pipeline diagnostics visualization object.
         /// </summary>
-        public PipelineDiagnosticsVisualizationObject DiagnosticsVisualizationObject { get; private set; }
+        public PipelineDiagnosticsVisualizationObject PipelineDiagnosticsVisualizationObject
+            => this.VisualizationObject as PipelineDiagnosticsVisualizationObject;
 
         /// <inheritdoc/>
         public void Dispose()
@@ -61,15 +60,98 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.infoText.Text = this.presenter.SelectedEdgeDetails;
         }
 
-        private void DiagnosticsVisualizationObjectView_Loaded(object sender, RoutedEventArgs e)
+        /// <inheritdoc/>
+        public override void AppendContextMenuItems(List<MenuItem> menuItems)
         {
+            // If the mouse is over an edge, add a menu item to expand the streams of the receiver.
+            if (this.graphViewer.ObjectUnderMouseCursor is VEdge vedge)
+            {
+                menuItems.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        IconSourcePath.Diagnostics,
+                        $"Add derived diagnostics streams for receiver {vedge.Edge.UserData}",
+                        new PsiCommand(() => this.presenter.AddDerivedReceiverDiagnosticsStreams((int)vedge.Edge.UserData))));
+            }
+
+            // Add a heatmap statistics context menu
+            var heatmapStatisticsMenu = MenuItemHelper.CreateMenuItem(null, "Heatmap Statistics", null);
+            menuItems.Add(heatmapStatisticsMenu);
+            foreach (var heatmapStat in Enum.GetValues(typeof(PipelineDiagnosticsVisualizationObject.HeatmapStats)))
+            {
+                var heatmapStatValue = (PipelineDiagnosticsVisualizationObject.HeatmapStats)heatmapStat;
+                var heatmapStatName = heatmapStatValue switch
+                {
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.None => "None",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageCreatedLatency => "Message Created Latency (Average)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageEmittedLatency => "Message Emitted Latency (Average)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageReceivedLatency => "Message Received Latency (Average)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgDeliveryQueueSize => "Delivery Queue Size (Average)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime => "Message Process Time (Average)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageEmittedCount => "Total Messages Emitted (Count)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedCount => "Total Messages Dropped (Count)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedCount => "Total Messages Processed (Count)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageSize => "Message Size (Average)",
+                    _ => throw new NotImplementedException(),
+                };
+
+                heatmapStatisticsMenu.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        this.PipelineDiagnosticsVisualizationObject.HeatmapStatistics == heatmapStatValue ? IconSourcePath.Checkmark : null,
+                        heatmapStatName,
+                        new PsiCommand(() => this.PipelineDiagnosticsVisualizationObject.HeatmapStatistics = heatmapStatValue)));
+            }
+
+            base.AppendContextMenuItems(menuItems);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            base.OnLoaded(sender, e);
+
             this.graphViewer.BindToPanel(this.dockPanel);
             this.graphViewer.MouseDown += this.GraphViewer_MouseDown;
             this.graphViewer.MouseUp += this.GraphViewer_MouseUp;
             this.graphViewer.MouseWheel += this.GraphViewer_MouseWheel;
             this.graphViewer.ObjectUnderMouseCursorChanged += this.GraphViewer_ObjectUnderMouseCursorChanged;
             this.SizeChanged += this.DiagnosticsVisualizationObjectView_SizeChanged;
-            this.presenter = new PipelineDiagnosticsVisualizationPresenter(this, this.DiagnosticsVisualizationObject);
+            this.presenter = new PipelineDiagnosticsVisualizationPresenter(this, this.PipelineDiagnosticsVisualizationObject);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(VisualizationObjects.PipelineDiagnosticsVisualizationObject.LayoutDirection))
+            {
+                // forget and refit all transforms upon changing layout direction
+                this.graphVisualPanZoom = new Dictionary<int, (Transform, Node)>();
+                this.FitGraphView();
+                this.presenter.UpdateSettings(this.PipelineDiagnosticsVisualizationObject);
+            }
+            else if (e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.CurrentData) && this.PipelineDiagnosticsVisualizationObject.CurrentData != null)
+            {
+                this.presenter.UpdateGraph(this.PipelineDiagnosticsVisualizationObject.CurrentData, false);
+            }
+            else if (
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ConnectorColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.EdgeColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.EdgeLineThickness) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HeatmapColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HeatmapStatistics) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.Highlight) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HighlightColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.InfoTextSize) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.JoinColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.NodeColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowDeliveryPolicies) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowEmitterNames) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowExporterConnections) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowReceiverNames) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.SourceNodeColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.SubpipelineColor))
+            {
+                this.presenter.UpdateSettings(this.PipelineDiagnosticsVisualizationObject);
+            }
         }
 
         private void GraphViewer_ObjectUnderMouseCursorChanged(object sender, ObjectUnderMouseCursorChangedEventArgs e)
@@ -93,8 +175,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             var obj = this.graphViewer.ObjectUnderMouseCursor;
             if (obj != null)
             {
-                var vnode = obj as VNode;
-                if (vnode != null)
+                if (obj is VNode vnode)
                 {
                     if (e.RightButtonIsPressed)
                     {
@@ -106,36 +187,34 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     }
                     else if (e.Clicks > 1)
                     {
-                        var subgraph = vnode.DrawingObject.UserData as PipelineDiagnostics;
-                        if (subgraph != null)
+                        if (vnode.DrawingObject.UserData is PipelineDiagnostics subgraph)
                         {
                             this.presenter.NavInto(subgraph.Id);
                         }
                     }
 
-                    this.presenter.UpdateSelectedEdge(null); // clear selected edge when clicking a node
+                    this.presenter.ClearSelectedEdge(); // clear selected edge when clicking a node
 
                     return;
                 }
 
-                var vedge = obj as VEdge;
                 Edge edge = null;
-                if (vedge != null)
+                if (obj is VEdge vedge)
                 {
                     edge = vedge.Edge;
                 }
                 else
                 {
-                    var vlabel = obj as VLabel;
-                    if (vlabel != null)
+                    if (obj is VLabel vlabel)
                     {
                         edge = vlabel.DrawingObject.UserData as Edge;
                     }
                 }
 
-                if (edge != null)
+                if (edge != null && !e.RightButtonIsPressed)
                 {
-                    this.presenter.UpdateSelectedEdge(edge);
+                    this.presenter.UpdateReceiverDiagnostics(
+                        this.presenter.DiagnosticsGraph.GetAllReceiverDiagnostics().FirstOrDefault(rd => rd.Id == (int)edge.UserData));
                 }
             }
         }
@@ -151,17 +230,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private void GraphViewer_MouseWheel(object sender, MsaglMouseEventArgs e)
         {
             this.lastCenteredNode = null; // prevent recentering after zoom elsewhere
-        }
-
-        private void DiagnosticsVisualizationObjectView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            this.DiagnosticsVisualizationObject.PropertyChanged -= this.DiagnosticsVisualizationObject_PropertyChanged;
-        }
-
-        private void DiagnosticsVisualizationObjectView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.DiagnosticsVisualizationObject = (PipelineDiagnosticsVisualizationObject)this.DataContext;
-            this.DiagnosticsVisualizationObject.PropertyChanged += this.DiagnosticsVisualizationObject_PropertyChanged;
         }
 
         private void FitGraphView()
@@ -279,41 +347,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
         }
 
-        private void DiagnosticsVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(PipelineDiagnosticsVisualizationObject.LayoutDirection))
-            {
-                // forget and refit all transforms upon changing layout direction
-                this.graphVisualPanZoom = new Dictionary<int, (Transform, Node)>();
-                this.FitGraphView();
-                this.presenter.UpdateSettings(this.DiagnosticsVisualizationObject);
-            }
-            else if (e.PropertyName == nameof(this.DiagnosticsVisualizationObject.CurrentData) && this.DiagnosticsVisualizationObject.CurrentData != null)
-            {
-                this.presenter.UpdateGraph(this.DiagnosticsVisualizationObject.CurrentData, false);
-            }
-            else if (
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ConnectorColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.EdgeColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.EdgeLineThickness) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.HeatmapColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.HeatmapStatistics) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.Highlight) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.HighlightColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.InfoTextSize) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.JoinColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.NodeColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowDeliveryPolicies) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowEmitterNames) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowExporterConnections) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.ShowReceiverNames) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.SourceNodeColor) ||
-                e.PropertyName == nameof(this.DiagnosticsVisualizationObject.SubpipelineColor))
-            {
-                this.presenter.UpdateSettings(this.DiagnosticsVisualizationObject);
-            }
-        }
-
         private void BreadcrumbNav_Click(object sender, RoutedEventArgs e)
         {
             this.presenter.NavBackTo((int)((Button)e.Source).Tag);
@@ -343,7 +376,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.presenter.UpdateSelectedEdge(null); // hide info panel (clear selected edge) upon clicking
+                this.presenter.ClearSelectedEdge(); // hide info panel (clear selected edge) upon clicking
             }
         }
     }

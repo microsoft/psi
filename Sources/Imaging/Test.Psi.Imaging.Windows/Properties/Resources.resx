@@ -142,6 +142,9 @@
   <data name="TestImage_GrayResized" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestImage_GrayResized.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TestImage_GraySetPixel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage_GraySetPixel.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TestImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -222,5 +225,11 @@
   </data>
   <data name="TestImage_Scale_50_25_Cubic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestImage_Scale_50_25_Cubic.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SolidColors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SolidColors.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TestImage_SetPixel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestImage_SetPixel.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -112,12 +112,17 @@ namespace Microsoft.Psi.Diagnostics
             /// <summary>
             /// Gets or sets a value indicating whether the pipeline element is running (after started, before stopped).
             /// </summary>
-            public bool IsRunning { get; internal set; }
+            public bool IsRunning { get; internal set; } = false;
 
             /// <summary>
             /// Gets or sets a value indicating whether the pipeline element is finalized.
             /// </summary>
-            public bool Finalized { get; internal set; }
+            public bool Finalized { get; internal set; } = false;
+
+            /// <summary>
+            /// Gets or sets the custom diagnostic state information.
+            /// </summary>
+            public string DiagnosticState { get; internal set; } = null;
 
             /// <summary>
             /// Gets pipeline element emitters.
@@ -164,13 +169,15 @@ namespace Microsoft.Psi.Diagnostics
                 this.ReceiverName = receiverName;
                 this.TypeName = typeName;
                 this.PipelineElement = pipelineElement;
-                this.MessageLatencyAtEmitterHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
-                this.MessageLatencyAtReceiverHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
-                this.ProcessingTimeHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
+                this.MessageCreatedLatencyHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
+                this.MessageEmittedLatencyHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
+                this.MessageReceivedLatencyHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
+                this.MessageProcessTimeHistory = new ConcurrentQueue<(TimeSpan, DateTime)>();
                 this.MessageSizeHistory = new ConcurrentQueue<(int, DateTime)>();
-                this.DroppedHistory = new ConcurrentQueue<(int, DateTime)>();
-                this.ProcessedHistory = new ConcurrentQueue<(int, DateTime)>();
-                this.QueueSizeHistory = new ConcurrentQueue<(int, DateTime)>();
+                this.MessageDroppedCountHistory = new ConcurrentQueue<(int, DateTime)>();
+                this.MessageProcessedCountHistory = new ConcurrentQueue<(int, DateTime)>();
+                this.MessageEmittedCountHistory = new ConcurrentQueue<(int, DateTime)>();
+                this.DeliveryQueueSizeHistory = new ConcurrentQueue<(int, DateTime)>();
             }
 
             /// <summary>
@@ -206,47 +213,62 @@ namespace Microsoft.Psi.Diagnostics
             /// <summary>
             /// Gets or sets a value indicating whether receiver is throttled.
             /// </summary>
-            public bool Throttled { get; internal set; }
+            public bool ReceiverIsThrottled { get; internal set; }
+
+            /// <summary>
+            /// Gets or sets total count of emitted messages.
+            /// </summary>
+            public int TotalMessageEmittedCount { get; internal set; }
 
             /// <summary>
             /// Gets or sets total count of dropped messages.
             /// </summary>
-            public int ProcessedCount { get; internal set; }
+            public int TotalMessageProcessedCount { get; internal set; }
 
             /// <summary>
             /// Gets or sets total count of dropped messages.
             /// </summary>
-            public int DroppedCount { get; internal set; }
+            public int TotalMessageDroppedCount { get; internal set; }
 
             /// <summary>
-            /// Gets or sets history of processed messages.
+            /// Gets or sets history of emitted message counts.
             /// </summary>
-            public ConcurrentQueue<(int, DateTime)> ProcessedHistory { get; internal set; }
+            public ConcurrentQueue<(int, DateTime)> MessageEmittedCountHistory { get; internal set; }
 
             /// <summary>
-            /// Gets or sets history of dropped messages.
+            /// Gets or sets history of processed message counts.
             /// </summary>
-            public ConcurrentQueue<(int, DateTime)> DroppedHistory { get; internal set; }
+            public ConcurrentQueue<(int, DateTime)> MessageProcessedCountHistory { get; internal set; }
+
+            /// <summary>
+            /// Gets or sets history of dropped message counts.
+            /// </summary>
+            public ConcurrentQueue<(int, DateTime)> MessageDroppedCountHistory { get; internal set; }
 
             /// <summary>
             /// Gets or sets history of awaiting delivery queue size.
             /// </summary>
-            public ConcurrentQueue<(int, DateTime)> QueueSizeHistory { get; internal set; }
+            public ConcurrentQueue<(int, DateTime)> DeliveryQueueSizeHistory { get; internal set; }
 
             /// <summary>
-            /// Gets or sets history of message latency at emitter (when queued/dropped) over past averaging time window.
+            /// Gets or sets history of message creation latency over past averaging time window.
             /// </summary>
-            public ConcurrentQueue<(TimeSpan, DateTime)> MessageLatencyAtEmitterHistory { get; internal set; }
+            public ConcurrentQueue<(TimeSpan, DateTime)> MessageCreatedLatencyHistory { get; internal set; }
 
             /// <summary>
-            /// Gets or sets history of message latency at receiver (when delivered/processed) over past averaging time window.
+            /// Gets or sets history of latencies when the message is emitted over past averaging time window.
             /// </summary>
-            public ConcurrentQueue<(TimeSpan, DateTime)> MessageLatencyAtReceiverHistory { get; internal set; }
+            public ConcurrentQueue<(TimeSpan, DateTime)> MessageEmittedLatencyHistory { get; internal set; }
+
+            /// <summary>
+            /// Gets or sets history of latencies when the message is received over past averaging time window.
+            /// </summary>
+            public ConcurrentQueue<(TimeSpan, DateTime)> MessageReceivedLatencyHistory { get; internal set; }
 
             /// <summary>
             /// Gets component processing time over the past averaging time window.
             /// </summary>
-            public ConcurrentQueue<(TimeSpan, DateTime)> ProcessingTimeHistory { get; private set; }
+            public ConcurrentQueue<(TimeSpan, DateTime)> MessageProcessTimeHistory { get; private set; }
 
             /// <summary>
             /// Gets message size history over the past averaging time window (if TrackMessageSize configured).
@@ -254,13 +276,23 @@ namespace Microsoft.Psi.Diagnostics
             public ConcurrentQueue<(int, DateTime)> MessageSizeHistory { get; private set; }
 
             /// <summary>
+            /// Add emitted message to pipeline element statistics.
+            /// </summary>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
+            /// <param name="averagingWindow">Window in which to compute averages.</param>
+            internal void AddMessageEmitted(DateTime diagnosticsTime, TimeSpan averagingWindow)
+            {
+                this.AddStatistic(++this.TotalMessageEmittedCount, this.MessageEmittedCountHistory, diagnosticsTime, averagingWindow);
+            }
+
+            /// <summary>
             /// Add processed message time to pipeline element statistics.
             /// </summary>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddProcessedMessage(DateTime diagnosticsTime, TimeSpan averagingWindow)
+            internal void AddMessageProcessed(DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(++this.ProcessedCount, this.ProcessedHistory, diagnosticsTime, averagingWindow);
+                this.AddStatistic(++this.TotalMessageProcessedCount, this.MessageProcessedCountHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
@@ -268,53 +300,64 @@ namespace Microsoft.Psi.Diagnostics
             /// </summary>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddDroppedMessage(DateTime diagnosticsTime, TimeSpan averagingWindow)
+            internal void AddMessageDropped(DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(++this.DroppedCount, this.DroppedHistory, diagnosticsTime, averagingWindow);
+                this.AddStatistic(++this.TotalMessageDroppedCount, this.MessageDroppedCountHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
             /// Add current delivery queue size to pipeline element statistics.
             /// </summary>
-            /// <param name="size">Current delivery queue size.</param>
+            /// <param name="deliveryQueueSize">Current delivery queue size.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddCurrentQueueSize(int size, DateTime diagnosticsTime, TimeSpan averagingWindow)
+            internal void AddDeliveryQueueSize(int deliveryQueueSize, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(size, this.QueueSizeHistory, diagnosticsTime, averagingWindow);
+                this.AddStatistic(deliveryQueueSize, this.DeliveryQueueSizeHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
-            /// Add message latency at emitter (when queued/dropped) to pipeline element statistics.
+            /// Add message created latency to pipeline element statistics.
             /// </summary>
-            /// <param name="latency">The message latency.</param>
+            /// <param name="messageCreatedLatency">The latency with which the message was created.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageLatencyAtEmitter(TimeSpan latency, DateTime diagnosticsTime, TimeSpan averagingWindow)
+            internal void AddMessageCreatedLatency(TimeSpan messageCreatedLatency, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(latency, this.MessageLatencyAtEmitterHistory, diagnosticsTime, averagingWindow);
+                this.AddStatistic(messageCreatedLatency, this.MessageCreatedLatencyHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
-            /// Add message latency at receiver (when delivered/processed) to pipeline element statistics.
+            /// Add message emitted latency to pipeline element statistics.
             /// </summary>
-            /// <param name="latency">The message latency.</param>
+            /// <param name="messageEmittedLatency">The latency with which the message is emitted.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageLatencyAtReceiver(TimeSpan latency, DateTime diagnosticsTime, TimeSpan averagingWindow)
+            internal void AddMessageEmittedLatency(TimeSpan messageEmittedLatency, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(latency, this.MessageLatencyAtReceiverHistory, diagnosticsTime, averagingWindow);
+                this.AddStatistic(messageEmittedLatency, this.MessageEmittedLatencyHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>
-            /// Add message processing time to pipeline element statistics.
+            /// Add message received latency to pipeline element statistics.
             /// </summary>
-            /// <param name="processingTime">Time spent processing message.</param>
+            /// <param name="messageReceivedLatency">The latency with which the message is received.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddProcessingTime(TimeSpan processingTime, DateTime diagnosticsTime, TimeSpan averagingWindow)
+            internal void AddMessageReceivedLatency(TimeSpan messageReceivedLatency, DateTime diagnosticsTime, TimeSpan averagingWindow)
             {
-                this.AddStatistic(processingTime, this.ProcessingTimeHistory, diagnosticsTime, averagingWindow);
+                this.AddStatistic(messageReceivedLatency, this.MessageReceivedLatencyHistory, diagnosticsTime, averagingWindow);
+            }
+
+            /// <summary>
+            /// Add message process time to pipeline element statistics.
+            /// </summary>
+            /// <param name="processTime">Time spent processing message.</param>
+            /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
+            /// <param name="averagingWindow">Window in which to compute averages.</param>
+            internal void AddMessageProcessTime(TimeSpan processTime, DateTime diagnosticsTime, TimeSpan averagingWindow)
+            {
+                this.AddStatistic(processTime, this.MessageProcessTimeHistory, diagnosticsTime, averagingWindow);
             }
 
             /// <summary>

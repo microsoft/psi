@@ -19,6 +19,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -26,13 +29,19 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Running Task:" HorizontalAlignment="Right"/>
-        <Label Grid.Row="0" Grid.Column="1" Name="TaskNameLabel" Content="..." />
+        <Label Grid.Row="0" Grid.Column="0" Content="Running Task:" Foreground="Gray" HorizontalAlignment="Right"/>
+        <Label Grid.Row="0" Grid.Column="1" Name="TaskNameLabel" Content="" />
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
-            <Label Name="PercentCompleteLabel" Content="20.0%"/>
+            <Label Name="PercentCompleteLabel" Content="0.0%"/>
         </StackPanel>
-        <Label Grid.Row="1" Grid.Column="0" Content="On:" HorizontalAlignment="Right"/>
-        <Label Grid.Row="1" Grid.Column="1" Name="TargetLabel" Content="..." />
-        <ProgressBar Name="ProgressBar" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height ="12" IsIndeterminate="False" Margin="5,10" Value="0" />
+        <Label Grid.Row="1" Grid.Column="0" Content="On:" Foreground="Gray" HorizontalAlignment="Right"/>
+        <Label Grid.Row="1" Grid.Column="1" Name="TargetLabel" Content="" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Data Size:" Foreground="Gray" HorizontalAlignment="Right"/>
+        <Label Grid.Row="2" Grid.Column="1" Name="DataSizeLabel" Content="" />
+        <Label Grid.Row="3" Grid.Column="0" Content="Elapsed Time:" Foreground="Gray" HorizontalAlignment="Right"/>
+        <Label Grid.Row="3" Grid.Column="1" Name="ElapsedTimeLabel" Content="" />
+        <Label Grid.Row="4" Grid.Column="0" Content="Remaining Time:" Foreground="Gray" HorizontalAlignment="Right"/>
+        <Label Grid.Row="4" Grid.Column="1" Name="EstimatedRemainingTimeLabel" Content="" />
+        <ProgressBar Name="ProgressBar" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Height ="12" IsIndeterminate="False" Margin="5,10" Value="0" />
     </Grid>
 </Window>

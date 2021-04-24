@@ -17,16 +17,16 @@ namespace PsiStoreTool
         internal abstract class BaseStoreCommand
         {
             /// <summary>
-            /// Gets or sets file path to Psi data store.
+            /// Gets or sets the name of the input Psi data store.
             /// </summary>
-            [Option('p', "path", HelpText = "File path to Psi data store (default=working directory).")]
-            public string Path { get; set; }
+            [Option('d', "data", Required = true, HelpText = "Name of the input Psi data store(s).")]
+            public string Store { get; set; }
 
             /// <summary>
-            /// Gets or sets name of Psi data store.
+            /// Gets or sets the file path of the input Psi data store.
             /// </summary>
-            [Option('d', "data", Required = true, HelpText = "Name of Psi data store(s).")]
-            public string Store { get; set; }
+            [Option('p', "path", Required = false, HelpText = "(Default: Working Directory) File path of the input Psi data store.")]
+            public string Path { get; set; }
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace PsiStoreTool
             /// <summary>
             /// Gets or sets a value indicating whether to show stream size information.
             /// </summary>
-            [Option('s', "showsize", Required = false, HelpText = "Shows stream size information.", Default = false)]
+            [Option('s', "showsize", Required = false, Default = false, HelpText = "Shows stream size information.")]
             public bool ShowSize { get; set; }
         }
 
@@ -91,7 +91,7 @@ namespace PsiStoreTool
             /// <summary>
             /// Gets or sets number of messages to include.
             /// </summary>
-            [Option('n', "number", HelpText = "Include first n messages (optional).", Default = int.MaxValue)]
+            [Option('n', "number", Required = false, Default = int.MaxValue, HelpText = "Optional maximum count of messages to include.")]
             public int Number { get; set; }
         }
 
@@ -115,15 +115,15 @@ namespace PsiStoreTool
         internal class Send : BaseTransportStreamCommand
         {
             /// <summary>
-            /// Gets or sets file to which to write.
+            /// Gets or sets the topic name to which to send messages.
             /// </summary>
-            [Option('t', "topic", HelpText = "Topic name to which to send messages (default='').")]
+            [Option('t', "topic", Required = false, Default = "", HelpText = "Topic name to which to send messages.")]
             public string Topic { get; set; }
 
             /// <summary>
-            /// Gets or sets format to which to serialize.
+            /// Gets or sets the connection address to which to send messages.
             /// </summary>
-            [Option('a', "address", Required = true, HelpText = "Connection address to which to send messages (e.g. 'tcp://localhost:12345').")]
+            [Option('a', "address", Required = true, HelpText = "Connection address to which to send messages, e.g. 'tcp://localhost:12345'.")]
             public string Address { get; set; }
         }
 
@@ -134,9 +134,15 @@ namespace PsiStoreTool
         internal class Concat : BaseStoreCommand
         {
             /// <summary>
-            /// Gets or sets name of Psi data store.
+            /// Gets or sets the file path for the output Psi data store.
             /// </summary>
-            [Option('o', "output", Required = false, Default = "Concatenated", HelpText = "Name of output Psi data store (default=Concatenated).")]
+            [Option('t', "outputpath", Required = false, HelpText = "(Default: Working Directory) File path for the output Psi data store.")]
+            public string OutputPath { get; set; }
+
+            /// <summary>
+            /// Gets or sets the name for the output Psi data store.
+            /// </summary>
+            [Option('o', "output", Required = false, Default = "Concatenated", HelpText = "Name for the output Psi data store.")]
             public string Output { get; set; }
         }
 
@@ -147,9 +153,9 @@ namespace PsiStoreTool
         internal class ListTasks
         {
             /// <summary>
-            /// Gets or sets task name to execute.
+            /// Gets or sets the assemblies containing tasks.
             /// </summary>
-            [Option('m', "assemblies", Required = false, Separator = ';', HelpText = "Optional assemblies containing task (semicolon-separated).")]
+            [Option('m', "assemblies", Required = false, Separator = ';', HelpText = "Optional list of assemblies containing task(s) (semicolon-separated).")]
             public IEnumerable<string> Assemblies { get; set; }
         }
 
@@ -160,37 +166,37 @@ namespace PsiStoreTool
         internal class Exec
         {
             /// <summary>
-            /// Gets or sets file path to Psi data store.
+            /// Gets or sets the file path of the input Psi data store.
             /// </summary>
-            [Option('p', "path", HelpText = "File path to Psi data store (default=working directory).")]
+            [Option('p', "path", Required = false, HelpText = "(Default: Working Directory) File path of the input Psi data store.")]
             public string Path { get; set; }
 
             /// <summary>
-            /// Gets or sets name of Psi data store.
+            /// Gets or sets the name of the input Psi data store.
             /// </summary>
-            [Option('d', "data", HelpText = "Name of Psi data store(s).")]
+            [Option('d', "data", Required = false, HelpText = "Name of the input Psi data store(s).")]
             public string Store { get; set; }
 
             /// <summary>
-            /// Gets or sets task name to execute.
+            /// Gets or sets the task name to execute.
             /// </summary>
             [Option('t', "task", Required = true, HelpText = "Task name.")]
             public string Name { get; set; }
 
             /// <summary>
-            /// Gets or sets assemblies containing task.
+            /// Gets or sets the assemblies containing the task.
             /// </summary>
             [Option('m', "assemblies", Required = false, Separator = ';', HelpText = "Optional assemblies containing task (semicolon-separated).")]
             public IEnumerable<string> Assemblies { get; set; }
 
             /// <summary>
-            /// Gets or sets configuration values provided at the command-line.
+            /// Gets or sets the configuration values provided at the command-line.
             /// </summary>
-            [Option('a', "arguments", Required = false, Separator = ';', HelpText = "Task arguments provided at the command-line (semicolon-separated).")]
+            [Option('a', "arguments", Required = false, Separator = ';', HelpText = "Optional task arguments provided at the command-line (semicolon-separated).")]
             public IEnumerable<string> Arguments { get; set; }
 
             /// <summary>
-            /// Gets or sets name of optional Psi stream.
+            /// Gets or sets the name of an optional Psi stream.
             /// </summary>
             [Option('s', "stream", Required = false, HelpText = "Optional name of Psi stream within data store.")]
             public string Stream { get; set; }
@@ -203,21 +209,27 @@ namespace PsiStoreTool
         internal class Crop : BaseStoreCommand
         {
             /// <summary>
-            /// Gets or sets name of output Psi data store.
+            /// Gets or sets the file path for the output Psi data store.
             /// </summary>
-            [Option('o', "output", Required = false, Default = "Cropped", HelpText = "Name of output Psi data store (default=Cropped).")]
+            [Option('t', "outputpath", Required = false, HelpText = "(Default: Working Directory) File path for the output Psi data store.")]
+            public string OutputPath { get; set; }
+
+            /// <summary>
+            /// Gets or sets the name for the output Psi data store.
+            /// </summary>
+            [Option('o', "output", Required = false, Default = "Cropped", HelpText = "Name for the output Psi data store.")]
             public string Output { get; set; }
 
             /// <summary>
-            /// Gets or sets start of interval.
+            /// Gets or sets the start of the interval to crop.
             /// </summary>
-            [Option('s', "start", Required = false, HelpText = "Start of interval relative to beginning of store (default=0).")]
+            [Option('s', "start", Required = false, Default = "0", HelpText = "Start of interval to crop, relative to beginning of store, e.g. use 00:02:00 for two minutes.")]
             public string Start { get; set; }
 
             /// <summary>
-            /// Gets or sets length of interval (relative to start).
+            /// Gets or sets the length of the interval to crop (relative to start).
             /// </summary>
-            [Option('l', "length", Required = false, HelpText = "Length of interval relative to start (default=unbounded).")]
+            [Option('l', "length", Required = false, HelpText = "(Default: Unbounded) Length of interval to crop, relative to the specified start point, e.g. use 00:02:00 for two minutes.")]
             public string Length { get; set; }
         }
 
@@ -228,16 +240,35 @@ namespace PsiStoreTool
         internal class Encode : BaseStoreCommand
         {
             /// <summary>
-            /// Gets or sets name of output Psi data store.
+            /// Gets or sets the file path for the output Psi data store.
             /// </summary>
-            [Option('o', "output", Required = false, Default = "Encoded", HelpText = "Name of output Psi data store (default=Encoded).")]
+            [Option('t', "outputpath", Required = false, HelpText = "(Default: Working Directory) File path for the output Psi data store.")]
+            public string OutputPath { get; set; }
+
+            /// <summary>
+            /// Gets or sets the name for the output Psi data store.
+            /// </summary>
+            [Option('o', "output", Required = false, Default = "Encoded", HelpText = "Name of output Psi data store.")]
             public string Output { get; set; }
 
             /// <summary>
-            /// Gets or sets quality of the JPEG compression.
+            /// Gets or sets the quality of the encoding.
             /// </summary>
-            [Option('q', "quality", Default = 90, HelpText = "Quality of JPEG compression 0-100 (optional, default 90).")]
+            [Option('q', "quality", Required = false, Default = 90, HelpText = "Quality of JPEG compression 0-100.")]
             public int Quality { get; set; }
+        }
+
+        /// <summary>
+        /// Analyze streams verb.
+        /// </summary>
+        [Verb("analyze", HelpText = "Analyze streams within a Psi data store.")]
+        internal class AnalyzeStreams : BaseStoreCommand
+        {
+            /// <summary>
+            /// Gets or sets the sort order for reporting statistics.
+            /// </summary>
+            [Option('o', "order", Default = "avg", HelpText = "Whether to order statistics by average ('avg') or maximum ('max') delay")]
+            public string Order { get; set; }
         }
     }
 }

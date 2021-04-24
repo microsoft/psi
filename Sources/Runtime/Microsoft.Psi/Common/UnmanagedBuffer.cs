@@ -206,16 +206,27 @@ namespace Microsoft.Psi.Common
         /// <param name="source">Managed array from which to copy.</param>
         public void CopyFrom(byte[] source)
         {
+            this.CopyFrom(source, 0, source.Length);
+        }
+
+        /// <summary>
+        /// Copy from managed array.
+        /// </summary>
+        /// <param name="source">Managed array from which to copy.</param>
+        /// <param name="offset">The zero-based index in the source array where copying should start.</param>
+        /// <param name="length">The number of bytes to copy.</param>
+        public void CopyFrom(byte[] source, int offset, int length)
+        {
             if (source == null)
             {
                 throw new ArgumentException("Source buffer is null.");
             }
-            else if (this.size != source.Length)
+            else if (this.size != length)
             {
                 throw new ArgumentException("Source buffer is not of the same size.");
             }
 
-            Marshal.Copy(source, 0, this.data, source.Length);
+            Marshal.Copy(source, offset, this.data, length);
         }
 
         /// <summary>

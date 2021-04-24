@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="tailRange">Tail duration function. Computes the view range start time given an end time. Applies to live view mode only.</param>
         /// <returns>A view over the cached summary data that covers the specified time range.</returns>
         ObservableKeyedCache<DateTime, IntervalData<T>>.ObservableKeyedView ReadSummary<T>(
-            ObservableKeyedCache<DateTime, IntervalData<T>>.ObservableKeyedView.ViewMode viewMode,
+            ObservableKeyedViewMode viewMode,
             DateTime startTime,
             DateTime endTime,
             uint tailCount,

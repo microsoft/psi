@@ -154,6 +154,7 @@ namespace Microsoft.Psi.Diagnostics
                 this.Kind = pipelineElementDiagnosticsInternal.Kind;
                 this.IsRunning = pipelineElementDiagnosticsInternal.IsRunning;
                 this.Finalized = pipelineElementDiagnosticsInternal.Finalized;
+                this.DiagnosticState = pipelineElementDiagnosticsInternal.DiagnosticState;
                 this.Emitters = pipelineElementDiagnosticsInternal.Emitters.Values.Select(e => builder.GetOrCreateEmitterDiagnostics(e)).ToArray();
                 this.Receivers = pipelineElementDiagnosticsInternal.Receivers.Values.Select(r => builder.GetOrCreateReceiverDiagnostics(r)).ToArray();
                 this.PipelineId = pipelineElementDiagnosticsInternal.PipelineId;
@@ -209,6 +210,11 @@ namespace Microsoft.Psi.Diagnostics
             /// Gets a value indicating whether the pipeline element is finalized.
             /// </summary>
             public bool Finalized { get; }
+
+            /// <summary>
+            /// Gets the diagnostic state for the pipeline element.
+            /// </summary>
+            public string DiagnosticState { get; }
 
             /// <summary>
             /// Gets pipeline element emitters.
@@ -304,16 +310,25 @@ namespace Microsoft.Psi.Diagnostics
                 this.ReceiverName = receiverDiagnostics.ReceiverName;
                 this.DeliveryPolicyName = receiverDiagnostics.DeliveryPolicyName;
                 this.TypeName = receiverDiagnostics.TypeName;
-                this.Throttled = receiverDiagnostics.Throttled;
-                this.QueueSize = receiverDiagnostics.QueueSizeHistory.AverageSize();
-                this.ProcessedCount = receiverDiagnostics.ProcessedCount;
-                this.ProcessedPerTimeSpan = receiverDiagnostics.ProcessedHistory.Count;
-                this.DroppedCount = receiverDiagnostics.DroppedCount;
-                this.DroppedPerTimeSpan = receiverDiagnostics.DroppedHistory.Count;
-                this.MessageLatencyAtEmitter = receiverDiagnostics.MessageLatencyAtEmitterHistory.AverageTime().TotalMilliseconds;
-                this.MessageLatencyAtReceiver = receiverDiagnostics.MessageLatencyAtReceiverHistory.AverageTime().TotalMilliseconds;
-                this.ProcessingTime = receiverDiagnostics.ProcessingTimeHistory.AverageTime().TotalMilliseconds;
-                this.MessageSize = receiverDiagnostics.MessageSizeHistory.AverageSize();
+                this.ReceiverIsThrottled = receiverDiagnostics.ReceiverIsThrottled;
+                this.LastDeliveryQueueSize = receiverDiagnostics.DeliveryQueueSizeHistory.LastOrDefault().Item1;
+                this.AvgDeliveryQueueSize = receiverDiagnostics.DeliveryQueueSizeHistory.AverageSize();
+                this.TotalMessageEmittedCount = receiverDiagnostics.TotalMessageEmittedCount;
+                this.WindowMessageEmittedCount = receiverDiagnostics.MessageEmittedCountHistory.Count;
+                this.TotalMessageProcessedCount = receiverDiagnostics.TotalMessageProcessedCount;
+                this.WindowMessageProcessedCount = receiverDiagnostics.MessageProcessedCountHistory.Count;
+                this.TotalMessageDroppedCount = receiverDiagnostics.TotalMessageDroppedCount;
+                this.WindowMessageDroppedCount = receiverDiagnostics.MessageDroppedCountHistory.Count;
+                this.LastMessageCreatedLatency = receiverDiagnostics.MessageCreatedLatencyHistory.LastOrDefault().Item1.TotalMilliseconds;
+                this.AvgMessageCreatedLatency = receiverDiagnostics.MessageCreatedLatencyHistory.AverageTime().TotalMilliseconds;
+                this.LastMessageEmittedLatency = receiverDiagnostics.MessageEmittedLatencyHistory.LastOrDefault().Item1.TotalMilliseconds;
+                this.AvgMessageEmittedLatency = receiverDiagnostics.MessageEmittedLatencyHistory.AverageTime().TotalMilliseconds;
+                this.LastMessageReceivedLatency = receiverDiagnostics.MessageReceivedLatencyHistory.LastOrDefault().Item1.TotalMilliseconds;
+                this.AvgMessageReceivedLatency = receiverDiagnostics.MessageReceivedLatencyHistory.AverageTime().TotalMilliseconds;
+                this.LastMessageProcessTime = receiverDiagnostics.MessageProcessTimeHistory.LastOrDefault().Item1.TotalMilliseconds;
+                this.AvgMessageProcessTime = receiverDiagnostics.MessageProcessTimeHistory.AverageTime().TotalMilliseconds;
+                this.LastMessageSize = receiverDiagnostics.MessageSizeHistory.LastOrDefault().Item1;
+                this.AvgMessageSize = receiverDiagnostics.MessageSizeHistory.AverageSize();
                 builder.EnqueueThunk(() =>
                 {
                     if (builder.PipelineElements.TryGetValue(receiverDiagnostics.PipelineElement.Id, out var element))
@@ -356,52 +371,97 @@ namespace Microsoft.Psi.Diagnostics
             /// <summary>
             /// Gets a value indicating whether receiver is throttled.
             /// </summary>
-            public bool Throttled { get; }
+            public bool ReceiverIsThrottled { get; }
 
             /// <summary>
-            /// Gets average awaiting delivery queue size.
+            /// Gets delivery queue size at last message.
             /// </summary>
-            public double QueueSize { get; }
+            public double LastDeliveryQueueSize { get; }
+
+            /// <summary>
+            /// Gets average delivery queue size.
+            /// </summary>
+            public double AvgDeliveryQueueSize { get; }
+
+            /// <summary>
+            /// Gets total count of emitted messages.
+            /// </summary>
+            public int TotalMessageEmittedCount { get; }
+
+            /// <summary>
+            /// Gets count of emitted messages in last averaging time window.
+            /// </summary>
+            public int WindowMessageEmittedCount { get; }
 
             /// <summary>
             /// Gets total count of processed messages.
             /// </summary>
-            public int ProcessedCount { get; }
+            public int TotalMessageProcessedCount { get; }
 
             /// <summary>
-            /// Gets count of processed messages in last averaging-timespan window.
+            /// Gets count of processed messages in last averaging time window.
             /// </summary>
-            public int ProcessedPerTimeSpan { get; }
+            public int WindowMessageProcessedCount { get; }
 
             /// <summary>
             /// Gets total count of dropped messages.
             /// </summary>
-            public int DroppedCount { get; }
+            public int TotalMessageDroppedCount { get; }
 
             /// <summary>
-            /// Gets count of dropped messages in last averaging time span window.
+            /// Gets count of dropped messages in last averaging time window.
             /// </summary>
-            public int DroppedPerTimeSpan { get; }
+            public int WindowMessageDroppedCount { get; }
 
             /// <summary>
-            /// Gets message latency at emitter (when queued/dropped) over past n-messages.
+            /// Gets latency with which the last message was created.
             /// </summary>
-            public double MessageLatencyAtEmitter { get; }
+            public double LastMessageCreatedLatency { get; }
 
             /// <summary>
-            /// Gets message latency at receiver (when delivered/processed) over past n-messages.
+            /// Gets average message created latency in last averaging time window.
             /// </summary>
-            public double MessageLatencyAtReceiver { get; }
+            public double AvgMessageCreatedLatency { get; }
 
             /// <summary>
-            /// Gets component processing time over the past n-messages.
+            /// Gets latency with which the last message was emitted.
             /// </summary>
-            public double ProcessingTime { get; }
+            public double LastMessageEmittedLatency { get; }
 
             /// <summary>
-            /// Gets average message size over the past n-messages (if TrackMessageSize configured).
+            /// Gets average message emitted latency in last averaging time window.
             /// </summary>
-            public double MessageSize { get; }
+            public double AvgMessageEmittedLatency { get; }
+
+            /// <summary>
+            /// Gets latency with which the last message was received.
+            /// </summary>
+            public double LastMessageReceivedLatency { get; }
+
+            /// <summary>
+            /// Gets average message received latency in last averaging time window.
+            /// </summary>
+            public double AvgMessageReceivedLatency { get; }
+
+            /// <summary>
+            /// Gets receiver processing time for the last message.
+            /// </summary>
+            public double LastMessageProcessTime { get; }
+
+            /// <summary>
+            /// Gets average receiver processing time in last averaging time window.
+            /// </summary>
+            public double AvgMessageProcessTime { get; }
+
+            /// <summary>
+            /// Gets message size for the last message.
+            /// </summary>
+            public double LastMessageSize { get; }
+
+            /// <summary>
+            /// Gets average message size over in last averaging time window.
+            /// </summary>
+            public double AvgMessageSize { get; }
 
             /// <summary>
             /// Gets pipeline element to which emitter belongs.
@@ -419,7 +479,7 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         internal class Builder
         {
-            private ConcurrentQueue<Action> thunks = new ConcurrentQueue<Action>();
+            private readonly ConcurrentQueue<Action> thunks = new ConcurrentQueue<Action>();
 
             public Builder()
             {

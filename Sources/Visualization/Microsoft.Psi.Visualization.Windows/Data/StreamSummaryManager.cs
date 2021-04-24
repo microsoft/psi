@@ -148,7 +148,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>A view over the cached summary data that covers the specified time range.</returns>
         public ObservableKeyedCache<DateTime, IntervalData<T>>.ObservableKeyedView ReadSummary<T>(
             StreamSource streamSource,
-            ObservableKeyedCache<DateTime, IntervalData<T>>.ObservableKeyedView.ViewMode viewMode,
+            ObservableKeyedViewMode viewMode,
             DateTime startTime,
             DateTime endTime,
             TimeSpan interval,
@@ -167,7 +167,7 @@ namespace Microsoft.Psi.Visualization.Data
                 endTime = this.FindNextDataPoint<T>(endTime, interval);
             }
 
-            return this.GetOrCreateSummaryCache(streamSource, interval).ReadSummary<T>(viewMode, startTime, endTime, tailCount, tailRange);
+            return this.GetOrCreateStreamSummary<T>(streamSource, interval).ReadSummary<T>(viewMode, startTime, endTime, tailCount, tailRange);
         }
 
         /// <inheritdoc/>
@@ -198,7 +198,7 @@ namespace Microsoft.Psi.Visualization.Data
             var searchInterval = interval;
             while (searchInterval <= this.MaxSummaryInterval)
             {
-                var cache = this.GetSummaryCache(searchInterval);
+                var cache = this.GetStreamSummaryOrDefault(searchInterval);
                 if (cache != null)
                 {
                     var intervalData = cache.Search<T>(time, StreamSummarySearchMode.Next);
@@ -227,10 +227,10 @@ namespace Microsoft.Psi.Visualization.Data
             var searchInterval = interval;
             while (searchInterval <= this.MaxSummaryInterval)
             {
-                var cache = this.GetSummaryCache(searchInterval);
-                if (cache != null)
+                var streamSummary = this.GetStreamSummaryOrDefault(searchInterval);
+                if (streamSummary != null)
                 {
-                    var intervalData = cache.Search<T>(time, StreamSummarySearchMode.Previous);
+                    var intervalData = streamSummary.Search<T>(time, StreamSummarySearchMode.Previous);
                     var adjustedTime = (intervalData.EndTime <= time) ? intervalData.EndTime : intervalData.OriginatingTime;
                     if (adjustedTime != DateTime.MinValue)
                     {
@@ -244,7 +244,7 @@ namespace Microsoft.Psi.Visualization.Data
             return time;
         }
 
-        private IStreamSummary GetSummaryCache(TimeSpan interval)
+        private IStreamSummary GetStreamSummaryOrDefault(TimeSpan interval)
         {
             if (this.summaryCaches.ContainsKey(interval))
             {
@@ -254,10 +254,10 @@ namespace Microsoft.Psi.Visualization.Data
             return null;
         }
 
-        private IStreamSummary GetOrCreateSummaryCache(StreamSource streamSource, TimeSpan interval)
+        private IStreamSummary GetOrCreateStreamSummary<T>(StreamSource streamSource, TimeSpan interval)
         {
             // Get the summary cache if it exists.
-            IStreamSummary summaryCache = this.GetSummaryCache(interval);
+            IStreamSummary summaryCache = this.GetStreamSummaryOrDefault(interval);
 
             // A summary cache with the required interval does not exist, so create it now.
             if (summaryCache == null)

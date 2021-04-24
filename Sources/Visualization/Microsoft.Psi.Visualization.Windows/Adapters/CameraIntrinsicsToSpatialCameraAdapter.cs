@@ -8,22 +8,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of <see cref="ICameraIntrinsics"/> to spatial camera with default position.
+    /// Implements a stream adapter from <see cref="ICameraIntrinsics"/> to spatial camera with default position.
     /// </summary>
     [StreamAdapter]
     public class CameraIntrinsicsToSpatialCameraAdapter : StreamAdapter<ICameraIntrinsics, (ICameraIntrinsics, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CameraIntrinsicsToSpatialCameraAdapter"/> class.
-        /// </summary>
-        public CameraIntrinsicsToSpatialCameraAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static (ICameraIntrinsics, CoordinateSystem) Adapter(ICameraIntrinsics value, Envelope env)
-        {
-            return (value, new CoordinateSystem());
-        }
+        /// <inheritdoc/>
+        public override (ICameraIntrinsics, CoordinateSystem) GetAdaptedValue(ICameraIntrinsics source, Envelope envelope)
+            => (source, new CoordinateSystem());
     }
 }

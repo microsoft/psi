@@ -15,12 +15,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.DataTypes;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Implements a discrete event visualization object.
+    /// Implements a visualization object for <see cref="TimeIntervalHistory"/>.
     /// </summary>
     [VisualizationObject("Time Interval History")]
-    public class TimeIntervalHistoryVisualizationObject : TimelineVisualizationObject<TimeIntervalHistory>
+    [VisualizationPanelType(VisualizationPanelType.Timeline)]
+    public class TimeIntervalHistoryVisualizationObject : StreamIntervalVisualizationObject<TimeIntervalHistory>
     {
         /// <summary>
         /// The dictionary of brushes.

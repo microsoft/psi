@@ -19,6 +19,12 @@ namespace Microsoft.Psi.Imaging
         {
             if (pixelFormat == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
             {
+                // Note that System.Drawing.Imaging.PixelFormat specifies the colors in reverse order from how they
+                // are actually laid out in memory, so:
+                //
+                // System.Drawing.Imaging.PixelFormat.Format24bppRgb => Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp,
+                //
+                // and not Microsoft.Psi.Imaging.PixelFormat.RGB_24bpp.
                 return PixelFormat.BGR_24bpp;
             }
 
@@ -65,9 +71,22 @@ namespace Microsoft.Psi.Imaging
                 PixelFormat.Gray_16bpp => System.Drawing.Imaging.PixelFormat.Format16bppGrayScale,
                 PixelFormat.BGRA_32bpp => System.Drawing.Imaging.PixelFormat.Format32bppArgb,
                 PixelFormat.RGBA_64bpp => System.Drawing.Imaging.PixelFormat.Format64bppArgb,
+
+                // Note that System.Drawing.Imaging.PixelFormat specifies the colors in reverse order from how they
+                // are actually laid out in memory, so while
+                //
+                // Microsoft.Psi.Imaging.PixelFormat.BGR_24bpp => System.Drawing.Imaging.PixelFormat.Format24bppRgb,
+                //
+                // there is no equivalent System.Drawing.Imaging.PixelFormat for Microsoft.Psi.Imaging.PixelFormat.RGB_24bpp.
+                PixelFormat.RGB_24bpp =>
+                    throw new InvalidOperationException(
+                        $"Cannot convert {nameof(PixelFormat.RGB_24bpp)} pixel format to {nameof(System.Drawing.Imaging.PixelFormat)} " +
+                        $"as there is no corresponding value for 24-bit pixels in (rr gg bb) format."),
+
                 PixelFormat.Undefined =>
                     throw new InvalidOperationException(
                         $"Cannot convert {nameof(PixelFormat.Undefined)} pixel format to {nameof(System.Drawing.Imaging.PixelFormat)}."),
+
                 _ => throw new Exception("Unknown pixel format."),
             };
         }
@@ -76,7 +95,10 @@ namespace Microsoft.Psi.Imaging
         /// Returns number of bytes/pixel for the specified pixel format.
         /// </summary>
         /// <param name="pixelFormat">Pixel format for which to determine number of bytes.</param>
-        /// <returns>Number of bytes in each pixel of the specified format.</returns>
+        /// <returns>
+        /// Number of bytes in each pixel of the specified format. If the pixel format is undefined,
+        /// this method returns 0.
+        /// </returns>
         internal static int GetBytesPerPixel(PixelFormat pixelFormat)
         {
             switch (pixelFormat)
@@ -88,6 +110,7 @@ namespace Microsoft.Psi.Imaging
                     return 2;
 
                 case PixelFormat.BGR_24bpp:
+                case PixelFormat.RGB_24bpp:
                     return 3;
 
                 case PixelFormat.BGRX_32bpp:
@@ -96,6 +119,37 @@ namespace Microsoft.Psi.Imaging
 
                 case PixelFormat.RGBA_64bpp:
                     return 8;
+
+                case PixelFormat.Undefined:
+                    return 0;
+
+                default:
+                    throw new ArgumentException("Unknown pixel format");
+            }
+        }
+
+        /// <summary>
+        /// Returns number of bits per channel (the bit depth) for the specified pixel format.
+        /// </summary>
+        /// <param name="pixelFormat">Pixel format for which to determine the bits per channel.</param>
+        /// <returns>
+        /// Number of bits per channel for the specified format. If the pixel format is undefined,
+        /// this method returns 0.
+        /// </returns>
+        internal static int GetBitsPerChannel(PixelFormat pixelFormat)
+        {
+            switch (pixelFormat)
+            {
+                case PixelFormat.Gray_8bpp:
+                case PixelFormat.BGR_24bpp:
+                case PixelFormat.BGRX_32bpp:
+                case PixelFormat.BGRA_32bpp:
+                case PixelFormat.RGB_24bpp:
+                    return 8;
+
+                case PixelFormat.Gray_16bpp:
+                case PixelFormat.RGBA_64bpp:
+                    return 16;
 
                 case PixelFormat.Undefined:
                     return 0;

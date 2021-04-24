@@ -6,7 +6,7 @@ namespace Microsoft.Psi.Visualization.Summarizers
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Represents a range summarizer that performs interval-based data summarization over a series of int values.
+    /// Represents a range summarizer that performs interval-based data summarization over int values.
     /// </summary>
     [Summarizer]
     public class IntRangeSummarizer : Summarizer<int, int>

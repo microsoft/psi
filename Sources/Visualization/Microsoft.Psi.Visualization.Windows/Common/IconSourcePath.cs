@@ -34,6 +34,21 @@ namespace Microsoft.Psi.Visualization
         public const string PartitionAdd = IconPrefix + "partition-add.png";
 
         /// <summary>
+        /// Create partition.
+        /// </summary>
+        public const string PartitionCreate = IconPrefix + "partition-create.png";
+
+        /// <summary>
+        /// Create partition.
+        /// </summary>
+        public const string PartitionCrop = IconPrefix + "partition-crop.png";
+
+        /// <summary>
+        /// Export partition.
+        /// </summary>
+        public const string PartitionExport = IconPrefix + "partition-export.png";
+
+        /// <summary>
         /// Remove partition.
         /// </summary>
         public const string PartitionRemove = IconPrefix + "partition-remove.png";
@@ -42,6 +57,11 @@ namespace Microsoft.Psi.Visualization
         /// Live Partition.
         /// </summary>
         public const string PartitionLive = IconPrefix + "partition-live.png";
+
+        /// <summary>
+        /// Invalid Partition.
+        /// </summary>
+        public const string PartitionInvalid = IconPrefix + "partition-invalid.png";
 
         /// <summary>
         /// Remove session.
@@ -184,6 +204,36 @@ namespace Microsoft.Psi.Visualization
         public const string MessagesInPanel = IconPrefix + "panel-messages.png";
 
         /// <summary>
+        /// One cell instant container.
+        /// </summary>
+        public const string InstantContainerOneCell = IconPrefix + "panel-matrix-1.png";
+
+        /// <summary>
+        /// Two cell instant container.
+        /// </summary>
+        public const string InstantContainerTwoCell = IconPrefix + "panel-matrix-2.png";
+
+        /// <summary>
+        /// Three cell instant container.
+        /// </summary>
+        public const string InstantContainerThreeCell = IconPrefix + "panel-matrix-3.png";
+
+        /// <summary>
+        /// Add instant container cell to the left.
+        /// </summary>
+        public const string InstantContainerAddCellLeft = IconPrefix + "panel-matrix-add-cell-left.png";
+
+        /// <summary>
+        /// Add instant container cell to the right.
+        /// </summary>
+        public const string InstantContainerAddCellRight = IconPrefix + "panel-matrix-add-cell-right.png";
+
+        /// <summary>
+        /// Remove instant container cell.
+        /// </summary>
+        public const string InstantContainerRemoveCell = IconPrefix + "panel-matrix-remove-cell.png";
+
+        /// <summary>
         /// Remove a panel.
         /// </summary>
         public const string RemovePanel = IconPrefix + "panel-remove.png";
@@ -204,9 +254,14 @@ namespace Microsoft.Psi.Visualization
         public const string ZoomToStream = IconPrefix + "zoom-to-stream.png";
 
         /// <summary>
-        /// Zoom to stream extents.
+        /// Zoom to selection.
         /// </summary>
         public const string ZoomToSelection = IconPrefix + "zoom-to-selection.png";
+
+        /// <summary>
+        /// Clear selection.
+        /// </summary>
+        public const string ClearSelection = IconPrefix + "selection-remove.png";
 
         /// <summary>
         /// Zoom to stream extents.
@@ -237,5 +292,25 @@ namespace Microsoft.Psi.Visualization
         /// A blank icon.
         /// </summary>
         public const string Blank = IconPrefix + "blank.png";
+
+        /// <summary>
+        /// Expand all nodes.
+        /// </summary>
+        public const string ExpandAllNodes = IconPrefix + "expand-all.png";
+
+        /// <summary>
+        /// Collapse all nodes.
+        /// </summary>
+        public const string CollapseAllNodes = IconPrefix + "collapse-all.png";
+
+        /// <summary>
+        /// Checkmark for menu items.
+        /// </summary>
+        public const string Checkmark = IconPrefix + "checkmark.png";
+
+        /// <summary>
+        /// Toggle visibility.
+        /// </summary>
+        public const string ToggleVisibility = IconPrefix + "stream-show-hide.png";
     }
 }

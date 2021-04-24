@@ -3,11 +3,10 @@
 
 namespace Microsoft.Psi.Data
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>
-    /// Defines a partition that can be added to a session. A partition represents a single data stream in a data store.
+    /// Defines a partition that can be added to a session.
     /// </summary>
     public interface IPartition
     {
@@ -17,9 +16,24 @@ namespace Microsoft.Psi.Data
         string Name { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether the the store for the partition is valid and readable.
+        /// </summary>
+        bool IsStoreValid { get; }
+
+        /// <summary>
         /// Gets the originating time interval (earliest to latest) of the messages in this partition.
         /// </summary>
         TimeInterval OriginatingTimeInterval { get; }
+
+        /// <summary>
+        /// Gets the size of the partition in bytes, if known.
+        /// </summary>
+        long? Size { get; }
+
+        /// <summary>
+        /// Gets the number of streams in the partition, if known.
+        /// </summary>
+        int? StreamCount { get; }
 
         /// <summary>
         /// Gets or sets the session that this partition belongs to.

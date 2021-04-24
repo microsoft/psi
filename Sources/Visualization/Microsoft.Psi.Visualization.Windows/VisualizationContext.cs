@@ -4,18 +4,14 @@
 namespace Microsoft.Psi.Visualization
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
-    using Microsoft.Psi.Audio;
-    using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
     using Microsoft.Psi.Visualization.Base;
-    using Microsoft.Psi.Visualization.Commands;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Tasks;
@@ -29,11 +25,10 @@ namespace Microsoft.Psi.Visualization
     /// </summary>
     public class VisualizationContext : ObservableObject
     {
+        private readonly DispatcherTimer liveStatusTimer = null;
+
         private VisualizationContainer visualizationContainer;
         private DatasetViewModel datasetViewModel = null;
-        private DispatcherTimer liveStatusTimer = null;
-
-        private List<TypeKeyedActionCommand> typeVisualizerActions = new List<TypeKeyedActionCommand>();
 
         static VisualizationContext()
         {
@@ -124,6 +119,9 @@ namespace Microsoft.Psi.Visualization
                     // Update bindings to the sources
                     this.VisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
 
+                    // And re-read the stream values at cursor (to publish to stream value visualizers)
+                    DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
+
                     return true;
                 }
             }
@@ -160,7 +158,11 @@ namespace Microsoft.Psi.Visualization
         public async Task RunDatasetBatchProcessingTaskAsync(DatasetViewModel datasetViewModel, BatchProcessingTaskMetadata batchProcessingTaskMetadata)
         {
             // Initialize the progress reporting window
-            var progressReportWindow = new RunBatchProcessingTaskWindow(Application.Current.MainWindow, batchProcessingTaskMetadata.Name, null);
+            var progressReportWindow = new RunBatchProcessingTaskWindow(
+                Application.Current.MainWindow,
+                batchProcessingTaskMetadata.Name,
+                null,
+                new TimeSpan(datasetViewModel.SessionViewModels.Sum(svm => svm.OriginatingTimeInterval.Span.Ticks)));
 
             // Initialize progress reporter for the status window
             IProgress<(string, double)> progress = new Progress<(string, double)>(tuple =>
@@ -169,6 +171,9 @@ namespace Microsoft.Psi.Visualization
                 progressReportWindow.Target = tuple.Item1;
                 if (tuple.Item2 == 1.0)
                 {
+                    // refresh the store reader connections
+                    DataManager.Instance.Refresh();
+
                     // close the status window when the task reports completion
                     progressReportWindow.Close();
                 }
@@ -178,9 +183,13 @@ namespace Microsoft.Psi.Visualization
             {
                 var task = datasetViewModel.Dataset.CreateDerivedPartitionAsync(
                     (pipeline, sessionImporter, exporter) => batchProcessingTaskMetadata.MethodInfo.Invoke(null, new object[] { pipeline, sessionImporter, exporter }),
-                    "Derived",
+                    batchProcessingTaskMetadata.OutputPartitionName ?? "Derived",
                     overwrite: true,
-                    replayDescriptor: ReplayDescriptor.ReplayAll,
+                    outputStoreName: batchProcessingTaskMetadata.OutputStoreName,
+                    outputStorePath: batchProcessingTaskMetadata.OutputStorePath,
+                    replayDescriptor: batchProcessingTaskMetadata.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
+                    deliveryPolicy: batchProcessingTaskMetadata.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : null,
+                    enableDiagnostics: batchProcessingTaskMetadata.EnableDiagnostics,
                     progress: progress);
 
                 // show the modal status window, which will be closed once the load dataset operation completes
@@ -188,8 +197,14 @@ namespace Microsoft.Psi.Visualization
 
                 await task;
 
-                // update the dataset view model as a new derived partition might have been created
-                datasetViewModel.Update();
+                // update the dataset view model as a new derived partition might have been created.
+                datasetViewModel.Update(datasetViewModel.Dataset);
+
+                // if the dataset has a known associated file, save it.
+                if (datasetViewModel.FileName != null)
+                {
+                    await datasetViewModel.SaveAsync(datasetViewModel.FileName);
+                }
             }
             catch (InvalidOperationException)
             {
@@ -207,7 +222,7 @@ namespace Microsoft.Psi.Visualization
         public async Task RunSessionBatchProcessingTask(SessionViewModel sessionViewModel, BatchProcessingTaskMetadata batchProcessingTaskMetadata)
         {
             // Initialize the progress reporting window
-            var progressReportWindow = new RunBatchProcessingTaskWindow(Application.Current.MainWindow, batchProcessingTaskMetadata.Name, null);
+            var progressReportWindow = new RunBatchProcessingTaskWindow(Application.Current.MainWindow, batchProcessingTaskMetadata.Name, null, sessionViewModel.OriginatingTimeInterval.Span);
 
             // Initialize progress reporter for the status window
             IProgress<(string, double)> progress = new Progress<(string, double)>(tuple =>
@@ -216,6 +231,9 @@ namespace Microsoft.Psi.Visualization
                 progressReportWindow.Target = tuple.Item1;
                 if (tuple.Item2 == 1.0)
                 {
+                    // refresh the store reader connections
+                    DataManager.Instance.Refresh();
+
                     // close the status window when the task reports completion
                     progressReportWindow.Close();
                 }
@@ -225,9 +243,13 @@ namespace Microsoft.Psi.Visualization
             {
                 var task = sessionViewModel.Session.CreateDerivedPartitionAsync(
                     (pipeline, sessionImporter, exporter) => batchProcessingTaskMetadata.MethodInfo.Invoke(null, new object[] { pipeline, sessionImporter, exporter }),
-                    "Derived",
+                    batchProcessingTaskMetadata.OutputPartitionName ?? "Derived",
                     overwrite: true,
-                    replayDescriptor: ReplayDescriptor.ReplayAll,
+                    outputStoreName: batchProcessingTaskMetadata.OutputStoreName,
+                    outputStorePath: batchProcessingTaskMetadata.OutputStorePath,
+                    replayDescriptor: batchProcessingTaskMetadata.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
+                    deliveryPolicy: batchProcessingTaskMetadata.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : null,
+                    enableDiagnostics: batchProcessingTaskMetadata.EnableDiagnostics,
                     progress: progress);
 
                 // show the modal status window, which will be closed once the load dataset operation completes
@@ -236,7 +258,13 @@ namespace Microsoft.Psi.Visualization
                 await task;
 
                 // update the session view model as a new derived partition might have been created
-                sessionViewModel.Update();
+                sessionViewModel.Update(sessionViewModel.Session);
+
+                // if the dataset has a known associated file, save it.
+                if (sessionViewModel.DatasetViewModel.FileName != null)
+                {
+                    await sessionViewModel.DatasetViewModel.SaveAsync(sessionViewModel.DatasetViewModel.FileName);
+                }
             }
             catch (InvalidOperationException)
             {
@@ -258,7 +286,7 @@ namespace Microsoft.Psi.Visualization
             visualizationObject.Name = visualizerMetadata.VisualizationFormatString.Replace(VisualizationObjectAttribute.DefaultVisualizationFormatString, streamTreeNode.Path);
 
             // If the visualization object requires stream supplemental metadata to function, check that we're able to read the supplemental metadata from the stream.
-            if (visualizationObject.RequiresSupplementalMetadata && !streamTreeNode.SupplementalMetadataIsKnownType)
+            if (visualizationObject.RequiresSupplementalMetadata && !streamTreeNode.SupplementalMetadataTypeIsKnown)
             {
                 new MessageBoxWindow(
                     Application.Current.MainWindow,
@@ -299,22 +327,18 @@ namespace Microsoft.Psi.Visualization
                 visualizationPanel = replacementPanel;
             }
 
-            // Make the target panel the current one
-            this.VisualizationContainer.CurrentPanel = visualizationPanel;
+            // Select the visualization panel in the tree
+            visualizationPanel.IsTreeNodeSelected = true;
 
             // Add the visualization object to the panel
             visualizationPanel.AddVisualizationObject(visualizationObject as VisualizationObject);
 
             // Update the binding
-            visualizationObject.StreamBinding = new StreamBinding(
-                streamTreeNode.StreamMetadata.Name,
-                streamTreeNode.StreamMetadata.PartitionName,
-                visualizerMetadata.StreamAdapterType,
-                string.IsNullOrWhiteSpace(streamTreeNode.MemberPath) || visualizationObject is LatencyVisualizationObject ? null : new object[] { streamTreeNode.MemberPath },
-                visualizerMetadata.SummarizerType,
-                null,
-                !string.IsNullOrWhiteSpace(streamTreeNode.MemberPath));
+            visualizationObject.StreamBinding = streamTreeNode.CreateStreamBinding(visualizerMetadata);
             visualizationObject.UpdateStreamSource(this.DatasetViewModel.CurrentSessionViewModel);
+
+            // Trigger an data read to update the visualization
+            DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
 
             // Check if this is a live stream
             this.DatasetViewModel.CurrentSessionViewModel.UpdateLivePartitionStatuses();
@@ -437,14 +461,7 @@ namespace Microsoft.Psi.Visualization
         /// <param name="streamTreeNode">The stream to zoom to.</param>
         public void ZoomToStreamExtents(StreamTreeNode streamTreeNode)
         {
-            if (streamTreeNode.FirstMessageOriginatingTime.HasValue && streamTreeNode.LastMessageOriginatingTime.HasValue)
-            {
-                this.VisualizationContainer.Navigator.Zoom(streamTreeNode.FirstMessageOriginatingTime.Value, streamTreeNode.LastMessageOriginatingTime.Value);
-            }
-            else
-            {
-                this.VisualizationContainer.Navigator.ZoomToDataRange();
-            }
+            this.VisualizationContainer.Navigator.Zoom(streamTreeNode.SubsumedFirstMessageOriginatingTime, streamTreeNode.SubsumedLastMessageOriginatingTime);
         }
 
         /// <summary>

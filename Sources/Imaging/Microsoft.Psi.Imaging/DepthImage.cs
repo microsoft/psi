@@ -243,34 +243,84 @@ namespace Microsoft.Psi.Imaging
         /// <param name="x">Pixel's X coordinate.</param>
         /// <param name="y">Pixel's Y coordinate.</param>
         /// <param name="gray">Gray value to set pixel to.</param>
-        public void SetPixel(int x, int y, int gray)
+        public void SetPixel(int x, int y, ushort gray)
         {
-            if (x < 0 || y < 0 || x >= this.Width || y >= this.Height)
+            if (x < 0 || x >= this.Width)
             {
-                return;
+                throw new ArgumentException("X coordinate is outside bounds", nameof(x));
+            }
+
+            if (y < 0 || y >= this.Height)
+            {
+                throw new ArgumentException("Y coordinate is outside bounds", nameof(y));
             }
 
             unsafe
             {
                 byte* src = (byte*)this.ImageData.ToPointer();
                 int pixelOffset = x * this.BitsPerPixel / 8 + y * this.Stride;
-                switch (this.PixelFormat)
+                *(ushort*)(src + pixelOffset) = gray;
+            }
+        }
+
+        /// <summary>
+        /// Gets the value of a pixel in the depth image.
+        /// </summary>
+        /// <param name="x">Pixel's X coordinate.</param>
+        /// <param name="y">Pixel's Y coordinate.</param>
+        /// <returns>The value of the pixel at the specified coordinates.</returns>
+        public ushort GetPixel(int x, int y)
+        {
+            if (x < 0 || x >= this.Width)
+            {
+                throw new ArgumentException("X coordinate is outside bounds", nameof(x));
+            }
+
+            if (y < 0 || y >= this.Height)
+            {
+                throw new ArgumentException("Y coordinate is outside bounds", nameof(y));
+            }
+
+            unsafe
+            {
+                return *(ushort*)((byte*)this.ImageData.ToPointer() + y * this.Stride + x * this.BitsPerPixel / 8);
+            }
+        }
+
+        /// <summary>
+        /// Gets the range of values in the depth image.
+        /// </summary>
+        /// <returns>A tuple describing the range of values in the depth image.</returns>
+        public (ushort, ushort) GetPixelRange()
+        {
+            ushort minRange = 65535;
+            ushort maxRange = 0;
+
+            unsafe
+            {
+                byte* src = (byte*)this.ImageData.ToPointer();
+                for (int y = 0; y < this.Height; y++)
                 {
-                    case PixelFormat.Gray_16bpp:
-                        src[pixelOffset + 0] = (byte)((gray >> 8) & 0xff);
-                        src[pixelOffset + 1] = (byte)(gray & 0xff);
-                        break;
-                    case PixelFormat.Gray_8bpp:
-                    case PixelFormat.BGRA_32bpp:
-                    case PixelFormat.BGR_24bpp:
-                    case PixelFormat.BGRX_32bpp:
-                    case PixelFormat.RGBA_64bpp:
-                        throw new InvalidOperationException(ExceptionDescriptionUnexpectedPixelFormat);
-                    case PixelFormat.Undefined:
-                    default:
-                        throw new ArgumentException(ExceptionDescriptionUnexpectedPixelFormat);
+                    var strideOffset = y * this.Stride;
+                    for (int x = 0; x < this.Width; x++)
+                    {
+                        int pixelOffset = (x << 1) + strideOffset;
+                        var value = *(ushort*)(src + pixelOffset);
+
+                        if (value < minRange)
+                        {
+                            minRange = value;
+                        }
+
+                        if (value > maxRange)
+                        {
+                            maxRange = value;
+                        }
+                    }
                 }
             }
+
+            return (minRange, maxRange);
         }
 
         /// <inheritdoc/>

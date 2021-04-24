@@ -19,34 +19,35 @@ namespace Microsoft.Psi.Visualization.Data
     /// <typeparam name="TDestination">The type of the summarized interval data.</typeparam>
     public class StreamSummary<TSource, TDestination> : IStreamSummary
     {
-        private Dictionary<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>, ObservableKeyedCache<DateTime, Message<TSource>>.ObservableKeyedView> activeStreamViews;
+        private readonly Dictionary<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>, ObservableKeyedCache<DateTime, Message<TSource>>.ObservableKeyedView> activeStreamViews;
+        private readonly Dictionary<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>, ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView> cachedSummaryViews;
+        private readonly ISummarizer<TSource, TDestination> summarizer;
+        private readonly Func<IntervalData<TDestination>, DateTime> keySelector;
+        private readonly Comparer<IntervalData<TDestination>> itemComparer;
+        private readonly StreamSource streamSource;
+        private readonly uint maxCacheSize;
+        private readonly object bufferLock = new object();
+
         private ObservableKeyedCache<DateTime, IntervalData<TDestination>> summaryCache;
-        private Dictionary<Tuple<DateTime, DateTime, uint, Func<DateTime, DateTime>>, ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView> cachedSummaryViews;
         private List<List<IntervalData<TDestination>>> summaryDataBuffer;
-        private ISummarizer<TSource, TDestination> summarizer;
-        private Func<IntervalData<TDestination>, DateTime> keySelector;
-        private Comparer<IntervalData<TDestination>> itemComparer;
-        private StreamSource streamSource;
-        private TimeSpan interval;
-        private uint maxCacheSize;
+        private TimeSpan summaryInterval;
         private bool isCanceled = false;
-        private object bufferLock = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamSummary{TSource, TDestination}"/> class.
         /// </summary>
         /// <param name="streamSource">Stream source indicating which stream to summarize.</param>
-        /// <param name="interval">The time interval over which summary <see cref="IntervalData"/> values are calculated.</param>
+        /// <param name="summaryInterval">The time interval over which summary <see cref="IntervalData"/> values are calculated.</param>
         /// <param name="maxCacheSize">The maximum amount of data to cache before purging older summarized data.</param>
-        public StreamSummary(StreamSource streamSource, TimeSpan interval, uint maxCacheSize)
+        public StreamSummary(StreamSource streamSource, TimeSpan summaryInterval, uint maxCacheSize)
         {
             this.streamSource = streamSource;
-            this.interval = interval;
+            this.summaryInterval = summaryInterval;
             this.maxCacheSize = maxCacheSize;
 
             this.summaryDataBuffer = new List<List<IntervalData<TDestination>>>();
 
-            this.keySelector = s => Summarizer<TSource, TDestination>.GetIntervalStartTime(s.OriginatingTime, interval);
+            this.keySelector = s => Summarizer<TSource, TDestination>.GetIntervalStartTime(s.OriginatingTime, summaryInterval);
             this.itemComparer = Comparer<IntervalData<TDestination>>.Create((r1, r2) => this.keySelector(r1).CompareTo(this.keySelector(r2)));
             this.summaryCache = new ObservableKeyedCache<DateTime, IntervalData<TDestination>>(null, this.itemComparer, this.keySelector);
 
@@ -58,7 +59,7 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <inheritdoc />
-        public TimeSpan Interval => this.interval;
+        public TimeSpan Interval => this.summaryInterval;
 
         /// <summary>
         /// Gets a value indicating whether the stream summarizer has been canceled.
@@ -105,8 +106,7 @@ namespace Microsoft.Psi.Visualization.Data
                             // that intervals between first and last do not already exist in the cache (i.e. only
                             // the boundary intervals can overlap, which should be the case if range requests
                             // do not overlap.
-                            IntervalData<TDestination> overlapped;
-                            if (this.summaryCache.TryGetValue(this.keySelector(range[0]), out overlapped))
+                            if (this.summaryCache.TryGetValue(this.keySelector(range[0]), out IntervalData<TDestination> overlapped))
                             {
                                 // Use summarizer-specific method to combine the two IntervalData values
                                 overlapped = this.summarizer.Combine(range[0], overlapped);
@@ -132,25 +132,25 @@ namespace Microsoft.Psi.Visualization.Data
 
         /// <inheritdoc />
         public ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView ReadSummary<TItem>(
-            ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView.ViewMode viewMode,
+            ObservableKeyedViewMode viewMode,
             DateTime startTime,
             DateTime endTime,
             uint tailCount,
             Func<DateTime, DateTime> tailRange)
         {
-            if (viewMode == ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView.ViewMode.TailRange)
+            if (viewMode == ObservableKeyedViewMode.TailRange)
             {
                 // Just read directly from the stream with the same tail range in live mode
                 this.ReadStream(tailRange);
             }
-            else if (viewMode == ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView.ViewMode.TailCount)
+            else if (viewMode == ObservableKeyedViewMode.TailCount)
             {
                 // We should read enough of the stream to generate the last tailCount intervals. So take the product of our
                 // summarization interval and tailCount, and use that interval as the tail range to read from the stream.
                 TimeSpan tailInterval = TimeSpan.FromTicks(this.Interval.Ticks * tailCount);
                 this.ReadStream(last => last - tailInterval);
             }
-            else if (viewMode == ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView.ViewMode.Fixed)
+            else if (viewMode == ObservableKeyedViewMode.Fixed)
             {
                 // Ranges for which we have not yet computed summary data.
                 foreach (var range in this.ComputeRangeRequests(startTime, endTime))
@@ -165,7 +165,7 @@ namespace Microsoft.Psi.Visualization.Data
 
             // Get or create the summary view from the cache
             return this.GetCachedSummaryView(
-                (ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView.ViewMode)viewMode,
+                viewMode,
                 startTime,
                 endTime,
                 tailCount,
@@ -183,12 +183,7 @@ namespace Microsoft.Psi.Visualization.Data
             if (viewExtent != null)
             {
                 // Get a fixed view of the data over the time range to search
-                var view = cache.GetView(
-                    ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView.ViewMode.Fixed,
-                    viewExtent.Item1,
-                    viewExtent.Item2,
-                    0,
-                    null);
+                var view = cache.GetView(ObservableKeyedViewMode.Fixed, viewExtent.Item1, viewExtent.Item2, 0, null);
 
                 int lo = 0;
                 int hi = view.Count - 1;
@@ -225,7 +220,7 @@ namespace Microsoft.Psi.Visualization.Data
                 }
             }
 
-            return default(IntervalData<TItem>);
+            return default;
         }
 
         private List<Tuple<DateTime, DateTime>> ComputeRangeRequests(DateTime startTime, DateTime endTime)
@@ -314,7 +309,7 @@ namespace Microsoft.Psi.Visualization.Data
             // Start a task to summarize the data
             Task.Factory.StartNew(() =>
             {
-                this.OnReceiveData(this.summarizer.Summarize(dataSource, this.interval));
+                this.OnReceiveData(this.summarizer.Summarize(dataSource, this.summaryInterval));
             });
         }
 
@@ -328,16 +323,15 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="tailRange">Tail duration function.</param>
         /// <returns>The requested summary view.</returns>
         private ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView GetCachedSummaryView(
-            ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView.ViewMode viewMode,
+            ObservableKeyedViewMode viewMode,
             DateTime startTime,
             DateTime endTime,
             uint tailCount,
             Func<DateTime, DateTime> tailRange)
         {
-            ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView newView;
             var newViewKey = Tuple.Create(startTime, endTime, tailCount, tailRange);
 
-            if (!this.cachedSummaryViews.TryGetValue(newViewKey, out newView))
+            if (!this.cachedSummaryViews.TryGetValue(newViewKey, out ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView newView))
             {
                 // Create the requested view over the cached summary data.
                 newView = this.summaryCache.GetView(viewMode, startTime, endTime, tailCount, tailRange);
@@ -345,7 +339,7 @@ namespace Microsoft.Psi.Visualization.Data
                 // Retain cached data by maintaining a table of summary views for which we want the data to be retained.
                 // This is currently done for fixed mode views only, as the views are constantly being updated in live
                 // mode, so it probably makes sense to just defer to the underlying cache to manage data retention.
-                if (viewMode == ObservableKeyedCache<DateTime, IntervalData<TDestination>>.ObservableKeyedView.ViewMode.Fixed)
+                if (viewMode == ObservableKeyedViewMode.Fixed)
                 {
                     // List of cached views, ordered by (startTime, endTime)
                     var cachedViews = this.cachedSummaryViews.OrderBy(v => v.Key.Item1).ThenBy(v => v.Key.Item2).ToList();
@@ -492,7 +486,7 @@ namespace Microsoft.Psi.Visualization.Data
             }
 
             // Remove the reference to unused views, potentially allowing the data within the view extent
-            // to be purged from the stream cache if there are no other views over it.
+            // to be purged from the cache if there are no other views over it.
             unusedStreamViews.ForEach(view => this.activeStreamViews.Remove(view.Key));
         }
 

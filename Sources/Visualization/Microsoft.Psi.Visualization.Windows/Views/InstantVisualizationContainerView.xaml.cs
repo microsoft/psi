@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Windows;
     using System.Windows.Controls;
@@ -17,8 +18,10 @@ namespace Microsoft.Psi.Visualization.Views
     /// <summary>
     /// Interaction logic for InstantVisualizationContainerView.xaml.
     /// </summary>
-    public partial class InstantVisualizationContainerView : UserControl
+    public partial class InstantVisualizationContainerView : UserControl, IContextMenuItemsSource
     {
+        private VisualizationPanel mouseOverVisualizationPanel;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InstantVisualizationContainerView"/> class.
         /// </summary>
@@ -29,10 +32,59 @@ namespace Microsoft.Psi.Visualization.Views
             this.SizeChanged += this.InstantVisualizationContainerView_SizeChanged;
         }
 
+        /// <inheritdoc/>
+        public ContextMenuItemsSourceType ContextMenuItemsSourceType => ContextMenuItemsSourceType.VisualizationPanelMatrixContainer;
+
+        /// <inheritdoc/>
+        public string ContextMenuObjectName => string.Empty;
+
         /// <summary>
         /// Gets the visualization panel.
         /// </summary>
         protected InstantVisualizationContainer VisualizationPanel => (InstantVisualizationContainer)this.DataContext;
+
+        /// <inheritdoc/>
+        public void AppendContextMenuItems(List<MenuItem> menuItems)
+        {
+            if (this.DataContext is InstantVisualizationContainer instantVisualizationContainer)
+            {
+                // Find the child panel that the mouse is over
+                // Run a hit test at the mouse cursor
+                this.mouseOverVisualizationPanel = null;
+                VisualTreeHelper.HitTest(
+                    this,
+                    null,
+                    new HitTestResultCallback(this.ContextMenuHitTestResult),
+                    new PointHitTestParameters(Mouse.GetPosition(this)));
+
+                if (this.mouseOverVisualizationPanel != null)
+                {
+                    menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.InstantContainerAddCellLeft, $"Insert Cell to the Left", instantVisualizationContainer.CreateIncreaseCellCountCommand(this.mouseOverVisualizationPanel, true)));
+                    menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.InstantContainerAddCellRight, $"Insert Cell to the Right", instantVisualizationContainer.CreateIncreaseCellCountCommand(this.mouseOverVisualizationPanel, false)));
+                    menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Remove Cell", instantVisualizationContainer.CreateRemoveCellCommand(this.mouseOverVisualizationPanel)));
+                    menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.InstantContainerRemoveCell, $"Remove {instantVisualizationContainer.Name}", instantVisualizationContainer.RemovePanelCommand));
+                }
+            }
+        }
+
+        private HitTestResultBehavior ContextMenuHitTestResult(HitTestResult result)
+        {
+            // Find the visualization panel view that the mouse is over
+            DependencyObject dependencyObject = result.VisualHit;
+            while (dependencyObject != null)
+            {
+                if (dependencyObject is IContextMenuItemsSource contextMenuItemsSource && contextMenuItemsSource.ContextMenuItemsSourceType == ContextMenuItemsSourceType.VisualizationPanel)
+                {
+                    // Get the visualization panel related to the visualization panel view
+                    this.mouseOverVisualizationPanel = (contextMenuItemsSource as VisualizationPanelView).DataContext as VisualizationPanel;
+                    return HitTestResultBehavior.Stop;
+                }
+
+                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
+            }
+
+            return HitTestResultBehavior.Continue;
+        }
 
         private void InstantVisualizationContainerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

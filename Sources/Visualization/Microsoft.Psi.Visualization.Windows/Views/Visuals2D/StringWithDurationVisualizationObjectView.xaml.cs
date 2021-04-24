@@ -3,12 +3,10 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
-    using System.Windows.Controls;
-
     /// <summary>
     /// Interaction logic for StringWithDurationVisualizationObjectView.xaml.
     /// </summary>
-    public partial class StringWithDurationVisualizationObjectView : UserControl
+    public partial class StringWithDurationVisualizationObjectView : VisualizationObjectView
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringWithDurationVisualizationObjectView"/> class.

@@ -8,22 +8,19 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of spatial image (encoded) to spatial image (decoded).
+    /// Implements a stream adapter from encoded spatial image (shared encoded image with position) to spatial image (shared image with position).
     /// </summary>
     [StreamAdapter]
     public class EncodedSpatialImageToSpatialImageAdapter : StreamAdapter<(Shared<EncodedImage>, CoordinateSystem), (Shared<Image>, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncodedSpatialImageToSpatialImageAdapter"/> class.
-        /// </summary>
-        public EncodedSpatialImageToSpatialImageAdapter()
-            : base(Adapter)
-        {
-        }
+        private readonly EncodedImageToImageAdapter imageAdapter = new EncodedImageToImageAdapter();
 
-        private static (Shared<Image>, CoordinateSystem) Adapter((Shared<EncodedImage>, CoordinateSystem) value, Envelope env)
-        {
-            return (value.Item1?.Decode(), value.Item2);
-        }
+        /// <inheritdoc/>
+        public override (Shared<Image>, CoordinateSystem) GetAdaptedValue((Shared<EncodedImage>, CoordinateSystem) source, Envelope envelope)
+            => (this.imageAdapter.GetAdaptedValue(source.Item1, envelope), source.Item2);
+
+        /// <inheritdoc/>
+        public override void Dispose((Shared<Image>, CoordinateSystem) destination)
+            => this.imageAdapter.Dispose(destination.Item1);
     }
 }

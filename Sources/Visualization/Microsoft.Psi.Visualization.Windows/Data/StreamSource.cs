@@ -24,13 +24,17 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="streamMetadata">The metadata for the stream.</param>
         /// <param name="streamAdapter">The stream adapter to use when reading stream data.</param>
         /// <param name="summarizer">The summarizer to use when reading the stream.</param>
+        /// <param name="allocator">The allocator to use when reading data.</param>
+        /// <param name="deallocator">The deallocator to use when reading data.</param>
         public StreamSource(
             PartitionViewModel partitionViewModel,
             Type streamReaderType,
             string streamName,
             IStreamMetadata streamMetadata,
             IStreamAdapter streamAdapter,
-            ISummarizer summarizer)
+            ISummarizer summarizer,
+            Func<dynamic> allocator,
+            Action<dynamic> deallocator)
         {
             this.StoreName = partitionViewModel.StoreName;
             this.StorePath = partitionViewModel.StorePath;
@@ -40,8 +44,10 @@ namespace Microsoft.Psi.Visualization.Data
             this.StreamAdapter = streamAdapter;
             this.Summarizer = summarizer;
             this.IsLive = partitionViewModel.IsLivePartition;
+            this.Allocator = allocator;
+            this.Deallocator = deallocator;
 
-            partitionViewModel.PropertyChanged += this.PartitionPropertyChanged;
+            partitionViewModel.PropertyChanged += this.OnPartitionViewModelPropertyChanged;
         }
 
         /// <summary>
@@ -89,6 +95,16 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
+        /// Gets the stream source allocator.
+        /// </summary>
+        public Func<dynamic> Allocator { get; }
+
+        /// <summary>
+        /// Gets the stream source deallocator.
+        /// </summary>
+        public Action<dynamic> Deallocator { get; }
+
+        /// <summary>
         /// Determines whether two stream sources are equal.
         /// </summary>
         /// <param name="first">The first stream source to compare.</param>
@@ -97,9 +113,9 @@ namespace Microsoft.Psi.Visualization.Data
         public static bool operator ==(StreamSource first, StreamSource second)
         {
             // Check for null on left side.
-            if (object.ReferenceEquals(first, null))
+            if (first is null)
             {
-                if (object.ReferenceEquals(second, null))
+                if (second is null)
                 {
                     // null == null = true.
                     return true;
@@ -165,7 +181,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         /// <param name="sender">The sender of the event.</param>
         /// <param name="e">The event args for the event.</param>
-        private void PartitionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPartitionViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PartitionViewModel.IsLivePartition))
             {

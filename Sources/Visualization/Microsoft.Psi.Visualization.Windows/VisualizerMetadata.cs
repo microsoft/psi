@@ -176,121 +176,15 @@ namespace Microsoft.Psi.Visualization
         }
 
         /// <summary>
-        /// Gets the visualizer metadata whose data type is hierarchically closest to a stream's data type.
-        /// Metadata objects that don't use an adapter are prioritized first.
+        /// Generates a clone of the visualizer metadata with a different stream adapter type.
         /// </summary>
-        /// <param name="dataType">The data type of messages in the stream.</param>
-        /// <param name="metadatas">A list of metadatas to select from.</param>
-        /// <returns>The metadata whose data type is closest (hierarchically, prioritizing non-adapters) to the message data type.</returns>
-        public static VisualizerMetadata GetClosestVisualizerMetadata(Type dataType, IEnumerable<VisualizerMetadata> metadatas)
+        /// <param name="streamAdapterType">The new stream adapter type.</param>
+        /// <returns>A clone of the visualizer metadata with a different stream adapter type.</returns>
+        internal VisualizerMetadata GetCloneWithNewStreamAdapterType(Type streamAdapterType)
         {
-            // Get the collection of metadatas that don't use an adapter
-            var nonAdaptedMetadatas = metadatas.Where(m => m.StreamAdapterType == null);
-
-            // If there are any metadata objects that don't use an adapter, return the one
-            // whose data type is closest to the message data type in the derivation hierarchy.
-            if (nonAdaptedMetadatas.Any())
-            {
-                VisualizerMetadata metadata = GetVisualizerMetadataOfNearestBaseType(dataType, nonAdaptedMetadatas);
-                if (metadata != default)
-                {
-                    return metadata;
-                }
-            }
-
-            // Return the metadata object whose data type is closest
-            // to the message data type in the derivation hierarchy.
-            return GetVisualizerMetadataOfNearestBaseType(dataType, metadatas);
-        }
-
-        /// <summary>
-        /// Instert a custom object adapter for viewing messages.
-        /// </summary>
-        /// <param name="visualizerMetadata">The visualizer metadata into which to insert the object adapter.</param>
-        /// <param name="sourceDataType">The type of the source data.</param>
-        /// <returns>A new visualizer metadata containing an object adapter.</returns>
-        internal static VisualizerMetadata InsertObjectAdapter(VisualizerMetadata visualizerMetadata, Type sourceDataType)
-        {
-            // Clone the metadata
-            VisualizerMetadata newMetadata = visualizerMetadata.DeepClone();
-
-            // Create an object adapter from the node type to object so that the message
-            // visualization object displays the actual data values for types that we understand.
-            newMetadata.StreamAdapterType = typeof(ObjectAdapter<>).MakeGenericType(sourceDataType);
-
+            var newMetadata = this.DeepClone();
+            newMetadata.StreamAdapterType = streamAdapterType;
             return newMetadata;
-        }
-
-        /// <summary>
-        /// Instert a custom object adapter for viewing message latencies.
-        /// </summary>
-        /// <param name="visualizerMetadata">The visualizer metadata into which to insert the object adapter.</param>
-        /// <param name="sourceDataType">The type of the source data.</param>
-        /// <returns>A new visualizer metadata containing an object adapter.</returns>
-        internal static VisualizerMetadata InsertObjectToLatencyAdapter(VisualizerMetadata visualizerMetadata, Type sourceDataType)
-        {
-            // Clone the metadata
-            VisualizerMetadata newMetadata = visualizerMetadata.DeepClone();
-
-            // Create an object adapter from the node type to object so that the message
-            // visualization object displays the actual data values for types that we understand.
-            newMetadata.StreamAdapterType = typeof(ObjectToLatencyAdapter<>).MakeGenericType(sourceDataType);
-
-            return newMetadata;
-        }
-
-        /// <summary>
-        /// Creates a stream member adapter based on a specified visualizer metadata.  Any existing stream
-        /// adapter in the given visualizer metadata will be preserved within the stream member adapter.
-        /// </summary>
-        /// <param name="visualizerMetadata">The visualizer metadata.</param>
-        /// <param name="sourceDataType">The type of the stream's source data.</param>
-        /// <returns>A new visualizer metadata containing a stream member adapter.</returns>
-        internal static VisualizerMetadata CreateStreamMemberAdapter(VisualizerMetadata visualizerMetadata, Type sourceDataType)
-        {
-            // Clone the metadata
-            var metadataClone = visualizerMetadata.DeepClone();
-
-            // If the visualizer metadata already contains a stream adapter, create a stream member adapter that
-            // encapsulates it, otherwise create a stream member adapter that adapts directly from the message
-            // type to the member type.
-            if (visualizerMetadata.StreamAdapterType != null)
-            {
-                IStreamAdapter existingStreamAdapter = (IStreamAdapter)Activator.CreateInstance(visualizerMetadata.StreamAdapterType);
-                metadataClone.StreamAdapterType = typeof(StreamMemberAdapter<,,,>).MakeGenericType(sourceDataType, existingStreamAdapter.SourceType, visualizerMetadata.StreamAdapterType, existingStreamAdapter.DestinationType);
-            }
-            else
-            {
-                metadataClone.StreamAdapterType = typeof(StreamMemberAdapter<,>).MakeGenericType(sourceDataType, metadataClone.DataType);
-            }
-
-            return metadataClone;
-        }
-
-        /// <summary>
-        /// Gets the visualizer metadata whose data type is hierarchially closest to a stream's data type.
-        /// </summary>
-        /// <param name="dataType">The data type of messages in the stream.</param>
-        /// <param name="metadatas">A collection of metadatas to select from.</param>
-        /// <returns>The metadata whose data type is hierarchically closest to the message data type.</returns>
-        private static VisualizerMetadata GetVisualizerMetadataOfNearestBaseType(Type dataType, IEnumerable<VisualizerMetadata> metadatas)
-        {
-            Type type = dataType;
-            do
-            {
-                VisualizerMetadata metadata = metadatas.FirstOrDefault(m => m.DataType == type);
-                if (metadata != default)
-                {
-                    return metadata;
-                }
-
-                type = type.BaseType;
-            }
-            while (type != null);
-
-            // The collection of metadata objects passed to this method should be guaranteed
-            // to find a match.  If that failed, then there's a bug in our logic.
-            throw new ApplicationException("No compatible metadata could be found for the message type");
         }
 
         private static void Create(

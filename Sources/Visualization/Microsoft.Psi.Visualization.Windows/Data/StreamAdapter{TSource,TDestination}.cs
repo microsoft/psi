@@ -6,22 +6,12 @@ namespace Microsoft.Psi.Visualization.Data
     using System;
 
     /// <summary>
-    /// Represents an object that adapts messages from one type to another.
+    /// Provides a base abstract class for stream adapters.
     /// </summary>
     /// <typeparam name="TSource">The type of the source message.</typeparam>
     /// <typeparam name="TDestination">The type of the destination message.</typeparam>
-    public class StreamAdapter<TSource, TDestination> : IStreamAdapter
+    public abstract class StreamAdapter<TSource, TDestination> : IStreamAdapter
     {
-        /// <summary>
-        /// Gets default stream adapter.
-        /// </summary>
-        public static readonly IStreamAdapter Default = new StreamAdapter<TDestination, TDestination>((src, env) => src);
-
-        /// <summary>
-        /// Flag indicating whether type parameter TSrc is Shared{} or not.
-        /// </summary>
-        public static readonly bool SourceIsSharedType = typeof(TSource).IsGenericType && typeof(TSource).GetGenericTypeDefinition() == typeof(Shared<>);
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamAdapter{TSource, TDestination}"/> class.
         /// When used, subtypes should set the adapter field in their ctor.
@@ -29,61 +19,37 @@ namespace Microsoft.Psi.Visualization.Data
         protected StreamAdapter()
         {
             this.DestinationType = typeof(TDestination);
-            this.Pool = PoolManager.Instance.GetPool<TSource>();
             this.SourceType = typeof(TSource);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StreamAdapter{TSource, TDestination}"/> class.
-        /// </summary>
-        /// <param name="adapterFn">Adapter function.</param>
-        protected StreamAdapter(Func<TSource, Envelope, TDestination> adapterFn)
-            : this()
-        {
-            this.AdapterFn = adapterFn ?? throw new ArgumentNullException(nameof(adapterFn));
-        }
-
-        /// <summary>
-        /// Gets the allocator.
-        /// </summary>
-        public Func<TSource> Allocator
-        {
-            get
-            {
-                if (this.Pool == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return () => (TSource)this.Pool.GetOrCreate();
-                }
-            }
         }
 
         /// <inheritdoc />
         public Type DestinationType { get; }
 
         /// <inheritdoc />
-        public IPool Pool { get; private set; }
-
-        /// <inheritdoc />
         public Type SourceType { get; }
 
         /// <summary>
-        /// Gets or sets the adapter function for the stream adapter.
+        /// Gets the allocator for reading source objects.
         /// </summary>
-        protected Func<TSource, Envelope, TDestination> AdapterFn { get; set; }
+        public virtual Func<TSource> SourceAllocator => null;
 
         /// <summary>
-        /// Adapts source data to destination data.
+        /// Gets the deallocator for reading source objects.
         /// </summary>
-        /// <param name="data">Source data.</param>
-        /// <returns>Destination data.</returns>
-        public TDestination AdaptData(TSource data)
-        {
-            return this.AdapterFn(data, default(Envelope));
-        }
+        public virtual Action<TSource> SourceDeallocator =>
+            source =>
+            {
+                if (source is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            };
+
+        /// <inheritdoc/>
+        Func<dynamic> IStreamAdapter.SourceAllocator => this.SourceAllocator != null ? () => this.SourceAllocator() : null;
+
+        /// <inheritdoc/>
+        Action<dynamic> IStreamAdapter.SourceDeallocator => this.SourceDeallocator != null ? t => this.SourceDeallocator(t) : null;
 
         /// <summary>
         /// Adapts a source message receiver to a destination message receiver.
@@ -94,23 +60,27 @@ namespace Microsoft.Psi.Visualization.Data
         {
             return (data, env) =>
             {
-                var dest = this.AdapterFn(data, env);
-
-                // Release the reference to the source data if it's shared.
-                if (SourceIsSharedType && data != null)
-                {
-                    (data as IDisposable).Dispose();
-                }
-
+                var dest = this.GetAdaptedValue(data, env);
                 receiver(dest, env);
             };
         }
 
-        /// <inheritdoc />
-        public void Dispose()
+        /// <summary>
+        /// Gets the adapted value.
+        /// </summary>
+        /// <param name="source">The source value.</param>
+        /// <param name="envelope">The source envelope.</param>
+        /// <returns>The adapted value.</returns>
+        public abstract TDestination GetAdaptedValue(TSource source, Envelope envelope);
+
+        /// <summary>
+        /// Disposes an adapter object that was created by this adapter.
+        /// </summary>
+        /// <param name="destination">The adapted object.</param>
+        /// <remaks>This method is to be overriden by derived stream adapters that allocate
+        /// new objects in the process of constructing the adapter object.</remaks>
+        public virtual void Dispose(TDestination destination)
         {
-            this.Pool?.Dispose();
-            this.Pool = null;
         }
     }
 }

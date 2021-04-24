@@ -179,7 +179,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <returns>Average queued message count.</returns>
         public static double GetAverageQueuedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
-            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.QueueSize).Sum();
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.AvgDeliveryQueueSize).Sum();
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <returns>Dropped message count.</returns>
         public static int GetDroppedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
-            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.DroppedCount).Sum();
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.TotalMessageDroppedCount).Sum();
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <returns>Dropped message count.</returns>
         public static int GetDroppedMessageAveragePerTimeSpan(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
-            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.DroppedPerTimeSpan).Sum();
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.WindowMessageDroppedCount).Sum();
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <returns>Processed message count.</returns>
         public static int GetProcessedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
-            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.ProcessedCount).Sum();
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.TotalMessageProcessedCount).Sum();
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <returns>Processed message count.</returns>
         public static int GetProcessedMessageAveragePerTimeSpan(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
-            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.ProcessedPerTimeSpan).Sum();
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.WindowMessageProcessedCount).Sum();
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <returns>Throttled receiver count.</returns>
         public static int GetThrottledReceiverCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
-            return pipeline.GetAllReceiverDiagnostics().Where(r => r.Throttled && (predicate == null ? true : predicate(r))).Count();
+            return pipeline.GetAllReceiverDiagnostics().Where(r => r.ReceiverIsThrottled && (predicate == null ? true : predicate(r))).Count();
         }
 
         /// <summary>

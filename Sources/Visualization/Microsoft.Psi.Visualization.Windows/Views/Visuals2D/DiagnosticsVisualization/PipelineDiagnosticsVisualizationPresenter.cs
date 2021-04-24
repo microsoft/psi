@@ -125,16 +125,17 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public void UpdateSettings(PipelineDiagnosticsVisualizationObject visualizationObject)
         {
             // convert colors to MSAGL graph colors
-            Func<System.Windows.Media.Color, Color> colorFromMediaColor = (System.Windows.Media.Color color) => new Color(color.R, color.G, color.B);
+            static Color ColorFromMediaColor(System.Windows.Media.Color color) => new Color(color.R, color.G, color.B);
+
             this.model.VisualizationObject = visualizationObject;
-            this.EdgeColor = colorFromMediaColor(visualizationObject.EdgeColor);
-            this.HighlightColor = colorFromMediaColor(visualizationObject.HighlightColor);
-            this.NodeColor = colorFromMediaColor(visualizationObject.NodeColor);
-            this.SourceNodeColor = colorFromMediaColor(visualizationObject.SourceNodeColor);
-            this.SubpipelineColor = colorFromMediaColor(visualizationObject.SubpipelineColor);
-            this.ConnectorColor = colorFromMediaColor(visualizationObject.ConnectorColor);
-            this.JoinColor = colorFromMediaColor(visualizationObject.JoinColor);
-            this.HeatmapColorBase = colorFromMediaColor(visualizationObject.HeatmapColor);
+            this.EdgeColor = ColorFromMediaColor(visualizationObject.EdgeColor);
+            this.HighlightColor = ColorFromMediaColor(visualizationObject.HighlightColor);
+            this.NodeColor = ColorFromMediaColor(visualizationObject.NodeColor);
+            this.SourceNodeColor = ColorFromMediaColor(visualizationObject.SourceNodeColor);
+            this.SubpipelineColor = ColorFromMediaColor(visualizationObject.SubpipelineColor);
+            this.ConnectorColor = ColorFromMediaColor(visualizationObject.ConnectorColor);
+            this.JoinColor = ColorFromMediaColor(visualizationObject.JoinColor);
+            this.HeatmapColorBase = ColorFromMediaColor(visualizationObject.HeatmapColor);
             this.InfoTextSize = visualizationObject.InfoTextSize;
             this.ShowExporterConnections = visualizationObject.ShowExporterConnections;
             this.LabelColorLight = Color.White;
@@ -176,24 +177,30 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         }
 
         /// <summary>
+        /// Clear the selected edge.
+        /// </summary>
+        public void ClearSelectedEdge()
+        {
+            this.model.SelectedEdgeId = -1;
+            this.view.Update(true);
+        }
+
+        /// <summary>
         /// Update selected edge.
         /// </summary>
-        /// <param name="edge">Selected edge.</param>
-        public void UpdateSelectedEdge(Edge edge)
+        /// <param name="receiverDiagnostics">The receiver diagnostics.</param>
+        public void UpdateReceiverDiagnostics(PipelineDiagnostics.ReceiverDiagnostics receiverDiagnostics)
         {
-            if (edge == null)
-            {
-                // clear selected edge (if any)
-                this.model.SelectedEdgeId = -1;
-                this.view.Update(true);
-                return;
-            }
+            this.UpdateReceiverDiagnostics(receiverDiagnostics, this.VisualGraph, true);
+        }
 
-            var input = edge.UserData as PipelineDiagnostics.ReceiverDiagnostics;
-            if (input != null)
-            {
-                this.UpdateSelectedEdge(input, this.VisualGraph, true);
-            }
+        /// <summary>
+        /// Adds the derived receiver diagnostics streams for a specified receiver id.
+        /// </summary>
+        /// <param name="receiverId">The receiver id.</param>
+        public void AddDerivedReceiverDiagnosticsStreams(int receiverId)
+        {
+            this.model.VisualizationObject.AddDerivedReceiverDiagnosticsStreams(receiverId);
         }
 
         /// <summary>
@@ -250,11 +257,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
         private static Edge GetEdgeById(int id, Graph graph)
         {
+            if (id < 0)
+            {
+                throw new InvalidOperationException("Cannot get edge for negative id.");
+            }
+
             foreach (var n in graph.Nodes)
             {
                 foreach (var e in n.Edges)
                 {
-                    if (e.UserData != null && ((PipelineDiagnostics.ReceiverDiagnostics)e.UserData).Id == id)
+                    if ((int)e.UserData == id)
                     {
                         return e;
                     }
@@ -271,10 +283,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             return typeName == "MessageConnector`1" || typeName == "MessageEnvelopeConnector`1";
         }
 
-        private void UpdateSelectedEdge(PipelineDiagnostics.ReceiverDiagnostics input, Graph graph, bool clicked)
+        private void UpdateReceiverDiagnostics(PipelineDiagnostics.ReceiverDiagnostics receiverDiagnostics, Graph graph, bool clicked)
         {
-            var edge = GetEdgeById(input.Id, graph);
-            if (clicked && this.model.SelectedEdgeId == input.Id)
+            var edge = GetEdgeById(receiverDiagnostics.Id, graph);
+            if (clicked && this.model.SelectedEdgeId == receiverDiagnostics.Id)
             {
                 // toggle unselected
                 edge.Attr.LineWidth = this.model.VisualizationObject.EdgeLineThickness; // unselect current
@@ -295,50 +307,53 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
 
             edge.Attr.LineWidth = this.model.VisualizationObject.EdgeLineThickness * 2; // select current
-            this.model.SelectedEdgeId = input.Id;
+            this.model.SelectedEdgeId = receiverDiagnostics.Id;
             var sb = new StringBuilder();
-            sb.Append($"Type: {TypeSpec.Simplify(input.TypeName)}" + Environment.NewLine);
-            sb.Append($"Message Size (avg): {input.MessageSize:0}" + Environment.NewLine);
-            sb.Append($"Queue Size: {input.QueueSize:0.###}" + Environment.NewLine);
-            sb.Append($"Processed Count: {input.ProcessedCount}" + Environment.NewLine);
-            sb.Append($"Processed/Time: {input.ProcessedPerTimeSpan:0.###}" + Environment.NewLine);
-            sb.Append($"Dropped Count: {input.DroppedCount}" + Environment.NewLine);
-            sb.Append($"Dropped/Time: {input.DroppedPerTimeSpan:0.###}" + Environment.NewLine);
-            sb.Append($"Latency at Emitter (avg): {input.MessageLatencyAtEmitter:0.###}ms" + Environment.NewLine);
-            sb.Append($"Latency at Receiver (avg): {input.MessageLatencyAtReceiver:0.###}ms" + Environment.NewLine);
-            sb.Append($"Processing Time (avg): {input.ProcessingTime:0.###}ms" + Environment.NewLine);
-            sb.Append($"Delivery Policy: {input.DeliveryPolicyName}" + Environment.NewLine);
+            sb.Append($"Id: {receiverDiagnostics.Id}" + Environment.NewLine);
+            sb.Append($"Type: {TypeSpec.Simplify(receiverDiagnostics.TypeName)}" + Environment.NewLine);
+            sb.Append($"Delivery Policy: {receiverDiagnostics.DeliveryPolicyName}" + Environment.NewLine);
+            sb.Append($"Delivery Queue Size (avg): {receiverDiagnostics.AvgDeliveryQueueSize:0.###}" + Environment.NewLine);
+            sb.Append($"Delivery Queue Size (last): {receiverDiagnostics.LastDeliveryQueueSize:0.###}" + Environment.NewLine);
+            sb.Append($"# Emitted (total): {receiverDiagnostics.TotalMessageEmittedCount}" + Environment.NewLine);
+            sb.Append($"# Emitted (window): {receiverDiagnostics.WindowMessageEmittedCount:0.###}" + Environment.NewLine);
+            sb.Append($"# Processed (total): {receiverDiagnostics.TotalMessageProcessedCount}" + Environment.NewLine);
+            sb.Append($"# Processed (window): {receiverDiagnostics.WindowMessageProcessedCount:0.###}" + Environment.NewLine);
+            sb.Append($"# Dropped (total): {receiverDiagnostics.TotalMessageDroppedCount}" + Environment.NewLine);
+            sb.Append($"# Dropped (window): {receiverDiagnostics.WindowMessageDroppedCount:0.###}" + Environment.NewLine);
+            sb.Append($"Message Size (avg): {receiverDiagnostics.AvgMessageSize:0}" + Environment.NewLine);
+            sb.Append($"Message Size (last): {receiverDiagnostics.LastMessageSize:0}" + Environment.NewLine);
+            sb.Append($"Message Created Latency (avg): {receiverDiagnostics.AvgMessageCreatedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Created Latency (last): {receiverDiagnostics.LastMessageCreatedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Emitted Latency (avg): {receiverDiagnostics.AvgMessageEmittedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Emitted Latency (last): {receiverDiagnostics.LastMessageEmittedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Received Latency (avg): {receiverDiagnostics.AvgMessageReceivedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Received Latency (last): {receiverDiagnostics.LastMessageReceivedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Process Time (avg): {receiverDiagnostics.AvgMessageProcessTime:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Process Time (last): {receiverDiagnostics.LastMessageProcessTime:0.###}ms" + Environment.NewLine);
             this.model.SelectedEdgeDetails = sb.ToString();
             this.view.Update(clicked);
         }
 
         private Func<PipelineDiagnostics.ReceiverDiagnostics, double> StatsSelector(bool heatmap)
         {
-            switch (this.model.VisualizationObject.HeatmapStatistics)
+            return this.model.VisualizationObject.HeatmapStatistics switch
             {
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.None:
-                    return null;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.LatencyAtEmitter:
-                    return i => i.MessageLatencyAtEmitter;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.LatencyAtReceiver:
-                    return i => i.MessageLatencyAtReceiver;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.Processing:
-                    return i => i.ProcessingTime;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.Throughput:
-                    return i => i.ProcessedCount;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.QueueSize:
-                    return i => i.QueueSize;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.DroppedCount:
-                    return i => i.DroppedCount;
-                case PipelineDiagnosticsVisualizationObject.HeatmapStats.MessageSize:
-                    return i =>
-                    {
-                        var avg = i.MessageSize;
-                        return heatmap && avg > 0 ? Math.Log(avg) : avg;
-                    };
-                default:
-                    throw new ArgumentException($"Unknown visualization selector type.");
-            }
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.None => null,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgDeliveryQueueSize => i => i.AvgDeliveryQueueSize,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageEmittedCount => i => i.TotalMessageEmittedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedCount => i => i.TotalMessageProcessedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedCount => i => i.TotalMessageDroppedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageSize => i =>
+                {
+                    var avg = i.AvgMessageSize;
+                    return heatmap && avg > 0 ? Math.Log(avg) : avg;
+                },
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageCreatedLatency => i => i.AvgMessageCreatedLatency,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageEmittedLatency => i => i.AvgMessageEmittedLatency,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageReceivedLatency => i => i.AvgMessageReceivedLatency,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime => i => i.AvgMessageProcessTime,
+                _ => throw new ArgumentException($"Unknown visualization selector type."),
+            };
         }
 
         private Color LabelColor(Color background)
@@ -352,27 +367,18 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
         private bool HilightEdge(PipelineDiagnostics.ReceiverDiagnostics receiverDiagnostics)
         {
-            switch (this.model.VisualizationObject.Highlight)
+            return this.model.VisualizationObject.Highlight switch
             {
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.None:
-                    return false;
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.UnlimitedDeliveryPolicy:
-                    return receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Unlimited));
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.LatestMessageDeliveryPolicy:
-                    return receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.LatestMessage));
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.ThrottleDeliveryPolicy:
-                    return receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Throttle));
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.SynchronousOrThrottleDeliveryPolicy:
-                    return receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.SynchronousOrThrottle));
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.LatencyConstrainedDeliveryPolicy:
-                    return receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.LatencyConstrained));
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.QueueSizeConstrainedDeliveryPolicy:
-                    return receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.QueueSizeConstrained));
-                case PipelineDiagnosticsVisualizationObject.HighlightCondition.ThrottledReceivers:
-                    return receiverDiagnostics.Throttled;
-                default:
-                    throw new ArgumentException($"Unknown highlight condition: {this.model.VisualizationObject.Highlight}");
-            }
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.None => false,
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.UnlimitedDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Unlimited)),
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.LatestMessageDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.LatestMessage)),
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.ThrottleDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Throttle)),
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.SynchronousOrThrottleDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.SynchronousOrThrottle)),
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.LatencyConstrainedDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.LatencyConstrained)),
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.QueueSizeConstrainedDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.QueueSizeConstrained)),
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.ThrottledReceivers => receiverDiagnostics.ReceiverIsThrottled,
+                _ => throw new ArgumentException($"Unknown highlight condition: {this.model.VisualizationObject.Highlight}"),
+            };
         }
 
         private Color HeatmapColor(double stats, Color baseColor)
@@ -386,6 +392,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             return new Color((byte)(baseR + heatR), (byte)(baseG + heatG), (byte)(baseB + heatB)); // blend from base to heat color
         }
 
+        private PipelineDiagnostics.ReceiverDiagnostics GetReceiverDiagnostics(Edge edge) =>
+            this.DiagnosticsGraph.GetAllReceiverDiagnostics().FirstOrDefault(rd => rd.Id == (int)edge.UserData);
+
         private void HeatmapStats(Graph graph, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector, bool perNode)
         {
             if (graph.Edges.Count() == 0)
@@ -393,7 +402,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 return;
             }
 
-            var edgeStats = graph.Edges.Where(e => e.UserData != null).Select(e => (e, statsSelector((PipelineDiagnostics.ReceiverDiagnostics)e.UserData)));
+            var edgeStats = graph.Edges.Where(e => (int)e.UserData != -1).Select(e => (e, statsSelector(this.GetReceiverDiagnostics(e))));
             var max = edgeStats.Select(x => x.Item2).Max();
 
             if (perNode)
@@ -404,7 +413,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     var inputs = node.InEdges;
                     if (inputs.Count() > 0)
                     {
-                        var maxStats = node.InEdges.Where(e => e.UserData != null).Select(e => statsSelector((PipelineDiagnostics.ReceiverDiagnostics)e.UserData)).Max();
+                        var maxStats = node.InEdges.Where(e => (int)e.UserData != -1).Select(e => statsSelector(this.GetReceiverDiagnostics(e))).Max();
                         var color = this.HeatmapColor(max > 0 ? maxStats / max : 0, this.NodeColor);
                         node.Attr.Color = color;
                         node.Attr.FillColor = color;
@@ -428,7 +437,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             if (selector != null)
             {
                 // visualize heatmap
-                var perNode = this.model.VisualizationObject.HeatmapStatistics == PipelineDiagnosticsVisualizationObject.HeatmapStats.Processing;
+                var perNode = this.model.VisualizationObject.HeatmapStatistics == PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime;
                 this.HeatmapStats(graph, selector, perNode);
             }
 
@@ -437,7 +446,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 foreach (var edge in graph.Edges)
                 {
-                    if (edge.UserData != null && this.HilightEdge((PipelineDiagnostics.ReceiverDiagnostics)edge.UserData))
+                    if ((int)edge.UserData != -1 && this.HilightEdge(this.GetReceiverDiagnostics(edge)))
                     {
                         edge.Attr.Color = this.HighlightColor;
                     }
@@ -457,7 +466,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             var typ = TypeSpec.Simplify(node.TypeName);
             var isStoppedSubpipeline = node.RepresentsSubpipeline != null && !node.RepresentsSubpipeline.IsPipelineRunning;
             var stopped = isStoppedSubpipeline || !node.IsRunning ? " (stopped)" : string.Empty;
-            vis.LabelText = node.Kind == PipelineElementKind.Subpipeline ? $"{node.Name}{stopped}|{typ}" : typ;
+            vis.LabelText = node.Kind == PipelineElementKind.Subpipeline ? $"{node.Name}{stopped}|{typ}" : (node.DiagnosticState ?? typ);
             vis.Label.FontColor = this.LabelColor(fillColor);
             vis.Attr.Color = fillColor;
             vis.Attr.FillColor = fillColor;
@@ -481,7 +490,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             return $"     {emitterName}{arrow}{receiverName}{stats}{deliveryPolicyName}     "; // extra padding to allow for stats changes without re-layout
         }
 
-        private Edge BuildVisualEdge(Node source, Node target, string emitterName, string receiverName, string stats, string deliveryPolicyName, Style style)
+        private Edge BuildVisualEdge(Node source, Node target, string emitterName, string receiverName, int receiverId, string stats, string deliveryPolicyName, Style style)
         {
             var edge = new Edge(source, target, ConnectionToGraph.Connected);
             edge.Attr.Color = this.EdgeColor;
@@ -489,16 +498,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             edge.Attr.AddStyle(style);
             edge.LabelText = this.BuildVisualEdgeLabelText(emitterName, receiverName, stats, deliveryPolicyName);
             edge.Label.FontColor = this.LabelColorLight;
+            edge.Label.UserData = edge;
+            edge.UserData = receiverId;
             return edge;
         }
 
         private Edge BuildVisualEdge(Node source, Node target, PipelineDiagnostics.ReceiverDiagnostics input, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector)
         {
             var stats = statsSelector != null ? $" ({statsSelector(input):0.#})" : string.Empty;
-            var edge = this.BuildVisualEdge(source, target, input.Source.Name, input.ReceiverName, stats, input.DeliveryPolicyName, Style.Solid);
-            edge.UserData = input;
-            edge.Label.UserData = edge;
-            return edge;
+            return this.BuildVisualEdge(source, target, input.Source.Name, input.ReceiverName, input.Id, stats, input.DeliveryPolicyName, Style.Solid);
         }
 
         private bool AddVisualEdge(Node source, Node target, PipelineDiagnostics.ReceiverDiagnostics input, Graph graph, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector)
@@ -509,7 +517,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 graph.AddPrecalculatedEdge(edge);
                 if (input.Id == this.model.SelectedEdgeId)
                 {
-                    this.UpdateSelectedEdge(input, graph, false);
+                    this.UpdateReceiverDiagnostics(input, graph, false);
                     return true;
                 }
             }
@@ -682,7 +690,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                         if (subpipelineIdToPipelineDiagnostics.ContainsKey(targetPipeline.Id))
                         {
                             var targetNode = graph.FindNode($"n{subpipelineNodes[targetPipeline.Id].Id}");
-                            graph.AddPrecalculatedEdge(this.BuildVisualEdge(connector, targetNode, n.Name, bridgedPipeline.Name, string.Empty, string.Empty, Style.Dotted));
+                            graph.AddPrecalculatedEdge(this.BuildVisualEdge(connector, targetNode, n.Name, bridgedPipeline.Name, -1, string.Empty, string.Empty, Style.Dotted));
                             break;
                         }
 
@@ -718,7 +726,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     {
                         var sourceNode = graph.FindNode($"n{sourceCurrentLevelId}");
                         var targetNode = graph.FindNode($"n{targetCurrentLevelId}");
-                        graph.AddPrecalculatedEdge(this.BuildVisualEdge(sourceNode, targetNode, string.Empty, descendantConnector.Name, string.Empty, string.Empty, Style.Dotted));
+                        graph.AddPrecalculatedEdge(this.BuildVisualEdge(sourceNode, targetNode, string.Empty, descendantConnector.Name, -1, string.Empty, string.Empty, Style.Dotted));
                     }
                 }
             }

@@ -7,6 +7,8 @@ namespace Microsoft.Psi.Visualization.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -37,7 +39,9 @@ namespace Microsoft.Psi.Visualization.Controls
         protected override void OnMouseMove(MouseEventArgs e)
         {
             // Only move the cursor if we're currently paused and if the cursor is currently following the mouse
-            if (this.Navigator.CursorMode == CursorMode.Manual && this.Navigator.CursorFollowsMouse)
+            if (this.Navigator.CursorMode == CursorMode.Manual &&
+                this.Navigator.CursorFollowsMouse &&
+                !(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
             {
                 DateTime time = this.GetTimeAtMousePointer(e);
                 DateTime? snappedTime = null;
@@ -46,7 +50,7 @@ namespace Microsoft.Psi.Visualization.Controls
                 // find the timestamp of the message that's temporally closest to the mouse pointer.
                 if (VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject streamVisualizationObject)
                 {
-                    snappedTime = streamVisualizationObject.GetSnappedTime(time);
+                    snappedTime = DataManager.Instance.GetTimeOfNearestMessage(streamVisualizationObject.StreamSource, time, NearestMessageType.Nearest);
                 }
 
                 if (snappedTime.HasValue)

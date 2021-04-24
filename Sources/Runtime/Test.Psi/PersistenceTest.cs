@@ -5,7 +5,6 @@ namespace Test.Psi
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Linq;
     using System.Reactive.Linq;
@@ -138,7 +137,7 @@ namespace Test.Psi
             using (var p2 = Pipeline.Create("read"))
             {
                 var readStore = PsiStore.Open(p2, name, this.path);
-                p2.Run();
+                Assert.AreEqual(0, readStore.AvailableStreams.Count());
             }
         }
 
@@ -543,7 +542,7 @@ namespace Test.Psi
 
             // manually read the index entries
             List<IndexEntry> indexEntries = new List<IndexEntry>();
-            using (var indexReader = new InfiniteFileReader(PsiStoreCommon.GetPathToLatestVersion(name, this.path), PsiStoreCommon.GetIndexFileName(name)))
+            using (var indexReader = new InfiniteFileReader(PsiStore.GetPathToLatestVersion(name, this.path), PsiStoreCommon.GetIndexFileName(name)))
             {
                 while (indexReader.MoveNext())
                 {
@@ -853,7 +852,7 @@ namespace Test.Psi
                 Assert.IsTrue(PsiStore.TryGetStreamMetadata(seq, out meta));
                 Assert.IsNotNull(meta);
                 Assert.AreEqual(meta.Id, seq.Out.Id);
-                Assert.AreEqual(meta.PartitionName, name);
+                Assert.AreEqual(meta.StoreName, name);
                 Assert.IsFalse(PsiStore.TryGetStreamMetadata(sel, out meta));
             }
         }
@@ -972,11 +971,17 @@ namespace Test.Psi
                     {
                         var now = Time.GetCurrentTime();
                         var realTimeDelta = (now - p2.Clock.RealTimeOrigin).Ticks;
-                        var messageDelta = (e.CreationTime - p2.Clock.Origin).Ticks;
-                        spaced = spaced && Math.Abs(realTimeDelta - messageDelta) < spacing.Ticks;
+                        var messageDelta = (e.OriginatingTime - p2.Clock.Origin).Ticks;
+
+                        // In realtime playback, the messages always arrive according to their originating times.
+                        // If we were replaying without realtime clock enforcement, the messages would eventually
+                        // outrun the realtime clock, and the messageDeltas would exceed the realTimeDeltas. The
+                        // check below verifies that this never happens, implying that the messages arrive spaced
+                        // apart by at least their originating time intervals.
+                        spaced = spaced && (realTimeDelta - messageDelta) >= 0;
                         replayCount++;
                     });
-                p2.Run(playbackInterval, true);
+                p2.Run(playbackInterval, enforceReplayClock: true);
             }
 
             Assert.IsTrue(spaced);
@@ -1546,6 +1551,79 @@ namespace Test.Psi
                 Assert.ThrowsException<InvalidOperationException>(() => store.GetSupplementalMetadata<int>("NoMeta"));
                 Assert.ThrowsException<InvalidCastException>(() => store.GetSupplementalMetadata<int>("WithMeta"));
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PersistingDictionaryKeysSupplementalMetadata()
+        {
+            // using factors as a quick way to get "keys" that come and go
+            IEnumerable<KeyValuePair<int, bool>> Factor(int n)
+            {
+                IEnumerable<int> Divisors(int n) => Enumerable.Range(1, n).Where(i => n % i == 0);
+                bool IsPrime(int n) => Divisors(n).Count() == 2;
+                if (n == 1)
+                {
+                    yield return KeyValuePair.Create(1, false);
+                }
+
+                while (n > 1)
+                {
+                    for (var i = 2; i <= n; i++)
+                    {
+                        if (n % i == 0)
+                        {
+                            yield return KeyValuePair.Create(i, IsPrime(i));
+                            n /= i;
+                        }
+                    }
+                }
+            }
+
+            // persisting dictionary with key metadata
+            var name = nameof(this.PersistingDictionaryKeysSupplementalMetadata);
+            using (var p = Pipeline.Create())
+            {
+                var exporter = PsiStore.Create(p, name, this.path);
+                Generators
+                    .Range(p, 0, 20, TimeSpan.FromMilliseconds(10))
+                    .Select(x => new Dictionary<int, bool>(Factor(x).Distinct()))
+                    .Write("Dictionary", exporter)
+                    .SummarizeDistinctKeysInSupplementalMetadata(exporter);
+                p.Run();
+            }
+
+            // now play back and get dictionary and key metadata
+            using var q = Pipeline.Create();
+            var importer = PsiStore.Open(q, name, this.path);
+            var distinct = importer.GetSupplementalMetadata<Exporter.DistinctKeysSupplementalMetadata<int>>("Dictionary");
+            var dictionary = importer.OpenStream<Dictionary<int, bool>>("Dictionary").Select(d => d.Select(kv => (kv.Key, kv.Value)).ToArray()).ToObservable().ToListObservable();
+            q.Run();
+
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { 1, 2, 3, 4, 5, 7, 11, 13, 17, 19 }, distinct.Keys));
+
+            var dict = dictionary.AsEnumerable().ToArray();
+            Assert.AreEqual(20, dict.Length);
+            Assert.IsTrue(Enumerable.SequenceEqual(new (int, bool)[0], dict[0]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (1, false), }, dict[1]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), }, dict[2]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (3, true), }, dict[3]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), }, dict[4]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (5, true), }, dict[5]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (3, true) }, dict[6]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (7, true), }, dict[7]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (4, false) }, dict[8]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (3, true), }, dict[9]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (5, true) }, dict[10]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (11, true), }, dict[11]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (3, true) }, dict[12]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (13, true), }, dict[13]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (7, true) }, dict[14]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (3, true), (5, true) }, dict[15]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (4, false) }, dict[16]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (17, true), }, dict[17]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (2, true), (3, true) }, dict[18]));
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { (19, true), }, dict[19]));
         }
 
         [DataContract(Name = "TestDataContract")]

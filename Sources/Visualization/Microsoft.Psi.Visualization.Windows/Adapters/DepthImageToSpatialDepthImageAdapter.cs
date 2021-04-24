@@ -8,22 +8,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of depth image to spatial depth image with default position.
+    /// Implements a stream adapter from depth image to spatial depth image with default position.
     /// </summary>
     [StreamAdapter]
     public class DepthImageToSpatialDepthImageAdapter : StreamAdapter<Shared<DepthImage>, (Shared<DepthImage>, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DepthImageToSpatialDepthImageAdapter"/> class.
-        /// </summary>
-        public DepthImageToSpatialDepthImageAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static (Shared<DepthImage>, CoordinateSystem) Adapter(Shared<DepthImage> value, Envelope env)
-        {
-            return (value, new CoordinateSystem());
-        }
+        /// <inheritdoc/>
+        public override (Shared<DepthImage>, CoordinateSystem) GetAdaptedValue(Shared<DepthImage> source, Envelope envelope)
+            => (source, new CoordinateSystem());
     }
 }

@@ -8,22 +8,19 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of spatial depth image (encoded) to spatial depth image (decoded).
+    /// Implements a stream adapter from encoded spatial depth image (shared encoded depth image with position) to spatial depth image (shared depth image with position).
     /// </summary>
     [StreamAdapter]
     public class EncodedSpatialDepthImageToSpatialDepthImageAdapter : StreamAdapter<(Shared<EncodedDepthImage>, CoordinateSystem), (Shared<DepthImage>, CoordinateSystem)>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncodedSpatialDepthImageToSpatialDepthImageAdapter"/> class.
-        /// </summary>
-        public EncodedSpatialDepthImageToSpatialDepthImageAdapter()
-            : base(Adapter)
-        {
-        }
+        private readonly EncodedDepthImageToDepthImageAdapter depthImageAdapter = new EncodedDepthImageToDepthImageAdapter();
 
-        private static (Shared<DepthImage>, CoordinateSystem) Adapter((Shared<EncodedDepthImage>, CoordinateSystem) value, Envelope env)
-        {
-            return (value.Item1?.Decode(), value.Item2);
-        }
+        /// <inheritdoc/>
+        public override (Shared<DepthImage>, CoordinateSystem) GetAdaptedValue((Shared<EncodedDepthImage>, CoordinateSystem) source, Envelope envelope)
+            => (this.depthImageAdapter.GetAdaptedValue(source.Item1, envelope), source.Item2);
+
+        /// <inheritdoc/>
+        public override void Dispose((Shared<DepthImage>, CoordinateSystem) destination)
+            => this.depthImageAdapter.Dispose(destination.Item1);
     }
 }

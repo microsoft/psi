@@ -267,6 +267,72 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Gets a pixel value in the image.
+        /// </summary>
+        /// <param name="x">The x coordinate of the pixel.</param>
+        /// <param name="y">The y coordinate of the pixel.</param>
+        /// <returns>A tuple containing the channel values of the pixel.</returns>
+        public (int r, int g, int b, int a) GetPixel(int x, int y)
+        {
+            unsafe
+            {
+                byte* src = (byte*)this.ImageData.ToPointer();
+                int pixelOffset = x * this.BitsPerPixel / 8 + y * this.Stride;
+                int red;
+                int green;
+                int blue;
+                int alpha;
+                switch (this.PixelFormat)
+                {
+                    case PixelFormat.BGRA_32bpp:
+                        red = src[pixelOffset + 2];
+                        green = src[pixelOffset + 1];
+                        blue = src[pixelOffset];
+                        alpha = src[pixelOffset + 3];
+                        break;
+
+                    case PixelFormat.BGR_24bpp:
+                    case PixelFormat.BGRX_32bpp:
+                        red = src[pixelOffset + 2];
+                        green = src[pixelOffset + 1];
+                        blue = src[pixelOffset];
+                        alpha = 255;
+                        break;
+
+                    case PixelFormat.RGB_24bpp:
+                        red = src[pixelOffset + 0];
+                        green = src[pixelOffset + 1];
+                        blue = src[pixelOffset + 2];
+                        alpha = 255;
+                        break;
+
+                    case PixelFormat.Gray_16bpp:
+                        red = green = blue = ((ushort*)src)[pixelOffset];
+                        alpha = 65535;
+                        break;
+
+                    case PixelFormat.Gray_8bpp:
+                        red = green = blue = src[pixelOffset];
+                        alpha = 255;
+                        break;
+
+                    case PixelFormat.RGBA_64bpp:
+                        red = ((ushort*)src)[pixelOffset];
+                        green = ((ushort*)src)[pixelOffset + 1];
+                        blue = ((ushort*)src)[pixelOffset + 2];
+                        alpha = ((ushort*)src)[pixelOffset + 3];
+                        break;
+
+                    case PixelFormat.Undefined:
+                    default:
+                        throw new ArgumentException(ExceptionDescriptionUnexpectedPixelFormat);
+                }
+
+                return (red, green, blue, alpha);
+            }
+        }
+
+        /// <summary>
         /// Sets a pixel in the image.
         /// </summary>
         /// <param name="x">Pixel's X coordinate.</param>
@@ -275,6 +341,10 @@ namespace Microsoft.Psi.Imaging
         /// <param name="g">Green channel's value.</param>
         /// <param name="b">Blue channel's value.</param>
         /// <param name="a">Alpha channel's value.</param>
+        /// <remarks>
+        /// For grayscale images (Gray_8bpp and Gray_16bpp), the pixel value is set using the <paramref name="r"/>
+        /// parameter. The <paramref name="g"/>, <paramref name="b"/> and <paramref name="a"/> parameters are ignored.
+        /// </remarks>
         public void SetPixel(int x, int y, int r, int g, int b, int a)
         {
             if (x < 0 || y < 0 || x >= this.Width || y >= this.Height)
@@ -289,24 +359,34 @@ namespace Microsoft.Psi.Imaging
                 switch (this.PixelFormat)
                 {
                     case PixelFormat.BGRA_32bpp:
-                        src[pixelOffset + 0] = (byte)r;
+                        src[pixelOffset + 0] = (byte)b;
                         src[pixelOffset + 1] = (byte)g;
-                        src[pixelOffset + 2] = (byte)b;
+                        src[pixelOffset + 2] = (byte)r;
                         src[pixelOffset + 3] = (byte)a;
                         break;
+
                     case PixelFormat.BGR_24bpp:
                     case PixelFormat.BGRX_32bpp:
+                        src[pixelOffset + 0] = (byte)b;
+                        src[pixelOffset + 1] = (byte)g;
+                        src[pixelOffset + 2] = (byte)r;
+                        break;
+
+                    case PixelFormat.RGB_24bpp:
                         src[pixelOffset + 0] = (byte)r;
                         src[pixelOffset + 1] = (byte)g;
                         src[pixelOffset + 2] = (byte)b;
                         break;
+
                     case PixelFormat.Gray_16bpp:
                         src[pixelOffset + 0] = (byte)((r >> 8) & 0xff);
                         src[pixelOffset + 1] = (byte)(r & 0xff);
                         break;
+
                     case PixelFormat.Gray_8bpp:
                         src[pixelOffset] = (byte)r;
                         break;
+
                     case PixelFormat.RGBA_64bpp:
                         src[pixelOffset + 0] = (byte)((r >> 8) & 0xff);
                         src[pixelOffset + 1] = (byte)(r & 0xff);
@@ -317,6 +397,7 @@ namespace Microsoft.Psi.Imaging
                         src[pixelOffset + 6] = (byte)((a >> 8) & 0xff);
                         src[pixelOffset + 7] = (byte)(a & 0xff);
                         break;
+
                     case PixelFormat.Undefined:
                     default:
                         throw new ArgumentException(ExceptionDescriptionUnexpectedPixelFormat);
@@ -332,51 +413,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="gray">Gray value to set pixel to.</param>
         public void SetPixel(int x, int y, int gray)
         {
-            if (x < 0 || y < 0 || x >= this.Width || y >= this.Height)
-            {
-                return;
-            }
-
-            unsafe
-            {
-                byte* src = (byte*)this.ImageData.ToPointer();
-                int pixelOffset = x * this.BitsPerPixel / 8 + y * this.Stride;
-                switch (this.PixelFormat)
-                {
-                    case PixelFormat.BGRA_32bpp:
-                        src[pixelOffset + 0] = (byte)gray;
-                        src[pixelOffset + 1] = (byte)gray;
-                        src[pixelOffset + 2] = (byte)gray;
-                        src[pixelOffset + 3] = (byte)255;
-                        break;
-                    case PixelFormat.BGR_24bpp:
-                    case PixelFormat.BGRX_32bpp:
-                        src[pixelOffset + 0] = (byte)gray;
-                        src[pixelOffset + 1] = (byte)gray;
-                        src[pixelOffset + 2] = (byte)gray;
-                        break;
-                    case PixelFormat.Gray_16bpp:
-                        src[pixelOffset + 0] = (byte)((gray >> 8) & 0xff);
-                        src[pixelOffset + 1] = (byte)(gray & 0xff);
-                        break;
-                    case PixelFormat.Gray_8bpp:
-                        src[pixelOffset] = (byte)gray;
-                        break;
-                    case PixelFormat.RGBA_64bpp:
-                        src[pixelOffset + 0] = (byte)((gray >> 8) & 0xff);
-                        src[pixelOffset + 1] = (byte)(gray & 0xff);
-                        src[pixelOffset + 2] = (byte)((gray >> 8) & 0xff);
-                        src[pixelOffset + 3] = (byte)(gray & 0xff);
-                        src[pixelOffset + 4] = (byte)((gray >> 8) & 0xff);
-                        src[pixelOffset + 5] = (byte)(gray & 0xff);
-                        src[pixelOffset + 6] = (byte)255;
-                        src[pixelOffset + 7] = (byte)255;
-                        break;
-                    case PixelFormat.Undefined:
-                    default:
-                        throw new Exception(ExceptionDescriptionUnexpectedPixelFormat);
-                }
-            }
+            this.SetPixel(x, y, gray, gray, gray, 65535);
         }
 
         /// <inheritdoc/>

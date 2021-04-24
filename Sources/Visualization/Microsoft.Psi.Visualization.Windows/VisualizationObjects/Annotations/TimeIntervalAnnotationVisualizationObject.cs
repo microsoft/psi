@@ -29,7 +29,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a visualization object for <see cref="TimeIntervalAnnotation"/>.
     /// </summary>
     [VisualizationObject("Time Interval Annotations")]
-    public class TimeIntervalAnnotationVisualizationObject : TimelineVisualizationObject<TimeIntervalAnnotation>
+    [VisualizationPanelType(VisualizationPanelType.Timeline)]
+    public class TimeIntervalAnnotationVisualizationObject : StreamIntervalVisualizationObject<TimeIntervalAnnotation>
     {
         private const string ErrorStreamNotBound = "The visualization object is not currently bound to a stream.";
         private const string ErrorEditingDisabled = "Annotation add/delete is currently disabled in the visualization object properties.";
@@ -327,24 +328,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(TimeIntervalAnnotationVisualizationObjectView));
 
-        /// <inheritdoc/>
-        public override IEnumerable<MenuItem> GetAdditionalContextMenuItems()
-        {
-            List<MenuItem> menuItems = new List<MenuItem>();
-
-            // Add the add annotation context menu item
-            menuItems.Add(MenuItemHelper.CreateMenuItem(null, "Add Annotation", this.GetAddAnnotationCommand()));
-
-            // If the mouse is above an existing annotation, add the delete annotation context menu item.
-            ICommand deleteCommand = this.GetDeleteAnnotationCommand();
-            if (deleteCommand != null)
-            {
-                menuItems.Add(MenuItemHelper.CreateMenuItem(null, "Delete Annotation", deleteCommand));
-            }
-
-            return menuItems;
-        }
-
         /// <summary>
         /// Sets a value in an annotation.
         /// </summary>
@@ -364,29 +347,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             DataManager.Instance.UpdateStream(this.StreamSource, updates);
         }
 
-        /// <inheritdoc/>
-        protected override void OnStreamBound()
-        {
-            base.OnStreamBound();
-            this.Definition = DataManager.Instance.GetSupplementalMetadata<AnnotationDefinition>(this.StreamSource);
-            this.GenerateLegendValue();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnStreamUnbound()
-        {
-            base.OnStreamUnbound();
-            this.Definition = null;
-        }
-
-        /// <inheritdoc />
-        protected override void OnDataCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            this.UpdateDisplayData();
-            base.OnDataCollectionChanged(e);
-        }
-
-        private ICommand GetAddAnnotationCommand()
+        /// <summary>
+        /// Gets the add annotation command for the context menu.
+        /// </summary>
+        /// <returns>The add annotation command.</returns>
+        public ICommand GetAddAnnotationCommand()
         {
             // All of the following must be true to allow an annotation to be added:
             //
@@ -420,7 +385,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             return new PsiCommand(() => this.AddAnnotation(selectionInterval));
         }
 
-        private ICommand GetDeleteAnnotationCommand()
+        /// <summary>
+        /// Gets the delete annotation command for the context menu.
+        /// </summary>
+        /// <returns>The delete annotation command.</returns>
+        public ICommand GetDeleteAnnotationCommand()
         {
             // All of the following must be true to delete an annotation:
             //
@@ -446,6 +415,28 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             return null;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnStreamBound()
+        {
+            base.OnStreamBound();
+            this.Definition = DataManager.Instance.GetSupplementalMetadata<AnnotationDefinition>(this.StreamSource);
+            this.GenerateLegendValue();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnStreamUnbound()
+        {
+            base.OnStreamUnbound();
+            this.Definition = null;
+        }
+
+        /// <inheritdoc />
+        protected override void OnDataCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            this.UpdateDisplayData();
+            base.OnDataCollectionChanged(e);
         }
 
         private PsiCommand CreateEditAnnotationErrorCommand(string errorMessage)
@@ -502,7 +493,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             // Find the nearest annotation to the left edge of the interval
-            int index = IndexHelper.GetIndexForTime(timeInterval.Left, this.Data.Count, (idx) => this.Data[idx].Data.Interval.Right, SnappingBehavior.Nearest);
+            int index = IndexHelper.GetIndexForTime(timeInterval.Left, this.Data.Count, (idx) => this.Data[idx].Data.Interval.Right, NearestMessageType.Nearest);
 
             // Check if the annotation intersects with the interval, then keep walking to the right until
             // we find an annotation within the interval or we go past the right hand side of the interval.

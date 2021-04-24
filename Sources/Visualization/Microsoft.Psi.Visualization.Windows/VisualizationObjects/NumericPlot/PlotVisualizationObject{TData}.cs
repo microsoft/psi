@@ -12,13 +12,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Represents a plot visualization object.
+    /// Provides an abstract base class for visualization objects for plotting numerical data.
     /// </summary>
-    /// <typeparam name="TData">The type of the data for the plot visualization object.</typeparam>
-    public abstract class PlotVisualizationObject<TData> : TimelineVisualizationObject<TData>
+    /// <typeparam name="TData">The type of the numerical data.</typeparam>
+    [VisualizationPanelType(VisualizationPanelType.Timeline)]
+    public abstract class PlotVisualizationObject<TData> : StreamIntervalVisualizationObject<TData>, IYValueRangeProvider
     {
+        /// <summary>
+        /// The Y value range of the current data or summary data.
+        /// </summary>
+        private ValueRange<double> yValueRange = null;
+
         /// <summary>
         /// The color of the line to draw.
         /// </summary>
@@ -59,22 +66,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         private double rangeWidth = 1;
 
-        /// <summary>
-        /// The mode for the y axis.
-        /// </summary>
-        private AxisComputeMode yAxisComputeMode = AxisComputeMode.Auto;
-
-        /// <summary>
-        /// The max value for the y axis.
-        /// </summary>
-        [DataMember]
-        private double yMax = 0;
-
-        /// <summary>
-        /// The min value for the y axis.
-        /// </summary>
-        [DataMember]
-        private double yMin = 0;
+        /// <inheritdoc/>
+        public event EventHandler<EventArgs> YValueRangeChanged;
 
         /// <summary>
         /// Gets or sets the line color.
@@ -180,51 +173,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the y axis compute mode.
+        /// Gets the Y axis.
         /// </summary>
-        [DataMember]
-        [DisplayName("Y Axis Compute Mode")]
-        [Description("Specifies whether the Y axis is computed automatically or set manually.")]
-        public AxisComputeMode YAxisComputeMode
-        {
-            get { return this.yAxisComputeMode; }
+        [IgnoreDataMember]
+        [Browsable(false)]
+        public Axis YAxis => (this.Panel as TimelineVisualizationPanel)?.YAxis;
 
-            set
-            {
-                this.Set(nameof(this.YAxisComputeMode), ref this.yAxisComputeMode, value);
-                this.AutoComputeYAxis();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the y max value.
-        /// </summary>
-        [IgnoreDataMember] // property has side effects so serialize its backing field instead
-        [DisplayName("Y Max")]
-        [Description("The max value for the Y axis.")]
-        public double YMax
+        /// <inheritdoc/>
+        [IgnoreDataMember]
+        [Browsable(false)]
+        public ValueRange<double> YValueRange
         {
-            get => this.yMax;
-            set
-            {
-                this.YAxisComputeMode = AxisComputeMode.Manual;
-                this.Set(nameof(this.YMax), ref this.yMax, value);
-            }
-        }
+            get { return this.yValueRange; }
 
-        /// <summary>
-        /// Gets or sets the y min value.
-        /// </summary>
-        [IgnoreDataMember] // property has side effects so serialize its backing field instead
-        [DisplayName("Y Min")]
-        [Description("The min value for the Y axis.")]
-        public double YMin
-        {
-            get => this.yMin;
-            set
+            protected set
             {
-                this.YAxisComputeMode = AxisComputeMode.Manual;
-                this.Set(nameof(this.YMin), ref this.yMin, value);
+                this.yValueRange = value;
+                this.YValueRangeChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -262,7 +227,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             // When collection changes, update the axis if in auto mode
             base.OnDataCollectionChanged(e);
-            this.AutoComputeYAxis();
+            this.ComputeYValueRange();
         }
 
         /// <inheritdoc />
@@ -270,63 +235,67 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             // When collection changes, update the axis if in auto mode
             base.OnSummaryDataCollectionChanged(e);
-            this.AutoComputeYAxis();
+            this.ComputeYValueRange();
         }
 
-        // Auto compute the y axis limits
-        private void AutoComputeYAxis()
+        /// <inheritdoc/>
+        protected override void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (this.YAxisComputeMode == AxisComputeMode.Auto)
+            if (e.PropertyName == nameof(TimelineVisualizationPanel.YAxis))
             {
-                double min = double.MaxValue;
-                double max = double.MinValue;
+                this.RaisePropertyChanged(nameof(this.YAxis));
+            }
 
-                if ((this.Data != null) && (this.Data.Count > 0))
+            base.OnPanelPropertyChanged(sender, e);
+        }
+
+        // Compute the rangwe of Y values in the dataset
+        private void ComputeYValueRange()
+        {
+            double min = double.MaxValue;
+            double max = double.MinValue;
+
+            if ((this.Data != null) && (this.Data.Count > 0))
+            {
+                foreach (var value in this.Data)
                 {
-                    foreach (var value in this.Data)
+                    var doubleValue = this.GetNumericValue(value.Data);
+                    if (!double.IsNaN(doubleValue) && !double.IsInfinity(doubleValue))
                     {
-                        var doubleValue = this.GetNumericValue(value.Data);
-                        if (!double.IsNaN(doubleValue) && !double.IsInfinity(doubleValue))
-                        {
-                            min = Math.Min(min, doubleValue);
-                            max = Math.Max(max, doubleValue);
-                        }
+                        min = Math.Min(min, doubleValue);
+                        max = Math.Max(max, doubleValue);
                     }
-                }
-                else if ((this.SummaryData != null) && (this.SummaryData.Count > 0))
-                {
-                    foreach (var value in this.SummaryData)
-                    {
-                        var doubleMinimum = this.GetNumericValue(value.Minimum);
-                        if (!double.IsNaN(doubleMinimum) && !double.IsInfinity(doubleMinimum))
-                        {
-                            min = Math.Min(min, doubleMinimum);
-                        }
-
-                        var doubleMaximum = this.GetNumericValue(value.Maximum);
-                        if (!double.IsNaN(doubleMaximum) && !double.IsInfinity(doubleMaximum))
-                        {
-                            max = Math.Max(max, doubleMaximum);
-                        }
-                    }
-                }
-
-                if (max >= min)
-                {
-                    this.SetYRange(min, max);
                 }
             }
-        }
+            else if ((this.SummaryData != null) && (this.SummaryData.Count > 0))
+            {
+                foreach (var value in this.SummaryData)
+                {
+                    var doubleMinimum = this.GetNumericValue(value.Minimum);
+                    if (!double.IsNaN(doubleMinimum) && !double.IsInfinity(doubleMinimum))
+                    {
+                        min = Math.Min(min, doubleMinimum);
+                    }
 
-        /// <summary>
-        /// Programmatically sets the y-axis range without altering the y-axis compute mode.
-        /// </summary>
-        /// <param name="yMin">The new y minimum value.</param>
-        /// <param name="yMax">The new y maximum value.</param>
-        private void SetYRange(double yMin, double yMax)
-        {
-            this.Set(nameof(this.YMin), ref this.yMin, yMin);
-            this.Set(nameof(this.YMax), ref this.yMax, yMax);
+                    var doubleMaximum = this.GetNumericValue(value.Maximum);
+                    if (!double.IsNaN(doubleMaximum) && !double.IsInfinity(doubleMaximum))
+                    {
+                        max = Math.Max(max, doubleMaximum);
+                    }
+                }
+            }
+
+            if (max >= min)
+            {
+                if (this.YValueRange == null || this.YValueRange.Minimum != min || this.YAxis.Maximum != max)
+                {
+                    this.YValueRange = new ValueRange<double>(min, max);
+                }
+            }
+            else if (this.YValueRange != null)
+            {
+                this.YValueRange = null;
+            }
         }
     }
 }

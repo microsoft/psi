@@ -8,23 +8,32 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
+    using System.Windows;
     using System.Windows.Media.Media3D;
 
     /// <summary>
     /// Represents a visualization object for a ModelVisual3D view.
     /// </summary>
     /// <typeparam name="TData">The underlying data being visualized.</typeparam>
-    public abstract class ModelVisual3DVisualizationObject<TData> : Instant3DVisualizationObject<TData>, IModelVisual3DVisualizationObject, ICustomTypeDescriptor
+    public abstract class ModelVisual3DVisualizationObject<TData> : XYZValueVisualizationObject<TData>, IModelVisual3DVisualizationObject, ICustomTypeDescriptor
     {
         // The list of properties that should not appear in the property browser if
         // this visualization object is the child of another visualization object.
-        private readonly List<string> hiddenChildProperties = new List<string>() { nameof(CursorEpsilonMs), nameof(Name), nameof(StreamAdapterType), nameof(SummarizerType) };
+        private readonly List<string> hiddenChildProperties = new List<string>() { nameof(CursorEpsilonNegMs), nameof(CursorEpsilonPosMs), nameof(Name), nameof(StreamAdapterDisplayName), nameof(SummarizerTypeDisplayName) };
 
         // The parent of this visualization object (if any)
         private IModelVisual3DVisualizationObject parent = null;
 
         // The name of this component according to this component's parent
         private string componentName = null;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelVisual3DVisualizationObject{TData}"/> class.
+        /// </summary>
+        public ModelVisual3DVisualizationObject()
+        {
+            this.Visual3D = new ModelVisual3D();
+        }
 
         /// <summary>
         /// Gets the model view of this visualization object.
@@ -189,19 +198,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         #endregion // ICustomTypeDescriptor
 
         /// <inheritdoc/>
-        protected override void InitNew()
-        {
-            this.Visual3D = new ModelVisual3D();
-            base.InitNew();
-        }
-
-        /// <inheritdoc/>
         protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.CurrentValue))
             {
-                // Notify of the change to the current data
-                this.UpdateData();
+                Application.Current.Dispatcher.Invoke(() => this.UpdateData());
             }
             else
             {
@@ -259,7 +260,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
             else
             {
-                return new Message<T>(data, this.CurrentValue.Value.OriginatingTime, this.CurrentValue.Value.Time, this.CurrentValue.Value.SourceId, this.CurrentValue.Value.SequenceId);
+                return new Message<T>(data, this.CurrentValue.Value.OriginatingTime, this.CurrentValue.Value.CreationTime, this.CurrentValue.Value.SourceId, this.CurrentValue.Value.SequenceId);
             }
         }
 

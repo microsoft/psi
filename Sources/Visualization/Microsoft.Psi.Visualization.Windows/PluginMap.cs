@@ -10,15 +10,11 @@ namespace Microsoft.Psi.Visualization
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-    using System.Windows.Navigation;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.Tasks;
-    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
-    using Microsoft.Psi.Visualization.VisualizationPanels;
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
@@ -55,6 +51,11 @@ namespace Microsoft.Psi.Visualization
         /// </summary>
         public bool IsInitialized { get; private set; } = false;
 
+        /// <summary>
+        /// Gets the set of available visualizers.
+        /// </summary>
+        public IReadOnlyList<VisualizerMetadata> Visualizers => this.visualizers.AsReadOnly();
+
         private IEnumerable<(string Name, string Extension, Type ReaderType)> StreamReaders
         {
             get
@@ -84,84 +85,6 @@ namespace Microsoft.Psi.Visualization
             this.DiscoverPlugins(assembliesToSearch, loadLogFilename);
 
             this.IsInitialized = true;
-        }
-
-        /// <summary>
-        /// Get a list of visualization panel types that are compatible with given a visualization panel.
-        /// </summary>
-        /// <param name="visualizationPanel">A visualization panel.</param>
-        /// <returns>The list of compatible visualization panel types.</returns>
-        public List<VisualizationPanelType> GetCompatiblePanelTypes(VisualizationPanel visualizationPanel)
-        {
-            this.EnsureInitialized();
-
-            List<VisualizationPanelType> results = new List<VisualizationPanelType>();
-
-            if (visualizationPanel is TimelineVisualizationPanel)
-            {
-                results.Add(VisualizationPanelType.Timeline);
-            }
-            else if (visualizationPanel is XYVisualizationPanel)
-            {
-                results.Add(VisualizationPanelType.XY);
-            }
-            else if (visualizationPanel is XYZVisualizationPanel)
-            {
-                results.Add(VisualizationPanelType.XYZ);
-            }
-            else if (visualizationPanel is InstantVisualizationPlaceholderPanel)
-            {
-                results.Add(VisualizationPanelType.XY);
-                results.Add(VisualizationPanelType.XYZ);
-            }
-
-            return results;
-        }
-
-        /// <summary>
-        /// Gets a collection of visualizer metadata objects for a given target data type.
-        /// </summary>
-        /// <param name="dataType">The data type to search for.</param>
-        /// <param name="visualizationPanel">The visualization panel where it is intended to visualize the data, or visualizers targeting any panels should be returned.</param>
-        /// <param name="isUniversal">A nullable boolean indicating constraints on whether the visualizer should be a universal one (visualize messages, visualize latency etc).</param>
-        /// <param name="isInNewPanel">A nullable boolean indicating constraints on whether the visualizer should be a "in new panel" one.</param>
-        /// <returns>A list of visualizer metadata objects.</returns>
-        public List<VisualizerMetadata> GetCompatibleVisualizers(
-            Type dataType,
-            VisualizationPanel visualizationPanel = null,
-            bool? isUniversal = null,
-            bool? isInNewPanel = null)
-        {
-            return this.GetCompatibleVisualizers(
-                dataType,
-                dataType,
-                false,
-                visualizationPanel,
-                isUniversal,
-                isInNewPanel);
-        }
-
-        /// <summary>
-        /// Gets a collection of visualizer metadata objects for a given target stream tree node.
-        /// </summary>
-        /// <param name="streamTreeNode">The stream tree node whose type should be searched for.</param>
-        /// <param name="visualizationPanel">The visualization panel where it is intended to visualize the data, or visualizers targeting any panels should be returned.</param>
-        /// <param name="isUniversal">A nullable boolean indicating constraints on whether the visualizer should be a universal one (visualize messages, visualize latency etc).</param>
-        /// <param name="isInNewPanel">A nullable boolean indicating constraints on whether the visualizer should be a "in new panel" one.</param>
-        /// <returns>A list of visualizer metadata objects.</returns>
-        public List<VisualizerMetadata> GetCompatibleVisualizers(
-            StreamTreeNode streamTreeNode,
-            VisualizationPanel visualizationPanel = null,
-            bool? isUniversal = null,
-            bool? isInNewPanel = null)
-        {
-            return this.GetCompatibleVisualizers(
-                VisualizationContext.Instance.GetDataType(streamTreeNode.StreamTypeName),
-                VisualizationContext.Instance.GetDataType(streamTreeNode.NodeTypeName),
-                !string.IsNullOrWhiteSpace(streamTreeNode.MemberPath),
-                visualizationPanel,
-                isUniversal,
-                isInNewPanel);
         }
 
         /// <summary>
@@ -235,110 +158,6 @@ namespace Microsoft.Psi.Visualization
         public Type GetStreamReaderType(string extension)
         {
             return this.StreamReaders.Where(sr => sr.Extension == extension).First().ReaderType;
-        }
-
-        private List<VisualizerMetadata> GetCompatibleVisualizers(
-            Type streamType,
-            Type dataType,
-            bool isStreamMember,
-            VisualizationPanel visualizationPanel,
-            bool? isUniversal,
-            bool? isInNewPanel)
-        {
-            this.EnsureInitialized();
-
-            var results = new List<VisualizerMetadata>();
-
-            // If we're looking for visualizers that fit in any panel
-            if (visualizationPanel == null)
-            {
-                results.AddRange(this.visualizers.FindAll(v =>
-                    (dataType == v.DataType || dataType.IsSubclassOf(v.DataType)) &&
-                    (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value) &&
-                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal))
-                    .OrderBy(v => this.GetVisualizerRank(v, dataType)));
-            }
-            else
-            {
-                // o/w find out the compatible panel types
-                var compatiblePanels = this.GetCompatiblePanelTypes(visualizationPanel);
-                results.AddRange(this.visualizers.FindAll(v =>
-                    compatiblePanels.Contains(v.VisualizationPanelType) &&
-                    (dataType == v.DataType || dataType.IsSubclassOf(v.DataType)) &&
-                    (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value) &&
-                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal))
-                    .OrderBy(v => this.GetVisualizerRank(v, dataType)));
-            }
-
-            // We force-add the latency visualizer b/c it's not detectable by data type
-            // (the adapter to make it work will be added automatically later in
-            // CustomizeVisualizerMetadata). Latency visualizer is only compatible with
-            // timeline visualization panels.
-            if (isUniversal.HasValue && isUniversal.Value)
-            {
-                if (isInNewPanel.HasValue && isInNewPanel.Value)
-                {
-                    results.Add(this.visualizers.FirstOrDefault(v => v.CommandText == ContextMenuName.VisualizeLatencyInNewPanel));
-                }
-                else if (visualizationPanel is TimelineVisualizationPanel)
-                {
-                    results.Add(this.visualizers.FirstOrDefault(v => v.CommandText == ContextMenuName.VisualizeLatency));
-                }
-            }
-
-            // Customize each visualizer metadata.
-            this.CustomizeVisualizerMetadata(results, streamType, dataType, isStreamMember);
-
-            return results;
-        }
-
-        private int GetVisualizerRank(VisualizerMetadata visualizerMetadata, Type dataType)
-        {
-            // For now, keep the visualizer that has a matching type at the top.
-            if (dataType == visualizerMetadata.DataType)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        /// <summary>
-        /// Customizes a collection of visualizer metadata objects for certain scenarios including whether the
-        /// metadata represents a message visualization object and whether we need to insert a stream member
-        /// adapter for visualizers that visualize a member of a stream rather than the entire stream.
-        /// </summary>
-        /// <param name="metadatas">A collection of visualizer metadata objects to insert stream member adapters into.</param>
-        /// <param name="messageDataType">The type of the messages in the source stream.</param>
-        /// <param name="targetDataType">The type of data to be displayed.</param>
-        /// <param name="isStreamMember">True if the visualizer metadata collection represents visualizers for a stream member
-        /// rather than for the entire stream, otherwise false.</param>
-        private void CustomizeVisualizerMetadata(List<VisualizerMetadata> metadatas, Type messageDataType, Type targetDataType, bool isStreamMember)
-        {
-            // For each of the non-universal visualization objects, add a data adapter from the stream data type to the subfield data type
-            for (int index = 0; index < metadatas.Count; index++)
-            {
-                // For message visualization object insert a custom object adapter so values can be displayed for known types.
-                if (metadatas[index].VisualizationObjectType == typeof(MessageVisualizationObject))
-                {
-                    metadatas[index] = VisualizerMetadata.InsertObjectAdapter(metadatas[index], targetDataType);
-                }
-
-                // For latency visualization object insert a custom object adapter so values can be displayed for known types.
-                if (metadatas[index].VisualizationObjectType == typeof(LatencyVisualizationObject))
-                {
-                    metadatas[index] = VisualizerMetadata.InsertObjectToLatencyAdapter(metadatas[index], targetDataType);
-                }
-
-                // For all but the latency visualization object, add a stream member adapter
-                // if the metadata is for a member of the stream rather than the entire stream.
-                if (isStreamMember && (metadatas[index].VisualizationObjectType != typeof(LatencyVisualizationObject)))
-                {
-                    metadatas[index] = VisualizerMetadata.CreateStreamMemberAdapter(metadatas[index], messageDataType);
-                }
-            }
         }
 
         private void DiscoverPlugins(List<string> assemblies, string loadLogFilename)
@@ -508,7 +327,7 @@ namespace Microsoft.Psi.Visualization
         private void AddBatchProcessingTask(Type batchProcessingTaskType, MethodInfo methodInfo, BatchProcessingTaskAttribute attribute, VisualizationLogWriter logWriter, string assemblyPath)
         {
             logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", attribute.Name, assemblyPath);
-            var batchProcessingTaskMetadata = BatchProcessingTaskMetadata.Create(batchProcessingTaskType, methodInfo, attribute, logWriter);
+            var batchProcessingTaskMetadata = BatchProcessingTaskMetadata.Create(batchProcessingTaskType, methodInfo, attribute);
             if (batchProcessingTaskMetadata != null)
             {
                 this.batchProcessingTasks.Add(batchProcessingTaskMetadata);

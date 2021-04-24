@@ -107,11 +107,6 @@ namespace Microsoft.Psi.Persistence
         /// </summary>
         public void Dispose()
         {
-            foreach (var streamId in this.metadata.Keys)
-            {
-                this.CloseStream(streamId);
-            }
-
             this.pageIndexWriter.Dispose();
             this.catalogWriter.Dispose();
             this.writer.Dispose();
@@ -148,8 +143,8 @@ namespace Microsoft.Psi.Persistence
             meta.OpenedTime = Time.GetCurrentTime();
             meta.IsPersisted = true;
             meta.IsIndexed = indexed;
-            meta.PartitionName = this.name;
-            meta.PartitionPath = this.path;
+            meta.StoreName = this.name;
+            meta.StorePath = this.path;
             this.metadata[streamId] = meta;
             this.WriteToCatalog(meta);
 
@@ -163,18 +158,53 @@ namespace Microsoft.Psi.Persistence
         }
 
         /// <summary>
+        /// Attempt to get stream metadata (available once stream has been opened).
+        /// </summary>
+        /// <param name="streamId">The id of the stream, unique for this store.</param>
+        /// <param name="meta">The metadata for the stream, if it has previously been opened.</param>
+        /// <returns>True if stream metadata if stream has been opened so that metadata is available.</returns>
+        public bool TryGetMetadata(int streamId, out PsiStreamMetadata meta)
+        {
+            return this.metadata.TryGetValue(streamId, out meta);
+        }
+
+        /// <summary>
         /// Closes the stream and persists the stream statistics.
         /// </summary>
         /// <param name="streamId">The id of the stream to close.</param>
         /// <param name="originatingTime">The originating time when the stream was closed.</param>
-        public void CloseStream(int streamId, DateTime? originatingTime = null)
+        public void CloseStream(int streamId, DateTime originatingTime)
         {
             var meta = this.metadata[streamId];
             if (!meta.IsClosed)
             {
-                meta.ClosedTime = originatingTime ?? meta.LastMessageCreationTime;
+                meta.ClosedTime = meta.OpenedTime <= originatingTime ? originatingTime : meta.OpenedTime;
                 meta.IsClosed = true;
                 this.WriteToCatalog(meta);
+            }
+        }
+
+        /// <summary>
+        /// Closes the streams and persists the stream statistics.
+        /// </summary>
+        /// <param name="originatingTime">The originating time when the streams are closed.</param>
+        public void CloseAllStreams(DateTime originatingTime)
+        {
+            foreach (var streamId in this.metadata.Keys)
+            {
+                this.CloseStream(streamId, originatingTime);
+            }
+        }
+
+        /// <summary>
+        /// Initialize stream opened times.
+        /// </summary>
+        /// <param name="originatingTime">The originating time when the streams are opened.</param>
+        public void InitializeStreamOpenedTimes(DateTime originatingTime)
+        {
+            foreach (var meta in this.metadata.Values)
+            {
+                meta.OpenedTime = originatingTime;
             }
         }
 

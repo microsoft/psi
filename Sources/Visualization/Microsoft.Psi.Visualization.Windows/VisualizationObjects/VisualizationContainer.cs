@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
@@ -34,6 +35,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         // Current Visualization Container version
         private const double CurrentVisualizationContainerVersion = 5.0d;
 
+        private RelayCommand zoomToSessionExtentsCommand;
+        private RelayCommand zoomToSelectionCommand;
+        private RelayCommand clearSelectionCommand;
         private RelayCommand<VisualizationPanel> deleteVisualizationPanelCommand;
 
         /// <summary>
@@ -77,6 +81,66 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Gets the zoom to selection command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ZoomToSelectionCommand
+        {
+            get
+            {
+                if (this.zoomToSelectionCommand == null)
+                {
+                    this.zoomToSelectionCommand = new RelayCommand(
+                        () => this.Navigator.ZoomToSelection(),
+                        () => this.Navigator.CanZoomToSelection());
+                }
+
+                return this.zoomToSelectionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the clear selection command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ClearSelectionCommand
+        {
+            get
+            {
+                if (this.clearSelectionCommand == null)
+                {
+                    this.clearSelectionCommand = new RelayCommand(
+                        () => this.Navigator.ClearSelection(),
+                        () => this.Navigator.CanClearSelection());
+                }
+
+                return this.clearSelectionCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the zoom to session extents command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ZoomToSessionExtentsCommand
+        {
+            get
+            {
+                if (this.zoomToSessionExtentsCommand == null)
+                {
+                    this.zoomToSessionExtentsCommand = new RelayCommand(
+                        () => this.Navigator.ZoomToDataRange(),
+                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.Navigator.CursorMode != CursorMode.Live);
+                }
+
+                return this.zoomToSessionExtentsCommand;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the current visualization panel.
         /// </summary>
         [IgnoreDataMember]
@@ -89,12 +153,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.currentPanel != value)
                 {
                     this.Set(nameof(this.CurrentPanel), ref this.currentPanel, value);
-
-                    // Display the properties of the panel
-                    if (this.currentPanel != null)
-                    {
-                        this.currentPanel.IsTreeNodeSelected = true;
-                    }
                 }
             }
         }
@@ -247,7 +305,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 this.Panels.Add(panel);
             }
 
-            this.CurrentPanel = panel is IInstantVisualizationContainer instantContainer ? instantContainer.Panels[0] : panel;
+            // Select the new panel, or its first child panel if the panel is an instant visualization container.
+            if (panel is IInstantVisualizationContainer instantVisulizationContainer)
+            {
+                instantVisulizationContainer.Panels[0].IsTreeNodeSelected = true;
+                this.CurrentPanel = instantVisulizationContainer.Panels[0];
+            }
+            else
+            {
+                panel.IsTreeNodeSelected = true;
+                this.CurrentPanel = panel;
+            }
         }
 
         /// <summary>
@@ -285,11 +353,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Remove all visualizations from the panel
             panel.Clear();
 
-            // If the panel to be removed is the child of a container panel (such as instant visualization panel
-            // matrix panel) then ask the parent to remove it, otherwise remove it directly from this container.
-            if (panel.ParentPanel is VisualizationPanel containerPanel)
+            // If the panel to be removed is the child of an instant visualization container
+            // then ask the parent to remove it, otherwise remove it directly from this container.
+            if (panel.ParentPanel is InstantVisualizationContainer instantVisualizationContainer)
             {
-                containerPanel.RemoveChildPanel(panel);
+                instantVisualizationContainer.RemoveCell(panel);
+                if (!instantVisualizationContainer.Panels.Any())
+                {
+                    this.Panels.Remove(instantVisualizationContainer);
+                }
             }
             else
             {
@@ -303,19 +375,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets all of the visualization objects that visualize a stream member rather than a stream.
+        /// Gets all of the visualization objects that visualize a derived stream, rather than a raw stream.
         /// </summary>
-        /// <returns>The collection ov visualization objects that visualize a stream member rathan a stream.</returns>
-        public List<IStreamVisualizationObject> GetStreamMemberVisualizers()
+        /// <returns>The collection of visualization objects that visualize a derived stream.</returns>
+        public List<IStreamVisualizationObject> GetDerivedStreamVisualizationObjects()
         {
-            List<IStreamVisualizationObject> streamMemberVisualizers = new List<IStreamVisualizationObject>();
+            var derivedStreamVisualizationObjects = new List<IStreamVisualizationObject>();
 
-            foreach (VisualizationPanel visualizationPanel in this.Panels)
+            foreach (var visualizationPanel in this.Panels)
             {
-                streamMemberVisualizers.AddRange(visualizationPanel.GetStreamMemberVisualizers());
+                derivedStreamVisualizationObjects.AddRange(visualizationPanel.GetDerivedStreamVisualizationObjects());
             }
 
-            return streamMemberVisualizers;
+            return derivedStreamVisualizationObjects;
         }
 
         /// <summary>
@@ -327,7 +399,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             var serializer = JsonSerializer.Create(
                 new JsonSerializerSettings()
                 {
-                    ContractResolver = new Instant3DVisualizationObjectContractResolver(),
+                    ContractResolver = new XYZValueVisualizationObjectContractResolver(),
                     Formatting = Formatting.Indented,
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

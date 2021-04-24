@@ -683,6 +683,145 @@ namespace Test.Psi
             Assert.IsTrue(sc1.Same(sc2));
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void PsiStreamMetadataTest()
+        {
+            var messageCount = 42L;
+            var avgMessageSize = 1234L;
+            var avgLatency = 70000L;
+            var messageSizeCumulativeSum = messageCount * avgMessageSize;
+            var latencyCumulativeSum = messageCount * avgLatency;
+
+            // serialize manually, simulating older/newer versions
+            (byte[] Buffer, int Size) Serialize(int version, bool isPolymorphic)
+            {
+                var writer = new BufferWriter(0);
+                writer.Write("SomeName"); // Name
+                writer.Write(123); // ID
+                writer.Write("SomeFakeTypeName"); // TypeName
+                writer.Write(version); // Version
+                writer.Write("SomeFakeSerializerTypeName"); // SerializerTypeName
+                writer.Write(7); // SerializerVersion
+                writer.Write((ushort)(isPolymorphic ? StreamMetadataFlags.Polymorphic : 0)); // CustomFlags
+                writer.Write((ushort)MetadataKind.StreamMetadata); // MetadataKind
+                writer.Write(new DateTime(1969, 4, 2)); // OpenedTime
+                writer.Write(new DateTime(2070, 1, 1)); // ClosedTime
+                if (version > 1)
+                {
+                    writer.Write(messageCount); // MessageCount
+                    writer.Write(messageSizeCumulativeSum); // MessageSizeCumulativeSum
+                    writer.Write(latencyCumulativeSum); // LatencyCumulativeSum
+                }
+                else
+                {
+                    writer.Write((int)messageCount); // MessageCount
+                }
+
+                writer.Write(new DateTime(1971, 11, 3)); // FirstMessageCreationTime
+                writer.Write(new DateTime(1972, 10, 12)); // LastMessageCreationTime
+                writer.Write(new DateTime(1971, 2, 3)); // FirstMessageOriginatingTime
+                writer.Write(new DateTime(1972, 1, 12)); // LastMessageOriginatingTime
+                if (version <= 1)
+                {
+                    writer.Write((int)avgMessageSize); // AverageMessageSize
+                    writer.Write((int)avgLatency / 10); // AverageLatency in *microseconds*
+                }
+
+                if (isPolymorphic)
+                {
+                    writer.Write(2); // RuntimeTypes.Count
+                    writer.Write(1); // Key
+                    writer.Write("SomeFakePolyType1"); // Value
+                    writer.Write(2); // Key
+                    writer.Write("SomeFakePolyType2"); // Value
+                }
+
+                if (version > 0)
+                {
+                    var payload = new byte[] { 1, 2, 3 };
+                    writer.Write(payload.GetType().FullName); // SupplementalMetadataTypeName
+                    writer.Write(payload.Length + 4 /* prefix */ + 4 /* length */); // supplementalMetadataBytes.Length
+                    writer.Write(SerializationHandler.RefPrefixNew);
+                    writer.Write(payload.Length);
+                    writer.Write(payload); // bytes
+                }
+
+                return (writer.Buffer, writer.Size);
+            }
+
+            // verify all versions deserialize/serialize correctly with migration to latest version
+            void TestAllVersions(Action<PsiStreamMetadata> verify)
+            {
+                // verify metadata instance
+                void VerifyMeta(PsiStreamMetadata meta, int version, bool isPolymorphic)
+                {
+                    verify(meta);
+
+                    Assert.AreEqual(isPolymorphic, meta.IsPolymorphic);
+                    if (isPolymorphic)
+                    {
+                        Assert.AreEqual(2, meta.RuntimeTypes.Count);
+                        Assert.AreEqual("SomeFakePolyType1", meta.RuntimeTypes[1]);
+                        Assert.AreEqual("SomeFakePolyType2", meta.RuntimeTypes[2]);
+                    }
+
+                    Assert.AreEqual(2, meta.Version); // expect upgraded version
+                    if (version > 0)
+                    {
+                        var expected = new byte[] { 1, 2, 3 };
+                        Assert.AreEqual(expected.GetType().FullName, meta.SupplementalMetadataTypeName);
+                        Assert.IsTrue(Enumerable.SequenceEqual(expected, meta.GetSupplementalMetadata<byte[]>()));
+                    }
+                    else
+                    {
+                        Assert.AreEqual(null, meta.SupplementalMetadataTypeName);
+                    }
+                }
+
+                // verify with isPolymorphic=true/false and versions=0..2
+                for (var pass = 0; pass < 2; pass++)
+                {
+                    var isPolymorphic = pass > 0;
+                    for (var version = 0; version < 3; version++)
+                    {
+                        // manually serialize (including older formats)
+                        var (buffer, size) = Serialize(version, isPolymorphic);
+                        var reader = new BufferReader(buffer, size);
+                        var meta = (PsiStreamMetadata)Metadata.Deserialize(reader);
+                        VerifyMeta(meta, version, isPolymorphic);
+
+                        // test serialization via round-trip
+                        var writer = new BufferWriter(0);
+                        meta.Serialize(writer);
+                        var roundtrip = (PsiStreamMetadata)Metadata.Deserialize(new BufferReader(writer));
+                        VerifyMeta(roundtrip, version, isPolymorphic);
+                    }
+                }
+            }
+
+            TestAllVersions(meta =>
+            {
+                Assert.AreEqual("SomeName", meta.Name);
+                Assert.AreEqual(123, meta.Id);
+                Assert.AreEqual(123, meta.Id);
+                Assert.AreEqual("SomeFakeTypeName", meta.TypeName);
+                Assert.AreEqual("SomeFakeSerializerTypeName", meta.SerializerTypeName);
+                Assert.AreEqual(7, meta.SerializerVersion);
+                Assert.AreEqual(new DateTime(1969, 4, 2), meta.OpenedTime);
+                Assert.AreEqual(new DateTime(2070, 1, 1), meta.ClosedTime);
+                Assert.AreEqual(messageCount, meta.MessageCount);
+                Assert.AreEqual(messageSizeCumulativeSum, meta.MessageSizeCumulativeSum);
+                Assert.AreEqual(latencyCumulativeSum, meta.LatencyCumulativeSum);
+                Assert.AreEqual(new DateTime(1971, 11, 3), meta.FirstMessageCreationTime);
+                Assert.AreEqual(new DateTime(1972, 10, 12), meta.LastMessageCreationTime);
+                Assert.AreEqual(new DateTime(1971, 2, 3), meta.FirstMessageOriginatingTime);
+                Assert.AreEqual(new DateTime(1972, 1, 12), meta.LastMessageOriginatingTime);
+                Assert.AreEqual(avgMessageSize, meta.AverageMessageSize);
+                Assert.AreEqual(avgLatency / TimeSpan.TicksPerMillisecond, meta.AverageMessageLatencyMs);
+            });
+        }
+
         private void ValueTypeCloneTest<T>(T value)
         {
             Assert.AreEqual(value, value.DeepClone());

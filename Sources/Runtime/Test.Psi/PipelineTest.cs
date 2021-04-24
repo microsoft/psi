@@ -1992,7 +1992,7 @@ namespace Test.Psi
             Assert.AreEqual(6, graph.GetAllEmitterDiagnostics().Where(e => e.Targets.Length != 0).Count()); // total _connected_ emitters
             Assert.AreEqual(13, graph.GetReceiverCount()); // total receivers (not necessarily connected)
             Assert.AreEqual(6, graph.GetAllReceiverDiagnostics().Where(r => r.Source != null).Count()); // total _connected_ receivers
-            Assert.IsTrue(graph.GetAllReceiverDiagnostics().Select(r => r.QueueSize).Sum() > 0); // usually 50+
+            Assert.IsTrue(graph.GetAllReceiverDiagnostics().Select(r => r.AvgDeliveryQueueSize).Sum() > 0); // usually 50+
             Assert.AreEqual(0, graph.GetDroppedMessageCount()); // total dropped
             Assert.AreEqual(0, graph.GetThrottledReceiverCount()); // total throttled receivers
 
@@ -2002,7 +2002,7 @@ namespace Test.Psi
                                 .GetAllPipelineElements()
                                 .Where(e => e.Kind == PipelineElementKind.Reactive) // reactive components
                                 .GetAllReceiverDiagnostics()
-                                .Select(r => r.MessageLatencyAtEmitter); // average latency at emitter into each component's receivers
+                                .Select(r => r.AvgMessageCreatedLatency); // average creation latency into each component's receivers
 
             Assert.AreEqual("default", graph.Name);
             Assert.IsTrue(graph.IsPipelineRunning);
@@ -2212,6 +2212,30 @@ namespace Test.Psi
 
             output.Add("Disposed");
             CollectionAssert.AreEqual(new[] { "Completed", "Disposed" }, output);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void NestedOnPipelineRun()
+        {
+            using (var pipeline = Pipeline.Create())
+            {
+                Generators.Range(pipeline, 0, 10, TimeSpan.FromTicks(1));
+
+                var fired = false;
+                pipeline.PipelineRun += (_, __) =>
+                {
+                    // additional handlers added *while* handling event must work
+                    pipeline.PipelineRun += (_, __) =>
+                    {
+                        fired = true;
+                    };
+                };
+
+                pipeline.Run();
+
+                Assert.IsTrue(fired);
+            }
         }
 
         private class FinalizationTestComponent : ISourceComponent

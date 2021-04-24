@@ -24,10 +24,9 @@ namespace Microsoft.Psi.Visualization.Converters
             }
 
             Color color;
-            if (value is System.Drawing.Color)
+            if (value is System.Drawing.Color drawingColor)
             {
-                var colorIn = (System.Drawing.Color)value;
-                color = Color.FromArgb(colorIn.A, colorIn.R, colorIn.G, colorIn.B);
+                color = Color.FromArgb(drawingColor.A, drawingColor.R, drawingColor.G, drawingColor.B);
             }
             else
             {

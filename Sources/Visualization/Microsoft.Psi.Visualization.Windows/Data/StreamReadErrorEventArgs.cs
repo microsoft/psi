@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Represents the event arguments passed by the stream read error event of <see cref="StreamCache{T}"/>.
+    /// Represents the event arguments passed by the stream read error event of <see cref="StreamDataProvider{T}"/>.
     /// </summary>
     public class StreamReadErrorEventArgs : EventArgs
     {

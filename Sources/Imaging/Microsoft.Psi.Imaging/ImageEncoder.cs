@@ -25,12 +25,18 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <inheritdoc/>
-        protected override void Receive(Shared<Image> sharedImage, Envelope e)
+        protected override void Receive(Shared<Image> sharedImage, Envelope envelope)
         {
+            if (sharedImage == null || sharedImage.Resource == null)
+            {
+                this.Out.Post(null, envelope.OriginatingTime);
+                return;
+            }
+
             using var sharedEncodedImage = EncodedImagePool.GetOrCreate(
                 sharedImage.Resource.Width, sharedImage.Resource.Height, sharedImage.Resource.PixelFormat);
             sharedEncodedImage.Resource.EncodeFrom(sharedImage.Resource, this.encoder);
-            this.Out.Post(sharedEncodedImage, e.OriginatingTime);
+            this.Out.Post(sharedEncodedImage, envelope.OriginatingTime);
         }
     }
 }

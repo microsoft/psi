@@ -14,12 +14,12 @@ namespace Microsoft.Psi.Visualization.Helpers
         /// Gets the index id corresponding to a specified time for
         /// a collection of indices that are ordered by time.
         /// </summary>
-        /// <param name="currentTime">The time to find the index for.</param>
+        /// <param name="dateTime">The time to find the index for.</param>
         /// <param name="count">The number of items in the index collection.</param>
         /// <param name="timeAtIndex">A function that returns the time for a given index id.</param>
         /// <param name="snappingBehavior">Timeline snapping behaviors.</param>
         /// <returns>The index id closest to the specified time, using the specified interpolation style.</returns>
-        public static int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest)
+        public static int GetIndexForTime(DateTime dateTime, int count, Func<int, DateTime> timeAtIndex, NearestMessageType snappingBehavior = NearestMessageType.Nearest)
         {
             // If there's only one point in the index, then return its index
             if (count == 1)
@@ -30,48 +30,42 @@ namespace Microsoft.Psi.Visualization.Helpers
             // Perform a binary search
             // If no exact match, lo and hi indicate ticks that
             // are right before and right after the time we're looking for.
-            SearchResult result = SearchIndex(currentTime, count, timeAtIndex);
+            SearchResult result = SearchIndex(dateTime, count, timeAtIndex);
 
             if (result.ExactMatchFound)
             {
                 return result.ExactIndex;
             }
 
-            switch (snappingBehavior)
+            return snappingBehavior switch
             {
-                case SnappingBehavior.Previous:
-                    return result.LowIndex;
-                case SnappingBehavior.Next:
-                    return result.HighIndex;
-                case SnappingBehavior.Nearest:
-                default:
-                    // Return the index of whichever point is closest to the current time
-                    return
-                        (timeAtIndex(result.HighIndex) - currentTime) < (currentTime - timeAtIndex(result.LowIndex)) ?
-                        result.HighIndex :
-                        result.LowIndex;
-            }
+                NearestMessageType.Previous => result.LowIndex,
+                NearestMessageType.Next => result.HighIndex,
+
+                // o/w return the index of whichever point is closest to the current time
+                _ => (timeAtIndex(result.HighIndex) - dateTime) < (dateTime - timeAtIndex(result.LowIndex)) ? result.HighIndex : result.LowIndex,
+            };
         }
 
         /// <summary>
         /// Gets the index id corresponding to a specified time for
         /// a collection of indices that are ordered by time.
         /// </summary>
-        /// <param name="currentTime">The time to find the index for.</param>
+        /// <param name="dateTime">The time to find the index for.</param>
+        /// <param name="epsilonTimeInterval">The epsilon interval used to determine if an index is close enough to the specified time to be counted as a match.</param>
         /// <param name="count">The number of items in the index collection.</param>
         /// <param name="timeAtIndex">A function that returns the time for a given index id.</param>
-        /// <param name="cursorEpsilon">The cursor epsilon to use to determine if an index is close enough to the specified time to be counted as a match.</param>
         /// <returns>The index id closest to the specified time, using the specified interpolation style.</returns>
-        public static int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex, RelativeTimeInterval cursorEpsilon)
+        public static int GetIndexForTime(DateTime dateTime, RelativeTimeInterval epsilonTimeInterval, int count, Func<int, DateTime> timeAtIndex)
         {
             // Perform a binary search
-            SearchResult result = SearchIndex(currentTime, count, timeAtIndex);
+            SearchResult result = SearchIndex(dateTime, count, timeAtIndex);
             if (result.ExactMatchFound)
             {
                 return result.ExactIndex;
             }
 
-            TimeInterval interval = currentTime + cursorEpsilon;
+            TimeInterval interval = dateTime + epsilonTimeInterval;
 
             // If there's only one entry in the index, return it if it's within the epsilon
             if (count == 1)
@@ -80,7 +74,7 @@ namespace Microsoft.Psi.Visualization.Helpers
             }
 
             // Check if the high index is closer to the current time
-            if ((timeAtIndex(result.HighIndex) - currentTime) < (currentTime - timeAtIndex(result.LowIndex)))
+            if ((timeAtIndex(result.HighIndex) - dateTime) < (dateTime - timeAtIndex(result.LowIndex)))
             {
                 if (interval.PointIsWithin(timeAtIndex(result.HighIndex)))
                 {
@@ -114,7 +108,7 @@ namespace Microsoft.Psi.Visualization.Helpers
             }
         }
 
-        private static SearchResult SearchIndex(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
+        private static SearchResult SearchIndex(DateTime dateTime, int count, Func<int, DateTime> timeAtIndex)
         {
             if (count == 0)
             {
@@ -127,11 +121,11 @@ namespace Microsoft.Psi.Visualization.Helpers
             while ((lo != hi - 1) && (lo != hi))
             {
                 var val = (lo + hi) / 2;
-                if (timeAtIndex(val) < currentTime)
+                if (timeAtIndex(val) < dateTime)
                 {
                     lo = val;
                 }
-                else if (timeAtIndex(val) > currentTime)
+                else if (timeAtIndex(val) > dateTime)
                 {
                     hi = val;
                 }

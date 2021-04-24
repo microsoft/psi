@@ -10,22 +10,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of point arrays into lists named points.
+    /// Implements a stream adapter from point arrays into lists named points.
     /// </summary>
     [StreamAdapter]
-    public class PointArrayToScatterPlotAdapter : StreamAdapter<Point[], List<Tuple<Point, string>>>
+    public class PointArrayToScatterPlotAdapter : StreamAdapter<Point[], List<Tuple<Point, string, string>>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PointArrayToScatterPlotAdapter"/> class.
-        /// </summary>
-        public PointArrayToScatterPlotAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static List<Tuple<Point, string>> Adapter(Point[] value, Envelope env)
-        {
-            return value.Select(p => Tuple.Create(p, default(string))).ToList();
-        }
+        /// <inheritdoc/>
+        public override List<Tuple<Point, string, string>> GetAdaptedValue(Point[] source, Envelope envelope)
+            => source?.Select(p => Tuple.Create(p, default(string), default(string))).ToList();
     }
 }

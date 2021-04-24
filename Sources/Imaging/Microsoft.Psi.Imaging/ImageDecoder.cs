@@ -28,6 +28,12 @@ namespace Microsoft.Psi.Imaging
         /// <inheritdoc/>
         protected override void Receive(Shared<EncodedImage> sharedEncodedImage, Envelope envelope)
         {
+            if (sharedEncodedImage == null || sharedEncodedImage.Resource == null)
+            {
+                this.Out.Post(null, envelope.OriginatingTime);
+                return;
+            }
+
             // The code below maintains back-compatibility with encoded images which did not store the pixel format
             // on the instance, but only in the stream. If the pixel format is unknown, we call upon the decoder to
             // retrieve the pixel format. This might be less performant, but enables decoding in the right format

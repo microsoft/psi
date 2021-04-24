@@ -9,22 +9,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of lists of <see cref="Line3D"/> to lists of nullable <see cref="Line3D"/>.
+    /// Implements a stream adapter from list of <see cref="Line3D"/> to list of nullable <see cref="Line3D"/>.
     /// </summary>
     [StreamAdapter]
     public class Line3DListToNullableAdapter : StreamAdapter<List<Line3D>, List<Line3D?>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Line3DListToNullableAdapter"/> class.
-        /// </summary>
-        public Line3DListToNullableAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static List<Line3D?> Adapter(List<Line3D> value, Envelope env)
-        {
-            return value?.Select(p => p as Line3D?).ToList();
-        }
+        /// <inheritdoc/>
+        public override List<Line3D?> GetAdaptedValue(List<Line3D> source, Envelope envelope)
+            => source?.Select(p => p as Line3D?).ToList();
     }
 }

@@ -10,22 +10,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of lists of rectangles into lists of named rectangles.
+    /// Implements a stream adapter from lists of rectangles into lists of named rectangles.
     /// </summary>
     [StreamAdapter]
-    public class RectangleListAdapter : StreamAdapter<List<Rectangle>, List<Tuple<Rectangle, string>>>
+    public class RectangleListAdapter : StreamAdapter<List<Rectangle>, List<Tuple<Rectangle, string, string>>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RectangleListAdapter"/> class.
-        /// </summary>
-        public RectangleListAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static List<Tuple<Rectangle, string>> Adapter(List<Rectangle> value, Envelope env)
-        {
-            return value.Select(p => Tuple.Create(p, string.Empty)).ToList();
-        }
+        /// <inheritdoc/>
+        public override List<Tuple<Rectangle, string, string>> GetAdaptedValue(List<Rectangle> source, Envelope envelope)
+            => source?.Select(p => Tuple.Create(p, default(string), default(string))).ToList();
     }
 }

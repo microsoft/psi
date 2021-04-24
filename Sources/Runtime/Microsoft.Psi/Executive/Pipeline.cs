@@ -38,11 +38,19 @@ namespace Microsoft.Psi
         private readonly DeliveryPolicy defaultDeliveryPolicy;
 
         /// <summary>
-        /// If set, indicates that the pipeline is in replay mode.
+        /// The list of completable components.
         /// </summary>
-        private ReplayDescriptor replayDescriptor;
+        private readonly List<PipelineElement> completableComponents = new List<PipelineElement>();
 
-        private TimeInterval proposedOriginatingTimeInterval;
+        private readonly Scheduler scheduler;
+
+        // the context on which message delivery is scheduled
+        private readonly SchedulerContext schedulerContext;
+
+        // the context used exclusively for activating components
+        private readonly SchedulerContext activationContext;
+
+        private readonly List<Exception> errors = new List<Exception>();
 
         /// <summary>
         /// The list of components.
@@ -50,19 +58,11 @@ namespace Microsoft.Psi
         private ConcurrentQueue<PipelineElement> components = new ConcurrentQueue<PipelineElement>();
 
         /// <summary>
-        /// The list of completable components.
+        /// If set, indicates that the pipeline is in replay mode.
         /// </summary>
-        private List<PipelineElement> completableComponents = new List<PipelineElement>();
+        private ReplayDescriptor replayDescriptor;
 
-        private Scheduler scheduler;
-
-        // the context on which message delivery is scheduled
-        private SchedulerContext schedulerContext;
-
-        // the context used exclusively for activating components
-        private SchedulerContext activationContext;
-
-        private List<Exception> errors = new List<Exception>();
+        private TimeInterval proposedOriginatingTimeInterval;
 
         private State state;
 
@@ -286,7 +286,7 @@ namespace Microsoft.Psi
         /// <param name="deliveryPolicy">Pipeline-level delivery policy.</param>
         /// <param name="threadCount">Number of threads.</param>
         /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
-        /// <param name="enableDiagnostics">Whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
+        /// <param name="enableDiagnostics">Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
         /// <param name="diagnosticsConfiguration">Optional diagnostics configuration information.</param>
         /// <returns>Created pipeline.</returns>
         public static Pipeline Create(
@@ -782,7 +782,7 @@ namespace Microsoft.Psi
         internal void ForThisPipelineAndAllDescendentSubpipelines(Action<Pipeline> action)
         {
             action(this);
-            foreach (var sub in this.components.Where(c => c.StateObject is Subpipeline && !c.IsFinalized).Select(c => c.StateObject as Subpipeline))
+            foreach (var sub in this.GetSubpipelines())
             {
                 sub.ForThisPipelineAndAllDescendentSubpipelines(action);
             }
@@ -898,7 +898,7 @@ namespace Microsoft.Psi
         protected virtual IDisposable RunAsync(ReplayDescriptor descriptor, Clock clock, IProgress<double> progress = null)
         {
             this.state = State.Starting;
-            descriptor = descriptor ?? ReplayDescriptor.ReplayAllRealTime;
+            descriptor ??= ReplayDescriptor.ReplayAllRealTime;
             this.replayDescriptor = descriptor.Intersect(this.proposedOriginatingTimeInterval);
 
             this.completed.Reset();
@@ -1052,8 +1052,7 @@ namespace Microsoft.Psi
                     var emitter = receiver.Value.Source;
                     if (emitter != null)
                     {
-                        PipelineElement parent;
-                        if (emitterNodes.TryGetValue(emitter.Id, out parent))
+                        if (emitterNodes.TryGetValue(emitter.Id, out PipelineElement parent))
                         {
                             if (OnlyCyclicInputs(parent, origin, emitterNodes, inputConnectors, visitedNodes))
                             {
@@ -1073,8 +1072,7 @@ namespace Microsoft.Psi
             {
                 // no inputs? perhaps it's the output side of a Connector pair
                 // try to get the input side and check it for cycles
-                PipelineElement bridge;
-                if (TryGetConnectorBridge(node, inputConnectors, out bridge))
+                if (TryGetConnectorBridge(node, inputConnectors, out PipelineElement bridge))
                 {
                     return OnlyCyclicInputs(bridge, origin, emitterNodes, inputConnectors, visitedNodes);
                 }
@@ -1111,8 +1109,7 @@ namespace Microsoft.Psi
                             return false; // has active source (and irrelevant whether cyclic)
                         }
 
-                        PipelineElement parent;
-                        if (emitterNodes.TryGetValue(emitter.Id, out parent))
+                        if (emitterNodes.TryGetValue(emitter.Id, out PipelineElement parent))
                         {
                             if (onlySelfCycles)
                             {
@@ -1135,14 +1132,22 @@ namespace Microsoft.Psi
             }
             else
             {
-                PipelineElement bridge;
-                if (TryGetConnectorBridge(node, inputConnectors, out bridge))
+                if (TryGetConnectorBridge(node, inputConnectors, out PipelineElement bridge))
                 {
                     return IsNodeFinalizable(bridge, emitterNodes, inputConnectors, includeCycles, onlySelfCycles);
                 }
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Gets child subpipeline components.
+        /// </summary>
+        /// <returns>Child subpipelines.</returns>
+        private IEnumerable<Subpipeline> GetSubpipelines()
+        {
+            return this.components.Where(c => c.StateObject is Subpipeline && !c.IsFinalized).Select(c => c.StateObject as Subpipeline);
         }
 
         /// <summary>
@@ -1157,7 +1162,14 @@ namespace Microsoft.Psi
                 // raise the PipelineRun event for all subpipelines
                 this.ForThisPipelineAndAllDescendentSubpipelines(p =>
                 {
-                    p.PipelineRun?.Invoke(p, e);
+                    // repeatedly invoke PipelineRun when invocation itself adds subscribers
+                    while (p.PipelineRun != null)
+                    {
+                        var handler = p.PipelineRun;
+                        p.PipelineRun = null;
+                        handler?.Invoke(p, e);
+                    }
+
                     p.pipelineRunEventHandled = true;
                 });
             }
@@ -1366,7 +1378,7 @@ namespace Microsoft.Psi
             this.schedulerContext.FinalizeTime = finalOriginatingTime;
 
             // propagate the final originating time to all descendant subpipelines and their respective scheduler contexts
-            foreach (var sub in this.components.Where(c => c.StateObject is Subpipeline && !c.IsFinalized).Select(c => c.StateObject as Subpipeline))
+            foreach (var sub in this.GetSubpipelines())
             {
                 // if subpipeline is already stopping then don't override its final originating time
                 if (!sub.IsStopping)
@@ -1410,6 +1422,7 @@ namespace Microsoft.Psi
             long startTicks = this.replayDescriptor.Start.Ticks;
             long endTicks = this.replayDescriptor.End.Ticks;
             double totalProgress = 0.0;
+            int componentCount = this.components.Count;
 
             foreach (var component in this.components)
             {
@@ -1422,10 +1435,14 @@ namespace Microsoft.Psi
                 else if (component.StateObject is Subpipeline sub)
                 {
                     // ensures dynamically-added subpipelines are actually running
-                    if (sub.IsRunning)
+                    if (sub.IsRunning && sub.Components.Count > 0)
                     {
                         // recursively estimate progress for subpipelines
                         componentProgress = sub.EstimateProgress();
+                    }
+                    else
+                    {
+                        componentCount--; // disregard stopped/empty subpipelines entirely
                     }
                 }
                 else if (component.Outputs.Count > 0 || component.Inputs.Count > 0)
@@ -1476,7 +1493,7 @@ namespace Microsoft.Psi
             }
 
             // use the average as a rough estimate of overall pipeline progress
-            return totalProgress / this.components.Count;
+            return totalProgress / componentCount;
         }
 
         private void ReportProgress()

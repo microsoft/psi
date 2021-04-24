@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
+#pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
+
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
@@ -28,6 +31,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         // The minimum height of a Visualization Panel
         private const double MinHeight = 10;
 
+        private RelayCommand toggleAllVisualizersVisibilityCommand;
         private RelayCommand removePanelCommand;
         private RelayCommand clearPanelCommand;
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
@@ -93,6 +97,24 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Gets the command for toggling the visibility of all visualizers.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ToggleAllVisualizersVisibilityCommand
+        {
+            get
+            {
+                if (this.toggleAllVisualizersVisibilityCommand == null)
+                {
+                    this.toggleAllVisualizersVisibilityCommand = new RelayCommand(() => this.ToggleAllVisualizersVisibility());
+                }
+
+                return this.toggleAllVisualizersVisibilityCommand;
+            }
+        }
+
+        /// <summary>
         /// Gets the remove panel command.
         /// </summary>
         [Browsable(false)]
@@ -145,7 +167,15 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                             // Set the current panel on click
                             if (!this.IsCurrentPanel)
                             {
+                                // Set the current panel to this panel
+                                this.IsTreeNodeSelected = true;
                                 this.Container.CurrentPanel = this;
+
+                                // If the panel contains any visualization objects, set the first one as selected.
+                                if (this.VisualizationObjects.Any())
+                                {
+                                    this.VisualizationObjects[0].IsTreeNodeSelected = true;
+                                }
                             }
                         });
                 }
@@ -300,7 +330,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public Navigator Navigator => this.Container.Navigator;
+        public Navigator Navigator => this.Container?.Navigator;
 
         /// <summary>
         /// Gets the collection of data stream visualization objects.
@@ -308,6 +338,13 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [DataMember]
         public ObservableCollection<VisualizationObject> VisualizationObjects { get; internal set; }
+
+        /// <summary>
+        /// Gets the list of compatible panel types.
+        /// </summary>
+        [Browsable(false)]
+        [DataMember]
+        public abstract List<VisualizationPanelType> CompatiblePanelTypes { get; }
 
         /// <summary>
         /// Gets the zoom to panel command.
@@ -384,12 +421,15 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Removes a child panel of this visualization panel (only valid if this panel is a parent container panel).
+        /// Toggles the visibility of all visualizers.
         /// </summary>
-        /// <param name="childPanel">The visualization panel to remove.</param>
-        public virtual void RemoveChildPanel(VisualizationPanel childPanel)
+        public virtual void ToggleAllVisualizersVisibility()
         {
-            throw new NotImplementedException();
+            var anyVisible = this.VisualizationObjects.Any(vo => vo.Visible);
+            foreach (var visualizationObject in this.VisualizationObjects)
+            {
+                visualizationObject.Visible = !anyVisible;
+            }
         }
 
         /// <summary>
@@ -429,22 +469,22 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets all of the visualization objects that visualize a stream member rather than a stream.
+        /// Gets all of the visualization objects that visualize a derived stream, rather than a raw stream.
         /// </summary>
-        /// <returns>The collection ov visualization objects that visualize a stream member rathan a stream.</returns>
-        public virtual List<IStreamVisualizationObject> GetStreamMemberVisualizers()
+        /// <returns>The collection of visualization objects that visualize a derived stream.</returns>
+        public virtual List<IStreamVisualizationObject> GetDerivedStreamVisualizationObjects()
         {
-            List<IStreamVisualizationObject> streamMemberVisualizers = new List<IStreamVisualizationObject>();
+            var derivedStreamVisualizationObjects = new List<IStreamVisualizationObject>();
 
-            foreach (IStreamVisualizationObject visualizationObject in this.VisualizationObjects)
+            foreach (IStreamVisualizationObject visualizationObject in this.VisualizationObjects.Where(vo => vo is IStreamVisualizationObject))
             {
-                if (visualizationObject.StreamBinding.IsStreamMemberBinding)
+                if (visualizationObject.StreamBinding.IsDerived)
                 {
-                    streamMemberVisualizers.Add(visualizationObject);
+                    derivedStreamVisualizationObjects.Add(visualizationObject);
                 }
             }
 
-            return streamMemberVisualizers;
+            return derivedStreamVisualizationObjects;
         }
 
         /// <inheritdoc/>
@@ -461,6 +501,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             this.VisualizationObjects = new ObservableCollection<VisualizationObject>();
             this.visualizationObjectsLock = new object();
             BindingOperations.EnableCollectionSynchronization(this.VisualizationObjects, this.visualizationObjectsLock);
+            this.VisualizationObjects.CollectionChanged += this.OnVisualizationObjectsCollectionChanged;
         }
 
         /// <summary>
@@ -468,6 +509,66 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         /// <returns>The template for the view.</returns>
         protected abstract DataTemplate CreateDefaultViewTemplate();
+
+        /// <summary>
+        /// Called when the collection of child visualization objects has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnVisualizationObjectsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (VisualizationObject visualizationObject in e.OldItems)
+                {
+                    if (visualizationObject is IXValueRangeProvider xValueRangeProvider)
+                    {
+                        xValueRangeProvider.XValueRangeChanged -= this.OnVisualizationObjectXValueRangeChanged;
+                    }
+
+                    if (visualizationObject is IYValueRangeProvider yValueRangeProvider)
+                    {
+                        yValueRangeProvider.YValueRangeChanged -= this.OnVisualizationObjectYValueRangeChanged;
+                    }
+                }
+            }
+
+            if (e.NewItems != null)
+            {
+                foreach (VisualizationObject visualizationObject in e.NewItems)
+                {
+                    if (visualizationObject is IXValueRangeProvider xValueRangeProvider)
+                    {
+                        xValueRangeProvider.XValueRangeChanged += this.OnVisualizationObjectXValueRangeChanged;
+                    }
+
+                    if (visualizationObject is IYValueRangeProvider yValueRangeProvider)
+                    {
+                        yValueRangeProvider.YValueRangeChanged += this.OnVisualizationObjectYValueRangeChanged;
+                    }
+                }
+            }
+
+            this.RaisePropertyChanged(nameof(this.CanZoomToPanel));
+        }
+
+        /// <summary>
+        /// Called when the X value range of a child visualization object has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnVisualizationObjectXValueRangeChanged(object sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the Y value range of a child visualization object has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnVisualizationObjectYValueRangeChanged(object sender, EventArgs e)
+        {
+        }
 
         /// <summary>
         /// Called when a property of the container has changed.
@@ -536,6 +637,20 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private void OnDeserializing(StreamingContext context)
         {
             this.InitNew();
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // After the panel has been deserialized from the layout file, it most likely will contain
+            // some visualization objects that will need their property changed handlers hooked up.
+            foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
+            {
+                if (visualizationObject is IYValueRangeProvider yValueRangeProvider)
+                {
+                    yValueRangeProvider.YValueRangeChanged += this.OnVisualizationObjectYValueRangeChanged;
+                }
+            }
         }
     }
 }

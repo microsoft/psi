@@ -19,14 +19,14 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// <summary>
     /// Interaction logic for TimeIntervalAnnotationVisualizationObjectView.xaml.
     /// </summary>
-    public partial class TimeIntervalAnnotationVisualizationObjectView : TimelineCanvasVisualizationObjectView<TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotation>
+    public partial class TimeIntervalAnnotationVisualizationObjectView : StreamIntervalVisualizationObjectTimelineCanvasView<TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotation>
     {
-        private List<TimeIntervalAnnotationVisualizationObjectViewItem> items = new List<TimeIntervalAnnotationVisualizationObjectViewItem>();
+        private readonly List<TimeIntervalAnnotationVisualizationObjectViewItem> items = new List<TimeIntervalAnnotationVisualizationObjectViewItem>();
 
         /// <summary>
         /// The collection of brushes used in rendering.
         /// </summary>
-        private Dictionary<Color, Brush> brushes = new Dictionary<Color, Brush>();
+        private readonly Dictionary<Color, Brush> brushes = new Dictionary<Color, Brush>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeIntervalAnnotationVisualizationObjectView"/> class.
@@ -35,6 +35,22 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             this.InitializeComponent();
             this.Canvas = this._DynamicCanvas;
+        }
+
+        /// <inheritdoc/>
+        public override void AppendContextMenuItems(List<MenuItem> menuItems)
+        {
+            if (this.DataContext is TimeIntervalAnnotationVisualizationObject annotationVisualizationObject && annotationVisualizationObject.IsBound)
+            {
+                // Add the add annotation context menu item
+                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Annotation, "Add Annotation", annotationVisualizationObject.GetAddAnnotationCommand()));
+
+                // Add the delete annotation context menu item
+                ICommand deleteCommand = annotationVisualizationObject.GetDeleteAnnotationCommand();
+                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Annotation, "Delete Annotation", deleteCommand, null, deleteCommand != null));
+            }
+
+            base.AppendContextMenuItems(menuItems);
         }
 
         /// <summary>
@@ -74,10 +90,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnVisualizationObjectPropertyChanged(sender, e);
-            if (e.PropertyName == nameof(this.VisualizationObject.DisplayData) ||
-                e.PropertyName == nameof(this.VisualizationObject.LineWidth) ||
-                e.PropertyName == nameof(this.VisualizationObject.Padding) ||
-                e.PropertyName == nameof(this.VisualizationObject.FontSize))
+            if (e.PropertyName == nameof(this.StreamVisualizationObject.DisplayData) ||
+                e.PropertyName == nameof(this.StreamVisualizationObject.LineWidth) ||
+                e.PropertyName == nameof(this.StreamVisualizationObject.Padding) ||
+                e.PropertyName == nameof(this.StreamVisualizationObject.FontSize))
             {
                 this.OnDisplayDataChanged();
             }
@@ -88,13 +104,36 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// </summary>
         protected virtual void OnDisplayDataChanged()
         {
-            this.Rerender();
+            this.UpdateView();
         }
 
         /// <inheritdoc/>
-        protected override void OnTransformsChanged()
+        protected override void UpdateView()
         {
-            this.Rerender();
+            for (int i = 0; i < this.StreamVisualizationObject.DisplayData.Count; i++)
+            {
+                TimeIntervalAnnotationVisualizationObjectViewItem item;
+
+                if (i < this.items.Count)
+                {
+                    item = this.items[i];
+                }
+                else
+                {
+                    item = new TimeIntervalAnnotationVisualizationObjectViewItem(this, this.StreamVisualizationObject.DisplayData[i]);
+                    this.items.Add(item);
+                }
+
+                item.Update(this.StreamVisualizationObject.DisplayData[i]);
+            }
+
+            // remove the remaining figures
+            for (int i = this.StreamVisualizationObject.DisplayData.Count; i < this.items.Count; i++)
+            {
+                var item = this.items[this.StreamVisualizationObject.DisplayData.Count];
+                item.RemoveFromCanvas();
+                this.items.Remove(item);
+            }
         }
 
         private static Color ToMediaColor(System.Drawing.Color color)
@@ -143,7 +182,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     value.ToString(),
                     metadata.BorderColor,
                     metadata.FillColor,
-                    new PsiCommand(() => this.VisualizationObject.SetAnnotationValue(displayData.Annotation, schemaDefinition.Name, value))));
+                    new PsiCommand(() => this.StreamVisualizationObject.SetAnnotationValue(displayData.Annotation, schemaDefinition.Name, value))));
             }
 
             // Add a handler so that the timeline visualization panel continues to receive mouse move messages
@@ -184,9 +223,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             var labelStart = Math.Min(navigatorViewDuration, Math.Max((displayData.StartTime - this.Navigator.ViewRange.StartTime).TotalSeconds, 0));
             var labelEnd = Math.Max(0, Math.Min((displayData.EndTime - this.Navigator.ViewRange.StartTime).TotalSeconds, navigatorViewDuration));
 
-            var verticalSpace = this.VisualizationObject.Padding / this.ScaleTransform.ScaleY;
-            var lo = (double)(trackId + verticalSpace) / this.VisualizationObject.TrackCount;
-            var hi = (double)(trackId + 1 - verticalSpace) / this.VisualizationObject.TrackCount;
+            var verticalSpace = this.StreamVisualizationObject.Padding / this.ScaleTransform.ScaleY;
+            var lo = (double)(trackId + verticalSpace) / this.StreamVisualizationObject.TrackCount;
+            var hi = (double)(trackId + 1 - verticalSpace) / this.StreamVisualizationObject.TrackCount;
 
             this.EditUnrestrictedAnnotationTextBox.Width = (labelEnd - labelStart) * this.Canvas.ActualWidth / this.Navigator.ViewRange.Duration.TotalSeconds;
             this.EditUnrestrictedAnnotationTextBox.Height = (hi - lo) * this.Canvas.ActualHeight;
@@ -201,8 +240,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
         private void EditUnrestrictedAnnotationTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            UnrestrictedAnnotationValueContext context = this.EditUnrestrictedAnnotationTextBox.Tag as UnrestrictedAnnotationValueContext;
-            if (context != null)
+            if (this.EditUnrestrictedAnnotationTextBox.Tag is UnrestrictedAnnotationValueContext context)
             {
                 context.DisplayData.SetValue(context.ValueName, this.EditUnrestrictedAnnotationTextBox.Text);
             }
@@ -228,34 +266,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
 
             return timelinePanelView as TimelineVisualizationPanelView;
-        }
-
-        private void Rerender()
-        {
-            for (int i = 0; i < this.VisualizationObject.DisplayData.Count; i++)
-            {
-                TimeIntervalAnnotationVisualizationObjectViewItem item;
-
-                if (i < this.items.Count)
-                {
-                    item = this.items[i];
-                }
-                else
-                {
-                    item = new TimeIntervalAnnotationVisualizationObjectViewItem(this, this.VisualizationObject.DisplayData[i]);
-                    this.items.Add(item);
-                }
-
-                item.Update(this.VisualizationObject.DisplayData[i]);
-            }
-
-            // remove the remaining figures
-            for (int i = this.VisualizationObject.DisplayData.Count; i < this.items.Count; i++)
-            {
-                var item = this.items[this.VisualizationObject.DisplayData.Count];
-                item.RemoveFromCanvas();
-                this.items.Remove(item);
-            }
         }
 
         private class UnrestrictedAnnotationValueContext

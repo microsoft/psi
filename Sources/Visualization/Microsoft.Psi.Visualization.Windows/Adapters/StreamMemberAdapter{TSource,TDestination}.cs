@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from a source stream to a member of that stream.
+    /// Implements a stream adapter from a source stream to a member of that stream.
     /// </summary>
     /// <typeparam name="TSource">The type of messages in the source stream.</typeparam>
     /// <typeparam name="TDestination">The type of the member property or field.</typeparam>
@@ -25,9 +25,7 @@ namespace Microsoft.Psi.Visualization.Adapters
         /// </summary>
         /// <param name="path">The path to the member.</param>
         public StreamMemberAdapter(string path)
-            : base()
         {
-            this.AdapterFn = this.Adapter;
             this.Initialize(path);
         }
 
@@ -40,9 +38,9 @@ namespace Microsoft.Psi.Visualization.Adapters
         public static bool operator ==(StreamMemberAdapter<TSource, TDestination> first, StreamMemberAdapter<TSource, TDestination> second)
         {
             // Check for null on left side.
-            if (object.ReferenceEquals(first, null))
+            if (first is null)
             {
-                if (object.ReferenceEquals(second, null))
+                if (second is null)
                 {
                     // null == null = true.
                     return true;
@@ -95,10 +93,11 @@ namespace Microsoft.Psi.Visualization.Adapters
             return this.pathAccessors.GetHashCode();
         }
 
-        private TDestination Adapter(TSource value, Envelope env)
+        /// <inheritdoc/>
+        public override TDestination GetAdaptedValue(TSource source, Envelope envelope)
         {
             // Walk the path of accessors to get to the final value
-            object targetObject = value;
+            object targetObject = source;
             foreach (var memberInfo in this.pathAccessors)
             {
                 if (targetObject != null)

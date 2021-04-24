@@ -7,22 +7,13 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of any type into tuples of originating and message times.
+    /// Implements a stream adapter from a specified type to tuples of originating and creation times.
     /// </summary>
-    /// <typeparam name="T">The type of the stream.</typeparam>
+    /// <typeparam name="T">The source type.</typeparam>
     public class ObjectToLatencyAdapter<T> : StreamAdapter<T, Tuple<DateTime, DateTime>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectToLatencyAdapter{T}"/> class.
-        /// </summary>
-        public ObjectToLatencyAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static Tuple<DateTime, DateTime> Adapter(T value, Envelope env)
-        {
-            return Tuple.Create(env.OriginatingTime, env.CreationTime);
-        }
+        /// <inheritdoc/>
+        public override Tuple<DateTime, DateTime> GetAdaptedValue(T source, Envelope envelope)
+            => Tuple.Create(envelope.OriginatingTime, envelope.CreationTime);
     }
 }

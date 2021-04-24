@@ -6,27 +6,17 @@ namespace Microsoft.Psi.Visualization.Adapters
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Psi.Visualization.Data;
-
     using MathNet = MathNet.Spatial.Euclidean;
     using Windows = System.Windows.Media.Media3D;
 
     /// <summary>
-    /// Implements an adapter from streams of lists of <see cref="MathNet.Point3D"/> into lists of nullable <see cref="Windows.Point3D"/>.
+    /// Implements a stream adapter from list of <see cref="MathNet.Point3D"/> to list of nullable <see cref="Windows.Point3D"/>.
     /// </summary>
     [StreamAdapter]
     public class MathNetPoint3DListToNullablePoint3DListAdapter : StreamAdapter<List<MathNet.Point3D>, List<Windows.Point3D?>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MathNetPoint3DListToNullablePoint3DListAdapter"/> class.
-        /// </summary>
-        public MathNetPoint3DListToNullablePoint3DListAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static List<Windows.Point3D?> Adapter(List<MathNet.Point3D> value, Envelope env)
-        {
-            return value?.Select(p => new Windows.Point3D(p.X, p.Y, p.Z) as Windows.Point3D?).ToList();
-        }
+        /// <inheritdoc/>
+        public override List<Windows.Point3D?> GetAdaptedValue(List<MathNet.Point3D> source, Envelope envelope)
+            => source?.Select(p => new Windows.Point3D(p.X, p.Y, p.Z) as Windows.Point3D?).ToList();
     }
 }

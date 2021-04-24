@@ -3,9 +3,7 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
-    using System;
     using Microsoft.Psi.Visualization.Data;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.ViewModels;
 
     /// <summary>
@@ -49,17 +47,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         bool IsTreeNodeSelected { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether the visualization object is currently bound to a datasource.
+        /// </summary>
+        bool IsBound { get; }
+
+        /// <summary>
         /// Updates the binding between a stream visualization object and a data source.
         /// </summary>
         /// <param name="currentSession">The current active session view model.</param>
         void UpdateStreamSource(SessionViewModel currentSession);
-
-        /// <summary>
-        /// Gets a snapped time based on a given time.
-        /// </summary>
-        /// <param name="time">The input time.</param>
-        /// <param name="snappingBehavior">Timeline snapping behavior.</param>
-        /// <returns>The snapped time.</returns>
-        DateTime? GetSnappedTime(DateTime time, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest);
     }
 }

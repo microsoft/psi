@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
     using Microsoft.Psi.Imaging;
@@ -18,5 +19,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(ImageVisualizationObjectView));
+
+        /// <inheritdoc />
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.CurrentData))
+            {
+                if (this.CurrentData != default && this.CurrentData.Resource != null)
+                {
+                    this.Resolution = new Size(this.CurrentData.Resource.Width, this.CurrentData.Resource.Height);
+                }
+                else
+                {
+                    this.Resolution = default;
+                }
+            }
+
+            base.OnPropertyChanged(sender, e);
+        }
     }
 }

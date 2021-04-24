@@ -9,7 +9,8 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
     using System.Windows.Media;
-    using Microsoft.Psi.PsiStudio;
+    using Microsoft.Psi.Visualization.Data;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -52,7 +53,7 @@ namespace Microsoft.Psi.Visualization.Views
             DateTime? snappedTime = null;
             if (VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject snapToVisualizationObject)
             {
-                snappedTime = snapToVisualizationObject.GetSnappedTime(time);
+                snappedTime = DataManager.Instance.GetTimeOfNearestMessage(snapToVisualizationObject.StreamSource, time, NearestMessageType.Nearest);
             }
 
             return snappedTime ?? time;
@@ -109,7 +110,7 @@ namespace Microsoft.Psi.Visualization.Views
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                DateTime time = this.GetTimeAtMousePointer(e);
+                var time = this.Navigator.Cursor;
                 this.Navigator.SelectionRange.SetRange(time, this.Navigator.SelectionRange.EndTime >= time ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
                 e.Handled = true;
             }
@@ -119,7 +120,7 @@ namespace Microsoft.Psi.Visualization.Views
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                DateTime time = this.GetTimeAtMousePointer(e);
+                var time = this.Navigator.Cursor;
                 this.Navigator.SelectionRange.SetRange(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
                 e.Handled = true;
             }

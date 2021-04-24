@@ -17,16 +17,16 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="id">The id of the data stream.</param>
         /// <param name="typeName">The type of data of this stream.</param>
         /// <param name="supplementalMetadataTypeName">The type of supplemental metadata for this stream.</param>
-        /// <param name="partitionName">The name of th partition.</param>
-        /// <param name="partitionPath">The path of the partition.</param>
-        public PsiLiveStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string partitionName, string partitionPath)
+        /// <param name="storeName">The store name.</param>
+        /// <param name="storePath">The store path.</param>
+        public PsiLiveStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string storeName, string storePath)
         {
             this.Name = name;
             this.Id = id;
             this.TypeName = typeName;
             this.SupplementalMetadataTypeName = supplementalMetadataTypeName;
-            this.PartitionName = partitionName;
-            this.PartitionPath = partitionPath;
+            this.StoreName = storeName;
+            this.StorePath = storePath;
             this.FirstMessageCreationTime = DateTime.MinValue;
             this.LastMessageCreationTime = DateTime.MaxValue;
             this.FirstMessageOriginatingTime = DateTime.MinValue;
@@ -46,10 +46,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public string SupplementalMetadataTypeName { get; private set; }
 
         /// <inheritdoc />
-        public string PartitionName { get; private set; }
+        public string StoreName { get; private set; }
 
         /// <inheritdoc />
-        public string PartitionPath { get; private set; }
+        public string StorePath { get; private set; }
 
         /// <inheritdoc />
         public DateTime FirstMessageCreationTime { get; private set; }
@@ -64,13 +64,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public DateTime LastMessageOriginatingTime { get; private set; }
 
         /// <inheritdoc />
-        public int AverageMessageSize => 0;
+        public long MessageCount { get; private set; }
 
         /// <inheritdoc />
-        public int AverageLatency => 0;
+        public double AverageMessageSize => 0;
 
         /// <inheritdoc />
-        public int MessageCount { get; private set; }
+        public double AverageMessageLatencyMs => 0;
 
         /// <inheritdoc />
         public DateTime OpenedTime => DateTime.MinValue;

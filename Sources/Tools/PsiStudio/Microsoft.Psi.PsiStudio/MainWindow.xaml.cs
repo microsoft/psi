@@ -4,20 +4,26 @@
 namespace Microsoft.Psi.PsiStudio
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.ViewModels;
-    using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Xceed.Wpf.Toolkit.PropertyGrid;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// The list of object property names that should automatically be expanded in the property browser if they are expandable properties.
+        /// </summary>
+        private readonly List<string> autoExpandedProperties = new List<string>() { "XAxis", "YAxis" };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
@@ -40,6 +46,9 @@ namespace Microsoft.Psi.PsiStudio
 
             // Set the data context
             this.DataContext = viewModel;
+
+            // Listen for items being added to the property grid.
+            this.PropertyGrid.PreparePropertyItem += this.OnPropertyGridPreparePropertyItem;
         }
 
         /// <inheritdoc/>
@@ -57,39 +66,50 @@ namespace Microsoft.Psi.PsiStudio
         private void ToolBar_Loaded(object sender, RoutedEventArgs e)
         {
             ToolBar toolBar = sender as ToolBar;
-            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
-            if (overflowGrid != null)
+            if (toolBar.Template.FindName("OverflowGrid", toolBar) is FrameworkElement overflowGrid)
             {
                 overflowGrid.Visibility = Visibility.Collapsed;
             }
 
-            var mainPanelBorder = toolBar.Template.FindName("MainPanelBorder", toolBar) as FrameworkElement;
-            if (mainPanelBorder != null)
+            if (toolBar.Template.FindName("MainPanelBorder", toolBar) is FrameworkElement mainPanelBorder)
             {
-                mainPanelBorder.Margin = default(Thickness);
+                mainPanelBorder.Margin = default;
             }
         }
 
-        private void StreamTreeNode_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void StreamTreeNode_MouseMove(object sender, MouseEventArgs e)
         {
             // If the left button is also pressed, then the user is probably wanting to
             // initiate a drag operation of the stream into the Visualization Container
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                // Get the Tree Item that sent the event
-                StackPanel treeNode = sender as StackPanel;
-                if (treeNode != null)
+                // Get the tree item that sent the event
+                if (sender is Grid treeNodeItem)
                 {
-                    StreamTreeNode streamTreeNode = treeNode.DataContext as StreamTreeNode;
-                    if (streamTreeNode != null && streamTreeNode.CanVisualize)
+                    if (treeNodeItem.DataContext is StreamTreeNode streamTreeNode && streamTreeNode.IsInCurrentSession)
                     {
                         // Begin the Drag & Drop operation
-                        DataObject data = new DataObject();
+                        var data = new DataObject();
                         data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.DragDropStream);
                         data.SetData(DragDropDataName.StreamTreeNode, streamTreeNode);
 
-                        DragDrop.DoDragDrop(treeNode, data, DragDropEffects.Move);
+                        DragDrop.DoDragDrop(treeNodeItem, data, DragDropEffects.Move);
                     }
+                }
+            }
+        }
+
+        private void OnPropertyGridPreparePropertyItem(object sender, PropertyItemEventArgs e)
+        {
+            // In a later version of the Xceed PropertyGrid we can specify if a property is initially
+            // expanded when shown in the property grid by setting a property on the ExpandableObject
+            // attribute.  This workaround lets us initially expand any expandable property whose name
+            // is in the list of properties we wish to automatically expand.
+            if (e.PropertyItem is PropertyItem propertyItem)
+            {
+                if (this.autoExpandedProperties.Contains(propertyItem.PropertyName) && propertyItem.IsExpandable && !propertyItem.IsExpanded)
+                {
+                    propertyItem.IsExpanded = true;
                 }
             }
         }

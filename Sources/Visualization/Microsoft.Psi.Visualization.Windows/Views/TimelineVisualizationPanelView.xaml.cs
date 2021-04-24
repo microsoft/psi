@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -17,7 +18,7 @@ namespace Microsoft.Psi.Visualization.Views
     /// <summary>
     /// Interaction logic for TimelineVisualizationPanelView.xaml.
     /// </summary>
-    public partial class TimelineVisualizationPanelView : VisualizationPanelViewBase
+    public partial class TimelineVisualizationPanelView : VisualizationPanelView
     {
         private Point lastMousePosition = new Point(0, 0);
         private DragOperation currentDragOperation = DragOperation.None;
@@ -41,6 +42,22 @@ namespace Microsoft.Psi.Visualization.Views
         /// Gets the timeline visualization panel.
         /// </summary>
         private TimelineVisualizationPanel VisualizationPanel => this.DataContext as TimelineVisualizationPanel;
+
+        /// <inheritdoc/>
+        public override void AppendContextMenuItems(List<MenuItem> menuItems)
+        {
+            if (this.DataContext is TimelineVisualizationPanel timelineVisualizationPanel)
+            {
+                // The show/hide legend menu
+                menuItems.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        IconSourcePath.Legend,
+                        timelineVisualizationPanel.ShowLegend ? $"Hide Legend" : $"Show Legend",
+                        timelineVisualizationPanel.ShowHideLegendCommand));
+            }
+
+            base.AppendContextMenuItems(menuItems);
+        }
 
         /// <summary>
         /// Signals to the panel that a drag and drop operation it may have initiated has been completed.
@@ -70,27 +87,6 @@ namespace Microsoft.Psi.Visualization.Views
                 // need in order to perform data summarization based on the view width.
                 // Not updating the Height property as it is bound to the panel view.
                 this.VisualizationPanel.Width = sizeInfo.NewSize.Width;
-            }
-        }
-
-        private void Root_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
-            {
-                // eat context menu opening, when shift key is pressed (dropping end selection marker)
-                e.Handled = true;
-            }
-            else
-            {
-                // Create the context menu if it doesn't yet exist
-                FrameworkElement senderElement = sender as FrameworkElement;
-                if (senderElement.ContextMenu == null)
-                {
-                    senderElement.ContextMenu = new ContextMenu();
-                    senderElement.ContextMenu.AddHandler(MouseMoveEvent, new MouseEventHandler(this.ContextMenuMouseMove), true);
-                }
-
-                this.VisualizationPanel.OnContextMenuOpening(senderElement.ContextMenu);
             }
         }
 

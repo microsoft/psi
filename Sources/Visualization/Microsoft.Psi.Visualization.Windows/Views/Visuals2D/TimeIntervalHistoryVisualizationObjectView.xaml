@@ -1,7 +1,7 @@
 ﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
      Licensed under the MIT License. -->
 
-<vv:TimelineCanvasVisualizationObjectView
+<vv:StreamIntervalVisualizationObjectTimelineCanvasView
     x:Class="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalHistoryVisualizationObjectView"
     x:TypeArguments="vo:TimeIntervalHistoryVisualizationObject,vdt:TimeIntervalHistory"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -27,4 +27,4 @@
             <Canvas Name="_DynamicCanvas" Margin="2"/>
         </Border>
     </Grid>
-</vv:TimelineCanvasVisualizationObjectView>
+</vv:StreamIntervalVisualizationObjectTimelineCanvasView>

@@ -8,10 +8,30 @@ namespace Microsoft.Psi.Visualization.Collections
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Windows;
     using System.Windows.Threading;
+
+    /// <summary>
+    /// Defines modes for the <see cref="ObservableKeyedCache{TKey, TItem}.ObservableKeyedView"/>.
+    /// </summary>
+    public enum ObservableKeyedViewMode
+    {
+        /// <summary>
+        /// View will stay fixed on start and end keys.
+        /// </summary>
+        Fixed,
+
+        /// <summary>
+        /// View will slide based on number of entries window.
+        /// </summary>
+        TailCount,
+
+        /// <summary>
+        /// View will slide based on time window.
+        /// </summary>
+        TailRange,
+    }
 
     /// <summary>
     /// Represents a dynamic data cache whose keys are embedded in the values and provides
@@ -38,6 +58,11 @@ namespace Microsoft.Psi.Visualization.Collections
         private readonly Func<TItem, TKey> getKeyForItem;
 
         /// <summary>
+        /// Dictionary of weakly held views indexed by start and end keys.
+        /// </summary>
+        private readonly Dictionary<Tuple<TKey, TKey, uint, Func<TKey, TKey>>, WeakReference<ObservableKeyedView>> views;
+
+        /// <summary>
         /// Number of collection changed events received before pruning the cache.
         /// </summary>
         private uint pruneThreshold = ObservableSortedCollection<TItem>.DefaultCapacity;
@@ -51,11 +76,6 @@ namespace Microsoft.Psi.Visualization.Collections
         /// Number of collection changed events received, since last pruning of the cache.
         /// </summary>
         private uint collectionChangedCount = 0;
-
-        /// <summary>
-        /// Dictionary of weakly held views indexed by start and end keys.
-        /// </summary>
-        private Dictionary<Tuple<TKey, TKey, uint, Func<TKey, TKey>>, WeakReference<ObservableKeyedView>> views;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObservableKeyedCache{TKey, TItem}" /> class that uses the default comparers.
@@ -103,7 +123,7 @@ namespace Microsoft.Psi.Visualization.Collections
         /// <param name="tailRange">Tail duration function. Takes last item's key and returns a new startKey.</param>
         /// <returns>An instance of <see cref="ObservableKeyedView"/>.</returns>
         /// <exception cref="ArgumentException"><paramref name="startKey"/> must be less than or equal to <paramref name="endKey"/>.</exception>
-        public ObservableKeyedView GetView(ObservableKeyedView.ViewMode mode, TKey startKey, TKey endKey, uint tailCount, Func<TKey, TKey> tailRange)
+        public ObservableKeyedView GetView(ObservableKeyedViewMode mode, TKey startKey, TKey endKey, uint tailCount, Func<TKey, TKey> tailRange)
         {
             if (this.keyComparer.Compare(startKey, endKey) > 0)
             {
@@ -111,9 +131,8 @@ namespace Microsoft.Psi.Visualization.Collections
             }
 
             var viewKey = Tuple.Create(startKey, endKey, tailCount, tailRange);
-            WeakReference<ObservableKeyedView> weakView = null;
             ObservableKeyedView view = null;
-            if (this.views.TryGetValue(viewKey, out weakView))
+            if (this.views.TryGetValue(viewKey, out WeakReference<ObservableKeyedView> weakView))
             {
                 if (weakView.TryGetTarget(out view))
                 {
@@ -162,7 +181,7 @@ namespace Microsoft.Psi.Visualization.Collections
                 }
             }
 
-            value = default(TItem);
+            value = default;
             return false;
         }
 
@@ -272,7 +291,7 @@ namespace Microsoft.Psi.Visualization.Collections
             while (lo <= hi)
             {
                 int mid = lo + ((hi - lo) / 2);
-                int res = res = this.keyComparer.Compare(key, this.getKeyForItem(this[mid]));
+                int res = this.keyComparer.Compare(key, this.getKeyForItem(this[mid]));
                 if (res < 0)
                 {
                     hi = mid - 1;
@@ -332,17 +351,32 @@ namespace Microsoft.Psi.Visualization.Collections
             /// <summary>
             /// Underlying cache.
             /// </summary>
-            private ObservableKeyedCache<TKey, TItem> cache;
+            private readonly ObservableKeyedCache<TKey, TItem> cache;
+
+            /// <summary>
+            /// Tail count.
+            /// </summary>
+            private readonly uint tailCount;
+
+            /// <summary>
+            /// Mode of the view.
+            /// </summary>
+            private readonly ObservableKeyedViewMode mode;
+
+            /// <summary>
+            /// Tail duration function. Takes last item's key and returns a new startKey.
+            /// </summary>
+            private readonly Func<TKey, TKey> tailRange;
+
+            /// <summary>
+            /// End key of the view.
+            /// </summary>
+            private readonly TKey endKey;
 
             /// <summary>
             /// End index of the view.
             /// </summary>
             private int endIndex;
-
-            /// <summary>
-            /// End key of the view.
-            /// </summary>
-            private TKey endKey;
 
             /// <summary>
             /// Start index of the view.
@@ -355,21 +389,6 @@ namespace Microsoft.Psi.Visualization.Collections
             private TKey startKey;
 
             /// <summary>
-            /// Mode of the view.
-            /// </summary>
-            private ViewMode mode;
-
-            /// <summary>
-            /// Tail count.
-            /// </summary>
-            private uint tailCount;
-
-            /// <summary>
-            /// Tail duration function. Takes last item's key and returns a new startKey.
-            /// </summary>
-            private Func<TKey, TKey> tailRange;
-
-            /// <summary>
             /// Initializes a new instance of the <see cref="ObservableKeyedView"/> class.
             /// </summary>
             /// <param name="cache">Underlying cache.</param>
@@ -378,7 +397,7 @@ namespace Microsoft.Psi.Visualization.Collections
             /// <param name="endKey">End key of the view.</param>
             /// <param name="tailCount">Number of items to include in view.</param>
             /// <param name="tailRange">Tail duration function. Takes last item's key and returns a new startKey.</param>
-            internal ObservableKeyedView(ObservableKeyedCache<TKey, TItem> cache, ViewMode mode, TKey startKey, TKey endKey, uint tailCount, Func<TKey, TKey> tailRange)
+            internal ObservableKeyedView(ObservableKeyedCache<TKey, TItem> cache, ObservableKeyedViewMode mode, TKey startKey, TKey endKey, uint tailCount, Func<TKey, TKey> tailRange)
             {
                 this.cache = cache;
                 this.mode = mode;
@@ -415,27 +434,6 @@ namespace Microsoft.Psi.Visualization.Collections
 
             /// <inheritdoc/>
             public virtual event PropertyChangedEventHandler PropertyChanged;
-
-            /// <summary>
-            /// Modes the <see cref="ObservableKeyedView"/> operates under.
-            /// </summary>
-            public enum ViewMode
-            {
-                /// <summary>
-                /// Fixed view mode (default). View will stay fixed on start and end keys.
-                /// </summary>
-                Fixed,
-
-                /// <summary>
-                /// TailCount view mode. View will slide based on number of entries window.
-                /// </summary>
-                TailCount,
-
-                /// <summary>
-                /// TailRange view mode. View will slide based on time window.
-                /// </summary>
-                TailRange,
-            }
 
             /// <inheritdoc/>
             public int Count => this.endIndex - this.startIndex;
@@ -646,11 +644,6 @@ namespace Microsoft.Psi.Visualization.Collections
                 }
             }
 
-            private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
-            {
-                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
-            }
-
             private void OnCollectionReset()
             {
                 this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
@@ -669,7 +662,7 @@ namespace Microsoft.Psi.Visualization.Collections
 
             private void UpdateKeys()
             {
-                if (this.mode == ViewMode.Fixed)
+                if (this.mode == ObservableKeyedViewMode.Fixed)
                 {
                     return;
                 }
@@ -678,12 +671,12 @@ namespace Microsoft.Psi.Visualization.Collections
                 {
                     // Update the keys
                     var oldStartKey = this.startKey;
-                    if (this.mode == ViewMode.TailCount)
+                    if (this.mode == ObservableKeyedViewMode.TailCount)
                     {
                         var count = Math.Min(this.cache.Count, (int)this.tailCount);
                         this.startKey = this.cache.getKeyForItem(this.cache[this.cache.Count - count]);
                     }
-                    else if (this.mode == ViewMode.TailRange)
+                    else if (this.mode == ObservableKeyedViewMode.TailRange)
                     {
                         var lastKey = this.cache.getKeyForItem(this.cache[this.cache.Count - 1]);
                         this.startKey = this.tailRange(lastKey);
@@ -699,8 +692,7 @@ namespace Microsoft.Psi.Visualization.Collections
                             this.cache.views.Remove(viewKey);
 
                             // If the view is no longer live, do not add it back
-                            ObservableKeyedView reference;
-                            if (view.TryGetTarget(out reference))
+                            if (view.TryGetTarget(out ObservableKeyedView reference))
                             {
                                 // Add the view back to the cache views with the new key
                                 viewKey = Tuple.Create(this.startKey, this.endKey, this.tailCount, this.tailRange);
@@ -713,15 +705,15 @@ namespace Microsoft.Psi.Visualization.Collections
 
             private class Enumerator : IEnumerator<TItem>
             {
+                private readonly ObservableKeyedView view;
                 private int index;
                 private TItem value;
-                private ObservableKeyedView view;
 
                 public Enumerator(ObservableKeyedView view)
                 {
                     this.view = view;
                     this.index = 0;
-                    this.value = default(TItem);
+                    this.value = default;
                 }
 
                 public TItem Current => this.value;
@@ -731,7 +723,7 @@ namespace Microsoft.Psi.Visualization.Collections
                 public void Dispose()
                 {
                     this.index = 0;
-                    this.value = default(TItem);
+                    this.value = default;
                 }
 
                 public bool MoveNext()
@@ -744,7 +736,7 @@ namespace Microsoft.Psi.Visualization.Collections
                     }
 
                     this.index = this.view.endIndex;
-                    this.value = default(TItem);
+                    this.value = default;
                     return false;
                 }
 

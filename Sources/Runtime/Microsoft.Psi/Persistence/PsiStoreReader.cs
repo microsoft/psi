@@ -23,10 +23,10 @@ namespace Microsoft.Psi.Persistence
         private readonly MessageReader largeMessageReader;
         private readonly Shared<MetadataCache> metadataCache;
         private readonly Shared<PageIndexCache> indexCache;
+        private readonly HashSet<int> enabledStreams = new HashSet<int>();
 
         private TimeInterval replayInterval = TimeInterval.Empty;
         private bool useOriginatingTime = false;
-        private List<int> enabledStreams = new List<int>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PsiStoreReader"/> class.
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Persistence
         public PsiStoreReader(string name, string path, Action<IEnumerable<Metadata>, RuntimeInfo> metadataUpdateHandler, bool autoOpenAllStreams = false)
         {
             this.Name = name;
-            this.Path = PsiStoreCommon.GetPathToLatestVersion(name, path);
+            this.Path = PsiStore.GetPathToLatestVersion(name, path);
             this.AutoOpenAllStreams = autoOpenAllStreams;
 
             // open the data readers
@@ -94,6 +94,21 @@ namespace Microsoft.Psi.Persistence
         /// Gets the interval between the originating times of the first and last messages written to this store, across all streams.
         /// </summary>
         public TimeInterval MessageOriginatingTimeInterval => this.metadataCache.Resource.MessageOriginatingTimeInterval;
+
+        /// <summary>
+        /// Gets the interval between the opened and closed times, across all streams.
+        /// </summary>
+        public TimeInterval StreamTimeInterval => this.metadataCache.Resource.StreamTimeInterval;
+
+        /// <summary>
+        /// Gets the size of the store.
+        /// </summary>
+        public long Size => PsiStoreCommon.GetSize(this.Name, this.Path);
+
+        /// <summary>
+        /// Gets the number of streams in the store.
+        /// </summary>
+        public int StreamCount => this.metadataCache.Resource.AvailableStreams.Count();
 
         /// <summary>
         /// Gets the version of the runtime used to write to this store.

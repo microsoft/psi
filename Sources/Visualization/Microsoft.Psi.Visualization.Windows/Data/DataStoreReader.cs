@@ -6,30 +6,33 @@ namespace Microsoft.Psi.Visualization.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Collections;
+    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
-    /// Represents an object used to read data stores. Reads data stores by reading their underlying streams.
-    /// Attempts to batch reads through a data store where possible.
+    /// Implements an object used to read stream data from a specific data store.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="DataStoreReader"/> attempts to batch multiple reads for the same streams
+    /// together and improve the efficiency of data access when multiple consumers try to
+    /// retrive the same data.
+    /// </remarks>
     public class DataStoreReader : IDisposable
     {
-        private IStreamReader streamReader;
-        private List<ExecutionContext> executionContexts;
-        private List<IStreamCache> streamCaches;
-        private string storeName;
-        private string storePath;
-
         /// <summary>
         /// The list of streams that have been identified as unreadable, probably due to the format of the
         /// message on disk not matching the current format of the data object they are deserialized from.
         /// </summary>
-        private List<string> unreadableStreams = new List<string>();
+        private readonly List<string> unreadableStreams = new List<string>();
+        private readonly List<IStreamDataProvider> streamDataProviders = new List<IStreamDataProvider>();
+
+        private IStreamReader streamReader;
+        private List<ExecutionContext> executionContexts;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataStoreReader"/> class.
@@ -39,11 +42,10 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="streamReaderType">Stream reader type.</param>
         internal DataStoreReader(string storeName, string storePath, Type streamReaderType)
         {
-            this.storeName = storeName;
-            this.storePath = storePath;
+            this.StoreName = storeName;
+            this.StorePath = storePath;
             this.streamReader = StreamReader.Create(storeName, storePath, streamReaderType);
             this.executionContexts = new List<ExecutionContext>();
-            this.streamCaches = new List<IStreamCache>();
         }
 
         /// <summary>
@@ -51,36 +53,45 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         public event EventHandler<StreamReadErrorEventArgs> StreamReadError;
 
+        /// <summary>
+        /// Gets the store name.
+        /// </summary>
+        internal string StoreName { get; }
+
+        /// <summary>
+        /// Gets the store path.
+        /// </summary>
+        internal string StorePath { get; }
+
         /// <inheritdoc />
         public void Dispose()
         {
-            // cancel all stream readers
-            this.streamCaches?.ForEach(sc => sc.Cancel());
+            // stop all stream data providers from publishing data
+            this.streamDataProviders?.ForEach(sdp => sdp.Stop());
 
             // dispose and clean up execution contexts
             this.executionContexts.ForEach(ec =>
             {
                 try
                 {
-                    ec.ReadAllTokenSource.Cancel();
-                    ec.ReadAllTask.Wait();
+                    ec.ReadTaskCancellationTokenSource.Cancel();
+                    ec.ReadTask.Wait();
                 }
                 catch (AggregateException)
                 {
                 }
 
-                ec.Reader.Dispose();
-                ec.ReadAllTask.Dispose();
-                ec.ReadAllTokenSource.Dispose();
+                ec.StreamReader.Dispose();
+                ec.ReadTask.Dispose();
+                ec.ReadTaskCancellationTokenSource.Dispose();
             });
 
             this.executionContexts.Clear();
             this.executionContexts = null;
 
-            // dispose all stream readers
-            this.streamCaches?.ForEach(sc => sc.Dispose());
-            this.streamCaches?.Clear();
-            this.streamCaches = null;
+            // dispose all stream data providers
+            this.streamDataProviders?.ForEach(sdp => sdp.Dispose());
+            this.streamDataProviders?.Clear();
 
             // dispose of stream reader
             this.streamReader?.Dispose();
@@ -88,68 +99,85 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Gets or creates an instant data target to be notified when new data for a stream is available.
+        /// Gets the time of the nearest message to a specified time, on a specified stream.
         /// </summary>
-        /// <typeparam name="TStreamData">The type of data in the stream.</typeparam>
-        /// <typeparam name="TTarget">The type of data the instant visualization object requires.</typeparam>
-        /// <param name="target">An instant data target that specifies the stream binding, the cursor epsilon, and the callback to call when new data is available.</param>
-        /// <param name="viewRange">The initial time range over which data is expected.</param>
-        internal void GetOrCreateStreamCache<TStreamData, TTarget>(InstantDataTarget target, TimeInterval viewRange)
-        {
-            // Get the stream reader.  Note that we don't care about the stream reader's stream adapter
-            // because with instant data we always read raw data and adapt the stream later.
-            IStreamCache streamCache = this.GetOrCreateStreamCacheByName<TStreamData>(target.StreamName, null);
-
-            // Register the target with the stream reader
-            streamCache.RegisterInstantDataTarget<TTarget>(target, viewRange);
-        }
+        /// <param name="streamSource">The stream source specifying the stream of interest.</param>
+        /// <param name="time">The time to find the nearest message to.</param>
+        /// <param name="nearestMessageType">The type of nearest message to find.</param>
+        /// <returns>The time of the nearest message, if one is found or null otherwise.</returns>
+        internal DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestMessageType nearestMessageType) =>
+            this.GetStreamProviderOrDefault(streamSource.StreamName)
+                .GetTimeOfNearestMessage(time, nearestMessageType);
 
         /// <summary>
-        /// Unregisters an instant visualization object from being notified when the current value of a stream changes.
+        /// Gets or creates a stream interval provider for a specified stream source.
         /// </summary>
-        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
-        internal void UnregisterInstantDataTarget(Guid registrationToken)
+        /// <typeparam name="T">The type of messages in the stream.</typeparam>
+        /// <param name="streamSource">The stream source.</param>
+        /// <returns>The stream interval provider.</returns>
+        internal IStreamIntervalProvider GetOrCreateStreamIntervalProvider<T>(StreamSource streamSource)
         {
-            foreach (IStreamCache streamCache in this.streamCaches)
-            {
-                streamCache.UnregisterInstantDataTarget(registrationToken);
-            }
-        }
+            var streamIntervalProvider = this.GetStreamIntervalProviderOrDefault(streamSource.StreamName, streamSource.StreamAdapter);
 
-        /// <summary>
-        /// Updates the cursor epsilon for a registered instant visualization object.
-        /// </summary>
-        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
-        /// <param name="epsilon">A relative time interval specifying the window around a message time that may be considered a match.</param>
-        internal void UpdateInstantDataTargetEpsilon(Guid registrationToken, RelativeTimeInterval epsilon)
-        {
-            foreach (IStreamCache streamCache in this.streamCaches)
+            if (streamIntervalProvider == null)
             {
-                streamCache.UpdateInstantDataTargetEpsilon(registrationToken, epsilon);
-            }
-        }
-
-        /// <summary>
-        /// Notifies the data store the view range of instant data has changed.
-        /// </summary>
-        /// <param name="viewRange">The new view range of the navigator.</param>
-        internal void OnInstantViewRangeChanged(TimeInterval viewRange)
-        {
-            foreach (IStreamCache streamCache in this.streamCaches.ToList())
-            {
-                if (streamCache.HasInstantStreamReaders)
+                streamIntervalProvider = new StreamIntervalProvider<T>(streamSource);
+                (streamIntervalProvider as StreamDataProvider<T>).StreamReadError += this.OnStreamReadError;
+                lock (this.streamDataProviders)
                 {
-                    streamCache.OnInstantViewRangeChanged(viewRange);
+                    this.streamDataProviders.Add(streamIntervalProvider);
                 }
             }
+
+            return streamIntervalProvider;
         }
+
+        /// <summary>
+        /// Gets or creates a stream value provider for a specified stream source.
+        /// </summary>
+        /// <typeparam name="T">The type of messages in the stream.</typeparam>
+        /// <param name="streamSource">The stream source.</param>
+        /// <returns>The stream value provider.</returns>
+        internal IStreamValueProvider GetOrCreateStreamValueProvider<T>(StreamSource streamSource)
+        {
+            var streamValueProvider = this.GetStreamValueProviderOrDefault(streamSource.StreamName);
+
+            if (streamValueProvider == null)
+            {
+                streamValueProvider = new StreamValueProvider<T>(streamSource);
+                (streamValueProvider as StreamDataProvider<T>).StreamReadError += this.OnStreamReadError;
+                lock (this.streamDataProviders)
+                {
+                    this.streamDataProviders.Add(streamValueProvider);
+                }
+            }
+
+            return streamValueProvider;
+        }
+
+        /// <summary>
+        /// Unregisters a stream value subscriber.
+        /// </summary>
+        /// <typeparam name="TData">The type of data expected by the stream value subscriber.</typeparam>
+        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
+        internal void UnregisterStreamValueSubscriber<TData>(Guid registrationToken) =>
+            this.GetStreamValueProviders()
+                .ForEach(svp => svp.UnregisterStreamValueSubscriber<TData>(registrationToken));
+
+        /// <summary>
+        /// Sets the caching interval for all stream value providers in the data store reader.
+        /// </summary>
+        /// <param name="timeInterval">The time interval to cache.</param>
+        internal void SetStreamValueProvidersCacheInterval(TimeInterval timeInterval) =>
+            this.GetStreamValueProviders()
+                .ForEach(svp => svp.SetCacheInterval(timeInterval));
 
         /// <summary>
         /// Checks if a stream is known to be unreadable.
         /// </summary>
         /// <param name="streamName">The name of the stream.</param>
         /// <returns>True if the stream is currently considered readable, otherwise false.</returns>
-        internal bool IsStreamUnreadable(string streamName)
+        internal bool StreamIsUnreadable(string streamName)
         {
             lock (this.unreadableStreams)
             {
@@ -158,24 +186,39 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Called to ask the reader to read the data for all instant streams.
+        /// Instructs all stream value providers to read data at the specified time and publish it to all registered stream value subscribers.
         /// </summary>
-        /// <param name="cursorTime">The time of the visualization container's cursor.</param>
-        internal void ReadInstantData(DateTime cursorTime)
+        /// <param name="dateTime">The time for the value to read and publish.</param>
+        internal void ReadAndPublishStreamValues(DateTime dateTime)
         {
-            using (IStreamReader reader = this.streamReader.OpenNew())
+            using IStreamReader reader = this.streamReader.OpenNew();
+            foreach (var streamValueProvider in this.GetStreamValueProviders())
             {
-                foreach (IStreamCache streamCache in this.streamCaches.ToList())
+                if (!this.StreamIsUnreadable(streamValueProvider.StreamName))
                 {
-                    if (streamCache.HasInstantStreamReaders && (!this.unreadableStreams.Contains(streamCache.StreamName)))
+                    try
                     {
-                        try
+                        // If a serialization exception is thrown, it will be because the format of the data has changed
+                        // since the store we're reading from was created.  This may be surfaced either as a direct
+                        // SerializationException or will be wrapped in a TargetInvocationException.  In both cases,
+                        // we call StreamReadError which will mark the stream as not readable so that DataManager will
+                        // no longer attempt to read from it, and also fire an event that the visualization object will
+                        // catch and then use to construct an error message explaining which fields have changed in the data.
+                        streamValueProvider.ReadAndPublishStreamValue(reader, dateTime);
+                    }
+                    catch (SerializationException ex)
+                    {
+                        this.OnStreamReadError(this, new StreamReadErrorEventArgs() { StreamName = streamValueProvider.StreamName, Exception = ex });
+                    }
+                    catch (TargetInvocationException ex)
+                    {
+                        if (ex.InnerException is SerializationException serializationException)
                         {
-                            streamCache.ReadInstantData(reader, cursorTime);
+                            this.OnStreamReadError(this, new StreamReadErrorEventArgs() { StreamName = streamValueProvider.StreamName, Exception = serializationException });
                         }
-                        catch (SerializationException ex)
+                        else
                         {
-                            this.StreamCache_StreamReadError(this, new StreamReadErrorEventArgs() { StreamName = streamCache.StreamName, Exception = ex });
+                            throw;
                         }
                     }
                 }
@@ -183,41 +226,13 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Creates a view of the messages identified by the matching parameters and asynchronously fills it in.
-        /// View mode can be one of three values:
-        ///     Fixed - fixed range based on start and end times
-        ///     TailCount - sliding dynamic range that includes the tail of the underlying data based on quantity
-        ///     TailRange - sliding dynamic range that includes the tail of the underlying data based on function.
-        /// </summary>
-        /// <typeparam name="T">The type of the message to read.</typeparam>
-        /// <param name="streamSource">The stream source indicating which stream to read from.</param>
-        /// <param name="viewMode">Mode the view will be created in.</param>
-        /// <param name="startTime">Start time of messages to read.</param>
-        /// <param name="endTime">End time of messages to read.</param>
-        /// <param name="tailCount">Number of messages to included in tail.</param>
-        /// <param name="tailRange">Function to determine range included in tail.</param>
-        /// <returns>Observable view of data.</returns>
-        internal ObservableKeyedCache<DateTime, Message<T>>.ObservableKeyedView ReadStream<T>(
-            StreamSource streamSource,
-            ObservableKeyedCache<DateTime, Message<T>>.ObservableKeyedView.ViewMode viewMode,
-            DateTime startTime,
-            DateTime endTime,
-            uint tailCount,
-            Func<DateTime, DateTime> tailRange)
-        {
-            return this.GetOrCreateStreamCacheByStreamSource<T>(streamSource, streamSource.StreamAdapter).ReadStream<T>(viewMode, startTime, endTime, tailCount, tailRange);
-        }
-
-        /// <summary>
         /// Gets the supplemental metadata for a stream.
         /// </summary>
         /// <typeparam name="TSupplementalMetadata">The type of the supplemental metadata.</typeparam>
-        /// <param name="streamSource">The stream source indicating which stream to read from.</param>
-        /// <returns>The supplemental metadata for the stream.</returns>
-        internal TSupplementalMetadata GetSupplementalMetadata<TSupplementalMetadata>(StreamSource streamSource)
-        {
-            return this.streamReader.GetSupplementalMetadata<TSupplementalMetadata>(streamSource.StreamName);
-        }
+        /// <param name="streamName">The stream name.</param>
+        /// <returns>The supplemental metadata for the specified stream.</returns>
+        internal TSupplementalMetadata GetSupplementalMetadata<TSupplementalMetadata>(string streamName) =>
+            this.streamReader.GetSupplementalMetadata<TSupplementalMetadata>(streamName);
 
         /// <summary>
         /// Performs a series of updates to the messages in a stream.
@@ -225,10 +240,9 @@ namespace Microsoft.Psi.Visualization.Data
         /// <typeparam name="T">The type of the messages in the stream.</typeparam>
         /// <param name="streamSource">The stream source indicating which stream to read from.</param>
         /// <param name="updates">A collection of updates to perform.</param>
-        internal void UpdateStream<T>(StreamSource streamSource, IEnumerable<StreamUpdate<T>> updates)
-        {
-            this.GetExistingStreamCache(streamSource, streamSource.StreamAdapter).UpdateStream<T>(updates);
-        }
+        internal void UpdateStream<T>(StreamSource streamSource, IEnumerable<StreamUpdate<T>> updates) =>
+            this.GetStreamIntervalProviderOrDefault(streamSource.StreamName, streamSource.StreamAdapter)
+                .UpdateStream<T>(updates);
 
         /// <summary>
         /// Saves all updates to all changed streams in the store to disk.
@@ -240,30 +254,19 @@ namespace Microsoft.Psi.Visualization.Data
             Dictionary<string, IEnumerable<(bool, dynamic, DateTime)>> updates = new Dictionary<string, IEnumerable<(bool, dynamic, DateTime)>>();
 
             // Get all the changes from all the stream readers that have them.
-            foreach (IStreamCache streamCache in this.streamCaches)
+            foreach (var streamIntervalProvider in this.GetStreamIntervalProviders())
             {
-                if (streamCache.HasUncommittedUpdates)
+                if (streamIntervalProvider.HasUncommittedUpdates)
                 {
-                    updates[streamCache.StreamName] = streamCache.GetUncommittedUpdates();
+                    updates[streamIntervalProvider.StreamName] = streamIntervalProvider.GetUncommittedUpdates();
                 }
             }
 
             // Edit the store in place
-            PsiStore.EditInPlace((this.storeName, this.storePath), updates, null, true, progress);
+            PsiStore.EditInPlace((this.StoreName, this.StorePath), updates, null, true, progress);
 
             // return the list of streams that changed
             return updates.Keys.ToArray();
-        }
-
-        /// <summary>
-        /// Gets originating time of the message in a stream that's closest to a given time.
-        /// </summary>
-        /// <param name="streamSource">The stream source indicating which stream to read from.</param>
-        /// <param name="time">The time for which to return the message with the closest originating time.</param>
-        /// <returns>The originating time of the message closest to time.</returns>
-        internal DateTime? GetOriginatingTimeOfNearestInstantMessage(StreamSource streamSource, DateTime time)
-        {
-            return this.GetExistingStreamCache(streamSource, null).GetOriginatingTimeOfNearestInstantMessage(time);
         }
 
         /// <summary>
@@ -274,53 +277,56 @@ namespace Microsoft.Psi.Visualization.Data
             lock (this.executionContexts)
             {
                 // cleanup completed execution contexts
-                var completedEcs = new List<ExecutionContext>();
-                foreach (var ec in
-                    this.executionContexts.Where(ec => ec.ReadAllTask != null && (ec.ReadAllTask.IsCanceled || ec.ReadAllTask.IsCompleted || ec.ReadAllTask.IsFaulted)))
+                var completedExecutionContexts = new List<ExecutionContext>();
+                foreach (var executionContext in this.executionContexts.Where(
+                    ec => ec.ReadTask != null && (ec.ReadTask.IsCanceled || ec.ReadTask.IsCompleted || ec.ReadTask.IsFaulted)))
                 {
-                    ec.Reader.Dispose();
-                    ec.ReadAllTask.Dispose();
-                    ec.ReadAllTokenSource.Dispose();
-                    completedEcs.Add(ec);
+                    executionContext.StreamReader.Dispose();
+                    executionContext.ReadTask.Dispose();
+                    executionContext.ReadTaskCancellationTokenSource.Dispose();
+                    completedExecutionContexts.Add(executionContext);
                 }
 
                 // removed completed execution contexts
-                completedEcs.ForEach(cec => this.executionContexts.Remove(cec));
+                completedExecutionContexts.ForEach(cec => this.executionContexts.Remove(cec));
             }
 
-            lock (this.streamCaches)
+            lock (this.streamDataProviders)
             {
-                IEnumerable<IGrouping<Tuple<DateTime, DateTime>, Tuple<ReadRequest, IStreamCache>>> groups = null;
+                IEnumerable<IGrouping<Tuple<DateTime, DateTime>, Tuple<ReadRequest, IStreamDataProvider>>> groups = null;
 
                 // NOTE: We might need to refactor this to avoid changing ReadRequests while we are enumerating over them.
                 //       One approach might be adding a back pointer from the ReadRequest to the StreamReader so that the ReadRequest can lock the StreamReader
                 // group StreamReaders by start and end time of read requests - a StreamReader can be included more than once if it has a disjointed read requests
-                groups = this.streamCaches
-                    .Select(sr => sr.ReadRequests.Select(rr => Tuple.Create(rr, sr)))
+                groups = this.streamDataProviders
+                    .Select(streamProvider => streamProvider.ReadRequests.Select(rr => Tuple.Create(rr, streamProvider)))
                     .SelectMany(rr2sr => rr2sr)
                     .GroupBy(rr2sr => Tuple.Create(rr2sr.Item1.StartTime, rr2sr.Item1.EndTime));
 
                 // walk groups of matching start and end time read requests
                 foreach (var group in groups)
                 {
-                    // setup execution context (needed for cleanup)
-                    var readAllTokenSource = new CancellationTokenSource();
-                    var reader = this.streamReader.OpenNew();
-                    ExecutionContext executionContext = new ExecutionContext() { Reader = reader, ReadAllTokenSource = readAllTokenSource };
+                    // setup the execution context (needed for cleanup)
+                    var executionContext = new ExecutionContext()
+                    {
+                        StreamReader = this.streamReader.OpenNew(),
+                        ReadTaskCancellationTokenSource = new CancellationTokenSource(),
+                    };
 
                     // open each stream that has a match, and close read request
-                    foreach (var rr2sr in group)
+                    foreach (var (readRequest, streamDataProvider) in group)
                     {
-                        var streamReader = rr2sr.Item2;
-                        streamReader.OpenStream(executionContext.Reader, rr2sr.Item1.ReadIndicesOnly);
-                        streamReader.CompleteReadRequest(rr2sr.Item1.StartTime, rr2sr.Item1.EndTime);
+                        streamDataProvider.OpenStream(executionContext.StreamReader);
+                        streamDataProvider.RemoveReadRequest(readRequest.StartTime, readRequest.EndTime);
                     }
 
                     // create new task
-                    executionContext.ReadAllTask = Task.Factory.StartNew(() =>
+                    executionContext.ReadTask = Task.Factory.StartNew(() =>
                     {
                         // read all of the data
-                        executionContext.Reader.ReadAll(new ReplayDescriptor(group.Key.Item1, group.Key.Item2, true), executionContext.ReadAllTokenSource.Token);
+                        executionContext.StreamReader.ReadAll(
+                            new ReplayDescriptor(group.Key.Item1, group.Key.Item2, true),
+                            executionContext.ReadTaskCancellationTokenSource.Token);
                     });
 
                     // save execution context for cleanup
@@ -335,55 +341,74 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Periodically called by the <see cref="DataManager"/> on the UI thread to give data store readers time dispatch data from internal buffers to views.
         /// </summary>
-        internal void DispatchData()
+        internal void DispatchData() =>
+            this.GetStreamProviders()
+                .ForEach(streamProvider => streamProvider.DispatchData());
+
+        /// <summary>
+        /// Gets the list of stream providers.
+        /// </summary>
+        /// <returns>The list of stream providers.</returns>
+        private List<IStreamDataProvider> GetStreamProviders()
         {
-            this.streamCaches.ForEach(sr => sr.DispatchData());
-        }
-
-        private IStreamCache GetExistingStreamCache(StreamSource streamSource, IStreamAdapter streamAdapter)
-        {
-            var streamName = streamSource.StreamName;
-
-            IStreamCache streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter);
-
-            if (streamCache == null)
+            lock (this.streamDataProviders)
             {
-                throw new ArgumentException("No stream reader exists for the stream.");
+                return this.streamDataProviders.ToList();
             }
-
-            return streamCache;
         }
 
-        private IStreamCache GetOrCreateStreamCacheByStreamSource<T>(StreamSource streamSource, IStreamAdapter streamAdapter)
+        /// <summary>
+        /// Gets a stream provider for a specified stream name.
+        /// </summary>
+        /// <param name="streamName">The stream name.</param>
+        /// <returns>The stream provider.</returns>
+        private IStreamDataProvider GetStreamProviderOrDefault(string streamName) =>
+            this.GetStreamProviders()
+                .FirstOrDefault(sc => sc.StreamName == streamName);
+
+        /// <summary>
+        /// Gets the list of stream interval providers.
+        /// </summary>
+        /// <returns>The list of stream interval providers.</returns>
+        private List<IStreamIntervalProvider> GetStreamIntervalProviders()
         {
-            var streamName = streamSource.StreamName;
-            StreamCache<T> streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter) as StreamCache<T>;
-
-            if (streamCache == null)
+            lock (this.streamDataProviders)
             {
-                streamCache = new StreamCache<T>(streamSource.StreamName, streamAdapter);
-                streamCache.StreamReadError += this.StreamCache_StreamReadError;
-                this.streamCaches.Add(streamCache);
+                return this.streamDataProviders.OfType<IStreamIntervalProvider>().ToList();
             }
-
-            return streamCache;
         }
 
-        private IStreamCache GetOrCreateStreamCacheByName<T>(string streamName, IStreamAdapter streamAdapter)
+        /// <summary>
+        /// Gets the stream interval provider based on a specified stream name and adapter.
+        /// </summary>
+        /// <param name="streamName">The stream name.</param>
+        /// <param name="streamAdapter">The stream adapter.</param>
+        /// <returns>The stream interval provider.</returns>
+        private IStreamIntervalProvider GetStreamIntervalProviderOrDefault(string streamName, IStreamAdapter streamAdapter) =>
+            this.GetStreamIntervalProviders()
+                .FirstOrDefault(sc => sc.StreamName == streamName && Equals(sc.StreamAdapter, streamAdapter));
+
+        /// <summary>
+        /// Gets the list of stream value providers.
+        /// </summary>
+        /// <returns>The list of stream value providers.</returns>
+        private List<IStreamValueProvider> GetStreamValueProviders()
         {
-            StreamCache<T> streamCache = this.streamCaches.Find(sr => sr.StreamName == streamName && sr.StreamAdapter == streamAdapter) as StreamCache<T>;
-
-            if (streamCache == null)
+            lock (this.streamDataProviders)
             {
-                streamCache = new StreamCache<T>(streamName, streamAdapter);
-                streamCache.StreamReadError += this.StreamCache_StreamReadError;
-                this.streamCaches.Add(streamCache);
+                return this.streamDataProviders.OfType<IStreamValueProvider>().ToList();
             }
-
-            return streamCache;
         }
 
-        private void StreamCache_StreamReadError(object sender, StreamReadErrorEventArgs e)
+        /// <summary>
+        /// Gets a stream value provider for a specified stream source.
+        /// </summary>
+        /// <param name="streamName">The stream name.</param>
+        /// <returns>The stream value provider.</returns>
+        private IStreamValueProvider GetStreamValueProviderOrDefault(string streamName) =>
+            this.GetStreamValueProviders().FirstOrDefault(sc => sc.StreamName == streamName);
+
+        private void OnStreamReadError(object sender, StreamReadErrorEventArgs e)
         {
             // Add the stream to the list of known unreadable streams if it's not already there.
             lock (this.unreadableStreams)
@@ -395,17 +420,17 @@ namespace Microsoft.Psi.Visualization.Data
             }
 
             // Add the store name and path and propagate the message to the data manager
-            e.StoreName = this.storeName;
-            e.StorePath = this.storePath;
+            e.StoreName = this.StoreName;
+            e.StorePath = this.StorePath;
 
             this.StreamReadError?.Invoke(this, e);
         }
 
         private struct ExecutionContext
         {
-            public IStreamReader Reader;
-            public Task ReadAllTask;
-            public CancellationTokenSource ReadAllTokenSource;
+            public IStreamReader StreamReader;
+            public Task ReadTask;
+            public CancellationTokenSource ReadTaskCancellationTokenSource;
         }
     }
 }

@@ -21,22 +21,233 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Tasks;
     using Microsoft.Psi.Visualization.VisualizationObjects;
-    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+
+    /// <summary>
+    /// Defines types of auxiliary dataset information to display.
+    /// </summary>
+    public enum AuxiliaryDatasetInfo
+    {
+        /// <summary>
+        /// No auxiliary dataset info.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// The dataset extent.
+        /// </summary>
+        Extent,
+
+        /// <summary>
+        /// The dataset total duration.
+        /// </summary>
+        TotalDuration,
+
+        /// <summary>
+        /// The start date for the dataset, in utc.
+        /// </summary>
+        StartDate,
+
+        /// <summary>
+        /// The start date for the dataset, in local time.
+        /// </summary>
+        StartDateLocal,
+
+        /// <summary>
+        /// The start time of day for the dataset, in utc.
+        /// </summary>
+        StartTime,
+
+        /// <summary>
+        /// The start time of day for the dataset, in local time.
+        /// </summary>
+        StartTimeLocal,
+
+        /// <summary>
+        /// The start date and time for the dataset, in utc.
+        /// </summary>
+        StartDateTime,
+
+        /// <summary>
+        /// The start date and time for the dataset, in local time.
+        /// </summary>
+        StartDateTimeLocal,
+
+        /// <summary>
+        /// The size of the session.
+        /// </summary>
+        Size,
+
+        /// <summary>
+        /// The number of streams.
+        /// </summary>
+        StreamCount,
+    }
+
+    /// <summary>
+    /// Defines types of auxiliary session information to display.
+    /// </summary>
+    public enum AuxiliarySessionInfo
+    {
+        /// <summary>
+        /// No auxiliary session info.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// The session duration.
+        /// </summary>
+        Duration,
+
+        /// <summary>
+        /// The start date for the session, in utc.
+        /// </summary>
+        StartDate,
+
+        /// <summary>
+        /// The start date for the session, in local time.
+        /// </summary>
+        StartDateLocal,
+
+        /// <summary>
+        /// The start time of day for the session, in utc.
+        /// </summary>
+        StartTime,
+
+        /// <summary>
+        /// The start time of day for the session, in local time.
+        /// </summary>
+        StartTimeLocal,
+
+        /// <summary>
+        /// The start date and time for the session, in utc.
+        /// </summary>
+        StartDateTime,
+
+        /// <summary>
+        /// The start date and time for the session, in local time.
+        /// </summary>
+        StartDateTimeLocal,
+
+        /// <summary>
+        /// The size of the session.
+        /// </summary>
+        Size,
+
+        /// <summary>
+        /// The number of streams.
+        /// </summary>
+        StreamCount,
+    }
+
+    /// <summary>
+    /// Defines types of auxiliary partition information to display.
+    /// </summary>
+    public enum AuxiliaryPartitionInfo
+    {
+        /// <summary>
+        /// No auxiliary partition info.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// The partition duration.
+        /// </summary>
+        Duration,
+
+        /// <summary>
+        /// The start date for the partition, in utc.
+        /// </summary>
+        StartDate,
+
+        /// <summary>
+        /// The start date for the partition, in local time.
+        /// </summary>
+        StartDateLocal,
+
+        /// <summary>
+        /// The start time of day for the partition, in utc.
+        /// </summary>
+        StartTime,
+
+        /// <summary>
+        /// The start time of day for the partition, in local time.
+        /// </summary>
+        StartTimeLocal,
+
+        /// <summary>
+        /// The start date and time for the partition, in utc.
+        /// </summary>
+        StartDateTime,
+
+        /// <summary>
+        /// The start date and time for the partition, in local time.
+        /// </summary>
+        StartDateTimeLocal,
+
+        /// <summary>
+        /// The size of the partition.
+        /// </summary>
+        Size,
+
+        /// <summary>
+        /// The number of streams.
+        /// </summary>
+        StreamCount,
+    }
+
+    /// <summary>
+    /// Defines types of auxiliary stream information to display.
+    /// </summary>
+    public enum AuxiliaryStreamInfo
+    {
+        /// <summary>
+        /// No auxiliary stream info.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// The size of the stream.
+        /// </summary>
+        Size,
+
+        /// <summary>
+        /// The number of messages.
+        /// </summary>
+        MessageCount,
+
+        /// <summary>
+        /// The average message latency, in milliseconds.
+        /// </summary>
+        AverageMessageLatencyMs,
+
+        /// <summary>
+        /// The average message size.
+        /// </summary>
+        AverageMessageSize,
+    }
 
     /// <summary>
     /// Represents a view model of a dataset.
     /// </summary>
     public class DatasetViewModel : ObservableTreeNodeObject
     {
-        private readonly Dataset dataset;
         private readonly ObservableCollection<SessionViewModel> internalSessionViewModels;
         private readonly ReadOnlyObservableCollection<SessionViewModel> sessionViewModels;
+
+        private Dataset dataset;
         private string filename;
         private SessionViewModel currentSessionViewModel = null;
 
+        private AuxiliaryDatasetInfo showAuxiliaryDatasetInfo = AuxiliaryDatasetInfo.None;
+        private AuxiliarySessionInfo showAuxiliarySessionInfo = AuxiliarySessionInfo.None;
+        private AuxiliaryPartitionInfo showAuxiliaryPartitionInfo = AuxiliaryPartitionInfo.None;
+        private AuxiliaryStreamInfo showAuxiliaryStreamInfo = AuxiliaryStreamInfo.None;
+
+        private string auxiliaryInfo = string.Empty;
+
         private RelayCommand createSessionCommand;
         private RelayCommand createSessionFromStoreCommand;
-        private RelayCommand<StackPanel> contextMenuOpeningCommand;
+        private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DatasetViewModel"/> class.
@@ -44,6 +255,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="dataset">The dataset for which to create the view model.</param>
         public DatasetViewModel(Dataset dataset)
         {
+            this.PropertyChanged += this.OnPropertyChanged;
+
             this.dataset = dataset;
             this.internalSessionViewModels = new ObservableCollection<SessionViewModel>();
             this.sessionViewModels = new ReadOnlyObservableCollection<SessionViewModel>(this.internalSessionViewModels);
@@ -53,6 +266,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             this.currentSessionViewModel = this.internalSessionViewModels.FirstOrDefault();
+
+            if (this.currentSessionViewModel != null && this.dataset.Sessions.Count == 1)
+            {
+                this.currentSessionViewModel.IsTreeNodeExpanded = true;
+            }
+
             this.IsTreeNodeExpanded = true;
         }
 
@@ -65,9 +284,76 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
+        /// Gets the underlying dataset.
+        /// </summary>
+        [Browsable(false)]
+        public Dataset Dataset => this.dataset;
+
+        /// <summary>
+        /// Gets the collection of sessions in this dataset.
+        /// </summary>
+        [Browsable(false)]
+        public ReadOnlyObservableCollection<SessionViewModel> SessionViewModels => this.sessionViewModels;
+
+        /// <summary>
+        /// Gets the current session view model for this dataset view model.
+        /// </summary>
+        [Browsable(false)]
+        public SessionViewModel CurrentSessionViewModel => this.currentSessionViewModel;
+
+        /// <summary>
+        /// Gets the originating time interval (earliest to latest) of the messages in this dataset.
+        /// </summary>
+        [Browsable(false)]
+        public TimeInterval OriginatingTimeInterval =>
+            TimeInterval.Coverage(
+                this.sessionViewModels
+                    .Where(s => s.OriginatingTimeInterval.Left > DateTime.MinValue && s.OriginatingTimeInterval.Right < DateTime.MaxValue)
+                    .Select(s => s.OriginatingTimeInterval));
+
+        /// <summary>
+        /// Gets the total duration of the dataset.
+        /// </summary>
+        [Browsable(false)]
+        public TimeSpan TotalDuration => TimeSpan.FromTicks(this.sessionViewModels.Sum(svm => svm.OriginatingTimeInterval.Span.Ticks));
+
+        /// <summary>
+        /// Gets the create session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CreateSessionCommand =>
+            this.createSessionCommand ??= new RelayCommand(() => this.CreateSession());
+
+        /// <summary>
+        /// Gets the create session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CreateSessionFromStoreCommand =>
+            this.createSessionFromStoreCommand ??= new RelayCommand(() => this.CreateSessionFromStore());
+
+        /// <summary>
+        /// Gets the command that executes when opening the dataset context menu.
+        /// </summary>
+        [Browsable(false)]
+        public RelayCommand<Grid> ContextMenuOpeningCommand =>
+            this.contextMenuOpeningCommand ??= new RelayCommand<Grid>(panel => panel.ContextMenu = this.CreateContextMenu());
+
+        /// <summary>
+        /// Gets the auxiliary info.
+        /// </summary>
+        [Browsable(false)]
+        public string AuxiliaryInfo
+        {
+            get => this.auxiliaryInfo;
+            private set => this.Set(nameof(this.AuxiliaryInfo), ref this.auxiliaryInfo, value);
+        }
+
+        /// <summary>
         /// Gets or sets the name of this dataset.
         /// </summary>
-        [PropertyOrder(0)]
+        [DisplayName("Dataset Name")]
         [Description("The name of the dataset.")]
         public string Name
         {
@@ -84,79 +370,70 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Gets the current session view model for this dataset view model.
-        /// </summary>
-        [Browsable(false)]
-        public SessionViewModel CurrentSessionViewModel
-        {
-            get => this.currentSessionViewModel;
-        }
-
-        /// <summary>
         /// Gets the filename of the underlying dataset.
         /// </summary>
-        [PropertyOrder(1)]
+        [DisplayName("Filename")]
         [Description("The full path to the dataset.")]
         public string FileName
         {
             get => this.filename;
-            private set => this.Set(nameof(this.filename), ref this.filename, value);
+            private set => this.Set(nameof(this.FileName), ref this.filename, value);
         }
 
         /// <summary>
-        /// Gets the collection of sessions in this dataset.
-        /// </summary>
-        [Browsable(false)]
-        public ReadOnlyObservableCollection<SessionViewModel> SessionViewModels => this.sessionViewModels;
-
-        /// <summary>
-        /// Gets the originating time interval (earliest to latest) of the messages in this dataset.
-        /// </summary>
-        [Browsable(false)]
-        public TimeInterval OriginatingTimeInterval =>
-            TimeInterval.Coverage(
-                this.sessionViewModels
-                    .Where(s => s.OriginatingTimeInterval.Left > DateTime.MinValue && s.OriginatingTimeInterval.Right < DateTime.MaxValue)
-                    .Select(s => s.OriginatingTimeInterval));
-
-        /// <summary>
-        /// Gets the create session command.
+        /// Gets or sets the type of auxiliary dataset information to display.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand CreateSessionCommand => this.createSessionCommand ??= new RelayCommand(() => this.CreateSession());
+        public AuxiliaryDatasetInfo ShowAuxiliaryDatasetInfo
+        {
+            get => this.showAuxiliaryDatasetInfo;
+            set => this.Set(nameof(this.ShowAuxiliaryDatasetInfo), ref this.showAuxiliaryDatasetInfo, value);
+        }
 
         /// <summary>
-        /// Gets the create session command.
+        /// Gets or sets the type of auxiliary session information to display.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand CreateSessionFromStoreCommand => this.createSessionFromStoreCommand ??= new RelayCommand(() => this.CreateSessionFromStore());
+        public AuxiliarySessionInfo ShowAuxiliarySessionInfo
+        {
+            get => this.showAuxiliarySessionInfo;
+            set => this.Set(nameof(this.ShowAuxiliarySessionInfo), ref this.showAuxiliarySessionInfo, value);
+        }
 
         /// <summary>
-        /// Gets the command that executes when opening the dataset context menu.
+        /// Gets or sets the type of auxiliary partition information to display.
         /// </summary>
         [Browsable(false)]
-        public RelayCommand<StackPanel> ContextMenuOpeningCommand => this.contextMenuOpeningCommand ??= new RelayCommand<StackPanel>(panel => panel.ContextMenu = this.CreateContextMenu());
+        [IgnoreDataMember]
+        public AuxiliaryPartitionInfo ShowAuxiliaryPartitionInfo
+        {
+            get => this.showAuxiliaryPartitionInfo;
+            set => this.Set(nameof(this.ShowAuxiliaryPartitionInfo), ref this.showAuxiliaryPartitionInfo, value);
+        }
 
         /// <summary>
-        /// Gets the underlying dataset.
+        /// Gets or sets the type of auxiliary stream information to display.
         /// </summary>
-        public Dataset Dataset => this.dataset;
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public AuxiliaryStreamInfo ShowAuxiliaryStreamInfo
+        {
+            get => this.showAuxiliaryStreamInfo;
+            set => this.Set(nameof(this.ShowAuxiliaryStreamInfo), ref this.showAuxiliaryStreamInfo, value);
+        }
 
         /// <summary>
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
         /// <returns>The newly loaded dataset view model.</returns>
-        public static DatasetViewModel Load(string filename)
-        {
-            var viewModel = new DatasetViewModel(Dataset.Load(filename))
+        public static DatasetViewModel Load(string filename) =>
+            new DatasetViewModel(Dataset.Load(filename))
             {
                 FileName = filename,
             };
-            return viewModel;
-        }
 
         /// <summary>
         /// Asynchronously loads a dataset from the specified file.
@@ -166,12 +443,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// A task that represents the asynchronous operation. The value of the TResult parameter
         /// contains the newly loaded dataset view model.
         /// </returns>
-        public static Task<DatasetViewModel> LoadAsync(string filename)
-        {
-            // Wrapping synchronous Load method in a Task for now. Eventually we should plumb this all
-            // the way down into the Dataset and implement progressive loading.
-            return Task.Run(() => Load(filename));
-        }
+        public static Task<DatasetViewModel> LoadAsync(string filename) =>
+            Task.Run(() => Load(filename));
 
         /// <summary>
         /// Creates a new dataset from an existing data store.
@@ -179,10 +452,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="streamReader">The stream reader of the data store.</param>
         /// <param name="partitionName">The partition name.</param>
         /// <returns>The newly created dataset view model.</returns>
-        public static DatasetViewModel CreateFromStore(IStreamReader streamReader, string partitionName = null)
-        {
-            return new DatasetViewModel(Dataset.CreateFromStore(streamReader, partitionName));
-        }
+        public static DatasetViewModel CreateFromStore(IStreamReader streamReader, string partitionName = null) =>
+            new DatasetViewModel(Dataset.CreateFromStore(streamReader, partitionName));
 
         /// <summary>
         /// Asynchronously creates a new dataset from an existing data store.
@@ -193,18 +464,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// A task that represents the asynchronous operation. The value of the TResult parameter
         /// contains the newly created dataset view model.
         /// </returns>
-        public static Task<DatasetViewModel> CreateFromStoreAsync(IStreamReader streamReader, string partitionName = null)
-        {
-            // Wrapping synchronous CreateFromStore method in a Task for now. Eventually we should
-            // plumb this all the way down into the Dataset and implement progressive loading.
-            return Task.Run(() => CreateFromStore(streamReader, partitionName));
-        }
+        public static Task<DatasetViewModel> CreateFromStoreAsync(IStreamReader streamReader, string partitionName = null) =>
+            Task.Run(() => CreateFromStore(streamReader, partitionName));
 
         /// <summary>
         /// Updates the dataset view model based on the latest version of the dataset.
         /// </summary>
-        public void Update()
+        /// <param name="dataset">The new dataset.</param>
+        public void Update(Dataset dataset)
         {
+            this.dataset = dataset;
+
             var oldSessions = new HashSet<SessionViewModel>();
             foreach (var existingSession in this.internalSessionViewModels)
             {
@@ -216,7 +486,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 var existingSession = this.internalSessionViewModels.FirstOrDefault(s => s.Name == session.Name);
                 if (existingSession != null)
                 {
-                    existingSession.Update();
+                    existingSession.Update(session);
                     oldSessions.Remove(existingSession);
                 }
                 else
@@ -340,12 +610,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         /// <param name="filename">The name of the file to save this dataset into.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public Task SaveAsync(string filename)
-        {
-            // Wrapping synchronous Save method in a Task for now. Eventually we should plumb this all
-            // the way down into the Dataset.
-            return Task.Run(() => this.Save(filename));
-        }
+        public Task SaveAsync(string filename) =>
+            Task.Run(() => this.Save(filename));
 
         /// <summary>
         /// Removes the specified session from the underlying dataset.
@@ -365,10 +631,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return "Dataset: " + this.Name;
-        }
+        public override string ToString() => "Dataset: " + this.Name;
 
         /// <summary>
         /// Checks all partitions in the session to determine whether they have an active writer attached and updates their IsLivePartition property.
@@ -381,10 +644,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
         }
 
-        private void AddSession(Session session)
-        {
+        private void AddSession(Session session) =>
             this.internalSessionViewModels.Add(new SessionViewModel(this, session));
-        }
 
         private string EnsureUniqueSessionName(string sessionName)
         {
@@ -404,6 +665,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private ContextMenu CreateContextMenu()
         {
             var contextMenu = new ContextMenu();
+
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionCreate, "Create Session", this.CreateSessionCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionCreateFromStore, "Create Session from Store ...", this.CreateSessionFromStoreCommand));
 
@@ -419,13 +681,98 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     MenuItemHelper.CreateMenuItem(
                         batchProcessingTask.IconSourcePath,
                         batchProcessingTask.Name,
-                        new VisualizationCommand<BatchProcessingTaskMetadata>(async s => await VisualizationContext.Instance.RunDatasetBatchProcessingTaskAsync(this, batchProcessingTask)),
-                        batchProcessingTask));
+                        new VisualizationCommand<BatchProcessingTaskMetadata>(async bpt => await VisualizationContext.Instance.RunDatasetBatchProcessingTaskAsync(this, bpt)),
+                        tag: batchProcessingTask,
+                        isEnabled: true,
+                        commandParameter: batchProcessingTask));
             }
 
             contextMenu.Items.Add(runTasksMenuItem);
 
+            contextMenu.Items.Add(new Separator());
+
+            // Add show dataset info menu
+            var showDatasetInfoMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Show Dataset Info", null);
+            foreach (var auxiliaryDatasetInfo in Enum.GetValues(typeof(AuxiliaryDatasetInfo)))
+            {
+                var auxiliaryDatasetInfoValue = (AuxiliaryDatasetInfo)auxiliaryDatasetInfo;
+                var auxiliaryDatasetInfoName = auxiliaryDatasetInfoValue switch
+                {
+                    AuxiliaryDatasetInfo.None => "None",
+                    AuxiliaryDatasetInfo.Extent => "Extent",
+                    AuxiliaryDatasetInfo.TotalDuration => "Total Duration",
+                    AuxiliaryDatasetInfo.StartDate => "Start Date (UTC)",
+                    AuxiliaryDatasetInfo.StartDateLocal => "Start Date (Local)",
+                    AuxiliaryDatasetInfo.StartTime => "Start Time (UTC)",
+                    AuxiliaryDatasetInfo.StartTimeLocal => "Start Time (Local)",
+                    AuxiliaryDatasetInfo.StartDateTime => "Start DateTime (UTC)",
+                    AuxiliaryDatasetInfo.StartDateTimeLocal => "Start DateTime (Local)",
+                    AuxiliaryDatasetInfo.Size => "Size",
+                    AuxiliaryDatasetInfo.StreamCount => "Number of Streams",
+                    _ => throw new NotImplementedException(),
+                };
+
+                showDatasetInfoMenuItem.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        this.ShowAuxiliaryDatasetInfo == auxiliaryDatasetInfoValue ? IconSourcePath.Checkmark : null,
+                        auxiliaryDatasetInfoName,
+                        new VisualizationCommand<AuxiliaryDatasetInfo>(adi => this.ShowAuxiliaryDatasetInfo = adi),
+                        commandParameter: auxiliaryDatasetInfoValue));
+            }
+
+            contextMenu.Items.Add(showDatasetInfoMenuItem);
+
             return contextMenu;
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.ShowAuxiliaryDatasetInfo))
+            {
+                this.UpdateAuxiliaryInfo();
+            }
+        }
+
+        private void UpdateAuxiliaryInfo()
+        {
+            switch (this.ShowAuxiliaryDatasetInfo)
+            {
+                case AuxiliaryDatasetInfo.None:
+                    this.AuxiliaryInfo = string.Empty;
+                    break;
+                case AuxiliaryDatasetInfo.Extent:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
+                    break;
+                case AuxiliaryDatasetInfo.TotalDuration:
+                    this.AuxiliaryInfo = this.TotalDuration.ToString(@"d\.hh\:mm\:ss");
+                    break;
+                case AuxiliaryDatasetInfo.StartDate:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToShortDateString();
+                    break;
+                case AuxiliaryDatasetInfo.StartDateLocal:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToLocalTime().ToShortDateString();
+                    break;
+                case AuxiliaryDatasetInfo.StartTime:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToShortTimeString();
+                    break;
+                case AuxiliaryDatasetInfo.StartTimeLocal:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToLocalTime().ToShortTimeString();
+                    break;
+                case AuxiliaryDatasetInfo.StartDateTime:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToString();
+                    break;
+                case AuxiliaryDatasetInfo.StartDateTimeLocal:
+                    this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToLocalTime().ToString();
+                    break;
+                case AuxiliaryDatasetInfo.Size:
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatSize(this.Dataset.Size.Value) : "?";
+                    break;
+                case AuxiliaryDatasetInfo.StreamCount:
+                    this.AuxiliaryInfo = this.Dataset.StreamCount.HasValue ? (this.Dataset.StreamCount == 0 ? "0" : $"{this.Dataset.StreamCount.Value:0,0.}") : "?";
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

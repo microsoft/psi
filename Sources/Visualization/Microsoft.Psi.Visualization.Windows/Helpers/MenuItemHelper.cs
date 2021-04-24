@@ -28,8 +28,9 @@ namespace Microsoft.Psi.Visualization.Helpers
         /// <param name="command">The command object.</param>
         /// <param name="tag">An optional, user-defined tag to attach to the menuitem (default is null).</param>
         /// <param name="isEnabled">An optional variable indicating whether the menu item is enabled (default is true).</param>
+        /// <param name="commandParameter">The command parameter, or null if the command does not take a parameter.</param>
         /// <returns>A new menuitem.</returns>
-        public static MenuItem CreateMenuItem(string iconSourcePath, string text, ICommand command, object tag = null, bool isEnabled = true)
+        public static MenuItem CreateMenuItem(string iconSourcePath, string text, ICommand command, object tag = null, bool isEnabled = true, object commandParameter = null)
         {
             // Create the bitmap for the icon
             var image = new BitmapImage();
@@ -60,6 +61,7 @@ namespace Microsoft.Psi.Visualization.Helpers
                 Icon = icon,
                 Header = menuItemHeader,
                 Command = command,
+                CommandParameter = commandParameter,
                 Tag = tag,
                 IsEnabled = isEnabled,
             };

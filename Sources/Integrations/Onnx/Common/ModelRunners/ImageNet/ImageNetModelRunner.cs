@@ -61,6 +61,13 @@ namespace Microsoft.Psi.Onnx
         /// <inheritdoc/>
         protected override void Receive(Shared<Image> data, Envelope envelope)
         {
+            // Handle incoming nulls by outputting null
+            if (data == null)
+            {
+                this.Out.Post(null, envelope.OriginatingTime);
+                return;
+            }
+
             // construct the ONNX model input vector (stored in this.onnxInputVector)
             // based on the incoming image
             this.ConstructOnnxInputVector(data);

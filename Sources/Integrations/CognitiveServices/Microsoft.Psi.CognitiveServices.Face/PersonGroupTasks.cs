@@ -6,7 +6,6 @@ namespace Microsoft.Psi.CognitiveServices.Face
     using System;
     using System.Drawing;
     using System.IO;
-    using System.Threading.Tasks;
     using Microsoft.Psi.Imaging;
 
     /// <summary>
@@ -25,7 +24,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="directory">The directory in which to look for images (organize by per-person subdirectories).</param>
         /// <param name="deleteExisting">Whether to delete existing group (if any).</param>
         /// <param name="throttleMs">The time to wait between calls.</param>
-        [BatchProcessingTask(nameof(TrainPersonGroup), "Create, add faces to, and train person group in Azure.")]
+        [BatchProcessingTask(nameof(TrainPersonGroup), Description = "Create, add faces to, and train person group in Azure.")]
         public static void TrainPersonGroup(string subscriptionKey, string endpoint, string groupId, string groupName, string directory, bool deleteExisting, int throttleMs)
         {
             PersonGroup.Create(subscriptionKey, endpoint, groupId, groupName, deleteExisting, Console.WriteLine, throttleMs).Wait();
@@ -41,7 +40,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="endpoint">The Azure service endpoint.</param>
         /// <param name="groupId">The group id.</param>
         /// <param name="throttleMs">The time to wait between calls.</param>
-        [BatchProcessingTask(nameof(DeletePersonGroup), "Delete person group in Azure.")]
+        [BatchProcessingTask(nameof(DeletePersonGroup), Description = "Delete person group in Azure.")]
         public static void DeletePersonGroup(string subscriptionKey, string endpoint, string groupId, int throttleMs)
         {
             PersonGroup.Delete(subscriptionKey, endpoint, groupId, Console.WriteLine, throttleMs).Wait();
@@ -55,29 +54,27 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="endpoint">The Azure service endpoint.</param>
         /// <param name="groupId">The group id.</param>
         /// <param name="directory">The directory from which to look for test images.</param>
-        [BatchProcessingTask(nameof(TestPersonGroup), "Test person group in Azure.")]
+        [BatchProcessingTask(nameof(TestPersonGroup), Description = "Test person group in Azure.")]
         public static void TestPersonGroup(string subscriptionKey, string endpoint, string groupId, string directory)
         {
-            using (var pipeline = Pipeline.Create())
-            {
-                var files = Generators.Sequence(pipeline, Directory.GetFiles(directory), TimeSpan.FromTicks(1));
-                files
-                    .Select(file => ImagePool.GetOrCreateFromBitmap(new Bitmap(File.OpenRead(file))))
-                    .RecognizeFace(new FaceRecognizerConfiguration(subscriptionKey, endpoint, groupId))
-                    .Join(files)
-                    .Do(x =>
+            using var pipeline = Pipeline.Create();
+            var files = Generators.Sequence(pipeline, Directory.GetFiles(directory), TimeSpan.FromTicks(1));
+            files
+                .Select(file => ImagePool.GetOrCreateFromBitmap(new Bitmap(File.OpenRead(file))))
+                .RecognizeFace(new FaceRecognizerConfiguration(subscriptionKey, endpoint, groupId))
+                .Join(files)
+                .Do(x =>
+                {
+                    Console.WriteLine($"File: {Path.GetFileName(x.Item2)}");
+                    foreach (var candidates in x.Item1)
                     {
-                        Console.WriteLine($"File: {Path.GetFileName(x.Item2)}");
-                        foreach (var candidates in x.Item1)
+                        foreach (var (name, confidence) in candidates)
                         {
-                            foreach (var face in candidates)
-                            {
-                                Console.WriteLine($"  Face: {face.Name} {face.Confidence}");
-                            }
+                            Console.WriteLine($"  Face: {name} {confidence}");
                         }
-                    });
-                pipeline.Run();
-            }
+                    }
+                });
+            pipeline.Run();
         }
     }
 }

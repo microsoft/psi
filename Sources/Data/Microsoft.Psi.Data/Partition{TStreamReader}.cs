@@ -18,8 +18,10 @@ namespace Microsoft.Psi.Data
     public sealed class Partition<TStreamReader> : IPartition, IDisposable
         where TStreamReader : IStreamReader
     {
+        private static IEnumerable<IStreamMetadata> emptyStreamMetadataCollection = new List<IStreamMetadata>();
         private TStreamReader streamReader;
         private string name;
+        private bool isStoreValid = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Partition{TStreamReader}"/> class.
@@ -29,10 +31,7 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The partition name.</param>
         public Partition(Session session, TStreamReader streamReader, string name)
         {
-            this.Session = session;
-            this.StreamReaderTypeName = streamReader.GetType().AssemblyQualifiedName;
-            this.StreamReader = streamReader;
-            this.Name = name ?? streamReader.Name;
+            this.Initialize(session, streamReader, name, streamReader.Name, streamReader.Path);
         }
 
         /// <summary>
@@ -45,8 +44,22 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The partition name.</param>
         [JsonConstructor]
         private Partition(Session session, string storeName, string storePath, string streamReaderTypeName, string name)
-            : this(session, (TStreamReader)Data.StreamReader.Create(storeName, storePath, streamReaderTypeName), name)
         {
+            TStreamReader streamReader = default;
+            try
+            {
+                streamReader = (TStreamReader)Data.StreamReader.Create(storeName, storePath, streamReaderTypeName);
+            }
+            catch
+            {
+                // Any exception when trying to create the stream reader will mean the partition is unreadable.
+                //
+                // - TargetInvocationException wrapping FileNotFoundException will be thrown if catalog file is not found.
+                // - TargetInvocationException wrapping InvalidOperationException will be thrown if no data files exist.
+                this.isStoreValid = false;
+            }
+
+            this.Initialize(session, streamReader, name, storeName, storePath);
         }
 
         /// <inheritdoc />
@@ -68,7 +81,19 @@ namespace Microsoft.Psi.Data
 
         /// <inheritdoc />
         [IgnoreDataMember]
-        public TimeInterval OriginatingTimeInterval { get; private set; }
+        public bool IsStoreValid => this.isStoreValid;
+
+        /// <inheritdoc />
+        [IgnoreDataMember]
+        public TimeInterval OriginatingTimeInterval { get; private set; } = TimeInterval.Empty;
+
+        /// <inheritdoc />
+        [IgnoreDataMember]
+        public long? Size { get; private set; }
+
+        /// <inheritdoc />
+        [IgnoreDataMember]
+        public int? StreamCount { get; private set; }
 
         /// <summary>
         /// Gets the data store reader for this partition.
@@ -84,6 +109,8 @@ namespace Microsoft.Psi.Data
                 {
                     // Set originating time interval from the reader metadata
                     this.OriginatingTimeInterval = this.streamReader.MessageOriginatingTimeInterval;
+                    this.Size = this.streamReader.Size;
+                    this.StreamCount = this.streamReader.StreamCount;
                 }
             }
         }
@@ -94,12 +121,12 @@ namespace Microsoft.Psi.Data
 
         /// <inheritdoc />
         [DataMember]
-        public string StoreName => this.StreamReader.Name;
+        public string StoreName { get; private set; }
 
         /// <inheritdoc />
         [DataMember]
         [JsonConverter(typeof(RelativePathConverter))]
-        public string StorePath => this.StreamReader.Path;
+        public string StorePath { get; private set; }
 
         /// <inheritdoc />
         [DataMember]
@@ -107,12 +134,27 @@ namespace Microsoft.Psi.Data
 
         /// <inheritdoc />
         [IgnoreDataMember]
-        public IEnumerable<IStreamMetadata> AvailableStreams => this.StreamReader?.AvailableStreams;
+        public IEnumerable<IStreamMetadata> AvailableStreams => this.IsStoreValid ? this.StreamReader.AvailableStreams : emptyStreamMetadataCollection;
 
         /// <inheritdoc />
         public void Dispose()
         {
-            this.streamReader.Dispose();
+            this.streamReader?.Dispose();
+        }
+
+        private void Initialize(Session session, TStreamReader streamReader, string name, string storeName, string storePath)
+        {
+            this.Session = session;
+            this.Name = name;
+            this.StoreName = storeName;
+            this.StorePath = storePath;
+
+            if (streamReader != null)
+            {
+                this.StreamReaderTypeName = streamReader.GetType().AssemblyQualifiedName;
+                this.StreamReader = streamReader;
+                this.Name = name ?? streamReader.Name;
+            }
         }
     }
 }

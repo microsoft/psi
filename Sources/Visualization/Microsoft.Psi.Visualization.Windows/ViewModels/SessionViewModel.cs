@@ -19,23 +19,25 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Tasks;
-    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
     /// Represents a view model of a session.
     /// </summary>
     public class SessionViewModel : ObservableTreeNodeObject
     {
-        private readonly Session session;
         private readonly DatasetViewModel datasetViewModel;
         private readonly ObservableCollection<PartitionViewModel> internalPartitionViewModels;
         private readonly ReadOnlyObservableCollection<PartitionViewModel> partitionViewModels;
+
+        private Session session;
         private bool containsLivePartitions = false;
+
+        private string auxiliaryInfo = string.Empty;
 
         private RelayCommand addPartitionCommand;
         private RelayCommand removeSessionCommand;
         private RelayCommand visualizeSessionCommand;
-        private RelayCommand<StackPanel> contextMenuOpeningCommand;
+        private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionViewModel"/> class.
@@ -46,7 +48,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             this.session = session;
             this.datasetViewModel = datasetViewModel;
-            this.datasetViewModel.PropertyChanged += this.DatasetViewModel_PropertyChanged;
+            this.datasetViewModel.PropertyChanged += this.OnDatasetViewModelPropertyChanged;
             this.internalPartitionViewModels = new ObservableCollection<PartitionViewModel>();
             this.partitionViewModels = new ReadOnlyObservableCollection<PartitionViewModel>(this.internalPartitionViewModels);
 
@@ -54,8 +56,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
             {
                 this.internalPartitionViewModels.Add(new PartitionViewModel(this, partition));
             }
-
-            this.IsTreeNodeExpanded = true;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <summary>
         /// Gets or sets the session name.
         /// </summary>
-        [PropertyOrder(0)]
+        [DisplayName("Session Name")]
         [Description("The name of the session.")]
         public string Name
         {
@@ -84,18 +84,26 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
+        /// Gets the auxiliary info.
+        /// </summary>
+        [Browsable(false)]
+        public string AuxiliaryInfo
+        {
+            get => this.auxiliaryInfo;
+            private set => this.Set(nameof(this.AuxiliaryInfo), ref this.auxiliaryInfo, value);
+        }
+
+        /// <summary>
         /// Gets a string representation of the originating time of the first message in the session.
         /// </summary>
-        [PropertyOrder(1)]
-        [DisplayName("FirstMessageOriginatingTime")]
+        [DisplayName("First Message OriginatingTime")]
         [Description("The originating time of the first message in the session.")]
         public string FirstMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.FirstMessageOriginatingTime);
 
         /// <summary>
         /// Gets a string representation of the originating time of the last message in the session.
         /// </summary>
-        [PropertyOrder(2)]
-        [DisplayName("LastMessageOriginatingTime")]
+        [DisplayName("Last Message OriginatingTime")]
         [Description("The originating time of the last message in the session.")]
         public string LastMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.LastMessageOriginatingTime);
 
@@ -103,13 +111,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets the originating time of the first message in the session.
         /// </summary>
         [Browsable(false)]
-        public DateTime? FirstMessageOriginatingTime => this.OriginatingTimeInterval.Left;
+        public DateTime FirstMessageOriginatingTime => this.partitionViewModels.Min(p => p.FirstMessageOriginatingTime);
 
         /// <summary>
         /// Gets the originating time of the last message in the session.
         /// </summary>
         [Browsable(false)]
-        public DateTime? LastMessageOriginatingTime => this.OriginatingTimeInterval.Right;
+        public DateTime LastMessageOriginatingTime => this.partitionViewModels.Max(p => p.LastMessageOriginatingTime);
 
         /// <summary>
         /// Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.
@@ -118,14 +126,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public double UiElementOpacity => this.DatasetViewModel.CurrentSessionViewModel == this ? 1.0d : 0.5d;
 
         /// <summary>
-        /// Gets the originating time interval (earliest to latest) of the messages in this session.
+        /// Gets the originating time interval (earliest to latest) for this session.
         /// </summary>
         [Browsable(false)]
         public TimeInterval OriginatingTimeInterval =>
             TimeInterval.Coverage(
                 this.partitionViewModels
-                    .Where(p => p.OriginatingTimeInterval.Left > DateTime.MinValue && p.OriginatingTimeInterval.Right < DateTime.MaxValue)
-                    .Select(p => p.OriginatingTimeInterval));
+                    .Where(p => p.FirstMessageOriginatingTime > DateTime.MinValue && p.LastMessageOriginatingTime < DateTime.MaxValue)
+                    .Select(p => new TimeInterval(p.FirstMessageOriginatingTime, p.LastMessageOriginatingTime)));
 
         /// <summary>
         /// Gets the collection of partitions in this session.
@@ -180,18 +188,22 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets the command that executes when opening the session context menu.
         /// </summary>
         [Browsable(false)]
-        public RelayCommand<StackPanel> ContextMenuOpeningCommand => this.contextMenuOpeningCommand ??= new RelayCommand<StackPanel>(panel => panel.ContextMenu = this.CreateContextMenu());
+        public RelayCommand<Grid> ContextMenuOpeningCommand => this.contextMenuOpeningCommand ??= new RelayCommand<Grid>(grid => grid.ContextMenu = this.CreateContextMenu());
 
         /// <summary>
         /// Gets the underlying session.
         /// </summary>
+        [Browsable(false)]
         public Session Session => this.session;
 
         /// <summary>
         /// Updates the session view model based on the latest version of the corresponding session.
         /// </summary>
-        public void Update()
+        /// <param name="session">The new session.</param>
+        public void Update(Session session)
         {
+            this.session = session;
+
             var oldPartitions = new HashSet<PartitionViewModel>();
             foreach (var existingPartition in this.internalPartitionViewModels)
             {
@@ -203,6 +215,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 var existingPartition = this.internalPartitionViewModels.FirstOrDefault(s => s.Name == partition.Name);
                 if (existingPartition != null)
                 {
+                    existingPartition.Update(partition);
                     oldPartitions.Remove(existingPartition);
                 }
                 else
@@ -283,41 +296,30 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Attempts to find a stream source in the session that matches a stream binding.
+        /// Attempts to create a stream source for a specified stream binding.
         /// </summary>
         /// <param name="streamBinding">A stream binding that describes the stream to bind to.</param>
+        /// <param name="allocator">The allocator to use when reading data.</param>
+        /// <param name="deallocator">The deallocator to use when reading data.</param>
         /// <returns>A stream source if a source was found to bind to, otherwise returns null.</returns>
-        public StreamSource GetStreamSource(StreamBinding streamBinding)
-        {
-            // Check if the session contains the required partition
-            PartitionViewModel partitionViewModel = this.PartitionViewModels.FirstOrDefault(p => p.Name == streamBinding.PartitionName);
-
-            // Pass the request to the partition
-            return partitionViewModel != null ? partitionViewModel.GetStreamSource(streamBinding) : null;
-        }
+        public StreamSource CreateStreamSource(StreamBinding streamBinding, Func<dynamic> allocator, Action<dynamic> deallocator) =>
+            this.PartitionViewModels
+                .FirstOrDefault(p => p.Name == streamBinding.PartitionName)?
+                .CreateStreamSource(streamBinding, allocator, deallocator);
 
         /// <summary>
-        /// Searches for a stream tree node within a session.
+        /// Finds a stream tree node within a session.
         /// </summary>
         /// <param name="partitionName">The name of the partition containing the stream.</param>
         /// <param name="streamName">The name of the stream to search for.</param>
         /// <returns>A stream tree node representing the stream, or null if the stream does not exist in the session.</returns>
-        public StreamTreeNode FindStream(string partitionName, string streamName)
-        {
-            PartitionViewModel partitionViewModel = this.PartitionViewModels.FirstOrDefault(p => p.Name == partitionName);
-            if (partitionViewModel != null)
-            {
-                return partitionViewModel.FindStream(streamName);
-            }
-
-            return null;
-        }
+        public StreamTreeNode FindStreamTreeNode(string partitionName, string streamName) =>
+            this.PartitionViewModels
+                .FirstOrDefault(p => p.Name == partitionName)?
+                .FindStreamTreeNode(streamName);
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return "Session: " + this.Name;
-        }
+        public override string ToString() => $"Session: {this.Name}";
 
         /// <summary>
         /// Checks all partitions in the session to determine whether they have an active writer attached and updates their IsLivePartition property.
@@ -351,11 +353,54 @@ namespace Microsoft.Psi.Visualization.ViewModels
             return partitionName;
         }
 
-        private void DatasetViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnDatasetViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.DatasetViewModel.CurrentSessionViewModel))
             {
                 this.RaisePropertyChanged(nameof(this.UiElementOpacity));
+            }
+            else if (e.PropertyName == nameof(this.DatasetViewModel.ShowAuxiliarySessionInfo))
+            {
+                this.UpdateAuxiliaryInfo();
+            }
+        }
+
+        private void UpdateAuxiliaryInfo()
+        {
+            switch (this.DatasetViewModel.ShowAuxiliarySessionInfo)
+            {
+                case AuxiliarySessionInfo.None:
+                    this.AuxiliaryInfo = string.Empty;
+                    break;
+                case AuxiliarySessionInfo.Duration:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
+                    break;
+                case AuxiliarySessionInfo.StartDate:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToShortDateString();
+                    break;
+                case AuxiliarySessionInfo.StartDateLocal:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToLocalTime().ToShortDateString();
+                    break;
+                case AuxiliarySessionInfo.StartTime:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToShortTimeString();
+                    break;
+                case AuxiliarySessionInfo.StartTimeLocal:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToLocalTime().ToShortTimeString();
+                    break;
+                case AuxiliarySessionInfo.StartDateTime:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToString();
+                    break;
+                case AuxiliarySessionInfo.StartDateTimeLocal:
+                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToLocalTime().ToString();
+                    break;
+                case AuxiliarySessionInfo.Size:
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatSize(this.Session.Size.Value) : "?";
+                    break;
+                case AuxiliarySessionInfo.StreamCount:
+                    this.AuxiliaryInfo = this.Session.StreamCount.HasValue ? (this.Session.StreamCount == 0 ? "0" : $"{this.Session.StreamCount.Value:0,0}") : "?";
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -381,11 +426,45 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     MenuItemHelper.CreateMenuItem(
                         batchProcessingTask.IconSourcePath,
                         batchProcessingTask.Name,
-                        new VisualizationCommand<BatchProcessingTaskMetadata>(async s => await VisualizationContext.Instance.RunSessionBatchProcessingTask(this, batchProcessingTask)),
-                        batchProcessingTask));
+                        new VisualizationCommand<BatchProcessingTaskMetadata>(async bpt => await VisualizationContext.Instance.RunSessionBatchProcessingTask(this, bpt)),
+                        tag: batchProcessingTask,
+                        isEnabled: true,
+                        commandParameter: batchProcessingTask));
             }
 
             contextMenu.Items.Add(runTasksMenuItem);
+
+            contextMenu.Items.Add(new Separator());
+
+            // Add show session info menu
+            var showSessionInfoMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Show Sessions Info", null);
+            foreach (var auxiliarySessionInfo in Enum.GetValues(typeof(AuxiliarySessionInfo)))
+            {
+                var auxiliarySessionInfoValue = (AuxiliarySessionInfo)auxiliarySessionInfo;
+                var auxiliarySessionInfoName = auxiliarySessionInfoValue switch
+                {
+                    AuxiliarySessionInfo.None => "None",
+                    AuxiliarySessionInfo.Duration => "Duration",
+                    AuxiliarySessionInfo.StartDate => "Start Date (UTC)",
+                    AuxiliarySessionInfo.StartDateLocal => "Start Date (Local)",
+                    AuxiliarySessionInfo.StartTime => "Start Time (UTC)",
+                    AuxiliarySessionInfo.StartTimeLocal => "Start Time (Local)",
+                    AuxiliarySessionInfo.StartDateTime => "Start DateTime (UTC)",
+                    AuxiliarySessionInfo.StartDateTimeLocal => "Start DateTime (Local)",
+                    AuxiliarySessionInfo.Size => "Size",
+                    AuxiliarySessionInfo.StreamCount => "Number of Streams",
+                    _ => throw new NotImplementedException(),
+                };
+
+                showSessionInfoMenuItem.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        this.DatasetViewModel.ShowAuxiliarySessionInfo == auxiliarySessionInfoValue ? IconSourcePath.Checkmark : null,
+                        auxiliarySessionInfoName,
+                        new VisualizationCommand<AuxiliarySessionInfo>(asi => this.DatasetViewModel.ShowAuxiliarySessionInfo = asi),
+                        commandParameter: auxiliarySessionInfoValue));
+            }
+
+            contextMenu.Items.Add(showSessionInfoMenuItem);
 
             return contextMenu;
         }

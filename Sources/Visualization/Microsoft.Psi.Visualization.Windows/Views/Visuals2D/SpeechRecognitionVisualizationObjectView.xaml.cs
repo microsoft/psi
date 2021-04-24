@@ -3,12 +3,10 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
-    using System.Windows.Controls;
-
     /// <summary>
     /// Interaction logic for PlotVisualizationObjectView.xaml.
     /// </summary>
-    public partial class SpeechRecognitionVisualizationObjectView : UserControl
+    public partial class SpeechRecognitionVisualizationObjectView : VisualizationObjectView
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeechRecognitionVisualizationObjectView"/> class.

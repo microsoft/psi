@@ -15,11 +15,12 @@ namespace Microsoft.Psi.Visualization
     /// </summary>
     public class DisplayImage : ObservableObject
     {
-        private object imageLock = new object();
+        private readonly object imageLock = new object();
         private Shared<Image> psiImage;
         private FrameCounter renderedFrames = new FrameCounter();
         private FrameCounter receivedFrames = new FrameCounter();
         private WriteableBitmap image;
+        private string resolution;
 
         /// <summary>
         /// Gets underlying <see cref="PsiImage"/>.
@@ -54,6 +55,15 @@ namespace Microsoft.Psi.Visualization
         }
 
         /// <summary>
+        /// Gets the formatted resolution.
+        /// </summary>
+        public string Resolution
+        {
+            get => this.resolution;
+            private set { this.Set(nameof(this.Resolution), ref this.resolution, value); }
+        }
+
+        /// <summary>
         /// Update the underlying image with the specified image.
         /// </summary>
         /// <param name="image">New image.</param>
@@ -66,10 +76,14 @@ namespace Microsoft.Psi.Visualization
                 if (image == null || image.Resource == null)
                 {
                     this.psiImage = null;
+                    this.Resolution = string.Empty;
                     return;
                 }
 
                 this.psiImage = image.AddRef();
+                this.Resolution = $"{this.psiImage.Resource.Width} x {this.psiImage.Resource.Height}";
+
+                this.InitializeImage();
             }
 
             this.UpdateBitmap();
@@ -97,6 +111,8 @@ namespace Microsoft.Psi.Visualization
 
                 var decoder = new ImageFromStreamDecoder();
                 decoder.DecodeFromStream(encodedImage.Resource.ToStream(), this.psiImage.Resource);
+
+                this.InitializeImage();
             }
 
             this.UpdateBitmap();
@@ -121,59 +137,68 @@ namespace Microsoft.Psi.Visualization
 
         private void UpdateBitmap()
         {
-            if ((Application.Current != null) && (this.psiImage != null) && (this.psiImage.Resource != null))
+            if (Application.Current != null)
             {
                 Application.Current.Dispatcher.BeginInvoke(
                     (Action)(() =>
                     {
                         lock (this.imageLock)
                         {
-                            if (this.Image == null
-                                    || this.Image.PixelWidth != this.psiImage.Resource.Width
-                                    || this.Image.PixelHeight != this.psiImage.Resource.Height
-                                    || this.Image.BackBufferStride != this.psiImage.Resource.Stride)
+                            if ((this.psiImage != null) && (this.psiImage.Resource != null))
                             {
-                                System.Windows.Media.PixelFormat pixelFormat;
-                                switch (this.psiImage.Resource.PixelFormat)
-                                {
-                                    case Imaging.PixelFormat.Gray_8bpp:
-                                        pixelFormat = PixelFormats.Gray8;
-                                        break;
-
-                                    case Imaging.PixelFormat.Gray_16bpp:
-                                        pixelFormat = PixelFormats.Gray16;
-                                        break;
-
-                                    case Imaging.PixelFormat.BGR_24bpp:
-                                        pixelFormat = PixelFormats.Bgr24;
-                                        break;
-
-                                    case Imaging.PixelFormat.BGRX_32bpp:
-                                        pixelFormat = PixelFormats.Bgr32;
-                                        break;
-
-                                    case Imaging.PixelFormat.BGRA_32bpp:
-                                        pixelFormat = PixelFormats.Bgra32;
-                                        break;
-
-                                    case Imaging.PixelFormat.RGBA_64bpp:
-                                        pixelFormat = PixelFormats.Rgba64;
-                                        break;
-
-                                    default:
-                                        this.Image = null;
-                                        return;
-                                }
-
-                                this.Image = new WriteableBitmap(this.psiImage.Resource.Width, this.psiImage.Resource.Height, 300, 300, pixelFormat, null);
+                                this.Image.WritePixels(new Int32Rect(0, 0, this.psiImage.Resource.Width, this.psiImage.Resource.Height), this.psiImage.Resource.ImageData, this.psiImage.Resource.Stride * this.psiImage.Resource.Height, this.psiImage.Resource.Stride);
+                                this.renderedFrames.Increment();
                             }
-
-                            this.Image.WritePixels(new Int32Rect(0, 0, this.psiImage.Resource.Width, this.psiImage.Resource.Height), this.psiImage.Resource.ImageData, this.psiImage.Resource.Stride * this.psiImage.Resource.Height, this.psiImage.Resource.Stride);
-                            this.renderedFrames.Increment();
                         }
                     }),
                     System.Windows.Threading.DispatcherPriority.Render);
             }
+        }
+
+        private void InitializeImage()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (this.Image == null
+                    || this.Image.PixelWidth != this.psiImage.Resource.Width
+                    || this.Image.PixelHeight != this.psiImage.Resource.Height
+                    || this.Image.BackBufferStride != this.psiImage.Resource.Stride)
+                {
+                    System.Windows.Media.PixelFormat pixelFormat;
+                    switch (this.psiImage.Resource.PixelFormat)
+                    {
+                        case Imaging.PixelFormat.Gray_8bpp:
+                            pixelFormat = PixelFormats.Gray8;
+                            break;
+
+                        case Imaging.PixelFormat.Gray_16bpp:
+                            pixelFormat = PixelFormats.Gray16;
+                            break;
+
+                        case Imaging.PixelFormat.BGR_24bpp:
+                            pixelFormat = PixelFormats.Bgr24;
+                            break;
+
+                        case Imaging.PixelFormat.BGRX_32bpp:
+                            pixelFormat = PixelFormats.Bgr32;
+                            break;
+
+                        case Imaging.PixelFormat.BGRA_32bpp:
+                            pixelFormat = PixelFormats.Bgra32;
+                            break;
+
+                        case Imaging.PixelFormat.RGBA_64bpp:
+                            pixelFormat = PixelFormats.Rgba64;
+                            break;
+
+                        default:
+                            this.Image = null;
+                            return;
+                    }
+
+                    this.Image = new WriteableBitmap(this.psiImage.Resource.Width, this.psiImage.Resource.Height, 300, 300, pixelFormat, null);
+                }
+            });
         }
     }
 }

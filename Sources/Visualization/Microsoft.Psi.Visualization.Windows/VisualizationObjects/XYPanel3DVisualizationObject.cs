@@ -5,14 +5,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.Runtime.Serialization;
     using MathNet.Spatial.Euclidean;
-    using Microsoft.Psi.Visualization.Views.Visuals3D;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
     /// Implements an XY panel 3D visualization object.
     /// </summary>
     [VisualizationObject("2D Panel in 3D Space")]
-    public class XYPanel3DVisualizationObject : Instant3DVisualizationObject<CoordinateSystem>
+    public class XYPanel3DVisualizationObject : XYZValueVisualizationObject<CoordinateSystem>
     {
         private double height;
         private double width;
@@ -42,14 +41,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [IgnoreDataMember]
         public XYVisualizationPanel XYVisualizationPanel { get; set; }
-
-        /// <inheritdoc />
-        protected override void InitNew()
-        {
-            this.Visual3D = new XYPanelVisual(this);
-            this.XYVisualizationPanel = new XYVisualizationPanel();
-            base.InitNew();
-        }
 
         /// <inheritdoc />
         protected override void OnAddToPanel()

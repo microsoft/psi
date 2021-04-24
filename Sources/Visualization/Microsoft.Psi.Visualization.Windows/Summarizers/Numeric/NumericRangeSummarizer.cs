@@ -9,7 +9,7 @@ namespace Microsoft.Psi.Visualization.Summarizers
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements core functionality for numeric range summarization.
+    /// Implements numeric range summarization.
     /// </summary>
     internal static class NumericRangeSummarizer
     {
@@ -30,12 +30,15 @@ namespace Microsoft.Psi.Visualization.Summarizers
                     {
                         var firstMessage = group.First();
                         var lastMessage = group.Last();
+
+                        // Use the last value as representative for summarization, with the first message
+                        // originating time.
                         return IntervalData.Create(
-                            lastMessage.Data, // Take last value as representative value for plotting
-                            group.Min(m => m.Data), // Minimum value
-                            group.Max(m => m.Data), // Maximum value
-                            firstMessage.OriginatingTime, // First message's OT
-                            lastMessage.OriginatingTime - firstMessage.OriginatingTime); // Interval between first and last messages
+                            value: lastMessage.Data,
+                            minimum: group.Min(m => m.Data),
+                            maximum: group.Max(m => m.Data),
+                            originatingTime: firstMessage.OriginatingTime,
+                            interval: lastMessage.OriginatingTime - firstMessage.OriginatingTime);
                     }).ToList();
         }
     }

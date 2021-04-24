@@ -228,11 +228,11 @@ namespace Microsoft.Psi
 
             if (this.counters != null)
             {
-                var messageTimeReal = this.scheduler.Clock.ToRealTime(message.Time);
+                var messageTimeReal = this.scheduler.Clock.ToRealTime(message.CreationTime);
                 var messageOriginatingTimeReal = this.scheduler.Clock.ToRealTime(message.OriginatingTime);
                 this.counters.Increment(ReceiverCounters.Total);
                 this.counters.RawValue(ReceiverCounters.IngestTime, (Time.GetCurrentTime() - messageTimeReal).Ticks / 10);
-                this.counters.RawValue(ReceiverCounters.PipelineExclusiveDelay, (message.Time - messageOriginatingTimeReal).Ticks / 10);
+                this.counters.RawValue(ReceiverCounters.PipelineExclusiveDelay, (message.CreationTime - messageOriginatingTimeReal).Ticks / 10);
                 this.counters.RawValue(ReceiverCounters.OutstandingUnrecycled, this.Recycler.OutstandingAllocationCount);
                 this.counters.RawValue(ReceiverCounters.AvailableRecycled, this.Recycler.AvailableAllocationCount);
             }
@@ -257,15 +257,30 @@ namespace Microsoft.Psi
                     message.OriginatingTime,
                     this.schedulerContext,
                     hasDiagnosticsCollector,
-                    out var processingTime);
+                    out var receiverStartTime,
+                    out var receiverEndTime);
 
                 if (delivered)
                 {
-                    this.receiverDiagnosticsCollector.Value?.MessageProcessed(
-                        message.Envelope,
-                        processingTime,
-                        this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
-                        diagnosticsTime);
+                    if (this.receiverDiagnosticsCollector.Value != null)
+                    {
+                        this.receiverDiagnosticsCollector.Value.MessageProcessed(
+                            message.Envelope,
+                            receiverStartTime,
+                            receiverEndTime,
+                            this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
+                            diagnosticsTime);
+
+                        var ownerToString = this.Owner.ToString();
+
+                        // If the owner to-string rendering is different from the default one (i.e., the type name)
+                        if (ownerToString != this.Owner.GetType().ToString())
+                        {
+                            // Then add this as diagnostic state information
+                            this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(ownerToString);
+                        }
+                    }
+
                     return;
                 }
             }
@@ -315,21 +330,31 @@ namespace Microsoft.Psi
                 }
                 else
                 {
-                    var processStartTime = this.pipeline.GetCurrentTime();
+                    var receiverStartTime = this.pipeline.GetCurrentTime();
                     this.onReceived(message);
-                    var processingTime = this.pipeline.GetCurrentTime() - processStartTime;
+                    var receiverEndTime = this.pipeline.GetCurrentTime();
 
                     this.receiverDiagnosticsCollector.Value.MessageProcessed(
                         message.Envelope,
-                        processingTime,
+                        receiverStartTime,
+                        receiverEndTime,
                         this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
                         currentTime);
+
+                    var ownerToString = this.Owner.ToString();
+
+                    // If the owner to-string rendering is different from the default one (i.e., the type name)
+                    if (ownerToString != this.Owner.GetType().ToString())
+                    {
+                        // Then add this as diagnostic state information
+                        this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(ownerToString);
+                    }
                 }
 
                 if (this.counters != null)
                 {
                     var end = Time.GetCurrentTime();
-                    var messageTimeReal = this.scheduler.Clock.ToRealTime(message.Time);
+                    var messageTimeReal = this.scheduler.Clock.ToRealTime(message.CreationTime);
                     var messageOriginatingTimeReal = this.scheduler.Clock.ToRealTime(message.OriginatingTime);
                     this.counters.RawValue(ReceiverCounters.TimeInQueue, (start - messageTimeReal).Ticks / 10);
                     this.counters.RawValue(ReceiverCounters.ProcessingTime, (end - start).Ticks / 10);

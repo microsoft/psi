@@ -133,7 +133,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="annotationDisplayData">The data to update the item from.</param>
         internal void Update(TimeIntervalAnnotationDisplayData annotationDisplayData)
         {
-            var verticalSpace = this.parent.VisualizationObject.Padding / this.parent.ScaleTransform.ScaleY;
+            var verticalSpace = this.parent.StreamVisualizationObject.Padding / this.parent.ScaleTransform.ScaleY;
             var start = (annotationDisplayData.StartTime - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
             var end = (annotationDisplayData.EndTime - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
 
@@ -153,8 +153,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 this.figures[index].StrokeThickness = schemaMetadata.BorderWidth;
                 this.figures[index].Fill = this.parent.GetBrush(schemaMetadata.FillColor);
 
-                var lo = (double)(index + verticalSpace) / this.parent.VisualizationObject.TrackCount;
-                var hi = (double)(index + 1 - verticalSpace) / this.parent.VisualizationObject.TrackCount;
+                var lo = (double)(index + verticalSpace) / this.parent.StreamVisualizationObject.TrackCount;
+                var hi = (double)(index + 1 - verticalSpace) / this.parent.StreamVisualizationObject.TrackCount;
 
                 PathFigure annotationElementFigure = (this.figures[index].Data as PathGeometry).Figures[0];
                 annotationElementFigure.StartPoint = new Point(start, lo);
@@ -169,7 +169,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
                 Grid labelGrid = this.labels[index];
                 (labelGrid.Children[0] as TextBlock).Text = value?.ToString();
-                (labelGrid.Children[0] as TextBlock).FontSize = this.parent.VisualizationObject.FontSize;
+                (labelGrid.Children[0] as TextBlock).FontSize = this.parent.StreamVisualizationObject.FontSize;
                 if (schemaDefinition.Schema.IsFiniteAnnotationSchema)
                 {
                     (labelGrid.Children[0] as TextBlock).Foreground = this.parent.GetBrush(schemaMetadata.TextColor);

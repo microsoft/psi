@@ -7,33 +7,30 @@ namespace Microsoft.Psi.Visualization.Adapters
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>
-    /// Implements an adapter from streams of encoded depth image to an image.
+    /// Implements a stream adapter from shared encoded depth image to shared image.
     /// </summary>
     [StreamAdapter]
     public class EncodedDepthImageToImageAdapter : StreamAdapter<Shared<EncodedDepthImage>, Shared<Image>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncodedDepthImageToImageAdapter"/> class.
-        /// </summary>
-        public EncodedDepthImageToImageAdapter()
-            : base(Adapter)
-        {
-        }
-
-        private static Shared<Image> Adapter(Shared<EncodedDepthImage> sharedEncodedDepthImage, Envelope envelope)
+        /// <inheritdoc/>
+        public override Shared<Image> GetAdaptedValue(Shared<EncodedDepthImage> source, Envelope envelope)
         {
             Shared<Image> sharedImage = null;
 
-            if ((sharedEncodedDepthImage != null) && (sharedEncodedDepthImage.Resource != null))
+            if ((source != null) && (source.Resource != null))
             {
-                var sharedDepthImage = DepthImagePool.GetOrCreate(sharedEncodedDepthImage.Resource.Width, sharedEncodedDepthImage.Resource.Height);
-                sharedImage = ImagePool.GetOrCreate(sharedEncodedDepthImage.Resource.Width, sharedEncodedDepthImage.Resource.Height, PixelFormat.Gray_16bpp);
+                using var sharedDepthImage = DepthImagePool.GetOrCreate(source.Resource.Width, source.Resource.Height);
+                sharedImage = ImagePool.GetOrCreate(source.Resource.Width, source.Resource.Height, PixelFormat.Gray_16bpp);
                 var decoder = new DepthImageFromStreamDecoder();
-                decoder.DecodeFromStream(sharedEncodedDepthImage.Resource.ToStream(), sharedDepthImage.Resource);
+                decoder.DecodeFromStream(source.Resource.ToStream(), sharedDepthImage.Resource);
                 sharedDepthImage.Resource.CopyTo(sharedImage.Resource);
             }
 
             return sharedImage;
         }
+
+        /// <inheritdoc/>
+        public override void Dispose(Shared<Image> destination) =>
+            destination?.Dispose();
     }
 }

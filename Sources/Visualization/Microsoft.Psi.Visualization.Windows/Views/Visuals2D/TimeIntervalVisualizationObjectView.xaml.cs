@@ -8,7 +8,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Shapes;
     using Microsoft.Psi.Visualization.Data;
@@ -18,7 +17,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// <summary>
     /// Interaction logic for TimeIntervalVisualizationObjectView.xaml.
     /// </summary>
-    public partial class TimeIntervalVisualizationObjectView : UserControl
+    public partial class TimeIntervalVisualizationObjectView : VisualizationObjectView
     {
         private Path linePath;
         private PathGeometry lineGeometry;
@@ -48,51 +47,31 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.transformGroup.Children.Add(this.translateTransform);
             this.transformGroup.Children.Add(this.scaleTransform);
 
-            this.DataContextChanged += this.TimeIntervalVisualizationObject_DataContextChanged;
-            this.Unloaded += this.TimeIntervalVisualizationObjectView_Unloaded;
             this.SizeChanged += this.TimeIntervalVisualizationObjectView_SizeChanged;
         }
 
         /// <summary>
         /// Gets the time interval visualization object.
         /// </summary>
-        public TimeIntervalVisualizationObject TimeIntervalVisualizationObject { get; private set; }
+        public TimeIntervalVisualizationObject TimeIntervalVisualizationObject =>
+            this.VisualizationObject as TimeIntervalVisualizationObject;
 
-        private void AddPoint(Tuple<DateTime, DateTime> timeInterval)
+        /// <inheritdoc/>
+        protected override void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (!this.startTime.HasValue)
-            {
-                this.startTime = timeInterval.Item1;
-                this.CalculateScaleTransform();
-            }
+            base.OnUnloaded(sender, e);
 
-            TimeSpan left = timeInterval.Item1 - this.startTime.Value;
-            TimeSpan right = timeInterval.Item2 - this.startTime.Value;
-
-            var trackBottom = (this.TimeIntervalVisualizationObject.TrackIndex + 1) / (double)this.TimeIntervalVisualizationObject.TrackCount;
-            var trackWidth = 1 / (double)this.TimeIntervalVisualizationObject.TrackCount;
-
-            if ((timeInterval.Item2 - timeInterval.Item1).TotalMilliseconds > this.TimeIntervalVisualizationObject.Threshold)
+            this.navigator.ViewRange.RangeChanged -= this.Navigator_ViewRangeChanged;
+            if (this.TimeIntervalVisualizationObject.Data != null)
             {
-                this.thresholdFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.1 * trackWidth))), false));
-                this.thresholdFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.35 * trackWidth))), true));
-                this.thresholdFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.65 * trackWidth))), true));
-                this.thresholdFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.9 * trackWidth))), true));
-            }
-            else
-            {
-                this.lineFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.1 * trackWidth))), false));
-                this.lineFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.35 * trackWidth))), true));
-                this.lineFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.65 * trackWidth))), true));
-                this.lineFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.9 * trackWidth))), true));
+                this.TimeIntervalVisualizationObject.Data.DetailedCollectionChanged -= this.Data_CollectionChanged;
             }
         }
 
-        private void TimeIntervalVisualizationObject_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.TimeIntervalVisualizationObject = (TimeIntervalVisualizationObject)this.DataContext;
-            this.TimeIntervalVisualizationObject.PropertyChanging += this.TimeIntervalVisualizationObject_PropertyChanging;
-            this.TimeIntervalVisualizationObject.PropertyChanged += this.TimeIntervalVisualizationObject_PropertyChanged;
+            base.OnDataContextChanged(sender, e);
 
             this.navigator = this.TimeIntervalVisualizationObject.Navigator;
             this.navigator.ViewRange.RangeChanged += this.Navigator_ViewRangeChanged;
@@ -111,17 +90,31 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
         }
 
-        private void UpdateThreshold()
+        /// <inheritdoc/>
+        protected override void OnVisualizationObjectPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
-            this.lineFigure.Segments.Clear();
-            this.thresholdFigure.Segments.Clear();
-            foreach (var timeInterval in this.datapoints)
+            if (e.PropertyName == nameof(this.TimeIntervalVisualizationObject.Data))
             {
-                this.AddPoint(timeInterval);
+                // Unsubscribe our handler from data collection notifications so that we do not
+                // continue to receive notifications from collections that are no longer in view.
+                if (this.TimeIntervalVisualizationObject.Data != null)
+                {
+                    this.TimeIntervalVisualizationObject.Data.DetailedCollectionChanged -= this.Data_CollectionChanged;
+                }
             }
+            else if (e.PropertyName == nameof(this.TimeIntervalVisualizationObject.SummaryData))
+            {
+                if (this.TimeIntervalVisualizationObject.SummaryData != null)
+                {
+                    this.TimeIntervalVisualizationObject.SummaryData.DetailedCollectionChanged -= this.IntervalData_CollectionChanged;
+                }
+            }
+
+            base.OnVisualizationObjectPropertyChanging(sender, e);
         }
 
-        private void TimeIntervalVisualizationObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.TimeIntervalVisualizationObject.Data))
             {
@@ -157,34 +150,47 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 this.ResetPath();
                 this.UpdateThreshold();
             }
+
+            base.OnVisualizationObjectPropertyChanged(sender, e);
         }
 
-        private void TimeIntervalVisualizationObject_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        private void AddPoint(Tuple<DateTime, DateTime> timeInterval)
         {
-            if (e.PropertyName == nameof(this.TimeIntervalVisualizationObject.Data))
+            if (!this.startTime.HasValue)
             {
-                // Unsubscribe our handler from data collection notifications so that we do not
-                // continue to receive notifications from collections that are no longer in view.
-                if (this.TimeIntervalVisualizationObject.Data != null)
-                {
-                    this.TimeIntervalVisualizationObject.Data.DetailedCollectionChanged -= this.Data_CollectionChanged;
-                }
+                this.startTime = timeInterval.Item1;
+                this.CalculateScaleTransform();
             }
-            else if (e.PropertyName == nameof(this.TimeIntervalVisualizationObject.SummaryData))
+
+            TimeSpan left = timeInterval.Item1 - this.startTime.Value;
+            TimeSpan right = timeInterval.Item2 - this.startTime.Value;
+
+            var trackBottom = (this.TimeIntervalVisualizationObject.TrackIndex + 1) / (double)this.TimeIntervalVisualizationObject.TrackCount;
+            var trackWidth = 1 / (double)this.TimeIntervalVisualizationObject.TrackCount;
+
+            if ((timeInterval.Item2 - timeInterval.Item1).TotalMilliseconds > this.TimeIntervalVisualizationObject.Threshold)
             {
-                if (this.TimeIntervalVisualizationObject.SummaryData != null)
-                {
-                    this.TimeIntervalVisualizationObject.SummaryData.DetailedCollectionChanged -= this.IntervalData_CollectionChanged;
-                }
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.1 * trackWidth))), false));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.35 * trackWidth))), true));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.65 * trackWidth))), true));
+                this.thresholdFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.9 * trackWidth))), true));
+            }
+            else
+            {
+                this.lineFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.1 * trackWidth))), false));
+                this.lineFigure.Segments.Add(new LineSegment(new Point(left.TotalSeconds, 1 - (trackBottom - (0.35 * trackWidth))), true));
+                this.lineFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.65 * trackWidth))), true));
+                this.lineFigure.Segments.Add(new LineSegment(new Point(right.TotalSeconds, 1 - (trackBottom - (0.9 * trackWidth))), true));
             }
         }
 
-        private void TimeIntervalVisualizationObjectView_Unloaded(object sender, RoutedEventArgs e)
+        private void UpdateThreshold()
         {
-            this.navigator.ViewRange.RangeChanged -= this.Navigator_ViewRangeChanged;
-            if (this.TimeIntervalVisualizationObject.Data != null)
+            this.lineFigure.Segments.Clear();
+            this.thresholdFigure.Segments.Clear();
+            foreach (var timeInterval in this.datapoints)
             {
-                this.TimeIntervalVisualizationObject.Data.DetailedCollectionChanged -= this.Data_CollectionChanged;
+                this.AddPoint(timeInterval);
             }
         }
 

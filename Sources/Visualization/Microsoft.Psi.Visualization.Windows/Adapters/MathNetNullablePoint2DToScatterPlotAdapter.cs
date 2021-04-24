@@ -13,22 +13,15 @@ namespace Microsoft.Psi.Visualization.Adapters
     /// Implements an adapter from streams of lists of nullable MathNet.Spatial.Euclidean.Point2Ds into lists named points.
     /// </summary>
     [StreamAdapter]
-    public class MathNetNullablePoint2DToScatterPlotAdapter : StreamAdapter<Point2D?, List<Tuple<Point, string>>>
+    public class MathNetNullablePoint2DToScatterPlotAdapter : StreamAdapter<Point2D?, List<Tuple<Point, string, string>>>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MathNetNullablePoint2DToScatterPlotAdapter"/> class.
-        /// </summary>
-        public MathNetNullablePoint2DToScatterPlotAdapter()
-            : base(Adapter)
+        /// <inheritdoc/>
+        public override List<Tuple<Point, string, string>> GetAdaptedValue(Point2D? source, Envelope envelope)
         {
-        }
-
-        private static List<Tuple<Point, string>> Adapter(Point2D? value, Envelope env)
-        {
-            var list = new List<Tuple<Point, string>>();
-            if (value.HasValue)
+            var list = new List<Tuple<Point, string, string>>();
+            if (source.HasValue)
             {
-                list.Add(Tuple.Create(new Point(value.Value.X, value.Value.Y), default(string)));
+                list.Add(Tuple.Create(new Point(source.Value.X, source.Value.Y), default(string), default(string)));
             }
 
             return list;

@@ -27,6 +27,9 @@ namespace Microsoft.Psi.Imaging
         /// Defines an color image format where each red/green/blue component is 8 bits.
         /// The byte order in memory is: bb gg rr.
         /// </summary>
+        /// <remarks>
+        /// Not to be confused with <see cref="RGB_24bpp"/> whose byte order is: rr gg bb.
+        /// </remarks>
         BGR_24bpp,
 
         /// <summary>
@@ -46,6 +49,15 @@ namespace Microsoft.Psi.Imaging
         /// The byte order in memory is: rrrr gggg bbbb aaaa.
         /// </summary>
         RGBA_64bpp,
+
+        /// <summary>
+        /// Defines an color image format where each red/green/blue component is 8 bits.
+        /// The byte order in memory is: rr gg bb.
+        /// </summary>
+        /// <remarks>
+        /// Not to be confused with <see cref="BGR_24bpp"/> whose byte order is: bb gg rr.
+        /// </remarks>
+        RGB_24bpp,
     }
 
     /// <summary>
@@ -71,6 +83,16 @@ namespace Microsoft.Psi.Imaging
         public static int GetBytesPerPixel(this PixelFormat pixelFormat)
         {
             return PixelFormatHelper.GetBytesPerPixel(pixelFormat);
+        }
+
+        /// <summary>
+        /// Returns the number of bits per channel (bit depth) for a given pixel format.
+        /// </summary>
+        /// <param name="pixelFormat">Pixel format for which to find bits per channel.</param>
+        /// <returns>Number of bits per channel for the given pixel format.</returns>
+        public static int GetBitsPerChannel(this PixelFormat pixelFormat)
+        {
+            return PixelFormatHelper.GetBitsPerChannel(pixelFormat);
         }
 
         /// <summary>

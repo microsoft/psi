@@ -20,21 +20,21 @@ namespace Microsoft.Psi
         /// <param name="partitionPath">Partition/file path.</param>
         /// <param name="first">First message time.</param>
         /// <param name="last">Last message time.</param>
-        /// <param name="averageMessageSize">Average message size (bytes).</param>
         /// <param name="messageCount">Total message count.</param>
-        /// <param name="averageLatency">Average message latency.</param>
-        public StreamMetadataBase(string name, int id, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, int averageMessageSize, int messageCount, int averageLatency)
+        /// <param name="averageMessageSize">Average message size (bytes).</param>
+        /// <param name="averageLatencyMs">Average message latency (milliseconds).</param>
+        public StreamMetadataBase(string name, int id, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, long messageCount, double averageMessageSize, double averageLatencyMs)
         {
             this.Name = name;
             this.Id = id;
             this.TypeName = typeName;
-            this.PartitionName = partitionName;
-            this.PartitionPath = partitionPath;
+            this.StoreName = partitionName;
+            this.StorePath = partitionPath;
             this.OpenedTime = this.FirstMessageCreationTime = this.FirstMessageOriginatingTime = first;
             this.ClosedTime = this.LastMessageCreationTime = this.LastMessageOriginatingTime = last;
-            this.AverageMessageSize = averageMessageSize;
             this.MessageCount = messageCount;
-            this.AverageLatency = averageLatency;
+            this.AverageMessageSize = averageMessageSize;
+            this.AverageMessageLatencyMs = averageLatencyMs;
         }
 
         /// <inheritdoc />
@@ -50,10 +50,10 @@ namespace Microsoft.Psi
         public string SupplementalMetadataTypeName => null;
 
         /// <inheritdoc />
-        public string PartitionName { get; private set; }
+        public string StoreName { get; private set; }
 
         /// <inheritdoc />
-        public string PartitionPath { get; private set; }
+        public string StorePath { get; private set; }
 
         /// <inheritdoc />
         public DateTime OpenedTime { get; private set; }
@@ -77,13 +77,13 @@ namespace Microsoft.Psi
         public DateTime LastMessageOriginatingTime { get; private set; }
 
         /// <inheritdoc />
-        public int AverageMessageSize { get; private set; }
+        public long MessageCount { get; private set; }
 
         /// <inheritdoc />
-        public int AverageLatency { get; private set; }
+        public double AverageMessageSize { get; private set; }
 
         /// <inheritdoc />
-        public int MessageCount { get; private set; }
+        public double AverageMessageLatencyMs { get; private set; }
 
         /// <inheritdoc />
         public virtual T GetSupplementalMetadata<T>()

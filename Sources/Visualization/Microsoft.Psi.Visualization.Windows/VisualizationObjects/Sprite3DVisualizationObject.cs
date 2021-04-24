@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a sprite 3D visualization object.
     /// </summary>
     [VisualizationObject("3D Sprites")]
-    public class Sprite3DVisualizationObject : Instant3DVisualizationObject<CoordinateSystem>
+    public class Sprite3DVisualizationObject : XYZValueVisualizationObject<CoordinateSystem>
     {
         private string source;
         private Point3D[] vertexPositions;
